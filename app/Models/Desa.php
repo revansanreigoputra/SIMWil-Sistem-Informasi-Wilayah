@@ -9,7 +9,7 @@ class Desa extends Model
 {
     use HasFactory;
 
-    protected $table = 'desa';
+    protected $table = 'desas';
 
     protected $fillable = [
         'kode_desa',
