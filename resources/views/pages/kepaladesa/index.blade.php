@@ -1,236 +1,179 @@
 @extends('layouts.master')
 
-@section('title', 'Manajemen Stok')
+@section('title', 'Data Kepala Desa')
+
+@section('action')
+    @can('kepala-desa.create')
+        <a href="{{ route('kepala-desa.create') }}" class="btn btn-primary">Tambah Data</a>
+    @endcan
+@endsection
 
 @section('content')
-<div class="px-4 container-fluid">
-    <h1 class="mt-4 fw-bold">Manajemen Stok</h1>
-    <ol class="mb-4 breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-        <li class="breadcrumb-item active">Manajemen Stok</li>
-    </ol>
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="kepala-desa-table" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Foto</th>
+                            <th>Nama Kepala Desa</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Kontak</th>
+                            <th>Masa Jabatan</th>
+                            <th>Alamat</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($kepalaDesas as $kepalaDesa)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>
+                                    @if ($kepalaDesa->foto)
+                                        <img src="{{ asset('storage/' . $kepalaDesa->foto) }}"
+                                            alt="{{ $kepalaDesa->nama_kepala_desa }}" class="rounded"
+                                            style="width: 50px; height: 50px; object-fit: cover;">
+                                    @else
+                                        <div class="rounded bg-secondary d-flex align-items-center justify-content-center"
+                                            style="width: 50px; height: 50px;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" class="text-white">
+                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                                <circle cx="12" cy="7" r="4"></circle>
+                                            </svg>
+                                        </div>
+                                    @endif
+                                </td>
+                                <td>
+                                    <strong>{{ $kepalaDesa->nama_kepala_desa }}</strong>
+                                    @if ($kepalaDesa->tanggal_lahir)
+                                        <small class="text-muted d-block">Lahir:
+                                            {{ $kepalaDesa->tanggal_lahir->format('d/m/Y') }}</small>
+                                    @endif
+                                </td>
+                                <td>
+                                    <span
+                                        class="text-white badge 
+                                @if ($kepalaDesa->jenis_kelamin === 'L') bg-primary
+                                @else bg-pink @endif">
+                                        {{ $kepalaDesa->jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan' }}
+                                    </span>
+                                </td>
+                                <td>
+                                    @if ($kepalaDesa->kontak)
+                                        <span class="text-muted">{{ $kepalaDesa->kontak }}</span>
+                                    @else
+                                        <span class="text-muted">-</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($kepalaDesa->masa_jabatan)
+                                        <span class="text-muted">{{ $kepalaDesa->masa_jabatan }}</span>
+                                    @else
+                                        <span class="text-muted">-</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($kepalaDesa->alamat)
+                                        <span class="text-muted">{{ Str::limit($kepalaDesa->alamat, 50) }}</span>
+                                    @else
+                                        <span class="text-muted">-</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @canany(['kepala-desa.view', 'kepala-desa.update', 'kepala-desa.delete'])
+                                        <div class="d-flex gap-1">
+                                            @can('kepala-desa.view')
+                                                <a href="{{ route('kepala-desa.show', $kepalaDesa->id) }}"
+                                                    class="btn btn-sm btn-info">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                                        <circle cx="12" cy="12" r="3" />
+                                                    </svg>
+                                                    Detail
+                                                </a>
+                                            @endcan
+                                            @can('kepala-desa.update')
+                                                <a href="{{ route('kepala-desa.edit', $kepalaDesa->id) }}"
+                                                    class="btn btn-sm btn-warning">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                        <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                                                        <path
+                                                            d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                                                        <path d="M16 5l3 3" />
+                                                    </svg>
+                                                    Edit
+                                                </a>
+                                            @endcan
+                                            @can('kepala-desa.delete')
+                                                <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                                    data-bs-target="#delete-kepala-desa-{{ $kepalaDesa->id }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                        <path d="M4 7l16 0" />
+                                                        <path d="M10 11l0 6" />
+                                                        <path d="M14 11l0 6" />
+                                                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                                    </svg>
+                                                    Hapus
+                                                </button>
+                                            @endcan
+                                        </div>
 
-    @include('partials.alert')
-
-    <!-- Stock Summary Cards -->
-    <div class="mb-4 row">
-        <div class="col-xl-3 col-md-6">
-            <div class="mb-4 text-white card bg-primary">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <div class="small text-white-50">Total Produk</div>
-                            <div class="mb-0 h4">{{ number_format($stockSummary['total_products']) }}</div>
-                        </div>
-                        <i class="fas fa-boxes fa-2x"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="mb-4 text-white card bg-success">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <div class="small text-white-50">Nilai Total Stok</div>
-                            <div class="mb-0 h4">Rp {{ number_format($stockSummary['total_stock_value'], 0, ',', '.') }}
-                            </div>
-                        </div>
-                        <i class="fas fa-money-bill-wave fa-2x"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="mb-4 text-white card bg-warning">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <div class="small text-white-50">Stok Rendah</div>
-                            <div class="mb-0 h4">{{ number_format($stockSummary['low_stock_count']) }}</div>
-                        </div>
-                        <i class="fas fa-exclamation-triangle fa-2x"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="mb-4 text-white card bg-danger">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <div class="small text-white-50">Stok Habis</div>
-                            <div class="mb-0 h4">{{ number_format($stockSummary['out_of_stock_count']) }}</div>
-                        </div>
-                        <i class="fas fa-times-circle fa-2x"></i>
-                    </div>
-                </div>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="delete-kepala-desa-{{ $kepalaDesa->id }}" tabindex="-1"
+                                            aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="deleteModalLabel">Hapus Kepala Desa?</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Data kepala desa
+                                                            <strong>{{ $kepalaDesa->nama_kepala_desa }}</strong> yang dihapus
+                                                            tidak bisa dikembalikan.</p>
+                                                        <p>Yakin ingin menghapus data ini?</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Batal</button>
+                                                        <form action="{{ route('kepala-desa.destroy', $kepalaDesa->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger">Hapus</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <span class="text-muted">Tidak ada aksi</span>
+                                    @endcanany
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-
-    <!-- Action Buttons -->
-    <div class="mb-4 row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="mb-0 fw-bold">Aksi Stok</h5>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        @can('stock.in')
-                        <div class="mb-3 col-md-3">
-                            <a href="{{ route('stock.in.form') }}" class="btn btn-success w-100">
-                                <i class="fas fa-plus-circle me-2"></i>Stok Masuk
-                            </a>
-                        </div>
-                        @endcan
-                        @can('stock.out')
-                        <div class="mb-3 col-md-3">
-                            <a href="{{ route('stock.out.form') }}" class="btn btn-danger w-100">
-                                <i class="fas fa-minus-circle me-2"></i>Stok Keluar
-                            </a>
-                        </div>
-                        @endcan
-                        @can('stock.adjustment')
-                        <div class="mb-3 col-md-3">
-                            <a href="{{ route('stock.adjustment.form') }}" class="btn btn-warning w-100">
-                                <i class="fas fa-edit me-2"></i>Penyesuaian Stok
-                            </a>
-                        </div>
-                        @endcan
-                        <div class="mb-3 col-md-3">
-                            <a href="{{ route('stock.movements') }}" class="btn btn-info w-100">
-                                <i class="fas fa-history me-2"></i>Riwayat Pergerakan
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <!-- Recent Stock Movements -->
-        <div class="col-lg-8">
-            <div class="mb-4 card">
-                <div class="card-header">
-                    <div class="d-flex justify-content-between align-items-center w-100">
-                        <h5 class="mb-0 fw-bold">Pergerakan Stok Terbaru</h5>
-                        <a href="{{ route('stock.movements') }}" class="btn btn-outline-primary btn-sm">
-                            Lihat Semua
-                        </a>
-                    </div>
-                </div>
-                <div class="card-body">
-                    @if($recentMovements->count() > 0)
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Tanggal</th>
-                                    <th>Produk</th>
-                                    <th>Tipe</th>
-                                    <th>Jumlah</th>
-                                    <th>Stok Akhir</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($recentMovements as $movement)
-                                <tr>
-                                    <td>{{ $movement->movement_date->format('d/m/Y H:i') }}</td>
-                                    <td>{{ $movement->product->name }}</td>
-                                    <td>
-                                        <span class="badge
-                                            @if($movement->type === 'in') bg-success
-                                            @elseif($movement->type === 'out') bg-danger
-                                            @elseif($movement->type === 'adjustment') bg-warning
-                                            @else bg-info
-                                            @endif text-white">
-                                            {{ $movement->type_name }}
-                                        </span>
-                                    </td>
-                                    <td class="
-                                        @if($movement->quantity > 0) text-success
-                                        @elseif($movement->quantity < 0) text-danger
-                                        @endif">
-                                        {{ $movement->quantity_display }}
-                                    </td>
-                                    <td>{{ number_format($movement->current_stock) }}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    @else
-                    <div class="py-4 text-center">
-                        <i class="mb-3 fas fa-inbox fa-3x text-muted"></i>
-                        <p class="text-muted">Belum ada pergerakan stok</p>
-                    </div>
-                    @endif
-                </div>
-            </div>
-        </div>
-
-        <!-- Low Stock Products -->
-        <div class="col-lg-4">
-            <div class="mb-4 card">
-                <div class="card-header">
-                    <h5 class="mb-0 fw-bold">Produk Stok Rendah</h5>
-                </div>
-                <div class="card-body">
-                    @if($lowStockProducts->count() > 0)
-                    @foreach($lowStockProducts as $product)
-                    <div class="py-2 d-flex justify-content-between align-items-center border-bottom">
-                        <div>
-                            <div class="fw-bold">{{ $product->name }}</div>
-                            <small class="text-muted">{{ $product->code }}</small>
-                        </div>
-                        <div class="text-end">
-                            <div class="fw-bold text-danger">{{ number_format($product->stock) }}</div>
-                            <small class="text-muted">Min: {{ number_format($product->minimum_stock) }}</small>
-                        </div>
-                    </div>
-                    @endforeach
-                    @else
-                    <div class="py-4 text-center">
-                        <i class="mb-3 fas fa-check-circle fa-3x text-success"></i>
-                        <p class="text-muted">Semua produk memiliki stok yang cukup</p>
-                    </div>
-                    @endif
-                </div>
-            </div>
-
-            <!-- Movement Statistics -->
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="mb-0 fw-bold">Statistik Pergerakan</h5>
-                </div>
-                <div class="card-body">
-                    <div class="text-center row">
-                        <div class="col-6 border-end">
-                            <div class="mb-0 h4 text-success">{{ number_format($movementStats['stock_in']) }}</div>
-                            <small class="text-muted">Stok Masuk</small>
-                        </div>
-                        <div class="col-6">
-                            <div class="mb-0 h4 text-danger">{{ number_format($movementStats['stock_out']) }}</div>
-                            <small class="text-muted">Stok Keluar</small>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="text-center row">
-                        <div class="col-6 border-end">
-                            <div class="mb-0 h6 text-warning">{{ number_format($movementStats['adjustments']) }}</div>
-                            <small class="text-muted">Penyesuaian</small>
-                        </div>
-                        <div class="col-6">
-                            <div class="mb-0 h6 text-info">{{ number_format($movementStats['opnames']) }}</div>
-                            <small class="text-muted">Stock Opname</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
+
+@push('addon-script')
+    <script>
+        $(document).ready(function() {
+            $('#kepala-desa-table').DataTable();
+        });
+    </script>
+@endpush

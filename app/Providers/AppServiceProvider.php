@@ -91,6 +91,10 @@ class AppServiceProvider extends ServiceProvider
             // Purchase
             PurchaseServiceInterface::class => PurchaseService::class,
             PurchaseRepositoryInterface::class => PurchaseRepository::class,
+
+            // Kepala Desa
+            \App\Services\Interface\KepalaDesaServiceInterface::class => \App\Services\KepalaDesaService::class,
+            \App\Repositories\Interface\KepalaDesaRepositoryInterface::class => \App\Repositories\KepalaDesaRepository::class,
         ];
 
         foreach ($bindings as $interface => $implementation) {
