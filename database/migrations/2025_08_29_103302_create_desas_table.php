@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->text('alamat_kantor')->nullable();
             $table->foreignId('kepala_desa_id')
                 ->nullable()
-                ->constrained('kepala_desa')
+                ->constrained('kepala_desas')
                 ->nullOnDelete()
                 ->cascadeOnUpdate();
             $table->string('email', 100)->nullable();
@@ -36,6 +36,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('desa');
+        Schema::dropIfExists('desas');
     }
 };
