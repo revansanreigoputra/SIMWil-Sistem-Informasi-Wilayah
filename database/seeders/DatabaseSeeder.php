@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             SettingSeeder::class,
             ProductSeeder::class,
+            KepalaDesaSeeder::class,
+            DesaSeeder::class,
         ]);
     }
 }
