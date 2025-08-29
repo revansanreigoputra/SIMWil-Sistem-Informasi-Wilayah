@@ -25,6 +25,10 @@ class KepalaDesa extends Model
         'foto',
     ];
 
+    protected $casts = [
+        'tanggal_lahir' => 'date',
+    ];
+
     /**
      * Relasi ke Desa (satu kepala desa untuk satu desa).
      */
