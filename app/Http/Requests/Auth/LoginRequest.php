@@ -29,6 +29,7 @@ class LoginRequest extends FormRequest
         return [
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
+            'desa_id' => ['required', 'exists:desas,id'],
         ];
     }
 
@@ -48,6 +49,9 @@ class LoginRequest extends FormRequest
                 'email' => trans('auth.failed'),
             ]);
         }
+
+        // Simpan desa_id ke session
+        session(['desa_id' => $this->input('desa_id')]);
 
         RateLimiter::clear($this->throttleKey());
     }

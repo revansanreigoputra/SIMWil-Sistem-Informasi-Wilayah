@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
@@ -18,7 +19,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
-    return Auth::check() ? redirect()->route('dashboard') : view('auth.login');
+    return Auth::check()
+        ? redirect()->route('dashboard')
+        : app(AuthenticatedSessionController::class)->create();
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

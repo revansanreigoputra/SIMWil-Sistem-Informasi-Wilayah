@@ -23,6 +23,7 @@ class User extends Authenticatable
         'password',
         'phone',
         'address',
+        'desa_id', // tambahkan ini
     ];
 
     /**
@@ -46,5 +47,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class, 'desa_id');
     }
 }

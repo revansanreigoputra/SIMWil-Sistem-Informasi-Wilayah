@@ -7,6 +7,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use App\Models\Desa;
 
 class RoleSeeder extends Seeder
 {
@@ -25,11 +26,15 @@ class RoleSeeder extends Seeder
 
             $email = $roleName . '@mail.com';
 
+            // Ambil id desa pertama jika ada, null jika tidak ada
+            $desa_id = $roleName === 'admindesa' ? Desa::first()?->id : null;
+
             $user = User::firstOrCreate(
                 ['email' => $email],
                 [
                     'name' => ucfirst(str_replace('_', ' ', $roleName)),
                     'password' => Hash::make('password'),
+                    'desa_id' => $desa_id,
                 ]
             );
 

@@ -15,6 +15,16 @@
                         <input type="email" name="email" class="form-control" placeholder="your@email.com" required>
                     </div>
 
+                    <div class="mb-3">
+                        <label class="form-label">Desa</label>
+                        <select name="desa_id" class="form-control" required>
+                            <option value="">Pilih Desa</option>
+                            @foreach($desas as $desa)
+                                <option value="{{ $desa->id }}">{{ $desa->nama_desa }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
                     <div class="mb-2">
                         <label class="form-label">Password</label>
                         <div class="input-group input-group-flat">

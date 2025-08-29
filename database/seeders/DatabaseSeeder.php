@@ -14,12 +14,12 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            KepalaDesaSeeder::class,
+            DesaSeeder::class,
             RoleSeeder::class,
             PermissionSeeder::class,
             SettingSeeder::class,
             ProductSeeder::class,
-            KepalaDesaSeeder::class,
-            DesaSeeder::class,
         ]);
     }
 }

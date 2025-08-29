@@ -35,6 +35,10 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignId('desa_id')->nullable()->constrained('desas')->nullOnDelete()->after('id');
+        });
     }
 
     /**
@@ -42,6 +46,11 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign(['desa_id']);
+            $table->dropColumn('desa_id');
+        });
+
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
