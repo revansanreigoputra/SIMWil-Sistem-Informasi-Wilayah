@@ -15,9 +15,10 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
-    return auth()->check() ? redirect()->route('dashboard') : view('auth.login');
+    return Auth::check() ? redirect()->route('dashboard') : view('auth.login');
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
