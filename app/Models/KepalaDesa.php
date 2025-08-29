@@ -12,6 +12,7 @@ class KepalaDesa extends Model
     protected $table = 'kepala_desas';
 
     protected $fillable = [
+        'desa_id',
         'nama_kepala_desa',
         'tanggal_lahir',
         'jenis_kelamin',
@@ -34,6 +35,6 @@ class KepalaDesa extends Model
      */
     public function desa()
     {
-        return $this->hasOne(Desa::class, 'kepala_desa_id');
+        return $this->belongsTo(Desa::class);
     }
 }

@@ -15,7 +15,6 @@ class Desa extends Model
         'kode_desa',
         'nama_desa',
         'alamat_kantor',
-        'kepala_desa_id',
         'email',
         'telepon',
         'website',
@@ -27,8 +26,8 @@ class Desa extends Model
     /**
      * Relasi ke Kepala Desa (satu desa punya satu kepala desa).
      */
-    public function kepalaDesa()
+    public function kepalaDesas()
     {
-        return $this->belongsTo(KepalaDesa::class, 'kepala_desa_id');
+        return $this->hasMany(KepalaDesa::class);
     }
 }

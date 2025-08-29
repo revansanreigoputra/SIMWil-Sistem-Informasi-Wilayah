@@ -15,11 +15,6 @@ return new class extends Migration {
             $table->string('kode_desa', 20)->unique();
             $table->string('nama_desa', 100);
             $table->text('alamat_kantor')->nullable();
-            $table->foreignId('kepala_desa_id')
-                ->nullable()
-                ->constrained('kepala_desas')
-                ->nullOnDelete()
-                ->cascadeOnUpdate();
             $table->string('email', 100)->nullable();
             $table->string('telepon', 20)->nullable();
             $table->string('website', 150)->nullable();

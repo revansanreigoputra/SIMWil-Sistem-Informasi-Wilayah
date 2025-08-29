@@ -19,6 +19,7 @@ final class KepalaDesaSeeder extends Seeder
             'tanggal_lahir' => '1970-05-12',
             'jenis_kelamin' => 'L',
             'golongan_darah' => 'O',
+            'desa_id' => 1,
             'kontak' => '081234567890',
             'alamat' => 'Jl. Merdeka No. 1, Desa Sukamaju',
             'masa_jabatan' => '2020-2026',
