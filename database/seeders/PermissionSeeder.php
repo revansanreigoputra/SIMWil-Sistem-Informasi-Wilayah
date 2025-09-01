@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Jabatan;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
@@ -98,6 +99,12 @@ class PermissionSeeder extends Seeder
             'desa.store',
             'desa.update',
             'desa.delete',
+            // jabatan permissions
+            'jabatan.view',
+            'jabatan.create',
+            'jabatan.store',
+            'jabatan.update',
+            'jabatan.delete',
         ];
 
         foreach ($permissions as $permission) {
