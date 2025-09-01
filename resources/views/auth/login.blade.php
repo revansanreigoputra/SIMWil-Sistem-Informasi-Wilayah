@@ -52,6 +52,10 @@
                     </div>
                 </div>
             </form>
+
+            <div class="text-center text-muted mt-3">
+                <a href="{{ route('password.request') }}">Lupa password?</a>
+            </div>
         </div>
     </div>
 
