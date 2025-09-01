@@ -7,13 +7,13 @@
 
 <style>
     :root {
-        --tblr-primary: #00a63e;
+        --tblr-primary: #000ba6;
         --tblr-font-sans-serif: "Inter";
     }
 
     .dropdown-item.active,
     .dropdown-item:active {
-        background-color: #00a63e !important;
+        background-color: #000ba6 !important;
         color: white !important;
     }
 
