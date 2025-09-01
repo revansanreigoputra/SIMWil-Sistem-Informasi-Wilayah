@@ -12,22 +12,39 @@ class Desa extends Model
     protected $table = 'desas';
 
     protected $fillable = [
-        'kode_desa',
+        'kecamatan_id',
         'nama_desa',
-        'alamat_kantor',
-        'email',
-        'telepon',
-        'website',
-        'logo',
-        'latitude',
-        'longitude',
+        'status',
+        'kelurahan_terluar',
+        'tipologi',
+        'luas',
+        'bujur',
+        'lintang',
+        'ketinggian',
+        'kode_pum',
     ];
 
     /**
-     * Relasi ke Kepala Desa (satu desa punya satu kepala desa).
+     * Relasi ke Kecamatan.
      */
-    public function kepalaDesas()
+    public function kecamatan()
     {
-        return $this->hasMany(KepalaDesa::class);
+        return $this->belongsTo(Kecamatan::class);
+    }
+
+    /**
+     * Relasi ke Perangkat Desa (satu desa punya banyak perangkat desa).
+     */
+    public function perangkatDesas()
+    {
+        return $this->hasMany(PerangkatDesa::class);
+    }
+
+    /**
+     * Relasi ke Jabatan (satu desa punya banyak jabatan).
+     */
+    public function jabatans()
+    {
+        return $this->hasMany(Jabatan::class);
     }
 }

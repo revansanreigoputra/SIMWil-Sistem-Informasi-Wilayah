@@ -2,18 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class KepalaDesa extends Model
+class PerangkatDesa extends Model
 {
     use HasFactory;
 
-    protected $table = 'kepala_desas';
+    protected $table = 'perangkat_desas';
 
     protected $fillable = [
         'desa_id',
-        'nama_kepala_desa',
+        'jabatan_id',
+        'nama',
         'tanggal_lahir',
         'jenis_kelamin',
         'golongan_darah',
@@ -31,10 +32,18 @@ class KepalaDesa extends Model
     ];
 
     /**
-     * Relasi ke Desa (satu kepala desa untuk satu desa).
+     * Relasi ke Desa (satu perangkat desa untuk satu desa).
      */
     public function desa()
     {
         return $this->belongsTo(Desa::class);
     }
+    public function jabatan()
+    {
+        return $this->belongsTo(Jabatan::class);
+    }
+
 }
+
+
+

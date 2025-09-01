@@ -10,13 +10,17 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('kepala_desas', function (Blueprint $table) {
+        Schema::create('perangkat_desas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('desa_id')
                 ->constrained('desas')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
-            $table->string('nama_kepala_desa', 100);
+            $table->foreignId('jabatan_id')
+                ->constrained('jabatans')
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
+            $table->string('nama', 100);
             $table->date('tanggal_lahir')->nullable();
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->string('golongan_darah', 3)->nullable();
@@ -29,15 +33,13 @@ return new class extends Migration {
             $table->string('foto', 255)->nullable();
             $table->timestamps();
         });
-
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('kepala_desas');
+        Schema::dropIfExists('perangkat_desas');
     }
 };

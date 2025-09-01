@@ -15,27 +15,28 @@ final class DesaSeeder extends Seeder
     public function run(): void
     {
         Desa::create([
-            'kode_desa' => 'DS001',
+            'kecamatan_id' => 1,
             'nama_desa' => 'Desa Sukamaju',
-            'alamat_kantor' => 'Jl. Raya Sukamaju No. 5',
-            'email' => 'desa@sukamaju.id',
-            'telepon' => '0219876543',
-            'website' => 'https://sukamaju.desa.id',
-            'logo' => null,
-            'latitude' => -6.20000000,
-            'longitude' => 106.81666667,
+            'status' => 'desa',
+            'kelurahan_terluar' => null,
+            'tipologi' => 'Perdesaan',
+            'luas' => 1200,
+            'bujur' => '-6.20000000',
+            'lintang' => '106.81666667',
+            'ketinggian' => 50,
+            'kode_pum' => 'DS001',
         ]);
-
         Desa::create([
-            'kode_desa' => 'DS002',
+            'kecamatan_id' => 2,
             'nama_desa' => 'Desa Mulyajaya',
-            'alamat_kantor' => 'Jl. Mulyajaya No. 10',
-            'email' => 'desa@mulyajaya.id',
-            'telepon' => '0211234567',
-            'website' => 'https://mulyajaya.desa.id',
-            'logo' => null,
-            'latitude' => -6.21000000,
-            'longitude' => 106.82666667,
+            'status' => 'desa',
+            'kelurahan_terluar' => null,
+            'tipologi' => 'Perdesaan',
+            'luas' => 900,
+            'bujur' => '-6.21000000',
+            'lintang' => '106.82666667',
+            'ketinggian' => 60,
+            'kode_pum' => 'DS002',
         ]);
     }
 }
