@@ -37,12 +37,13 @@
                         <span class="nav-link-title"> Dashboard </span>
                     </a>
                 </li>
-                {{-- Kepala Desa --}}
-                @can('kepala-desa.view')
-                    <li class="nav-item {{ request()->is('kepala-desa*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('kepala-desa.index') }}">
+                
+                {{-- Kecamatan --}}
+                @can('kecamatan.view')
+                    <li class="nav-item {{ request()->is('kecamatan*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('kecamatan.index') }}">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                <!-- Icon Kepala Desa -->
+                                <!-- Icon Kecamatan -->
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round"
@@ -54,7 +55,7 @@
                                         d="M17.8 20.817l-2.172 1.138a.392 .392 0 0 1 -.568 -.41l.415 -2.411l-1.757 -1.707a.389 .389 0 0 1 .217 -.665l2.428 -.352l1.086 -2.193a.392 .392 0 0 1 .702 0l1.086 2.193l2.428 .352a.39 .39 0 0 1 .217 .665l-1.757 1.707l.414 2.41a.39 .39 0 0 1 -.567 .411l-2.172 -1.138z" />
                                 </svg>
                             </span>
-                            <span class="nav-link-title"> Kepala Desa </span>
+                            <span class="nav-link-title"> Kecamatan </span>
                         </a>
                     </li>
                 @endcan

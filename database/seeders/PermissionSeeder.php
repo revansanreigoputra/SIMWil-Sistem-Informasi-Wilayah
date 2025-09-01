@@ -80,12 +80,12 @@ class PermissionSeeder extends Seeder
             // Settings permissions
             'setting.view',
             'setting.update',
-            // Kepala Desa permissions
-            'kepala-desa.view',
-            'kepala-desa.create',
-            'kepala-desa.store',
-            'kepala-desa.update',
-            'kepala-desa.delete',
+            // Kecamatan permissions
+            'kecamatan.view',
+            'kecamatan.create',
+            'kecamatan.store',
+            'kecamatan.update',
+            'kecamatan.delete',
         ];
 
         foreach ($permissions as $permission) {
