@@ -6,7 +6,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KecamatanController;
-use App\Http\Controllers\KepalaDesaController;
+use App\Http\Controllers\PerangkatDesaController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -174,5 +174,16 @@ Route::middleware(['auth', 'permission:jabatan.view'])->prefix('jabatan')->group
 
 // Desa routes
 Route::resource('desa', DesaController::class);
+
+// Perangkat Desa routes
+Route::middleware(['auth', 'permission:perangkat_desa.view'])->prefix('perangkat_desa')->group(function () {
+    Route::get('/', [PerangkatDesaController::class, 'index'])->name('perangkat_desa.index');
+    Route::get('/create', [PerangkatDesaController::class, 'create'])->middleware('permission:perangkat_desa.store')->name('perangkat_desa.create');
+    Route::post('/', [PerangkatDesaController::class, 'store'])->middleware('permission:perangkat_desa.store')->name('perangkat_desa.store');
+    Route::get('/{id}', [PerangkatDesaController::class, 'show'])->name('perangkat_desa.show');
+    Route::get('/{id}/edit', [PerangkatDesaController::class, 'edit'])->middleware('permission:perangkat_desa.update')->name('perangkat_desa.edit');
+    Route::put('/{id}', [PerangkatDesaController::class, 'update'])->middleware('permission:perangkat_desa.update')->name('perangkat_desa.update');
+    Route::delete('/{id}', [PerangkatDesaController::class, 'destroy'])->middleware('permission:perangkat_desa.delete')->name('perangkat_desa.destroy');
+});
 
 require __DIR__ . '/auth.php';

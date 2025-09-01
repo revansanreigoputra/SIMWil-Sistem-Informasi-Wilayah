@@ -105,6 +105,12 @@ class PermissionSeeder extends Seeder
             'jabatan.store',
             'jabatan.update',
             'jabatan.delete',
+            // perangkat desa permissions
+            'perangkat_desa.view',
+            'perangkat_desa.create',
+            'perangkat_desa.store',
+            'perangkat_desa.update',
+            'perangkat_desa.delete',
         ];
 
         foreach ($permissions as $permission) {

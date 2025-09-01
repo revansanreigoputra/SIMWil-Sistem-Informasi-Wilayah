@@ -21,10 +21,10 @@ class Kecamatan extends Model
     }
 
     /**
-     * Relasi ke Jabatan (satu kecamatan punya banyak jabatan).
+     * Relasi ke Jabatan melalui Desa (satu kecamatan punya banyak jabatan melalui desa).
      */
     public function jabatans()
     {
-        return $this->hasMany(Jabatan::class);
+        return $this->hasManyThrough(Jabatan::class, Desa::class);
     }
 }
