@@ -1,23 +1,24 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\KepalaDesaController;
-use App\Http\Controllers\PurchaseController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DesaController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\SalesController;
-use App\Http\Controllers\SettingController;
-use App\Http\Controllers\StockController;
-use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\SalesController;
+use App\Http\Controllers\StockController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KepalaDesaController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 Route::get('/', function () {
     return Auth::check()
@@ -160,5 +161,8 @@ Route::middleware(['auth', 'permission:kepala-desa.view'])->prefix('kepala-desa'
     Route::put('/{id}', [KepalaDesaController::class, 'update'])->middleware('permission:kepala-desa.update')->name('kepala-desa.update');
     Route::delete('/{id}', [KepalaDesaController::class, 'destroy'])->middleware('permission:kepala-desa.delete')->name('kepala-desa.destroy');
 });
+
+// Desa routes
+Route::resource('desa', DesaController::class);
 
 require __DIR__ . '/auth.php';

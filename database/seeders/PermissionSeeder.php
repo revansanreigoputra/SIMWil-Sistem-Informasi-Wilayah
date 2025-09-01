@@ -86,6 +86,12 @@ class PermissionSeeder extends Seeder
             'kepala-desa.store',
             'kepala-desa.update',
             'kepala-desa.delete',
+            // desa permissions
+            'desa.view',
+            'desa.create',
+            'desa.store',
+            'desa.update',
+            'desa.delete',
         ];
 
         foreach ($permissions as $permission) {
