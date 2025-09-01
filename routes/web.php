@@ -1,25 +1,26 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DesaController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\UnitController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\SalesController;
-use App\Http\Controllers\StockController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SettingController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\PurchaseController;
-use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KecamatanController;
 use App\Http\Controllers\KepalaDesaController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\SalesController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\StockController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\UnitController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\DesaController;
 
 Route::get('/', function () {
     return Auth::check()
@@ -152,6 +153,7 @@ Route::middleware(['auth'])->prefix('pengaturan')->group(function () {
     Route::put('/', [SettingController::class, 'update'])->name('settings.update');
 });
 
+// Kecamatan routes
 Route::middleware(['auth', 'permission:kecamatan.view'])->prefix('kecamatan')->group(function () {
     Route::get('/', [KecamatanController::class, 'index'])->name('kecamatan.index');
     Route::get('/create', [KecamatanController::class, 'create'])->middleware('permission:kecamatan.create')->name('kecamatan.create');
@@ -160,6 +162,14 @@ Route::middleware(['auth', 'permission:kecamatan.view'])->prefix('kecamatan')->g
     Route::get('/{kecamatan}/edit', [KecamatanController::class, 'edit'])->middleware('permission:kecamatan.update')->name('kecamatan.edit');
     Route::put('/{kecamatan}', [KecamatanController::class, 'update'])->middleware('permission:kecamatan.update')->name('kecamatan.update');
     Route::delete('/{kecamatan}', [KecamatanController::class, 'destroy'])->middleware('permission:kecamatan.delete')->name('kecamatan.destroy');
+});
+
+// Jabatan routes
+Route::middleware(['auth', 'permission:jabatan.view'])->prefix('jabatan')->group(function () {
+    Route::get('/', [JabatanController::class, 'index'])->name('jabatan.index');
+    Route::post('/', [JabatanController::class, 'store'])->middleware('permission:jabatan.store')->name('jabatan.store');
+    Route::put('/{jabatan}', [JabatanController::class, 'update'])->middleware('permission:jabatan.update')->name('jabatan.update');
+    Route::delete('/{jabatan}', [JabatanController::class, 'destroy'])->middleware('permission:jabatan.delete')->name('jabatan.destroy');
 });
 
 // Desa routes
