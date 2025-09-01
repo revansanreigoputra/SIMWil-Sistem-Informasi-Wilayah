@@ -1,23 +1,25 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\KepalaDesaController;
-use App\Http\Controllers\PurchaseController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DesaController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\SalesController;
-use App\Http\Controllers\SettingController;
-use App\Http\Controllers\StockController;
-use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\SalesController;
+use App\Http\Controllers\StockController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KecamatanController;
+use App\Http\Controllers\KepalaDesaController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 Route::get('/', function () {
     return Auth::check()
@@ -150,15 +152,17 @@ Route::middleware(['auth'])->prefix('pengaturan')->group(function () {
     Route::put('/', [SettingController::class, 'update'])->name('settings.update');
 });
 
-// Kepala Desa routes
-Route::middleware(['auth', 'permission:kepala-desa.view'])->prefix('kepala-desa')->group(function () {
-    Route::get('/', [KepalaDesaController::class, 'index'])->name('kepala-desa.index');
-    Route::get('/create', [KepalaDesaController::class, 'create'])->middleware('permission:kepala-desa.create')->name('kepala-desa.create');
-    Route::post('/', [KepalaDesaController::class, 'store'])->middleware('permission:kepala-desa.store')->name('kepala-desa.store');
-    Route::get('/{id}', [KepalaDesaController::class, 'show'])->name('kepala-desa.show');
-    Route::get('/{id}/edit', [KepalaDesaController::class, 'edit'])->middleware('permission:kepala-desa.update')->name('kepala-desa.edit');
-    Route::put('/{id}', [KepalaDesaController::class, 'update'])->middleware('permission:kepala-desa.update')->name('kepala-desa.update');
-    Route::delete('/{id}', [KepalaDesaController::class, 'destroy'])->middleware('permission:kepala-desa.delete')->name('kepala-desa.destroy');
+Route::middleware(['auth', 'permission:kecamatan.view'])->prefix('kecamatan')->group(function () {
+    Route::get('/', [KecamatanController::class, 'index'])->name('kecamatan.index');
+    Route::get('/create', [KecamatanController::class, 'create'])->middleware('permission:kecamatan.create')->name('kecamatan.create');
+    Route::post('/', [KecamatanController::class, 'store'])->middleware('permission:kecamatan.store')->name('kecamatan.store');
+    Route::get('/{kecamatan}', [KecamatanController::class, 'show'])->name('kecamatan.show');
+    Route::get('/{kecamatan}/edit', [KecamatanController::class, 'edit'])->middleware('permission:kecamatan.update')->name('kecamatan.edit');
+    Route::put('/{kecamatan}', [KecamatanController::class, 'update'])->middleware('permission:kecamatan.update')->name('kecamatan.update');
+    Route::delete('/{kecamatan}', [KecamatanController::class, 'destroy'])->middleware('permission:kecamatan.delete')->name('kecamatan.destroy');
 });
+
+// Desa routes
+Route::resource('desa', DesaController::class);
 
 require __DIR__ . '/auth.php';

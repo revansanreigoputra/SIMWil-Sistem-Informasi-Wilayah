@@ -1,10 +1,10 @@
 @extends('layouts.master')
 
-@section('title', 'Data Kepala Desa')
+@section('title', 'Data Kecamatan')
 
 @section('action')
-    @can('kepala-desa.create')
-        <a href="{{ route('kepala-desa.create') }}" class="btn btn-primary">Tambah Data</a>
+    @can('kecamatan.create')
+        <a href="{{ route('kecamatan.create') }}" class="btn btn-primary">Tambah Kecamatan</a>
     @endcan
 @endsection
 
@@ -12,81 +12,34 @@
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
-                <table id="kepala-desa-table" class="table table-striped">
+                <table id="kecamatan-table" class="table table-striped">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Foto</th>
-                            <th>Nama Kepala Desa</th>
-                            <th>Jenis Kelamin</th>
-                            <th>Kontak</th>
-                            <th>Masa Jabatan</th>
-                            <th>Alamat</th>
+                            <th>Nama Kecamatan</th>
+                            <th>Jumlah Desa</th>
+                            <th>Jumlah Jabatan</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($kepalaDesas as $kepalaDesa)
+                        @foreach ($kecamatans as $kecamatan)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>
-                                    @if ($kepalaDesa->foto)
-                                        <img src="{{ asset('storage/' . $kepalaDesa->foto) }}"
-                                            alt="{{ $kepalaDesa->nama_kepala_desa }}" class="rounded"
-                                            style="width: 50px; height: 50px; object-fit: cover;">
-                                    @else
-                                        <div class="rounded bg-secondary d-flex align-items-center justify-content-center"
-                                            style="width: 50px; height: 50px;">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round" class="text-white">
-                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                                <circle cx="12" cy="7" r="4"></circle>
-                                            </svg>
-                                        </div>
-                                    @endif
+                                    <p>{{ $kecamatan->nama_kecamatan }}</p>
                                 </td>
                                 <td>
-                                    <strong>{{ $kepalaDesa->nama_kepala_desa }}</strong>
-                                    @if ($kepalaDesa->tanggal_lahir)
-                                        <small class="text-muted d-block">Lahir:
-                                            {{ $kepalaDesa->tanggal_lahir->format('d/m/Y') }}</small>
-                                    @endif
+                                    <span class="badge bg-info">{{ $kecamatan->desas->count() }}</span>
                                 </td>
                                 <td>
-                                    <span
-                                        class="text-white badge 
-                                @if ($kepalaDesa->jenis_kelamin === 'L') bg-primary
-                                @else bg-pink @endif">
-                                        {{ $kepalaDesa->jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan' }}
-                                    </span>
+                                    <span class="badge bg-success">{{ $kecamatan->jabatans->count() }}</span>
                                 </td>
                                 <td>
-                                    @if ($kepalaDesa->kontak)
-                                        <span class="text-muted">{{ $kepalaDesa->kontak }}</span>
-                                    @else
-                                        <span class="text-muted">-</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($kepalaDesa->masa_jabatan)
-                                        <span class="text-muted">{{ $kepalaDesa->masa_jabatan }}</span>
-                                    @else
-                                        <span class="text-muted">-</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($kepalaDesa->alamat)
-                                        <span class="text-muted">{{ Str::limit($kepalaDesa->alamat, 50) }}</span>
-                                    @else
-                                        <span class="text-muted">-</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    @canany(['kepala-desa.view', 'kepala-desa.update', 'kepala-desa.delete'])
+                                    @canany(['kecamatan.view', 'kecamatan.update', 'kecamatan.delete'])
                                         <div class="d-flex gap-1">
-                                            @can('kepala-desa.view')
-                                                <a href="{{ route('kepala-desa.show', $kepalaDesa->id) }}"
+                                            @can('kecamatan.view')
+                                                <a href="{{ route('kecamatan.show', $kecamatan->id) }}"
                                                     class="btn btn-sm btn-info">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -97,8 +50,8 @@
                                                     Detail
                                                 </a>
                                             @endcan
-                                            @can('kepala-desa.update')
-                                                <a href="{{ route('kepala-desa.edit', $kepalaDesa->id) }}"
+                                            @can('kecamatan.update')
+                                                <a href="{{ route('kecamatan.edit', $kecamatan->id) }}"
                                                     class="btn btn-sm btn-warning">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -111,9 +64,9 @@
                                                     Edit
                                                 </a>
                                             @endcan
-                                            @can('kepala-desa.delete')
+                                            @can('kecamatan.delete')
                                                 <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                                    data-bs-target="#delete-kepala-desa-{{ $kepalaDesa->id }}">
+                                                    data-bs-target="#delete-kecamatan-{{ $kecamatan->id }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                         stroke-linecap="round" stroke-linejoin="round">
@@ -129,25 +82,25 @@
                                         </div>
 
                                         <!-- Modal -->
-                                        <div class="modal fade" id="delete-kepala-desa-{{ $kepalaDesa->id }}" tabindex="-1"
+                                        <div class="modal fade" id="delete-kecamatan-{{ $kecamatan->id }}" tabindex="-1"
                                             aria-labelledby="deleteModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="deleteModalLabel">Hapus Kepala Desa?</h5>
+                                                        <h5 class="modal-title" id="deleteModalLabel">Hapus Kecamatan?</h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <p>Data kepala desa
-                                                            <strong>{{ $kepalaDesa->nama_kepala_desa }}</strong> yang dihapus
+                                                        <p>Data kecamatan
+                                                            <strong>{{ $kecamatan->nama_kecamatan }}</strong> yang dihapus
                                                             tidak bisa dikembalikan.</p>
                                                         <p>Yakin ingin menghapus data ini?</p>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
                                                             data-bs-dismiss="modal">Batal</button>
-                                                        <form action="{{ route('kepala-desa.destroy', $kepalaDesa->id) }}"
+                                                        <form action="{{ route('kecamatan.destroy', $kecamatan->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
@@ -173,7 +126,7 @@
 @push('addon-script')
     <script>
         $(document).ready(function() {
-            $('#kepala-desa-table').DataTable();
+            $('#kecamatan-table').DataTable();
         });
     </script>
 @endpush
