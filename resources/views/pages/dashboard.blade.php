@@ -9,7 +9,7 @@
             <div class="border-0 shadow-sm card h-100">
                 <div class="text-center card-body">
                     <div class="mb-2">
-                        <i class="bi bi-box-seam" style="font-size:2rem;color:#00A63E;"></i>
+                        <i class="bi bi-box-seam" style="font-size:2rem;color:#000ba6;"></i>
                     </div>
                     <h5 class="mb-1 card-title">Total Produk</h5>
                     <h2 class="fw-bold">{{ $totalProducts }}</h2>
@@ -20,7 +20,7 @@
             <div class="border-0 shadow-sm card h-100">
                 <div class="text-center card-body">
                     <div class="mb-2">
-                        <i class="bi bi-people" style="font-size:2rem;color:#00A63E;"></i>
+                        <i class="bi bi-people" style="font-size:2rem;color:#000ba6;"></i>
                     </div>
                     <h5 class="mb-1 card-title">Total Pelanggan</h5>
                     <h2 class="fw-bold">{{ $totalCustomers }}</h2>
@@ -31,7 +31,7 @@
             <div class="border-0 shadow-sm card h-100">
                 <div class="text-center card-body">
                     <div class="mb-2">
-                        <i class="bi bi-cash-stack" style="font-size:2rem;color:#00A63E;"></i>
+                        <i class="bi bi-cash-stack" style="font-size:2rem;color:#000ba6;"></i>
                     </div>
                     <h5 class="mb-1 card-title">Pendapatan Hari Ini</h5>
                     <h2 class="fw-bold">Rp {{ number_format($todayRevenue, 0, ',', '.') }}</h2>
