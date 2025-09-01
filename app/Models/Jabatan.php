@@ -11,7 +11,6 @@ class Jabatan extends Model
     protected $fillable = [
         'nama_jabatan',
         'desa_id',
-        'kecamatan_id',
     ];
 
     /**
@@ -21,16 +20,12 @@ class Jabatan extends Model
     {
         return $this->belongsTo(Desa::class);
     }
+
+    /**
+     * Relasi ke Perangkat Desa.
+     */
     public function perangkatDesa()
     {
         return $this->hasMany(PerangkatDesa::class);
-    }
-
-    /**
-     * Relasi ke Kecamatan.
-     */
-    public function kecamatan()
-    {
-        return $this->belongsTo(Kecamatan::class);
     }
 }

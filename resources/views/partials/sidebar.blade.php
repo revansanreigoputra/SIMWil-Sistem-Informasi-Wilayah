@@ -43,39 +43,80 @@
                         <a class="nav-link" href="{{ route('kecamatan.index') }}">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
                                 <!-- Icon Kecamatan -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-user-star">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="icon icon-tabler icon-tabler-building-townhall" width="24" height="24"
+                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                    stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-                                    <path d="M6 21v-2a4 4 0 0 1 4 -4h.5" />
-                                    <path
-                                        d="M17.8 20.817l-2.172 1.138a.392 .392 0 0 1 -.568 -.41l.415 -2.411l-1.757 -1.707a.389 .389 0 0 1 .217 -.665l2.428 -.352l1.086 -2.193a.392 .392 0 0 1 .702 0l1.086 2.193l2.428 .352a.39 .39 0 0 1 .217 .665l-1.757 1.707l.414 2.41a.39 .39 0 0 1 -.567 .411l-2.172 -1.138z" />
+                                    <path d="M10 12h4v8h-4z" />
+                                    <path d="M12 6l-8 6h16z" />
+                                    <path d="M4 12v8h16v-8" />
                                 </svg>
                             </span>
                             <span class="nav-link-title"> Kecamatan </span>
                         </a>
                     </li>
                 @endcan
+
                 {{-- Kepala Desa --}}
                 @can('desa.view')
                     <li class="nav-item {{ request()->is('desa*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('desa.index') }}">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
                                 <!-- Icon Kecamatan -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-user-star">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="icon icon-tabler icon-tabler-building-community" width="24" height="24"
+                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M3 21v-12l9 -4l9 4v12" />
+                                    <path d="M13 13h4v8h-4z" />
+                                    <path d="M7 13h4v8h-4z" />
+                                </svg>
+                            </span>
+                            <span class="nav-link-title"> Desa </span>
+                        </a>
+                    </li>
+                @endcan
+
+                {{-- Jabatan --}}
+                @can('jabatan.view')
+                    <li class="nav-item {{ request()->is('jabatan*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('jabatan.index') }}">
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <!-- Icon Jabatan -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-star"
+                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                     <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
                                     <path d="M6 21v-2a4 4 0 0 1 4 -4h.5" />
                                     <path
-                                        d="M17.8 20.817l-2.172 1.138a.392 .392 0 0 1 -.568 -.41l.415 -2.411l-1.757 -1.707a.389 .389 0 0 1 .217 -.665l2.428 -.352l1.086 -2.193a.392 .392 0 0 1 .702 0l1.086 2.193l2.428 .352a.39 .39 0 0 1 .217 .665l-1.757 1.707l.414 2.41a.39 .39 0 0 1 -.567 .411l-2.172 -1.138z" />
+                                        d="M17.8 20.817l-2.172 1.138a.392 .392 0 0 1 -.568 -.41l.415 -2.411l-1.757 -1.707a.389 .389 0 0 1 .217 -.665l2.428 -.352l1.086 -2.193a.392 .392 0 0 1 .702 0l1.086 2.193l2.428 .352a.39 .39 0 0 1 .217 .665l-1.757 1.707l.414 2.41a.39 .39 0 0 1 -.567 .411z" />
                                 </svg>
                             </span>
-                            <span class="nav-link-title"> Desa </span>
+                            <span class="nav-link-title"> Jabatan </span>
+                        </a>
+                    </li>
+                @endcan
+
+                {{-- Perangkat Desa --}}
+                @can('perangkat_desa.view')
+                    <li class="nav-item {{ request()->is('perangkat_desa*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('perangkat_desa.index') }}">
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <!-- Icon Perangkat Desa -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-star"
+                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                    <path d="M6 21v-2a4 4 0 0 1 4 -4h.5" />
+                                    <path
+                                        d="M17.8 20.817l-2.172 1.138a.392 .392 0 0 1 -.568 -.41l.415 -2.411l-1.757 -1.707a.389 .389 0 0 1 .217 -.665l2.428 -.352l1.086 -2.193a.392 .392 0 0 1 .702 0l1.086 2.193l2.428 .352a.39 .39 0 0 1 .217 .665l-1.757 1.707l.414 2.41a.39 .39 0 0 1 -.567 .411z" />
+                                </svg>
+                            </span>
+                            <span class="nav-link-title"> Perangkat Desa </span>
                         </a>
                     </li>
                 @endcan
@@ -149,9 +190,9 @@
                     <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="icon icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
                                 <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5"></path>
                                 <path d="M12 12l8 -4.5"></path>
                                 <path d="M12 12l0 9"></path>
@@ -199,9 +240,9 @@
                 <li class="nav-item {{ request()->is('pengaturan*') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('settings.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="icon icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
                                 <path
                                     d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 0 0 -1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
                                 </path>
