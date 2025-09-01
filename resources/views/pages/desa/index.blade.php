@@ -14,12 +14,9 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Kode PUM</th>
                             <th>Kecamatan</th>
                             <th>Nama Desa</th>
-                            <th>Status</th>
-                            <th>Tipologi</th>
-                            <th>Luas</th>
-                            <th>Kode PUM</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -27,13 +24,11 @@
                         @foreach ($desas as $desa)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
+                                <td>{{ $desa->kode_pum }}</td>
                                 <td>{{ $desa->kecamatan->nama_kecamatan ?? '-' }}</td>
                                 <td>{{ $desa->nama_desa }}</td>
-                                <td>{{ $desa->status }}</td>
-                                <td>{{ $desa->tipologi }}</td>
-                                <td>{{ $desa->luas }}</td>
-                                <td>{{ $desa->kode_pum }}</td>
                                 <td>
+                                    <a href="{{ route('desa.show', $desa->id) }}" class="btn btn-info btn-sm">Detail</a>
                                     <a href="{{ route('desa.edit', $desa->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                     <form action="{{ route('desa.destroy', $desa->id) }}" method="POST"
                                         style="display:inline;">
