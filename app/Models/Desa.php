@@ -40,11 +40,5 @@ class Desa extends Model
         return $this->hasMany(PerangkatDesa::class);
     }
 
-    /**
-     * Relasi ke Jabatan (satu desa punya banyak jabatan).
-     */
-    public function jabatans()
-    {
-        return $this->hasMany(Jabatan::class);
-    }
+
 }

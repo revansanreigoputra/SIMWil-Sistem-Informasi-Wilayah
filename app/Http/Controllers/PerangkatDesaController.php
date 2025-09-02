@@ -49,7 +49,7 @@ class PerangkatDesaController extends Controller
             'kontak' => 'nullable|string|max:20',
             'alamat' => 'nullable|string',
             'masa_jabatan' => 'nullable|string|max:100',
-            'nama_istri' => 'nullable|string|max:100',
+            'nama_pasangan' => 'nullable|string|max:100',
             'jumlah_anak' => 'nullable|integer|min:0',
             'sambutan' => 'nullable|string',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -59,6 +59,21 @@ class PerangkatDesaController extends Controller
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
+        }
+
+        // Check for duplicate desa_id, jabatan_id, and masa_jabatan
+        if ($request->masa_jabatan) {
+            $existing = DB::table('perangkat_desas')
+                ->where('desa_id', $request->desa_id)
+                ->where('jabatan_id', $request->jabatan_id)
+                ->where('masa_jabatan', $request->masa_jabatan)
+                ->first();
+
+            if ($existing) {
+                return redirect()->back()
+                    ->withErrors('Perangkat desa dengan desa, jabatan, dan masa jabatan yang sama sudah ada.')
+                    ->withInput();
+            }
         }
 
         DB::beginTransaction();
@@ -134,7 +149,7 @@ class PerangkatDesaController extends Controller
             'kontak' => 'nullable|string|max:20',
             'alamat' => 'nullable|string',
             'masa_jabatan' => 'nullable|string|max:100',
-            'nama_istri' => 'nullable|string|max:100',
+            'nama_pasangan' => 'nullable|string|max:100',
             'jumlah_anak' => 'nullable|integer|min:0',
             'sambutan' => 'nullable|string',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -150,6 +165,22 @@ class PerangkatDesaController extends Controller
 
         if (!$perangkatDesa) {
             return redirect()->route('perangkat_desa.index')->withErrors('Perangkat Desa tidak ditemukan.');
+        }
+
+        // Check for duplicate desa_id, jabatan_id, and masa_jabatan (exclude current record)
+        if ($request->masa_jabatan) {
+            $existing = DB::table('perangkat_desas')
+                ->where('desa_id', $request->desa_id)
+                ->where('jabatan_id', $request->jabatan_id)
+                ->where('masa_jabatan', $request->masa_jabatan)
+                ->where('id', '!=', $id)
+                ->first();
+
+            if ($existing) {
+                return redirect()->back()
+                    ->withErrors('Perangkat desa dengan desa, jabatan, dan masa jabatan yang sama sudah ada.')
+                    ->withInput();
+            }
         }
 
         DB::beginTransaction();
@@ -201,5 +232,36 @@ class PerangkatDesaController extends Controller
         } catch (\Throwable $th) {
             return redirect()->back()->withErrors('Gagal menghapus perangkat desa: ' . $th->getMessage());
         }
+    }
+
+    public function checkDuplicate(Request $request)
+    {
+        $desa_id = $request->input('desa_id');
+        $jabatan_id = $request->input('jabatan_id');
+        $masa_jabatan = $request->input('masa_jabatan');
+        $exclude_id = $request->input('exclude_id'); // For edit mode
+
+        if (!$desa_id || !$jabatan_id || !$masa_jabatan) {
+            return response()->json([
+                'duplicate' => false,
+                'message' => ''
+            ]);
+        }
+
+        $query = DB::table('perangkat_desas')
+            ->where('desa_id', $desa_id)
+            ->where('jabatan_id', $jabatan_id)
+            ->where('masa_jabatan', $masa_jabatan);
+
+        if ($exclude_id) {
+            $query->where('id', '!=', $exclude_id);
+        }
+
+        $exists = $query->exists();
+
+        return response()->json([
+            'duplicate' => $exists,
+            'message' => $exists ? 'Perangkat desa dengan desa, jabatan, dan masa jabatan yang sama sudah ada.' : ''
+        ]);
     }
 }

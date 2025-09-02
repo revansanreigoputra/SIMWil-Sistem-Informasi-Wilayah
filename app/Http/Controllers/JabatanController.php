@@ -14,9 +14,8 @@ class JabatanController extends Controller
      */
     public function index()
     {
-        $jabatans = Jabatan::with(['desa'])->paginate(10);
-        $desas = Desa::all();
-        return view('pages.jabatan.index', compact('jabatans', 'desas'));
+        $jabatans = Jabatan::paginate(10);
+        return view('pages.jabatan.index', compact('jabatans'));
     }
 
     /**
@@ -26,12 +25,11 @@ class JabatanController extends Controller
     {
         $request->validate([
             'nama_jabatan' => 'required|string|max:255',
-            'desa_id' => 'nullable|exists:desas,id',
         ]);
 
         DB::beginTransaction();
         try {
-            Jabatan::create($request->only(['nama_jabatan', 'desa_id']));
+            Jabatan::create($request->only(['nama_jabatan']));
 
             DB::commit();
             return redirect()->route('jabatan.index')->withSuccess('Jabatan berhasil dibuat.');
@@ -48,12 +46,11 @@ class JabatanController extends Controller
     {
         $request->validate([
             'nama_jabatan' => 'required|string|max:255',
-            'desa_id' => 'nullable|exists:desas,id',
         ]);
 
         DB::beginTransaction();
         try {
-            $jabatan->update($request->only(['nama_jabatan', 'desa_id']));
+            $jabatan->update($request->only(['nama_jabatan']));
 
             DB::commit();
             return redirect()->route('jabatan.index')->withSuccess('Jabatan berhasil diperbaharui.');

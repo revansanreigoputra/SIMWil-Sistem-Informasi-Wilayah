@@ -38,12 +38,6 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label text-muted">Jumlah Jabatan</label>
-                                <p class="fw-semibold">{{ $kecamatan->jabatans->count() }}</p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
                                 <label class="form-label text-muted">Dibuat Pada</label>
                                 <p class="fw-semibold">{{ $kecamatan->created_at->format('d F Y H:i') }}</p>
                             </div>
@@ -86,37 +80,7 @@
         </div>
     @endif
 
-    @if ($kecamatan->jabatans->count() > 0)
-        <div class="row mt-3">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title">Daftar Jabatan</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama Jabatan</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($kecamatan->jabatans as $jabatan)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $jabatan->nama_jabatan }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
+
 
     <!-- Delete Modal -->
     @can('kecamatan.delete')

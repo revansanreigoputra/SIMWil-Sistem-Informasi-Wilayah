@@ -13,7 +13,7 @@ class KecamatanController extends Controller
      */
     public function index()
     {
-        $kecamatans = Kecamatan::with(['desas', 'jabatans'])->paginate(10);
+        $kecamatans = Kecamatan::with(['desas'])->paginate(10);
         return view('pages.kecamatan.index', compact('kecamatans'));
     }
 
@@ -51,7 +51,7 @@ class KecamatanController extends Controller
      */
     public function show(Kecamatan $kecamatan)
     {
-        $kecamatan->load(['desas', 'jabatans']);
+        $kecamatan->load(['desas']);
         return view('pages.kecamatan.show', compact('kecamatan'));
     }
 

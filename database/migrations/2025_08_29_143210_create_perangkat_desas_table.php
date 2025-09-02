@@ -27,7 +27,7 @@ return new class extends Migration {
             $table->string('kontak', 20)->nullable();
             $table->text('alamat')->nullable();
             $table->string('masa_jabatan', 100)->nullable();
-            $table->string('nama_istri', 100)->nullable();
+            $table->string('nama_pasangan', 100)->nullable();
             $table->integer('jumlah_anak')->default(0);
             $table->text('sambutan')->nullable();
             $table->string('foto', 255)->nullable();

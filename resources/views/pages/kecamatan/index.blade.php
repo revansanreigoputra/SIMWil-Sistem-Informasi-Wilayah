@@ -4,7 +4,7 @@
 
 @section('action')
     @can('kecamatan.create')
-        <a href="{{ route('kecamatan.create') }}" class="btn btn-primary">Tambah Kecamatan</a>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createKecamatanModal">Tambah Kecamatan</button>
     @endcan
 @endsection
 
@@ -15,32 +15,27 @@
                 <table id="kecamatan-table" class="table table-striped">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>Nama Kecamatan</th>
-                            <th>Jumlah Desa</th>
-                            <th>Jumlah Jabatan</th>
-                            <th>Aksi</th>
+                            <th class="text-center">No</th>
+                            <th class="text-center">Nama Kecamatan</th>
+                            <th class="text-center">Jumlah Desa</th>
+                            <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($kecamatans as $kecamatan)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>
+                                <td class="text-center">{{ $loop->iteration }}</td>
+                                <td class="text-center">
                                     <p>{{ $kecamatan->nama_kecamatan }}</p>
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     <span class="badge bg-info">{{ $kecamatan->desas->count() }}</span>
                                 </td>
                                 <td>
-                                    <span class="badge bg-success">{{ $kecamatan->jabatans->count() }}</span>
-                                </td>
-                                <td>
                                     @canany(['kecamatan.view', 'kecamatan.update', 'kecamatan.delete'])
-                                        <div class="d-flex gap-1">
+                                        <div class="d-flex gap-1 justify-content-center">
                                             @can('kecamatan.view')
-                                                <a href="{{ route('kecamatan.show', $kecamatan->id) }}"
-                                                    class="btn btn-sm btn-info">
+                                                <a href="{{ route('kecamatan.show', $kecamatan->id) }}" class="btn btn-sm btn-info">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                         stroke-linecap="round" stroke-linejoin="round">
@@ -51,8 +46,9 @@
                                                 </a>
                                             @endcan
                                             @can('kecamatan.update')
-                                                <a href="{{ route('kecamatan.edit', $kecamatan->id) }}"
-                                                    class="btn btn-sm btn-warning">
+                                                <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                                                    data-bs-target="#editKecamatanModal" data-id="{{ $kecamatan->id }}"
+                                                    data-name="{{ $kecamatan->nama_kecamatan }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                         stroke-linecap="round" stroke-linejoin="round">
@@ -62,7 +58,7 @@
                                                         <path d="M16 5l3 3" />
                                                     </svg>
                                                     Edit
-                                                </a>
+                                                </button>
                                             @endcan
                                             @can('kecamatan.delete')
                                                 <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
@@ -94,7 +90,8 @@
                                                     <div class="modal-body">
                                                         <p>Data kecamatan
                                                             <strong>{{ $kecamatan->nama_kecamatan }}</strong> yang dihapus
-                                                            tidak bisa dikembalikan.</p>
+                                                            tidak bisa dikembalikan.
+                                                        </p>
                                                         <p>Yakin ingin menghapus data ini?</p>
                                                     </div>
                                                     <div class="modal-footer">
@@ -121,12 +118,88 @@
             </div>
         </div>
     </div>
+
+    <!-- Create Modal -->
+    <div class="modal fade" id="createKecamatanModal" tabindex="-1" aria-labelledby="createKecamatanModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createKecamatanModalLabel">Tambah Data Kecamatan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('kecamatan.store') }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="nama_kecamatan_create" class="form-label">Nama Kecamatan <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" class="form-control @error('nama_kecamatan') is-invalid @enderror"
+                                id="nama_kecamatan_create" name="nama_kecamatan" value="{{ old('nama_kecamatan') }}"
+                                required>
+                            @error('nama_kecamatan')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editKecamatanModal" tabindex="-1" aria-labelledby="editKecamatanModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editKecamatanModalLabel">Edit Data Kecamatan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="editKecamatanForm" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="nama_kecamatan_edit" class="form-label">Nama Kecamatan <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" class="form-control @error('nama_kecamatan') is-invalid @enderror"
+                                id="nama_kecamatan_edit" name="nama_kecamatan" required>
+                            @error('nama_kecamatan')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('addon-script')
     <script>
         $(document).ready(function() {
             $('#kecamatan-table').DataTable();
+
+            // Fill edit modal with data
+            $('#editKecamatanModal').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget);
+                var id = button.data('id');
+                var name = button.data('name');
+
+                var modal = $(this);
+                modal.find('#nama_kecamatan_edit').val(name);
+                var updateUrl = '{{ route("kecamatan.update", ":id") }}'.replace(':id', id);
+                modal.find('#editKecamatanForm').attr('action', updateUrl);
+            });
         });
     </script>
 @endpush

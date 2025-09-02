@@ -3,16 +3,30 @@
     <div class="page page-center">
         <div class="container container-tight py-4">
             <div class="text-center mb-4">
-                <p class="navbar-brand fs-1">Laravel POS</p>
+                <div class="navbar-brand navbar-brand-autodark">
+                    <a href="{{ route('dashboard') }}" aria-label="{{ $websiteSetting?->website_name ?? 'Laravel POS' }}">
+                        @if ($websiteSetting?->logo)
+                            <img src="{{ asset('storage/' . $websiteSetting->logo) }}"
+                                alt="{{ $websiteSetting->website_name }}" class="navbar-brand-image"
+                                style="height: 32px; width: auto; max-width: 150px;">
+                        @else
+                            {{ $websiteSetting?->website_name ?? '' }}
+                        @endif
+                    </a>
+                </div>
+                {{-- nama website setting --}}
+                <div class="">
+                    <h2>{{ $websiteSetting?->website_name ?? '' }}</h2>
+                </div>
             </div>
-            <form method="POST" action="{{ route('login') }}" class="card card-md">
+            <form method="POST" action="{{ route('login') }}" class="card card-sm">
+                <div class="card-body px-5">
                 @csrf
-                <div class="card-body">
                     <h2 class="card-title text-center mb-4">Login ke akun Anda</h2>
 
                     <div class="mb-3">
                         <label class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control" placeholder="your@email.com" required>
+                        <input type="email" name="email" class="form-control" placeholder="email@email.com" required>
                     </div>
 
                     <div class="mb-3">
@@ -50,12 +64,12 @@
                     <div class="form-footer">
                         <button type="submit" class="btn btn-primary w-100">Login</button>
                     </div>
+                    <div class="text-center text-muted mt-3">
+                        <a href="{{ route('password.request') }}">Lupa password?</a>
+                    </div>
                 </div>
             </form>
 
-            <div class="text-center text-muted mt-3">
-                <a href="{{ route('password.request') }}">Lupa password?</a>
-            </div>
         </div>
     </div>
 
