@@ -426,16 +426,16 @@
             border-radius: 0.375rem;
         }
 
-        .card-header {
+        /* .card-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border-radius: 0.375rem 0.375rem 0 0 !important;
-        }
+        } */
 
-        .card-header .card-title {
+        /* .card-header .card-title {
             color: white;
             font-weight: 600;
-        }
+        } */
 
         .form-group {
             margin-bottom: 1.5rem;
@@ -466,7 +466,7 @@
             padding: 0.5rem 1rem;
         }
 
-        .btn-primary {
+        /* .btn-primary {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border: none;
         }
@@ -474,7 +474,7 @@
         .btn-primary:hover {
             background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
             transform: translateY(-1px);
-        }
+        } */
 
         .btn-secondary {
             background-color: #6c757d;

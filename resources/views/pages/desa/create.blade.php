@@ -5,9 +5,9 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">
-                <i class="fas fa-plus-circle"></i> Tambah Data Desa
-            </h3>
+            <h5 class="card-title">
+                 Tambah Data Desa
+            </h5>
         </div>
 
         <div class="card-body">
@@ -331,7 +331,7 @@
             border: none;
         }
 
-        .card-header {
+        /* .card-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border-bottom: none;
@@ -340,7 +340,7 @@
         .card-header .card-title {
             margin: 0;
             font-weight: 600;
-        }
+        } */
 
         .input-group-text {
             background-color: #e9ecef;
@@ -353,7 +353,7 @@
             font-weight: 500;
             padding: 0.5rem 1rem;
         }
-
+/* 
         .btn-primary {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border: none;
@@ -362,7 +362,7 @@
         .btn-primary:hover {
             background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
             transform: translateY(-1px);
-        }
+        } */
 
         .border-bottom {
             border-bottom: 2px solid !important;

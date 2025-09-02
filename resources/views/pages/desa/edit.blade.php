@@ -5,9 +5,9 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">
-                <i class="fas fa-edit"></i> Edit Data Desa: {{ $desa->nama_desa }}
-            </h3>
+            <h5 class="card-title">
+                 Edit Data Desa: {{ $desa->nama_desa }}
+            </h5>
         </div>
 
         <div class="card-body">
@@ -270,7 +270,7 @@
     </div>
 
     {{-- Info Card --}}
-    <div class="card mt-3">
+    {{-- <div class="card mt-3">
         <div class="card-body">
             <div class="row text-center">
                 <div class="col-md-3">
@@ -311,7 +311,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 @push('addon-script')
@@ -437,7 +437,7 @@
             border: none;
         }
 
-        .card-header {
+        /* .card-header {
             background: linear-gradient(135deg, #fd7e14 0%, #e83e8c 100%);
             color: white;
             border-bottom: none;
@@ -446,7 +446,7 @@
         .card-header .card-title {
             margin: 0;
             font-weight: 600;
-        }
+        } */
 
         .input-group-text {
             background-color: #e9ecef;
@@ -461,7 +461,7 @@
             margin-left: 0.5rem;
         }
 
-        .btn-primary {
+        /* .btn-primary {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border: none;
         }
@@ -469,7 +469,7 @@
         .btn-primary:hover {
             background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
             transform: translateY(-1px);
-        }
+        } */
 
         .form-group {
             margin-bottom: 1.5rem;
