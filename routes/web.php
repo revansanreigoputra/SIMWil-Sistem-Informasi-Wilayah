@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\DesaController;
 use App\Http\Controllers\MasterDdkController;
+use App\Http\Controllers\DataKeluargaController;
+
 Route::get('/', function () {
     return Auth::check()
         ? redirect()->route('dashboard')
@@ -185,6 +187,15 @@ Route::middleware(['auth', 'permission:perangkat_desa.view'])->prefix('perangkat
     Route::put('/{id}', [PerangkatDesaController::class, 'update'])->middleware('permission:perangkat_desa.update')->name('perangkat_desa.update');
     Route::delete('/{id}', [PerangkatDesaController::class, 'destroy'])->middleware('permission:perangkat_desa.delete')->name('perangkat_desa.destroy');
     Route::post('/check-duplicate', [PerangkatDesaController::class, 'checkDuplicate'])->name('perangkat_desa.check_duplicate');
+});
+
+// Data Keluarga
+Route::middleware(['auth'])->prefix('data-keluarga')->name('data_keluarga.')->group(function () {
+    Route::get('/', [DataKeluargaController::class, 'index'])->middleware('permission:data_keluarga.view')->name('index');
+    Route::get('/create', [DataKeluargaController::class, 'create'])->middleware('permission:data_keluarga.create')->name('create');
+    Route::post('/', [DataKeluargaController::class, 'store'])->middleware('permission:data_keluarga.store')->name('store');
+    Route::get('/laporan/kepala-keluarga', [DataKeluargaController::class, 'headsReport'])->middleware('permission:data_keluarga.report')->name('report.heads');
+    Route::get('/laporan/anggota-keluarga', [DataKeluargaController::class, 'membersReport'])->middleware('permission:data_keluarga.report')->name('report.members');
 });
 
 require __DIR__ . '/auth.php';
