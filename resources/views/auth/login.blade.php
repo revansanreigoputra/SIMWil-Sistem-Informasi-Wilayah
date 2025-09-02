@@ -19,7 +19,7 @@
                         <label class="form-label">Desa</label>
                         <select name="desa_id" class="form-control" required>
                             <option value="">Pilih Desa</option>
-                            @foreach($desas as $desa)
+                            @foreach ($desas as $desa)
                                 <option value="{{ $desa->id }}">{{ $desa->nama_desa }}</option>
                             @endforeach
                         </select>
@@ -52,6 +52,10 @@
                     </div>
                 </div>
             </form>
+
+            <div class="text-center text-muted mt-3">
+                <a href="{{ route('password.request') }}">Lupa password?</a>
+            </div>
         </div>
     </div>
 
