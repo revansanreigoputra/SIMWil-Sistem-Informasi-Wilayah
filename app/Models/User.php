@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Auth\Notifications\ResetPassword;
+use App\Notifications\CustomResetPassword;
+
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -52,5 +55,13 @@ class User extends Authenticatable
     public function desa()
     {
         return $this->belongsTo(Desa::class, 'desa_id');
+    }
+
+    /**
+     * Kirim notifikasi reset password dengan subject custom.
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new CustomResetPassword($token));
     }
 }
