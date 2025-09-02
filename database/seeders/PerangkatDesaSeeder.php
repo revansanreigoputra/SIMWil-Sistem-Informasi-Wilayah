@@ -25,7 +25,7 @@ final class PerangkatDesaSeeder extends Seeder
             'kontak' => '081234567890',
             'alamat' => 'Jl. Merdeka No. 1, Desa Sukamaju',
             'masa_jabatan' => '2020-2026',
-            'nama_istri' => 'Siti Aminah',
+            'nama_pasangan' => 'Siti Aminah',
             'jumlah_anak' => 3,
             'sambutan' => 'Selamat datang di website resmi Desa Sukamaju.',
             'foto' => null,

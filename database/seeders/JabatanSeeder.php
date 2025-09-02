@@ -14,15 +14,12 @@ class JabatanSeeder extends Seeder
     {
         Jabatan::create([
             'nama_jabatan' => 'Kepala Desa',
-            'desa_id' => 1,
         ]);
         Jabatan::create([
             'nama_jabatan' => 'Sekretaris Desa',
-            'desa_id' => 1,
         ]);
         Jabatan::create([
             'nama_jabatan' => 'Kepala Dusun',
-            'desa_id' => 2,
         ]);
     }
 }

@@ -27,7 +27,7 @@ class RoleController extends Controller
         $permissions = $this->roleService->getRolePermissions();
         $rolePermissions = $this->roleService->getAssignedPermissionNames($role);
 
-        return view('pages.role.edit', compact('role', 'permissions', 'rolePermissions'));
+        return view('pages.roles.edit', compact('role', 'permissions', 'rolePermissions'));
     }
 
     public function update(Request $request, $id)

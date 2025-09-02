@@ -10,16 +10,7 @@ class Jabatan extends Model
 
     protected $fillable = [
         'nama_jabatan',
-        'desa_id',
     ];
-
-    /**
-     * Relasi ke Desa.
-     */
-    public function desa()
-    {
-        return $this->belongsTo(Desa::class);
-    }
 
     /**
      * Relasi ke Perangkat Desa.

@@ -15,29 +15,25 @@
                 <table id="kecamatan-table" class="table table-striped">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>Nama Kecamatan</th>
-                            <th>Jumlah Desa</th>
-                            <th>Jumlah Jabatan</th>
-                            <th>Aksi</th>
+                            <th class="text-center">No</th>
+                            <th  class="text-center">Nama Kecamatan</th>
+                            <th class="text-center">Jumlah Desa</th>
+                            <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($kecamatans as $kecamatan)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>
+                                <td class="text-center">{{ $loop->iteration }}</td>
+                                <td class="text-center">
                                     <p>{{ $kecamatan->nama_kecamatan }}</p>
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     <span class="badge bg-info">{{ $kecamatan->desas->count() }}</span>
                                 </td>
                                 <td>
-                                    <span class="badge bg-success">{{ $kecamatan->jabatans->count() }}</span>
-                                </td>
-                                <td>
                                     @canany(['kecamatan.view', 'kecamatan.update', 'kecamatan.delete'])
-                                        <div class="d-flex gap-1">
+                                        <div class="d-flex gap-1 justify-content-center">
                                             @can('kecamatan.view')
                                                 <a href="{{ route('kecamatan.show', $kecamatan->id) }}"
                                                     class="btn btn-sm btn-info">

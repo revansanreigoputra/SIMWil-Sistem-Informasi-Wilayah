@@ -19,7 +19,6 @@
                         <tr>
                             <th>No</th>
                             <th>Nama Jabatan</th>
-                            <th>Desa</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -28,7 +27,6 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $jabatan->nama_jabatan }}</td>
-                                <td>{{ $jabatan->desa ? $jabatan->desa->nama_desa : '-' }}</td>
                                 <td>
                                     @canany(['jabatan.update', 'jabatan.delete'])
                                         <div class="d-flex gap-1">
@@ -94,20 +92,6 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="mb-3">
-                                <label for="desa_id" class="form-label">Desa</label>
-                                <select class="form-select @error('desa_id') is-invalid @enderror" id="desa_id" name="desa_id">
-                                    <option value="">Pilih Desa</option>
-                                    @foreach ($desas as $desa)
-                                        <option value="{{ $desa->id }}" {{ old('desa_id') == $desa->id ? 'selected' : '' }}>
-                                            {{ $desa->nama_desa }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('desa_id')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -139,20 +123,6 @@
                                            id="nama_jabatan-{{ $jabatan->id }}" name="nama_jabatan"
                                            value="{{ old('nama_jabatan', $jabatan->nama_jabatan) }}" required>
                                     @error('nama_jabatan')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="desa_id-{{ $jabatan->id }}" class="form-label">Desa</label>
-                                    <select class="form-select @error('desa_id') is-invalid @enderror" id="desa_id-{{ $jabatan->id }}" name="desa_id">
-                                        <option value="">Pilih Desa</option>
-                                        @foreach ($desas as $desa)
-                                            <option value="{{ $desa->id }}" {{ old('desa_id', $jabatan->desa_id) == $desa->id ? 'selected' : '' }}>
-                                                {{ $desa->nama_desa }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('desa_id')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
