@@ -19,6 +19,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KecamatanController;
 use App\Http\Controllers\KepalaDesaController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\MasterDdkController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 Route::get('/', function () {
@@ -166,3 +167,7 @@ Route::middleware(['auth', 'permission:kecamatan.view'])->prefix('kecamatan')->g
 Route::resource('desa', DesaController::class);
 
 require __DIR__ . '/auth.php';
+
+
+// routes for direct file (placeholder routes)
+Route::get('/master-ddk/{table?}', [MasterDDKController::class, 'index'])->name('master.ddk.index');

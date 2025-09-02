@@ -22,6 +22,16 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             SettingSeeder::class,
             ProductSeeder::class,
+            HubunganKeluargaSeeder::class,
+            AgamaSeeder::class,
+            CacatSeeder::class,
+            GolonganDarahSeeder::class,
+            KBSeeder::class,
+            KedudukanPajakSeeder::class,
+            KewarganegaraanSeeder::class,
+            LembagaSeeder::class,
+            MataPencaharianSeeder::class,
+            PendidikanSeeder::class,
         ]);
     }
 }

@@ -164,6 +164,29 @@
                         class="dropdown-menu {{ request()->is('role*') || request()->is('kategori*') || request()->is('supplier*') || request()->is('konsumen*') || request()->is('satuan*') || request()->is('produk*') || request()->is('user*') ? 'show' : '' }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
+                                {{--  --}}
+                                <a href="{{ route('master.ddk.index') }}" class="dropdown-item">Master DDK</a>
+                                {{-- dummy The nested dropdown for Master DDK --}}
+                                {{-- <a class="dropdown-item dropdown-toggle {{ request()->is('ddk*') ? 'active' : '' }}"
+                                    href="#" data-bs-toggle="dropdown">
+                                    Master DDK
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="">filter Hubungan Keluarga</a></li>
+                                    <li><a class="dropdown-item" href="">filter Agama</a></li>
+                                    <li><a class="dropdown-item" href="">filter Golongan Darah</a></li>
+                                    <li><a class="dropdown-item" href="">filter Kewarganegaraan</a></li>
+                                    <li><a class="dropdown-item" href="">filter Pendidikan terakhir</a></li>
+                                    <li><a class="dropdown-item" href="">filter Mata Pencaharian Pokok</a></li>
+                                    <li><a class="dropdown-item" href="">filter Akseptor KB</a></li>
+                                    <li><a class="dropdown-item" href="">filter Cacat Fisik</a></li>
+                                    <li><a class="dropdown-item" href="">filter Cacat Mental</a></li>
+                                    <li><a class="dropdown-item" href="">filter Kedudukan sebagai Wajib Pajak</a></li>
+                                    <li><a class="dropdown-item" href="">filter Lembaga Pemerintahan yang diikuti</a></li>
+                                    <li><a class="dropdown-item" href="">filter Lembaga Kemasyarakatan yang diikuti</a></li>
+                                    <li><a class="dropdown-item" href="">filter Lembaga Ekonomi yang diikuti</a></li>
+                                </ul> --}}
+                                {{--  --}}
                                 @can('category.view')
                                     <a class="dropdown-item {{ request()->is('kategori*') ? 'active' : '' }}"
                                         href="{{ route('category.index') }}"> Kategori </a>
