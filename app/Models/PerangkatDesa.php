@@ -21,7 +21,7 @@ class PerangkatDesa extends Model
         'kontak',
         'alamat',
         'masa_jabatan',
-        'nama_istri',
+        'nama_pasangan',
         'jumlah_anak',
         'sambutan',
         'foto',

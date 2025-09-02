@@ -55,7 +55,7 @@ class DesaController extends Controller
     }
     public function show(Desa $desa)
     {
-        $desa->load(['kecamatan', 'jabatans', 'perangkatDesas.jabatan']);
+        $desa->load(['kecamatan', 'perangkatDesas.jabatan']);
         return view('pages.desa.show', compact('desa'));
     }
 }
