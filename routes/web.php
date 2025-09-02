@@ -1,27 +1,27 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DesaController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\UnitController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\SalesController;
-use App\Http\Controllers\StockController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SettingController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\PurchaseController;
-use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KecamatanController;
-use App\Http\Controllers\KepalaDesaController;
+use App\Http\Controllers\PerangkatDesaController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\SalesController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\StockController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\UnitController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\DesaController;
 use App\Http\Controllers\MasterDdkController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-
 Route::get('/', function () {
     return Auth::check()
         ? redirect()->route('dashboard')
@@ -153,6 +153,7 @@ Route::middleware(['auth'])->prefix('pengaturan')->group(function () {
     Route::put('/', [SettingController::class, 'update'])->name('settings.update');
 });
 
+// Kecamatan routes
 Route::middleware(['auth', 'permission:kecamatan.view'])->prefix('kecamatan')->group(function () {
     Route::get('/', [KecamatanController::class, 'index'])->name('kecamatan.index');
     Route::get('/create', [KecamatanController::class, 'create'])->middleware('permission:kecamatan.create')->name('kecamatan.create');
@@ -163,8 +164,28 @@ Route::middleware(['auth', 'permission:kecamatan.view'])->prefix('kecamatan')->g
     Route::delete('/{kecamatan}', [KecamatanController::class, 'destroy'])->middleware('permission:kecamatan.delete')->name('kecamatan.destroy');
 });
 
+// Jabatan routes
+Route::middleware(['auth', 'permission:jabatan.view'])->prefix('jabatan')->group(function () {
+    Route::get('/', [JabatanController::class, 'index'])->name('jabatan.index');
+    Route::post('/', [JabatanController::class, 'store'])->middleware('permission:jabatan.store')->name('jabatan.store');
+    Route::put('/{jabatan}', [JabatanController::class, 'update'])->middleware('permission:jabatan.update')->name('jabatan.update');
+    Route::delete('/{jabatan}', [JabatanController::class, 'destroy'])->middleware('permission:jabatan.delete')->name('jabatan.destroy');
+});
+
 // Desa routes
 Route::resource('desa', DesaController::class);
+
+// Perangkat Desa routes
+Route::middleware(['auth', 'permission:perangkat_desa.view'])->prefix('perangkat_desa')->group(function () {
+    Route::get('/', [PerangkatDesaController::class, 'index'])->name('perangkat_desa.index');
+    Route::get('/create', [PerangkatDesaController::class, 'create'])->middleware('permission:perangkat_desa.store')->name('perangkat_desa.create');
+    Route::post('/', [PerangkatDesaController::class, 'store'])->middleware('permission:perangkat_desa.store')->name('perangkat_desa.store');
+    Route::get('/{id}', [PerangkatDesaController::class, 'show'])->name('perangkat_desa.show');
+    Route::get('/{id}/edit', [PerangkatDesaController::class, 'edit'])->middleware('permission:perangkat_desa.update')->name('perangkat_desa.edit');
+    Route::put('/{id}', [PerangkatDesaController::class, 'update'])->middleware('permission:perangkat_desa.update')->name('perangkat_desa.update');
+    Route::delete('/{id}', [PerangkatDesaController::class, 'destroy'])->middleware('permission:perangkat_desa.delete')->name('perangkat_desa.destroy');
+    Route::post('/check-duplicate', [PerangkatDesaController::class, 'checkDuplicate'])->name('perangkat_desa.check_duplicate');
+});
 
 require __DIR__ . '/auth.php';
 

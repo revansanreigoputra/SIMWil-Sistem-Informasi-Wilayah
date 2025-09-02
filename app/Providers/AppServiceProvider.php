@@ -56,6 +56,7 @@ use App\View\Composers\NotificationComposer;
 use App\View\Composers\SettingComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use App\Models\WebsiteSetting;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -91,10 +92,6 @@ class AppServiceProvider extends ServiceProvider
             // Purchase
             PurchaseServiceInterface::class => PurchaseService::class,
             PurchaseRepositoryInterface::class => PurchaseRepository::class,
-
-            // Kepala Desa
-            \App\Services\Interface\KepalaDesaServiceInterface::class => \App\Services\KepalaDesaService::class,
-            \App\Repositories\Interface\KepalaDesaRepositoryInterface::class => \App\Repositories\KepalaDesaRepository::class,
         ];
 
         foreach ($bindings as $interface => $implementation) {
@@ -112,5 +109,8 @@ class AppServiceProvider extends ServiceProvider
 
         // Register view composer for settings
         View::composer('partials.sidebar', SettingComposer::class);
+
+        // Share websiteSetting ke semua view
+        View::composer('*', SettingComposer::class);
     }
 }

@@ -20,11 +20,5 @@ class Kecamatan extends Model
         return $this->hasMany(Desa::class);
     }
 
-    /**
-     * Relasi ke Jabatan (satu kecamatan punya banyak jabatan).
-     */
-    public function jabatans()
-    {
-        return $this->hasMany(Jabatan::class);
-    }
+
 }
