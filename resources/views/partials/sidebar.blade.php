@@ -17,7 +17,136 @@
                 @endif
             </a>
         </div>
-        <!-- END NAVBAR LOGO -->
+        <!-- MOBILE USER & NOTIFICATION -->
+        <div class="d-lg-none d-flex align-items-center gap-3">
+
+            <!-- MOBILE NOTIFICATION -->
+            <div class="dropdown">
+                <a href="#" class="nav-link position-relative p-0" data-bs-toggle="dropdown"
+                    aria-label="Show notifications" data-bs-auto-close="outside">
+                    <!-- ikon notifikasi -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="icon icon-1">
+                        <path
+                            d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6">
+                        </path>
+                        <path d="M9 17v1a3 3 0 0 0 6 0v-1"></path>
+                    </svg>
+                    @if (isset($notificationCount) && $notificationCount > 0)
+                        <span class="badge bg-red position-absolute top-0 start-100 translate-middle">
+                            {{ $notificationCount > 99 ? '99+' : $notificationCount }}
+                        </span>
+                    @endif
+                </a>
+
+                <!-- Dropdown isi notifikasi -->
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow dropdown-menu-card">
+                    <div class="card">
+                        <div class="card-header d-flex">
+                            <h3 class="card-title">Notifikasi Stok</h3>
+                            <button type="button" class="btn-close ms-auto" aria-label="Close"
+                                onclick="closeDropdown(this)"></button>
+                        </div>
+                        <div class="list-group list-group-flush list-group-hoverable">
+                            @if (isset($notifications) && $notifications->count() > 0)
+                                @foreach ($notifications->take(5) as $notification)
+                                    <div class="list-group-item">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <span
+                                                    class="status-dot status-dot-animated {{ $notificationService->getPriorityColor($notification['priority']) }} d-block"></span>
+                                            </div>
+                                            <div class="col text-truncate">
+                                                <a href="{{ $notification['url'] }}" class="text-body d-block">
+                                                    {{ $notification['product']['name'] }}
+                                                </a>
+                                                <div class="d-block text-secondary text-truncate mt-n1">
+                                                    Stok: {{ number_format($notification['product']['stock']) }} /
+                                                    Min: {{ number_format($notification['product']['minimum_stock']) }}
+                                                    <span
+                                                        class="badge badge-sm {{ $notificationService->getPriorityColor($notification['priority']) }} ms-1">
+                                                        {{ $notificationService->getPriorityLabel($notification['priority']) }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <a href="#" class="list-group-item-actions"
+                                                    onclick="markAsRead({{ $notification['id'] }})">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round" class="icon text-muted icon-2">
+                                                        <path d="M20 6L9 17l-5-5"></path>
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                                @if ($notifications->count() > 5)
+                                    <div class="text-center list-group-item">
+                                        <a href="{{ route('stock.index') }}" class="text-muted">
+                                            Lihat {{ $notifications->count() - 5 }} notifikasi lainnya...
+                                        </a>
+                                    </div>
+                                @endif
+                            @else
+                                <div class="py-4 text-center list-group-item">
+                                    <div class="text-muted">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" class="mb-2 icon">
+                                            <path d="M20 6L9 17l-5-5"></path>
+                                        </svg>
+                                        <div>Tidak ada notifikasi stok rendah</div>
+                                        <small>Semua produk memiliki stok yang cukup</small>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                        @if (isset($notifications) && $notifications->count() > 0)
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <a href="{{ route('stock.index') }}" class="btn btn-outline-primary w-100">
+                                            <i class="fas fa-warehouse me-1"></i> Lihat Stok
+                                        </a>
+                                    </div>
+                                    <div class="col">
+                                        <a href="#" class="btn btn-primary w-100" onclick="markAllAsRead()">
+                                            <i class="fas fa-check-double me-1"></i> Tandai Dibaca
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            <!-- DROPDOWN PROFIL MOBILE -->
+            <div class="dropdown">
+                <a href="#" class="nav-link p-0 d-flex align-items-center" data-bs-toggle="dropdown"
+                    aria-label="Open user menu">
+                    <span class="avatar avatar-sm me-2" style="background-image: url(./static/avatars/000m.jpg)"></span>
+                    {{-- <span>{{ auth()->user() ? auth()->user()->name : '' }}</span> --}}
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <a href="#" class="dropdown-item">Settings</a>
+                    <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                        @csrf
+                        <a href="#" class="dropdown-item"
+                            onclick="event.preventDefault(); this.closest('form').submit();">
+                            Keluar
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- END MOBILE USER & NOTIFICATION -->
+
+
         <div class="navbar-collapse collapse" id="sidebar-menu" style="">
             <!-- BEGIN NAVBAR MENU -->
             <ul class="navbar-nav pt-lg-3">
@@ -26,9 +155,9 @@
                     <a class="nav-link" href="{{ route('dashboard') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <!-- Download SVG icon from http://tabler.io/icons/icon/home -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="icon icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
                                 <path d="M5 12l-2 0l9 -9l9 9l-2 0"></path>
                                 <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"></path>
                                 <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"></path>
@@ -86,8 +215,8 @@
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
                                 <!-- Icon Jabatan -->
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-star"
-                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                     <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
                                     <path d="M6 21v-2a4 4 0 0 1 4 -4h.5" />
@@ -107,8 +236,8 @@
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
                                 <!-- Icon Perangkat Desa -->
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-star"
-                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                     <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
                                     <path d="M6 21v-2a4 4 0 0 1 4 -4h.5" />
@@ -252,8 +381,21 @@
                         <span class="nav-link-title"> Pengaturan </span>
                     </a>
                 </li>
+
             </ul>
             <!-- END NAVBAR MENU -->
         </div>
     </div>
 </aside>
+
+<script>
+function closeDropdown(btn) {
+    // Cari parent .dropdown-menu
+    let dropdownMenu = btn.closest('.dropdown-menu');
+    if (dropdownMenu) {
+        // Bootstrap 5: tutup dropdown dengan instance
+        let dropdown = bootstrap.Dropdown.getOrCreateInstance(dropdownMenu.previousElementSibling);
+        dropdown.hide();
+    }
+}
+</script>
