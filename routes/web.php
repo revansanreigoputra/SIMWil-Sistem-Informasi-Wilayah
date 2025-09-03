@@ -169,6 +169,7 @@ Route::middleware(['auth', 'permission:kecamatan.view'])->prefix('kecamatan')->g
 // Jabatan routes
 Route::middleware(['auth', 'permission:jabatan.view'])->prefix('jabatan')->group(function () {
     Route::get('/', [JabatanController::class, 'index'])->name('jabatan.index');
+    Route::get('/create', [JabatanController::class, 'create'])->middleware('permission:jabatan.create')->name('jabatan.create');
     Route::post('/', [JabatanController::class, 'store'])->middleware('permission:jabatan.store')->name('jabatan.store');
     Route::put('/{jabatan}', [JabatanController::class, 'update'])->middleware('permission:jabatan.update')->name('jabatan.update');
     Route::delete('/{jabatan}', [JabatanController::class, 'destroy'])->middleware('permission:jabatan.delete')->name('jabatan.destroy');

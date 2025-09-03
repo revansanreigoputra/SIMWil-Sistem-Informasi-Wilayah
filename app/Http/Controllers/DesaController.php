@@ -24,7 +24,17 @@ class DesaController extends Controller
     {
         $request->validate([
             'kecamatan_id' => 'required|exists:kecamatans,id',
-            'nama_desa' => 'required',
+            'nama_desa' => [
+                'required',
+                function ($attribute, $value, $fail) use ($request) {
+                    $exists = Desa::where('kecamatan_id', $request->kecamatan_id)
+                        ->where('nama_desa', $value)
+                        ->exists();
+                    if ($exists) {
+                        $fail('Nama desa sudah terdaftar di kecamatan tersebut.');
+                    }
+                },
+            ],
             'kode_pum' => 'required|unique:desas,kode_pum',
         ]);
         Desa::create($request->all());
@@ -41,7 +51,18 @@ class DesaController extends Controller
     {
         $request->validate([
             'kecamatan_id' => 'required|exists:kecamatans,id',
-            'nama_desa' => 'required',
+            'nama_desa' => [
+                'required',
+                function ($attribute, $value, $fail) use ($request, $desa) {
+                    $exists = Desa::where('kecamatan_id', $request->kecamatan_id)
+                        ->where('nama_desa', $value)
+                        ->where('id', '!=', $desa->id)
+                        ->exists();
+                    if ($exists) {
+                        $fail('Nama desa sudah terdaftar di kecamatan tersebut.');
+                    }
+                },
+            ],
             'kode_pum' => 'required|unique:desas,kode_pum,' . $desa->id,
         ]);
         $desa->update($request->all());
