@@ -250,6 +250,46 @@
                     </li>
                 @endcan
 
+                {{-- Mutasi --}}
+                <li class="nav-item dropdown {{ request()->is('mutasi*') ? 'active' : '' }}">
+                    <a class="nav-link dropdown-toggle" href="#navbar-mutasi" data-bs-toggle="dropdown"
+                        data-bs-auto-close="false" role="button" aria-expanded="false">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="icon icon-tabler icon-tabler-arrows-exchange" width="24" height="24"
+                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M10 4l-2 2l2 2" />
+                                <path d="M14 20l2 -2l-2 -2" />
+                                <path d="M4 6h12a2 2 0 0 1 2 2v2" />
+                                <path d="M20 18h-12a2 2 0 0 1 -2 -2v-2" />
+                            </svg>
+                        </span>
+
+                        <span class="nav-link-title"> Mutasi </span>
+                    </a>
+                    <div class="dropdown-menu {{ request()->is('mutasi*') ? 'show' : '' }}">
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ request()->is('mutasi/data*') ? 'active' : '' }}"
+                                    href="{{ route('mutasi.data.index') }}">
+                                    Data Mutasi
+                                </a>
+                                {{-- <a class="dropdown-item {{ request()->is('mutasi/masuk*') ? 'active' : '' }}"
+                                    href="{{ route('mutasi.masuk.index') }}">
+                                    Masuk Desa
+                                </a> --}}
+                                <a class="dropdown-item {{ request()->is('mutasi/laporan*') ? 'active' : '' }}"
+                                    href="{{ route('mutasi.laporan.index') }}">
+                                    Laporan Mutasi
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+
                 {{-- <li class="nav-item dropdown {{ request()->is('penjualan*') ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-sales" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
@@ -389,13 +429,13 @@
 </aside>
 
 <script>
-function closeDropdown(btn) {
-    // Cari parent .dropdown-menu
-    let dropdownMenu = btn.closest('.dropdown-menu');
-    if (dropdownMenu) {
-        // Bootstrap 5: tutup dropdown dengan instance
-        let dropdown = bootstrap.Dropdown.getOrCreateInstance(dropdownMenu.previousElementSibling);
-        dropdown.hide();
+    function closeDropdown(btn) {
+        // Cari parent .dropdown-menu
+        let dropdownMenu = btn.closest('.dropdown-menu');
+        if (dropdownMenu) {
+            // Bootstrap 5: tutup dropdown dengan instance
+            let dropdown = bootstrap.Dropdown.getOrCreateInstance(dropdownMenu.previousElementSibling);
+            dropdown.hide();
+        }
     }
-}
 </script>
