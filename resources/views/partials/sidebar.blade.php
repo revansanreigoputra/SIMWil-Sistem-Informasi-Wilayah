@@ -126,13 +126,13 @@
             </div>
 
             <!-- DROPDOWN PROFIL MOBILE -->
-            <div class="dropdown">
+            {{-- <div class="dropdown">
                 <a href="#" class="nav-link p-0 d-flex align-items-center" data-bs-toggle="dropdown"
                     aria-label="Open user menu">
                     <span class="avatar avatar-sm me-2" style="background-image: url(./static/avatars/000m.jpg)"></span>
-                    {{-- <span>{{ auth()->user() ? auth()->user()->name : '' }}</span> --}}
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <span>{{ auth()->user() ? auth()->user()->name : '' }}</span>
                     <a href="#" class="dropdown-item">Settings</a>
                     <form method="POST" action="{{ route('logout') }}" class="d-inline">
                         @csrf
@@ -142,7 +142,34 @@
                         </a>
                     </form>
                 </div>
+            </div> --}}
+            <div class="dropdown">
+                <a href="#" class="nav-link p-0 d-flex align-items-center" data-bs-toggle="dropdown"
+                    aria-label="Open user menu">
+                    <span class="avatar avatar-sm me-2" style="background-image: url(./static/avatars/000m.jpg)"></span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <!-- Nama User -->
+                    <span class="dropdown-item-text fw-bold text-center">
+                        {{ auth()->user() ? auth()->user()->name : '' }}
+                    </span>
+                    <div class="dropdown-divider"></div>
+
+                    <!-- Settings -->
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-cog me-2"></i> Settings
+                    </a>
+
+                    <!-- Logout -->
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="dropdown-item">
+                            <i class="fas fa-sign-out-alt me-2"></i> Keluar
+                        </button>
+                    </form>
+                </div>
             </div>
+
         </div>
         <!-- END MOBILE USER & NOTIFICATION -->
 
@@ -389,13 +416,13 @@
 </aside>
 
 <script>
-function closeDropdown(btn) {
-    // Cari parent .dropdown-menu
-    let dropdownMenu = btn.closest('.dropdown-menu');
-    if (dropdownMenu) {
-        // Bootstrap 5: tutup dropdown dengan instance
-        let dropdown = bootstrap.Dropdown.getOrCreateInstance(dropdownMenu.previousElementSibling);
-        dropdown.hide();
+    function closeDropdown(btn) {
+        // Cari parent .dropdown-menu
+        let dropdownMenu = btn.closest('.dropdown-menu');
+        if (dropdownMenu) {
+            // Bootstrap 5: tutup dropdown dengan instance
+            let dropdown = bootstrap.Dropdown.getOrCreateInstance(dropdownMenu.previousElementSibling);
+            dropdown.hide();
+        }
     }
-}
 </script>
