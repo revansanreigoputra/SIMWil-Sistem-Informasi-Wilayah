@@ -32,4 +32,8 @@
     .badge {
         color: #fff;
     }
+
+    .bg-card-inside-form{
+        background-color: #fcfcfc;
+    }
 </style>
