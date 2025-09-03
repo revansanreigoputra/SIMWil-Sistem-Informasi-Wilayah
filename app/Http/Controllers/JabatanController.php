@@ -19,12 +19,22 @@ class JabatanController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('pages.jabatan.create');
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
         $request->validate([
-            'nama_jabatan' => 'required|string|max:255',
+            'nama_jabatan' => 'required|string|max:255|unique:jabatans,nama_jabatan',
+        ], [
+            'nama_jabatan.unique' => ' Nama jabatan sudah ada.',
         ]);
 
         DB::beginTransaction();
@@ -45,7 +55,9 @@ class JabatanController extends Controller
     public function update(Request $request, Jabatan $jabatan)
     {
         $request->validate([
-            'nama_jabatan' => 'required|string|max:255',
+            'nama_jabatan' => 'required|string|max:255255|unique:jabatans,nama_jabatan',
+        ], [
+            'nama_jabatan.unique' => ' Nama jabatan sudah ada.',
         ]);
 
         DB::beginTransaction();

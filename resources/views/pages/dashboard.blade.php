@@ -12,7 +12,7 @@
                         <i class="bi bi-box-seam" style="font-size:2rem;color:#000ba6;"></i>
                     </div>
                     <h5 class="mb-1 card-title">Total Produk</h5>
-                    <h2 class="fw-bold">{{ $totalProducts }}</h2>
+                    {{-- <h2 class="fw-bold">{{ $totalProducts }}</h2> --}}
                 </div>
             </div>
         </div>
@@ -23,7 +23,7 @@
                         <i class="bi bi-people" style="font-size:2rem;color:#000ba6;"></i>
                     </div>
                     <h5 class="mb-1 card-title">Total Pelanggan</h5>
-                    <h2 class="fw-bold">{{ $totalCustomers }}</h2>
+                    {{-- <h2 class="fw-bold">{{ $totalCustomers }}</h2> --}}
                 </div>
             </div>
         </div>
@@ -34,7 +34,7 @@
                         <i class="bi bi-cash-stack" style="font-size:2rem;color:#000ba6;"></i>
                     </div>
                     <h5 class="mb-1 card-title">Pendapatan Hari Ini</h5>
-                    <h2 class="fw-bold">Rp {{ number_format($todayRevenue, 0, ',', '.') }}</h2>
+                    {{-- <h2 class="fw-bold">Rp {{ number_format($todayRevenue, 0, ',', '.') }}</h2> --}}
                 </div>
             </div>
         </div>
@@ -61,45 +61,6 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const ctx = document.getElementById('salesChart').getContext('2d');
-        const salesChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: @json($chartLabels),
-                datasets: [{
-                    label: 'Revenue',
-                    data: @json($chartData),
-                    borderColor: '#00A63E',
-                    backgroundColor: 'rgba(0,166,62,0.1)',
-                    fill: true,
-                    tension: 0.3,
-                    pointRadius: 4,
-                    pointBackgroundColor: '#00A63E',
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return 'Rp ' + context.parsed.y.toLocaleString('id-ID');
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            callback: function(value) {
-                                return 'Rp ' + value.toLocaleString('id-ID');
-                            }
-                        }
-                    }
-                }
-            }
-        });
     });
 </script>
 @endpush

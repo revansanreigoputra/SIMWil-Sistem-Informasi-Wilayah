@@ -35,9 +35,9 @@
             </a>
         </li>
     </ul>
-    <div class="pagination-info">
+    {{-- <div class="pagination-info">
         Showing <b>{{ $paginator->firstItem() }}</b> to <b>{{ $paginator->lastItem() }}</b> of <b>{{ $paginator->total()
             }}</b> products
-    </div>
+    </div> --}}
 </nav>
 @endif
