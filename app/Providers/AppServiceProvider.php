@@ -68,30 +68,11 @@ class AppServiceProvider extends ServiceProvider
         $bindings = [
             RoleServiceInterface::class => RoleService::class,
             RoleRepositoryInterface::class => RoleRepository::class,
-            CategoryServiceInterface::class => CategoryService::class,
-            CategoryRepositoryInterface::class => CategoryRepository::class,
-            SupplierServiceInterface::class => SupplierService::class,
-            SupplierRepositoryInterface::class => SupplierRepository::class,
-            CustomerServiceInterface::class => CustomerService::class,
-            CustomerRepositoryInterface::class => CustomerRepository::class,
-            UnitServiceInterface::class => UnitService::class,
-            UnitRepositoryInterface::class => UnitRepository::class,
-            ProductServiceInterface::class => ProductService::class,
-            ProductRepositoryInterface::class => ProductRepository::class,
-            StockMovementRepositoryInterface::class => StockMovementRepository::class,
-            StockOpnameRepositoryInterface::class => StockOpnameRepository::class,
-            StockServiceInterface::class => StockService::class,
-            StockOpnameServiceInterface::class => StockOpnameService::class,
             NotificationServiceInterface::class => NotificationService::class,
-            SalesServiceInterface::class => SalesService::class,
-            SalesRepositoryInterface::class => SalesRepository::class,
             SettingServiceInterface::class => SettingService::class,
             SettingRepositoryInterface::class => SettingRepository::class,
             UserServiceInterface::class => UserService::class,
             UserRepositoryInterface::class => UserRepository::class,
-            // Purchase
-            PurchaseServiceInterface::class => PurchaseService::class,
-            PurchaseRepositoryInterface::class => PurchaseRepository::class,
         ];
 
         foreach ($bindings as $interface => $implementation) {

@@ -21,7 +21,6 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             PermissionSeeder::class,
             SettingSeeder::class,
-            ProductSeeder::class,
             HubunganKeluargaSeeder::class,
             AgamaSeeder::class,
             CacatSeeder::class,
