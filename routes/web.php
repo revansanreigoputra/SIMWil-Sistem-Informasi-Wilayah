@@ -30,11 +30,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Notification routes
-    Route::prefix('notifications')->name('notifications.')->group(function () {
-        Route::post('/mark-as-read', [NotificationController::class, 'markAsRead'])->name('mark-as-read');
-        Route::post('/mark-all-as-read', [NotificationController::class, 'markAllAsRead'])->name('mark-all-as-read');
-        Route::get('/count', [NotificationController::class, 'getCount'])->name('count');
-    });
+    // Route::prefix('notifications')->name('notifications.')->group(function () {
+    //     Route::post('/mark-as-read', [NotificationController::class, 'markAsRead'])->name('mark-as-read');
+    //     Route::post('/mark-all-as-read', [NotificationController::class, 'markAllAsRead'])->name('mark-all-as-read');
+    //     Route::get('/count', [NotificationController::class, 'getCount'])->name('count');
+    // });
 });
 
 Route::prefix('user')->group(function () {
