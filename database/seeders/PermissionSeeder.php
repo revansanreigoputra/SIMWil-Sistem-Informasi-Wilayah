@@ -57,13 +57,22 @@ class PermissionSeeder extends Seeder
             'perangkat_desa.store',
             'perangkat_desa.update',
             'perangkat_desa.delete',
+
             // data keluarga permissions
             'data_keluarga.view',
             'data_keluarga.create',
             'data_keluarga.store',
             'data_keluarga.report',
 
-
+             // Mutasi permissions
+            'mutasi.data.view',
+            'mutasi.data.create',
+            'mutasi.data.store',
+            'mutasi.data.edit',
+            'mutasi.data.update',
+            'mutasi.data.destroy',
+            'mutasi.laporan.view',
+            'mutasi.laporan.export',
         ];
 
         foreach ($permissions as $permission) {
