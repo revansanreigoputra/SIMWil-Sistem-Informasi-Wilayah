@@ -29,7 +29,6 @@ final class StoreSettingRequest extends FormRequest
             'email' => ['nullable', 'email', 'max:255'],
             'phone' => ['nullable', 'string', 'max:20'],
             'logo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-            'margin' => ['nullable', 'numeric', 'min:0'],
         ];
     }
 
@@ -46,7 +45,6 @@ final class StoreSettingRequest extends FormRequest
             'email' => 'Email',
             'phone' => 'Telepon',
             'logo' => 'Logo',
-            'margin' => 'Margin Penjualan',
         ];
     }
 }
