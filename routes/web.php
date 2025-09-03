@@ -1,22 +1,14 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KecamatanController;
 use App\Http\Controllers\PerangkatDesaController;
-use App\Http\Controllers\PurchaseController;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\SalesController;
 use App\Http\Controllers\SettingController;
-use App\Http\Controllers\StockController;
-use App\Http\Controllers\SupplierController;
-use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;

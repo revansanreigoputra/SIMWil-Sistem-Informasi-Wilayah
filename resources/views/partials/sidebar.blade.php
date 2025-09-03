@@ -33,11 +33,6 @@
                         </path>
                         <path d="M9 17v1a3 3 0 0 0 6 0v-1"></path>
                     </svg>
-                    @if (isset($notificationCount) && $notificationCount > 0)
-                        <span class="badge bg-red position-absolute top-0 start-100 translate-middle">
-                            {{ $notificationCount > 99 ? '99+' : $notificationCount }}
-                        </span>
-                    @endif
                 </a>
 
                 <!-- Dropdown isi notifikasi -->
@@ -48,79 +43,6 @@
                             <button type="button" class="btn-close ms-auto" aria-label="Close"
                                 onclick="closeDropdown(this)"></button>
                         </div>
-                        <div class="list-group list-group-flush list-group-hoverable">
-                            @if (isset($notifications) && $notifications->count() > 0)
-                                @foreach ($notifications->take(5) as $notification)
-                                    <div class="list-group-item">
-                                        <div class="row align-items-center">
-                                            <div class="col-auto">
-                                                <span
-                                                    class="status-dot status-dot-animated {{ $notificationService->getPriorityColor($notification['priority']) }} d-block"></span>
-                                            </div>
-                                            <div class="col text-truncate">
-                                                <a href="{{ $notification['url'] }}" class="text-body d-block">
-                                                    {{ $notification['product']['name'] }}
-                                                </a>
-                                                <div class="d-block text-secondary text-truncate mt-n1">
-                                                    Stok: {{ number_format($notification['product']['stock']) }} /
-                                                    Min: {{ number_format($notification['product']['minimum_stock']) }}
-                                                    <span
-                                                        class="badge badge-sm {{ $notificationService->getPriorityColor($notification['priority']) }} ms-1">
-                                                        {{ $notificationService->getPriorityLabel($notification['priority']) }}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <a href="#" class="list-group-item-actions"
-                                                    onclick="markAsRead({{ $notification['id'] }})">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" class="icon text-muted icon-2">
-                                                        <path d="M20 6L9 17l-5-5"></path>
-                                                    </svg>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                                @if ($notifications->count() > 5)
-                                    <div class="text-center list-group-item">
-                                        <a href="{{ route('stock.index') }}" class="text-muted">
-                                            Lihat {{ $notifications->count() - 5 }} notifikasi lainnya...
-                                        </a>
-                                    </div>
-                                @endif
-                            @else
-                                <div class="py-4 text-center list-group-item">
-                                    <div class="text-muted">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round" class="mb-2 icon">
-                                            <path d="M20 6L9 17l-5-5"></path>
-                                        </svg>
-                                        <div>Tidak ada notifikasi stok rendah</div>
-                                        <small>Semua produk memiliki stok yang cukup</small>
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                        @if (isset($notifications) && $notifications->count() > 0)
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <a href="{{ route('stock.index') }}" class="btn btn-outline-primary w-100">
-                                            <i class="fas fa-warehouse me-1"></i> Lihat Stok
-                                        </a>
-                                    </div>
-                                    <div class="col">
-                                        <a href="#" class="btn btn-primary w-100" onclick="markAllAsRead()">
-                                            <i class="fas fa-check-double me-1"></i> Tandai Dibaca
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
                     </div>
                 </div>
             </div>
@@ -334,70 +256,6 @@
                     </li>
                 @endcan
 
-                {{-- <li class="nav-item dropdown {{ request()->is('penjualan*') ? 'active' : '' }}">
-                    <a class="nav-link dropdown-toggle" href="#navbar-sales" data-bs-toggle="dropdown"
-                        data-bs-auto-close="false" role="button" aria-expanded="false">
-                        <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="icon icon-1">
-                                <path d="M3 3h18l-1 13H4L3 3z"></path>
-                                <path d="M16 16a1 1 0 1 1 2 0a1 1 0 0 1 -2 0"></path>
-                                <path d="M7 16a1 1 0 1 1 2 0a1 1 0 0 1 -2 0"></path>
-                                <path d="M8.5 4.5l.5 7h6l.5 -7"></path>
-                            </svg>
-                        </span>
-                        <span class="nav-link-title"> Penjualan </span>
-                    </a>
-                    <div class="dropdown-menu {{ request()->is('penjualan*') ? 'show' : '' }}">
-                        <div class="dropdown-menu-columns">
-                            <div class="dropdown-menu-column">
-                                <a class="dropdown-item {{ request()->is('penjualan') && !request()->is('penjualan/riwayat') ? 'active' : '' }}"
-                                    href="{{ route('sales.pos') }}"> Point of Sale </a>
-                                <a class="dropdown-item {{ request()->is('penjualan/riwayat*') ? 'active' : '' }}"
-                                    href="{{ route('sales.history') }}"> Riwayat Penjualan </a>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                @can('purchase.view')
-                <li class="nav-item {{ request()->is('pembelian*') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('purchases.index') }}">
-                        <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="icon icon-1">
-                                <rect x="3" y="7" width="18" height="13" rx="2" />
-                                <path d="M16 3v4" />
-                                <path d="M8 3v4" />
-                                <path d="M3 10h18" />
-                            </svg>
-                        </span>
-                        <span class="nav-link-title"> Pembelian </span>
-                    </a>
-                </li>
-                @endcan
-                @can('stock.view')
-                <li class="nav-item {{ request()->is('stok*') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('stock.index') }}">
-                        <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="icon icon-1">
-                                <path d="M3 3h18v18H3z"></path>
-                                <path d="M9 9h6v6H9z"></path>
-                                <path d="M3 9h6"></path>
-                                <path d="M15 9h6"></path>
-                                <path d="M9 3v6"></path>
-                                <path d="M9 15v6"></path>
-                                <path d="M15 3v6"></path>
-                                <path d="M15 15v6"></path>
-                            </svg>
-                        </span>
-                        <span class="nav-link-title"> Manajemen Stok </span>
-                    </a>
-                </li>
-                @endcan --}}
                 {{-- Master Data (Dropdown Menu) --}}
 
                 <li
@@ -438,29 +296,9 @@
                                     <li><a class="dropdown-item" href="">filter Lembaga Ekonomi yang diikuti</a></li>
                                 </ul> --}}
                                 {{--  --}}
-                                @can('category.view')
-                                    <a class="dropdown-item {{ request()->is('kategori*') ? 'active' : '' }}"
-                                        href="{{ route('category.index') }}"> Kategori </a>
-                                @endcan
-                                @can('product.view')
-                                    <a class="dropdown-item {{ request()->is('produk*') ? 'active' : '' }}"
-                                        href="{{ route('product.index') }}"> Produk </a>
-                                @endcan
                                 @can('user.view')
                                     <a class="dropdown-item {{ request()->is('user*') ? 'active' : '' }}"
                                         href="{{ route('user.index') }}"> User </a>
-                                @endcan
-                                @can('customer.view')
-                                    <a class="dropdown-item {{ request()->is('konsumen*') ? 'active' : '' }}"
-                                        href="{{ route('customer.index') }}"> Konsumen </a>
-                                @endcan
-                                @can('unit.view')
-                                    <a class="dropdown-item {{ request()->is('satuan*') ? 'active' : '' }}"
-                                        href="{{ route('unit.index') }}"> Satuan </a>
-                                @endcan
-                                @can('supplier.view')
-                                    <a class="dropdown-item {{ request()->is('supplier*') ? 'active' : '' }}"
-                                        href="{{ route('supplier.index') }}"> Supplier </a>
                                 @endcan
                                 @can('role.view')
                                     <a class="dropdown-item {{ request()->is('role*') ? 'active' : '' }}"
