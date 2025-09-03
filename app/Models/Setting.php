@@ -17,7 +17,6 @@ final class Setting extends Model
         'email',
         'phone',
         'logo',
-        'margin',
     ];
 
     protected $casts = [
@@ -26,6 +25,5 @@ final class Setting extends Model
         'email' => 'string',
         'phone' => 'string',
         'logo' => 'string',
-        'margin' => 'decimal:2',
     ];
 }
