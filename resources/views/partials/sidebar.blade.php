@@ -277,6 +277,42 @@
                     </li>
                 @endcan
 
+                {{-- Awal Menu Dasar Data Keluarga --}}
+                @can('data_keluarga.view')
+                    <li class="nav-item dropdown {{ request()->is('data_keluarga*') ? 'active' : '' }}">
+                        <a class="nav-link dropdown-toggle" href="#navbar-data-keluarga" data-bs-toggle="dropdown"
+                            data-bs-auto-close="false" role="button" aria-expanded="false">
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                {{-- Icon Database --}}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-database">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M12 6m-8 0a8 3 0 1 0 16 0a8 3 0 1 0 -16 0" />
+                                    <path d="M4 6v6a8 3 0 0 0 16 0v-6" />
+                                    <path d="M4 12v6a8 3 0 0 0 16 0v-6" />
+                                </svg>
+                            </span>
+                            <span class="nav-link-title"> Dasar Data Keluarga </span>
+                        </a>
+                        <div class="dropdown-menu {{ request()->is('data_keluarga*') ? 'show' : '' }}">
+                            <div class="dropdown-menu-columns">
+                                <div class="dropdown-menu-column">
+                                    <a class="dropdown-item {{ request()->is('data-keluarga') && !request()->is('data-keluarga/*') ? 'active' : '' }}"
+                                        href="{{ route('data_keluarga.index') }}"> Data Kepala Keluarga </a>
+                                    {{-- <a class="dropdown-item {{ request()->is('data-keluarga/create') ? 'active' : '' }}"
+                                        href="{{ route('data_keluarga.create') }}"> + KK & Anggota Keluarga </a> --}}
+                                    <a class="dropdown-item {{ request()->is('data-keluarga/laporan/kepala-keluarga') ? 'active' : '' }}"
+                                        href="{{ route('data_keluarga.report.heads') }}"> Laporan Kepala Keluarga </a>
+                                    <a class="dropdown-item {{ request()->is('data-keluarga/laporan/anggota-keluarga') ? 'active' : '' }}"
+                                        href="{{ route('data_keluarga.report.members') }}"> Laporan Anggota Keluarga </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                @endcan
+
                 {{-- <li class="nav-item dropdown {{ request()->is('penjualan*') ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-sales" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
@@ -361,6 +397,29 @@
                         class="dropdown-menu {{ request()->is('role*') || request()->is('kategori*') || request()->is('supplier*') || request()->is('konsumen*') || request()->is('satuan*') || request()->is('produk*') || request()->is('user*') ? 'show' : '' }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
+                                {{--  --}}
+                                <a href="{{ route('master.ddk.index') }}" class="dropdown-item">Master DDK</a>
+                                {{-- dummy The nested dropdown for Master DDK --}}
+                                {{-- <a class="dropdown-item dropdown-toggle {{ request()->is('ddk*') ? 'active' : '' }}"
+                                    href="#" data-bs-toggle="dropdown">
+                                    Master DDK
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="">filter Hubungan Keluarga</a></li>
+                                    <li><a class="dropdown-item" href="">filter Agama</a></li>
+                                    <li><a class="dropdown-item" href="">filter Golongan Darah</a></li>
+                                    <li><a class="dropdown-item" href="">filter Kewarganegaraan</a></li>
+                                    <li><a class="dropdown-item" href="">filter Pendidikan terakhir</a></li>
+                                    <li><a class="dropdown-item" href="">filter Mata Pencaharian Pokok</a></li>
+                                    <li><a class="dropdown-item" href="">filter Akseptor KB</a></li>
+                                    <li><a class="dropdown-item" href="">filter Cacat Fisik</a></li>
+                                    <li><a class="dropdown-item" href="">filter Cacat Mental</a></li>
+                                    <li><a class="dropdown-item" href="">filter Kedudukan sebagai Wajib Pajak</a></li>
+                                    <li><a class="dropdown-item" href="">filter Lembaga Pemerintahan yang diikuti</a></li>
+                                    <li><a class="dropdown-item" href="">filter Lembaga Kemasyarakatan yang diikuti</a></li>
+                                    <li><a class="dropdown-item" href="">filter Lembaga Ekonomi yang diikuti</a></li>
+                                </ul> --}}
+                                {{--  --}}
                                 @can('category.view')
                                     <a class="dropdown-item {{ request()->is('kategori*') ? 'active' : '' }}"
                                         href="{{ route('category.index') }}"> Kategori </a>
