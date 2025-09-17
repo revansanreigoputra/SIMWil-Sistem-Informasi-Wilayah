@@ -1,21 +1,22 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\JabatanController;
-use App\Http\Controllers\KecamatanController;
-use App\Http\Controllers\PerangkatDesaController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\SettingController;
-use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DesaController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\JumlahController;
+use App\Http\Controllers\MutasiController;
+use App\Http\Controllers\JabatanController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KecamatanController;
 use App\Http\Controllers\MasterDdkController;
 use App\Http\Controllers\DataKeluargaController;
-use App\Http\Controllers\MutasiController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PerangkatDesaController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 Route::get('/', function () {
     return Auth::check()
@@ -75,6 +76,16 @@ Route::middleware(['auth', 'permission:jabatan.view'])->prefix('jabatan')->group
     Route::post('/', [JabatanController::class, 'store'])->middleware('permission:jabatan.store')->name('jabatan.store');
     Route::put('/{jabatan}', [JabatanController::class, 'update'])->middleware('permission:jabatan.update')->name('jabatan.update');
     Route::delete('/{jabatan}', [JabatanController::class, 'destroy'])->middleware('permission:jabatan.delete')->name('jabatan.destroy');
+});
+// Jumlah routes
+Route::middleware(['auth', 'permission:jumlah.view'])->prefix('jumlah')->group(function () {
+    Route::get('/', [JumlahController::class, 'index'])->name('potensi.potensi-sdm.jumlah.index');
+    Route::get('/create', [JumlahController::class, 'create'])->middleware('permission:jumlah.create')->name('potensi.potensi-sdm.jumlah.create');
+    Route::post('/', [JumlahController::class, 'store'])->middleware('permission:jumlah.store')->name('potensi.potensi-sdm.jumlah.store');
+    Route::get('/{jumlah}', [JumlahController::class, 'show'])->name('potensi.potensi-sdm.jumlah.show');
+    Route::get('/{jumlah}/edit', [JumlahController::class, 'edit'])->middleware('permission:jumlah.update')->name('potensi.potensi-sdm.jumlah.edit');
+    Route::put('/{jumlah}', [JumlahController::class, 'update'])->middleware('permission:jumlah.update')->name('potensi.potensi-sdm.jumlah.update');
+    Route::delete('/{jumlah}', [JumlahController::class, 'destroy'])->middleware('permission:jumlah.delete')->name('potensi.potensi-sdm.jumlah.destroy');
 });
 
 // Desa routes

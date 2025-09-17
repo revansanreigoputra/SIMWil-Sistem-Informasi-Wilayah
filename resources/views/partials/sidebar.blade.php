@@ -87,9 +87,9 @@
                     <a class="nav-link" href="{{ route('dashboard') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <!-- Download SVG icon from http://tabler.io/icons/icon/home -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="icon icon-1">
                                 <path d="M5 12l-2 0l9 -9l9 9l-2 0"></path>
                                 <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"></path>
                                 <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"></path>
@@ -108,8 +108,8 @@
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
                                 <!-- Icon Wilayah -->
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-pin"
-                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-                                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                     <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
                                     <path
@@ -239,11 +239,11 @@
                                     <path d="M4 12v6a8 3 0 0 0 16 0v-6" />
                                 </svg>
                             </span>
-                            <span class="nav-link-title">  Dasar Data Keluarga </span>
+                            <span class="nav-link-title"> Dasar Data Keluarga </span>
                         </a>
                     </li>
                 @endcan
-                      {{-- Mutasi --}}
+                {{-- Mutasi --}}
                 <li class="nav-item dropdown {{ request()->is('mutasi*') ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-mutasi" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
@@ -282,32 +282,49 @@
                     </div>
                 </li>
 
-                {{-- <li class="nav-item dropdown {{ request()->is('penjualan*') ? 'active' : '' }}">
-                    <a class="nav-link dropdown-toggle" href="#navbar-sales" data-bs-toggle="dropdown"
+                {{-- potensi --}}
+                <li class="nav-item dropdown {{ request()->is('potensi*') ? 'active' : '' }}">
+                    <a class="nav-link dropdown-toggle" href="#navbar-potensi" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="icon icon-1">
-                                <path d="M3 3h18l-1 13H4L3 3z"></path>
-                                <path d="M16 16a1 1 0 1 1 2 0a1 1 0 0 1 -2 0"></path>
-                                <path d="M7 16a1 1 0 1 1 2 0a1 1 0 0 1 -2 0"></path>
-                                <path d="M8.5 4.5l.5 7h6l.5 -7"></path>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chart-bar"
+                                width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M3 12h18" />
+                                <path d="M12 3v18" />
+                                <path d="M7 9v12" />
+                                <path d="M17 9v12" />
                             </svg>
                         </span>
-                        <span class="nav-link-title"> Penjualan </span>
+
+                        <span class="nav-link-title"> Potensi </span>
                     </a>
-                    <div class="dropdown-menu {{ request()->is('penjualan*') ? 'show' : '' }}">
+                    <div class="dropdown-menu {{ request()->is('potensi*') ? 'show' : '' }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
-                                <a class="dropdown-item {{ request()->is('penjualan') && !request()->is('penjualan/riwayat') ? 'active' : '' }}"
-                                    href="{{ route('sales.pos') }}"> Point of Sale </a>
-                                <a class="dropdown-item {{ request()->is('penjualan/riwayat*') ? 'active' : '' }}"
-                                    href="{{ route('sales.history') }}"> Riwayat Penjualan </a>
+                                <div class="dropend">
+                                    <a class="dropdown-item dropdown-toggle {{ request()->is('potensi/potensi-sdm*') ? 'active' : '' }}"
+                                        href="#sidebar-potensi-sdm" data-bs-toggle="dropdown"
+                                        data-bs-auto-close="false" role="button" aria-expanded="false">
+                                        Potensi Sumber <br> Daya Manusia
+                                    </a>
+                                    <div
+                                        class="dropdown-menu {{ request()->is('potensi/potensi-sdm*') ? 'show' : '' }}">
+                                        <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/jumlah*') ? 'active' : '' }}"
+                                            href="{{ route('potensi.potensi-sdm.jumlah.index') }}">
+                                            Jumlah
+                                        </a>
+                                    </div>
+                                </div>
+                                {{-- <a class="dropdown-item {{ request()->is('potensi/laporan*') ? 'active' : '' }}"
+                                    href="{{ route('potensi.laporan.index') }}">
+                                    Laporan Mutasi
+                                </a> --}}
                             </div>
                         </div>
-                    </li>
-                @endcan
+                    </div>
+                </li>
 
                 {{-- Master Data (Dropdown Menu) --}}
 
