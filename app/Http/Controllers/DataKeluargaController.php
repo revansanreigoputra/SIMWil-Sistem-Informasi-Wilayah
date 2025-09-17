@@ -61,7 +61,7 @@ class DataKeluargaController extends Controller
     public function update(Request $request, DataKeluarga $dataKeluarga)
     {
         $validatedData = $request->validate([
-            'no_kk' => 'required|string|unique:data_keluarga,no_kk,' . $dataKeluarga->id,
+            'no_kk' => 'required|string|unique:data_keluargas,no_kk,' . $dataKeluarga->id,
             'kepala_keluarga' => 'required|string',
             'alamat' => 'required|string',
             'desa_id' => 'required|exists:desas,id',

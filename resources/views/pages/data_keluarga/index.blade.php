@@ -43,12 +43,12 @@
                                     @can('data_keluarga.edit')
                                         <a href="{{ route('data_keluarga.edit', $dataKeluarga) }}" class="btn btn-warning btn-sm">Edit</a>
                                     @endcan
-                                    @can('data_keluarga.delete')
-                                        <form action="{{ route('data_keluarga.destroy', $dataKeluarga) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                        </form>
+                                     @can('data_keluarga.delete')
+                                        <button type="button" class="btn btn-danger btn-sm"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#delete-confirm-{{ $dataKeluarga->id }}">
+                                            Hapus
+                                        </button>
                                     @endcan
                                 </td>
                             </tr>
@@ -59,15 +59,24 @@
         </div>
     </div>
 @endsection
-
+@foreach ($dataKeluargas as $dataKeluarga)
+    <x-modal.delete-confirm
+        id="delete-confirm-{{ $dataKeluarga->id }}"
+        title="Yakin hapus data ini?"
+        description="Aksi ini tidak bisa dikembalikan."
+        route="{{ route('data_keluarga.destroy', $dataKeluarga) }}"
+        item="{{ $dataKeluarga->kepala_keluarga }}"
+    />
+@endforeach
+ 
 @push('addon-script')
     <script>
-        $(document).ready(function() {
+          $(document).ready(function() {
             $('#keluarga-table').DataTable({
                 pageLength: 10,
                 responsive: true,
                 autoWidth: false
             });
-        });
+        }); 
     </script>
 @endpush
