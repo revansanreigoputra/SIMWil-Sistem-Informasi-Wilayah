@@ -215,11 +215,13 @@
 
                 {{-- Awal Menu Dasar Data Keluarga --}}
                 @can('data_keluarga.view')
-                    <li class="nav-item dropdown {{ request()->is('data_keluarga*') ? 'active' : '' }}">
+                    <li
+                        class="nav-item dropdown {{ request()->is(['data-keluarga*', 'anggota-keluarga*']) ? 'active' : '' }}">
                         <a class="nav-link dropdown-toggle" href="#navbar-data-keluarga" data-bs-toggle="dropdown"
                             data-bs-auto-close="false" role="button" aria-expanded="false">
+
+                            {{-- Icon --}}
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                {{-- Icon Database --}}
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round"
@@ -230,18 +232,116 @@
                                     <path d="M4 12v6a8 3 0 0 0 16 0v-6" />
                                 </svg>
                             </span>
-                            <span class="nav-link-title"> Dasar Data Keluarga </span>
+
+                            {{-- Judul --}}
+                            <span class="nav-link-title">Dasar Data Keluarga</span>
                         </a>
-                        <div class="dropdown-menu {{ request()->is('data_keluarga*') ? 'show' : '' }}">
+
+                        {{-- Dropdown Menu --}}
+                        <div
+                            class="dropdown-menu {{ request()->is(['data-keluarga*', 'anggota-keluarga*']) ? 'show' : '' }}">
                             <div class="dropdown-menu-columns">
                                 <div class="dropdown-menu-column">
-                                    <a class="dropdown-item {{ request()->is('data-keluarga') && !request()->is('data-keluarga/*') ? 'active' : '' }}"
-                                        href="{{ route('data_keluarga.index') }}"> Data Kepala Keluarga </a>
-                                    <a class="dropdown-item {{ request()->is('data-keluarga/laporan/kepala-keluarga') ? 'active' : '' }}"
-                                        href="{{ route('data_keluarga.report.heads') }}"> Laporan Kepala Keluarga </a>
-                                    <a class="dropdown-item {{ request()->is('data-keluarga/laporan/anggota-keluarga') ? 'active' : '' }}"
-                                        href="{{ route('data_keluarga.report.members') }}"> Laporan Anggota Keluarga </a>
+
+                                    {{-- Kartu Keluarga --}}
+                                    <a class="dropdown-item {{ request()->routeIs('data_keluarga.index') ? 'active' : '' }}"
+                                        href="{{ route('data_keluarga.index') }}">
+                                        Data Kartu Keluarga
+                                    </a>
+                                    {{-- <a class="dropdown-item {{ request()->routeIs('data_keluarga.create') ? 'active' : '' }}"
+                                        href="{{ route('data_keluarga.create') }}">
+                                        + Tambah Kartu Keluarga
+                                    </a> --}}
+
+                                    {{-- <div class="dropdown-divider"></div> --}}
+
+                                    {{-- Anggota Keluarga --}}
+                                    <a class="dropdown-item {{ request()->routeIs('anggota_keluarga.index') ? 'active' : '' }}"
+                                        href="{{ route('anggota_keluarga.index') }}">
+                                        Data Anggota Keluarga
+                                    </a>
+                                    {{-- <a class="dropdown-item {{ request()->routeIs('anggota_keluarga.create') ? 'active' : '' }}"
+                                        href="{{ route('anggota_keluarga.create') }}">
+                                        + Tambah Anggota Keluarga
+                                    </a> --}}
+                                    <div class="dropdown-divider"></div>
+                                    {{-- Laporan --}}
+                                    <a class="dropdown-item {{ request()->routeIs('data_keluarga.report.heads') ? 'active' : '' }}"
+                                        href="{{ route('data_keluarga.report.heads') }}">
+                                        Laporan Kepala Keluarga
+                                    </a>
+                                    <a class="dropdown-item {{ request()->routeIs('anggota_keluarga.report.members') ? 'active' : '' }}"
+                                        href="{{ route('anggota_keluarga.report.members') }}">
+                                        Laporan Anggota Keluarga
+                                    </a>
                                 </div>
+                            </div>
+                        </div>
+                    </li>
+                @endcan
+                {{-- Akhir Menu Dasar Data Keluarga --}}
+
+                {{-- Mutasi --}}
+                <li class="nav-item dropdown {{ request()->is('mutasi*') ? 'active' : '' }}">
+                    <a class="nav-link dropdown-toggle" href="#navbar-mutasi" data-bs-toggle="dropdown"
+                        data-bs-auto-close="false" role="button" aria-expanded="false">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="icon icon-tabler icon-tabler-arrows-exchange" width="24" height="24"
+                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M10 4l-2 2l2 2" />
+                                <path d="M14 20l2 -2l-2 -2" />
+                                <path d="M4 6h12a2 2 0 0 1 2 2v2" />
+                                <path d="M20 18h-12a2 2 0 0 1 -2 -2v-2" />
+                            </svg>
+                        </span>
+
+                        <span class="nav-link-title"> Mutasi </span>
+                    </a>
+                    <div class="dropdown-menu {{ request()->is('mutasi*') ? 'show' : '' }}">
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ request()->is('mutasi/data*') ? 'active' : '' }}"
+                                    href="{{ route('mutasi.data.index') }}">
+                                    Data Mutasi
+                                </a>
+                                {{-- <a class="dropdown-item {{ request()->is('mutasi/masuk*') ? 'active' : '' }}"
+                                    href="{{ route('mutasi.masuk.index') }}">
+                                    Masuk Desa
+                                </a> --}}
+                                <a class="dropdown-item {{ request()->is('mutasi/laporan*') ? 'active' : '' }}"
+                                    href="{{ route('mutasi.laporan.index') }}">
+                                    Laporan Mutasi
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                {{-- <li class="nav-item dropdown {{ request()->is('penjualan*') ? 'active' : '' }}">
+                    <a class="nav-link dropdown-toggle" href="#navbar-sales" data-bs-toggle="dropdown"
+                        data-bs-auto-close="false" role="button" aria-expanded="false">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="icon icon-1">
+                                <path d="M3 3h18l-1 13H4L3 3z"></path>
+                                <path d="M16 16a1 1 0 1 1 2 0a1 1 0 0 1 -2 0"></path>
+                                <path d="M7 16a1 1 0 1 1 2 0a1 1 0 0 1 -2 0"></path>
+                                <path d="M8.5 4.5l.5 7h6l.5 -7"></path>
+                            </svg>
+                        </span>
+                        <span class="nav-link-title"> Penjualan </span>
+                    </a>
+                    <div class="dropdown-menu {{ request()->is('penjualan*') ? 'show' : '' }}">
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ request()->is('penjualan') && !request()->is('penjualan/riwayat') ? 'active' : '' }}"
+                                    href="{{ route('sales.pos') }}"> Point of Sale </a>
+                                <a class="dropdown-item {{ request()->is('penjualan/riwayat*') ? 'active' : '' }}"
+                                    href="{{ route('sales.history') }}"> Riwayat Penjualan </a>
                             </div>
                         </div>
                     </li>

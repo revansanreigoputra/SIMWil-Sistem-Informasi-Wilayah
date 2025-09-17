@@ -17,7 +17,7 @@ class DataKeluarga extends Model
         'alamat',
         'rt',
         'rw',
-        'nama_dusun',
+        'dusun',
         'bulan',
         'tahun',
         'nama_pengisi',
@@ -25,4 +25,13 @@ class DataKeluarga extends Model
         'jabatan',
         'sumber_data',
     ];
+
+    /**
+     * Mendefinisikan relasi "hasMany" ke model AnggotaKeluarga.
+     * Satu kartu keluarga dapat memiliki banyak anggota keluarga.
+     */
+    public function anggotaKeluargas()
+    {
+        return $this->hasMany(AnggotaKeluarga::class, 'kartu_keluarga_id');
+    }
 }
