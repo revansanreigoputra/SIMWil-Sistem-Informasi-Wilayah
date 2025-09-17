@@ -2,95 +2,66 @@
 
 namespace App\Models;
 
-use App\Models\MasterDDK\{
-    Agama,
-    GolonganDarah,
-    Kewarganegaraan,
-    Pendidikan,
-    MataPencaharian,
-    KB,
-    Cacat,
-    KedudukanPajak,
-    Lembaga
-};
-use App\Models\DataKeluarga;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class AnggotaKeluarga extends Model
 {
-    protected $table = 'anggota_keluargas';
+    use HasFactory;
 
+    /**
+     * Atribut yang dapat diisi secara massal.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
-        'data_keluarga_id',
+        'kartu_keluarga_id',
         'no_urut',
         'nik',
-        'no_akta_kelahiran',
-        'nama',
+        'nama_lengkap',
+        'no_akte',
         'jenis_kelamin',
-        'hubungan_keluarga_id',
+        'hubungan_keluarga',
         'tempat_lahir',
         'tanggal_lahir',
         'tanggal_pencatatan',
         'status_perkawinan',
-        'agama_id',
-        'golongan_darah_id',
-        'kewarganegaraan_id',
+        'agama',
+        'golongan_darah',
+        'kewarganegaraan',
         'etnis',
-        'pendidikan_id',
-        'mata_pencaharian_id',
-        'nama_orang_tua',
-        'kb_id',
-        'cacat_id',
-        'kedudukan_pajak_id',
-        'lembaga_id',
+        'pendidikan',
+        'mata_pencaharian',
+        'nama_ayah',
+        'nama_ibu',
+        'akseptor_kb',
+        'cacat_fisik',
+        'cacat_mental',
+        'wajib_pajak',
+        'lembaga_pemerintahan',
+        'lembaga_kemasyarakatan',
     ];
-    public function dataKeluarga()
-    {
-        return $this->belongsTo(DataKeluarga::class, 'data_keluarga_id');
-    }
 
-    public function agama()
-    {
-        return $this->belongsTo(Agama::class, 'agama_id');
-    }
+    /**
+     * Atribut yang harus di-cast ke tipe data tertentu.
+     * Ini berguna untuk data yang disimpan sebagai JSON (dari checkbox).
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'cacat_fisik' => 'array',
+        'cacat_mental' => 'array',
+        'lembaga_pemerintahan' => 'array',
+        'lembaga_kemasyarakatan' => 'array',
+    ];
 
-    public function golonganDarah()
+    /**
+     * Mendefinisikan relasi "belongsTo" ke model KartuKeluarga.
+     * Setiap anggota keluarga pasti dimiliki oleh satu kartu keluarga.
+     */
+    public function kartuKeluarga()
     {
-        return $this->belongsTo(GolonganDarah::class, 'golongan_darah_id');
-    }
-
-    public function kewarganegaraan()
-    {
-        return $this->belongsTo(Kewarganegaraan::class, 'kewarganegaraan_id');
-    }
-
-    public function pendidikan()
-    {
-        return $this->belongsTo(Pendidikan::class, 'pendidikan_id');
-    }
-
-    public function mataPencaharian()
-    {
-        return $this->belongsTo(MataPencaharian::class, 'mata_pencaharian_id');
-    }
-
-    public function kb()
-    {
-        return $this->belongsTo(KB::class, 'kb_id');
-    }
-
-    public function cacat()
-    {
-        return $this->belongsTo(Cacat::class, 'cacat_id');
-    }
-
-    public function kedudukanPajak()
-    {
-        return $this->belongsTo(KedudukanPajak::class, 'kedudukan_pajak_id');
-    }
-
-    public function lembaga()
-    {
-        return $this->belongsTo(Lembaga::class, 'lembaga_id');
+        // Sesuaikan 'App\Models\KartuKeluarga' jika nama model KK Anda berbeda
+        return $this->belongsTo(DataKeluarga::class, 'kartu_keluarga_id');
     }
 }

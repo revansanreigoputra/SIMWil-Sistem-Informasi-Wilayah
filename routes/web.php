@@ -91,13 +91,30 @@ Route::middleware(['auth', 'permission:perangkat_desa.view'])->prefix('perangkat
     Route::delete('/{id}', [PerangkatDesaController::class, 'destroy'])->middleware('permission:perangkat_desa.delete')->name('perangkat_desa.destroy');
     Route::post('/check-duplicate', [PerangkatDesaController::class, 'checkDuplicate'])->name('perangkat_desa.check_duplicate');
 });
-// Data Keluarga
+
+// DATA KARTU KELUARGA (KK)
 Route::middleware(['auth'])->prefix('data-keluarga')->name('data_keluarga.')->group(function () {
     Route::get('/', [DataKeluargaController::class, 'index'])->middleware('permission:data_keluarga.view')->name('index');
-    Route::get('/create', [DataKeluargaController::class, 'create'])->middleware('permission:data_keluarga.create')->name('create');
-    Route::post('/', [DataKeluargaController::class, 'store'])->middleware('permission:data_keluarga.store')->name('store');
+    Route::get('/create', [DataKeluargaController::class, 'createKk'])->middleware('permission:data_keluarga.create')->name('create');
+    Route::post('/store', [DataKeluargaController::class, 'storeKk'])->middleware('permission:data_keluarga.store')->name('store');
     Route::get('/laporan/kepala-keluarga', [DataKeluargaController::class, 'headsReport'])->middleware('permission:data_keluarga.report')->name('report.heads');
+    // EDIT, UPDATE, DELETE tanpa permission
+    Route::get('/{id}/edit', [DataKeluargaController::class, 'editKk'])->name('edit');
+    Route::put('/{id}', [DataKeluargaController::class, 'updateKk'])->name('update');
+    Route::delete('/{id}', [DataKeluargaController::class, 'destroyKk'])->name('destroy');
+});
+
+
+// DATA ANGGOTA KELUARGA (AK)
+Route::middleware(['auth'])->prefix('anggota-keluarga')->name('anggota_keluarga.')->group(function () {
+    Route::get('/', [DataKeluargaController::class, 'indexAnggota'])->middleware('permission:data_keluarga.view')->name('index');
+    Route::get('/create', [DataKeluargaController::class, 'createAk'])->middleware('permission:data_keluarga.create')->name('create');
+    Route::post('/store', [DataKeluargaController::class, 'storeAk'])->middleware('permission:data_keluarga.store')->name('store');
     Route::get('/laporan/anggota-keluarga', [DataKeluargaController::class, 'membersReport'])->middleware('permission:data_keluarga.report')->name('report.members');
+    // EDIT, UPDATE, DELETE tanpa permission
+    Route::get('/{id}/edit', [DataKeluargaController::class, 'editAk'])->name('edit');
+    Route::put('/{id}', [DataKeluargaController::class, 'updateAk'])->name('update');
+    Route::delete('/{id}', [DataKeluargaController::class, 'destroyAk'])->name('destroy');
 });
 
 

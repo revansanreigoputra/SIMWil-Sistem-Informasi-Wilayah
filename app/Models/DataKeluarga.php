@@ -2,13 +2,6 @@
 
 namespace App\Models;
 
- 
-use App\Models\{
-    Desa,
-    Kecamatan,
-    AnggotaKeluarga,
-    PerangkatDesa
-};
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,24 +15,23 @@ class DataKeluarga extends Model
         'no_kk',
         'kepala_keluarga',
         'alamat',
-        'desa_id',
         'rt',
         'rw',
-        'kecamatan_id',
-        'nama_pengisi_id'
+        'dusun',
+        'bulan',
+        'tahun',
+        'nama_pengisi',
+        'pekerjaan',
+        'jabatan',
+        'sumber_data',
     ];
 
-    public function perangkatDesas()
+    /**
+     * Mendefinisikan relasi "hasMany" ke model AnggotaKeluarga.
+     * Satu kartu keluarga dapat memiliki banyak anggota keluarga.
+     */
+    public function anggotaKeluargas()
     {
-        return $this->belongsTo(PerangkatDesa::class, 'nama_pengisi_id');
+        return $this->hasMany(AnggotaKeluarga::class, 'kartu_keluarga_id');
     }
-    public function desas()
-    {
-        return $this->belongsTo(Desa::class, 'desa_id');
-    }
-    public function kecamatans()
-    {
-        return $this->belongsTo(Kecamatan::class, 'kecamatan_id');
-    }
-
 }
