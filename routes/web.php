@@ -6,7 +6,6 @@ use App\Http\Controllers\DesaController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\JumlahController;
-use App\Http\Controllers\MutasiController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingController;
@@ -14,11 +13,11 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KecamatanController;
 use App\Http\Controllers\MasterDdkController;
 use App\Http\Controllers\DataKeluargaController;
-
+use App\Http\Controllers\MutasiController;
+use App\Http\Controllers\TtdController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PerangkatDesaController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\TtdController;
 
 Route::get('/', function () {
     return Auth::check()

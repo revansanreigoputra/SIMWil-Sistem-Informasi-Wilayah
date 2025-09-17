@@ -28,7 +28,7 @@
 
                         <div class="mb-3">
                             <label for="nip" class="form-label">NIP</label>
-                            <input type="text" name="nip" id="nip" class="form-control" value="{{ old('nip', $ttd->nip) }}">
+                            <input type="number" name="nip" id="nip" class="form-control" value="{{ old('nip', $ttd->nip) }}" required>
                             @error('nip')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
