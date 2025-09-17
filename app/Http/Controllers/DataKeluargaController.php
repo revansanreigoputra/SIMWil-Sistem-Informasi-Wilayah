@@ -130,73 +130,25 @@ class DataKeluargaController extends Controller
             ],
         ]);
 
-        return view('pages.data_keluarga.index_ak', compact('anggotaKeluargas'));
+        return view('pages.data_keluarga.edit', compact('dataKeluarga', 'desas', 'kecamatans', 'perangkatDesas'));
     }
 
-
-    /**
-     * Menampilkan formulir untuk membuat anggota keluarga baru.
-     */
-    public function createAk()
+    public function update(Request $request, DataKeluarga $dataKeluarga)
     {
-        // Data tiruan untuk dropdown pilihan KK
-        $kartuKeluargas = collect([
-            (object)['id' => 1, 'no_kk' => '3401010101010001', 'kepala_keluarga' => 'Budi Santoso'],
-            (object)['id' => 2, 'no_kk' => '3401010101010002', 'kepala_keluarga' => 'Agus Setiawan'],
+        $validatedData = $request->validate([
+            'no_kk' => 'required|string|unique:data_keluargas,no_kk,' . $dataKeluarga->id,
+            'kepala_keluarga' => 'required|string',
+            'alamat' => 'required|string',
+            'desa_id' => 'required|exists:desas,id',
+            'rt' => 'required|string',
+            'rw' => 'required|string',
+            'kecamatan_id' => 'required|exists:kecamatans,id',
+            'nama_pengisi_id' => 'nullable|exists:perangkat_desas,id',
         ]);
-        return view('pages.data_keluarga.create_ak', compact('kartuKeluargas'));
-    }
 
-    /**
-     * (Dummy) Menyimpan data anggota keluarga baru.
-     */
-    public function storeAk(Request $request)
-    {
-        // Hanya redirect kembali dengan pesan sukses, tanpa menyimpan ke database
-        return redirect()->route('anggota_keluarga.index')->with('success', 'Data Anggota Keluarga berhasil ditambahkan!');
-    }
+        $dataKeluarga->update($validatedData);
 
-        /**
-     * Menampilkan form edit Anggota Keluarga.
-     */
-    public function editAk($id)
-{
-    // Data dummy contoh anggota yang diedit
-    $anggota = (object)[
-        'id' => $id,
-        'nik' => '340101121290000' . $id,
-        'nama_lengkap' => $id == 1 ? 'Siti Aminah' : 'Joko Susilo',
-        'jenis_kelamin' => $id == 1 ? 'P' : 'L',
-        'hubungan_keluarga' => $id == 1 ? 'Istri' : 'Anak',
-        'kartu_keluarga_id' => 1,
-        'no_urut' => $id,          
-        'no_akte' => null,
-        'tempat_lahir' => 'Bantul',
-        'tanggal_lahir' => '1990-12-12',
-        'agama' => 'Islam',
-        'pendidikan' => 'SMA',
-        'pekerjaan' => 'Petani',
-        'status_perkawinan' => 'Kawin',
-        'status_hubungan' => 'Aktif',
-    ];
-
-    // Data dummy untuk pilihan dropdown KK
-    $kartuKeluargas = collect([
-        (object)['id' => 1, 'no_kk' => '3401010101010001', 'kepala_keluarga' => 'Budi Santoso'],
-        (object)['id' => 2, 'no_kk' => '3401010101010002', 'kepala_keluarga' => 'Agus Setiawan'],
-    ]);
-
-    return view('pages.data_keluarga.edit_ak', compact('anggota', 'kartuKeluargas'));
-}
-
-
-    /**
-     * (Dummy) Update data anggota keluarga.
-     */
-    public function updateAk(Request $request, $id)
-    {
-        // Tidak ada database, jadi hanya redirect kembali
-        return redirect()->route('anggota_keluarga.index')->with('success', 'Data Anggota Keluarga berhasil diperbarui!');
+        return redirect()->route('data_keluarga.index')->with('success', 'Data Kepala Keluarga berhasil diperbarui.');
     }
 
     /**

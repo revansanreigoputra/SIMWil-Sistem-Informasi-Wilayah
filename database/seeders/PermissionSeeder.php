@@ -63,12 +63,21 @@ class PermissionSeeder extends Seeder
             'data_keluarga.create',
             'data_keluarga.store',
             'data_keluarga.report',
+            'data_keluarga.edit',
+            'data_keluarga.update',
+            'data_keluarga.delete',
+            'data_keluarga.destroy',
+            
             // ttd (penanda tangan) permissions
             'ttd.view',
             'ttd.create',
             'ttd.store',
             'ttd.update',
             'ttd.delete',
+            'data_keluarga.edit',
+            'data_keluarga.update',
+            'data_keluarga.delete',
+            'data_keluarga.destroy',
 
              // Mutasi permissions
             'mutasi.data.view',

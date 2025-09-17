@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\DesaController;
 use App\Http\Controllers\MasterDdkController;
 use App\Http\Controllers\DataKeluargaController;
+use App\Http\Controllers\MutasiController;
 
 Route::get('/', function () {
     return Auth::check()
@@ -94,13 +95,14 @@ Route::middleware(['auth', 'permission:perangkat_desa.view'])->prefix('perangkat
 // DATA KARTU KELUARGA (KK)
 Route::middleware(['auth'])->prefix('data-keluarga')->name('data_keluarga.')->group(function () {
     Route::get('/', [DataKeluargaController::class, 'index'])->middleware('permission:data_keluarga.view')->name('index');
-    Route::get('/create', [DataKeluargaController::class, 'createKk'])->middleware('permission:data_keluarga.create')->name('create');
-    Route::post('/store', [DataKeluargaController::class, 'storeKk'])->middleware('permission:data_keluarga.store')->name('store');
-    Route::get('/laporan/kepala-keluarga', [DataKeluargaController::class, 'headsReport'])->middleware('permission:data_keluarga.report')->name('report.heads');
-    // EDIT, UPDATE, DELETE tanpa permission
-    Route::get('/{id}/edit', [DataKeluargaController::class, 'editKk'])->name('edit');
-    Route::put('/{id}', [DataKeluargaController::class, 'updateKk'])->name('update');
-    Route::delete('/{id}', [DataKeluargaController::class, 'destroyKk'])->name('destroy');
+    Route::get('/create', [DataKeluargaController::class, 'create'])->middleware('permission:data_keluarga.create')->name('create');
+    Route::post('/', [DataKeluargaController::class, 'store'])->middleware('permission:data_keluarga.store')->name('store');
+    // Route::get('/laporan/kepala-keluarga', [DataKeluargaController::class, 'headsReport'])->middleware('permission:data_keluarga.report')->name('report.heads');
+    // Route::get('/laporan/anggota-keluarga', [DataKeluargaController::class, 'membersReport'])->middleware('permission:data_keluarga.report')->name('report.members');
+    Route::get('/{dataKeluarga}/edit', [DataKeluargaController::class, 'edit'])->middleware('permission:data_keluarga.edit')->name('edit');
+    Route::put('/{dataKeluarga}', [DataKeluargaController::class, 'update'])->middleware('permission:data_keluarga.update')->name('update');
+    Route::delete('/{dataKeluarga}', [DataKeluargaController::class, 'destroy'])->middleware('permission:data_keluarga.delete')->name('delete');
+    Route::delete('/{dataKeluarga}', [DataKeluargaController::class, 'destroy'])->middleware('permission:data_keluarga.destroy')->name('destroy');
 });
 
 
@@ -110,8 +112,42 @@ Route::middleware(['auth'])->prefix('anggota-keluarga')->name('anggota_keluarga.
     Route::get('/create', [DataKeluargaController::class, 'createAk'])->middleware('permission:data_keluarga.create')->name('create');
     Route::post('/store', [DataKeluargaController::class, 'storeAk'])->middleware('permission:data_keluarga.store')->name('store');
     Route::get('/laporan/anggota-keluarga', [DataKeluargaController::class, 'membersReport'])->middleware('permission:data_keluarga.report')->name('report.members');
+    // EDIT, UPDATE, DELETE tanpa permission
+    Route::get('/{id}/edit', [DataKeluargaController::class, 'editAk'])->name('edit');
+    Route::put('/{id}', [DataKeluargaController::class, 'updateAk'])->name('update');
+    Route::delete('/{id}', [DataKeluargaController::class, 'destroyAk'])->name('destroy');
 });
 
+
+// Mutasi Routes
+Route::prefix('mutasi')->middleware(['auth'])->group(function() {
+
+    Route::prefix('data')->middleware('permission:mutasi.data.view')->group(function() {
+        Route::get('/', [MutasiController::class, 'indexData'])->name('mutasi.data.index');
+        Route::get('/create', [MutasiController::class, 'createData'])->name('mutasi.data.create')->middleware('permission:mutasi.data.create');
+        Route::post('/', [MutasiController::class, 'storeData'])->name('mutasi.data.store')->middleware('permission:mutasi.data.store');
+        Route::get('/{id}/edit', [MutasiController::class, 'editData'])->name('mutasi.data.edit')->middleware('permission:mutasi.data.edit');
+        Route::put('/{id}', [MutasiController::class, 'updateData'])->name('mutasi.data.update')->middleware('permission:mutasi.data.update');
+        Route::delete('/{id}', [MutasiController::class, 'destroyData'])->name('mutasi.data.destroy')->middleware('permission:mutasi.data.delete');
+        Route::get('/{id}', [MutasiController::class, 'showData'])->name('mutasi.data.show');
+    });
+
+    // Route::prefix('masuk')->middleware('permission:mutasi.masuk.view')->group(function() {
+    //     Route::get('/', [MutasiController::class, 'indexMasuk'])->name('mutasi.masuk.index');
+    //     Route::get('/create', [MutasiController::class, 'createMasuk'])->name('mutasi.masuk.create')->middleware('permission:mutasi.masuk.create');
+    //     Route::post('/', [MutasiController::class, 'storeMasuk'])->name('mutasi.masuk.store')->middleware('permission:mutasi.masuk.store');
+    //     Route::get('/{id}/edit', [MutasiController::class, 'editMasuk'])->name('mutasi.masuk.edit')->middleware('permission:mutasi.masuk.edit');
+    //     Route::put('/{id}', [MutasiController::class, 'updateMasuk'])->name('mutasi.masuk.update')->middleware('permission:mutasi.masuk.update');
+    //     Route::delete('/{id}', [MutasiController::class, 'destroyMasuk'])->name('mutasi.masuk.destroy')->middleware('permission:mutasi.masuk.delete');
+    //     Route::get('/{id}', [MutasiController::class, 'showMasuk'])->name('mutasi.masuk.show')->middleware('permission:mutasi.masuk.view');
+    // });
+
+    Route::prefix('laporan')->middleware('permission:mutasi.laporan.view')->group(function() {
+        Route::get('/', [MutasiController::class, 'laporan'])->name('mutasi.laporan.index');
+        Route::get('/export', [MutasiController::class, 'exportLaporan'])->name('mutasi.laporan.export')->middleware('permission:mutasi.laporan.export');
+    });
+
+});
 require __DIR__ . '/auth.php';
 
 
