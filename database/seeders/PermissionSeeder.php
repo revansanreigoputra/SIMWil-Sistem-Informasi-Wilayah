@@ -62,6 +62,12 @@ class PermissionSeeder extends Seeder
             'data_keluarga.create',
             'data_keluarga.store',
             'data_keluarga.report',
+            // ttd (penanda tangan) permissions
+            'ttd.view',
+            'ttd.create',
+            'ttd.store',
+            'ttd.update',
+            'ttd.delete',
 
 
         ];
