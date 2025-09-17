@@ -29,7 +29,7 @@ class DataKeluarga extends Model
         'nama_pengisi_id'
     ];
 
-    public function perangkatDesa()
+    public function perangkatDesas()
     {
         return $this->belongsTo(PerangkatDesa::class, 'nama_pengisi_id');
     }

@@ -14,9 +14,11 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KecamatanController;
 use App\Http\Controllers\MasterDdkController;
 use App\Http\Controllers\DataKeluargaController;
+
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PerangkatDesaController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\TtdController;
 
 Route::get('/', function () {
     return Auth::check()
@@ -105,12 +107,34 @@ Route::middleware(['auth', 'permission:perangkat_desa.view'])->prefix('perangkat
 // Data Keluarga
 Route::middleware(['auth'])->prefix('data-keluarga')->name('data_keluarga.')->group(function () {
     Route::get('/', [DataKeluargaController::class, 'index'])->middleware('permission:data_keluarga.view')->name('index');
-    // Route::get('/create', [DataKeluargaController::class, 'create'])->middleware('permission:data_keluarga.create')->name('create');
-    // Route::post('/', [DataKeluargaController::class, 'store'])->middleware('permission:data_keluarga.store')->name('store');
-    // Route::get('/laporan/kepala-keluarga', [DataKeluargaController::class, 'headsReport'])->middleware('permission:data_keluarga.report')->name('report.heads');
-    // Route::get('/laporan/anggota-keluarga', [DataKeluargaController::class, 'membersReport'])->middleware('permission:data_keluarga.report')->name('report.members');
+    Route::get('/create', [DataKeluargaController::class, 'create'])->middleware('permission:data_keluarga.create')->name('create');
+    Route::post('/', [DataKeluargaController::class, 'store'])->middleware('permission:data_keluarga.store')->name('store');
+    Route::get('/laporan/kepala-keluarga', [DataKeluargaController::class, 'headsReport'])->middleware('permission:data_keluarga.report')->name('report.heads');
+    Route::get('/laporan/anggota-keluarga', [DataKeluargaController::class, 'membersReport'])->middleware('permission:data_keluarga.report')->name('report.members');
+    Route::get('/{dataKeluarga}/edit', [DataKeluargaController::class, 'edit'])->middleware('permission:data_keluarga.edit')->name('edit');
+    Route::put('/{dataKeluarga}', [DataKeluargaController::class, 'update'])->middleware('permission:data_keluarga.update')->name('update');
+    Route::delete('/{dataKeluarga}', [DataKeluargaController::class, 'destroy'])->middleware('permission:data_keluarga.delete')->name('delete');
+    Route::delete('/{dataKeluarga}', [DataKeluargaController::class, 'destroy'])->middleware('permission:data_keluarga.destroy')->name('destroy');
 });
 
+// DATA ANGGOTA KELUARGA (AK)
+Route::middleware(['auth'])->prefix('anggota-keluarga')->name('anggota_keluarga.')->group(function () {
+    Route::get('/', [DataKeluargaController::class, 'indexAnggota'])->middleware('permission:data_keluarga.view')->name('index');
+    Route::get('/create', [DataKeluargaController::class, 'createAk'])->middleware('permission:data_keluarga.create')->name('create');
+    Route::post('/store', [DataKeluargaController::class, 'storeAk'])->middleware('permission:data_keluarga.store')->name('store');
+    Route::get('/laporan/anggota-keluarga', [DataKeluargaController::class, 'membersReport'])->middleware('permission:data_keluarga.report')->name('report.members');
+});
+
+// Penanda Tangan (TTD) routes
+Route::middleware(['auth', 'permission:ttd.view'])->prefix('ttd')->group(function () {
+    Route::get('/', [TtdController::class, 'index'])->name('ttd.index');
+    Route::get('/create', [TtdController::class, 'create'])->middleware('permission:ttd.create')->name('ttd.create');
+    Route::post('/', [TtdController::class, 'store'])->middleware('permission:ttd.store')->name('ttd.store');
+    Route::get('/{ttd}', [TtdController::class, 'show'])->name('ttd.show');
+    Route::get('/{ttd}/edit', [TtdController::class, 'edit'])->middleware('permission:ttd.update')->name('ttd.edit');
+    Route::put('/{ttd}', [TtdController::class, 'update'])->middleware('permission:ttd.update')->name('ttd.update');
+    Route::delete('/{ttd}', [TtdController::class, 'destroy'])->middleware('permission:ttd.delete')->name('ttd.destroy');
+});
 
 // Mutasi Routes
 Route::prefix('mutasi')->middleware(['auth'])->group(function() {
