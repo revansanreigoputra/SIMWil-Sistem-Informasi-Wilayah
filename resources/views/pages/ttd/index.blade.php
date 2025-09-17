@@ -140,7 +140,10 @@
 @push('addon-script')
     <script>
         $(document).ready(function() {
-            $('#ttd-table').DataTable();
+            // Only initialize DataTable if there are data rows (not just the empty message)
+            if ($('#ttd-table tbody tr').length > 1 || ($('#ttd-table tbody tr').length === 1 && !$('#ttd-table tbody tr td[colspan="7"]').length)) {
+                $('#ttd-table').DataTable();
+            }
         });
     </script>
 @endpush
