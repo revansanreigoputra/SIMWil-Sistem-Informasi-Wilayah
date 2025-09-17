@@ -284,48 +284,58 @@
                 </li>
 
                 {{-- potensi --}}
-                <li class="nav-item dropdown {{ request()->is('potensi*') ? 'active' : '' }}">
-                    <a class="nav-link dropdown-toggle" href="#navbar-potensi" data-bs-toggle="dropdown"
-                        data-bs-auto-close="false" role="button" aria-expanded="false">
-                        <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chart-bar"
-                                width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-                                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M3 12h18" />
-                                <path d="M12 3v18" />
-                                <path d="M7 9v12" />
-                                <path d="M17 9v12" />
-                            </svg>
-                        </span>
+                @canany('jumlah.view')
+                    <li class="nav-item dropdown {{ request()->is('potensi*') ? 'active' : '' }}">
+                        <a class="nav-link dropdown-toggle" href="#navbar-potensi" data-bs-toggle="dropdown"
+                            data-bs-auto-close="false" role="button" aria-expanded="false">
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chart-bar"
+                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M3 12h18" />
+                                    <path d="M12 3v18" />
+                                    <path d="M7 9v12" />
+                                    <path d="M17 9v12" />
+                                </svg>
+                            </span>
 
-                        <span class="nav-link-title"> Potensi </span>
-                    </a>
-                    <div class="dropdown-menu {{ request()->is('potensi*') ? 'show' : '' }}">
-                        <div class="dropdown-menu-columns">
-                            <div class="dropdown-menu-column">
-                                <div class="dropend">
-                                    <a class="dropdown-item dropdown-toggle {{ request()->is('potensi/potensi-sdm*') ? 'active' : '' }}"
-                                        href="#sidebar-potensi-sdm" data-bs-toggle="dropdown"
-                                        data-bs-auto-close="false" role="button" aria-expanded="false">
-                                        Potensi Sumber <br> Daya Manusia
-                                    </a>
-                                    <div
-                                        class="dropdown-menu {{ request()->is('potensi/potensi-sdm*') ? 'show' : '' }}">
-                                        <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/jumlah*') ? 'active' : '' }}"
-                                            href="{{ route('potensi.potensi-sdm.jumlah.index') }}">
-                                            Jumlah
-                                        </a>
+                            <span class="nav-link-title"> Potensi </span>
+                        </a>
+                        <div class="dropdown-menu {{ request()->is('potensi*') ? 'show' : '' }}">
+                            <div class="dropdown-menu-columns">
+                                <div class="dropdown-menu-column">
+                                    <div class="dropend">
+                                        @can('jumlah.view')
+                                            <a class="dropdown-item dropdown-toggle {{ request()->is('potensi/potensi-sdm*') ? : '' }}"
+                                                href="#sidebar-potensi-sdm" data-bs-toggle="dropdown"
+                                                data-bs-auto-close="false" role="button" aria-expanded="false">
+                                                Potensi Sumber <br> Daya Manusia
+                                            </a>
+                                        @endcan
+                                        <div
+                                            class="dropdown-menu {{ request()->is('potensi/potensi-sdm*') ? 'show' : '' }}">
+                                            <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/jumlah*') ? 'active' : '' }}"
+                                                href="{{ route('potensi.potensi-sdm.jumlah.index') }}">
+                                                Jumlah
+                                            </a>
+                                            @can('usia.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/usia*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-sdm.usia.index') }}">
+                                                    Usia
+                                                </a>
+                                            @endcan
+                                        </div>
                                     </div>
+                                    {{-- <a class="dropdown-item {{ request()->is('potensi/laporan*') ? 'active' : '' }}"
+                                        href="{{ route('potensi.laporan.index') }}">
+                                        Laporan Mutasi
+                                    </a> --}}
                                 </div>
-                                {{-- <a class="dropdown-item {{ request()->is('potensi/laporan*') ? 'active' : '' }}"
-                                    href="{{ route('potensi.laporan.index') }}">
-                                    Laporan Mutasi
-                                </a> --}}
                             </div>
                         </div>
-                    </div>
-                </li>
+                    </li>
+                @endcanany
 
                 {{-- Master Data (Dropdown Menu) --}}
                 <li

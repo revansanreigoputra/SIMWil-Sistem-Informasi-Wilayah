@@ -89,6 +89,7 @@ class PermissionSeeder extends Seeder
             'data_keluarga.update',
             'data_keluarga.delete',
             'data_keluarga.destroy',
+
             // Jumlah permissions
             'jumlah.view',
             'jumlah.create',
@@ -96,9 +97,12 @@ class PermissionSeeder extends Seeder
             'jumlah.update',
             'jumlah.delete',
 
-            // potensi permissions
-            'potensi.laporan.view',
-            'potensi.laporan.export',
+            // usia permissions
+            'usia.view',
+            'usia.create',
+            'usia.store',
+            'usia.update',
+            'usia.delete',
         ];
 
         foreach ($permissions as $permission) {

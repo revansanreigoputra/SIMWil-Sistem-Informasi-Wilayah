@@ -2,10 +2,13 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TtdController;
 use App\Http\Controllers\DesaController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UsiaController;
 use App\Http\Controllers\JumlahController;
+use App\Http\Controllers\MutasiController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingController;
@@ -13,8 +16,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KecamatanController;
 use App\Http\Controllers\MasterDdkController;
 use App\Http\Controllers\DataKeluargaController;
-use App\Http\Controllers\MutasiController;
-use App\Http\Controllers\TtdController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PerangkatDesaController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -79,14 +80,14 @@ Route::middleware(['auth', 'permission:jabatan.view'])->prefix('jabatan')->group
     Route::delete('/{jabatan}', [JabatanController::class, 'destroy'])->middleware('permission:jabatan.delete')->name('jabatan.destroy');
 });
 // Jumlah routes
-Route::middleware(['auth', 'permission:jumlah.view'])->prefix('jumlah')->group(function () {
-    Route::get('/', [JumlahController::class, 'index'])->name('potensi.potensi-sdm.jumlah.index');
-    Route::get('/create', [JumlahController::class, 'create'])->middleware('permission:jumlah.create')->name('potensi.potensi-sdm.jumlah.create');
-    Route::post('/', [JumlahController::class, 'store'])->middleware('permission:jumlah.store')->name('potensi.potensi-sdm.jumlah.store');
-    Route::get('/{jumlah}', [JumlahController::class, 'show'])->name('potensi.potensi-sdm.jumlah.show');
-    Route::get('/{jumlah}/edit', [JumlahController::class, 'edit'])->middleware('permission:jumlah.update')->name('potensi.potensi-sdm.jumlah.edit');
-    Route::put('/{jumlah}', [JumlahController::class, 'update'])->middleware('permission:jumlah.update')->name('potensi.potensi-sdm.jumlah.update');
-    Route::delete('/{jumlah}', [JumlahController::class, 'destroy'])->middleware('permission:jumlah.delete')->name('potensi.potensi-sdm.jumlah.destroy');
+Route::middleware(['auth', 'permission:jumlah.view'])->prefix('potensi/potensi-sdm/jumlah')->name('potensi.potensi-sdm.jumlah.')->group(function () {
+    Route::get('/', [JumlahController::class, 'index'])->name('index');
+    Route::get('/create', [JumlahController::class, 'create'])->middleware('permission:jumlah.create')->name('create');
+    Route::post('/', [JumlahController::class, 'store'])->middleware('permission:jumlah.store')->name('store');
+    Route::get('/{jumlah}', [JumlahController::class, 'show'])->name('show');
+    Route::get('/{jumlah}/edit', [JumlahController::class, 'edit'])->middleware('permission:jumlah.update')->name('edit');
+    Route::put('/{jumlah}', [JumlahController::class, 'update'])->middleware('permission:jumlah.update')->name('update');
+    Route::delete('/{jumlah}', [JumlahController::class, 'destroy'])->middleware('permission:jumlah.delete')->name('destroy');
 });
 
 // Desa routes
@@ -169,3 +170,14 @@ require __DIR__ . '/auth.php';
 
 // routes for direct file (placeholder routes)
 Route::get('/master-ddk/{table?}', [MasterDDKController::class, 'index'])->name('master.ddk.index');
+
+// Usia routes
+Route::middleware(['auth', 'permission:usia.view'])->prefix('potensi/potensi-sdm/usia')->name('potensi.potensi-sdm.usia.')->group(function () {
+    Route::get('/', [UsiaController::class, 'index'])->name('index');
+    Route::get('/create', [UsiaController::class, 'create'])->middleware('permission:usia.create')->name('create');
+    Route::post('/', [UsiaController::class, 'store'])->middleware('permission:usia.store')->name('store');
+    Route::get('/{usia}', [UsiaController::class, 'show'])->name('show');
+    Route::get('/{usia}/edit', [UsiaController::class, 'edit'])->middleware('permission:usia.update')->name('edit');
+    Route::put('/{usia}', [UsiaController::class, 'update'])->middleware('permission:usia.update')->name('update');
+    Route::delete('/{usia}', [UsiaController::class, 'destroy'])->middleware('permission:usia.delete')->name('destroy');
+});
