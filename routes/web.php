@@ -91,7 +91,8 @@ Route::middleware(['auth', 'permission:perangkat_desa.view'])->prefix('perangkat
     Route::delete('/{id}', [PerangkatDesaController::class, 'destroy'])->middleware('permission:perangkat_desa.delete')->name('perangkat_desa.destroy');
     Route::post('/check-duplicate', [PerangkatDesaController::class, 'checkDuplicate'])->name('perangkat_desa.check_duplicate');
 });
-// Data Keluarga
+
+// DATA KARTU KELUARGA (KK)
 Route::middleware(['auth'])->prefix('data-keluarga')->name('data_keluarga.')->group(function () {
     Route::get('/', [DataKeluargaController::class, 'index'])->middleware('permission:data_keluarga.view')->name('index');
     Route::get('/create', [DataKeluargaController::class, 'create'])->middleware('permission:data_keluarga.create')->name('create');

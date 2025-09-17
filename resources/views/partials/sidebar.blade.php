@@ -224,11 +224,13 @@
 
                 {{-- Awal Menu Dasar Data Keluarga --}}
                 @can('data_keluarga.view')
-                    <li class="nav-item dropdown {{ request()->is('data_keluarga*') ? 'active' : '' }}">
+                    <li
+                        class="nav-item dropdown {{ request()->is(['data-keluarga*', 'anggota-keluarga*']) ? 'active' : '' }}">
                         <a class="nav-link dropdown-toggle" href="#navbar-data-keluarga" data-bs-toggle="dropdown"
                             data-bs-auto-close="false" role="button" aria-expanded="false">
+
+                            {{-- Icon --}}
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                {{-- Icon Database --}}
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round"
@@ -239,20 +241,55 @@
                                     <path d="M4 12v6a8 3 0 0 0 16 0v-6" />
                                 </svg>
                             </span>
-                            <span class="nav-link-title"> Dasar Data Keluarga </span>
+
+                            {{-- Judul --}}
+                            <span class="nav-link-title">Dasar Data Keluarga</span>
                         </a>
-                        {{-- sub menus --}}
-                        <div class="dropdown-menu {{ request()->is('data-keluarga*') ? 'show' : '' }}">
+
+                        {{-- Dropdown Menu --}}
+                        <div
+                            class="dropdown-menu {{ request()->is(['data-keluarga*', 'anggota-keluarga*']) ? 'show' : '' }}">
                             <div class="dropdown-menu-columns">
                                 <div class="dropdown-menu-column">
-                                    <a class="dropdown-item" href="{{ route('data_keluarga.index') }}">
-                                        Data Kepala Keluarga
+
+                                    {{-- Kartu Keluarga --}}
+                                    <a class="dropdown-item {{ request()->routeIs('data_keluarga.index') ? 'active' : '' }}"
+                                        href="{{ route('data_keluarga.index') }}">
+                                        Data Kartu Keluarga
+                                    </a>
+                                    {{-- <a class="dropdown-item {{ request()->routeIs('data_keluarga.create') ? 'active' : '' }}"
+                                        href="{{ route('data_keluarga.create') }}">
+                                        + Tambah Kartu Keluarga
+                                    </a> --}}
+
+                                    {{-- <div class="dropdown-divider"></div> --}}
+
+                                    {{-- Anggota Keluarga --}}
+                                    <a class="dropdown-item {{ request()->routeIs('anggota_keluarga.index') ? 'active' : '' }}"
+                                        href="{{ route('anggota_keluarga.index') }}">
+                                        Data Anggota Keluarga
+                                    </a>
+                                    {{-- <a class="dropdown-item {{ request()->routeIs('anggota_keluarga.create') ? 'active' : '' }}"
+                                        href="{{ route('anggota_keluarga.create') }}">
+                                        + Tambah Anggota Keluarga
+                                    </a> --}}
+                                    <div class="dropdown-divider"></div>
+                                    {{-- Laporan --}}
+                                    <a class="dropdown-item {{ request()->routeIs('data_keluarga.report.heads') ? 'active' : '' }}"
+                                        href="{{ route('data_keluarga.report.heads') }}">
+                                        Laporan Kepala Keluarga
+                                    </a>
+                                    <a class="dropdown-item {{ request()->routeIs('anggota_keluarga.report.members') ? 'active' : '' }}"
+                                        href="{{ route('anggota_keluarga.report.members') }}">
+                                        Laporan Anggota Keluarga
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </li>
                 @endcan
+                {{-- Akhir Menu Dasar Data Keluarga --}}
+
                 {{-- Mutasi --}}
                 <li class="nav-item dropdown {{ request()->is('mutasi*') ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-mutasi" data-bs-toggle="dropdown"
