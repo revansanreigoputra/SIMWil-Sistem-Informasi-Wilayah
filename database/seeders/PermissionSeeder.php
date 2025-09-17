@@ -97,12 +97,21 @@ class PermissionSeeder extends Seeder
             'jumlah.update',
             'jumlah.delete',
 
+            // transportasi_darat permissions
+            'transportasi_darat.view',
+            'transportasi_darat.create',
+            'transportasi_darat.store',
+            'transportasi_darat.update',
+            'transportasi_darat.delete',
+
             // usia permissions
             'usia.view',
             'usia.create',
             'usia.store',
             'usia.update',
             'usia.delete',
+
+
         ];
 
         foreach ($permissions as $permission) {

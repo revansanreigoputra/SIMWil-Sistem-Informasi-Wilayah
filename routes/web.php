@@ -18,6 +18,7 @@ use App\Http\Controllers\MasterDdkController;
 use App\Http\Controllers\DataKeluargaController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PerangkatDesaController;
+use App\Http\Controllers\TransportasiDaratController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 Route::get('/', function () {
@@ -88,6 +89,17 @@ Route::middleware(['auth', 'permission:jumlah.view'])->prefix('potensi/potensi-s
     Route::get('/{jumlah}/edit', [JumlahController::class, 'edit'])->middleware('permission:jumlah.update')->name('edit');
     Route::put('/{jumlah}', [JumlahController::class, 'update'])->middleware('permission:jumlah.update')->name('update');
     Route::delete('/{jumlah}', [JumlahController::class, 'destroy'])->middleware('permission:jumlah.delete')->name('destroy');
+});
+
+// Transportasi Darat routes
+Route::middleware(['auth'])->prefix('transportasi-darat')->group(function () {
+    Route::get('/', [TransportasiDaratController::class, 'index'])->middleware('permission:transportasi_darat.view')->name('potensi.potensi-prasarana-dan-sarana.transportasi-darat.index');
+    Route::get('/create', [TransportasiDaratController::class, 'create'])->middleware('permission:transportasi_darat.create')->name('potensi.potensi-prasarana-dan-sarana.transportasi-darat.create');
+    Route::post('/', [TransportasiDaratController::class, 'store'])->middleware('permission:transportasi_darat.store')->name('potensi.potensi-prasarana-dan-sarana.transportasi-darat.store');
+    Route::get('/{transportasiDarat}', [TransportasiDaratController::class, 'show'])->middleware('permission:transportasi_darat.view')->name('potensi.potensi-prasarana-dan-sarana.transportasi-darat.show');
+    Route::get('/{transportasiDarat}/edit', [TransportasiDaratController::class, 'edit'])->middleware('permission:transportasi_darat.update')->name('potensi.potensi-prasarana-dan-sarana.transportasi-darat.edit');
+    Route::put('/{transportasiDarat}', [TransportasiDaratController::class, 'update'])->middleware('permission:transportasi_darat.update')->name('potensi.potensi-prasarana-dan-sarana.transportasi-darat.update');
+    Route::delete('/{transportasiDarat}', [TransportasiDaratController::class, 'destroy'])->middleware('permission:transportasi_darat.delete')->name('potensi.potensi-prasarana-dan-sarana.transportasi-darat.destroy');
 });
 
 // Desa routes
