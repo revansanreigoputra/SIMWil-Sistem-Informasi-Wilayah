@@ -99,6 +99,13 @@ class PermissionSeeder extends Seeder
             // potensi permissions
             'potensi.laporan.view',
             'potensi.laporan.export',
+
+            // transportasi_darat permissions
+            'transportasi_darat.view',
+            'transportasi_darat.create',
+            'transportasi_darat.store',
+            'transportasi_darat.update',
+            'transportasi_darat.delete',
         ];
 
         foreach ($permissions as $permission) {
