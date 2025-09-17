@@ -78,7 +78,6 @@ class PermissionSeeder extends Seeder
             'mutasi.laporan.view',
             'mutasi.laporan.export',
 
-
             // ttd (penanda tangan) permissions
             'ttd.view',
             'ttd.create',
@@ -89,6 +88,17 @@ class PermissionSeeder extends Seeder
             'data_keluarga.update',
             'data_keluarga.delete',
             'data_keluarga.destroy',
+
+            // Jumlah permissions
+            'jumlah.view',
+            'jumlah.create',
+            'jumlah.store',
+            'jumlah.update',
+            'jumlah.delete',
+
+            // potensi permissions
+            'potensi.laporan.view',
+            'potensi.laporan.export',
         ];
 
         foreach ($permissions as $permission) {
