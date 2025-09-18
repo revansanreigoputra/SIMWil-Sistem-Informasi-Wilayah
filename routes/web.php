@@ -16,6 +16,7 @@ use App\Http\Controllers\DesaController;
 use App\Http\Controllers\MasterDdkController;
 use App\Http\Controllers\DataKeluargaController;
 use App\Http\Controllers\MutasiController;
+use App\Http\Controllers\AnggotaKeluargaController;
 
 Route::get('/', function () {
     return Auth::check()
@@ -103,7 +104,16 @@ Route::middleware(['auth'])->prefix('data-keluarga')->name('data_keluarga.')->gr
     Route::delete('/{dataKeluarga}', [DataKeluargaController::class, 'destroy'])->middleware('permission:data_keluarga.delete')->name('delete');
     Route::delete('/{dataKeluarga}', [DataKeluargaController::class, 'destroy'])->middleware('permission:data_keluarga.destroy')->name('destroy');
 });
-
+// data anggota keluarga routes
+Route::middleware(['auth'])->prefix('anggota-keluarga')->name('anggota_keluarga.')->group(function () {
+    Route::get('/', [App\Http\Controllers\AnggotaKeluargaController::class, 'index'])->middleware('permission:anggota_keluarga.view')->name('index');
+    Route::get('/create', [App\Http\Controllers\AnggotaKeluargaController::class, 'create'])->middleware('permission:anggota_keluarga.create')->name('create');
+    Route::post('/', [App\Http\Controllers\AnggotaKeluargaController::class, 'store'])->middleware('permission:anggota_keluarga.store')->name('store');
+    Route::get('/{anggotaKeluarga}/edit', [App\Http\Controllers\AnggotaKeluargaController::class, 'edit'])->middleware('permission:anggota_keluarga.edit')->name('edit');
+    Route::put('/{anggotaKeluarga}', [App\Http\Controllers\AnggotaKeluargaController::class, 'update'])->middleware('permission:anggota_keluarga.update')->name('update');
+    Route::delete('/{anggotaKeluarga}', [App\Http\Controllers\AnggotaKeluargaController::class, 'destroy'])->middleware('permission:anggota_keluarga.delete')->name('destroy');
+    Route::get('/{dataKeluarga}/show', [App\Http\Controllers\AnggotaKeluargaController::class, 'showAnggota'])->middleware('permission:anggota_keluarga.show')->name('show');
+});
 
 // Mutasi Routes
 Route::prefix('mutasi')->middleware(['auth'])->group(function() {

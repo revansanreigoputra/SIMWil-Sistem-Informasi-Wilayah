@@ -248,6 +248,9 @@
                                     <a class="dropdown-item" href="{{ route('data_keluarga.index') }}">
                                         Data Kepala Keluarga
                                     </a>
+                                    <a class="dropdown-item" href="{{ route('anggota_keluarga.index') }}">
+                                        Data Anggota Keluarga
+                                    </a>
                                 </div>
                             </div>
                         </div>
