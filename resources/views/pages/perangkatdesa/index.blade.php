@@ -13,36 +13,6 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                {{-- <div class="card-header">
-                    <h3 class="card-title">Daftar Perangkat Desa</h3>
-                    <div class="card-tools">
-                        @can('perangkat_desa.store')
-                            <a href="{{ route('perangkat_desa.create') }}" class="btn btn-primary btn-sm">
-                                <i class="fas fa-plus"></i> Tambah Perangkat Desa
-                            </a>
-                        @endcan
-                    </div>
-                </div> --}}
-                {{-- <div class="card-body">
-                    @if (session('success'))
-                        <div class="alert alert-success alert-dismissible">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <h5><i class="icon fas fa-check"></i> Berhasil!</h5>
-                            {{ session('success') }}
-                        </div>
-                    @endif
-
-                    @if ($errors->any())
-                        <div class="alert alert-danger alert-dismissible">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <h5><i class="icon fas fa-ban"></i> Error!</h5>
-                            <ul class="mb-0">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif --}}
 
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped" id="perangkat-desa-table">

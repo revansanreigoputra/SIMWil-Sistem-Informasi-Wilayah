@@ -84,6 +84,28 @@ class PermissionSeeder extends Seeder
             'mutasi.data.destroy',
             'mutasi.laporan.view',
             'mutasi.laporan.export',
+
+
+            // ttd (penanda tangan) permissions
+            'ttd.view',
+            'ttd.create',
+            'ttd.store',
+            'ttd.update',
+            'ttd.delete',
+            'data_keluarga.edit',
+            'data_keluarga.update',
+            'data_keluarga.delete',
+            'data_keluarga.destroy',
+            // Jumlah permissions
+            'jumlah.view',
+            'jumlah.create',
+            'jumlah.store',
+            'jumlah.update',
+            'jumlah.delete',
+
+            // potensi permissions
+            'potensi.laporan.view',
+            'potensi.laporan.export',
         ];
 
         foreach ($permissions as $permission) {
