@@ -106,6 +106,14 @@ class PermissionSeeder extends Seeder
             'transportasi_darat.store',
             'transportasi_darat.update',
             'transportasi_darat.delete',
+
+            // Irigasi
+            'irigasi.view',
+            'irigasi.create',
+            'irigasi.store',
+            'irigasi.edit',
+            'irigasi.update',
+            'irigasi.delete',
         ];
 
         foreach ($permissions as $permission) {
