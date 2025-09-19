@@ -19,6 +19,10 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PerangkatDesaController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\AnggotaKeluargaController;
+use App\Http\Controllers\AgendaController;
+use App\Http\Controllers\GlosariumController;
+use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\GaleriController;
 
 
 Route::get('/', function () {
@@ -135,6 +139,19 @@ Route::middleware(['auth'])->prefix('anggota-keluarga')->name('anggota_keluarga.
 //     Route::get('/laporan/anggota-keluarga', [DataKeluargaController::class, 'membersReport'])->middleware('permission:data_keluarga.report')->name('report.members');
 // });
 
+// Grup menu UTAMA
+Route::prefix('utama')->name('utama.')->middleware(['auth'])->group(function () {
+    Route::resource('agenda', AgendaController::class);
+    Route::resource('berita', BeritaController::class);
+    Route::resource('glosarium', GlosariumController::class);
+    Route::resource('galeri', GaleriController::class);
+    Route::prefix('galeri/{galeri}/photos')->name('galeri.photo.')->group(function () {
+        Route::get('/create', [GaleriController::class, 'createPhoto'])->name('create');
+        Route::post('/', [GaleriController::class, 'storePhoto'])->name('store');
+        Route::delete('/{photo}', [GaleriController::class, 'destroyPhoto'])->name('destroy');
+    });
+});
+
 // Penanda Tangan (TTD) routes
 Route::middleware(['auth', 'permission:ttd.view'])->prefix('ttd')->group(function () {
     Route::get('/', [TtdController::class, 'index'])->name('ttd.index');
@@ -147,9 +164,9 @@ Route::middleware(['auth', 'permission:ttd.view'])->prefix('ttd')->group(functio
 });
 
 // Mutasi Routes
-Route::prefix('mutasi')->middleware(['auth'])->group(function() {
+Route::prefix('mutasi')->middleware(['auth'])->group(function () {
 
-    Route::prefix('data')->middleware('permission:mutasi.data.view')->group(function() {
+    Route::prefix('data')->middleware('permission:mutasi.data.view')->group(function () {
         Route::get('/', [MutasiController::class, 'indexData'])->name('mutasi.data.index');
         Route::get('/create', [MutasiController::class, 'createData'])->name('mutasi.data.create')->middleware('permission:mutasi.data.create');
         Route::post('/', [MutasiController::class, 'storeData'])->name('mutasi.data.store')->middleware('permission:mutasi.data.store');
@@ -169,11 +186,10 @@ Route::prefix('mutasi')->middleware(['auth'])->group(function() {
     //     Route::get('/{id}', [MutasiController::class, 'showMasuk'])->name('mutasi.masuk.show')->middleware('permission:mutasi.masuk.view');
     // });
 
-    Route::prefix('laporan')->middleware('permission:mutasi.laporan.view')->group(function() {
+    Route::prefix('laporan')->middleware('permission:mutasi.laporan.view')->group(function () {
         Route::get('/', [MutasiController::class, 'laporan'])->name('mutasi.laporan.index');
         Route::get('/export', [MutasiController::class, 'exportLaporan'])->name('mutasi.laporan.export')->middleware('permission:mutasi.laporan.export');
     });
-
 });
 require __DIR__ . '/auth.php';
 

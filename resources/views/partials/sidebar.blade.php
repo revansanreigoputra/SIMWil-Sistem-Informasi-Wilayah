@@ -397,6 +397,49 @@
                     </a>
                 </li>
 
+                {{-- Menu Utama --}}
+                <li class="nav-item dropdown {{ request()->is('utama/*') ? 'active' : '' }}">
+                    <a class="nav-link dropdown-toggle" href="#navbar-utama" data-bs-toggle="dropdown"
+                        data-bs-auto-close="false" role="button" aria-expanded="false">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            {{-- Icon --}}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list"
+                                width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M9 6h11"></path>
+                                <path d="M9 12h11"></path>
+                                <path d="M9 18h11"></path>
+                                <path d="M5 6v.01"></path>
+                                <path d="M5 12v.01"></path>
+                                <path d="M5 18v.01"></path>
+                            </svg>
+                        </span>
+                        <span class="nav-link-title"> Utama </span>
+                    </a>
+                    <div class="dropdown-menu {{ request()->is('utama/*') ? 'show' : '' }}">
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ request()->routeIs('utama.agenda.*') ? 'active' : '' }}"
+                                    href="{{ route('utama.agenda.index') }}">
+                                    Agenda Kegiatan
+                                </a>
+                                <a class="dropdown-item {{ request()->routeIs('utama.glosarium.*') ? 'active' : '' }}"
+                                    href="{{ route('utama.glosarium.index') }}">
+                                    Glosarium
+                                </a>
+                                <a class="dropdown-item {{ request()->routeIs('utama.berita.*') ? 'active' : '' }}"
+                                    href="{{ route('utama.berita.index') }}">
+                                    Berita Penting
+                                </a>
+                                <a class="dropdown-item {{ request()->routeIs('utama.galeri.*') ? 'active' : '' }}"
+                                    href="{{ route('utama.galeri.index') }}">
+                                    Galeri Foto
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
             </ul>
             <!-- END NAVBAR MENU -->
         </div>
