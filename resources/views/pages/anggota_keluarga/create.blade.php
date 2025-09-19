@@ -126,7 +126,7 @@
                                      @foreach ($agama as $item)
                                          <option value="{{ $item->id }}"
                                              {{ old('agama_id') == $item->id ? 'selected' : '' }}>
-                                             {{ $item->nama }}
+                                             {{ $item->agama }}
                                          </option>
                                      @endforeach
                                  </select>
@@ -138,7 +138,7 @@
                                      @foreach ($golonganDarah as $item)
                                          <option value="{{ $item->id }}"
                                              {{ old('golongan_darah_id') == $item->id ? 'selected' : '' }}>
-                                             {{ $item->nama }}
+                                             {{ $item->golongan_darah }}
                                          </option>
                                      @endforeach
                                  </select>
@@ -151,7 +151,7 @@
                                      @foreach ($kewarganegaraan as $item)
                                          <option value="{{ $item->id }}"
                                              {{ old('kewarganegaraan_id') == $item->id ? 'selected' : '' }}>
-                                             {{ $item->nama }}
+                                             {{ $item->kewarganegaraan }}
                                          </option>
                                      @endforeach
                                  </select>
@@ -162,6 +162,7 @@
                              </div>
 
 
+
                              <div class="col-md-6">
                                  <label class="form-label">Mata Pencaharian Pokok</label>
                                  <select name="mata_pencaharian_id" class="form-select">
@@ -169,7 +170,7 @@
                                      @foreach ($mataPencaharian as $item)
                                          <option value="{{ $item->id }}"
                                              {{ old('mata_pencaharian_id') == $item->id ? 'selected' : '' }}>
-                                             {{ $item->nama }}
+                                             {{ $item->mata_pencaharian }}
                                          </option>
                                      @endforeach
                                  </select>
