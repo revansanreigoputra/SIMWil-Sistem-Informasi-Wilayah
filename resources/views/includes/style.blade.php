@@ -4,7 +4,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 <link href="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-2.3.1/datatables.min.css" rel="stylesheet"
     integrity="sha384-rOq+bSqJVRwotGgW1XZO3EINtS8WzFI0Irekl0IRWM4qvgF+bIgfIaaGfzrOvkZL" crossorigin="anonymous">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <style>
     :root {
         --tblr-primary: #000ba6;
@@ -31,5 +31,22 @@
 
     .badge {
         color: #fff;
+    }
+
+    .bg-card-inside-form{
+        background-color: #fcfcfc;
+    }
+
+    .title-text-primary{
+        color: var(--tblr-primary);
+        font-weight: 500;
+    }
+    .form-label{ 
+        margin: 2%;
+    }
+    .form-control{
+        font-weight: 500;
+        color: rgb(106, 106, 106);
+        font-size: small;
     }
 </style>

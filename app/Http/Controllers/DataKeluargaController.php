@@ -2,64 +2,84 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Models\DataKeluarga; // pastikan model ini sudah ada
+use App\Models\{
+    AnggotaKeluarga,
+    Desa,
+    PerangkatDesa,
+    Kecamatan,
+    DataKeluarga
+};
 
 class DataKeluargaController extends Controller
 {
     /**
-     * Menampilkan halaman utama data kepala keluarga.
-     * Route: GET /data-keluarga
+     * Display a listing of the resource.
      */
     public function index()
     {
-        $dataKeluarga = DataKeluarga::all();
-
-        return view('pages.data_keluarga.index', compact('dataKeluarga'));
+        $dataKeluargas = DataKeluarga::with(['desas', 'kecamatans', 'perangkatDesas'])->get();
+        return view('pages.data_keluarga.index', compact('dataKeluargas'));
     }
 
-    /**
-     * Menampilkan formulir untuk membuat data keluarga baru.
-     * Route: GET /data-keluarga/create
-     */
     public function create()
     {
-        return view('pages.data_keluarga.create');
+        $desas = Desa::all();
+        $kecamatans = Kecamatan::all();
+        $perangkatDesas = PerangkatDesa::all();
+        return view('pages.data_keluarga.create', compact('desas', 'kecamatans', 'perangkatDesas'));
     }
 
-    /**
-     * Menyimpan data keluarga baru dari formulir ke database.
-     * Route: POST /data-keluarga
-     */
     public function store(Request $request)
     {
-        // validasi sederhana
-        $validated = $request->validate([
-            'no_kk'           => 'required|unique:data_keluargas,no_kk',
-            'kepala_keluarga' => 'required|string|max:255',
-            'alamat'          => 'required|string|max:255',
+        $validatedData = $request->validate([
+            'no_kk' => 'required|string|unique:data_keluargas,no_kk',
+            'kepala_keluarga' => 'required|string',
+            'alamat' => 'required|string',
+            'rt' => 'required|string',
+            'rw' => 'required|string',
+            'desa_id' => 'required|exists:desas,id',
+            'kecamatan_id' => 'required|exists:kecamatans,id',
+            'nama_pengisi_id' => 'required|exists:perangkat_desas,id',
         ]);
 
-        DataKeluarga::create($validated);
+        DataKeluarga::create($validatedData);
 
-        return redirect()->route('data_keluarga.index')->with('success', 'Data keluarga berhasil ditambahkan.');
+        return redirect()->route('data_keluarga.index')->with('success', 'Data Kepala Keluarga berhasil ditambahkan.');
     }
 
-    /**
-     * Menampilkan laporan kepala keluarga.
-     * Route: GET /data-keluarga/laporan/kepala-keluarga
-     */
-    public function headsReport()
+    public function edit(DataKeluarga $dataKeluarga)
     {
-        return view('pages.data_keluarga.report_keluarga');
+        $desas = Desa::all();
+        $kecamatans = Kecamatan::all();
+        $perangkatDesas = PerangkatDesa::all();
+
+        return view('pages.data_keluarga.edit', compact('dataKeluarga', 'desas', 'kecamatans', 'perangkatDesas'));
     }
 
-    /**
-     * Menampilkan laporan anggota keluarga.
-     * Route: GET /data-keluarga/laporan/anggota-keluarga
-     */
-    public function membersReport()
+    public function update(Request $request, DataKeluarga $dataKeluarga)
     {
-        return view('pages.data_keluarga.report_anggota');
+        $validatedData = $request->validate([
+            'no_kk' => 'required|string|unique:data_keluargas,no_kk,' . $dataKeluarga->id,
+            'kepala_keluarga' => 'required|string',
+            'alamat' => 'required|string',
+            'desa_id' => 'required|exists:desas,id',
+            'rt' => 'required|string',
+            'rw' => 'required|string',
+            'kecamatan_id' => 'required|exists:kecamatans,id',
+            'nama_pengisi_id' => 'nullable|exists:perangkat_desas,id',
+        ]);
+
+        $dataKeluarga->update($validatedData);
+
+        return redirect()->route('data_keluarga.index')->with('success', 'Data Kepala Keluarga berhasil diperbarui.');
+    }
+
+    public function destroy(DataKeluarga $dataKeluarga)
+    {
+        $dataKeluarga->delete();
+
+        return redirect()->route('data_keluarga.index')->with('success', 'Data Kepala Keluarga berhasil dihapus.');
     }
 }

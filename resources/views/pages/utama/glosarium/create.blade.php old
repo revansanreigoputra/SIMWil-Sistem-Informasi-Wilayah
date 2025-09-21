@@ -1,0 +1,34 @@
+@extends('layouts.master')
+
+@section('title', 'Tambah Glosarium')
+
+@section('content')
+<div class="card">
+    <div class="card-body">
+        <h5 class="mb-4">Form Tambah Glosari</h5>
+
+        {{-- Arahkan ke route index dulu (dummy), karena backend belum dibuat --}}
+        <form method="POST" action="{{ route('utama.glosarium.index') }}">
+            @csrf
+
+            {{-- Istilah --}}
+            <div class="mb-3">
+                <label class="form-label">Istilah <span class="text-danger">*</span></label>
+                <input type="text" name="istilah" class="form-control" placeholder="Masukkan istilah" required>
+            </div>
+
+            {{-- Deskripsi --}}
+            <div class="mb-3">
+                <label class="form-label">Deskripsi <span class="text-danger">*</span></label>
+                <textarea name="deskripsi" class="form-control" rows="4" placeholder="Masukkan deskripsi istilah" required></textarea>
+            </div>
+
+            {{-- Tombol Aksi --}}
+            <div class="d-flex justify-content-end gap-2">
+                <a href="{{ route('utama.glosarium.index') }}" class="btn btn-secondary">Batal</a>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
+        </form>
+    </div>
+</div>
+@endsection
