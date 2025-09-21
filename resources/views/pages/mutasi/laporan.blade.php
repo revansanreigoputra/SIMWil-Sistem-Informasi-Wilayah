@@ -1,6 +1,11 @@
 @extends('layouts.master')
 
-@section('title', 'Laporan Mutasi')
+@section('title')
+    <div class="d-flex align-items-center border-bottom pb-2 mb-3">
+        <i class="fas fa-user-edit text-primary me-2"></i>
+        <h4 class="fw-bold mb-0 text-dark"> Laporan Mutasi Penduduk</h4>
+    </div>
+@endsection
 
 @section('content')
     <div class="container">

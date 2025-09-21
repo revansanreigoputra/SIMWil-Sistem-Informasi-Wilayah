@@ -87,9 +87,9 @@
                     <a class="nav-link" href="{{ route('dashboard') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <!-- Download SVG icon from http://tabler.io/icons/icon/home -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="icon icon-1">
                                 <path d="M5 12l-2 0l9 -9l9 9l-2 0"></path>
                                 <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"></path>
                                 <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"></path>
@@ -108,8 +108,8 @@
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
                                 <!-- Icon Wilayah -->
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-pin"
-                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-                                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                     <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
                                     <path
@@ -220,7 +220,69 @@
                         </div>
                     </li>
                 @endcanany
+                {{-- Layanan Surat --}}
+                <li class="nav-item dropdown {{ request()->is('layanan-surat*') ? 'active' : '' }}">
+                    <a class="nav-link dropdown-toggle" href="#navbar-layanan" data-bs-toggle="dropdown"
+                        data-bs-auto-close="false" role="button" aria-expanded="false">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail"
+                                width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M3 7l9 6l9 -6" />
+                                <path
+                                    d="M21 7v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2z" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title"> Layanan Surat </span>
+                    </a>
 
+                    <div class="dropdown-menu {{ request()->is('layanan-surat*') ? 'show' : '' }}">
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+
+                                {{-- Template Surat (submenu di dalam Layanan Surat) --}}
+                                <div class="dropend">
+                                    <a class="dropdown-item dropdown-toggle {{ request()->is('layanan-surat/template*') ? 'active' : '' }}"
+                                        href="#" data-bs-toggle="dropdown" data-bs-auto-close="false">
+                                        Template Surat
+                                    </a>
+                                    <div
+                                        class="dropdown-menu {{ request()->is('layanan-surat/template*') ? 'show' : '' }}">
+                                        <a class="dropdown-item {{ request()->is('layanan-surat/template/kop-surat*') ? 'active' : '' }}"
+                                            href="{{ route('layanan.template.kop_surat.index') }}">
+                                            Kop Surat
+                                        </a>
+                                        <a class="dropdown-item {{ request()->is('layanan-surat/template/kop-laporan*') ? 'active' : '' }}"
+                                            href="{{ route('layanan.template.kop_laporan.index') }}">
+                                            Kop Laporan
+                                        </a>
+                                        <a class="dropdown-item {{ request()->is('layanan-surat/template/format-nomor*') ? 'active' : '' }}"
+                                            href="{{ route('layanan.template.format_nomor.index') }}">
+                                            Format Nomor Surat
+                                        </a>
+                                        {{-- <a class="dropdown-item {{ request()->is('layanan-surat/template/profil-desa*') ? 'active' : '' }}"
+                                            href="{{ route('layanan.template.profil_desa.index') }}">
+                                            Profil Desa
+                                        </a> --}}
+                                    </div>
+                                </div>
+                                {{-- Permohonan Surat --}}
+                                <a class="dropdown-item {{ request()->is('layanan-surat/permohonan*') ? 'active' : '' }}"
+                                    href="{{ route('layanan.permohonan.index') }}">
+                                    Permohonan Surat +
+                                </a>
+
+                                {{-- Profil Desa (di luar Template) --}}
+                                <a class="dropdown-item {{ request()->is('layanan-surat/profil-desa*') ? 'active' : '' }}"
+                                    href="{{ route('layanan.profil_desa.index') }}">
+                                    Profil Desa
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+                </li>
 
                 {{-- Awal Menu Dasar Data Keluarga --}}
                 @can('data_keluarga.view')
@@ -239,11 +301,11 @@
                                     <path d="M4 12v6a8 3 0 0 0 16 0v-6" />
                                 </svg>
                             </span>
-                            <span class="nav-link-title">  Dasar Data Keluarga </span>
+                            <span class="nav-link-title"> Dasar Data Keluarga </span>
                         </a>
                     </li>
                 @endcan
-                      {{-- Mutasi --}}
+                {{-- Mutasi --}}
                 <li class="nav-item dropdown {{ request()->is('mutasi*') ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-mutasi" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
