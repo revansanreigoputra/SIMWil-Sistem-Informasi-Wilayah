@@ -367,7 +367,7 @@
 
                         <span class="nav-link-title"> Potensi </span>
                     </a>
-                    <div class="dropdown-menu {{ request()->is('potensi*') ? 'show' : '' }}">
+                                 <div class="dropdown-menu {{ request()->is('potensi*') ? 'show' : '' }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
                                 <div class="dropend">
@@ -408,13 +408,13 @@
                                                     @endcan
                                                 </div>
                                             </div>
-                                {{-- <a class="dropdown-item {{ request()->is('potensi/laporan*') ? 'active' : '' }}"
-                                    href="{{ route('potensi.laporan.index') }}">
-                                    Laporan Mutasi
-                                </a> --}}
-                            </div>
-                        </div>
-                    </div>
+                                            {{-- <a class="dropdown-item {{ request()->is('potensi/laporan*') ? 'active' : '' }}"
+                                                href="{{ route('potensi.laporan.index') }}">
+                                                Laporan Mutasi
+                                            </a> --}}
+                                        </div>
+                                    </div>
+                                </div>
                 </li>
 
                 {{-- Master Data (Dropdown Menu) --}}
