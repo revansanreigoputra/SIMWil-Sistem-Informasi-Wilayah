@@ -371,11 +371,6 @@
                             <div class="dropdown-menu-columns">
                                 <div class="dropdown-menu-column">
                                     <div class="dropend">
-                                        <a class="dropdown-item dropdown-toggle {{ request()->is('potensi/potensi-sdm*') ? 'active' : '' }}"
-                                            href="#sidebar-potensi-sdm" data-bs-toggle="dropdown"
-                                            data-bs-auto-close="false" role="button" aria-expanded="false">
-                                            Potensi Sumber <br> Daya Manusia
-                                        </a>
                                         @can('jumlah.view')
                                             <a class="dropdown-item dropdown-toggle {{ request()->is('potensi/potensi-sdm*') ?: '' }}"
                                                 href="#sidebar-potensi-sdm" data-bs-toggle="dropdown"
@@ -525,8 +520,7 @@
                         <span class="nav-link-title"> Pengaturan </span>
                     </a>
                 </li>
-
-                {{-- Menu Utama --}}
+                      {{-- Menu Utama --}}
                 <li class="nav-item dropdown {{ request()->is('utama/*') ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-utama" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">

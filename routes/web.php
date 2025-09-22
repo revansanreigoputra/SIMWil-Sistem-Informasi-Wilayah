@@ -244,6 +244,15 @@ Route::middleware(['auth'])->prefix('layanan-surat')->group(function () {
     Route::get('profil-desa/edit', [LayananSuratController::class, 'editProfilDesa'])->name('layanan.profil_desa.edit');
 });
 
+
+require __DIR__ . '/auth.php';
+
+
+// routes for direct file (placeholder routes)
+Route::get('/master-ddk/{table?}', [MasterDDKController::class, 'index'])->name('master.ddk.index');
+
+
+// Usia routes
 Route::middleware(['auth', 'permission:usia.view'])->prefix('potensi/potensi-sdm/usia')->name('potensi.potensi-sdm.usia.')->group(function () {
     Route::get('/', [UsiaController::class, 'index'])->name('index');
     Route::get('/create', [UsiaController::class, 'create'])->middleware('permission:usia.create')->name('create');
@@ -253,9 +262,6 @@ Route::middleware(['auth', 'permission:usia.view'])->prefix('potensi/potensi-sdm
     Route::put('/{usia}', [UsiaController::class, 'update'])->middleware('permission:usia.update')->name('update');
     Route::delete('/{usia}', [UsiaController::class, 'destroy'])->middleware('permission:usia.delete')->name('destroy');
 });
-
-require __DIR__ . '/auth.php';
-
 
 // routes for direct file (placeholder routes)
 Route::get('/master-ddk/{table?}', [MasterDDKController::class, 'index'])->name('master.ddk.index');
