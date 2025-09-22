@@ -371,19 +371,25 @@
                             <div class="dropdown-menu-columns">
                                 <div class="dropdown-menu-column">
                                     <div class="dropend">
-                                        @can('jumlah.view')
-                                            <a class="dropdown-item dropdown-toggle {{ request()->is('potensi/potensi-sdm*') ?: '' }}"
-                                                href="#sidebar-potensi-sdm" data-bs-toggle="dropdown"
-                                                data-bs-auto-close="false" role="button" aria-expanded="false">
-                                                Potensi Sumber <br> Daya Manusia
-                                            </a>
-                                        @endcan
+                                        <a class="dropdown-item dropdown-toggle {{ request()->is('potensi/potensi-sdm*') ?: '' }}"
+                                            href="#sidebar-potensi-sdm" data-bs-toggle="dropdown"
+                                            data-bs-auto-close="false" role="button" aria-expanded="false">
+                                            Potensi Sumber <br> Daya Manusia
+                                        </a>
                                         <div
                                             class="dropdown-menu {{ request()->is('potensi/potensi-sdm*') ? 'show' : '' }}">
-                                            <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/jumlah*') ? 'active' : '' }}"
-                                                href="{{ route('potensi.potensi-sdm.jumlah.index') }}">
-                                                Jumlah
-                                            </a>
+                                            @can('jumlah.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/jumlah*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-sdm.jumlah.index') }}">
+                                                    Jumlah
+                                                </a>
+                                            @endcan
+                                            @can('usia.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/usia*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-sdm.usia.index') }}">
+                                                    Usia
+                                                </a>
+                                            @endcan
                                         </div>
                                     </div>
                                     <div class="dropend">
@@ -520,7 +526,7 @@
                         <span class="nav-link-title"> Pengaturan </span>
                     </a>
                 </li>
-                      {{-- Menu Utama --}}
+                {{-- Menu Utama --}}
                 <li class="nav-item dropdown {{ request()->is('utama/*') ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-utama" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
