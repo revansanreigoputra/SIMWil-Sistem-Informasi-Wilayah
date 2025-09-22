@@ -188,4 +188,47 @@
             </div>
         </div>
     </div>
+     <!-- Modal Tambah Permohonan -->
+<div class="modal fade" id="modalTambahPermohonan" tabindex="-1" aria-labelledby="modalTambahPermohonanLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content border-0 rounded-3 shadow">
+            <div class="modal-body p-0">
+                <!-- Card Modern -->
+                <div class="card border-0 rounded-3 overflow-hidden">
+                    <div class="card-header bg-primary text-white fw-bold rounded-top-4">
+                        <h5 class="mb-0 fw-bold">Tambah Permohonan</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <form id="formJenisSurat" method="GET" action="{{ route('layanan.permohonan.create') }}">
+                            <div class="mb-3">
+                                <label for="jenis" class="form-label fw-semibold text-dark">Pilih Jenis Surat</label>
+                                <select name="jenis" id="jenis" class="form-select border-primary shadow-sm" required>
+                                    <option value="">-- Pilih Jenis Surat --</option>
+                                    <option value="sk_domisili">SK Domisili</option>
+                                    <option value="sk_belum_pernah_nikah">SK Belum Pernah Nikah</option>
+                                    <option value="sp_berlakuan_baik">SP Berlakuan Baik</option>
+                                    <option value="sk_tidak_mampu">SK Tidak Mampu</option>
+                                    <option value="sk_kehilangan_ktp">SK Kehilangan KTP</option>
+                                    <option value="surat_penghibaan_tanah">Surat Penghibaan Tanah</option>
+                                    <option value="sk_umum">SK Umum</option>
+                                    <option value="surat_rekomendasi_rt">Surat Rekomendasi RT</option>
+                                    <option value="sr_ijin_mendirikan_bangunan">Ijin Mendirikan Bangunan</option>
+                                    <option value="sr_ijin_tempat">Ijin Tempat</option>
+                                </select>
+                            </div>
+                            <div class="d-flex justify-content-end gap-2">
+                                <button type="button" class="btn btn-light border" data-bs-dismiss="modal">Batal</button>
+                                <button type="submit" class="btn btn-primary">Lanjut</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer text-center small text-muted py-2 bg-light">
+                        Pastikan jenis surat sesuai dengan kebutuhan Anda
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
