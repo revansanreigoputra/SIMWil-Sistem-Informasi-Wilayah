@@ -66,9 +66,9 @@
 @endsection
 
 @section('action')
-    <a href="{{ route('layanan.permohonan.create', ['jenis' => 'sk_domisili']) }}" class="btn btn-primary">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahPermohonan">
         Tambah Permohonan
-    </a>
+    </button>
 @endsection
 
 @section('content')
@@ -192,10 +192,10 @@
 <div class="modal fade" id="modalTambahPermohonan" tabindex="-1" aria-labelledby="modalTambahPermohonanLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-md modal-dialog-centered">
-        <div class="modal-content border-0 rounded-3 shadow">
+        <div class="modal-content border-0 rounded-4 shadow">
             <div class="modal-body p-0">
                 <!-- Card Modern -->
-                <div class="card border-0 rounded-3 overflow-hidden">
+                <div class="card border-0 rounded-4 overflow-hidden">
                     <div class="card-header bg-primary text-white fw-bold rounded-top-4">
                         <h5 class="mb-0 fw-bold">Tambah Permohonan</h5>
                     </div>
