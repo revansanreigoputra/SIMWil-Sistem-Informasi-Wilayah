@@ -42,4 +42,9 @@ class DataKeluarga extends Model
         return $this->belongsTo(Kecamatan::class, 'kecamatan_id');
     }
 
+    public function anggotaKeluarga()
+    {
+        return $this->hasMany(AnggotaKeluarga::class, 'data_keluarga_id');
+    }
+
 }

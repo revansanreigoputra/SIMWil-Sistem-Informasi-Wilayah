@@ -211,7 +211,69 @@
                         </div>
                     </li>
                 @endcanany
+                {{-- Layanan Surat --}}
+                <li class="nav-item dropdown {{ request()->is('layanan-surat*') ? 'active' : '' }}">
+                    <a class="nav-link dropdown-toggle" href="#navbar-layanan" data-bs-toggle="dropdown"
+                        data-bs-auto-close="false" role="button" aria-expanded="false">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail"
+                                width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M3 7l9 6l9 -6" />
+                                <path
+                                    d="M21 7v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2z" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title"> Layanan Surat </span>
+                    </a>
 
+                    <div class="dropdown-menu {{ request()->is('layanan-surat*') ? 'show' : '' }}">
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+
+                                {{-- Template Surat (submenu di dalam Layanan Surat) --}}
+                                <div class="dropend">
+                                    <a class="dropdown-item dropdown-toggle {{ request()->is('layanan-surat/template*') ? 'active' : '' }}"
+                                        href="#" data-bs-toggle="dropdown" data-bs-auto-close="false">
+                                        Template Surat
+                                    </a>
+                                    <div
+                                        class="dropdown-menu {{ request()->is('layanan-surat/template*') ? 'show' : '' }}">
+                                        <a class="dropdown-item {{ request()->is('layanan-surat/template/kop-surat*') ? 'active' : '' }}"
+                                            href="{{ route('layanan.template.kop_surat.index') }}">
+                                            Kop Surat
+                                        </a>
+                                        <a class="dropdown-item {{ request()->is('layanan-surat/template/kop-laporan*') ? 'active' : '' }}"
+                                            href="{{ route('layanan.template.kop_laporan.index') }}">
+                                            Kop Laporan
+                                        </a>
+                                        <a class="dropdown-item {{ request()->is('layanan-surat/template/format-nomor*') ? 'active' : '' }}"
+                                            href="{{ route('layanan.template.format_nomor.index') }}">
+                                            Format Nomor Surat
+                                        </a>
+                                        {{-- <a class="dropdown-item {{ request()->is('layanan-surat/template/profil-desa*') ? 'active' : '' }}"
+                                            href="{{ route('layanan.template.profil_desa.index') }}">
+                                            Profil Desa
+                                        </a> --}}
+                                    </div>
+                                </div>
+                                {{-- Permohonan Surat --}}
+                                <a class="dropdown-item {{ request()->is('layanan-surat/permohonan*') ? 'active' : '' }}"
+                                    href="{{ route('layanan.permohonan.index') }}">
+                                    Permohonan Surat +
+                                </a>
+
+                                {{-- Profil Desa (di luar Template) --}}
+                                <a class="dropdown-item {{ request()->is('layanan-surat/profil-desa*') ? 'active' : '' }}"
+                                    href="{{ route('layanan.profil_desa.index') }}">
+                                    Profil Desa
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+                </li>
 
                 {{-- Awal Menu Dasar Data Keluarga --}}
                 @can('data_keluarga.view')
@@ -238,6 +300,9 @@
                                 <div class="dropdown-menu-column">
                                     <a class="dropdown-item" href="{{ route('data_keluarga.index') }}">
                                         Data Kepala Keluarga
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('anggota_keluarga.index') }}">
+                                        Data Anggota Keluarga
                                     </a>
                                 </div>
                             </div>
@@ -419,6 +484,49 @@
                     </a>
                 </li>
 
+                {{-- Menu Utama --}}
+                <li class="nav-item dropdown {{ request()->is('utama/*') ? 'active' : '' }}">
+                    <a class="nav-link dropdown-toggle" href="#navbar-utama" data-bs-toggle="dropdown"
+                        data-bs-auto-close="false" role="button" aria-expanded="false">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            {{-- Icon --}}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list"
+                                width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M9 6h11"></path>
+                                <path d="M9 12h11"></path>
+                                <path d="M9 18h11"></path>
+                                <path d="M5 6v.01"></path>
+                                <path d="M5 12v.01"></path>
+                                <path d="M5 18v.01"></path>
+                            </svg>
+                        </span>
+                        <span class="nav-link-title"> Utama </span>
+                    </a>
+                    <div class="dropdown-menu {{ request()->is('utama/*') ? 'show' : '' }}">
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ request()->routeIs('utama.agenda.*') ? 'active' : '' }}"
+                                    href="{{ route('utama.agenda.index') }}">
+                                    Agenda Kegiatan
+                                </a>
+                                <a class="dropdown-item {{ request()->routeIs('utama.glosarium.*') ? 'active' : '' }}"
+                                    href="{{ route('utama.glosarium.index') }}">
+                                    Glosarium
+                                </a>
+                                <a class="dropdown-item {{ request()->routeIs('utama.berita.*') ? 'active' : '' }}"
+                                    href="{{ route('utama.berita.index') }}">
+                                    Berita Penting
+                                </a>
+                                <a class="dropdown-item {{ request()->routeIs('utama.galeri.*') ? 'active' : '' }}"
+                                    href="{{ route('utama.galeri.index') }}">
+                                    Galeri Foto
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
             </ul>
             <!-- END NAVBAR MENU -->
         </div>

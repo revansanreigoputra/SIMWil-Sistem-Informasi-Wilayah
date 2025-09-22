@@ -17,7 +17,7 @@
                         <div class="text-primary">Data Kepala Keluarga</div>
                         <div class="p-1">
                             <label class="form-label">Nomor KK *</label>
-                            <input type="text" name="no_kk" class="form-control" value="{{ old('no_kk') }}" required>
+                            <input type="number" name="no_kk" class="form-control" value="{{ old('no_kk') }}" required>
                             @error('no_kk')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -38,7 +38,7 @@
                         <div class="row">
                             <div class="col-md-6 p-1">
                                 <label class="form-label">RT *</label>
-                                <input type="text" name="rt" class="form-control" value="{{ old('rt') }}"
+                                <input type="number" name="rt" class="form-control" value="{{ old('rt') }}"
                                     required>
                                 @error('rt')
                                     <div class="text-danger">{{ $message }}</div>
@@ -46,7 +46,7 @@
                             </div>
                             <div class="col-md-6 p-1">
                                 <label class="form-label">RW *</label>
-                                <input type="text" name="rw" class="form-control" value="{{ old('rw') }}"
+                                <input type="number" name="rw" class="form-control" value="{{ old('rw') }}"
                                     required>
                                 @error('rw')
                                     <div class="text-danger">{{ $message }}</div>
