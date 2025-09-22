@@ -142,9 +142,9 @@
                 @endcanany
 
                 {{-- Master Pegawai (Dropdown Menu) --}}
-                @canany(['jabatan.view', 'perangkat_desa.view'])
+                @canany(['jabatan.view', 'perangkat_desa.view', 'ttd.view'])
                     <li
-                        class="nav-item dropdown {{ request()->is('jabatan*') || request()->is('perangkat_desa*') ? 'active' : '' }}">
+                        class="nav-item dropdown {{ request()->is('jabatan*') || request()->is('perangkat_desa*') || request()->is('ttd*') ? 'active' : '' }}">
                         <a class="nav-link dropdown-toggle" href="#navbar-pegawai" data-bs-toggle="dropdown"
                             data-bs-auto-close="false" role="button" aria-expanded="false">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -164,7 +164,7 @@
                             <span class="nav-link-title"> Master Pegawai </span>
                         </a>
                         <div
-                            class="dropdown-menu {{ request()->is('jabatan*') || request()->is('perangkat_desa*') ? 'show' : '' }}">
+                            class="dropdown-menu {{ request()->is('jabatan*') || request()->is('perangkat_desa*') || request()->is('ttd*') ? 'show' : '' }}">
                             <div class="dropdown-menu-columns">
                                 <div class="dropdown-menu-column">
                                     <!-- Quick Create Jabatan Button -->
@@ -189,15 +189,6 @@
                                     @can('jabatan.view')
                                         <a class="dropdown-item {{ request()->is('jabatan*') && !request()->is('jabatan/create*') ? 'active' : '' }}"
                                             href="{{ route('jabatan.index') }}">
-                                            {{-- <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list me-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                        <path d="M9 6l11 0" />
-                                        <path d="M9 12l11 0" />
-                                        <path d="M9 18l11 0" />
-                                        <path d="M5 6l0 .01" />
-                                        <path d="M5 12l0 .01" />
-                                        <path d="M5 18l0 .01" />
-                                    </svg> --}}
                                             Daftar Jabatan
                                         </a>
                                     @endcan
@@ -205,14 +196,14 @@
                                     @can('perangkat_desa.view')
                                         <a class="dropdown-item {{ request()->is('perangkat_desa*') ? 'active' : '' }}"
                                             href="{{ route('perangkat_desa.index') }}">
-                                            {{-- <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users me-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                        <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
-                                        <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-                                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                                        <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
-                                    </svg> --}}
                                             Perangkat Desa
+                                        </a>
+                                    @endcan
+
+                                    @can('ttd.view')
+                                        <a class="dropdown-item {{ request()->is('ttd*') ? 'active' : '' }}"
+                                            href="{{ route('ttd.index') }}">
+                                            Penanda Tangan Surat
                                         </a>
                                     @endcan
                                 </div>
@@ -220,17 +211,77 @@
                         </div>
                     </li>
                 @endcanany
+                {{-- Layanan Surat --}}
+                <li class="nav-item dropdown {{ request()->is('layanan-surat*') ? 'active' : '' }}">
+                    <a class="nav-link dropdown-toggle" href="#navbar-layanan" data-bs-toggle="dropdown"
+                        data-bs-auto-close="false" role="button" aria-expanded="false">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail"
+                                width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M3 7l9 6l9 -6" />
+                                <path
+                                    d="M21 7v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2z" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title"> Layanan Surat </span>
+                    </a>
 
+                    <div class="dropdown-menu {{ request()->is('layanan-surat*') ? 'show' : '' }}">
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+
+                                {{-- Template Surat (submenu di dalam Layanan Surat) --}}
+                                <div class="dropend">
+                                    <a class="dropdown-item dropdown-toggle {{ request()->is('layanan-surat/template*') ? 'active' : '' }}"
+                                        href="#" data-bs-toggle="dropdown" data-bs-auto-close="false">
+                                        Template Surat
+                                    </a>
+                                    <div
+                                        class="dropdown-menu {{ request()->is('layanan-surat/template*') ? 'show' : '' }}">
+                                        <a class="dropdown-item {{ request()->is('layanan-surat/template/kop-surat*') ? 'active' : '' }}"
+                                            href="{{ route('layanan.template.kop_surat.index') }}">
+                                            Kop Surat
+                                        </a>
+                                        <a class="dropdown-item {{ request()->is('layanan-surat/template/kop-laporan*') ? 'active' : '' }}"
+                                            href="{{ route('layanan.template.kop_laporan.index') }}">
+                                            Kop Laporan
+                                        </a>
+                                        <a class="dropdown-item {{ request()->is('layanan-surat/template/format-nomor*') ? 'active' : '' }}"
+                                            href="{{ route('layanan.template.format_nomor.index') }}">
+                                            Format Nomor Surat
+                                        </a>
+                                        {{-- <a class="dropdown-item {{ request()->is('layanan-surat/template/profil-desa*') ? 'active' : '' }}"
+                                            href="{{ route('layanan.template.profil_desa.index') }}">
+                                            Profil Desa
+                                        </a> --}}
+                                    </div>
+                                </div>
+                                {{-- Permohonan Surat --}}
+                                <a class="dropdown-item {{ request()->is('layanan-surat/permohonan*') ? 'active' : '' }}"
+                                    href="{{ route('layanan.permohonan.index') }}">
+                                    Permohonan Surat +
+                                </a>
+
+                                {{-- Profil Desa (di luar Template) --}}
+                                <a class="dropdown-item {{ request()->is('layanan-surat/profil-desa*') ? 'active' : '' }}"
+                                    href="{{ route('layanan.profil_desa.index') }}">
+                                    Profil Desa
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+                </li>
 
                 {{-- Awal Menu Dasar Data Keluarga --}}
                 @can('data_keluarga.view')
-                    <li
-                        class="nav-item dropdown {{ request()->is(['data-keluarga*', 'anggota-keluarga*']) ? 'active' : '' }}">
+                    <li class="nav-item dropdown {{ request()->is('data_keluarga*') ? 'active' : '' }}">
                         <a class="nav-link dropdown-toggle" href="#navbar-data-keluarga" data-bs-toggle="dropdown"
                             data-bs-auto-close="false" role="button" aria-expanded="false">
-
-                            {{-- Icon --}}
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                {{-- Icon Database --}}
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round"
@@ -241,55 +292,23 @@
                                     <path d="M4 12v6a8 3 0 0 0 16 0v-6" />
                                 </svg>
                             </span>
-
-                            {{-- Judul --}}
-                            <span class="nav-link-title">Dasar Data Keluarga</span>
+                            <span class="nav-link-title"> Dasar Data Keluarga </span>
                         </a>
-
-                        {{-- Dropdown Menu --}}
-                        <div
-                            class="dropdown-menu {{ request()->is(['data-keluarga*', 'anggota-keluarga*']) ? 'show' : '' }}">
+                        {{-- sub menus --}}
+                        <div class="dropdown-menu {{ request()->is('data-keluarga*') ? 'show' : '' }}">
                             <div class="dropdown-menu-columns">
                                 <div class="dropdown-menu-column">
-
-                                    {{-- Kartu Keluarga --}}
-                                    <a class="dropdown-item {{ request()->routeIs('data_keluarga.index') ? 'active' : '' }}"
-                                        href="{{ route('data_keluarga.index') }}">
-                                        Data Kartu Keluarga
+                                    <a class="dropdown-item" href="{{ route('data_keluarga.index') }}">
+                                        Data Kepala Keluarga
                                     </a>
-                                    {{-- <a class="dropdown-item {{ request()->routeIs('data_keluarga.create') ? 'active' : '' }}"
-                                        href="{{ route('data_keluarga.create') }}">
-                                        + Tambah Kartu Keluarga
-                                    </a> --}}
-
-                                    {{-- <div class="dropdown-divider"></div> --}}
-
-                                    {{-- Anggota Keluarga --}}
-                                    <a class="dropdown-item {{ request()->routeIs('anggota_keluarga.index') ? 'active' : '' }}"
-                                        href="{{ route('anggota_keluarga.index') }}">
+                                    <a class="dropdown-item" href="{{ route('anggota_keluarga.index') }}">
                                         Data Anggota Keluarga
-                                    </a>
-                                    {{-- <a class="dropdown-item {{ request()->routeIs('anggota_keluarga.create') ? 'active' : '' }}"
-                                        href="{{ route('anggota_keluarga.create') }}">
-                                        + Tambah Anggota Keluarga
-                                    </a> --}}
-                                    <div class="dropdown-divider"></div>
-                                    {{-- Laporan --}}
-                                    <a class="dropdown-item {{ request()->routeIs('data_keluarga.report.heads') ? 'active' : '' }}"
-                                        href="{{ route('data_keluarga.report.heads') }}">
-                                        Laporan Kepala Keluarga
-                                    </a>
-                                    <a class="dropdown-item {{ request()->routeIs('anggota_keluarga.report.members') ? 'active' : '' }}"
-                                        href="{{ route('anggota_keluarga.report.members') }}">
-                                        Laporan Anggota Keluarga
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </li>
                 @endcan
-                {{-- Akhir Menu Dasar Data Keluarga --}}
-
                 {{-- Mutasi --}}
                 <li class="nav-item dropdown {{ request()->is('mutasi*') ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-mutasi" data-bs-toggle="dropdown"
@@ -329,35 +348,77 @@
                     </div>
                 </li>
 
-                {{-- <li class="nav-item dropdown {{ request()->is('penjualan*') ? 'active' : '' }}">
-                    <a class="nav-link dropdown-toggle" href="#navbar-sales" data-bs-toggle="dropdown"
-                        data-bs-auto-close="false" role="button" aria-expanded="false">
-                        <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="icon icon-1">
-                                <path d="M3 3h18l-1 13H4L3 3z"></path>
-                                <path d="M16 16a1 1 0 1 1 2 0a1 1 0 0 1 -2 0"></path>
-                                <path d="M7 16a1 1 0 1 1 2 0a1 1 0 0 1 -2 0"></path>
-                                <path d="M8.5 4.5l.5 7h6l.5 -7"></path>
-                            </svg>
-                        </span>
-                        <span class="nav-link-title"> Penjualan </span>
+                {{-- potensi --}}
+                @canany('jumlah.view')
+                    <li class="nav-item dropdown {{ request()->is('potensi*') ? 'active' : '' }}">
+                        <a class="nav-link dropdown-toggle" href="#navbar-potensi" data-bs-toggle="dropdown"
+                            data-bs-auto-close="false" role="button" aria-expanded="false">
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chart-bar"
+                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M3 12h18" />
+                                    <path d="M12 3v18" />
+                                    <path d="M7 9v12" />
+                                    <path d="M17 9v12" />
+                                </svg>
+                            </span>
+
+                        <span class="nav-link-title"> Potensi </span>
                     </a>
-                    <div class="dropdown-menu {{ request()->is('penjualan*') ? 'show' : '' }}">
+                                 <div class="dropdown-menu {{ request()->is('potensi*') ? 'show' : '' }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
-                                <a class="dropdown-item {{ request()->is('penjualan') && !request()->is('penjualan/riwayat') ? 'active' : '' }}"
-                                    href="{{ route('sales.pos') }}"> Point of Sale </a>
-                                <a class="dropdown-item {{ request()->is('penjualan/riwayat*') ? 'active' : '' }}"
-                                    href="{{ route('sales.history') }}"> Riwayat Penjualan </a>
-                            </div>
-                        </div>
-                    </li>
-                @endcan
+                                <div class="dropend">
+                                    @can('jumlah.view')
+                                            <a class="dropdown-item dropdown-toggle {{ request()->is('potensi/potensi-sdm*') ? : '' }}"
+                                                href="#sidebar-potensi-sdm" data-bs-toggle="dropdown"
+                                                data-bs-auto-close="false" role="button" aria-expanded="false">
+                                                Potensi Sumber <br> Daya Manusia
+                                            </a>
+                                        @endcan
+                                    <div
+                                        class="dropdown-menu {{ request()->is('potensi/potensi-sdm*') ? 'show' : '' }}">
+                                        <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/jumlah*') ? 'active' : '' }}"
+                                            href="{{ route('potensi.potensi-sdm.jumlah.index') }}">
+                                            Jumlah
+                                        </a>
+                                           @can('usia.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/usia*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-sdm.usia.index') }}">
+                                                    Usia
+                                                </a>
+                                            @endcan
+                                    </div>
+                                </div>
+                                <div class="dropend">
+                                                <a class="dropdown-item dropdown-toggle {{ request()->is('potensi/potensi-prasarana-dan-sarana*') ? 'active' : '' }}"
+                                                    href="#sidebar-potensi-prasarana" data-bs-toggle="dropdown"
+                                                    data-bs-auto-close="false" role="button" aria-expanded="false">
+                                                    Potensi Prasarana <br> dan Sarana
+                                                </a>
+                                                <div
+                                                    class="dropdown-menu {{ request()->is('potensi/potensi-prasarana-dan-sarana*') ? 'show' : '' }}">
+                                                    @can('transportasi_darat.view')
+                                                        <a class="dropdown-item {{ request()->is('transportasi-darat*') ? 'active' : '' }}"
+                                                            href="{{ route('potensi.potensi-prasarana-dan-sarana.transportasi-darat.index') }}">
+                                                            Transportasi Darat
+                                                        </a>
+                                                    @endcan
+                                                </div>
+                                            </div>
+                                            {{-- <a class="dropdown-item {{ request()->is('potensi/laporan*') ? 'active' : '' }}"
+                                                href="{{ route('potensi.laporan.index') }}">
+                                                Laporan Mutasi
+                                            </a> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                </li>
+                @endcanany
 
                 {{-- Master Data (Dropdown Menu) --}}
-
                 <li
                     class="nav-item dropdown {{ request()->is('role*') || request()->is('kategori*') || request()->is('supplier*') || request()->is('konsumen*') || request()->is('satuan*') || request()->is('produk*') || request()->is('user*') ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
@@ -424,6 +485,49 @@
                     </a>
                 </li>
 
+                {{-- Menu Utama --}}
+                <li class="nav-item dropdown {{ request()->is('utama/*') ? 'active' : '' }}">
+                    <a class="nav-link dropdown-toggle" href="#navbar-utama" data-bs-toggle="dropdown"
+                        data-bs-auto-close="false" role="button" aria-expanded="false">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            {{-- Icon --}}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list"
+                                width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M9 6h11"></path>
+                                <path d="M9 12h11"></path>
+                                <path d="M9 18h11"></path>
+                                <path d="M5 6v.01"></path>
+                                <path d="M5 12v.01"></path>
+                                <path d="M5 18v.01"></path>
+                            </svg>
+                        </span>
+                        <span class="nav-link-title"> Utama </span>
+                    </a>
+                    <div class="dropdown-menu {{ request()->is('utama/*') ? 'show' : '' }}">
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ request()->routeIs('utama.agenda.*') ? 'active' : '' }}"
+                                    href="{{ route('utama.agenda.index') }}">
+                                    Agenda Kegiatan
+                                </a>
+                                <a class="dropdown-item {{ request()->routeIs('utama.glosarium.*') ? 'active' : '' }}"
+                                    href="{{ route('utama.glosarium.index') }}">
+                                    Glosarium
+                                </a>
+                                <a class="dropdown-item {{ request()->routeIs('utama.berita.*') ? 'active' : '' }}"
+                                    href="{{ route('utama.berita.index') }}">
+                                    Berita Penting
+                                </a>
+                                <a class="dropdown-item {{ request()->routeIs('utama.galeri.*') ? 'active' : '' }}"
+                                    href="{{ route('utama.galeri.index') }}">
+                                    Galeri Foto
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
             </ul>
             <!-- END NAVBAR MENU -->
         </div>

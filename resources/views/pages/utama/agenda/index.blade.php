@@ -1,76 +1,69 @@
 @extends('layouts.master')
 
-@section('title', 'Data Anggota Keluarga')
+@section('title', 'Agenda Kegiatan')
 
 @section('action')
-    <a href="{{ route('anggota_keluarga.create') }}" class="btn btn-primary mb-3">+ Anggota Keluarga</a>
+    <a href="{{ route('utama.agenda.create') }}" class="btn btn-primary mb-3">Tambah Agenda</a>
 @endsection
 
 @section('content')
     <div class="card">
         <div class="card-body">
-
             <div class="table-responsive">
-                <table id="anggota-table" class="table table-striped">
+                <table id="agenda-table" class="table table-striped">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>NIK</th>
-                            <th>Nama Lengkap</th>
-                            <th>Jenis Kelamin</th>
-                            <th>Hubungan</th>
-                            <th>No. KK</th>
-                            <th>Kepala Keluarga</th>
+                            <th>Dari Tanggal</th>
+                            <th>Sampai Tanggal</th>
+                            <th>Lokasi</th>
+                            <th>Kegiatan</th>
+                            <th>Peserta</th>
+                            <th>Diupload / Diupdate</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($anggotaKeluargas as $anggota)
+                        @forelse ($agenda as $no => $a)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $anggota->nik }}</td>
-                                <td>{{ $anggota->nama_lengkap }}</td>
-                                <td>{{ $anggota->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
-                                <td>{{ $anggota->hubungan_keluarga }}</td>
-                                <td>{{ $anggota->kartuKeluarga->no_kk ?? 'N/A' }}</td>
-                                <td>{{ $anggota->kartuKeluarga->kepala_keluarga ?? 'N/A' }}</td>
+                                <td>{{ $a['tgl_dari'] }}</td>
+                                <td>{{ $a['tgl_sampai'] }}</td>
+                                <td>{{ $a['lokasi'] }}</td>
+                                <td>{{ $a['kegiatan'] }}</td>
+                                <td>{{ $a['peserta'] }}</td>
+                                <td>{{ $a['diupload'] }} ({{ $a['tanggal'] }})</td>
                                 <td>
                                     <div class="d-flex gap-1 justify-content-center">
-                                        {{-- Detail --}}
-                                        <a href="#" class="btn btn-sm btn-info">Detail</a>
-
-
-                                        <a href="{{ route('anggota_keluarga.edit', $anggota->id) }}"
-                                            class="btn btn-sm btn-warning">Edit</a>
-
-                                        {{-- Hapus dengan modal --}}
+                                        {{-- Edit --}}
+                                        <a href="{{ route('utama.agenda.edit', $a['id']) }}"
+                                           class="btn btn-sm btn-warning">Edit</a>
+                                        {{-- Hapus --}}
                                         <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                            data-bs-target="#delete-anggota-{{ $anggota->id }}">
+                                            data-bs-target="#delete-agenda-{{ $a['id'] }}">
                                             Hapus
                                         </button>
                                     </div>
 
                                     <!-- Modal Hapus -->
-                                    <div class="modal fade" id="delete-anggota-{{ $anggota->id }}" tabindex="-1"
+                                    <div class="modal fade" id="delete-agenda-{{ $a['id'] }}" tabindex="-1"
                                         aria-labelledby="deleteModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title">Hapus Data Anggota?</h5>
+                                                    <h5 class="modal-title">Hapus Agenda?</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>Data anggota <strong>{{ $anggota->nama_lengkap }}</strong> akan
-                                                        dihapus dan tidak bisa dikembalikan.</p>
+                                                    <p>Agenda <strong>{{ $a['kegiatan'] }}</strong> akan dihapus.</p>
                                                     <p>Yakin ingin menghapus data ini?</p>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">Batal</button>
-                                                    {{-- Hapus --}}
-                                                    <form action="{{ route('anggota_keluarga.destroy', $anggota->id) }}"
-                                                        method="POST">
+                                                    <form action="{{ route('utama.agenda.index', $a['id']) }}"
+                                                          method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger">Hapus</button>
@@ -83,7 +76,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="8" class="text-center">Data anggota keluarga masih kosong.</td>
+                                <td colspan="8" class="text-center">Belum ada agenda kegiatan.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -96,7 +89,7 @@
 @push('addon-script')
     <script>
         $(document).ready(function() {
-            $('#anggota-table').DataTable();
+            $('#agenda-table').DataTable();
         });
     </script>
 @endpush
