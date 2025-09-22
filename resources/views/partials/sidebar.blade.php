@@ -416,6 +416,7 @@
                                     </div>
                                 </div>
                 </li>
+                @endcanany
 
                 {{-- Master Data (Dropdown Menu) --}}
                 <li
