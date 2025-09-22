@@ -2,10 +2,13 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TtdController;
 use App\Http\Controllers\DesaController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UsiaController;
 use App\Http\Controllers\JumlahController;
+use App\Http\Controllers\MutasiController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingController;
@@ -13,13 +16,17 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KecamatanController;
 use App\Http\Controllers\MasterDdkController;
 use App\Http\Controllers\DataKeluargaController;
-use App\Http\Controllers\MutasiController;
-use App\Http\Controllers\TtdController;
+use App\Http\Controllers\IrigasiController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PerangkatDesaController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\TransportasiDaratController;
-use App\Http\Controllers\IrigasiController;
+use App\Http\Controllers\AgendaController;
+use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\GaleriController;
+use App\Http\Controllers\GlosariumController;
+
+
 
 Route::get('/', function () {
     return Auth::check()
@@ -81,14 +88,14 @@ Route::middleware(['auth', 'permission:jabatan.view'])->prefix('jabatan')->group
     Route::delete('/{jabatan}', [JabatanController::class, 'destroy'])->middleware('permission:jabatan.delete')->name('jabatan.destroy');
 });
 // Jumlah routes
-Route::middleware(['auth', 'permission:jumlah.view'])->prefix('jumlah')->group(function () {
-    Route::get('/', [JumlahController::class, 'index'])->name('potensi.potensi-sdm.jumlah.index');
-    Route::get('/create', [JumlahController::class, 'create'])->middleware('permission:jumlah.create')->name('potensi.potensi-sdm.jumlah.create');
-    Route::post('/', [JumlahController::class, 'store'])->middleware('permission:jumlah.store')->name('potensi.potensi-sdm.jumlah.store');
-    Route::get('/{jumlah}', [JumlahController::class, 'show'])->name('potensi.potensi-sdm.jumlah.show');
-    Route::get('/{jumlah}/edit', [JumlahController::class, 'edit'])->middleware('permission:jumlah.update')->name('potensi.potensi-sdm.jumlah.edit');
-    Route::put('/{jumlah}', [JumlahController::class, 'update'])->middleware('permission:jumlah.update')->name('potensi.potensi-sdm.jumlah.update');
-    Route::delete('/{jumlah}', [JumlahController::class, 'destroy'])->middleware('permission:jumlah.delete')->name('potensi.potensi-sdm.jumlah.destroy');
+Route::middleware(['auth', 'permission:jumlah.view'])->prefix('potensi/potensi-sdm/jumlah')->name('potensi.potensi-sdm.jumlah.')->group(function () {
+    Route::get('/', [JumlahController::class, 'index'])->name('index');
+    Route::get('/create', [JumlahController::class, 'create'])->middleware('permission:jumlah.create')->name('create');
+    Route::post('/', [JumlahController::class, 'store'])->middleware('permission:jumlah.store')->name('store');
+    Route::get('/{jumlah}', [JumlahController::class, 'show'])->name('show');
+    Route::get('/{jumlah}/edit', [JumlahController::class, 'edit'])->middleware('permission:jumlah.update')->name('edit');
+    Route::put('/{jumlah}', [JumlahController::class, 'update'])->middleware('permission:jumlah.update')->name('update');
+    Route::delete('/{jumlah}', [JumlahController::class, 'destroy'])->middleware('permission:jumlah.delete')->name('destroy');
 });
 
 // Transportasi Darat routes
@@ -139,13 +146,35 @@ Route::middleware(['auth'])->prefix('data-keluarga')->name('data_keluarga.')->gr
     Route::delete('/{dataKeluarga}', [DataKeluargaController::class, 'destroy'])->middleware('permission:data_keluarga.delete')->name('delete');
     Route::delete('/{dataKeluarga}', [DataKeluargaController::class, 'destroy'])->middleware('permission:data_keluarga.destroy')->name('destroy');
 });
-
-// DATA ANGGOTA KELUARGA (AK)
+// data anggota keluarga routes
 Route::middleware(['auth'])->prefix('anggota-keluarga')->name('anggota_keluarga.')->group(function () {
-    Route::get('/', [DataKeluargaController::class, 'indexAnggota'])->middleware('permission:data_keluarga.view')->name('index');
-    Route::get('/create', [DataKeluargaController::class, 'createAk'])->middleware('permission:data_keluarga.create')->name('create');
-    Route::post('/store', [DataKeluargaController::class, 'storeAk'])->middleware('permission:data_keluarga.store')->name('store');
-    Route::get('/laporan/anggota-keluarga', [DataKeluargaController::class, 'membersReport'])->middleware('permission:data_keluarga.report')->name('report.members');
+    Route::get('/', [App\Http\Controllers\AnggotaKeluargaController::class, 'index'])->middleware('permission:anggota_keluarga.view')->name('index');
+    Route::get('/create', [App\Http\Controllers\AnggotaKeluargaController::class, 'create'])->middleware('permission:anggota_keluarga.create')->name('create');
+    Route::post('/', [App\Http\Controllers\AnggotaKeluargaController::class, 'store'])->middleware('permission:anggota_keluarga.store')->name('store');
+    Route::get('/{anggotaKeluarga}/edit', [App\Http\Controllers\AnggotaKeluargaController::class, 'edit'])->middleware('permission:anggota_keluarga.edit')->name('edit');
+    Route::put('/{anggotaKeluarga}', [App\Http\Controllers\AnggotaKeluargaController::class, 'update'])->middleware('permission:anggota_keluarga.update')->name('update');
+    Route::delete('/{anggotaKeluarga}', [App\Http\Controllers\AnggotaKeluargaController::class, 'destroy'])->middleware('permission:anggota_keluarga.delete')->name('destroy');
+    Route::get('/{dataKeluarga}/show', [App\Http\Controllers\AnggotaKeluargaController::class, 'showAnggota'])->middleware('permission:anggota_keluarga.show')->name('show');
+});
+// DATA ANGGOTA KELUARGA (AK)
+// Route::middleware(['auth'])->prefix('anggota-keluarga')->name('anggota_keluarga.')->group(function () {
+//     Route::get('/', [DataKeluargaController::class, 'indexAnggota'])->middleware('permission:data_keluarga.view')->name('index');
+//     Route::get('/create', [DataKeluargaController::class, 'createAk'])->middleware('permission:data_keluarga.create')->name('create');
+//     Route::post('/store', [DataKeluargaController::class, 'storeAk'])->middleware('permission:data_keluarga.store')->name('store');
+//     Route::get('/laporan/anggota-keluarga', [DataKeluargaController::class, 'membersReport'])->middleware('permission:data_keluarga.report')->name('report.members');
+// });
+
+// Grup menu UTAMA
+Route::prefix('utama')->name('utama.')->middleware(['auth'])->group(function () {
+    Route::resource('agenda', AgendaController::class);
+    Route::resource('berita', BeritaController::class);
+    Route::resource('glosarium', GlosariumController::class);
+    Route::resource('galeri', GaleriController::class);
+    Route::prefix('galeri/{galeri}/photos')->name('galeri.photo.')->group(function () {
+        Route::get('/create', [GaleriController::class, 'createPhoto'])->name('create');
+        Route::post('/', [GaleriController::class, 'storePhoto'])->name('store');
+        Route::delete('/{photo}', [GaleriController::class, 'destroyPhoto'])->name('destroy');
+    });
 });
 
 // Penanda Tangan (TTD) routes
@@ -186,9 +215,20 @@ Route::prefix('mutasi')->middleware(['auth'])->group(function () {
         Route::get('/', [MutasiController::class, 'laporan'])->name('mutasi.laporan.index');
         Route::get('/export', [MutasiController::class, 'exportLaporan'])->name('mutasi.laporan.export')->middleware('permission:mutasi.laporan.export');
     });
+
 });
 require __DIR__ . '/auth.php';
 
 
 // routes for direct file (placeholder routes)
 Route::get('/master-ddk/{table?}', [MasterDDKController::class, 'index'])->name('master.ddk.index');
+
+Route::middleware(['auth', 'permission:usia.view'])->prefix('potensi/potensi-sdm/usia')->name('potensi.potensi-sdm.usia.')->group(function () {
+    Route::get('/', [UsiaController::class, 'index'])->name('index');
+    Route::get('/create', [UsiaController::class, 'create'])->middleware('permission:usia.create')->name('create');
+    Route::post('/', [UsiaController::class, 'store'])->middleware('permission:usia.store')->name('store');
+    Route::get('/{usia}', [UsiaController::class, 'show'])->name('show');
+    Route::get('/{usia}/edit', [UsiaController::class, 'edit'])->middleware('permission:usia.update')->name('edit');
+    Route::put('/{usia}', [UsiaController::class, 'update'])->middleware('permission:usia.update')->name('update');
+    Route::delete('/{usia}', [UsiaController::class, 'destroy'])->middleware('permission:usia.delete')->name('destroy');
+});

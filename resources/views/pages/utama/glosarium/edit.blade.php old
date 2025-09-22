@@ -1,0 +1,35 @@
+@extends('layouts.master')
+
+@section('content')
+<header class="p-header mb-3">
+    <h2 class="p-title">Edit Glosari</h2>
+</header>
+
+<div class="card">
+    <div class="card-body">
+        <h3 class="mb-3">Form Edit Glosari</h3>
+
+        <form method="POST" action="#">
+            @csrf
+            @method('PUT')
+
+            <input type="hidden" name="id" value="{{ $glosarium['id'] }}">
+
+            <div class="mb-3">
+                <label class="form-label">Istilah</label>
+                <input type="text" name="istilah" class="form-control" value="{{ $glosarium['istilah'] }}">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Deskripsi</label>
+                <textarea name="deskripsi" class="form-control" rows="3">{{ $glosarium['deskripsi'] }}</textarea>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Simpan</button>
+                <a href="{{ route('utama.glosarium.index') }}" class="btn btn-warning">Kembali</a>
+            </div>
+        </form>
+    </div>
+</div>
+@endsection
