@@ -27,6 +27,7 @@ use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\GlosariumController;
+use App\Http\Controllers\SanitasiController;
 
 
 use App\Http\Controllers\LayananSuratController;
@@ -80,6 +81,17 @@ Route::middleware(['auth', 'permission:kecamatan.view'])->prefix('kecamatan')->g
     Route::get('/{kecamatan}/edit', [KecamatanController::class, 'edit'])->middleware('permission:kecamatan.update')->name('kecamatan.edit');
     Route::put('/{kecamatan}', [KecamatanController::class, 'update'])->middleware('permission:kecamatan.update')->name('kecamatan.update');
     Route::delete('/{kecamatan}', [KecamatanController::class, 'destroy'])->middleware('permission:kecamatan.delete')->name('kecamatan.destroy');
+});
+
+// Prasarana Sanitasi routes
+Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/prasarana-sanitasi')->name('potensi.potensi-prasarana-dan-sarana.prasarana-sanitasi.')->group(function () {
+    Route::get('/', [SanitasiController::class, 'index'])->middleware('permission:sanitasi.view')->name('index');
+    Route::get('/create', [SanitasiController::class, 'create'])->middleware('permission:sanitasi.create')->name('create');
+    Route::post('/', [SanitasiController::class, 'store'])->middleware('permission:sanitasi.store')->name('store');
+    Route::get('/{sanitasi}', [SanitasiController::class, 'show'])->middleware('permission:sanitasi.view')->name('show');
+    Route::get('/{sanitasi}/edit', [SanitasiController::class, 'edit'])->middleware('permission:sanitasi.update')->name('edit');
+    Route::put('/{sanitasi}', [SanitasiController::class, 'update'])->middleware('permission:sanitasi.update')->name('update');
+    Route::delete('/{sanitasi}', [SanitasiController::class, 'destroy'])->middleware('permission:sanitasi.delete')->name('destroy');
 });
 
 // Jabatan routes
