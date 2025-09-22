@@ -16,17 +16,20 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KecamatanController;
 use App\Http\Controllers\MasterDdkController;
 use App\Http\Controllers\DataKeluargaController;
-use App\Http\Controllers\IrigasiController;
+// use App\Http\Controllers\IrigasiController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PerangkatDesaController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\TransportasiDaratController;
+use App\Http\Controllers\IrigasiController;
+use App\Http\Controllers\AnggotaKeluargaController;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\GlosariumController;
 
 
+use App\Http\Controllers\LayananSuratController;
 
 Route::get('/', function () {
     return Auth::check()

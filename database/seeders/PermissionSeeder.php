@@ -61,7 +61,7 @@ class PermissionSeeder extends Seeder
             // data keluarga permissions
             'data_keluarga.view',
             'data_keluarga.create',
-            'data_keluarga.store', 
+            'data_keluarga.store',
             'data_keluarga.edit',
             'data_keluarga.update',
             'data_keluarga.delete',
@@ -124,6 +124,15 @@ class PermissionSeeder extends Seeder
             'usia.store',
             'usia.update',
             'usia.delete',
+            
+            // Irigasi
+            'irigasi.view',
+            'irigasi.create',
+            'irigasi.store',
+            'irigasi.edit',
+            'irigasi.update',
+            'irigasi.delete',
+
         ];
 
         foreach ($permissions as $permission) {
