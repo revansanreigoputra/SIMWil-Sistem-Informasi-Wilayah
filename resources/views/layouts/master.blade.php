@@ -24,6 +24,8 @@
             </div>
         </div>
     </div>
+    @stack('modals')
+
     @include('includes.script')
     @stack('addon-script')
 </body>
