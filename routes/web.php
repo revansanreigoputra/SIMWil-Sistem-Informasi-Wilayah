@@ -16,6 +16,7 @@ use App\Http\Controllers\DesaController;
 use App\Http\Controllers\MasterDdkController;
 use App\Http\Controllers\DataKeluargaController;
 use App\Http\Controllers\MutasiController;
+use App\Http\Controllers\APBDesaController; 
 
 Route::get('/', function () {
     return Auth::check()
@@ -145,6 +146,8 @@ Route::prefix('mutasi')->middleware(['auth'])->group(function() {
         Route::get('/', [MutasiController::class, 'laporan'])->name('mutasi.laporan.index');
         Route::get('/export', [MutasiController::class, 'exportLaporan'])->name('mutasi.laporan.export')->middleware('permission:mutasi.laporan.export');
     });
+
+    
 
 });
 require __DIR__ . '/auth.php';
