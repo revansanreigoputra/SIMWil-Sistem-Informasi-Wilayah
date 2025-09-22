@@ -218,13 +218,31 @@ Route::prefix('mutasi')->middleware(['auth'])->group(function () {
         Route::get('/', [MutasiController::class, 'laporan'])->name('mutasi.laporan.index');
         Route::get('/export', [MutasiController::class, 'exportLaporan'])->name('mutasi.laporan.export')->middleware('permission:mutasi.laporan.export');
     });
-
 });
-require __DIR__ . '/auth.php';
 
+Route::middleware(['auth'])->prefix('layanan-surat')->group(function () {
 
-// routes for direct file (placeholder routes)
-Route::get('/master-ddk/{table?}', [MasterDDKController::class, 'index'])->name('master.ddk.index');
+    // ==== TEMPLATE SURAT ====
+    Route::prefix('template')->group(function () {
+        Route::get('kop-surat', [LayananSuratController::class, 'templateKopSurat'])->name('layanan.template.kop_surat.index');
+        Route::get('kop-surat/edit', [LayananSuratController::class, 'editKopSurat'])->name('layanan.template.kop_surat.edit');
+        Route::get('kop-laporan', [LayananSuratController::class, 'templateKopLaporan'])->name('layanan.template.kop_laporan.index');
+        Route::get('kop-laporan/edit', [LayananSuratController::class, 'editKopLaporan'])->name('layanan.template.kop_laporan.edit');
+        Route::get('format-nomor', [LayananSuratController::class, 'templateFormatNomor'])->name('layanan.template.format_nomor.index');
+        Route::get('format-nomor/edit', [LayananSuratController::class, 'editFormatNomor'])->name('layanan.template.format_nomor.edit');
+        // Route::get('profil-desa', [LayananSuratController::class, 'templateProfilDesa'])->name('layanan.template.profil_desa.index');
+    });
+    // ==== PERMOHONAN SURAT ====
+    Route::get('/permohonan', [LayananSuratController::class, 'index'])->name('layanan.permohonan.index');
+    Route::get('/permohonan/create', [LayananSuratController::class, 'create'])->name('layanan.permohonan.create');
+    Route::get('/permohonan/edit/{id}', [LayananSuratController::class, 'edit'])->name('layanan.permohonan.edit');
+    Route::get('/permohonan/delete/{id}', [LayananSuratController::class, 'delete'])->name('layanan.permohonan.delete');
+    Route::get('/permohonan/cetak/{id}', [LayananSuratController::class, 'cetak'])->name('layanan.permohonan.cetak');
+    // ==== PROFIL DESA (di luar template) ====
+    Route::get('profil-desa', [LayananSuratController::class, 'profilDesa'])->name('layanan.profil_desa.index');
+    Route::get('profil-desa/show', [LayananSuratController::class, 'showProfilDesa'])->name('layanan.profil_desa.show');
+    Route::get('profil-desa/edit', [LayananSuratController::class, 'editProfilDesa'])->name('layanan.profil_desa.edit');
+});
 
 Route::middleware(['auth', 'permission:usia.view'])->prefix('potensi/potensi-sdm/usia')->name('potensi.potensi-sdm.usia.')->group(function () {
     Route::get('/', [UsiaController::class, 'index'])->name('index');
@@ -235,3 +253,9 @@ Route::middleware(['auth', 'permission:usia.view'])->prefix('potensi/potensi-sdm
     Route::put('/{usia}', [UsiaController::class, 'update'])->middleware('permission:usia.update')->name('update');
     Route::delete('/{usia}', [UsiaController::class, 'destroy'])->middleware('permission:usia.delete')->name('destroy');
 });
+
+require __DIR__ . '/auth.php';
+
+
+// routes for direct file (placeholder routes)
+Route::get('/master-ddk/{table?}', [MasterDDKController::class, 'index'])->name('master.ddk.index');
