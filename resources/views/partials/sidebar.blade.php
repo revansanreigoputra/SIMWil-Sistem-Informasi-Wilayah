@@ -418,7 +418,7 @@
                         <span class="nav-link-title"> Pengaturan </span>
                     </a>
                 </li>
-
+@endcanany
             </ul>
             <!-- END NAVBAR MENU -->
         </div>
