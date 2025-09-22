@@ -61,7 +61,7 @@ class PermissionSeeder extends Seeder
             // data keluarga permissions
             'data_keluarga.view',
             'data_keluarga.create',
-            'data_keluarga.store', 
+            'data_keluarga.store',
             'data_keluarga.edit',
             'data_keluarga.update',
             'data_keluarga.delete',
@@ -84,7 +84,6 @@ class PermissionSeeder extends Seeder
             'mutasi.data.destroy',
             'mutasi.laporan.view',
             'mutasi.laporan.export',
-
 
             // ttd (penanda tangan) permissions
             'ttd.view',
@@ -111,13 +110,28 @@ class PermissionSeeder extends Seeder
             'transportasi_darat.update',
             'transportasi_darat.delete',
 
+            // Irigasi
+            'irigasi.view',
+            'irigasi.create',
+            'irigasi.store',
+            'irigasi.edit',
+            'irigasi.update',
+            'irigasi.delete',
+            
             // usia permissions
             'usia.view',
             'usia.create',
             'usia.store',
             'usia.update',
             'usia.delete',
-
+            
+            // Irigasi
+            'irigasi.view',
+            'irigasi.create',
+            'irigasi.store',
+            'irigasi.edit',
+            'irigasi.update',
+            'irigasi.delete',
 
         ];
 

@@ -16,15 +16,18 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KecamatanController;
 use App\Http\Controllers\MasterDdkController;
 use App\Http\Controllers\DataKeluargaController;
+// use App\Http\Controllers\IrigasiController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PerangkatDesaController;
-use App\Http\Controllers\TransportasiDaratController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\TransportasiDaratController;
+use App\Http\Controllers\IrigasiController;
 use App\Http\Controllers\AnggotaKeluargaController;
 use App\Http\Controllers\AgendaController;
-use App\Http\Controllers\GlosariumController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\GaleriController;
+use App\Http\Controllers\GlosariumController;
+
 
 use App\Http\Controllers\LayananSuratController;
 
@@ -107,6 +110,17 @@ Route::middleware(['auth'])->prefix('transportasi-darat')->group(function () {
     Route::get('/{transportasiDarat}/edit', [TransportasiDaratController::class, 'edit'])->middleware('permission:transportasi_darat.update')->name('potensi.potensi-prasarana-dan-sarana.transportasi-darat.edit');
     Route::put('/{transportasiDarat}', [TransportasiDaratController::class, 'update'])->middleware('permission:transportasi_darat.update')->name('potensi.potensi-prasarana-dan-sarana.transportasi-darat.update');
     Route::delete('/{transportasiDarat}', [TransportasiDaratController::class, 'destroy'])->middleware('permission:transportasi_darat.delete')->name('potensi.potensi-prasarana-dan-sarana.transportasi-darat.destroy');
+});
+
+// Irigasi routes
+Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/irigasi')->name('potensi.potensi-prasarana-dan-sarana.irigasi.')->group(function () {
+    Route::get('/', [IrigasiController::class, 'index'])->name('index');
+    Route::get('/create', [IrigasiController::class, 'create'])->name('create');
+    Route::post('/', [IrigasiController::class, 'store'])->name('store');
+    Route::get('/{irigasi}', [IrigasiController::class, 'show'])->name('show');
+    Route::get('/{irigasi}/edit', [IrigasiController::class, 'edit'])->name('edit');
+    Route::put('/{irigasi}', [IrigasiController::class, 'update'])->name('update');
+    Route::delete('/{irigasi}', [IrigasiController::class, 'destroy'])->name('destroy');
 });
 
 // Desa routes
@@ -249,3 +263,5 @@ Route::middleware(['auth', 'permission:usia.view'])->prefix('potensi/potensi-sdm
     Route::delete('/{usia}', [UsiaController::class, 'destroy'])->middleware('permission:usia.delete')->name('destroy');
 });
 
+// routes for direct file (placeholder routes)
+Route::get('/master-ddk/{table?}', [MasterDDKController::class, 'index'])->name('master.ddk.index');
