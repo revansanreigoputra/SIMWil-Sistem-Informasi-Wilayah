@@ -23,6 +23,7 @@ use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\GlosariumController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\GaleriController;
+use App\Http\Controllers\TapController;
 
 use App\Http\Controllers\LayananSuratController;
 
@@ -146,6 +147,7 @@ Route::prefix('utama')->name('utama.')->middleware(['auth'])->group(function () 
     Route::resource('berita', BeritaController::class);
     Route::resource('glosarium', GlosariumController::class);
     Route::resource('galeri', GaleriController::class);
+    Route::resource('tap', TapController::class);
     Route::prefix('galeri/{galeri}/photos')->name('galeri.photo.')->group(function () {
         Route::get('/create', [GaleriController::class, 'createPhoto'])->name('create');
         Route::post('/', [GaleriController::class, 'storePhoto'])->name('store');

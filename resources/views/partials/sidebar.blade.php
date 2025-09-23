@@ -499,6 +499,10 @@
                                     href="{{ route('utama.galeri.index') }}">
                                     Galeri Foto
                                 </a>
+                                <a class="dropdown-item {{ request()->routeIs('utama.tap.*') ? 'active' : '' }}"
+                                    href="{{ route('utama.tap.index') }}">
+                                    TA Pendamping
+                                </a>
                             </div>
                         </div>
                     </div>
