@@ -123,6 +123,8 @@ Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/irigas
     Route::delete('/{irigasi}', [IrigasiController::class, 'destroy'])->name('destroy');
 });
 
+//APB Desa Routes
+Route::resource('apbdesa', APBDesaController::class);
 // perkembangan_apb routes
 Route::middleware(['auth'])->prefix('perkembangan/pemerintahdesadankelurahan/apbdesa')->name('perkembangan.pemerintahdesadankelurahan.apbdesa.')->group(function () {
     Route::get('/', [APBDesaController::class, 'index'])->name('index');

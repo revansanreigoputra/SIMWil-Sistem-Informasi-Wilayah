@@ -13,7 +13,8 @@ class APBDesaController extends Controller
     public function index()
     {
         $data = ApbDesa::orderBy('tanggal', 'desc')->get();
-        return view('apb_desa.index', compact('data'));
+        return view('pages.perkembangan.pemerintahdesadankelurahan.apbdesa.index', compact('data'));
+
     }
 
     /**
@@ -21,7 +22,8 @@ class APBDesaController extends Controller
      */
     public function create()
     {
-        return view('apb_desa.create');
+        return view('pages.perkembangan.pemerintahdesadankelurahan.apbdesa.create');
+
     }
 
     /**
@@ -49,7 +51,7 @@ class APBDesaController extends Controller
 
         ApbDesa::create($validated);
 
-        return redirect()->route('apb-desa.index')->with('success', 'Data APB Desa berhasil ditambahkan.');
+        return redirect()->route('apbdesa.index')->with('success', 'Data APB Desa berhasil ditambahkan.');
     }
 
     /**
@@ -66,7 +68,7 @@ class APBDesaController extends Controller
     public function edit($id)
     {
         $apb = ApbDesa::findOrFail($id);
-        return view('apb_desa.edit', compact('apb'));
+        return view('pages.perkembangan.pemerintahdesadankelurahan.apbdesa.edit', compact('apb'));
     }
 
     /**
@@ -91,11 +93,18 @@ class APBDesaController extends Controller
             'jumlah_belanja' => 'nullable|numeric',
             'saldo_anggaran' => 'nullable|numeric',
         ]);
-
+        // Bersihkan format rupiah → hanya angka
+            foreach ($validated as $key => $value) {
+                if (is_string($value)) {
+                    $validated[$key] = preg_replace('/[^0-9]/', '', $value);
+                }
+            }
         $apb = ApbDesa::findOrFail($id);
         $apb->update($validated);
 
-        return redirect()->route('apb-desa.index')->with('success', 'Data APB Desa berhasil diperbarui.');
+        return redirect()->route('perkembangan.pemerintahdesadankelurahan.apbdesa.index')
+        ->with('success', 'Data APB Desa berhasil ditambahkan.');
+
 
     }
 
@@ -107,6 +116,6 @@ class APBDesaController extends Controller
         $apb = ApbDesa::findOrFail($id);
         $apb->delete();
 
-        return redirect()->route('apb-desa.index')->with('success', 'Data APB Desa berhasil dihapus.');
+        return redirect()->route('perkembangan.pemerintahdesadankelurahan.apbdesa.index')->with('success', 'Data APB Desa berhasil dihapus.');
     }
 }
