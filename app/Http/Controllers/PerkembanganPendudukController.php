@@ -55,25 +55,17 @@ class PerkembanganPendudukController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
-{
-    $request->validate([
-        'tanggal' => 'required|date',
-        'jumlah_laki_laki_tahun_ini' => 'required|integer',
-        'jumlah_perempuan_tahun_ini' => 'required|integer',
-        'jumlah_laki_laki_tahun_lalu' => 'required|integer',
-        'jumlah_perempuan_tahun_lalu' => 'required|integer',
-        'jumlah_kepala_keluarga_laki_laki_tahun_ini' => 'required|integer',
-        'jumlah_kepala_keluarga_perempuan_tahun_ini' => 'required|integer',
-        'jumlah_kepala_keluarga_laki_laki_tahun_lalu' => 'required|integer',
-        'jumlah_kepala_keluarga_perempuan_tahun_lalu' => 'required|integer',
-    ]);
+    public function update(Request $request, PerkembanganPenduduk $perkembangan_penduduk)
+    {
+        $request->validate([
+            'tanggal' => 'required|date',
+            // tambahkan validasi untuk semua field lainnya
+        ]);
 
-    $item = PerkembanganPenduduk::findOrFail($id);
-    $item->update($request->all());
+        $perkembangan_penduduk->update($request->all());
 
-    return redirect()->route('perkembangan-penduduk.index')->with('success', 'Data berhasil diperbarui.');
-}
+        return response()->json($perkembangan_penduduk);
+    }
 
     /**
      * Remove the specified resource from storage.
