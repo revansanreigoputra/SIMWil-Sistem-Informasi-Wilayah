@@ -390,6 +390,12 @@
                                                     Usia
                                                 </a>
                                             @endcan
+                                            @can('p_pendidikan.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/pendidikan*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-sdm.pendidikan.index') }}">
+                                                    Pendidikan
+                                                </a>
+                                            @endcan
                                         </div>
                                     </div>
                                     <div class="dropend">
