@@ -126,6 +126,15 @@ class PermissionSeeder extends Seeder
             'irigasi.update',
             'irigasi.delete',
 
+            // apb
+            'apb.view',
+            'apb.create',
+            'apb.store',
+            'apb.edit',
+            'apb.update',
+            'apb.delete',
+
+
         ];
 
         foreach ($permissions as $permission) {
