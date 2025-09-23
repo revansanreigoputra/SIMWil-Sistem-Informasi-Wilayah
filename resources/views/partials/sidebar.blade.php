@@ -465,12 +465,12 @@
             </div>
 
             <!-- Dropdown 'Perkembangan Penduduk' -->
-            <div class="dropend">
-                <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/penduduk*') ? 'show' : '' }}"
-                    href="#sidebar-perkembangan-penduduk" data-bs-toggle="dropdown" data-bs-auto-close="false"
-                    role="button" aria-expanded="false">
-                    Perkembangan Penduduk
-                </a>
+<div class="dropend">
+    <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/penduduk*') ? 'show' : '' }}"
+        href="#sidebar-perkembangan-penduduk" data-bs-toggle="dropdown" data-bs-auto-close="false"
+        role="button" aria-expanded="false">
+        <span class="dropdown-text">Perkembangan<br>Penduduk</span>
+    </a>
                 <div class="dropdown-menu {{ request()->is('perkembangan/penduduk*') ? 'show' : '' }}">
                     <a class="dropdown-item {{ request()->is('perkembangan/penduduk') ? 'active' : '' }}"
                         href="{{ route('perkembangan-penduduk.index') }}">
