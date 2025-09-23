@@ -421,6 +421,13 @@
                                                     Prasarana Sanitasi
                                                 </a>
                                             @endcan
+                                            
+                                            @can('air_bersih.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/air-bersih*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-prasarana-dan-sarana.prasarana-air-bersih.index') }}">
+                                                    Prasarana Air Bersih
+                                                </a>
+                                            @endcan
                                         </div>
                                     </div>
                                     {{-- <a class="dropdown-item {{ request()->is('potensi/laporan*') ? 'active' : '' }}"

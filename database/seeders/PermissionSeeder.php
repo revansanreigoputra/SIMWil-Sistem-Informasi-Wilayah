@@ -141,6 +141,13 @@ class PermissionSeeder extends Seeder
             'sanitasi.update',
             'sanitasi.delete',
 
+            // Air Bersih
+            'air_bersih.view',
+            'air_bersih.create',
+            'air_bersih.store',
+            'air_bersih.update',
+            'air_bersih.delete',
+
         ];
 
         foreach ($permissions as $permission) {
