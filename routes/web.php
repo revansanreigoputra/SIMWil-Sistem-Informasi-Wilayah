@@ -226,3 +226,16 @@ Route::get('/anggota_keluarga/{id}/get_data', [AnggotaKeluargaController::class,
 // routes for direct file (placeholder routes)
 Route::get('/master-ddk/{table?}', [MasterDDKController::class, 'index'])->name('master.ddk.index');
 
+ // ==== Route jenis Surat ====
+    Route::prefix('layanan/permohonan')->group(function() {
+        Route::view('/sk_domisili', 'pages.layanan.permohonan.forms.sk_domisili')->name('permohonan.sk_domisili');
+        Route::view('/sk_belum_pernah_nikah', 'pages.layanan.permohonan.forms.sk_belum_pernah_nikah')->name('permohonan.sk_belum_pernah_nikah');
+        Route::view('/sp_berlakuan_baik', 'pages.layanan.permohonan.forms.sp_berlakuan_baik')->name('permohonan.sp_berlakuan_baik');
+        Route::view('/sk_tidak_mampu', 'pages.layanan.permohonan.forms.sk_tidak_mampu')->name('permohonan.sk_tidak_mampu');
+        Route::view('/sk_kehilangan_ktp', 'pages.layanan.permohonan.forms.sk_kehilangan_ktp')->name('permohonan.sk_kehilangan_ktp');
+        Route::view('/surat_penghibaan_tanah', 'pages.layanan.permohonan.forms.surat_penghibaan_tanah')->name('permohonan.surat_penghibaan_tanah');
+        Route::view('/sk_umum', 'pages.layanan.permohonan.forms.sk_umum')->name('permohonan.sk_umum');
+        Route::view('/surat_rekomendasi_rt', 'pages.layanan.permohonan.forms.surat_rekomendasi_rt')->name('permohonan.surat_rekomendasi_rt');
+        Route::view('/sr_ijin_mendirikan_bangunan', 'pages.layanan.permohonan.forms.sr_ijin_mendirikan_bangunan')->name('permohonan.sr_ijin_mendirikan_bangunan');
+        Route::view('/sr_ijin_tempat', 'pages.layanan.permohonan.forms.sr_ijin_tempat')->name('permohonan.sr_ijin_tempat');
+    });
