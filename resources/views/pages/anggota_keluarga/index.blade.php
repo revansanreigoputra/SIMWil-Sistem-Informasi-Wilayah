@@ -3,7 +3,7 @@
 @section('title', 'Data Anggota Keluarga')
 
 @section('action')
-    <a href="{{ route('anggota_keluarga.create') }}" class="btn btn-primary mb-3">+ Anggota Keluarga</a>
+    <!-- <a href="{{ route('anggota_keluarga.create') }}" class="btn btn-primary mb-3">+ Anggota Keluarga</a> -->
 @endsection
 
 @section('content')
@@ -64,3 +64,4 @@
         });
     </script>
 @endpush
+

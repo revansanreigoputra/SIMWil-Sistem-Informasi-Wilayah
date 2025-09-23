@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AnggotaKeluarga;
-use App\Models\DataKeluarga;
+use \Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use App\Models\AnggotaKeluarga;
+use App\Models\DataKeluarga;
 use App\Models\MasterDDK\{
     Agama,
     GolonganDarah,
@@ -51,7 +53,9 @@ class AnggotaKeluargaController extends Controller
             'kb',
             'cacat',
             'kedudukanPajak',
-            'lembaga'
+            'lembaga',
+            'hubunganKeluarga',
+            'datakeluarga'
         ])->get();
 
         return view('pages.anggota_keluarga.show_anggota', compact('dataKeluarga', 'anggotaKeluargas'));
@@ -71,26 +75,25 @@ class AnggotaKeluargaController extends Controller
             $dataKeluarga = DataKeluarga::find($dataKeluargaId);
         }
         // Load relationships data for dropdowns
-        $hubunganKeluargas = HubunganKeluarga::all(); 
+        $hubunganKeluarga = HubunganKeluarga::all(); // Corrected variable name
         $agama = Agama::all();
         $golonganDarah = GolonganDarah::all();
         $kewarganegaraan = Kewarganegaraan::all();
         $pendidikan = Pendidikan::all();
-        $mataPencaharian = MataPencaharian::all();
+        $mataPencaharians = MataPencaharian::all(); // This is the variable name you want to use
         $kb = KB::all();
         $cacat = Cacat::all();
         $kedudukanPajak = KedudukanPajak::all();
         $lembaga = Lembaga::all();
 
         return view('pages.anggota_keluarga.create', compact(
-
             'dataKeluarga',
-            'hubunganKeluargas',
+            'hubunganKeluarga',
             'agama',
             'golonganDarah',
             'kewarganegaraan',
             'pendidikan',
-            'mataPencaharian',
+            'mataPencaharians', // Corrected variable name here
             'kb',
             'cacat',
             'kedudukanPajak',
@@ -112,24 +115,62 @@ class AnggotaKeluargaController extends Controller
             'nik' => 'required|string|unique:anggota_keluargas,nik|max:255',
             'no_akta_kelahiran' => 'nullable|string|max:255',
             'nama' => 'required|string|max:255',
-            'jenis_kelamin' => 'required|string|max:1',
-            'hubungan_keluarga_id' => 'nullable|exists:hubungan_keluargas,id',
+            'jenis_kelamin' => ['required', Rule::in(['Laki-laki', 'Perempuan'])],
+            'hubungan_keluarga_id' => 'nullable|exists:hubungan_keluarga,id',
             'tempat_lahir' => 'nullable|string|max:255',
             'tanggal_lahir' => 'nullable|date',
             'tanggal_pencatatan' => 'nullable|date',
             'status_perkawinan' => 'nullable|string|max:255',
-            'agama_id' => 'nullable|exists:agamas,id',
+            'agama_id' => 'nullable|exists:agama,id',
             'golongan_darah_id' => 'nullable|exists:golongan_darahs,id',
             'kewarganegaraan_id' => 'nullable|exists:kewarganegaraans,id',
             'etnis' => 'nullable|string|max:255',
             'pendidikan_id' => 'nullable|exists:pendidikans,id',
-            'mata_pencaharian_id' => 'nullable|exists:mata_pencarians,id',
+            'mata_pencaharian_id' => 'nullable|exists:mata_pencaharians,id',
             'nama_orang_tua' => 'nullable|string|max:255',
-            'kb_id' => 'nullable|exists:k_b_s,id',
+            'kb_id' => 'nullable|exists:kb,id',
             'cacat_id' => 'nullable|exists:cacats,id',
+            'nama_cacat' => 'nullable|string|max:255',
             'kedudukan_pajak_id' => 'nullable|exists:kedudukan_pajaks,id',
             'lembaga_id' => 'nullable|exists:lembagas,id',
+            'nama_lembaga' => 'nullable|string|max:255',
         ]);
+
+        // Handle Cacat logic
+        if ($validatedData['nama_cacat'] && $validatedData['cacat_id']) {
+            // Find the Cacat type based on the selected ID
+            $selectedCacat = Cacat::find($validatedData['cacat_id']);
+
+            if ($selectedCacat) {
+                // Create a new Cacat record with the selected type and the specified name
+                $newCacat = Cacat::firstOrCreate(
+                    ['tipe' => $selectedCacat->tipe, 'nama_cacat' => $validatedData['nama_cacat']]
+                );
+                $validatedData['cacat_id'] = $newCacat->id;
+            }
+        } else {
+            // If nama_cacat is empty, set cacat_id to null
+            $validatedData['cacat_id'] = null;
+        }
+        // Handle Lembaga logic
+        if ($validatedData['nama_lembaga'] && $validatedData['lembaga_id']) {
+            // Find the Lembaga based on the selected ID
+            $selectedLembaga = Lembaga::find($validatedData['lembaga_id']);
+
+            if ($selectedLembaga) {
+                // Create a new Lembaga record with the specified name
+                $newLembaga = Lembaga::firstOrCreate(
+                    ['nama_lembaga' => $validatedData['nama_lembaga']]
+                );
+                $validatedData['lembaga_id'] = $newLembaga->id;
+            }
+        } else {
+            // If nama_lembaga is empty, set lembaga_id to null
+            $validatedData['lembaga_id'] = null;
+        }
+        // Remove the temporary fields before creating the AnggotaKeluarga record
+        unset($validatedData['nama_cacat']);
+        unset($validatedData['nama_lembaga']);
 
         AnggotaKeluarga::create($validatedData);
 
@@ -147,32 +188,32 @@ class AnggotaKeluargaController extends Controller
         return view('anggota_keluarga.show', compact('anggotaKeluarga'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\AnggotaKeluarga  $anggotaKeluarga
-     * @return \Illuminate\View\View
-     */
-    public function edit(AnggotaKeluarga $anggotaKeluarga)
+     public function edit(AnggotaKeluarga $anggota_keluarga)
     {
-        // Load relationships data for dropdowns
+        // Muat relasi yang diperlukan untuk form
+        $anggota_keluarga->load(['datakeluarga', 'cacat', 'lembaga']);
+
+        // Ambil semua data master untuk dropdown
+        $hubunganKeluarga = HubunganKeluarga::all();
         $agama = Agama::all();
         $golonganDarah = GolonganDarah::all();
         $kewarganegaraan = Kewarganegaraan::all();
         $pendidikan = Pendidikan::all();
-        $mataPencaharian = MataPencaharian::all();
-        $kb = KB::all();
+        $mataPencaharians = MataPencaharian::all();
+        $kb = Kb::all();
         $cacat = Cacat::all();
         $kedudukanPajak = KedudukanPajak::all();
         $lembaga = Lembaga::all();
 
-        return view('anggota_keluarga.edit', compact(
-            'anggotaKeluarga',
+        // Mengirim data anggota keluarga dan data master ke view
+        return view('pages.anggota_keluarga.edit', compact(
+            'anggota_keluarga',
+            'hubunganKeluarga',
             'agama',
             'golonganDarah',
             'kewarganegaraan',
             'pendidikan',
-            'mataPencaharian',
+            'mataPencaharians',
             'kb',
             'cacat',
             'kedudukanPajak',
@@ -180,45 +221,71 @@ class AnggotaKeluargaController extends Controller
         ));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\AnggotaKeluarga  $anggotaKeluarga
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function update(Request $request, AnggotaKeluarga $anggotaKeluarga)
+   
+    public function update(Request $request, AnggotaKeluarga $anggota_keluarga)
     {
         $validatedData = $request->validate([
             'data_keluarga_id' => 'required|exists:data_keluargas,id',
             'no_urut' => 'nullable|integer',
-            'nik' => 'required|string|unique:anggota_keluargas,nik,' . $anggotaKeluarga->id . '|max:255',
+            // Aturan validasi nik diubah untuk mengabaikan id yang sedang diedit
+            'nik' => ['required', 'string', 'max:255', Rule::unique('anggota_keluargas', 'nik')->ignore($anggota_keluarga->id)],
             'no_akta_kelahiran' => 'nullable|string|max:255',
             'nama' => 'required|string|max:255',
-            'jenis_kelamin' => 'required|string|max:1',
-            'hubungan_keluarga_id' => 'nullable|exists:hubungan_keluargas,id',
+            'jenis_kelamin' => ['required', Rule::in(['Laki-laki', 'Perempuan'])],
+            'hubungan_keluarga_id' => 'nullable|exists:hubungan_keluarga,id',
             'tempat_lahir' => 'nullable|string|max:255',
             'tanggal_lahir' => 'nullable|date',
             'tanggal_pencatatan' => 'nullable|date',
             'status_perkawinan' => 'nullable|string|max:255',
-            'agama_id' => 'nullable|exists:agamas,id',
+            'agama_id' => 'nullable|exists:agama,id',
             'golongan_darah_id' => 'nullable|exists:golongan_darahs,id',
             'kewarganegaraan_id' => 'nullable|exists:kewarganegaraans,id',
             'etnis' => 'nullable|string|max:255',
             'pendidikan_id' => 'nullable|exists:pendidikans,id',
-            'mata_pencaharian_id' => 'nullable|exists:mata_pencarians,id',
+            'mata_pencaharian_id' => 'nullable|exists:mata_pencaharians,id',
             'nama_orang_tua' => 'nullable|string|max:255',
-            'kb_id' => 'nullable|exists:k_b_s,id',
+            'kb_id' => 'nullable|exists:kb,id',
             'cacat_id' => 'nullable|exists:cacats,id',
+            'nama_cacat' => 'nullable|string|max:255',
             'kedudukan_pajak_id' => 'nullable|exists:kedudukan_pajaks,id',
             'lembaga_id' => 'nullable|exists:lembagas,id',
+            'nama_lembaga' => 'nullable|string|max:255',
         ]);
+        
+        // Handle Cacat logic
+        if ($validatedData['nama_cacat'] && $validatedData['cacat_id']) {
+            $selectedCacat = Cacat::find($validatedData['cacat_id']);
+            if ($selectedCacat) {
+                $newCacat = Cacat::firstOrCreate(
+                    ['tipe' => $selectedCacat->tipe, 'nama_cacat' => $validatedData['nama_cacat']]
+                );
+                $validatedData['cacat_id'] = $newCacat->id;
+            }
+        } else {
+            $validatedData['cacat_id'] = null;
+        }
 
-        $anggotaKeluarga->update($validatedData);
+        // Handle Lembaga logic
+        if ($validatedData['nama_lembaga'] && $validatedData['lembaga_id']) {
+            $selectedLembaga = Lembaga::find($validatedData['lembaga_id']);
+            if ($selectedLembaga) {
+                $newLembaga = Lembaga::firstOrCreate(
+                    ['jenis_lembaga' => $selectedLembaga->jenis_lembaga, 'nama_lembaga' => $validatedData['nama_lembaga']]
+                );
+                $validatedData['lembaga_id'] = $newLembaga->id;
+            }
+        } else {
+            $validatedData['lembaga_id'] = null;
+        }
 
-        return redirect()->route('anggota_keluarga.index')->with('success', 'Anggota keluarga berhasil diperbarui.');
-    }
+        // Hapus field temporary
+        unset($validatedData['nama_cacat']);
+        unset($validatedData['nama_lembaga']);
 
+        $anggota_keluarga->update($validatedData);
+
+        return redirect()->route('anggota_keluarga.show', $anggota_keluarga->data_keluarga_id)->with('success', 'Data anggota keluarga berhasil diperbarui.');
+    } 
     /**
      * Remove the specified resource from storage.
      *
@@ -230,5 +297,36 @@ class AnggotaKeluargaController extends Controller
         $anggotaKeluarga->delete();
 
         return redirect()->route('anggota_keluarga.index')->with('success', 'Anggota keluarga berhasil dihapus.');
+    }
+
+    // get data anggota keluarga by data keluarga id
+
+    public function get_data($id)
+    {
+        try {
+            $anggota = AnggotaKeluarga::with([
+                'datakeluarga',
+                'hubunganKeluarga',
+                'agama',
+                'golonganDarah',
+                'kewarganegaraan',
+                'pendidikan',
+                'mataPencaharian',
+                'kb',
+                'cacat',
+                'kedudukanPajak',
+                'lembaga'
+            ])->findOrFail($id);
+
+            return response()->json([
+                'success' => true,
+                'data' => $anggota
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data anggota keluarga tidak ditemukan.'
+            ], 404);
+        }
     }
 }
