@@ -28,6 +28,10 @@ use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\GlosariumController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\GaleriController;
+use App\Http\Controllers\PerkembanganPendudukController;
+use App\Http\Controllers\TambangGalianController;
+
+
 
 use App\Http\Controllers\LayananSuratController;
 
@@ -267,6 +271,24 @@ Route::middleware(['auth', 'permission:usia.view'])->prefix('potensi/potensi-sdm
     Route::put('/{usia}', [UsiaController::class, 'update'])->middleware('permission:usia.update')->name('update');
     Route::delete('/{usia}', [UsiaController::class, 'destroy'])->middleware('permission:usia.delete')->name('destroy');
 });
+
+// perkembangan_penduduk routes
+Route::get('perkembangan-penduduk', [PerkembanganPendudukController::class, 'index'])->name('perkembangan-penduduk.index');
+Route::get('perkembangan-penduduk/create', [PerkembanganPendudukController::class, 'create'])->name('perkembangan-penduduk.create');
+Route::post('perkembangan-penduduk', [PerkembanganPendudukController::class, 'store'])->name('perkembangan-penduduk.store');
+
+
+// produk domestik desa/tambang galian 
+
+ Route::resource('tambang-galian', TambangGalianController::class)->names([
+    'index' => 'tambang-galian.index',
+    'create' => 'tambang-galian.create',
+    'store' => 'tambang-galian.store',
+    'show' => 'tambang-galian.show',
+    'edit' => 'tambang-galian.edit',
+    'update' => 'tambang-galian.update',
+    'destroy' => 'tambang-galian.destroy'
+]);
 
 require __DIR__ . '/auth.php';
 

@@ -435,33 +435,49 @@
                                 </svg>
                             </span>
 
-                        <span class="nav-link-title"> Perkembangan </span>
+                       <span class="nav-link-title"> Perkembangan </span>
+</a>
+<div class="dropdown-menu {{ request()->is('perkembangan*') ? 'show' : '' }}">
+    <div class="dropdown-menu-columns">
+        <div class="dropdown-menu-column">
+            <!-- Dropdown 'Pemerintah Desa dan Kelurahan' -->
+            <div class="dropend">
+                @can('apb.view')
+                    <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/pemerintahdesadankelurahan*') ? 'show' : '' }}"
+                        href="#sidebar-pemerintahandesadankelurahan" data-bs-toggle="dropdown"
+                        data-bs-auto-close="false" role="button" aria-expanded="false">
+                        Pemerintah Desa <br> dan Kelurahan
                     </a>
-                                 <div class="dropdown-menu {{ request()->is('apb*') ? 'show' : '' }}">
-                        <div class="dropdown-menu-columns">
-                            <div class="dropdown-menu-column">
-                                <div class="dropend">
-                                    @can('apb.view')
-                                            <a class="dropdown-item dropdown-toggle {{ request()->is('perkmebangan/pemerintahdesadankelurahan*') ? : '' }}"
-                                                href="#sidebar-pemerintahandesadankelurahan" data-bs-toggle="dropdown"
-                                                data-bs-auto-close="false" role="button" aria-expanded="false">
-                                                Pemerintah Desa <br> dan Kelurahan
-                                            </a>
-                                        @endcan
-                                    <div
-                                        class="dropdown-menu {{ request()->is('perkmebangan/pemerintahdesadankelurahan/apbdesa*') ? 'show' : '' }}">
-                                        <a class="dropdown-item {{ request()->is('perkembangan/pemerintahdesadankelurahan/apbdesa*') ? 'active' : '' }}"
-                                            href="{{ route('perkembangan.pemerintahdesadankelurahan.apbdesa.index') }}">
-                                            APB Desa dan <br> Anggaran Kelurahan
-                                        </a>
-                                           @can('pertanggungjawaban.view')
-                                                <a class="dropdown-item {{ request()->is('perkmebangan/pemerintahdesadankelurahan/pertanggungjawaban*') ? 'active' : '' }}"
-                                                    href="{{ route('perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.index') }}">
-                                                    Pertanggungjawaban Kepala <br> Desa dan Kelurahan
-                                                </a>
-                                            @endcan
-                                    </div>
-                                </div>
+                @endcan
+                <div
+                    class="dropdown-menu {{ request()->is('perkembangan/pemerintahdesadankelurahan/apbdesa*') ? 'show' : '' }}">
+                    <a class="dropdown-item {{ request()->is('perkembangan/pemerintahdesadankelurahan/apbdesa*') ? 'active' : '' }}"
+                        href="{{ route('perkembangan.pemerintahdesadankelurahan.apbdesa.index') }}">
+                        APB Desa dan <br> Anggaran Kelurahan
+                    </a>
+                    @can('pertanggungjawaban.view')
+                        <a class="dropdown-item {{ request()->is('perkembangan/pemerintahdesadankelurahan/pertanggungjawaban*') ? 'active' : '' }}"
+                            href="{{ route('perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.index') }}">
+                            Pertanggungjawaban Kepala <br> Desa dan Kelurahan
+                        </a>
+                    @endcan
+                </div>
+            </div>
+
+            <!-- Dropdown 'Perkembangan Penduduk' -->
+            <div class="dropend">
+                <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/penduduk*') ? 'show' : '' }}"
+                    href="#sidebar-perkembangan-penduduk" data-bs-toggle="dropdown" data-bs-auto-close="false"
+                    role="button" aria-expanded="false">
+                    Perkembangan Penduduk
+                </a>
+                <div class="dropdown-menu {{ request()->is('perkembangan/penduduk*') ? 'show' : '' }}">
+                    <a class="dropdown-item {{ request()->is('perkembangan/penduduk') ? 'active' : '' }}"
+                        href="{{ route('perkembangan-penduduk.index') }}">
+                        Penduduk dan <br> Kepala Keluarga
+                    </a>
+                </div>
+            </div>
                                 <div class="dropend">
                                                 <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/lembagakemasyarakatan*') ? 'active' : '' }}"
                                                     href="#sidebar-lembagakemasyarakatan" data-bs-toggle="dropdown"
