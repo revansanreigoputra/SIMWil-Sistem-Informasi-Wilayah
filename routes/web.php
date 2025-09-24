@@ -29,7 +29,8 @@ use App\Http\Controllers\LayananSurat\{
     FormatNomorSuratController
 };
 
-
+use App\Http\Controllers\MasterPerkembanganController;
+use App\Http\Controllers\MasterPotensiController;
 use App\Http\Controllers\LayananSuratController;
 use App\Models\LayananSurat\KopTemplate;
 
@@ -240,6 +241,8 @@ require __DIR__ . '/auth.php';
 Route::get('/anggota_keluarga/{id}/get_data', [AnggotaKeluargaController::class, 'get_data'])->name('anggota_keluarga.get_data');
 // routes for direct file (placeholder routes)
 Route::get('/master-ddk/{table?}', [MasterDDKController::class, 'index'])->name('master.ddk.index');
+Route::get('/master-perkembangan', [MasterPerkembanganController::class, 'index'])->name('master.perkembangan.index');
+Route::get('/master-potensi', [MasterPotensiController::class, 'index'])->name('master.potensi.index');
 
 // ==== Route jenis Surat ====
 Route::prefix('layanan/permohonan')->group(function () {
