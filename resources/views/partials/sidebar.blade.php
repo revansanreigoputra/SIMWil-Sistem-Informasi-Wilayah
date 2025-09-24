@@ -478,6 +478,20 @@
                     </a>
                 </div>
             </div>
+<div class="dropend mt-2">
+    {{-- Produk Domestik / Kelurahan Bruto --}}
+    <a class="dropdown-item dropdown-toggle {{ request()->is('produk-domestik*') ? 'show' : '' }}"
+        href="#sidebar-produk-domestik" data-bs-toggle="dropdown" data-bs-auto-close="false"
+        role="button" aria-expanded="false">
+        <span class="dropdown-text">Produk Domestik /<br>Kelurahan Bruto</span>
+    </a>
+    <div class="dropdown-menu {{ request()->is('produk-domestik*') ? 'show' : '' }}">
+        <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/sektor-pertambangan*') ? 'active' : '' }}"
+            href="{{ route('perkembangan.produk-domestik.sektor-pertambangan.index') }}">
+            Sektor Pertambangan <br> dan Galian
+        </a>
+    </div>
+</div>
                                 <div class="dropend">
                                                 <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/lembagakemasyarakatan*') ? 'active' : '' }}"
                                                     href="#sidebar-lembagakemasyarakatan" data-bs-toggle="dropdown"

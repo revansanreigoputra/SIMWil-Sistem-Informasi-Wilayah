@@ -87,11 +87,12 @@ class PerkembanganPendudukController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(PerkembanganPenduduk $perkembangan_penduduk)
-    {
-        $perkembangan_penduduk->delete();
+{
+    $perkembangan_penduduk->delete();
 
-        return response()->json(['success' => 'Data deleted successfully']);
-    }
+    return redirect()->route('perkembangan-penduduk.index')
+                     ->with('success', 'Data berhasil dihapus');
+}
 
     
 }

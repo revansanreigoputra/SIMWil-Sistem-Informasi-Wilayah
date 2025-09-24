@@ -29,7 +29,8 @@ use App\Http\Controllers\GlosariumController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\PerkembanganPendudukController;
-use App\Http\Controllers\TambangGalianController;
+use App\Http\Controllers\SektorPertambanganController;
+
 
 
 
@@ -285,17 +286,13 @@ Route::put('perkembangan-penduduk/{id}', [PerkembanganPendudukController::class,
 Route::delete('perkembangan-penduduk/{id}', [PerkembanganPendudukController::class, 'destroy'])->name('perkembangan-penduduk.destroy');
 
 
-// produk domestik desa/tambang galian 
+// produk domestik desa
 
- Route::resource('tambang-galian', TambangGalianController::class)->names([
-    'index' => 'tambang-galian.index',
-    'create' => 'tambang-galian.create',
-    'store' => 'tambang-galian.store',
-    'show' => 'tambang-galian.show',
-    'edit' => 'tambang-galian.edit',
-    'update' => 'tambang-galian.update',
-    'destroy' => 'tambang-galian.destroy'
-]);
+
+Route::prefix('perkembangan/produk-domestik')->name('perkembangan.produk-domestik.')->group(function () {
+    Route::resource('sektor-pertambangan', SektorPertambanganController::class);
+
+});
 
 require __DIR__ . '/auth.php';
 

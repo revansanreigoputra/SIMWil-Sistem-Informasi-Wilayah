@@ -39,22 +39,58 @@
                                 <td class="text-center">{{ $item->jumlah_kepala_keluarga_perempuan_tahun_ini }}</td>
                                 <td class="text-center">{{ $item->jumlah_kepala_keluarga_laki_laki_tahun_lalu }}</td>
                                 <td class="text-center">{{ $item->jumlah_kepala_keluarga_perempuan_tahun_lalu }}</td>
-                                <td class="text-center">
-                                    <div class="d-flex gap-1 justify-content-center">
-                                        {{-- tombol edit & hapus --}}
-                                        @can('perkembangan-penduduk.update')
-                                            <a href="{{ route('perkembangan-penduduk.edit', $item->id) }}" class="btn btn-sm btn-warning">
-                                                <i class="fas fa-edit"></i> Edit
-                                            </a>
-                                        @endcan
-                                        @can('perkembangan-penduduk.delete')
-                                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#delete-modal-{{ $item->id }}">
-                                                <i class="fas fa-trash"></i> Hapus
-                                            </button>
-                                        @endcan
-                                    </div>
-                                </td>
+                              <td class="text-center">
+    @canany(['perkembangan-penduduk.update', 'perkembangan-penduduk.delete'])
+        <div class="d-flex gap-1 justify-content-center">
+            @can('perkembangan-penduduk.update')
+                <a href="{{ route('perkembangan-penduduk.edit', $item->id) }}" 
+                   class="btn btn-sm btn-warning">
+                    <i class="fas fa-edit"></i> Edit
+                </a>
+            @endcan
+            @can('perkembangan-penduduk.delete')
+                <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                    data-bs-target="#delete-perkembangan-{{ $item->id }}">
+                    <i class="fas fa-trash"></i> Hapus
+                </button>
+            @endcan
+        </div>
+
+        <!-- Modal Delete -->
+        <div class="modal fade" id="delete-perkembangan-{{ $item->id }}" tabindex="-1"
+            aria-labelledby="deleteModalLabel-{{ $item->id }}" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel-{{ $item->id }}">Hapus Data?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Data perkembangan penduduk tanggal 
+                            <strong>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</strong> 
+                            yang dihapus tidak bisa dikembalikan.
+                        </p>
+                        <p>Yakin ingin menghapus data ini?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">Batal</button>
+                        <form action="{{ route('perkembangan-penduduk.destroy', $item->id) }}"
+                              method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Hapus</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @else
+        <span class="text-muted">Tidak ada aksi</span>
+    @endcanany
+</td>
+
                             </tr>
                         @endforeach
                     </tbody>
@@ -62,6 +98,8 @@
             </div>
         </div>
     </div>
+
+    
     <!-- Modal Tambah Data -->
 <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -120,6 +158,8 @@
         </div>
     </div>
 </div>
+
+
 
 @endsection
 
