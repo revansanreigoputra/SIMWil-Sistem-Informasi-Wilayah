@@ -24,8 +24,10 @@ use App\Http\Controllers\GlosariumController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\TapController;
+use App\Http\Controllers\LayananSurat\KopTemplateController;
 
 use App\Http\Controllers\LayananSuratController;
+use App\Models\LayananSurat\KopTemplate;
 
 Route::get('/', function () {
     return Auth::check()
@@ -198,7 +200,7 @@ Route::prefix('mutasi')->middleware(['auth'])->group(function () {
 Route::middleware(['auth'])->prefix('layanan-surat')->group(function () {
 
     // ==== TEMPLATE SURAT ====
-    Route::prefix('template')->group(function () {
+    Route::prefix('template')->group(function () { 
         Route::get('kop-surat', [LayananSuratController::class, 'templateKopSurat'])->name('layanan.template.kop_surat.index');
         Route::get('kop-surat/edit', [LayananSuratController::class, 'editKopSurat'])->name('layanan.template.kop_surat.edit');
         Route::get('kop-laporan', [LayananSuratController::class, 'templateKopLaporan'])->name('layanan.template.kop_laporan.index');
@@ -219,6 +221,15 @@ Route::middleware(['auth'])->prefix('layanan-surat')->group(function () {
     Route::get('profil-desa/edit', [LayananSuratController::class, 'editProfilDesa'])->name('layanan.profil_desa.edit');
 });
 
+Route::middleware('auth')->group(function () {
+   
+    Route::get('/layanan-surat/template/kop-templates', [KopTemplateController::class, 'index'])->name('kop_templates.index');
+    Route::get('/layanan-surat/template/kop-templates/create', [KopTemplateController::class, 'create'])->name('kop_templates.create');
+    Route::post('/layanan-surat/template/kop-templates', [KopTemplateController::class, 'store'])->name('kop_templates.store');
+    Route::get('/layanan-surat/template/kop-templates/{id}/edit', [KopTemplateController::class, 'edit'])->name('kop_templates.edit');
+    Route::put('/layanan-surat/template/kop-templates/{id}', [KopTemplateController::class, 'update'])->name('kop_templates.update');
+    Route::delete('/layanan-surat/template/kop-templates/{id}', [KopTemplateController::class, 'destroy'])->name('kop_templates.destroy');
+});
 
 require __DIR__ . '/auth.php';
 

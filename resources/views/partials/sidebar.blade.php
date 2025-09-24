@@ -240,14 +240,17 @@
                                     </a>
                                     <div
                                         class="dropdown-menu {{ request()->is('layanan-surat/template*') ? 'show' : '' }}">
-                                        <a class="dropdown-item {{ request()->is('layanan-surat/template/kop-surat*') ? 'active' : '' }}"
+                                        <!-- <a class="dropdown-item {{ request()->is('layanan-surat/template/kop-surat*') ? 'active' : '' }}"
                                             href="{{ route('layanan.template.kop_surat.index') }}">
                                             Kop Surat
                                         </a>
                                         <a class="dropdown-item {{ request()->is('layanan-surat/template/kop-laporan*') ? 'active' : '' }}"
                                             href="{{ route('layanan.template.kop_laporan.index') }}">
                                             Kop Laporan
-                                        </a>
+                                        </a> -->
+                                        <a class="dropdown-item {{ request()->is('layanan-surat/template/kop-template*') ? 'active' : '' }}"
+                                        href="{{ route('kop_templates.index') }}" >
+                                        Kop Template</a>
                                         <a class="dropdown-item {{ request()->is('layanan-surat/template/format-nomor*') ? 'active' : '' }}"
                                             href="{{ route('layanan.template.format_nomor.index') }}">
                                             Format Nomor Surat

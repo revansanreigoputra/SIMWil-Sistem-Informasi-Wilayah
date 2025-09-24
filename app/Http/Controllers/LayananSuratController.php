@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 class LayananSuratController extends Controller
+
 {
+
+    
     // ==== TEMPLATE SURAT ====
 
     public function templateKopSurat()
