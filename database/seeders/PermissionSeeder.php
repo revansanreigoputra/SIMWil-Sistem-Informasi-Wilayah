@@ -134,8 +134,16 @@ class PermissionSeeder extends Seeder
             'apb.update',
             'apb.delete',
 
+            // perkembangan penduduk 
+            'perkembangan-penduduk.view',
+            'perkembangan-penduduk.create',
+            'perkembangan-penduduk.store',
+            'perkembangan-penduduk.edit',
+            'perkembangan-penduduk.update',
+            'perkembangan-penduduk.delete',
+            'perkembangan-penduduk.destroy',
 
-        ];
+                    ];
 
         foreach ($permissions as $permission) {
             Permission::firstOrCreate(['name' => $permission]);

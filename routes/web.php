@@ -276,6 +276,13 @@ Route::middleware(['auth', 'permission:usia.view'])->prefix('potensi/potensi-sdm
 Route::get('perkembangan-penduduk', [PerkembanganPendudukController::class, 'index'])->name('perkembangan-penduduk.index');
 Route::get('perkembangan-penduduk/create', [PerkembanganPendudukController::class, 'create'])->name('perkembangan-penduduk.create');
 Route::post('perkembangan-penduduk', [PerkembanganPendudukController::class, 'store'])->name('perkembangan-penduduk.store');
+Route::resource('perkembangan-penduduk', PerkembanganPendudukController::class);
+
+
+// perkembangan penduduk crud update, delete
+Route::get('perkembangan-penduduk/{id}/edit', [PerkembanganPendudukController::class, 'edit'])->name('perkembangan-penduduk.edit');
+Route::put('perkembangan-penduduk/{id}', [PerkembanganPendudukController::class, 'update'])->name('perkembangan-penduduk.update');
+Route::delete('perkembangan-penduduk/{id}', [PerkembanganPendudukController::class, 'destroy'])->name('perkembangan-penduduk.destroy');
 
 
 // produk domestik desa/tambang galian 

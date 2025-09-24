@@ -10,8 +10,8 @@
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
-                <table id="perkembangan-penduduk-table" class="table table-striped">
-                    <thead>
+              <table id="perkembangan-penduduk-table" class="table table-striped table-bordered align-middle">
+                    <thead class="text-center">
                         <tr>
                             <th>No</th>
                             <th>Tanggal</th>
@@ -26,62 +26,34 @@
                             <th>Aksi</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="text-center">
                         @foreach ($perkembangan_penduduks as $item)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
-                                <td>{{ $item->jumlah_laki_laki_tahun_ini }}</td>
-                                <td>{{ $item->jumlah_perempuan_tahun_ini }}</td>
-                                <td>{{ $item->jumlah_laki_laki_tahun_lalu }}</td>
-                                <td>{{ $item->jumlah_perempuan_tahun_lalu }}</td>
-                                <td>{{ $item->jumlah_kepala_keluarga_laki_laki_tahun_ini }}</td>
-                                <td>{{ $item->jumlah_kepala_keluarga_perempuan_tahun_ini }}</td>
-                                <td>{{ $item->jumlah_kepala_keluarga_laki_laki_tahun_lalu }}</td>
-                                <td>{{ $item->jumlah_kepala_keluarga_perempuan_tahun_lalu }}</td>
-                                <td>
-                                    {{-- Menggunakan @canany untuk otorisasi --}}
-                                    @canany(['perkembangan-penduduk.view', 'perkembangan-penduduk.update', 'perkembangan-penduduk.delete'])
-                                        <div class="d-flex gap-1 justify-content-center">
-                                            @can('perkembangan-penduduk.update')
-                                                <a href="{{ route('perkembangan-penduduk.edit', $item->id) }}" class="btn btn-sm btn-warning">
-                                                    <i class="fas fa-edit"></i> Edit
-                                                </a>
-                                            @endcan
-                                            @can('perkembangan-penduduk.delete')
-                                                <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                                    data-bs-target="#delete-modal-{{ $item->id }}">
-                                                    <i class="fas fa-trash"></i> Hapus
-                                                </button>
-                                            @endcan
-                                        </div>
-
-                                        <div class="modal fade" id="delete-modal-{{ $item->id }}" tabindex="-1"
-                                            aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="deleteModalLabel">Hapus Data?</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>Yakin ingin menghapus data perkembangan penduduk pada tanggal <strong>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</strong>?
-                                                        Data yang dihapus tidak bisa dikembalikan.</p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                                        <form action="{{ route('perkembangan-penduduk.destroy', $item->id) }}" method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-danger">Hapus</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @else
-                                        <span class="text-muted">Tidak ada aksi</span>
-                                    @endcanany
+                                <td class="text-center">{{ $loop->iteration }}</td>
+                                <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
+                                <td class="text-center">{{ $item->jumlah_laki_laki_tahun_ini }}</td>
+                                <td class="text-center">{{ $item->jumlah_perempuan_tahun_ini }}</td>
+                                <td class= "text-center">{{ $item->jumlah_laki_laki_tahun_lalu }}</td>
+                                <td class="text-center">{{ $item->jumlah_perempuan_tahun_lalu }}</td>
+                                <td class="text-center">{{ $item->jumlah_kepala_keluarga_laki_laki_tahun_ini }}</td>
+                                <td class="text-center">{{ $item->jumlah_kepala_keluarga_perempuan_tahun_ini }}</td>
+                                <td class="text-center">{{ $item->jumlah_kepala_keluarga_laki_laki_tahun_lalu }}</td>
+                                <td class="text-center">{{ $item->jumlah_kepala_keluarga_perempuan_tahun_lalu }}</td>
+                                <td class="text-center">
+                                    <div class="d-flex gap-1 justify-content-center">
+                                        {{-- tombol edit & hapus --}}
+                                        @can('perkembangan-penduduk.update')
+                                            <a href="{{ route('perkembangan-penduduk.edit', $item->id) }}" class="btn btn-sm btn-warning">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </a>
+                                        @endcan
+                                        @can('perkembangan-penduduk.delete')
+                                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#delete-modal-{{ $item->id }}">
+                                                <i class="fas fa-trash"></i> Hapus
+                                            </button>
+                                        @endcan
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
