@@ -147,6 +147,15 @@ class PermissionSeeder extends Seeder
             'air_bersih.store',
             'air_bersih.update',
             'air_bersih.delete',
+            
+            // dkelurahan
+            'dkelurahan.view',
+            'dkelurahan.create',
+            'dkelurahan.store',
+            'dkelurahan.update',
+            'dkelurahan.delete',
+
+            
 
         ];
 

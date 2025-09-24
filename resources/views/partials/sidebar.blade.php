@@ -428,6 +428,17 @@
                                                     Prasarana Air Bersih
                                                 </a>
                                             @endcan
+                                            
+                                            <br>
+
+                                            @can('dkelurahan.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/dkelurahan.view*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-prasarana-dan-sarana.prasarana-dkelurahan.index') }}">
+                                                    Desa atau Kelurahan
+                                                </a>
+                                            @endcan
+
+
                                         </div>
                                     </div>
                                     {{-- <a class="dropdown-item {{ request()->is('potensi/laporan*') ? 'active' : '' }}"

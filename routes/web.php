@@ -28,6 +28,7 @@ use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\GlosariumController;
 use App\Http\Controllers\SanitasiController;
+use App\Http\Controllers\DesaKelurahanController;
 
 
 use App\Http\Controllers\LayananSuratController;
@@ -92,6 +93,17 @@ Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/prasar
     Route::get('/{sanitasi}/edit', [SanitasiController::class, 'edit'])->middleware('permission:sanitasi.update')->name('edit');
     Route::put('/{sanitasi}', [SanitasiController::class, 'update'])->middleware('permission:sanitasi.update')->name('update');
     Route::delete('/{sanitasi}', [SanitasiController::class, 'destroy'])->middleware('permission:sanitasi.delete')->name('destroy');
+});
+
+// dkelurahan
+Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/prasarana-dkelurahan')->name('potensi.potensi-prasarana-dan-sarana.prasarana-dkelurahan.')->group(function () {
+    Route::get('/', [DesaKelurahanController::class, 'index'])->name('index');
+    Route::get('/create', [DesaKelurahanController::class, 'create'])->name('create');
+    Route::post('/', [DesaKelurahanController::class, 'store'])->name('store');
+    Route::get('/{desaKelurahan}', [DesaKelurahanController::class, 'show'])->name('show');
+    Route::get('/{desaKelurahan}/edit', [DesaKelurahanController::class, 'edit'])->name('edit');
+    Route::put('/{desaKelurahan}', [DesaKelurahanController::class, 'update'])->name('update');
+    Route::delete('/{desaKelurahan}', [DesaKelurahanController::class, 'destroy'])->name('destroy');
 });
 
 // Prasarana Air Bersih routes
