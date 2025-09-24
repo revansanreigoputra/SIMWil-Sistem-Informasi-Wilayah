@@ -463,7 +463,7 @@
                                            @can('pertanggungjawaban.view')
                                                 <a class="dropdown-item {{ request()->is('perkmebangan/pemerintahdesadankelurahan/pertanggungjawaban*') ? 'active' : '' }}"
                                                     href="{{ route('perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.index') }}">
-                                                    Pertanggungjawaban Kepala <br> Desa dan Kelurahan
+                                                    Pertanggungjawaban<br> Kepala Desa/Lurah
                                                 </a>
                                             @endcan
                                     </div>
