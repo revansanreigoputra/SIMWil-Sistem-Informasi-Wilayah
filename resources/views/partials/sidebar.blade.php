@@ -227,40 +227,28 @@
                         </span>
                         <span class="nav-link-title"> Layanan Surat </span>
                     </a>
-
+ 
                     <div class="dropdown-menu {{ request()->is('layanan-surat*') ? 'show' : '' }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
-
                                 {{-- Template Surat (submenu di dalam Layanan Surat) --}}
                                 <div class="dropend">
                                     <a class="dropdown-item dropdown-toggle {{ request()->is('layanan-surat/template*') ? 'active' : '' }}"
                                         href="#" data-bs-toggle="dropdown" data-bs-auto-close="false">
                                         Template Surat
                                     </a>
-                                    <div
-                                        class="dropdown-menu {{ request()->is('layanan-surat/template*') ? 'show' : '' }}">
-                                        <!-- <a class="dropdown-item {{ request()->is('layanan-surat/template/kop-surat*') ? 'active' : '' }}"
-                                            href="{{ route('layanan.template.kop_surat.index') }}">
-                                            Kop Surat
+                                    <div class="dropdown-menu {{ request()->is('layanan-surat/template*') ? 'show' : '' }}">
+                                        <a class="dropdown-item {{ request()->is('layanan-surat/template/kop-templates*') ? 'active' : '' }}"
+                                            href="{{ route('kop_templates.index') }}">
+                                            Kop Template
                                         </a>
-                                        <a class="dropdown-item {{ request()->is('layanan-surat/template/kop-laporan*') ? 'active' : '' }}"
-                                            href="{{ route('layanan.template.kop_laporan.index') }}">
-                                            Kop Laporan
-                                        </a> -->
-                                        <a class="dropdown-item {{ request()->is('layanan-surat/template/kop-template*') ? 'active' : '' }}"
-                                        href="{{ route('kop_templates.index') }}" >
-                                        Kop Template</a>
-                                        <a class="dropdown-item {{ request()->is('layanan-surat/template/format-nomor*') ? 'active' : '' }}"
-                                            href="{{ route('layanan.template.format_nomor.index') }}">
+                                        <a class="dropdown-item {{ request()->is('layanan-surat/template/format-nomor-surats*') ? 'active' : '' }}"
+                                            href="{{ route('format_nomor_surats.index') }}">
                                             Format Nomor Surat
                                         </a>
-                                        {{-- <a class="dropdown-item {{ request()->is('layanan-surat/template/profil-desa*') ? 'active' : '' }}"
-                                        href="{{ route('layanan.template.profil_desa.index') }}">
-                                        Profil Desa
-                                        </a> --}}
                                     </div>
                                 </div>
+
                                 {{-- Permohonan Surat --}}
                                 <a class="dropdown-item {{ request()->is('layanan-surat/permohonan*') ? 'active' : '' }}"
                                     href="{{ route('layanan.permohonan.index') }}">
@@ -272,10 +260,9 @@
                                     href="{{ route('layanan.profil_desa.index') }}">
                                     Profil Desa
                                 </a>
-
                             </div>
                         </div>
-                    </div>
+                    </div> 
                 </li>
 
                 {{-- Awal Menu Dasar Data Keluarga --}}

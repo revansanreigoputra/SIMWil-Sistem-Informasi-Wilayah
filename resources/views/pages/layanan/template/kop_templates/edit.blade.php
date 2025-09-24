@@ -18,12 +18,12 @@
             {{-- Form action points to the update route with the kopTemplate ID --}}
             <form action="{{ route('kop_templates.update', $kopTemplate->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                @method('PUT') {{-- This tells Laravel to handle a PUT request --}}
+                @method('PUT') 
 
                 {{-- Nama Kop Surat --}}
                 <div class="mb-3">
                     <label for="nama" class="form-label fw-semibold text-dark">Nama Kop Surat</label>
-                    {{-- Use old() and the existing data to pre-fill the form --}}
+                    
                     <textarea class="form-control rounded-3 @error('nama') is-invalid @enderror" id="nama" name="nama" rows="3">{{ old('nama', $kopTemplate->nama) }}</textarea>
                     <div class="form-text">Contoh: PEMERINTAH PROVINSI ... KABUPATEN ...</div>
                     @error('nama')

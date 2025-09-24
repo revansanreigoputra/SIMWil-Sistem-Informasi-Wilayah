@@ -24,7 +24,11 @@ use App\Http\Controllers\GlosariumController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\TapController;
-use App\Http\Controllers\LayananSurat\KopTemplateController;
+use App\Http\Controllers\LayananSurat\{
+    KopTemplateController,
+    FormatNomorSuratController
+};
+
 
 use App\Http\Controllers\LayananSuratController;
 use App\Models\LayananSurat\KopTemplate;
@@ -195,42 +199,40 @@ Route::prefix('mutasi')->middleware(['auth'])->group(function () {
         Route::get('/', [MutasiController::class, 'laporan'])->name('mutasi.laporan.index');
         Route::get('/export', [MutasiController::class, 'exportLaporan'])->name('mutasi.laporan.export')->middleware('permission:mutasi.laporan.export');
     });
-});
-
-Route::middleware(['auth'])->prefix('layanan-surat')->group(function () {
-
+}); 
+// FINAL CONSOLIDATED LAYANAN SURAT ROUTES
+Route::middleware('auth')->prefix('layanan-surat')->group(function () {
     // ==== TEMPLATE SURAT ====
-    Route::prefix('template')->group(function () { 
-        Route::get('kop-surat', [LayananSuratController::class, 'templateKopSurat'])->name('layanan.template.kop_surat.index');
-        Route::get('kop-surat/edit', [LayananSuratController::class, 'editKopSurat'])->name('layanan.template.kop_surat.edit');
-        Route::get('kop-laporan', [LayananSuratController::class, 'templateKopLaporan'])->name('layanan.template.kop_laporan.index');
-        Route::get('kop-laporan/edit', [LayananSuratController::class, 'editKopLaporan'])->name('layanan.template.kop_laporan.edit');
-        Route::get('format-nomor', [LayananSuratController::class, 'templateFormatNomor'])->name('layanan.template.format_nomor.index');
-        Route::get('format-nomor/edit', [LayananSuratController::class, 'editFormatNomor'])->name('layanan.template.format_nomor.edit');
-        // Route::get('profil-desa', [LayananSuratController::class, 'templateProfilDesa'])->name('layanan.template.profil_desa.index');
+    Route::prefix('template')->group(function () {
+        // Kop Template Routes
+        Route::get('kop-templates', [KopTemplateController::class, 'index'])->name('kop_templates.index');
+        Route::get('kop-templates/create', [KopTemplateController::class, 'create'])->name('kop_templates.create');
+        Route::post('kop-templates', [KopTemplateController::class, 'store'])->name('kop_templates.store');
+        Route::get('kop-templates/{id}/edit', [KopTemplateController::class, 'edit'])->name('kop_templates.edit');
+        Route::put('kop-templates/{id}', [KopTemplateController::class, 'update'])->name('kop_templates.update');
+        Route::delete('kop-templates/{id}', [KopTemplateController::class, 'destroy'])->name('kop_templates.destroy');
+
+        // Format Nomor Surat Routes
+        Route::get('format-nomor-surats', [FormatNomorSuratController::class, 'index'])->name('format_nomor_surats.index');
+        Route::get('format-nomor-surats/create', [FormatNomorSuratController::class, 'create'])->name('format_nomor_surats.create');
+        Route::post('format-nomor-surats', [FormatNomorSuratController::class, 'store'])->name('format_nomor_surats.store');
+        Route::get('format-nomor-surats/{id}/edit', [FormatNomorSuratController::class, 'edit'])->name('format_nomor_surats.edit');
+        Route::put('format-nomor-surats/{id}', [FormatNomorSuratController::class, 'update'])->name('format_nomor_surats.update');
+        Route::delete('format-nomor-surats/{id}', [FormatNomorSuratController::class, 'destroy'])->name('format_nomor_surats.destroy');
     });
+
     // ==== PERMOHONAN SURAT ====
     Route::get('/permohonan', [LayananSuratController::class, 'index'])->name('layanan.permohonan.index');
     Route::get('/permohonan/create', [LayananSuratController::class, 'create'])->name('layanan.permohonan.create');
     Route::get('/permohonan/edit/{id}', [LayananSuratController::class, 'edit'])->name('layanan.permohonan.edit');
     Route::get('/permohonan/delete/{id}', [LayananSuratController::class, 'delete'])->name('layanan.permohonan.delete');
     Route::get('/permohonan/cetak/{id}', [LayananSuratController::class, 'cetak'])->name('layanan.permohonan.cetak');
-    // ==== PROFIL DESA (di luar template) ====
+
+    // ==== PROFIL DESA ====
     Route::get('profil-desa', [LayananSuratController::class, 'profilDesa'])->name('layanan.profil_desa.index');
     Route::get('profil-desa/show', [LayananSuratController::class, 'showProfilDesa'])->name('layanan.profil_desa.show');
     Route::get('profil-desa/edit', [LayananSuratController::class, 'editProfilDesa'])->name('layanan.profil_desa.edit');
 });
-
-Route::middleware('auth')->group(function () {
-   
-    Route::get('/layanan-surat/template/kop-templates', [KopTemplateController::class, 'index'])->name('kop_templates.index');
-    Route::get('/layanan-surat/template/kop-templates/create', [KopTemplateController::class, 'create'])->name('kop_templates.create');
-    Route::post('/layanan-surat/template/kop-templates', [KopTemplateController::class, 'store'])->name('kop_templates.store');
-    Route::get('/layanan-surat/template/kop-templates/{id}/edit', [KopTemplateController::class, 'edit'])->name('kop_templates.edit');
-    Route::put('/layanan-surat/template/kop-templates/{id}', [KopTemplateController::class, 'update'])->name('kop_templates.update');
-    Route::delete('/layanan-surat/template/kop-templates/{id}', [KopTemplateController::class, 'destroy'])->name('kop_templates.destroy');
-});
-
 require __DIR__ . '/auth.php';
 
 // end point for get angota keluarga by data keluarga id
@@ -239,16 +241,16 @@ Route::get('/anggota_keluarga/{id}/get_data', [AnggotaKeluargaController::class,
 // routes for direct file (placeholder routes)
 Route::get('/master-ddk/{table?}', [MasterDDKController::class, 'index'])->name('master.ddk.index');
 
- // ==== Route jenis Surat ====
-    Route::prefix('layanan/permohonan')->group(function() {
-        Route::view('/sk_domisili', 'pages.layanan.permohonan.forms.sk_domisili')->name('permohonan.sk_domisili');
-        Route::view('/sk_belum_pernah_nikah', 'pages.layanan.permohonan.forms.sk_belum_pernah_nikah')->name('permohonan.sk_belum_pernah_nikah');
-        Route::view('/sp_berlakuan_baik', 'pages.layanan.permohonan.forms.sp_berlakuan_baik')->name('permohonan.sp_berlakuan_baik');
-        Route::view('/sk_tidak_mampu', 'pages.layanan.permohonan.forms.sk_tidak_mampu')->name('permohonan.sk_tidak_mampu');
-        Route::view('/sk_kehilangan_ktp', 'pages.layanan.permohonan.forms.sk_kehilangan_ktp')->name('permohonan.sk_kehilangan_ktp');
-        Route::view('/surat_penghibaan_tanah', 'pages.layanan.permohonan.forms.surat_penghibaan_tanah')->name('permohonan.surat_penghibaan_tanah');
-        Route::view('/sk_umum', 'pages.layanan.permohonan.forms.sk_umum')->name('permohonan.sk_umum');
-        Route::view('/surat_rekomendasi_rt', 'pages.layanan.permohonan.forms.surat_rekomendasi_rt')->name('permohonan.surat_rekomendasi_rt');
-        Route::view('/sr_ijin_mendirikan_bangunan', 'pages.layanan.permohonan.forms.sr_ijin_mendirikan_bangunan')->name('permohonan.sr_ijin_mendirikan_bangunan');
-        Route::view('/sr_ijin_tempat', 'pages.layanan.permohonan.forms.sr_ijin_tempat')->name('permohonan.sr_ijin_tempat');
-    });
+// ==== Route jenis Surat ====
+Route::prefix('layanan/permohonan')->group(function () {
+    Route::view('/sk_domisili', 'pages.layanan.permohonan.forms.sk_domisili')->name('permohonan.sk_domisili');
+    Route::view('/sk_belum_pernah_nikah', 'pages.layanan.permohonan.forms.sk_belum_pernah_nikah')->name('permohonan.sk_belum_pernah_nikah');
+    Route::view('/sp_berlakuan_baik', 'pages.layanan.permohonan.forms.sp_berlakuan_baik')->name('permohonan.sp_berlakuan_baik');
+    Route::view('/sk_tidak_mampu', 'pages.layanan.permohonan.forms.sk_tidak_mampu')->name('permohonan.sk_tidak_mampu');
+    Route::view('/sk_kehilangan_ktp', 'pages.layanan.permohonan.forms.sk_kehilangan_ktp')->name('permohonan.sk_kehilangan_ktp');
+    Route::view('/surat_penghibaan_tanah', 'pages.layanan.permohonan.forms.surat_penghibaan_tanah')->name('permohonan.surat_penghibaan_tanah');
+    Route::view('/sk_umum', 'pages.layanan.permohonan.forms.sk_umum')->name('permohonan.sk_umum');
+    Route::view('/surat_rekomendasi_rt', 'pages.layanan.permohonan.forms.surat_rekomendasi_rt')->name('permohonan.surat_rekomendasi_rt');
+    Route::view('/sr_ijin_mendirikan_bangunan', 'pages.layanan.permohonan.forms.sr_ijin_mendirikan_bangunan')->name('permohonan.sr_ijin_mendirikan_bangunan');
+    Route::view('/sr_ijin_tempat', 'pages.layanan.permohonan.forms.sr_ijin_tempat')->name('permohonan.sr_ijin_tempat');
+});
