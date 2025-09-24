@@ -83,6 +83,28 @@ Route::middleware(['auth', 'permission:kecamatan.view'])->prefix('kecamatan')->g
     Route::delete('/{kecamatan}', [KecamatanController::class, 'destroy'])->middleware('permission:kecamatan.delete')->name('kecamatan.destroy');
 });
 
+// Prasarana Sanitasi routes
+Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/prasarana-sanitasi')->name('potensi.potensi-prasarana-dan-sarana.prasarana-sanitasi.')->group(function () {
+    Route::get('/', [SanitasiController::class, 'index'])->middleware('permission:sanitasi.view')->name('index');
+    Route::get('/create', [SanitasiController::class, 'create'])->middleware('permission:sanitasi.create')->name('create');
+    Route::post('/', [SanitasiController::class, 'store'])->middleware('permission:sanitasi.store')->name('store');
+    Route::get('/{sanitasi}', [SanitasiController::class, 'show'])->middleware('permission:sanitasi.view')->name('show');
+    Route::get('/{sanitasi}/edit', [SanitasiController::class, 'edit'])->middleware('permission:sanitasi.update')->name('edit');
+    Route::put('/{sanitasi}', [SanitasiController::class, 'update'])->middleware('permission:sanitasi.update')->name('update');
+    Route::delete('/{sanitasi}', [SanitasiController::class, 'destroy'])->middleware('permission:sanitasi.delete')->name('destroy');
+});
+
+// Prasarana Air Bersih routes
+Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/prasarana-air-bersih')->name('potensi.potensi-prasarana-dan-sarana.prasarana-air-bersih.')->group(function () {
+    Route::get('/', [App\Http\Controllers\AirBersihController::class, 'index'])->middleware('permission:air_bersih.view')->name('index');
+    Route::get('/create', [App\Http\Controllers\AirBersihController::class, 'create'])->middleware('permission:air_bersih.create')->name('create');
+    Route::post('/', [App\Http\Controllers\AirBersihController::class, 'store'])->middleware('permission:air_bersih.store')->name('store');
+    Route::get('/{airBersih}', [App\Http\Controllers\AirBersihController::class, 'show'])->middleware('permission:air_bersih.view')->name('show');
+    Route::get('/{airBersih}/edit', [App\Http\Controllers\AirBersihController::class, 'edit'])->middleware('permission:air_bersih.update')->name('edit');
+    Route::put('/{airBersih}', [App\Http\Controllers\AirBersihController::class, 'update'])->middleware('permission:air_bersih.update')->name('update');
+    Route::delete('/{airBersih}', [App\Http\Controllers\AirBersihController::class, 'destroy'])->middleware('permission:air_bersih.delete')->name('destroy');
+});
+
 // Jabatan routes
 Route::middleware(['auth', 'permission:jabatan.view'])->prefix('jabatan')->group(function () {
     Route::get('/', [JabatanController::class, 'index'])->name('jabatan.index');

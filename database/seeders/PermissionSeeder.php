@@ -139,6 +139,21 @@ class PermissionSeeder extends Seeder
             'irigasi.edit',
             'irigasi.update',
             'irigasi.delete',
+            
+            // Sanitasi
+            'sanitasi.view',
+            'sanitasi.create',
+            'sanitasi.store',
+            'sanitasi.edit',
+            'sanitasi.update',
+            'sanitasi.delete',
+
+            // Air Bersih
+            'air_bersih.view',
+            'air_bersih.create',
+            'air_bersih.store',
+            'air_bersih.update',
+            'air_bersih.delete',
 
         ];
 

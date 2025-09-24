@@ -402,8 +402,9 @@
                                         <a class="dropdown-item dropdown-toggle {{ request()->is('potensi/potensi-prasarana-dan-sarana*') ? 'active' : '' }}"
                                             href="#sidebar-potensi-prasarana" data-bs-toggle="dropdown"
                                             data-bs-auto-close="false" role="button" aria-expanded="false">
-                                            Potensi Prasarana <br> dan Sarana
+                                            Potensi Prasarana<br>dan Sarana
                                         </a>
+
                                         <div
                                             class="dropdown-menu {{ request()->is('potensi/potensi-prasarana-dan-sarana*') ? 'show' : '' }}">
                                             @can('transportasi_darat.view')
@@ -417,6 +418,20 @@
                                                 <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/irigasi*') ? 'active' : '' }}"
                                                     href="{{ route('potensi.potensi-prasarana-dan-sarana.irigasi.index') }}">
                                                     Prasarana dan Irigasi
+                                                </a>
+                                            @endcan
+
+                                            @can('sanitasi.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/sanitasi*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-prasarana-dan-sarana.prasarana-sanitasi.index') }}">
+                                                    Prasarana Sanitasi
+                                                </a>
+                                            @endcan
+                                            
+                                            @can('air_bersih.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/air-bersih*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-prasarana-dan-sarana.prasarana-air-bersih.index') }}">
+                                                    Prasarana Air Bersih
                                                 </a>
                                             @endcan
                                         </div>
