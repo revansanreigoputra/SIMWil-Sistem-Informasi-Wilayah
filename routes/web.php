@@ -294,6 +294,10 @@ Route::prefix('perkembangan/produk-domestik')->name('perkembangan.produk-domesti
     Route::resource('sektor-pertambangan', SektorPertambanganController::class);
 
 
+
+    // Subsektor kerajinan
+Route::resource('kerajinan', KerajinanController::class);
+
 });
 
 require __DIR__ . '/auth.php';
