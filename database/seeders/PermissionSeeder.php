@@ -155,7 +155,12 @@ class PermissionSeeder extends Seeder
             'dkelurahan.update',
             'dkelurahan.delete',
 
-            
+            // bpd
+            'bpd.view',
+            'bpd.create',
+            'bpd.store',
+            'bpd.update',
+            'bpd.delete',
 
         ];
 

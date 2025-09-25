@@ -37,7 +37,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($desaKelurahans as $item)
+                        @foreach($desaKelurahans as $item)
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td>{{ $item->tanggal->format('d-m-Y') }}</td>
@@ -197,20 +197,7 @@
                                     @endcanany
                                 </td>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="9" class="text-center py-4">
-                                    <div class="d-flex flex-column align-items-center">
-                                        <i class="fas fa-inbox fa-2x text-muted mb-2"></i>
-                                        <p class="text-muted mb-0">Tidak ada data tersedia</p>
-                                        <a href="{{ route('potensi.potensi-prasarana-dan-sarana.prasarana-dkelurahan.create') }}" 
-                                           class="btn btn-sm btn-primary mt-2">
-                                            <i class="fas fa-plus me-1"></i> Tambah Data Pertama
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>

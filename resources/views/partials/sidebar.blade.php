@@ -437,6 +437,13 @@
                                                     Desa atau Kelurahan
                                                 </a>
                                             @endcan
+                                            
+                                            @can('bpd.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/prasarana-bpd*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-prasarana-dan-sarana.prasarana-bpd.index') }}">
+                                                    BPD
+                                                </a>
+                                            @endcan
 
 
                                         </div>

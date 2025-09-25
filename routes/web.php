@@ -29,6 +29,7 @@ use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\GlosariumController;
 use App\Http\Controllers\SanitasiController;
 use App\Http\Controllers\DesaKelurahanController;
+use App\Http\Controllers\BpdController;
 
 
 use App\Http\Controllers\LayananSuratController;
@@ -104,6 +105,17 @@ Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/prasar
     Route::get('/{desaKelurahan}/edit', [DesaKelurahanController::class, 'edit'])->name('edit');
     Route::put('/{desaKelurahan}', [DesaKelurahanController::class, 'update'])->name('update');
     Route::delete('/{desaKelurahan}', [DesaKelurahanController::class, 'destroy'])->name('destroy');
+});
+
+// bpd
+Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/prasarana-bpd')->name('potensi.potensi-prasarana-dan-sarana.prasarana-bpd.')->group(function () {
+    Route::get('/', [BpdController::class, 'index'])->name('index');
+    Route::get('/create', [BpdController::class, 'create'])->name('create');
+    Route::post('/', [BpdController::class, 'store'])->name('store');
+    Route::get('/{bpd}', [BpdController::class, 'show'])->name('show');
+    Route::get('/{bpd}/edit', [BpdController::class, 'edit'])->name('edit');
+    Route::put('/{bpd}', [BpdController::class, 'update'])->name('update');
+    Route::delete('/{bpd}', [BpdController::class, 'destroy'])->name('destroy');
 });
 
 // Prasarana Air Bersih routes
