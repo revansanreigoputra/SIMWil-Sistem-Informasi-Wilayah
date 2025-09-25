@@ -161,6 +161,13 @@ class PermissionSeeder extends Seeder
             'bpd.store',
             'bpd.update',
             'bpd.delete',
+            
+            // dusun
+            'dusun.view',
+            'dusun.create',
+            'dusun.store',
+            'dusun.update',
+            'dusun.delete',
 
         ];
 

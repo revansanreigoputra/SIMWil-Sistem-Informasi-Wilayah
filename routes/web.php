@@ -30,6 +30,7 @@ use App\Http\Controllers\GlosariumController;
 use App\Http\Controllers\SanitasiController;
 use App\Http\Controllers\DesaKelurahanController;
 use App\Http\Controllers\BpdController;
+use App\Http\Controllers\DusunController;
 
 
 use App\Http\Controllers\LayananSuratController;
@@ -116,6 +117,17 @@ Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/prasar
     Route::get('/{bpd}/edit', [BpdController::class, 'edit'])->name('edit');
     Route::put('/{bpd}', [BpdController::class, 'update'])->name('update');
     Route::delete('/{bpd}', [BpdController::class, 'destroy'])->name('destroy');
+});
+
+// dusun
+Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/prasarana-dusun')->name('potensi.potensi-prasarana-dan-sarana.prasarana-dusun.')->group(function () {
+    Route::get('/', [DusunController::class, 'index'])->name('index');
+    Route::get('/create', [DusunController::class, 'create'])->name('create');
+    Route::post('/', [DusunController::class, 'store'])->name('store');
+    Route::get('/{dusun}', [DusunController::class, 'show'])->name('show');
+    Route::get('/{dusun}/edit', [DusunController::class, 'edit'])->name('edit');
+    Route::put('/{dusun}', [DusunController::class, 'update'])->name('update');
+    Route::delete('/{dusun}', [DusunController::class, 'destroy'])->name('destroy');
 });
 
 // Prasarana Air Bersih routes

@@ -441,7 +441,14 @@
                                             @can('bpd.view')
                                                 <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/prasarana-bpd*') ? 'active' : '' }}"
                                                     href="{{ route('potensi.potensi-prasarana-dan-sarana.prasarana-bpd.index') }}">
-                                                    BPD
+                                                    Badan Perwakilan Desa
+                                                </a>
+                                            @endcan
+                                            
+                                            @can('dusun.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/prasarana-dusun*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-prasarana-dan-sarana.prasarana-dusun.index') }}">
+                                                    Dusun atau Blok
                                                 </a>
                                             @endcan
 
