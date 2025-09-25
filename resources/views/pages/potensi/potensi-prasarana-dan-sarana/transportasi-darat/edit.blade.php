@@ -171,7 +171,7 @@
             function hitungJumlah() {
                 const baik = parseFloat(kondisiBaikInput.value) || 0;
                 const rusak = parseFloat(kondisiRusakInput.value) || 0;
-                jumlahInput.value = (baik + rusak).toFixed(2);
+                jumlahInput.value = Math.round(baik + rusak);
             }
 
             kondisiBaikInput.addEventListener('input', hitungJumlah);
