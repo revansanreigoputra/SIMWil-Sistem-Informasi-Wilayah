@@ -466,6 +466,12 @@
                                                     Pertanggungjawaban<br> Kepala Desa/Lurah
                                                 </a>
                                             @endcan
+                                            @can('pembinaanpusat.view')
+                                                <a class="dropdown-item {{ request()->is('perkmebangan/pemerintahdesadankelurahan/pembinaanpusat*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.pemerintahdesadankelurahan.pembinaanpusat.index') }}">
+                                                    Pembinaan<br> Pemerintah Pusat
+                                                </a>
+                                            @endcan
                                     </div>
                                 </div>
                                 <div class="dropend">

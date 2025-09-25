@@ -140,7 +140,7 @@
                 <small class="text-muted">
                     <span class="text-danger">*</span> wajib diisi
                 </small>
-                <div class="btn-group">
+                <div class="btn-group gap-2">
                     <a href="{{ route('perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.index') }}"
                         class="btn btn-outline-secondary rounded">
                         <i class="fas fa-arrow-left me-1"></i> Kembali

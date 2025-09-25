@@ -142,6 +142,15 @@ class PermissionSeeder extends Seeder
             'pertanggungjawaban.update',
             'pertanggungjawaban.delete',
 
+            //pembinaan Pusat
+            'pembinaanpusat.view',
+            'pembinaanpusat.create',
+            'pembinaanpusat.store',
+            'pembinaanpusat.edit',      
+            'pembinaanpusat.update',
+            'pembinaanpusat.delete',
+
+
 
 
 

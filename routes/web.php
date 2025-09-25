@@ -19,6 +19,7 @@ use App\Http\Controllers\DataKeluargaController;
 // use App\Http\Controllers\MutasiController;
 use App\Http\Controllers\APBDesaController;
 use App\Http\Controllers\PertanggungjawabanController;
+use App\Http\Controllers\PembinaanPusatController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PerangkatDesaController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -141,6 +142,9 @@ Route::middleware(['auth'])->prefix('perkembangan/pemerintahdesadankelurahan/apb
 Route::resource('perkembangan/pemerintahdesadankelurahan/pertanggungjawaban', PertanggungjawabanController::class)
      ->names('perkembangan.pemerintahdesadankelurahan.pertanggungjawaban');
 
+// pembinaanpusat Routes
+Route::resource('perkembangan/pemerintahdesadankelurahan/pembinaanpusat', PembinaanpusatController::class)
+     ->names('perkembangan.pemerintahdesadankelurahan.pembinaanpusat');
 // Desa routes
 Route::resource('desa', DesaController::class);
 
