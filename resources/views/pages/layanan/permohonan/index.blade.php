@@ -176,7 +176,7 @@
                                                     <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
                                                 </form>
                                                 <!-- Tombol Cetak -->
-                                                <a href="{{ route('layanan.permohonan.cetak', $row[0]) }}"
+                                                <a href="{{ url('/cetak/sk_domisili') }}"
                                                     class="btn btn-sm btn-success" target="_blank">Cetak</a>
                                             </td>
                                         </tr>

@@ -217,6 +217,11 @@ Route::middleware(['auth'])->prefix('layanan-surat')->group(function () {
     Route::get('profil-desa', [LayananSuratController::class, 'profilDesa'])->name('layanan.profil_desa.index');
     Route::get('profil-desa/show', [LayananSuratController::class, 'showProfilDesa'])->name('layanan.profil_desa.show');
     Route::get('profil-desa/edit', [LayananSuratController::class, 'editProfilDesa'])->name('layanan.profil_desa.edit');
+    // ==== DATA LAPORAN (submenu baru) ====
+    // Laporan Surat
+    Route::get('laporan/surat', [LayananSuratController::class, 'indexSurat'])->name('layanan.laporan.surat.index');
+    Route::get('laporan/surat/{id}', [LayananSuratController::class, 'showSurat'])->name('layanan.laporan.surat.show');
+    Route::get('laporan/surat/{id}/cetak', [LayananSuratController::class, 'cetakSurat'])->name('layanan.laporan.surat.cetak');
 });
 
 
@@ -241,3 +246,13 @@ Route::get('/master-ddk/{table?}', [MasterDDKController::class, 'index'])->name(
         Route::view('/sr_ijin_mendirikan_bangunan', 'pages.layanan.permohonan.forms.sr_ijin_mendirikan_bangunan')->name('permohonan.sr_ijin_mendirikan_bangunan');
         Route::view('/sr_ijin_tempat', 'pages.layanan.permohonan.forms.sr_ijin_tempat')->name('permohonan.sr_ijin_tempat');
     });
+   Route::get('/cetak/sk_domisili', function () {return view('pages.layanan.permohonan.cetak.sk_domisili');});
+   Route::get('/cetak/sp_berlakuan_baik', function () {return view('pages.layanan.permohonan.cetak.sp_berlakuan_baik');});
+   Route::get('/cetak/sk_tidak_mampu', function () {return view('pages.layanan.permohonan.cetak.sk_tidak_mampu');});
+   Route::get('/cetak/sk_belum_pernah_nikah', function () {return view('pages.layanan.permohonan.cetak.sk_belum_pernah_nikah');});
+   Route::get('/cetak/sk_kehilangan_ktp', function () {return view('pages.layanan.permohonan.cetak.sk_kehilangan_ktp');});
+   Route::get('/cetak/sk_umum', function () {return view('pages.layanan.permohonan.cetak.sk_umum');});
+   Route::get('/cetak/sr_ijin_mendirikan_bangunan', function () {return view('pages.layanan.permohonan.cetak.sr_ijin_mendirikan_bangunan');});
+   Route::get('/cetak/sr_ijin_tempat', function () {return view('pages.layanan.permohonan.cetak.sr_ijin_tempat');});
+   Route::get('/cetak/surat_penghibaan_tanah', function () {return view('pages.layanan.permohonan.surat_penghibaan_tanah');});
+   Route::get('/cetak/surat_rekomendasi_rt', function () {return view('pages.layanan.permohonan.surat_rekomendasi_rt');});

@@ -59,10 +59,19 @@ class LayananSuratController extends Controller
     {
         return view('pages.layanan.permohonan.delete', compact('id'));
     }
-    public function cetak($id)
+   public function cetak($jenis)
     {
-    return view('pages.layanan.permohonan.cetak', compact('id'));
+        // Pastikan nama view sesuai folder
+        $viewPath = "pages.layanan.permohonan.cetak.$jenis";
+
+        // Cek apakah file view ada
+        if (view()->exists($viewPath)) {return view($viewPath);
     }
+
+        // Kalau view tidak ada, lempar error
+        abort(404, "Template cetak untuk surat $jenis tidak ditemukan.");
+    }
+
 
     // ==== PROFIL DESA ====
 
@@ -79,5 +88,26 @@ class LayananSuratController extends Controller
     public function editProfilDesa()
     {
         return view('pages.layanan.profil_desa.edit');
+    }
+    // ==== LAPORAN SURAT ====
+    public function indexSurat(Request $request)
+    {
+        $laporan = [];
+
+        if ($request->has('tanggal') || $request->has('jenis') || $request->has('ttd')) {
+            $laporan = Surat::query()
+                ->when($request->tanggal, fn($q) => $q->whereDate('tanggal', $request->tanggal))
+                ->when($request->jenis, fn($q) => $q->where('jenis', $request->jenis))
+                ->when($request->ttd, fn($q) => $q->where('ttd', $request->ttd))
+                ->get();
+        }
+
+        return view('pages.layanan.laporan.surat.index', compact('laporan'));
+    }
+
+    public function cetakSurat($id)
+    {
+        // tampilan cetak dummy
+        return view('pages.layanan.laporan.surat.cetak', compact('id'));
     }
 }
