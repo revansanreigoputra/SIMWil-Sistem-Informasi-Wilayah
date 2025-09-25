@@ -36,6 +36,7 @@ use App\Http\Controllers\SanitasiController;
 use App\Http\Controllers\DesaKelurahanController;
 use App\Http\Controllers\BpdController;
 use App\Http\Controllers\DusunController;
+use App\Http\Controllers\PPendidikanController;
 
 
 use App\Http\Controllers\LayananSuratController;
@@ -163,6 +164,17 @@ Route::middleware(['auth', 'permission:jumlah.view'])->prefix('potensi/potensi-s
     Route::get('/{jumlah}/edit', [JumlahController::class, 'edit'])->middleware('permission:jumlah.update')->name('edit');
     Route::put('/{jumlah}', [JumlahController::class, 'update'])->middleware('permission:jumlah.update')->name('update');
     Route::delete('/{jumlah}', [JumlahController::class, 'destroy'])->middleware('permission:jumlah.delete')->name('destroy');
+});
+
+// Potensi Pendidikan routes
+Route::middleware(['auth', 'permission:p_pendidikan.view'])->prefix('potensi/potensi-sdm/pendidikan')->name('potensi.potensi-sdm.pendidikan.')->group(function () {
+    Route::get('/', [PPendidikanController::class, 'index'])->name('index');
+    Route::get('/create', [PPendidikanController::class, 'create'])->middleware('permission:p_pendidikan.create')->name('create');
+    Route::post('/', [PPendidikanController::class, 'store'])->middleware('permission:p_pendidikan.store')->name('store');
+    Route::get('/{p_pendidikan}', [PPendidikanController::class, 'show'])->name('show');
+    Route::get('/{p_pendidikan}/edit', [PPendidikanController::class, 'edit'])->middleware('permission:p_pendidikan.update')->name('edit');
+    Route::put('/{p_pendidikan}', [PPendidikanController::class, 'update'])->middleware('permission:p_pendidikan.update')->name('update');
+    Route::delete('/{p_pendidikan}', [PPendidikanController::class, 'destroy'])->middleware('permission:p_pendidikan.delete')->name('destroy');
 });
 
 // Transportasi Darat routes

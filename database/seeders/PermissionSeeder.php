@@ -117,14 +117,21 @@ class PermissionSeeder extends Seeder
             'irigasi.edit',
             'irigasi.update',
             'irigasi.delete',
-            
+
             // usia permissions
             'usia.view',
             'usia.create',
             'usia.store',
             'usia.update',
             'usia.delete',
-            
+
+            // Potensi Pendidikan permissions
+            'p_pendidikan.view',
+            'p_pendidikan.create',
+            'p_pendidikan.store',
+            'p_pendidikan.update',
+            'p_pendidikan.delete',
+
             // Irigasi
             'irigasi.view',
             'irigasi.create',
