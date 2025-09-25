@@ -491,6 +491,7 @@
             Sektor Pertambangan <br> dan Galian
         </a>
     </div>
+    
 </div>
                                 <div class="dropend">
                                                 <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/lembagakemasyarakatan*') ? 'active' : '' }}"

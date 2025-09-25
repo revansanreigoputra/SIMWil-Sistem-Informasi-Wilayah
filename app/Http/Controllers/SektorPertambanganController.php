@@ -33,5 +33,31 @@ class SektorPertambanganController extends Controller
                          ->with('success', 'Data sektor pertambangan berhasil ditambahkan!');
     }
 
-    // ... (metode lainnya seperti create, show, edit, update, destroy)
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'tanggal' => 'required|date',
+            'total_nilai_produksi_tahun_ini' => 'required|numeric',
+            'total_nilai_bahan_baku_digunakan' => 'required|numeric',
+            'total_nilai_bahan_penolong_digunakan' => 'required|numeric',
+            'total_biaya_antara_dihabiskan' => 'required|numeric',
+            'jumlah_total_jenis_bahan_tambang_dan_galian' => 'required|numeric',
+        ]);
+
+        $data = SektorPertambangan::findOrFail($id);
+        $data->update($request->all());
+
+        return redirect()->route('perkembangan.produk-domestik.sektor-pertambangan.index')
+                         ->with('success', 'Data berhasil diupdate!');
+    }
+
+    public function destroy($id)
+    {
+        $data = SektorPertambangan::findOrFail($id);
+        $data->delete();
+
+        return redirect()->route('perkembangan.produk-domestik.sektor-pertambangan.index')
+                         ->with('success', 'Data berhasil dihapus!');
+    }
 }
+    // ... (metode lainnya seperti create, show, edit, update, destroy)

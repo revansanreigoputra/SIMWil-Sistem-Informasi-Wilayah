@@ -30,6 +30,7 @@ use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\PerkembanganPendudukController;
 use App\Http\Controllers\SektorPertambanganController;
+use App\Http\Controllers\KerajinanController;
 
 
 
@@ -291,6 +292,7 @@ Route::delete('perkembangan-penduduk/{id}', [PerkembanganPendudukController::cla
 
 Route::prefix('perkembangan/produk-domestik')->name('perkembangan.produk-domestik.')->group(function () {
     Route::resource('sektor-pertambangan', SektorPertambanganController::class);
+
 
 });
 
