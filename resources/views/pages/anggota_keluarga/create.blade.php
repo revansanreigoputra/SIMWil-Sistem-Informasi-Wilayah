@@ -105,8 +105,8 @@
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Golongan Darah</label>
-                            <select name="golongan_darah_id" class="form-select">
+                            <label class="form-label">Golongan Darah<span class="text-danger">*</span></label>
+                            <select name="golongan_darah_id" class="form-select" required>
                                 <option value="" disabled selected>-- Pilih Golongan Darah --</option>
                                 @foreach ($golonganDarah as $item)
                                 <option value="{{ $item->id }}" {{ old('golongan_darah_id') == $item->id ? 'selected' : '' }}>
@@ -131,8 +131,8 @@
                             <input type="text" name="etnis" class="form-control" value="{{ old('etnis') }}">
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Mata Pencaharian Pokok</label>
-                            <select name="mata_pencaharian_id" class="form-select">
+                            <label class="form-label">Mata Pencaharian Pokok <span class="text-danger">*</span></label>
+                            <select name="mata_pencaharian_id" class="form-select" required>
                                 <option value="" disabled selected>-- Pilih Pekerjaan --</option>
                                 @foreach ($mataPencaharians as $item)
                                 <option value="{{ $item->id }}" {{ old('mata_pencaharian_id') == $item->id ? 'selected' : '' }}>

@@ -106,6 +106,32 @@ class PermissionSeeder extends Seeder
             // potensi permissions
             'potensi.laporan.view',
             'potensi.laporan.export',
+
+            // layanan surat permissions
+            'layanan_surat.view',
+            'layanan_surat.create',
+            'layanan_surat.store',
+            'layanan_surat.edit',
+            'layanan_surat.update',
+            'layanan_surat.delete', 
+            'layanan_surat.cetak',  
+            // template permissions
+            'kop_template.view',
+            'kop_template.create',
+            'kop_template.store',
+            'kop_template.edit',       
+            'kop_template.update',
+            'kop_template.delete',
+            'kop_template.destroy',
+            
+            'format_nomor_surat.view',
+            'format_nomor_surat.create',
+            'format_nomor_surat.store',
+            'format_nomor_surat.edit',       
+            'format_nomor_surat.update',
+            'format_nomor_surat.delete',
+            'format_nomor_surat.destroy',
+             
         ];
 
         foreach ($permissions as $permission) {

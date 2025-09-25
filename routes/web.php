@@ -24,8 +24,15 @@ use App\Http\Controllers\GlosariumController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\TapController;
+use App\Http\Controllers\LayananSurat\{
+    KopTemplateController,
+    FormatNomorSuratController
+};
 
+use App\Http\Controllers\MasterPerkembanganController;
+use App\Http\Controllers\MasterPotensiController;
 use App\Http\Controllers\LayananSuratController;
+use App\Models\LayananSurat\KopTemplate;
 
 Route::get('/', function () {
     return Auth::check()
@@ -193,27 +200,36 @@ Route::prefix('mutasi')->middleware(['auth'])->group(function () {
         Route::get('/', [MutasiController::class, 'laporan'])->name('mutasi.laporan.index');
         Route::get('/export', [MutasiController::class, 'exportLaporan'])->name('mutasi.laporan.export')->middleware('permission:mutasi.laporan.export');
     });
-});
-
-Route::middleware(['auth'])->prefix('layanan-surat')->group(function () {
-
+}); 
+// FINAL CONSOLIDATED LAYANAN SURAT ROUTES
+Route::middleware('auth')->prefix('layanan-surat')->group(function () {
     // ==== TEMPLATE SURAT ====
     Route::prefix('template')->group(function () {
-        Route::get('kop-surat', [LayananSuratController::class, 'templateKopSurat'])->name('layanan.template.kop_surat.index');
-        Route::get('kop-surat/edit', [LayananSuratController::class, 'editKopSurat'])->name('layanan.template.kop_surat.edit');
-        Route::get('kop-laporan', [LayananSuratController::class, 'templateKopLaporan'])->name('layanan.template.kop_laporan.index');
-        Route::get('kop-laporan/edit', [LayananSuratController::class, 'editKopLaporan'])->name('layanan.template.kop_laporan.edit');
-        Route::get('format-nomor', [LayananSuratController::class, 'templateFormatNomor'])->name('layanan.template.format_nomor.index');
-        Route::get('format-nomor/edit', [LayananSuratController::class, 'editFormatNomor'])->name('layanan.template.format_nomor.edit');
-        // Route::get('profil-desa', [LayananSuratController::class, 'templateProfilDesa'])->name('layanan.template.profil_desa.index');
+        // Kop Template Routes
+        Route::get('kop-templates', [KopTemplateController::class, 'index'])->name('kop_templates.index');
+        Route::get('kop-templates/create', [KopTemplateController::class, 'create'])->name('kop_templates.create');
+        Route::post('kop-templates', [KopTemplateController::class, 'store'])->name('kop_templates.store');
+        Route::get('kop-templates/{id}/edit', [KopTemplateController::class, 'edit'])->name('kop_templates.edit');
+        Route::put('kop-templates/{id}', [KopTemplateController::class, 'update'])->name('kop_templates.update');
+        Route::delete('kop-templates/{id}', [KopTemplateController::class, 'destroy'])->name('kop_templates.destroy');
+
+        // Format Nomor Surat Routes
+        Route::get('format-nomor-surats', [FormatNomorSuratController::class, 'index'])->name('format_nomor_surats.index');
+        Route::get('format-nomor-surats/create', [FormatNomorSuratController::class, 'create'])->name('format_nomor_surats.create');
+        Route::post('format-nomor-surats', [FormatNomorSuratController::class, 'store'])->name('format_nomor_surats.store');
+        Route::get('format-nomor-surats/{id}/edit', [FormatNomorSuratController::class, 'edit'])->name('format_nomor_surats.edit');
+        Route::put('format-nomor-surats/{id}', [FormatNomorSuratController::class, 'update'])->name('format_nomor_surats.update');
+        Route::delete('format-nomor-surats/{id}', [FormatNomorSuratController::class, 'destroy'])->name('format_nomor_surats.destroy');
     });
+
     // ==== PERMOHONAN SURAT ====
     Route::get('/permohonan', [LayananSuratController::class, 'index'])->name('layanan.permohonan.index');
     Route::get('/permohonan/create', [LayananSuratController::class, 'create'])->name('layanan.permohonan.create');
     Route::get('/permohonan/edit/{id}', [LayananSuratController::class, 'edit'])->name('layanan.permohonan.edit');
     Route::get('/permohonan/delete/{id}', [LayananSuratController::class, 'delete'])->name('layanan.permohonan.delete');
     Route::get('/permohonan/cetak/{id}', [LayananSuratController::class, 'cetak'])->name('layanan.permohonan.cetak');
-    // ==== PROFIL DESA (di luar template) ====
+
+    // ==== PROFIL DESA ====
     Route::get('profil-desa', [LayananSuratController::class, 'profilDesa'])->name('layanan.profil_desa.index');
     Route::get('profil-desa/show', [LayananSuratController::class, 'showProfilDesa'])->name('layanan.profil_desa.show');
     Route::get('profil-desa/edit', [LayananSuratController::class, 'editProfilDesa'])->name('layanan.profil_desa.edit');
@@ -223,8 +239,6 @@ Route::middleware(['auth'])->prefix('layanan-surat')->group(function () {
     Route::get('laporan/surat/{id}', [LayananSuratController::class, 'showSurat'])->name('layanan.laporan.surat.show');
     Route::get('laporan/surat/{id}/cetak', [LayananSuratController::class, 'cetakSurat'])->name('layanan.laporan.surat.cetak');
 });
-
-
 require __DIR__ . '/auth.php';
 
 // end point for get angota keluarga by data keluarga id
@@ -232,6 +246,8 @@ require __DIR__ . '/auth.php';
 Route::get('/anggota_keluarga/{id}/get_data', [AnggotaKeluargaController::class, 'get_data'])->name('anggota_keluarga.get_data');
 // routes for direct file (placeholder routes)
 Route::get('/master-ddk/{table?}', [MasterDDKController::class, 'index'])->name('master.ddk.index');
+Route::get('/master-perkembangan', [MasterPerkembanganController::class, 'index'])->name('master.perkembangan.index');
+Route::get('/master-potensi', [MasterPotensiController::class, 'index'])->name('master.potensi.index');
 
  // ==== Route jenis Surat ====
     Route::prefix('layanan/permohonan')->group(function() {
