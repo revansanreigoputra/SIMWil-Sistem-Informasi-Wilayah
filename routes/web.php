@@ -19,7 +19,8 @@ use App\Http\Controllers\DataKeluargaController;
 // use App\Http\Controllers\MutasiController;
 use App\Http\Controllers\APBDesaController;
 use App\Http\Controllers\PertanggungjawabanController;
-use App\Http\Controllers\PembinaanPusatController;
+use App\Http\Controllers\PembinaanpusatController;
+use App\Http\Controllers\PembinaanprovinsiController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PerangkatDesaController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -145,12 +146,17 @@ Route::resource('perkembangan/pemerintahdesadankelurahan/pertanggungjawaban', Pe
 // pembinaanpusat Routes
 Route::resource('perkembangan/pemerintahdesadankelurahan/pembinaanpusat', PembinaanpusatController::class)
      ->names('perkembangan.pemerintahdesadankelurahan.pembinaanpusat');
+
+// pembinaanprovinsi Routes
+Route::resource('perkembangan/pemerintahdesadankelurahan/pembinaanprovinsi', PembinaanprovinsiController::class)
+     ->names('perkembangan.pemerintahdesadankelurahan.pembinaanprovinsi');
+
 // Desa routes
 Route::resource('desa', DesaController::class);
 
 // Perangkat Desa routes
 Route::middleware(['auth', 'permission:perangkat_desa.view'])->prefix('perangkat_desa')->group(function () {
-    Route::get('/', [PerangkatDesaController::class, 'index'])->name('perangkat_desa.index');
+    Route::get('/', action: [PerangkatDesaController::class, 'index'])->name('perangkat_desa.index');
     Route::get('/create', [PerangkatDesaController::class, 'create'])->middleware('permission:perangkat_desa.store')->name('perangkat_desa.create');
     Route::post('/', [PerangkatDesaController::class, 'store'])->middleware('permission:perangkat_desa.store')->name('perangkat_desa.store');
     Route::get('/{id}', [PerangkatDesaController::class, 'show'])->name('perangkat_desa.show');

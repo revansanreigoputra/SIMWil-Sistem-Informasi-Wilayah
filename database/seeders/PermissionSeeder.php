@@ -150,6 +150,14 @@ class PermissionSeeder extends Seeder
             'pembinaanpusat.update',
             'pembinaanpusat.delete',
 
+            //pembinaan Provinsi
+            'pembinaanprovinsi.view',
+            'pembinaanprovinsi.create',
+            'pembinaanprovinsi.store', 
+            'pembinaanprovinsi.edit',
+            'pembinaanprovinsi.update',
+            'pembinaanprovinsi.delete',
+
 
 
 
