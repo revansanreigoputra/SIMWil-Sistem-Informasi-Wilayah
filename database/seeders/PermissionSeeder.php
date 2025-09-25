@@ -154,6 +154,27 @@ class PermissionSeeder extends Seeder
             'air_bersih.store',
             'air_bersih.update',
             'air_bersih.delete',
+            
+            // dkelurahan
+            'dkelurahan.view',
+            'dkelurahan.create',
+            'dkelurahan.store',
+            'dkelurahan.update',
+            'dkelurahan.delete',
+
+            // bpd
+            'bpd.view',
+            'bpd.create',
+            'bpd.store',
+            'bpd.update',
+            'bpd.delete',
+            
+            // dusun
+            'dusun.view',
+            'dusun.create',
+            'dusun.store',
+            'dusun.update',
+            'dusun.delete',
 
             // apb
             'apb.view',
@@ -171,6 +192,34 @@ class PermissionSeeder extends Seeder
             'perkembangan-penduduk.update',
             'perkembangan-penduduk.delete',
             'perkembangan-penduduk.destroy',
+
+            // Pertanggungjawaban
+            'pertanggungjawaban.view',
+            'pertanggungjawaban.create',
+            'pertanggungjawaban.store',
+            'pertanggungjawaban.edit',
+            'pertanggungjawaban.update',
+            'pertanggungjawaban.delete',
+
+            //pembinaan Pusat
+            'pembinaanpusat.view',
+            'pembinaanpusat.create',
+            'pembinaanpusat.store',
+            'pembinaanpusat.edit',      
+            'pembinaanpusat.update',
+            'pembinaanpusat.delete',
+
+            //pembinaan Provinsi
+            'pembinaanprovinsi.view',
+            'pembinaanprovinsi.create',
+            'pembinaanprovinsi.store', 
+            'pembinaanprovinsi.edit',
+            'pembinaanprovinsi.update',
+            'pembinaanprovinsi.delete',
+
+
+
+
 
                     ];
 
