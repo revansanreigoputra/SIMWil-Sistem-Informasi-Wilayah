@@ -22,16 +22,18 @@
                         <th>No</th>
                         <th>Tanggal</th>
                         <th>Pedoman Pelaksanaan</th>
-                        <th>Pedoman Pembiayaan</th>
-                        <th>Pedoman Administrasi</th>
-                        <th>Pedoman Tanda Jabatan</th>
-                        <th>Pedoman Diklat</th>
-                        <th>Jumlah Bimbingan</th>
+                        <th>Pedoman Bantuan Keuangan</th>
+                        <th>Fasilitasi Keberadaan</th>
+                        <th>Fasilitasi Pelaksanaan</th>
                         <th>Jumlah Kegiatan Pendidikan</th>
-                        <th>Jumlah Penelitian</th>
-                        <th>Jumlah Kegiatan APBN</th>
-                        <th>Jumlah Penghargaan</th>
-                        <th>Jumlah Sanksi</th>
+                        <th>Penanggulangan Kemiskinan</th>
+                        <th>Penanganan Bencana</th>
+                        <th>Peningkatan Pendapatan</th>
+                        <th>Penyediaan Sarana</th>
+                        <th>Pemanfaatan SDA</th>
+                        <th>Pengembangan Sosial</th>
+                        <th>Pedoman Pendataan</th>
+                        <th>Pemberian Sanksi</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -39,18 +41,25 @@
                     @foreach ($data as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->tanggal->format('Y-m-d') }}</td>
-                            <td><span class="badge bg-{{ $item->pedoman_pelaksanaan_urusan === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pedoman_pelaksanaan_urusan ?? '-' }}</span></td>
-                            <td><span class="badge bg-{{ $item->pedoman_bantuan_pembiayaan === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pedoman_bantuan_pembiayaan ?? '-' }}</span></td>
-                            <td><span class="badge bg-{{ $item->pedoman_administrasi === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pedoman_administrasi ?? '-' }}</span></td>
-                            <td><span class="badge bg-{{ $item->pedoman_tanda_jabatan === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pedoman_tanda_jabatan ?? '-' }}</span></td>
-                            <td><span class="badge bg-{{ $item->pedoman_pendidikan_pelatihan === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pedoman_pendidikan_pelatihan ?? '-' }}</span></td>
-                            <td>{{ $item->jumlah_bimbingan ?? '-' }}</td>
+                            <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
+
+                            {{-- Badge Hijau jika "Ada", Abu-abu jika "Tidak Ada" --}}
+                            <td><span class="badge bg-{{ $item->pedoman_pelaksanaan_tugas === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pedoman_pelaksanaan_tugas ?? '-' }}</span></td>
+                            <td><span class="badge bg-{{ $item->pedoman_bantuan_keuangan === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pedoman_bantuan_keuangan ?? '-' }}</span></td>
+                            <td><span class="badge bg-{{ $item->kegiatan_fasilitasi_keberadaan === 'Ada' ? 'success' : 'secondary' }}">{{ $item->kegiatan_fasilitasi_keberadaan ?? '-' }}</span></td>
+                            <td><span class="badge bg-{{ $item->fasilitasi_pelaksanaan_pedoman === 'Ada' ? 'success' : 'secondary' }}">{{ $item->fasilitasi_pelaksanaan_pedoman ?? '-' }}</span></td>
+
+                            {{-- Angka atau "-" --}}
                             <td>{{ $item->jumlah_kegiatan_pendidikan ?? '-' }}</td>
-                            <td>{{ $item->jumlah_penelitian_pengkajian ?? '-' }}</td>
-                            <td>{{ $item->jumlah_kegiatan_terkait_apbn ?? '-' }}</td>
-                            <td>{{ $item->jumlah_penghargaan ?? '-' }}</td>
-                            <td>{{ $item->jumlah_sanksi ?? '-' }}</td>
+                            <td>{{ $item->kegiatan_penanggulangan_kemiskinan ?? '-' }}</td>
+                            <td>{{ $item->kegiatan_penanganan_bencana ?? '-' }}</td>
+                            <td>{{ $item->kegiatan_peningkatan_pendapatan ?? '-' }}</td>
+                            <td>{{ $item->kegiatan_penyediaan_sarana ?? '-' }}</td>
+                            <td>{{ $item->kegiatan_pemanfaatan_sda ?? '-' }}</td>
+                            <td>{{ $item->kegiatan_pengembangan_sosial ?? '-' }}</td>
+                            <td>{{ $item->pedoman_pendataan ?? '-' }}</td>
+                            <td>{{ $item->pemberian_sanksi ?? '-' }}</td>
+
                             <td>
                                 <div class="d-flex gap-1 justify-content-center">
                                     <a href="{{ route('perkembangan.pemerintahdesadankelurahan.pembinaanprovinsi.edit', $item->id) }}" class="btn btn-sm btn-warning">

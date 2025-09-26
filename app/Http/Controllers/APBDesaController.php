@@ -51,15 +51,15 @@ class APBDesaController extends Controller
 
         ApbDesa::create($validated);
 
-        return redirect()->route('apbdesa.index')->with('success', 'Data APB Desa berhasil ditambahkan.');
+        return redirect()->route('perkembangan.pemerintahdesadankelurahan.apbdesa.index')->with('success', 'Data APB Desa berhasil ditambahkan.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(APBDesa $aPBDesa)
+    public function show(APBDesa $id)
     {
-        //
+        return view('perkembangan.pemerintahdesadankelurahan.apbdesa.show', compact('apb'));
     }
 
     /**
@@ -95,15 +95,15 @@ class APBDesaController extends Controller
         ]);
         // Bersihkan format rupiah → hanya angka
             foreach ($validated as $key => $value) {
-                if (is_string($value)) {
-                    $validated[$key] = preg_replace('/[^0-9]/', '', $value);
+                if ($key !== 'tanggal' && is_string($value)) {
+        $validated[$key] = preg_replace('/[^0-9]/', '', $value);
                 }
             }
         $apb = ApbDesa::findOrFail($id);
         $apb->update($validated);
 
         return redirect()->route('perkembangan.pemerintahdesadankelurahan.apbdesa.index')
-        ->with('success', 'Data APB Desa berhasil ditambahkan.');
+        ->with('success', 'Data APB Desa berhasil diperbaharui.');
 
 
     }

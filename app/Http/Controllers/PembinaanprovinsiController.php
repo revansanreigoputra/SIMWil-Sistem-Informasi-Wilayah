@@ -52,7 +52,7 @@ class PembinaanprovinsiController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(pembinaanprovinsi $pembinaanprovinsi)
+    public function show($id)
     {
         //
     }
@@ -60,7 +60,7 @@ class PembinaanprovinsiController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(pembinaanprovinsi $id)
+    public function edit($id)
     {
         $pembinaan = PembinaanProvinsi::findOrFail($id);
         return view('pages.perkembangan.pemerintahdesadankelurahan.pembinaanprovinsi.edit', compact('pembinaan'));
@@ -96,7 +96,7 @@ class PembinaanprovinsiController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(pembinaanprovinsi $id)
+    public function destroy($id)
     {
         $pembinaan = PembinaanProvinsi::findOrFail($id);
         $pembinaan->delete();

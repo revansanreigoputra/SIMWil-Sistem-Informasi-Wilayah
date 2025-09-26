@@ -3,7 +3,7 @@
 @section('title', 'Edit Pembinaan Pemerintah Provinsi')
 
 @section('action')
-    <a href="{{ route('pembinaanprovinsi.index') }}" class="btn btn-warning mb-3">
+    <a href="{{ route('perkembangan.pemerintahdesadankelurahan.pembinaanprovinsi.index') }}" class="btn btn-warning mb-3">
         <i class="fas fa-arrow-left me-1"></i> Kembali
     </a>
 @endsection
@@ -18,7 +18,7 @@
     </div>
 
     <div class="card-body">
-        <form action="{{ route('pembinaanprovinsi.update', $pembinaanprovinsi->id) }}" method="POST">
+        <form action="{{ route('perkembangan.pemerintahdesadankelurahan.pembinaanprovinsi.update', $pembinaan->id) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -27,7 +27,7 @@
                 <label class="col-sm-3 col-form-label fw-semibold">Tanggal *</label>
                 <div class="col-sm-9">
                     <input type="date" name="tanggal" class="form-control @error('tanggal') is-invalid @enderror"
-                           value="{{ old('tanggal', \Carbon\Carbon::parse($pembinaanprovinsi->tanggal)->format('Y-m-d')) }}" required>
+                           value="{{ old('tanggal', \Carbon\Carbon::parse($pembinaan->tanggal)->format('Y-m-d')) }}" required>
                     @error('tanggal')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -50,12 +50,12 @@
                     <div class="col-sm-3">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="{{ $name }}" value="Ada"
-                                {{ old($name, $pembinaanprovinsi->$name) === 'Ada' ? 'checked' : '' }}>
+                                {{ old($name, $pembinaan->$name) === 'Ada' ? 'checked' : '' }}>
                             <label class="form-check-label">Ada</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="{{ $name }}" value="Tidak Ada"
-                                {{ old($name, $pembinaanprovinsi->$name) === 'Tidak Ada' ? 'checked' : '' }}>
+                                {{ old($name, $pembinaan->$name) === 'Tidak Ada' ? 'checked' : '' }}>
                             <label class="form-check-label">Tidak Ada</label>
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                     <label class="col-sm-9 col-form-label">{{ $label }}</label>
                     <div class="col-sm-3">
                         <input type="number" name="{{ $name }}" class="form-control @error($name) is-invalid @enderror"
-                               min="0" value="{{ old($name, $pembinaanprovinsi->$name) }}">
+                               min="0" value="{{ old($name, $pembinaan->$name) }}">
                         @error($name)
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

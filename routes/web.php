@@ -200,8 +200,6 @@ Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/irigas
 });
 
 //APB Desa Routes
-Route::resource('apbdesa', APBDesaController::class);
-// perkembangan_apb routes
 Route::middleware(['auth'])->prefix('perkembangan/pemerintahdesadankelurahan/apbdesa')->name('perkembangan.pemerintahdesadankelurahan.apbdesa.')->group(function () {
     Route::get('/', [APBDesaController::class, 'index'])->name('index');
     Route::get('/create', [APBDesaController::class, 'create'])->name('create');
@@ -213,16 +211,39 @@ Route::middleware(['auth'])->prefix('perkembangan/pemerintahdesadankelurahan/apb
 });
 
 // pertanggungjawaban Routes
-Route::resource('perkembangan/pemerintahdesadankelurahan/pertanggungjawaban', PertanggungjawabanController::class)
-     ->names('perkembangan.pemerintahdesadankelurahan.pertanggungjawaban');
+Route::middleware(['auth'])->prefix('perkembangan/pemerintahdesadankelurahan/pertanggungjawaban')->name('perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.')->group(function () {
+        Route::get('/', [PertanggungjawabanController::class, 'index'])->name('index');
+        Route::get('/create', [PertanggungjawabanController::class, 'create'])->name('create');
+        Route::post('/', [PertanggungjawabanController::class, 'store'])->name('store');
+        Route::get('/{pertanggungjawaban}', [PertanggungjawabanController::class, 'show'])->name('show');
+        Route::get('/{pertanggungjawaban}/edit', [PertanggungjawabanController::class, 'edit'])->name('edit');
+        Route::put('/{pertanggungjawaban}', [PertanggungjawabanController::class, 'update'])->name('update');
+        Route::delete('/{pertanggungjawaban}', [PertanggungjawabanController::class, 'destroy'])->name('destroy');
+    });
 
 // pembinaanpusat Routes
-Route::resource('perkembangan/pemerintahdesadankelurahan/pembinaanpusat', PembinaanpusatController::class)
-     ->names('perkembangan.pemerintahdesadankelurahan.pembinaanpusat');
+Route::middleware(['auth'])->prefix('perkembangan/pemerintahdesadankelurahan/pembinaanpusat')->name('perkembangan.pemerintahdesadankelurahan.pembinaanpusat.')->group(function () {
+        Route::get('/', [PembinaanpusatController::class, 'index'])->name('index');
+        Route::get('/create', [PembinaanpusatController::class, 'create'])->name('create');
+        Route::post('/', [PembinaanpusatController::class, 'store'])->name('store');
+        Route::get('/{pembinaanpusat}', [PembinaanpusatController::class, 'show'])->name('show');
+        Route::get('/{pembinaanpusat}/edit', [PembinaanpusatController::class, 'edit'])->name('edit');
+        Route::put('/{pembinaanpusat}', [PembinaanpusatController::class, 'update'])->name('update');
+        Route::delete('/{pembinaanpusat}', [PembinaanpusatController::class, 'destroy'])->name('destroy');
+    });
+
 
 // pembinaanprovinsi Routes
-Route::resource('perkembangan/pemerintahdesadankelurahan/pembinaanprovinsi', PembinaanprovinsiController::class)
-     ->names('perkembangan.pemerintahdesadankelurahan.pembinaanprovinsi');
+Route::middleware(['auth'])->prefix('perkembangan/pemerintahdesadankelurahan/pembinaanprovinsi')->name('perkembangan.pemerintahdesadankelurahan.pembinaanprovinsi.')->group(function () {
+        Route::get('/', [PembinaanprovinsiController::class, 'index'])->name('index');
+        Route::get('/create', [PembinaanprovinsiController::class, 'create'])->name('create');
+        Route::post('/', [PembinaanprovinsiController::class, 'store'])->name('store');
+        Route::get('/{pembinaanprovinsi}', [PembinaanprovinsiController::class, 'show'])->name('show');
+        Route::get('/{pembinaanprovinsi}/edit', [PembinaanprovinsiController::class, 'edit'])->name('edit');
+        Route::put('/{pembinaanprovinsi}', [PembinaanprovinsiController::class, 'update'])->name('update');
+        Route::delete('/{pembinaanprovinsi}', [PembinaanprovinsiController::class, 'destroy'])->name('destroy');
+    });
+
 
 // Desa routes
 Route::resource('desa', DesaController::class);

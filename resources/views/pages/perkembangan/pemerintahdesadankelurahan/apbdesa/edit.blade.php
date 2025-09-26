@@ -3,21 +3,14 @@
 @section('title', 'Edit Data APB Desa')
 
 @section('content')
-<div class="card">
+<div class="card-header text-dark">
+        <h5 class="card-title mb-0">
+            <i class="fas fa-edit me-2"></i>
+            Edit Data APB Desa
+        </h5>
+    </div>
+
     <div class="card-body">
-        <h4 class="mb-4">Edit Data APB Desa</h4>
-
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <strong>Terjadi Kesalahan!</strong>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
         <form action="{{ route('perkembangan.pemerintahdesadankelurahan.apbdesa.update', $apb->id) }}" method="POST">
             @csrf
             @method('PUT')
@@ -86,10 +79,15 @@
                 </div>
             </div>
 
-            <div class="mt-3">
-                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                <a href="{{ route('perkembangan.pemerintahdesadankelurahan.apbdesa.index') }}" class="btn btn-secondary">Batal</a>
-            </div>
+            <div class="btn-group gap-2">
+                    <a href="{{ route('perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.index') }}"
+                        class="btn btn-outline-secondary rounded">
+                        Kembali
+                    </a>
+                    <button type="submit" class="btn btn-primary rounded">
+                        Perbarui Data
+                    </button>
+                </div>
         </form>
     </div>
 </div>

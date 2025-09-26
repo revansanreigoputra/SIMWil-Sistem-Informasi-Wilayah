@@ -535,63 +535,63 @@
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
                                 <div class="dropend">
-                                    @can('apb.view')
                                             <a class="dropdown-item dropdown-toggle {{ request()->is('perkmebangan/pemerintahdesadankelurahan*') ? : '' }}"
                                                 href="#sidebar-pemerintahandesadankelurahan" data-bs-toggle="dropdown"
                                                 data-bs-auto-close="false" role="button" aria-expanded="false">
                                                 Pemerintah Desa <br> dan Kelurahan
-                                            </a>
-                                        @endcan
+                                         </a>
+                                    
                                     <div
                                         class="dropdown-menu {{ request()->is('perkmebangan/pemerintahdesadankelurahan/apbdesa*') ? 'show' : '' }}">
-                                        <a class="dropdown-item {{ request()->is('perkembangan/pemerintahdesadankelurahan/apbdesa*') ? 'active' : '' }}"
-                                            href="{{ route('perkembangan.pemerintahdesadankelurahan.apbdesa.index') }}">
-                                            APB Desa dan <br> Anggaran Kelurahan
-                                        </a>
-                                           @can('pertanggungjawaban.view')
-                                                <a class="dropdown-item {{ request()->is('perkmebangan/pemerintahdesadankelurahan/pertanggungjawaban*') ? 'active' : '' }}"
-                                                    href="{{ route('perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.index') }}">
-                                                    Pertanggungjawaban<br> Kepala Desa/Lurah
-                                                </a>
-                                            @endcan
-                                            @can('pembinaanpusat.view')
-                                                <a class="dropdown-item {{ request()->is('perkmebangan/pemerintahdesadankelurahan/pembinaanpusat*') ? 'active' : '' }}"
-                                                    href="{{ route('perkembangan.pemerintahdesadankelurahan.pembinaanpusat.index') }}">
-                                                    Pembinaan<br> Pemerintah Pusat
-                                                </a>
-                                            @endcan
-                                             @can('pembinaanprovinsi.view')
-                                                <a class="dropdown-item {{ request()->is('perkmebangan/pemerintahdesadankelurahan/pembinaanprovinsi*') ? 'active' : '' }}"
-                                                    href="{{ route('perkembangan.pemerintahdesadankelurahan.pembinaanprovinsi.index') }}">
-                                                    Pembinaan<br> Pemerintah Provinsi
-                                                </a>
-                                            @endcan
+                                        @can('apb.view')
+                                            <a class="dropdown-item {{ request()->is('perkembangan/pemerintahdesadankelurahan/apbdesa*') ? 'active' : '' }}"
+                                                href="{{ route('perkembangan.pemerintahdesadankelurahan.apbdesa.index') }}">
+                                                APB Desa dan <br> Anggaran Kelurahan
+                                            </a>
+                                        @endcan
+
+                                        @can('pertanggungjawaban.view')
+                                            <a class="dropdown-item {{ request()->is('perkmebangan/pemerintahdesadankelurahan/pertanggungjawaban*') ? 'active' : '' }}"
+                                                href="{{ route('perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.index') }}">
+                                                Pertanggungjawaban<br> Kepala Desa/Lurah
+                                            </a>
+                                        @endcan
+
+                                        @can('pembinaanpusat.view')
+                                            <a class="dropdown-item {{ request()->is('perkmebangan/pemerintahdesadankelurahan/pembinaanpusat*') ? 'active' : '' }}"
+                                                href="{{ route('perkembangan.pemerintahdesadankelurahan.pembinaanpusat.index') }}">
+                                                Pembinaan<br> Pemerintah Pusat
+                                            </a>
+                                        @endcan
+
+                                        @can('pembinaanprovinsi.view')
+                                            <a class="dropdown-item {{ request()->is('perkmebangan/pemerintahdesadankelurahan/pembinaanprovinsi*') ? 'active' : '' }}"
+                                                href="{{ route('perkembangan.pemerintahdesadankelurahan.pembinaanprovinsi.index') }}">
+                                                Pembinaan<br> Pemerintah Provinsi
+                                            </a>
+                                        @endcan
                                     </div>
                                 </div>
                                 <div class="dropend">
-                                                <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/lembagakemasyarakatan*') ? 'active' : '' }}"
-                                                    href="#sidebar-lembagakemasyarakatan" data-bs-toggle="dropdown"
-                                                    data-bs-auto-close="false" role="button" aria-expanded="false">
-                                                    Lembaga Kemasyarakatan
-                                                </a>
-                                                <div
-                                                    class="dropdown-menu {{ request()->is('perkembangan/lembagakemasyarakatan*') ? 'show' : '' }}">
-                                                    @can('organisasi.view')
-                                                        <a class="dropdown-item {{ request()->is('organisasi*') ? 'active' : '' }}"
-                                                            href="{{ route('perkembangan.lembagakemsyarakatan.organisasi.index') }}">
-                                                            organisasi Lemabaga <br> Masyarakat
-                                                        </a>
-                                                    @endcan
-                                                </div>
-                                            </div>
-                                            {{-- <a class="dropdown-item {{ request()->is('potensi/laporan*') ? 'active' : '' }}"
-                                                href="{{ route('potensi.laporan.index') }}">
-                                                Laporan Mutasi
-                                            </a> --}}
-                                        </div>
-                                    </div>
+                                    <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/lembagakemasyarakatan*') ? 'active' : '' }}"
+                                        href="#sidebar-lembagakemasyarakatan" data-bs-toggle="dropdown"
+                                        data-bs-auto-close="false" role="button" aria-expanded="false">
+                                        Lembaga Kemasyarakatan
+                                    </a>
+                                <div
+                                    class="dropdown-menu {{ request()->is('perkembangan/lembagakemasyarakatan*') ? 'show' : '' }}">
+                                    @can('organisasi.view')
+                                        <a class="dropdown-item {{ request()->is('organisasi*') ? 'active' : '' }}"
+                                            href="{{ route('perkembangan.lembagakemsyarakatan.organisasi.index') }}">
+                                            organisasi Lemabaga <br> Masyarakat
+                                        </a>
+                                    @endcan
                                 </div>
-                </li>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </li>
                 @endcanany
 
                 {{-- Master Data (Dropdown Menu) --}}
