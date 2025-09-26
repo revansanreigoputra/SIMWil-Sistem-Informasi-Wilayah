@@ -7,6 +7,7 @@
     <title>Laravel POS</title>
     @include('includes.style')
     @stack('addon-style')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf/notyf.min.css">
 
 </head>
 
@@ -27,6 +28,20 @@
     @stack('modals')
 
     @include('includes.script')
+    <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
+
+    <script>
+        @if (session('message'))
+            var notyf = new Notyf({
+                position: {
+                    x: 'right',
+                    y: 'top'
+                },
+                duration: 4000
+            });
+            notyf.success('{{ session('message') }}');
+        @endif
+    </script>
     @stack('addon-script')
 </body>
 

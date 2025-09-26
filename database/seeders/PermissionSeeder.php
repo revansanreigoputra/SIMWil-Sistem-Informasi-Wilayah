@@ -61,7 +61,7 @@ class PermissionSeeder extends Seeder
             // data keluarga permissions
             'data_keluarga.view',
             'data_keluarga.create',
-            'data_keluarga.store', 
+            'data_keluarga.store',
             'data_keluarga.edit',
             'data_keluarga.update',
             'data_keluarga.delete',
@@ -113,25 +113,31 @@ class PermissionSeeder extends Seeder
             'layanan_surat.store',
             'layanan_surat.edit',
             'layanan_surat.update',
-            'layanan_surat.delete', 
-            'layanan_surat.cetak',  
+            'layanan_surat.delete',
+            'layanan_surat.cetak',
             // template permissions
             'kop_template.view',
             'kop_template.create',
             'kop_template.store',
-            'kop_template.edit',       
+            'kop_template.edit',
             'kop_template.update',
             'kop_template.delete',
             'kop_template.destroy',
-            
+
             'format_nomor_surat.view',
             'format_nomor_surat.create',
             'format_nomor_surat.store',
-            'format_nomor_surat.edit',       
+            'format_nomor_surat.edit',
             'format_nomor_surat.update',
             'format_nomor_surat.delete',
             'format_nomor_surat.destroy',
-             
+
+            // berita permissions
+            'berita.view',
+            'berita.create',
+            'berita.update',
+            'berita.delete',
+
         ];
 
         foreach ($permissions as $permission) {

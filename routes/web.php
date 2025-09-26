@@ -148,10 +148,20 @@ Route::middleware(['auth'])->prefix('anggota-keluarga')->name('anggota_keluarga.
 //     Route::get('/laporan/anggota-keluarga', [DataKeluargaController::class, 'membersReport'])->middleware('permission:data_keluarga.report')->name('report.members');
 // });
 
-// Grup menu UTAMA
+// Grup menu UTAMA (BARU DENGAN PERMISSION)
 Route::prefix('utama')->name('utama.')->middleware(['auth'])->group(function () {
+
+    // Route untuk Berita dengan permission
+    Route::prefix('berita')->name('berita.')->group(function () {
+        Route::get('/', [BeritaController::class, 'index'])->middleware('permission:berita.view')->name('index');
+        Route::get('/create', [BeritaController::class, 'create'])->middleware('permission:berita.create')->name('create');
+        Route::post('/', [BeritaController::class, 'store'])->middleware('permission:berita.create')->name('store');
+        Route::get('/{berita}', [BeritaController::class, 'show'])->middleware('permission:berita.view')->name('show');
+        Route::get('/{berita}/edit', [BeritaController::class, 'edit'])->middleware('permission:berita.update')->name('edit');
+        Route::put('/{berita}', [BeritaController::class, 'update'])->middleware('permission:berita.update')->name('update');
+        Route::delete('/{berita}', [BeritaController::class, 'destroy'])->middleware('permission:berita.delete')->name('destroy');
+    });
     Route::resource('agenda', AgendaController::class);
-    Route::resource('berita', BeritaController::class);
     Route::resource('glosarium', GlosariumController::class);
     Route::resource('galeri', GaleriController::class);
     Route::resource('tap', TapController::class);
@@ -200,7 +210,7 @@ Route::prefix('mutasi')->middleware(['auth'])->group(function () {
         Route::get('/', [MutasiController::class, 'laporan'])->name('mutasi.laporan.index');
         Route::get('/export', [MutasiController::class, 'exportLaporan'])->name('mutasi.laporan.export')->middleware('permission:mutasi.laporan.export');
     });
-}); 
+});
 // FINAL CONSOLIDATED LAYANAN SURAT ROUTES
 Route::middleware('auth')->prefix('layanan-surat')->group(function () {
     // ==== TEMPLATE SURAT ====
