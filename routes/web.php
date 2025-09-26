@@ -26,12 +26,14 @@ use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\TapController;
 use App\Http\Controllers\LayananSurat\{
     KopTemplateController,
-    FormatNomorSuratController
+    JenisSuratController,
+    PermohonanSuratController
 };
 
 use App\Http\Controllers\MasterPerkembanganController;
 use App\Http\Controllers\MasterPotensiController;
 use App\Http\Controllers\LayananSuratController;
+use App\Models\LayananSurat\JenisSurat;
 use App\Models\LayananSurat\KopTemplate;
 
 Route::get('/', function () {
@@ -213,22 +215,32 @@ Route::middleware('auth')->prefix('layanan-surat')->group(function () {
         Route::put('kop-templates/{id}', [KopTemplateController::class, 'update'])->name('kop_templates.update');
         Route::delete('kop-templates/{id}', [KopTemplateController::class, 'destroy'])->name('kop_templates.destroy');
 
-        // Format Nomor Surat Routes
-        Route::get('format-nomor-surats', [FormatNomorSuratController::class, 'index'])->name('format_nomor_surats.index');
-        Route::get('format-nomor-surats/create', [FormatNomorSuratController::class, 'create'])->name('format_nomor_surats.create');
-        Route::post('format-nomor-surats', [FormatNomorSuratController::class, 'store'])->name('format_nomor_surats.store');
-        Route::get('format-nomor-surats/{id}/edit', [FormatNomorSuratController::class, 'edit'])->name('format_nomor_surats.edit');
-        Route::put('format-nomor-surats/{id}', [FormatNomorSuratController::class, 'update'])->name('format_nomor_surats.update');
-        Route::delete('format-nomor-surats/{id}', [FormatNomorSuratController::class, 'destroy'])->name('format_nomor_surats.destroy');
+        // Jenis Surat Routes
+        Route::get('jenis-surats', [JenisSuratController::class, 'index'])->name('jenis_surats.index');
+        Route::get('jenis-surats/create', [JenisSuratController::class, 'create'])->name('jenis_surats.create');
+        Route::post('jenis-surats', [JenisSuratController::class, 'store'])->name('jenis_surats.store');
+        Route::get('jenis-surats/{id}/edit', [JenisSuratController::class, 'edit'])->name('jenis_surats.edit');
+        Route::put('jenis-surats/{id}', [JenisSuratController::class, 'update'])->name('jenis_surats.update');
+        Route::delete('jenis-surats/{id}', [JenisSuratController::class, 'destroy'])->name('jenis_surats.destroy');
     });
 
     // ==== PERMOHONAN SURAT ====
-    Route::get('/permohonan', [LayananSuratController::class, 'index'])->name('layanan.permohonan.index');
-    Route::get('/permohonan/create', [LayananSuratController::class, 'create'])->name('layanan.permohonan.create');
-    Route::get('/permohonan/edit/{id}', [LayananSuratController::class, 'edit'])->name('layanan.permohonan.edit');
-    Route::get('/permohonan/delete/{id}', [LayananSuratController::class, 'delete'])->name('layanan.permohonan.delete');
-    Route::get('/permohonan/cetak/{id}', [LayananSuratController::class, 'cetak'])->name('layanan.permohonan.cetak');
-
+    // old
+      // Route::get('/permohonan/cetak/{id}', [LayananSuratController::class, 'cetak'])->name('layanan.permohonan.cetak');
+    
+    // new
+    Route::get('/permohonan', [PermohonanSuratController::class, 'index'])->name('layanan.permohonan.index');
+    Route::get('/permohonan/create', [PermohonanSuratController::class, 'create'])
+    ->name('layanan.permohonan.create');
+    Route::post('permohonan', [PermohonanSuratController::class, 'store'])->name('layanan.permohonan.store');
+    Route::get('/permohonan/edit/{id}', [PermohonanSuratController::class, 'edit'])->name('layanan.permohonan.edit');
+    Route::get('/permohonan/delete/{id}', [PermohonanSuratController::class, 'delete'])->name('layanan.permohonan.delete');
+    Route::get('/permohonan/cetak/{id}', [PermohonanSuratController::class, 'cetak'])->name('layanan.permohonan.cetak');
+    // FORMS PERMOHONAN SURAT
+    // new end point to get form
+    Route::get('layanan/permohonan/get-form/{jenisSuratId}', [PermohonanSuratController::class, 'getForm'])
+    ->name('layanan.permohonan.getForm');
+    
     // ==== PROFIL DESA ====
     Route::get('profil-desa', [LayananSuratController::class, 'profilDesa'])->name('layanan.profil_desa.index');
     Route::get('profil-desa/show', [LayananSuratController::class, 'showProfilDesa'])->name('layanan.profil_desa.show');

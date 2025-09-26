@@ -1,11 +1,11 @@
 @extends('layouts.master')
 
-@section('title', 'Format Nomor Surat')
+@section('title', 'Jenis Surat Template')
 
 
 @section('action')
-<a href="{{ route('format_nomor_surats.create') }}" class="btn btn-primary ">
-    <i class="bi bi-plus-circle me-2"></i> Tambah Format Nomor
+<a href="{{ route('jenis_surats.create') }}" class="btn btn-primary ">
+    <i class="bi bi-plus-circle me-2"></i> Tambah Jenis Surat
 </a>
 @endsection
 
@@ -18,7 +18,7 @@
         {{-- <div class="row mb-3">
                 <div class="col-md-4">
                     <label for="search" class="form-label">
-                        <i class="fas fa-search"></i> Cari Format Nomor
+                        <i class="fas fa-search"></i> Cari Jenis Surat
                     </label>
                     <input type="text" id="search" class="form-control" placeholder="Cari format nomor surat...">
                 </div>
@@ -36,18 +36,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($formatNomorSurats as $format)
+                    @foreach ($jenisSurats as $format)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
                         <td>{{ $format->kode }}</td>
                         <td>{{ $format->nama }}</td>
                         <td>
                             <div class="d-flex gap-1 justify-content-center">
-                                <a href="{{ route('format_nomor_surats.edit', $format->id) }}"
+                                <a href="{{ route('jenis_surats.edit', $format->id) }}"
                                     class="btn btn-sm btn-warning d-flex align-items-center gap-1">
                                     <i class="fas fa-edit"></i> Edit
                                 </a>
-                                @can('format_nomor_surat.delete')
+                                @can('Jenis_surats.delete')
                                 <button type="button" class="btn btn-danger btn-sm"
                                     data-bs-toggle="modal"
                                     data-bs-target="#delete-confirm-{{ $format->id }}">
@@ -65,13 +65,13 @@
 </div>
 @endsection
 
-@foreach ($formatNomorSurats as $formatSurat)
+@foreach ($jenisSurats as $item)
     <x-modal.delete-confirm
-        id="delete-confirm-{{ $formatSurat->id }}"
+        id="delete-confirm-{{ $item->id }}"
         title="Yakin hapus data ini?"
         description="Aksi ini tidak bisa dikembalikan."
-        route="{{ route('format_nomor_surats.destroy', $formatSurat) }}"
-        item="{{ $formatSurat->nama }}"
+        route="{{ route('jenis_surats.destroy', $item) }}"
+        item="{{ $item->nama }}"
     />
 @endforeach
 

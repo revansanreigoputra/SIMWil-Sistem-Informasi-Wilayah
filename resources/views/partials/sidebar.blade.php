@@ -242,9 +242,9 @@
                                             href="{{ route('kop_templates.index') }}">
                                             Kop Template
                                         </a>
-                                        <a class="dropdown-item {{ request()->is('layanan-surat/template/format-nomor-surats*') ? 'active' : '' }}"
-                                            href="{{ route('format_nomor_surats.index') }}">
-                                            Format Nomor Surat
+                                        <a class="dropdown-item {{ request()->is('layanan-surat/template/jenis-surats*') ? 'active' : '' }}"
+                                            href="{{ route('jenis_surats.index') }}">
+                                           Jenis Surat
                                         </a>
                                     </div>
                                 </div>
