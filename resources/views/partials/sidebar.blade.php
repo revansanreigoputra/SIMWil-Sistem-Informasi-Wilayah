@@ -260,6 +260,25 @@
                                     href="{{ route('layanan.profil_desa.index') }}">
                                     Profil Desa
                                 </a>
+
+                                {{-- Data Laporan --}}
+                                <div class="dropend">
+                                    <a class="dropdown-item dropdown-toggle {{ request()->is('layanan-surat/laporan*') ? 'active' : '' }}"
+                                        href="#" data-bs-toggle="dropdown" data-bs-auto-close="false">
+                                        Data Laporan
+                                    </a>
+                                    <div
+                                        class="dropdown-menu {{ request()->is('layanan-surat/laporan*') ? 'show' : '' }}">
+                                        <a class="dropdown-item {{ request()->is('layanan-surat/laporan/surat*') ? 'active' : '' }}"
+                                            href="{{ route('layanan.laporan.surat.index') }}">
+                                            Data Laporan Surat
+                                        </a>
+                                        {{-- <a class="dropdown-item {{ request()->is('layanan-surat/laporan/arsip*') ? 'active' : '' }}"
+                                            href="{{ route('layanan.laporan.arsip.index') }}">
+                                            Data Arsip Surat
+                                        </a> --}}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div> 
