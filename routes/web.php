@@ -42,6 +42,7 @@ use App\Http\Controllers\SanitasiController;
 use App\Http\Controllers\DesaKelurahanController;
 use App\Http\Controllers\BpdController;
 use App\Http\Controllers\DusunController;
+use App\Http\Controllers\KemasyarakatanController;
 
 
 // use App\Http\Controllers\DashboardController;
@@ -141,6 +142,16 @@ Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/prasar
     Route::get('/{bpd}/edit', [BpdController::class, 'edit'])->name('edit');
     Route::put('/{bpd}', [BpdController::class, 'update'])->name('update');
     Route::delete('/{bpd}', [BpdController::class, 'destroy'])->name('destroy');
+});
+
+Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/kemasyarakatan')->name('potensi.potensi-prasarana-dan-sarana.kemasyarakatan.')->group(function () {
+    Route::get('/', [KemasyarakatanController::class, 'index'])->name('index');
+    Route::get('/create', [KemasyarakatanController::class, 'create'])->name('create');
+    Route::post('/', [KemasyarakatanController::class, 'store'])->name('store');
+    Route::get('/{kemasyarakatan}', [KemasyarakatanController::class, 'show'])->name('show');
+    Route::get('/{kemasyarakatan}/edit', [KemasyarakatanController::class, 'edit'])->name('edit');
+    Route::put('/{kemasyarakatan}', [KemasyarakatanController::class, 'update'])->name('update');
+    Route::delete('/{kemasyarakatan}', [KemasyarakatanController::class, 'destroy'])->name('destroy');
 });
 
 // dusun
