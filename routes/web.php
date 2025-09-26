@@ -30,6 +30,8 @@ use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\GaleriController;
 
 use App\Http\Controllers\LayananSuratController;
+use App\Http\Controllers\PengangguranController;
+use App\Http\Controllers\KesejahteraanKeluargaController;
 
 Route::get('/', function () {
     return Auth::check()
@@ -133,6 +135,42 @@ Route::middleware(['auth'])->prefix('perkembangan/pemerintahdesadankelurahan/apb
     Route::put('/{apbdesa}', [APBDesaController::class, 'update'])->name('update');
     Route::delete('/{apbdesa}', [APBDesaController::class, 'destroy'])->name('destroy');
 });
+
+
+// Pengangguran
+Route::middleware(['auth'])
+    ->prefix('perkembangan/ekonomimasyarakat/pengangguran')
+    ->name('perkembangan.ekonomimasyarakat.pengangguran.')
+    ->group(function () {
+        Route::get('/', [\App\Http\Controllers\PengangguranController::class, 'index'])->name('index');
+        Route::get('/create', [\App\Http\Controllers\PengangguranController::class, 'create'])->name('create');
+        Route::post('/', [\App\Http\Controllers\PengangguranController::class, 'store'])->name('store');
+        Route::get('/{pengangguran}', [\App\Http\Controllers\PengangguranController::class, 'show'])->name('show');
+        Route::get('/{pengangguran}/edit', [\App\Http\Controllers\PengangguranController::class, 'edit'])->name('edit');
+        Route::put('/{pengangguran}', [\App\Http\Controllers\PengangguranController::class, 'update'])->name('update');
+        Route::delete('/{pengangguran}', [\App\Http\Controllers\PengangguranController::class, 'destroy'])->name('destroy');
+    });
+
+// Kesejahteraan Keluarga
+Route::middleware(['auth'])->prefix('perkembangan/ekonomimasyarakat/kesejahteraan_keluarga')
+    ->name('perkembangan.ekonomimasyarakat.kesejahteraan_keluarga.')
+    ->group(function () {
+        Route::get('/', [KesejahteraanKeluargaController::class, 'index'])->name('index');
+        Route::get('/create', [KesejahteraanKeluargaController::class, 'create'])->name('create');
+        Route::post('/', [KesejahteraanKeluargaController::class, 'store'])->name('store');
+        Route::get('/{id}', [KesejahteraanKeluargaController::class, 'show'])->name('show');
+        Route::get('/{id}/edit', [KesejahteraanKeluargaController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [KesejahteraanKeluargaController::class, 'update'])->name('update');
+        Route::delete('/{id}', [KesejahteraanKeluargaController::class, 'destroy'])->name('destroy');
+    });
+
+
+
+
+    // AJAX: Ambil desa berdasarkan kecamatan
+Route::get('/get-desa-by-kecamatan', [\App\Http\Controllers\PengangguranController::class, 'getDesaByKecamatan'])->name('getDesaByKecamatan');
+
+
 
 // Desa routes
 Route::resource('desa', DesaController::class);

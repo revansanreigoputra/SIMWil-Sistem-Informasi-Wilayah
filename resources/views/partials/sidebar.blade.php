@@ -478,10 +478,31 @@
                                                     @endcan
                                                 </div>
                                             </div>
-                                            {{-- <a class="dropdown-item {{ request()->is('potensi/laporan*') ? 'active' : '' }}"
-                                                href="{{ route('potensi.laporan.index') }}">
-                                                Laporan Mutasi
-                                            </a> --}}
+                                            {{-- Ekonomi Masyarakat --}}
+                                <div class="dropend">
+                                                <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/ekonomi*') ? 'active' : '' }}"
+                                                    href="#sidebar-ekonomi" data-bs-toggle="dropdown" data-bs-auto-close="false"
+                                                    role="button" aria-expanded="false">
+                                                    Ekonomi Masyarakat
+                                                </a>
+                                                <div class="dropdown-menu {{ request()->is('perkembangan/ekonomi*') ? 'show' : '' }}">
+                                                {{-- Pengangguran --}}
+                                                @can('pengangguran.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/ekonomi/pengangguran*') ? 'active' : '' }}"
+                                                        href="{{ route('perkembangan.ekonomimasyarakat.pengangguran.index') }}">
+                                                        Pengangguran
+                                                    </a>
+                                                @endcan
+
+                                               {{-- Kesejahteraan Keluarga --}}
+                                                @can('kesejahteraan.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/ekonomimasyarakat/kesejahteraan_keluarga*') ? 'active' : '' }}"
+                                                        href="{{ route('perkembangan.ekonomimasyarakat.kesejahteraan_keluarga.index') }}">
+                                                        Kesejahteraan Keluarga
+                                                    </a>
+                                                @endcan
+
+                                    </div>
                                         </div>
                                     </div>
                                 </div>

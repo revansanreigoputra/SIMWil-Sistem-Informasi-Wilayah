@@ -134,6 +134,21 @@ class PermissionSeeder extends Seeder
             'apb.update',
             'apb.delete',
 
+            // pengangguran
+            'pengangguran.view',
+            'pengangguran.create',
+            'pengangguran.store',
+            'pengangguran.edit',
+            'pengangguran.update',
+            'pengangguran.delete',
+
+            // kesejahteraan keluarga
+            'kesejahteraan.view',
+            'kesejahteraan.create',
+            'kesejahteraan.store',
+            'kesejahteraan.edit',
+            'kesejahteraan.update',
+            'kesejahteraan.delete',
 
         ];
 
