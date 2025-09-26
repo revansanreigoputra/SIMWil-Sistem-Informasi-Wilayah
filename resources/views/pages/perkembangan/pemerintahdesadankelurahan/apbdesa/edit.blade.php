@@ -78,8 +78,14 @@
                     <input type="number" class="form-control" id="saldo_anggaran" name="saldo_anggaran" value="{{ old('saldo_anggaran', $apb->saldo_anggaran) }}">
                 </div>
             </div>
+            
+            <hr class="my-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">
+                    Field dengan tanda <span class="text-danger">*</span> wajib diisi
+                </small>
 
-            <div class="btn-group gap-2">
+                <div class="btn-group gap-2">
                     <a href="{{ route('perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.index') }}"
                         class="btn btn-outline-secondary rounded">
                         Kembali
@@ -88,6 +94,7 @@
                         Perbarui Data
                     </button>
                 </div>
+            </div>
         </form>
     </div>
 </div>

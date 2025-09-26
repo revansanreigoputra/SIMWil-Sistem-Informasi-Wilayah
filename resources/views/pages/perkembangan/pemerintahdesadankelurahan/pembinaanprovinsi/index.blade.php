@@ -50,15 +50,15 @@
                             <td><span class="badge bg-{{ $item->fasilitasi_pelaksanaan_pedoman === 'Ada' ? 'success' : 'secondary' }}">{{ $item->fasilitasi_pelaksanaan_pedoman ?? '-' }}</span></td>
 
                             {{-- Angka atau "-" --}}
-                            <td>{{ $item->jumlah_kegiatan_pendidikan ?? '-' }}</td>
-                            <td>{{ $item->kegiatan_penanggulangan_kemiskinan ?? '-' }}</td>
-                            <td>{{ $item->kegiatan_penanganan_bencana ?? '-' }}</td>
-                            <td>{{ $item->kegiatan_peningkatan_pendapatan ?? '-' }}</td>
-                            <td>{{ $item->kegiatan_penyediaan_sarana ?? '-' }}</td>
-                            <td>{{ $item->kegiatan_pemanfaatan_sda ?? '-' }}</td>
-                            <td>{{ $item->kegiatan_pengembangan_sosial ?? '-' }}</td>
-                            <td>{{ $item->pedoman_pendataan ?? '-' }}</td>
-                            <td>{{ $item->pemberian_sanksi ?? '-' }}</td>
+                            <td class="text-center">{{ $item->jumlah_kegiatan_pendidikan ?? '-' }}</td>
+                            <td class="text-center">{{ $item->kegiatan_penanggulangan_kemiskinan ?? '-' }}</td>
+                            <td class="text-center">{{ $item->kegiatan_penanganan_bencana ?? '-' }}</td>
+                            <td class="text-center">{{ $item->kegiatan_peningkatan_pendapatan ?? '-' }}</td>
+                            <td class="text-center">{{ $item->kegiatan_penyediaan_sarana ?? '-' }}</td>
+                            <td class="text-center">{{ $item->kegiatan_pemanfaatan_sda ?? '-' }}</td>
+                            <td class="text-center">{{ $item->kegiatan_pengembangan_sosial ?? '-' }}</td>
+                            <td class="text-center">{{ $item->pedoman_pendataan ?? '-' }}</td>
+                            <td class="text-center">{{ $item->pemberian_sanksi ?? '-' }}</td>
 
                             <td>
                                 <div class="d-flex gap-1 justify-content-center">

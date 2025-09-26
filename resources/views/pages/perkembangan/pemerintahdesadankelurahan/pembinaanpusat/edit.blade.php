@@ -80,10 +80,21 @@
                 </div>
             @endforeach
 
-            <div class="text-end">
-                <button type="submit" class="btn btn-primary">
-                    Update
-                </button>
+            <hr class="my-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">
+                    Field dengan tanda <span class="text-danger">*</span> wajib diisi
+                </small>
+
+                <div class="btn-group gap-2">
+                    <a href="{{ route('perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.index') }}"
+                        class="btn btn-outline-secondary rounded">
+                        Kembali
+                    </a>
+                    <button type="submit" class="btn btn-primary rounded">
+                        Perbarui Data
+                    </button>
+                </div>
             </div>
         </form>
     </div>
