@@ -396,6 +396,12 @@
                                                     Pendidikan
                                                 </a>
                                             @endcan
+                                            @can('mata_pencaharian_pokok.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/mata-pencaharian-pokok*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-sdm.mata-pencaharian-pokok.index') }}">
+                                                    Mata Pencaharian <br> Pokok
+                                                </a>
+                                            @endcan
                                         </div>
                                     </div>
                                     <div class="dropend">
@@ -427,14 +433,14 @@
                                                     Prasarana Sanitasi
                                                 </a>
                                             @endcan
-                                            
+
                                             @can('air_bersih.view')
                                                 <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/air-bersih*') ? 'active' : '' }}"
                                                     href="{{ route('potensi.potensi-prasarana-dan-sarana.prasarana-air-bersih.index') }}">
                                                     Prasarana Air Bersih
                                                 </a>
                                             @endcan
-                                            
+
                                             <br>
 
                                             @can('dkelurahan.view')
@@ -443,14 +449,14 @@
                                                     Desa atau Kelurahan
                                                 </a>
                                             @endcan
-                                            
+
                                             @can('bpd.view')
                                                 <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/prasarana-bpd*') ? 'active' : '' }}"
                                                     href="{{ route('potensi.potensi-prasarana-dan-sarana.prasarana-bpd.index') }}">
                                                     Badan Perwakilan Desa
                                                 </a>
                                             @endcan
-                                            
+
                                             @can('dusun.view')
                                                 <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/prasarana-dusun*') ? 'active' : '' }}"
                                                     href="{{ route('potensi.potensi-prasarana-dan-sarana.prasarana-dusun.index') }}">
@@ -512,9 +518,9 @@
                         <a class="nav-link dropdown-toggle" href="#navbar-perkembangan" data-bs-toggle="dropdown"
                             data-bs-auto-close="false" role="button" aria-expanded="false">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
-                               <svg  xmlns="http://www.w3.org/2000/svg"  
-                                width="24"  height="24"  viewBox="0 0 24 24"  
-                                fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  
+                               <svg  xmlns="http://www.w3.org/2000/svg"
+                                width="24"  height="24"  viewBox="0 0 24 24"
+                                fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"
                                 class="icon icon-tabler icons-tabler-outline icon-tabler-adjustments-code">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                 <path d="M4 10a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
@@ -565,12 +571,12 @@
                                                     href="{{ route('perkembangan.pemerintahdesadankelurahan.pembinaanprovinsi.index') }}">
                                                     Pembinaan<br> Pemerintah Provinsi
                                                 </a>
-                                                
+
                                             @endcan
                                             </div>
                                 </div>
 
-                               
+
                               {{-- PERKEMBANGAN PENDUDUK --}}
 
 @can('perkembangan-penduduk.view')
@@ -599,9 +605,9 @@
             data-bs-auto-close="false" role="button" aria-expanded="false">
             Produk Domestik <br> Desa/Kelurahan
         </a>
-        
+
         <div class="dropdown-menu {{ request()->is('perkembangan/produk-domestik*') ? 'show' : '' }}">
-            
+
             {{-- SUBMENU: Sektor Pertambangan. Cek Permission: pertambangan.view --}}
             @can('sektor-pertambangan.view')
                 <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/sektor-pertambangan*') ? 'active' : '' }}"

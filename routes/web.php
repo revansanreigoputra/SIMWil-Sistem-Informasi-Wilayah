@@ -26,6 +26,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GlosariumController;
 use App\Http\Controllers\KecamatanController;
 use App\Http\Controllers\MasterDdkController;
+use App\Http\Controllers\MataPencaharianPokokController;
 use App\Http\Controllers\PPendidikanController;
 use App\Http\Controllers\DataKeluargaController;
 use App\Http\Controllers\LayananSuratController;
@@ -180,6 +181,17 @@ Route::middleware(['auth', 'permission:p_pendidikan.view'])->prefix('potensi/pot
     Route::get('/{p_pendidikan}/edit', [PPendidikanController::class, 'edit'])->middleware('permission:p_pendidikan.update')->name('edit');
     Route::put('/{p_pendidikan}', [PPendidikanController::class, 'update'])->middleware('permission:p_pendidikan.update')->name('update');
     Route::delete('/{p_pendidikan}', [PPendidikanController::class, 'destroy'])->middleware('permission:p_pendidikan.delete')->name('destroy');
+});
+
+// Potensi Mata Pencaharian Pokok routes
+Route::middleware(['auth', 'permission:mata_pencaharian_pokok.view'])->prefix('potensi/potensi-sdm/mata-pencaharian-pokok')->name('potensi.potensi-sdm.mata-pencaharian-pokok.')->group(function () {
+    Route::get('/', [MataPencaharianPokokController::class, 'index'])->name('index');
+    Route::get('/create', [MataPencaharianPokokController::class, 'create'])->middleware('permission:mata_pencaharian_pokok.create')->name('create');
+    Route::post('/', [MataPencaharianPokokController::class, 'store'])->middleware('permission:mata_pencaharian_pokok.store')->name('store');
+    Route::get('/{mataPencaharianPokok}', [MataPencaharianPokokController::class, 'show'])->name('show');
+    Route::get('/{mataPencaharianPokok}/edit', [MataPencaharianPokokController::class, 'edit'])->middleware('permission:mata_pencaharian_pokok.update')->name('edit');
+    Route::put('/{mataPencaharianPokok}', [MataPencaharianPokokController::class, 'update'])->middleware('permission:mata_pencaharian_pokok.update')->name('update');
+    Route::delete('/{mataPencaharianPokok}', [MataPencaharianPokokController::class, 'destroy'])->middleware('permission:mata_pencaharian_pokok.delete')->name('destroy');
 });
 
 // Transportasi Darat routes
