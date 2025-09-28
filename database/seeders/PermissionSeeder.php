@@ -193,6 +193,26 @@ class PermissionSeeder extends Seeder
             'perkembangan-penduduk.delete',
             'perkembangan-penduduk.destroy',
 
+            // sektor pertambangan permissions
+            'sektor-pertambangan.view',
+            'sektor-pertambangan.create',
+            'sektor-pertambangan.store',
+            'sektor-pertambangan.edit',
+            'sektor-pertambangan.update',
+            'sektor-pertambangan.delete',
+            'sektor-pertambangan.destroy',
+
+            // subsektor kerajinan permissions
+            'subsektor-kerajinan.view',
+            'subsektor-kerajinan.create',
+            'subsektor-kerajinan.store',
+            'subsektor-kerajinan.edit',
+            'subsektor-kerajinan.update',
+            'subsektor-kerajinan.delete',
+            'subsektor-kerajinan.destroy',
+
+
+
             // Pertanggungjawaban
             'pertanggungjawaban.view',
             'pertanggungjawaban.create',

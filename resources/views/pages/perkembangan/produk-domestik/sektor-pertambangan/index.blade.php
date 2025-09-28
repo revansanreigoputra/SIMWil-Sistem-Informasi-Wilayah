@@ -36,6 +36,9 @@
                                 <td class="text-center">{{ $pertambangan->total_biaya_antara_dihabiskan }}</td>
                                 <td class="text-center">{{ $pertambangan->jumlah_total_jenis_bahan_tambang_dan_galian }}</td>
                                 <td>
+
+
+                                
                                    <!-- Tombol Edit -->
 <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#edit-pertambangan-{{ $pertambangan->id }}">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -48,7 +51,7 @@
     Edit
 </button>
 
-<!-- Modal Edit -->
+@can('sektor-pertambangan.update')
 <div class="modal fade" id="edit-pertambangan-{{ $pertambangan->id }}" tabindex="-1" aria-labelledby="editModalLabel{{ $pertambangan->id }}" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -61,7 +64,7 @@
         </div>
         <div class="modal-body">
           <div class="mb-3">
-              <label for="tanggal" class="form-label">Tanggal</label>
+              <label class="form-label">Tanggal</label>
               <input type="date" class="form-control" name="tanggal" value="{{ $pertambangan->tanggal }}" required>
           </div>
           <div class="mb-3">
@@ -93,6 +96,8 @@
     </div>
   </div>
 </div>
+@endcan
+
 
                                         </a>
                                         <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
@@ -155,7 +160,8 @@
         });
     </script>
     
-    <div class="modal fade" id="tambahDataModal" tabindex="-1" aria-labelledby="tambahDataModalLabel" aria-hidden="true">
+   @can('sektor-pertambangan.create')
+<div class="modal fade" id="tambahDataModal" tabindex="-1" aria-labelledby="tambahDataModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -165,37 +171,30 @@
             <div class="modal-body">
                 <form action="{{ route('perkembangan.produk-domestik.sektor-pertambangan.store') }}" method="POST">
                     @csrf
-
                     <div class="mb-3">
                         <label for="tanggal" class="form-label">Tanggal</label>
                         <input type="date" class="form-control" id="tanggal" name="tanggal" required>
                     </div>
-
                     <div class="mb-3">
                         <label for="total_nilai_produksi_tahun_ini" class="form-label">Total Nilai Produksi Tahun Ini (Rp)</label>
                         <input type="number" class="form-control" id="total_nilai_produksi_tahun_ini" name="total_nilai_produksi_tahun_ini" required>
                     </div>
-
                     <div class="mb-3">
                         <label for="total_nilai_bahan_baku_digunakan" class="form-label">Total Nilai Bahan Baku yang Digunakan (Rp)</label>
                         <input type="number" class="form-control" id="total_nilai_bahan_baku_digunakan" name="total_nilai_bahan_baku_digunakan" required>
                     </div>
-
                     <div class="mb-3">
                         <label for="total_nilai_bahan_penolong_digunakan" class="form-label">Total Nilai Bahan Penolong yang Digunakan (Rp)</label>
                         <input type="number" class="form-control" id="total_nilai_bahan_penolong_digunakan" name="total_nilai_bahan_penolong_digunakan" required>
                     </div>
-
                     <div class="mb-3">
                         <label for="total_biaya_antara_dihabiskan" class="form-label">Total Biaya Antara yang Dihabiskan (Rp)</label>
                         <input type="number" class="form-control" id="total_biaya_antara_dihabiskan" name="total_biaya_antara_dihabiskan" required>
                     </div>
-
                     <div class="mb-3">
                         <label for="jumlah_total_jenis_bahan_tambang_dan_galian" class="form-label">Jumlah Total Jenis Bahan Tambang dan Galian (Buah)</label>
                         <input type="number" class="form-control" id="jumlah_total_jenis_bahan_tambang_dan_galian" name="jumlah_total_jenis_bahan_tambang_dan_galian" required>
                     </div>
-
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-primary">Simpan Data</button>
@@ -205,8 +204,4 @@
         </div>
     </div>
 </div>
-
-@endpush
-
-
-
+@endcan

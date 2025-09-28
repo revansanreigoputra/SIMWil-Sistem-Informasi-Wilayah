@@ -34,7 +34,7 @@ use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\PerkembanganPendudukController;
 use App\Http\Controllers\SektorPertambanganController;
-use App\Http\Controllers\KerajinanController;
+use App\Http\Controllers\SubsektorKerajinanController;
 
 
 use App\Http\Controllers\SanitasiController;
@@ -168,6 +168,16 @@ Route::middleware(['auth', 'permission:jumlah.view'])->prefix('potensi/potensi-s
     Route::get('/{jumlah}/edit', [JumlahController::class, 'edit'])->middleware('permission:jumlah.update')->name('edit');
     Route::put('/{jumlah}', [JumlahController::class, 'update'])->middleware('permission:jumlah.update')->name('update');
     Route::delete('/{jumlah}', [JumlahController::class, 'destroy'])->middleware('permission:jumlah.delete')->name('destroy');
+});
+
+// Potensi Pendidikan routes
+Route::middleware(['auth', 'permission:p_pendidikan.view'])->prefix('potensi/potensi-sdm/pendidikan')->name('potensi.potensi-sdm.pendidikan.')->group(function () {
+    Route::get('/', [PPendidikanController::class, 'index'])->name('index');
+    Route::get('/create', [PPendidikanController::class, 'create'])->middleware('permission:p_pendidikan.create')->name('create');
+    Route::post('/', [PPendidikanController::class, 'store'])->middleware('permission:p_pendidikan.store')->name('store');
+    Route::get('/{p_pendidikan}', [PPendidikanController::class, 'show'])->name('show');
+    Route::get('/{p_pendidikan}/edit', [PPendidikanController::class, 'edit'])->middleware('permission:p_pendidikan.update')->name('edit');
+    Route::put('/{p_pendidikan}', [PPendidikanController::class, 'update'])->middleware('permission:p_pendidikan.update')->name('update');
 });
 
 // Transportasi Darat routes
@@ -366,14 +376,13 @@ Route::delete('perkembangan-penduduk/{id}', [PerkembanganPendudukController::cla
 
 // produk domestik desa
 
-
 Route::prefix('perkembangan/produk-domestik')->name('perkembangan.produk-domestik.')->group(function () {
-    Route::resource('sektor-pertambangan', SektorPertambanganController::class);
+   Route::resource('sektor-pertambangan', SektorPertambanganController::class);
 
+    // Subsektor Kerajinan routes 
 
+    Route::resource('subsektor-kerajinan', SubsektorKerajinanController::class);
 
-    // Subsektor kerajinan
-Route::resource('kerajinan', KerajinanController::class);
 
 });
 

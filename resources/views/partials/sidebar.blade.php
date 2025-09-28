@@ -565,9 +565,65 @@
                                                     href="{{ route('perkembangan.pemerintahdesadankelurahan.pembinaanprovinsi.index') }}">
                                                     Pembinaan<br> Pemerintah Provinsi
                                                 </a>
+                                                
                                             @endcan
-                                    </div>
+                                            </div>
                                 </div>
+
+                               
+                              {{-- PERKEMBANGAN PENDUDUK --}}
+
+@can('perkembangan-penduduk.view')
+    <div class="dropend">
+        <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/penduduk*') ? 'active' : '' }}"
+            href="#sidebar-perkembanganpenduduk" data-bs-toggle="dropdown"
+            data-bs-auto-close="false" role="button" aria-expanded="false">
+            Perkembangan <br> Penduduk
+        </a>
+        <div class="dropdown-menu {{ request()->is('perkembangan/penduduk*') ? 'show' : '' }}">
+            {{-- Tidak perlu cek @can lagi di sini karena sudah dicek di blok luar --}}
+            <a class="dropdown-item {{ request()->is('perkembangan-penduduk*') ? 'active' : '' }}"
+                href="{{ route('perkembangan-penduduk.index') }}">
+                Penduduk dan <br> Kepala Keluarga
+            </a>
+        </div>
+    </div>
+@endcan
+
+{{-- PRODUK DOMESTIK DESA/KELURAHAN --}}
+
+@canany(['sektor-pertambangan.view', 'kerajinan.view'])
+    <div class="dropend">
+        <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/produk-domestik*') ? 'active' : '' }}"
+            href="#sidebar-produkdomestik" data-bs-toggle="dropdown"
+            data-bs-auto-close="false" role="button" aria-expanded="false">
+            Produk Domestik <br> Desa/Kelurahan
+        </a>
+        
+        <div class="dropdown-menu {{ request()->is('perkembangan/produk-domestik*') ? 'show' : '' }}">
+            
+            {{-- SUBMENU: Sektor Pertambangan. Cek Permission: pertambangan.view --}}
+            @can('sektor-pertambangan.view')
+                <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/sektor-pertambangan*') ? 'active' : '' }}"
+                    href="{{ route('perkembangan.produk-domestik.sektor-pertambangan.index') }}">
+                    Sektor Pertambangan <br> dan Galian
+                </a>
+            @endcan
+
+            {{-- SUBMENU: Subsektor Kerajinan. Cek Permission: kerajinan.view --}}
+            @can('subsektor-kerajinan.view')
+                <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/subsektor-kerajinan*') ? 'active' : '' }}"
+                    href="{{ route('perkembangan.produk-domestik.subsektor-kerajinan.index') }}">
+                    Subsektor Kerajinan
+                </a>
+            @endcan
+
+        </div>
+    </div>
+@endcanany
+
+
+                                {{-- perkembangan lembaga kemasyarakatan --}}
                                 <div class="dropend">
                                                 <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/lembagakemasyarakatan*') ? 'active' : '' }}"
                                                     href="#sidebar-lembagakemasyarakatan" data-bs-toggle="dropdown"
