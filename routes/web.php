@@ -2,48 +2,49 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BpdController;
 use App\Http\Controllers\TtdController;
 use App\Http\Controllers\DesaController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UsiaController;
+use App\Http\Controllers\DusunController;
+use App\Http\Controllers\AgendaController;
+use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\JumlahController;
 use App\Http\Controllers\MutasiController;
+use App\Http\Controllers\APBDesaController;
+use App\Http\Controllers\IrigasiController;
+// use App\Http\Controllers\MutasiController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\SanitasiController;
+// use App\Http\Controllers\IrigasiController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GlosariumController;
 use App\Http\Controllers\KecamatanController;
 use App\Http\Controllers\MasterDdkController;
+use App\Http\Controllers\PPendidikanController;
 use App\Http\Controllers\DataKeluargaController;
-// use App\Http\Controllers\MutasiController;
-use App\Http\Controllers\APBDesaController;
-use App\Http\Controllers\PertanggungjawabanController;
-use App\Http\Controllers\PembinaanpusatController;
-use App\Http\Controllers\PembinaanprovinsiController;
-// use App\Http\Controllers\IrigasiController;
+use App\Http\Controllers\LayananSuratController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\DesaKelurahanController;
 use App\Http\Controllers\PerangkatDesaController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\TransportasiDaratController;
-use App\Http\Controllers\IrigasiController;
+use App\Http\Controllers\PembinaanpusatController;
 use App\Http\Controllers\AnggotaKeluargaController;
-use App\Http\Controllers\AgendaController;
-use App\Http\Controllers\GlosariumController;
-use App\Http\Controllers\BeritaController;
-use App\Http\Controllers\GaleriController;
-use App\Http\Controllers\PerkembanganPendudukController;
+use App\Http\Controllers\PembinaanprovinsiController;
+
+
+use App\Http\Controllers\TransportasiDaratController;
+use App\Http\Controllers\PertanggungjawabanController;
 use App\Http\Controllers\SektorPertambanganController;
 use App\Http\Controllers\SubsektorKerajinanController;
 
 
-use App\Http\Controllers\SanitasiController;
-use App\Http\Controllers\DesaKelurahanController;
-use App\Http\Controllers\BpdController;
-use App\Http\Controllers\DusunController;
-
-
-use App\Http\Controllers\LayananSuratController;
+use App\Http\Controllers\PerkembanganPendudukController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 Route::get('/', function () {
     return Auth::check()
@@ -323,7 +324,7 @@ Route::prefix('mutasi')->middleware(['auth'])->group(function () {
         Route::get('/export', [MutasiController::class, 'exportLaporan'])->name('mutasi.laporan.export')->middleware('permission:mutasi.laporan.export');
     });
 
-    
+
 
 });
 
@@ -379,7 +380,7 @@ Route::delete('perkembangan-penduduk/{id}', [PerkembanganPendudukController::cla
 Route::prefix('perkembangan/produk-domestik')->name('perkembangan.produk-domestik.')->group(function () {
    Route::resource('sektor-pertambangan', SektorPertambanganController::class);
 
-    // Subsektor Kerajinan routes 
+    // Subsektor Kerajinan routes
 
     Route::resource('subsektor-kerajinan', SubsektorKerajinanController::class);
 
