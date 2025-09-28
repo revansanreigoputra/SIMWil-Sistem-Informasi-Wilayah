@@ -179,6 +179,7 @@ Route::middleware(['auth', 'permission:p_pendidikan.view'])->prefix('potensi/pot
     Route::get('/{p_pendidikan}', [PPendidikanController::class, 'show'])->name('show');
     Route::get('/{p_pendidikan}/edit', [PPendidikanController::class, 'edit'])->middleware('permission:p_pendidikan.update')->name('edit');
     Route::put('/{p_pendidikan}', [PPendidikanController::class, 'update'])->middleware('permission:p_pendidikan.update')->name('update');
+    Route::delete('/{p_pendidikan}', [PPendidikanController::class, 'destroy'])->middleware('permission:p_pendidikan.delete')->name('destroy');
 });
 
 // Transportasi Darat routes
@@ -392,6 +393,3 @@ require __DIR__ . '/auth.php';
 
 // routes for direct file (placeholder routes)
 Route::get('/master-ddk/{table?}', [MasterDDKController::class, 'index'])->name('master.ddk.index');
-
-
-
