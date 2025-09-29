@@ -132,6 +132,13 @@ class PermissionSeeder extends Seeder
             'p_pendidikan.update',
             'p_pendidikan.delete',
 
+            // Potensi Mata Pencaharian Pokok permissions
+            'mata_pencaharian_pokok.view',
+            'mata_pencaharian_pokok.create',
+            'mata_pencaharian_pokok.store',
+            'mata_pencaharian_pokok.update',
+            'mata_pencaharian_pokok.delete',
+
             // Irigasi
             'irigasi.view',
             'irigasi.create',
@@ -139,7 +146,7 @@ class PermissionSeeder extends Seeder
             'irigasi.edit',
             'irigasi.update',
             'irigasi.delete',
-            
+
             // Sanitasi
             'sanitasi.view',
             'sanitasi.create',
@@ -154,7 +161,7 @@ class PermissionSeeder extends Seeder
             'air_bersih.store',
             'air_bersih.update',
             'air_bersih.delete',
-            
+
             // dkelurahan
             'dkelurahan.view',
             'dkelurahan.create',
@@ -168,13 +175,20 @@ class PermissionSeeder extends Seeder
             'bpd.store',
             'bpd.update',
             'bpd.delete',
-            
+
             // dusun
             'dusun.view',
             'dusun.create',
             'dusun.store',
             'dusun.update',
             'dusun.delete',
+            
+            // kemasyarakatan
+            'kemasyarakatan.view',
+            'kemasyarakatan.create',
+            'kemasyarakatan.store',
+            'kemasyarakatan.update',
+            'kemasyarakatan.delete',
 
             // apb
             'apb.view',
@@ -184,7 +198,7 @@ class PermissionSeeder extends Seeder
             'apb.update',
             'apb.delete',
 
-            // perkembangan penduduk 
+            // perkembangan penduduk
             'perkembangan-penduduk.view',
             'perkembangan-penduduk.create',
             'perkembangan-penduduk.store',
@@ -225,14 +239,14 @@ class PermissionSeeder extends Seeder
             'pembinaanpusat.view',
             'pembinaanpusat.create',
             'pembinaanpusat.store',
-            'pembinaanpusat.edit',      
+            'pembinaanpusat.edit',
             'pembinaanpusat.update',
             'pembinaanpusat.delete',
 
             //pembinaan Provinsi
             'pembinaanprovinsi.view',
             'pembinaanprovinsi.create',
-            'pembinaanprovinsi.store', 
+            'pembinaanprovinsi.store',
             'pembinaanprovinsi.edit',
             'pembinaanprovinsi.update',
             'pembinaanprovinsi.delete',
