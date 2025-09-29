@@ -194,6 +194,17 @@ Route::middleware(['auth', 'permission:mata_pencaharian_pokok.view'])->prefix('p
     Route::delete('/{mataPencaharianPokok}', [MataPencaharianPokokController::class, 'destroy'])->middleware('permission:mata_pencaharian_pokok.delete')->name('destroy');
 });
 
+// Potensi Agama routes
+Route::middleware(['auth', 'permission:p_agama.view'])->prefix('potensi/potensi-sdm/agama')->name('potensi.potensi-sdm.agama.')->group(function () {
+    Route::get('/', [App\Http\Controllers\PAgamaController::class, 'index'])->name('index');
+    Route::get('/create', [App\Http\Controllers\PAgamaController::class, 'create'])->middleware('permission:p_agama.create')->name('create');
+    Route::post('/', [App\Http\Controllers\PAgamaController::class, 'store'])->middleware('permission:p_agama.store')->name('store');
+    Route::get('/{p_agama}', [App\Http\Controllers\PAgamaController::class, 'show'])->name('show');
+    Route::get('/{p_agama}/edit', [App\Http\Controllers\PAgamaController::class, 'edit'])->middleware('permission:p_agama.update')->name('edit');
+    Route::put('/{p_agama}', [App\Http\Controllers\PAgamaController::class, 'update'])->middleware('permission:p_agama.update')->name('update');
+    Route::delete('/{p_agama}', [App\Http\Controllers\PAgamaController::class, 'destroy'])->middleware('permission:p_agama.delete')->name('destroy');
+});
+
 // Transportasi Darat routes
 Route::middleware(['auth'])->prefix('transportasi-darat')->group(function () {
     Route::get('/', [TransportasiDaratController::class, 'index'])->middleware('permission:transportasi_darat.view')->name('potensi.potensi-prasarana-dan-sarana.transportasi-darat.index');
