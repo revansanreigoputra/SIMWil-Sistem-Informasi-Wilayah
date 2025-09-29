@@ -474,46 +474,7 @@
                                             @endcan
 
                                         </div>
-                                    </div>
-                                    {{-- <a class="dropdown-item {{ request()->is('potensi/laporan*') ? 'active' : '' }}"
-                                                href="{{ route('potensi.laporan.index') }}">
-                                                Laporan Mutasi
-                                            </a>
-                                           @can('usia.view')
-                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/usia*') ? 'active' : '' }}"
-                                                    href="{{ route('potensi.potensi-sdm.usia.index') }}">
-                                                    Usia
-                                                </a>
-                                            @endcan
-                                    </div>
-                                </div>
-                                <div class="dropend">
-                                                <a class="dropdown-item dropdown-toggle {{ request()->is('potensi/potensi-prasarana-dan-sarana*') ? 'active' : '' }}"
-                                                    href="#sidebar-potensi-prasarana" data-bs-toggle="dropdown"
-                                                    data-bs-auto-close="false" role="button" aria-expanded="false">
-                                                    Potensi Prasarana <br> dan Sarana
-                                                </a>
-                                                <div
-                                                    class="dropdown-menu {{ request()->is('potensi/potensi-prasarana-dan-sarana*') ? 'show' : '' }}">
-                                                    @can('transportasi_darat.view')
-                                                        <a class="dropdown-item {{ request()->is('transportasi-darat*') ? 'active' : '' }}"
-                                                            href="{{ route('potensi.potensi-prasarana-dan-sarana.transportasi-darat.index') }}">
-                                                            Transportasi Darat
-                                                        </a>
-                                                    @endcan
-                                                </div>
-                                            </div>
-                                {{-- <a class="dropdown-item {{ request()->is('potensi/laporan*') ? 'active' : '' }}"
-                                    href="{{ route('potensi.laporan.index') }}">
-                                    Laporan Mutasi
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                                            {{-- <a class="dropdown-item {{ request()->is('potensi/laporan*') ? 'active' : '' }}"
-                                                href="{{ route('potensi.laporan.index') }}">
-                                                Laporan Mutasi
-                                            </a> --}}
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
@@ -684,10 +645,6 @@
                                         @endcan
                                     </div>
                                 </div>
-                                {{-- <a class="dropdown-item {{ request()->is('potensi/laporan*') ? 'active' : '' }}"
-                                                href="{{ route('potensi.laporan.index') }}">
-                                                Laporan Mutasi
-                                            </a> --}}
                             </div>
                         </div>
                     </li>
