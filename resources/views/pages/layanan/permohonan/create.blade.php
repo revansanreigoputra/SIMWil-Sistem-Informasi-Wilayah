@@ -1,146 +1,154 @@
 @extends('layouts.master')
 
-@section('title')
-    <div class="d-flex align-items-center border-bottom pb-2 mb-3">
-        <i class="fas fa-file-alt text-primary me-2"></i>
-        <h4 class="fw-bold mb-0 text-dark"> Tambah Permohonan </h4>
-    </div>
-@endsection
+@section('title', 'Buat Permohonan Surat Baru')
 
 @section('content')
-<div class="container py-4">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
+<div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+        <h1 class="h4 mb-0" id="form-title">Formulir Permohonan Surat Baru</h1>
+        <p class="mb-0 mt-1" id="form-subtitle">Pilih jenis surat di bawah untuk memuat formulir.</p>
+    </div>
 
-            <div class="card shadow-lg border-0 rounded-4">
-                <div class="card-header bg-primary text-white rounded-top-4">
-                    <h5 class="mb-0"> Tambah Permohonan Surat</h5>
-                </div>
-                <div class="card-body p-4">
-                    <form id="formJenis">
-                        @csrf
-                        <div class="mb-4">
-                            <label for="jenis" class="form-label fw-semibold">Jenis Surat</label>
-                            <select name="jenis" id="jenis" class="form-select rounded-3">
-                                <option value="">-- Pilih Jenis Surat --</option>
-                                <option value="sk_domisili">Surat Keterangan Domisili</option>
-                                <option value="sk_belum_pernah_nikah">Surat Keterangan Belum Pernah Nikah</option>
-                                <option value="sk_berkelakuan_baik">Surat Keterangan Berkelakuan Baik</option>
-                                <option value="sk_usaha">Surat Keterangan Usaha</option>
-                                <option value="sk_kematian">Surat Keterangan Kematian</option>
-                                <option value="sk_kelahiran">Surat Keterangan Kelahiran</option>
-                                <option value="sk_pengantar_ktp">Surat Pengantar KTP</option>
-                                <option value="sk_pengantar_kk">Surat Pengantar KK</option>
-                                <option value="sk_pengantar_nikah">Surat Pengantar Nikah</option>
-                                <option value="sk_pengantar_pindah">Surat Pengantar Pindah</option>
-                            </select>
-                        </div>
-
-                        <div class="d-grid">
-                            <button type="button" class="btn btn-primary btn-md-custom rounded-pill shadow-sm" onclick="lanjutkan()">
-                                Selanjutnya 
-                            </button>
-                        </div>
-                    </form>
-                </div>
+    <div class="card-body">
+        <form method="POST" action="{{ route('layanan.permohonan.store') }}"> 
+            @csrf
+ 
+            <h5 class="mt-3 mb-3 pb-2 border-bottom">Pilih Jenis Surat</h5>
+            <div class="mb-4">
+                <label for="jenis_surat_id" class="form-label fw-semibold">Jenis Surat</label>
+                <select name="jenis_surat_id" id="jenis_surat_id" class="form-select @error('jenis_surat_id') is-invalid @enderror" required>
+                    <option value="">-- Pilih Jenis Surat untuk Membuat Permohonan --</option>
+                    @foreach ($jenisSurats as $jenis)
+                        <option value="{{ $jenis->id }}" data-kode="{{ $jenis->kode }}">{{ $jenis->nama }}</option>
+                    @endforeach
+                </select>
+                @error('jenis_surat_id')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
 
-        </div>
-    </div>
-</div>
+            {{-- 2. DYNAMIC FORM CONTAINER (Starts hidden/empty) --}}
+            <div id="dynamic-form-container" style="display: none;">
+                
+                {{-- Bagian I: Data Pemohon (Static fields, now included after selection) --}}
+                <h5 class="mt-3 mb-3 pb-2 border-bottom">Data Pemohon</h5>
+                <div class="mb-3">
+                    <label for="id_anggota_keluargas" class="form-label fw-semibold">Pilih Pemohon</label>
+                    <select name="id_anggota_keluargas" id="id_anggota_keluargas" class="form-select @error('id_anggota_keluargas') is-invalid @enderror" required>
+                        <option value="">-- Pilih Anggota Keluarga/Penduduk --</option>
+                        @foreach ($anggotaKeluargas as $anggota)
+                            <option value="{{ $anggota->id }}" {{ old('id_anggota_keluargas') == $anggota->id ? 'selected' : '' }}>
+                                {{ $anggota->nik }} - {{ $anggota->nama }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('id_anggota_keluargas')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                
+                <div class="mb-3">
+                    <label for="tanggal_permohonan" class="form-label fw-semibold">Tanggal Permohonan</label>
+                    <input type="date" name="tanggal_permohonan" class="form-control" value="{{ old('tanggal_permohonan', now()->format('Y-m-d')) }}" required>
+                </div>
+                
+                <hr>
 
-<!-- Modal -->
-<div class="modal fade" id="modalFormSurat" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content rounded-4 shadow">
-      <div class="modal-header bg-primary text-white rounded-top-4">
-        <h5 class="modal-title">Form Permohonan Surat</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body p-4" id="form-container">
-        <!-- Form dinamis akan dimunculkan di sini -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-light border rounded-pill px-4 btn-md-custom" data-bs-dismiss="modal">Batal</button>
-        <button type="submit" class="btn btn-success rounded-pill px-4 btn-md-custom">Simpan</button>
-      </div>
+                {{-- 3. AJAX-LOADED DYNAMIC FIELDS WILL APPEAR HERE --}}
+                <h5 class="mt-4 mb-3 pb-2 border-bottom">Data Khusus Surat</h5>
+                <div id="specific-fields-placeholder">
+                    {{-- The form fields (like @include($specificFormView)) will be loaded here via AJAX --}}
+                </div>
+                {{-- **************************************************************** --}}
+
+                <hr>
+
+                {{-- Bagian III: Penanda Tangan (TTD) & Kop Surat (Static fields) --}}
+                <h5 class="mt-4 mb-3 pb-2 border-bottom">Pengaturan Surat</h5>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="id_ttds" class="form-label fw-semibold">Penanda Tangan</label>
+                        <select name="id_ttds" id="id_ttds" class="form-select @error('id_ttds') is-invalid @enderror" required>
+                            <option value="">-- Pilih Pejabat Penanda Tangan --</option>
+                            @foreach ($ttds as $ttd)
+                                <option value="{{ $ttd->id }}" {{ old('id_ttds') == $ttd->id ? 'selected' : '' }}>
+                                    {{ $ttd->nama }} ({{ $ttd->jabatan }})
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('id_ttds')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="id_kop_templates" class="form-label fw-semibold">Kop Surat</label>
+                        <select name="id_kop_templates" id="id_kop_templates" class="form-select @error('id_kop_templates') is-invalid @enderror" required>
+                            <option value="">-- Pilih Kop Surat --</option>
+                            @foreach ($kopTemplates as $kop)
+                                <option value="{{ $kop->id }}" {{ old('id_kop_templates') == $kop->id ? 'selected' : '' }}>
+                                    {{ $kop->nama_kop }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('id_kop_templates')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-4 w-100">
+                    <i class="fas fa-paper-plane me-2"></i> Ajukan & Buat Permohonan Surat
+                </button>
+            </div> {{-- end dynamic-form-container --}}
+        </form>
     </div>
-  </div>
 </div>
 @endsection
-
-@push('styles')
-<style>
-    /* kecilin font & padding dropdown */
-    #jenis {
-        font-size: 0.9rem;
-        padding: 0.45rem 0.75rem;
-    }
-
-    /* ukuran custom tombol (antara sm dan md) */
-    .btn-md-custom {
-        font-size: 0.95rem;
-        padding: 0.5rem 1.25rem;
-    }
-</style>
-@endpush
-
-@push('scripts')
+@push('addon-script')
 <script>
-    function lanjutkan() {
-        let jenis = document.getElementById('jenis').value;
-        if (jenis === "") {
-            alert("Silakan pilih jenis surat dulu!");
-            return;
-        }
+    $(document).ready(function() {
+        const jenisSuratSelect = $('#jenis_surat_id');
+        const formContainer = $('#dynamic-form-container');
+        const specificFieldsPlaceholder = $('#specific-fields-placeholder');
+        const formTitle = $('#form-title');
+        const formSubtitle = $('#form-subtitle');
 
-        let container = document.getElementById('form-container');
-        let html = '';
+        jenisSuratSelect.on('change', function() {
+            const selectedId = $(this).val();
+            
+            // Clear previous content
+            specificFieldsPlaceholder.empty();
+            formContainer.hide();
+            formTitle.text('Formulir Permohonan Surat Baru');
+            formSubtitle.text('Pilih jenis surat di bawah untuk memuat formulir.');
 
-        switch (jenis) {
-            case 'sk_domisili':
-                html = `
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Nama Lengkap</label>
-                        <input type="text" class="form-control rounded-3" name="nama">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Alamat</label>
-                        <textarea class="form-control rounded-3" name="alamat" rows="3"></textarea>
-                    </div>`;
-                break;
+            if (selectedId) {
+                const jenisSuratName = $(this).find('option:selected').text();
+                
+                // Show a loading indicator
+                specificFieldsPlaceholder.html('<div class="text-center p-4"><i class="fas fa-spinner fa-spin me-2"></i>Memuat formulir...</div>');
+                formContainer.show();
 
-            case 'sk_belum_pernah_nikah':
-                html = `
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Nama Pemohon</label>
-                        <input type="text" class="form-control rounded-3" name="nama">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Umur</label>
-                        <input type="number" class="form-control rounded-3" name="umur">
-                    </div>`;
-                break;
-
-            case 'sk_kematian':
-                html = `
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Nama Almarhum/Almarhumah</label>
-                        <input type="text" class="form-control rounded-3" name="nama_almarhum">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Tanggal Meninggal</label>
-                        <input type="date" class="form-control rounded-3" name="tanggal_meninggal">
-                    </div>`;
-                break;
-
-            default:
-                html = `<p class="text-muted fst-italic">Form untuk <b>${jenis}</b> belum tersedia.</p>`;
-        }
-
-        container.innerHTML = html;
-        let modal = new bootstrap.Modal(document.getElementById('modalFormSurat'));
-        modal.show();
-    }
+                // AJAX call to fetch the form
+                $.ajax({
+                    url: '{{ route('layanan.permohonan.getForm', ['jenisSuratId' => 'PLACEHOLDER']) }}'.replace('PLACEHOLDER', selectedId),
+                    method: 'GET',
+                    success: function(response) {
+                        specificFieldsPlaceholder.html(response.html);
+                        
+                        // Update dynamic titles
+                        formTitle.text(`Formulir Permohonan: ${response.nama}`);
+                        formSubtitle.text(`Kode Surat: **${response.kode}**`);
+                    },
+                    error: function(xhr, status, error) {
+                        specificFieldsPlaceholder.html('<div class="alert alert-danger">Gagal memuat formulir. Silakan coba lagi.</div>');
+                        formTitle.text('Error Memuat Formulir');
+                        formSubtitle.text('');
+                        console.error("AJAX Error:", error);
+                    }
+                });
+            }
+        });
+    });
 </script>
 @endpush
