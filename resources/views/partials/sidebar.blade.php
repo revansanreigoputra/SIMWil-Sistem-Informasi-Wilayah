@@ -227,37 +227,28 @@
                         </span>
                         <span class="nav-link-title"> Layanan Surat </span>
                     </a>
-
+ 
                     <div class="dropdown-menu {{ request()->is('layanan-surat*') ? 'show' : '' }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
-
                                 {{-- Template Surat (submenu di dalam Layanan Surat) --}}
                                 <div class="dropend">
                                     <a class="dropdown-item dropdown-toggle {{ request()->is('layanan-surat/template*') ? 'active' : '' }}"
                                         href="#" data-bs-toggle="dropdown" data-bs-auto-close="false">
                                         Template Surat
                                     </a>
-                                    <div
-                                        class="dropdown-menu {{ request()->is('layanan-surat/template*') ? 'show' : '' }}">
-                                        <a class="dropdown-item {{ request()->is('layanan-surat/template/kop-surat*') ? 'active' : '' }}"
-                                            href="{{ route('layanan.template.kop_surat.index') }}">
-                                            Kop Surat
+                                    <div class="dropdown-menu {{ request()->is('layanan-surat/template*') ? 'show' : '' }}">
+                                        <a class="dropdown-item {{ request()->is('layanan-surat/template/kop-templates*') ? 'active' : '' }}"
+                                            href="{{ route('kop_templates.index') }}">
+                                            Kop Template
                                         </a>
-                                        <a class="dropdown-item {{ request()->is('layanan-surat/template/kop-laporan*') ? 'active' : '' }}"
-                                            href="{{ route('layanan.template.kop_laporan.index') }}">
-                                            Kop Laporan
+                                        <a class="dropdown-item {{ request()->is('layanan-surat/template/jenis-surats*') ? 'active' : '' }}"
+                                            href="{{ route('jenis_surats.index') }}">
+                                           Jenis Surat
                                         </a>
-                                        <a class="dropdown-item {{ request()->is('layanan-surat/template/format-nomor*') ? 'active' : '' }}"
-                                            href="{{ route('layanan.template.format_nomor.index') }}">
-                                            Format Nomor Surat
-                                        </a>
-                                        {{-- <a class="dropdown-item {{ request()->is('layanan-surat/template/profil-desa*') ? 'active' : '' }}"
-                                            href="{{ route('layanan.template.profil_desa.index') }}">
-                                            Profil Desa
-                                        </a> --}}
                                     </div>
                                 </div>
+
                                 {{-- Permohonan Surat --}}
                                 <a class="dropdown-item {{ request()->is('layanan-surat/permohonan*') ? 'active' : '' }}"
                                     href="{{ route('layanan.permohonan.index') }}">
@@ -270,14 +261,33 @@
                                     Profil Desa
                                 </a>
 
+                                {{-- Data Laporan --}}
+                                <div class="dropend">
+                                    <a class="dropdown-item dropdown-toggle {{ request()->is('layanan-surat/laporan*') ? 'active' : '' }}"
+                                        href="#" data-bs-toggle="dropdown" data-bs-auto-close="false">
+                                        Data Laporan
+                                    </a>
+                                    <div
+                                        class="dropdown-menu {{ request()->is('layanan-surat/laporan*') ? 'show' : '' }}">
+                                        <a class="dropdown-item {{ request()->is('layanan-surat/laporan/surat*') ? 'active' : '' }}"
+                                            href="{{ route('layanan.laporan.surat.index') }}">
+                                            Data Laporan Surat
+                                        </a>
+                                        {{-- <a class="dropdown-item {{ request()->is('layanan-surat/laporan/arsip*') ? 'active' : '' }}"
+                                            href="{{ route('layanan.laporan.arsip.index') }}">
+                                            Data Arsip Surat
+                                        </a> --}}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </div> 
                 </li>
 
                 {{-- Awal Menu Dasar Data Keluarga --}}
                 @can('data_keluarga.view')
-                    <li class="nav-item dropdown {{ request()->is('data_keluarga*') ? 'active' : '' }}">
+                    <li
+                        class="nav-item dropdown {{ request()->is('data_keluarga*') || request()->is('anggota_keluarga*') ? 'active' : '' }}">
                         <a class="nav-link dropdown-toggle" href="#navbar-data-keluarga" data-bs-toggle="dropdown"
                             data-bs-auto-close="false" role="button" aria-expanded="false">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -294,14 +304,18 @@
                             </span>
                             <span class="nav-link-title"> Dasar Data Keluarga </span>
                         </a>
+
                         {{-- sub menus --}}
-                        <div class="dropdown-menu {{ request()->is('data-keluarga*') ? 'show' : '' }}">
+                        <div
+                            class="dropdown-menu {{ request()->is('data_keluarga*') || request()->is('anggota_keluarga*') ? 'show' : '' }}">
                             <div class="dropdown-menu-columns">
                                 <div class="dropdown-menu-column">
-                                    <a class="dropdown-item" href="{{ route('data_keluarga.index') }}">
+                                    <a class="dropdown-item {{ request()->is('data_keluarga*') ? 'active' : '' }}"
+                                        href="{{ route('data_keluarga.index') }}">
                                         Data Kepala Keluarga
                                     </a>
-                                    <a class="dropdown-item" href="{{ route('anggota_keluarga.index') }}">
+                                    <a class="dropdown-item {{ request()->is('anggota_keluarga*') ? 'active' : '' }}"
+                                        href="{{ route('anggota_keluarga.index') }}">
                                         Data Anggota Keluarga
                                     </a>
                                 </div>
@@ -336,8 +350,8 @@
                                     Data Mutasi
                                 </a>
                                 {{-- <a class="dropdown-item {{ request()->is('mutasi/masuk*') ? 'active' : '' }}"
-                                    href="{{ route('mutasi.masuk.index') }}">
-                                    Masuk Desa
+                                href="{{ route('mutasi.masuk.index') }}">
+                                Masuk Desa
                                 </a> --}}
                                 <a class="dropdown-item {{ request()->is('mutasi/laporan*') ? 'active' : '' }}"
                                     href="{{ route('mutasi.laporan.index') }}">
@@ -482,6 +496,10 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{-- <a class="dropdown-item {{ request()->is('potensi/laporan*') ? 'active' : '' }}"
+                                href="{{ route('potensi.laporan.index') }}">
+                                Laporan Mutasi
+                                </a> --}}
                             </div>
                         </div>
                     </li>
@@ -641,8 +659,7 @@
                 @endcanany
 
                 {{-- Master Data (Dropdown Menu) --}}
-                <li
-                    class="nav-item dropdown {{ request()->is('role*') || request()->is('kategori*') || request()->is('supplier*') || request()->is('konsumen*') || request()->is('satuan*') || request()->is('produk*') || request()->is('user*') ? 'active' : '' }}">
+                <li class="nav-item dropdown {{ request()->is('master-ddk*') || request()->is('master-perkembangan*') || request()->is('master-potensi*') || request()->is('user*') || request()->is('role*') ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -654,38 +671,38 @@
                                 <path d="M12 12l0 9"></path>
                                 <path d="M12 12l-8 -4.5"></path>
                                 <path d="M16 5.25l-8 4.5"></path>
-                            </svg></span>
+                            </svg>
+                        </span>
                         <span class="nav-link-title"> Master Data </span>
                     </a>
                     <div
-                        class="dropdown-menu {{ request()->is('role*') || request()->is('kategori*') || request()->is('supplier*') || request()->is('konsumen*') || request()->is('satuan*') || request()->is('produk*') || request()->is('user*') ? 'show' : '' }}">
+                        class="dropdown-menu {{ request()->is('master-ddk*') || request()->is('master-perkembangan*') || request()->is('master-potensi*') || request()->is('user*') || request()->is('role*') ? 'show' : '' }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
-                                {{--  --}}
-                                <a href="{{ route('master.ddk.index') }}" class="dropdown-item">Master DDK</a>
-                                {{-- <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="">filter Hubungan Keluarga</a></li>
-                                    <li><a class="dropdown-item" href="">filter Agama</a></li>
-                                    <li><a class="dropdown-item" href="">filter Golongan Darah</a></li>
-                                    <li><a class="dropdown-item" href="">filter Kewarganegaraan</a></li>
-                                    <li><a class="dropdown-item" href="">filter Pendidikan terakhir</a></li>
-                                    <li><a class="dropdown-item" href="">filter Mata Pencaharian Pokok</a></li>
-                                    <li><a class="dropdown-item" href="">filter Akseptor KB</a></li>
-                                    <li><a class="dropdown-item" href="">filter Cacat Fisik</a></li>
-                                    <li><a class="dropdown-item" href="">filter Cacat Mental</a></li>
-                                    <li><a class="dropdown-item" href="">filter Kedudukan sebagai Wajib Pajak</a></li>
-                                    <li><a class="dropdown-item" href="">filter Lembaga Pemerintahan yang diikuti</a></li>
-                                    <li><a class="dropdown-item" href="">filter Lembaga Kemasyarakatan yang diikuti</a></li>
-                                    <li><a class="dropdown-item" href="">filter Lembaga Ekonomi yang diikuti</a></li>
-                                </ul> --}}
-                                {{--  --}}
+                                <a href="{{ route('master.ddk.index') }}"
+                                    class="dropdown-item {{ request()->is('master-ddk*') ? 'active' : '' }}">
+                                    Master DDK
+                                </a>
+                                <a href="{{ route('master.perkembangan.index') }}"
+                                    class="dropdown-item {{ request()->is('master-perkembangan*') ? 'active' : '' }}">
+                                    Master Perkembangan
+                                </a>
+                                <a href="{{ route('master.potensi.index') }}"
+                                    class="dropdown-item {{ request()->is('master-potensi*') ? 'active' : '' }}">
+                                    Master Potensi
+                                </a>
+
                                 @can('user.view')
                                     <a class="dropdown-item {{ request()->is('user*') ? 'active' : '' }}"
-                                        href="{{ route('user.index') }}"> User </a>
+                                        href="{{ route('user.index') }}">
+                                        User
+                                    </a>
                                 @endcan
                                 @can('role.view')
                                     <a class="dropdown-item {{ request()->is('role*') ? 'active' : '' }}"
-                                        href="{{ route('role.index') }}"> Hak Akses </a>
+                                        href="{{ route('role.index') }}">
+                                        Hak Akses
+                                    </a>
                                 @endcan
                             </div>
                         </div>
@@ -744,6 +761,10 @@
                                 <a class="dropdown-item {{ request()->routeIs('utama.galeri.*') ? 'active' : '' }}"
                                     href="{{ route('utama.galeri.index') }}">
                                     Galeri Foto
+                                </a>
+                                <a class="dropdown-item {{ request()->routeIs('utama.tap.*') ? 'active' : '' }}"
+                                    href="{{ route('utama.tap.index') }}">
+                                    TA Pendamping
                                 </a>
                             </div>
                         </div>
