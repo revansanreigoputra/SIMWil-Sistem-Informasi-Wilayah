@@ -66,7 +66,7 @@
                             <th class="text-center">Judul</th>
                             <th class="text-center">Isi Berita</th>
                             <th class="text-center">Gambar</th>
-                            <th class="text-center">Tanggal</th>
+                            <th class="text-center text-nowrap">Tanggal</th>
                             <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
@@ -83,10 +83,10 @@
                                         alt="Gambar {{ $berita->judul }}">
                                 </td>
 
-                                <td>
+                                <td class="text-nowrap"> {{-- Ditambahkan class text-nowrap di sini --}}
                                     {{ \Carbon\Carbon::parse($berita->tanggal2)->translatedFormat('d M Y') }}
                                     <small
-                                        class="d-block text-muted">{{ \Carbon\Carbon::parse($berita->tanggal2)->diffForHumans() }}</small>
+                                        class="d-block text-muted">{{ $berita->created_at->diffForHumans() }}</small>
                                 </td>
 
                                 <td class="text-center">
@@ -159,12 +159,11 @@
             // Inisialisasi DataTables untuk tabel berita
             $('#berita-table').DataTable();
 
-            // // Inisialisasi semua tooltip di halaman
-            // // Kode ini dipindahkan ke dalam document.ready
-            // var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-            // var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-            //     return new bootstrap.Tooltip(tooltipTriggerEl)
-            // })
+            // Inisialisasi semua tooltip di halaman
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            })
         });
     </script>
 @endpush
