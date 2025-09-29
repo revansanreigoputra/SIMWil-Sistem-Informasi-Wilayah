@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BpdController;
 use App\Http\Controllers\TtdController;
 use App\Http\Controllers\DesaController;
 use App\Http\Controllers\RoleController;
@@ -40,7 +41,7 @@ use App\Http\Controllers\GaleriController;
 // use App\Http\Controllers\IrigasiController;
 use App\Http\Controllers\SanitasiController;
 use App\Http\Controllers\DesaKelurahanController;
-use App\Http\Controllers\BpdController;
+// use App\Http\Controllers\BpdController;
 use App\Http\Controllers\DusunController;
 use App\Http\Controllers\KemasyarakatanController;
 
@@ -58,6 +59,44 @@ use App\Http\Controllers\LayananSuratController;
 
 
 // use App\Http\Controllers\TransportasiDaratController;
+// use App\Http\Controllers\Auth\AuthenticatedSessionController;
+// use App\Http\Controllers\DusunController;
+// use App\Http\Controllers\AgendaController;
+// use App\Http\Controllers\BeritaController;
+// use App\Http\Controllers\GaleriController;
+// use App\Http\Controllers\JumlahController;
+// use App\Http\Controllers\MutasiController;
+// use App\Http\Controllers\APBDesaController;
+// use App\Http\Controllers\IrigasiController;
+// use App\Http\Controllers\MutasiController;
+// use App\Http\Controllers\JabatanController;
+// use App\Http\Controllers\ProfileController;
+// use App\Http\Controllers\SettingController;
+// use App\Http\Controllers\SanitasiController;
+// use App\Http\Controllers\IrigasiController;
+// use App\Http\Controllers\DashboardController;
+// use App\Http\Controllers\GlosariumController;
+// use App\Http\Controllers\KecamatanController;
+// use App\Http\Controllers\MasterDdkController;
+use App\Http\Controllers\MataPencaharianPokokController;
+// use App\Http\Controllers\PPendidikanController;
+// use App\Http\Controllers\DataKeluargaController;
+// use App\Http\Controllers\LayananSuratController;
+// use App\Http\Controllers\NotificationController;
+// use App\Http\Controllers\DesaKelurahanController;
+// use App\Http\Controllers\PerangkatDesaController;
+// use App\Http\Controllers\PembinaanpusatController;
+// use App\Http\Controllers\AnggotaKeluargaController;
+// use App\Http\Controllers\PembinaanprovinsiController;
+
+
+// use App\Http\Controllers\TransportasiDaratController;
+// use App\Http\Controllers\PertanggungjawabanController;
+use App\Http\Controllers\SektorPertambanganController;
+use App\Http\Controllers\SubsektorKerajinanController;
+
+
+use App\Http\Controllers\PerkembanganPendudukController;
 // use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 Route::get('/', function () {
@@ -206,6 +245,17 @@ Route::middleware(['auth', 'permission:p_pendidikan.view'])->prefix('potensi/pot
     Route::delete('/{p_pendidikan}', [PPendidikanController::class, 'destroy'])->middleware('permission:p_pendidikan.delete')->name('destroy');
 });
 
+// Potensi Mata Pencaharian Pokok routes
+Route::middleware(['auth', 'permission:mata_pencaharian_pokok.view'])->prefix('potensi/potensi-sdm/mata-pencaharian-pokok')->name('potensi.potensi-sdm.mata-pencaharian-pokok.')->group(function () {
+    Route::get('/', [MataPencaharianPokokController::class, 'index'])->name('index');
+    Route::get('/create', [MataPencaharianPokokController::class, 'create'])->middleware('permission:mata_pencaharian_pokok.create')->name('create');
+    Route::post('/', [MataPencaharianPokokController::class, 'store'])->middleware('permission:mata_pencaharian_pokok.store')->name('store');
+    Route::get('/{mataPencaharianPokok}', [MataPencaharianPokokController::class, 'show'])->name('show');
+    Route::get('/{mataPencaharianPokok}/edit', [MataPencaharianPokokController::class, 'edit'])->middleware('permission:mata_pencaharian_pokok.update')->name('edit');
+    Route::put('/{mataPencaharianPokok}', [MataPencaharianPokokController::class, 'update'])->middleware('permission:mata_pencaharian_pokok.update')->name('update');
+    Route::delete('/{mataPencaharianPokok}', [MataPencaharianPokokController::class, 'destroy'])->middleware('permission:mata_pencaharian_pokok.delete')->name('destroy');
+});
+
 // Transportasi Darat routes
 Route::middleware(['auth'])->prefix('transportasi-darat')->group(function () {
     Route::get('/', [TransportasiDaratController::class, 'index'])->middleware('permission:transportasi_darat.view')->name('potensi.potensi-prasarana-dan-sarana.transportasi-darat.index');
@@ -349,7 +399,7 @@ Route::prefix('mutasi')->middleware(['auth'])->group(function () {
         Route::get('/export', [MutasiController::class, 'exportLaporan'])->name('mutasi.laporan.export')->middleware('permission:mutasi.laporan.export');
     });
 
-    
+
 
 });
 
@@ -377,15 +427,6 @@ Route::middleware(['auth'])->prefix('layanan-surat')->group(function () {
     Route::get('profil-desa/edit', [LayananSuratController::class, 'editProfilDesa'])->name('layanan.profil_desa.edit');
 });
 
-
-require __DIR__ . '/auth.php';
-
-
-// routes for direct file (placeholder routes)
-Route::get('/master-ddk/{table?}', [MasterDDKController::class, 'index'])->name('master.ddk.index');
-
-
-// Usia routes
 Route::middleware(['auth', 'permission:usia.view'])->prefix('potensi/potensi-sdm/usia')->name('potensi.potensi-sdm.usia.')->group(function () {
     Route::get('/', [UsiaController::class, 'index'])->name('index');
     Route::get('/create', [UsiaController::class, 'create'])->middleware('permission:usia.create')->name('create');
@@ -395,6 +436,34 @@ Route::middleware(['auth', 'permission:usia.view'])->prefix('potensi/potensi-sdm
     Route::put('/{usia}', [UsiaController::class, 'update'])->middleware('permission:usia.update')->name('update');
     Route::delete('/{usia}', [UsiaController::class, 'destroy'])->middleware('permission:usia.delete')->name('destroy');
 });
+
+// perkembangan_penduduk routes
+Route::get('perkembangan-penduduk', [PerkembanganPendudukController::class, 'index'])->name('perkembangan-penduduk.index');
+Route::get('perkembangan-penduduk/create', [PerkembanganPendudukController::class, 'create'])->name('perkembangan-penduduk.create');
+Route::post('perkembangan-penduduk', [PerkembanganPendudukController::class, 'store'])->name('perkembangan-penduduk.store');
+Route::resource('perkembangan-penduduk', PerkembanganPendudukController::class);
+
+
+// perkembangan penduduk crud update, delete
+Route::get('perkembangan-penduduk/{id}/edit', [PerkembanganPendudukController::class, 'edit'])->name('perkembangan-penduduk.edit');
+Route::put('perkembangan-penduduk/{id}', [PerkembanganPendudukController::class, 'update'])->name('perkembangan-penduduk.update');
+Route::delete('perkembangan-penduduk/{id}', [PerkembanganPendudukController::class, 'destroy'])->name('perkembangan-penduduk.destroy');
+
+
+// produk domestik desa
+
+Route::prefix('perkembangan/produk-domestik')->name('perkembangan.produk-domestik.')->group(function () {
+   Route::resource('sektor-pertambangan', SektorPertambanganController::class);
+
+    // Subsektor Kerajinan routes
+
+    Route::resource('subsektor-kerajinan', SubsektorKerajinanController::class);
+
+
+});
+
+require __DIR__ . '/auth.php';
+
 
 // routes for direct file (placeholder routes)
 Route::get('/master-ddk/{table?}', [MasterDDKController::class, 'index'])->name('master.ddk.index');

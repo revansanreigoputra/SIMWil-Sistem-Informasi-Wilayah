@@ -132,6 +132,13 @@ class PermissionSeeder extends Seeder
             'p_pendidikan.update',
             'p_pendidikan.delete',
 
+            // Potensi Mata Pencaharian Pokok permissions
+            'mata_pencaharian_pokok.view',
+            'mata_pencaharian_pokok.create',
+            'mata_pencaharian_pokok.store',
+            'mata_pencaharian_pokok.update',
+            'mata_pencaharian_pokok.delete',
+
             // Irigasi
             'irigasi.view',
             'irigasi.create',
@@ -139,7 +146,7 @@ class PermissionSeeder extends Seeder
             'irigasi.edit',
             'irigasi.update',
             'irigasi.delete',
-            
+
             // Sanitasi
             'sanitasi.view',
             'sanitasi.create',
@@ -154,7 +161,7 @@ class PermissionSeeder extends Seeder
             'air_bersih.store',
             'air_bersih.update',
             'air_bersih.delete',
-            
+
             // dkelurahan
             'dkelurahan.view',
             'dkelurahan.create',
@@ -168,7 +175,7 @@ class PermissionSeeder extends Seeder
             'bpd.store',
             'bpd.update',
             'bpd.delete',
-            
+
             // dusun
             'dusun.view',
             'dusun.create',
@@ -191,6 +198,35 @@ class PermissionSeeder extends Seeder
             'apb.update',
             'apb.delete',
 
+            // perkembangan penduduk
+            'perkembangan-penduduk.view',
+            'perkembangan-penduduk.create',
+            'perkembangan-penduduk.store',
+            'perkembangan-penduduk.edit',
+            'perkembangan-penduduk.update',
+            'perkembangan-penduduk.delete',
+            'perkembangan-penduduk.destroy',
+
+            // sektor pertambangan permissions
+            'sektor-pertambangan.view',
+            'sektor-pertambangan.create',
+            'sektor-pertambangan.store',
+            'sektor-pertambangan.edit',
+            'sektor-pertambangan.update',
+            'sektor-pertambangan.delete',
+            'sektor-pertambangan.destroy',
+
+            // subsektor kerajinan permissions
+            'subsektor-kerajinan.view',
+            'subsektor-kerajinan.create',
+            'subsektor-kerajinan.store',
+            'subsektor-kerajinan.edit',
+            'subsektor-kerajinan.update',
+            'subsektor-kerajinan.delete',
+            'subsektor-kerajinan.destroy',
+
+
+
             // Pertanggungjawaban
             'pertanggungjawaban.view',
             'pertanggungjawaban.create',
@@ -203,14 +239,14 @@ class PermissionSeeder extends Seeder
             'pembinaanpusat.view',
             'pembinaanpusat.create',
             'pembinaanpusat.store',
-            'pembinaanpusat.edit',      
+            'pembinaanpusat.edit',
             'pembinaanpusat.update',
             'pembinaanpusat.delete',
 
             //pembinaan Provinsi
             'pembinaanprovinsi.view',
             'pembinaanprovinsi.create',
-            'pembinaanprovinsi.store', 
+            'pembinaanprovinsi.store',
             'pembinaanprovinsi.edit',
             'pembinaanprovinsi.update',
             'pembinaanprovinsi.delete',
@@ -219,7 +255,7 @@ class PermissionSeeder extends Seeder
 
 
 
-        ];
+                    ];
 
         foreach ($permissions as $permission) {
             Permission::firstOrCreate(['name' => $permission]);
