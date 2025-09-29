@@ -43,6 +43,7 @@ use App\Http\Controllers\SanitasiController;
 use App\Http\Controllers\DesaKelurahanController;
 // use App\Http\Controllers\BpdController;
 use App\Http\Controllers\DusunController;
+use App\Http\Controllers\EnergiPeneranganController;
 use App\Http\Controllers\KemasyarakatanController;
 
 
@@ -195,6 +196,18 @@ Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/prasar
     Route::delete('/{bpd}', [BpdController::class, 'destroy'])->name('destroy');
 });
 
+// Energi & Penerangan routes
+Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/energiPenerangan')->name('potensi.potensi-prasarana-dan-sarana.energiPenerangan.')->group(function () {
+    Route::get('/', [EnergiPeneranganController::class, 'index'])->name('index');
+    Route::get('/create', [EnergiPeneranganController::class, 'create'])->name('create');
+    Route::post('/', [EnergiPeneranganController::class, 'store'])->name('store');
+    Route::get('/{energiPenerangan}', [EnergiPeneranganController::class, 'show'])->name('show');
+    Route::get('/{energiPenerangan}/edit', [EnergiPeneranganController::class, 'edit'])->name('edit');
+    Route::put('/{energiPenerangan}', [EnergiPeneranganController::class, 'update'])->name('update');
+    Route::delete('/{energiPenerangan}', [EnergiPeneranganController::class, 'destroy'])->name('destroy');
+});
+
+// kemasyarakatan
 Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/kemasyarakatan')->name('potensi.potensi-prasarana-dan-sarana.kemasyarakatan.')->group(function () {
     Route::get('/', [KemasyarakatanController::class, 'index'])->name('index');
     Route::get('/create', [KemasyarakatanController::class, 'create'])->name('create');

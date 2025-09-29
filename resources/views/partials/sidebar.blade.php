@@ -492,6 +492,13 @@
                                                     Lemb. Kemasyarakatan
                                                 </a>
                                             @endcan
+                                            
+                                            @can('kemasyarakatan.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/energiPenerangan*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-prasarana-dan-sarana.energiPenerangan.index') }}">
+                                                    Energi & Penerangan
+                                                </a>
+                                            @endcan
 
                                         </div>
                                     </div>

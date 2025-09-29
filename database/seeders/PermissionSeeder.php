@@ -197,6 +197,13 @@ class PermissionSeeder extends Seeder
             'kemasyarakatan.update',
             'kemasyarakatan.delete',
 
+            // energi dan penerangan
+            'energiPenerangan.view',
+            'energiPenerangan.create',
+            'energiPenerangan.store',
+            'energiPenerangan.update',
+            'energiPenerangan.delete',
+
             // apb
             'apb.view',
             'apb.create',
