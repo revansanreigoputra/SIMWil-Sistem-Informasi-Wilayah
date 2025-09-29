@@ -139,6 +139,13 @@ class PermissionSeeder extends Seeder
             'mata_pencaharian_pokok.update',
             'mata_pencaharian_pokok.delete',
 
+            // Potensi Agama permissions
+            'p_agama.view',
+            'p_agama.create',
+            'p_agama.store',
+            'p_agama.update',
+            'p_agama.delete',
+
             // Irigasi
             'irigasi.view',
             'irigasi.create',

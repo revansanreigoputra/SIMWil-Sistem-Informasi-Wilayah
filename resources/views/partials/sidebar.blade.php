@@ -402,6 +402,12 @@
                                                     Mata Pencaharian <br> Pokok
                                                 </a>
                                             @endcan
+                                            @can('p_agama.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/agama*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-sdm.agama.index') }}">
+                                                    Agama
+                                                </a>
+                                            @endcan
                                         </div>
                                     </div>
                                     <div class="dropend">
