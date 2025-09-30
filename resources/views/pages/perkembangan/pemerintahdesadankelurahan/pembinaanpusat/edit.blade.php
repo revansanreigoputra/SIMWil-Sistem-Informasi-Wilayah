@@ -2,12 +2,6 @@
 
 @section('title', 'Edit Pembinaan Pemerintah Pusat')
 
-@section('action')
-    <a href="{{ route('perkembangan.pemerintahdesadankelurahan.pembinaanpusat.index') }}" class="btn btn-warning mb-3">
-        Kembali
-    </a>
-@endsection
-
 @section('content')
 <div class="card shadow-sm">
     <div class="card-header text-dark">

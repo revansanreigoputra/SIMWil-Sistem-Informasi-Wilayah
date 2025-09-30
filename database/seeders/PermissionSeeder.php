@@ -208,6 +208,14 @@ class PermissionSeeder extends Seeder
             'pembinaanprovinsi.update',
             'pembinaanprovinsi.delete',
 
+            //pembinaan Kabupaten
+            'pembinaankabupaten.view',
+            'pembinaankabupaten.create',
+            'pembinaankabupaten.store',
+            'pembinaankabupaten.edit',      
+            'pembinaankabupaten.update',
+            'pembinaankabupaten.delete',
+
 
 
 

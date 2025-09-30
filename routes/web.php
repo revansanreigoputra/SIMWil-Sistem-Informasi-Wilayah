@@ -21,6 +21,7 @@ use App\Http\Controllers\APBDesaController;
 use App\Http\Controllers\PertanggungjawabanController;
 use App\Http\Controllers\PembinaanpusatController;
 use App\Http\Controllers\PembinaanprovinsiController;
+use App\Http\Controllers\PembinaankabupatenController;
 // use App\Http\Controllers\IrigasiController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PerangkatDesaController;
@@ -232,7 +233,6 @@ Route::middleware(['auth'])->prefix('perkembangan/pemerintahdesadankelurahan/pem
         Route::delete('/{pembinaanpusat}', [PembinaanpusatController::class, 'destroy'])->name('destroy');
     });
 
-
 // pembinaanprovinsi Routes
 Route::middleware(['auth'])->prefix('perkembangan/pemerintahdesadankelurahan/pembinaanprovinsi')->name('perkembangan.pemerintahdesadankelurahan.pembinaanprovinsi.')->group(function () {
         Route::get('/', [PembinaanprovinsiController::class, 'index'])->name('index');
@@ -243,6 +243,17 @@ Route::middleware(['auth'])->prefix('perkembangan/pemerintahdesadankelurahan/pem
         Route::put('/{pembinaanprovinsi}', [PembinaanprovinsiController::class, 'update'])->name('update');
         Route::delete('/{pembinaanprovinsi}', [PembinaanprovinsiController::class, 'destroy'])->name('destroy');
     });
+
+// pembinaankabupaten Routes
+Route::middleware(['auth'])->prefix('perkembangan/pemerintahdesadankelurahan/pembinaankabupaten')->name('perkembangan.pemerintahdesadankelurahan.pembinaankabupaten.')->group(function () {
+    Route::get('/', [PembinaankabupatenController::class, 'index'])->name('index');
+    Route::get('/create', [PembinaankabupatenController::class, 'create'])->name('create');
+    Route::post('/', [PembinaankabupatenController::class, 'store'])->name('store');
+    Route::get('/{pembinaankabupaten}', [PembinaankabupatenController::class, 'show'])->name('show');
+    Route::get('/{pembinaankabupaten}/edit', [PembinaankabupatenController::class, 'edit'])->name('edit');
+    Route::put('/{pembinaankabupaten}', [PembinaankabupatenController::class, 'update'])->name('update');
+    Route::delete('/{pembinaankabupaten}', [PembinaankabupatenController::class, 'destroy'])->name('destroy');
+});
 
 
 // Desa routes
