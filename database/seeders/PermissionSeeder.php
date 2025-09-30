@@ -143,6 +143,12 @@ class PermissionSeeder extends Seeder
             'agenda.create',
             'agenda.update',
             'agenda.delete',
+            
+            // Glosarium permissions
+            'glosarium.view',
+            'glosarium.create',
+            'glosarium.update',
+            'glosarium.delete',
 
         ];
 
