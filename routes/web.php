@@ -111,6 +111,7 @@ use App\Http\Controllers\MasterPotensiController;
 use App\Http\Controllers\LayananSuratController;
 use App\Http\Controllers\PengangguranController;
 use App\Http\Controllers\KesejahteraanKeluargaController;
+use App\Http\Controllers\MenurutSektorUsahaController;
 use App\Models\LayananSurat\JenisSurat;
 use App\Models\LayananSurat\KopTemplate;
 
@@ -358,7 +359,19 @@ Route::middleware(['auth'])->prefix('perkembangan/ekonomimasyarakat/kesejahteraa
         Route::delete('/{id}', [KesejahteraanKeluargaController::class, 'destroy'])->name('destroy');
     });
 
-
+// Menurut Sektor Usaha
+Route::middleware(['auth'])
+    ->prefix('perkembangan/pendapatanperkapital/menurut_sektor_usaha')
+    ->name('perkembangan.pendapatanperkapital.menurut_sektor_usaha.')
+    ->group(function () {
+        Route::get('/', [MenurutSektorUsahaController::class, 'index'])->name('index');
+        Route::get('/create', [MenurutSektorUsahaController::class, 'create'])->name('create');
+        Route::post('/', [MenurutSektorUsahaController::class, 'store'])->name('store');
+        Route::get('/{menurut_sektor_usaha}', [MenurutSektorUsahaController::class, 'show'])->name('show');
+        Route::get('/{menurut_sektor_usaha}/edit', [MenurutSektorUsahaController::class, 'edit'])->name('edit');
+        Route::put('/{menurut_sektor_usaha}', [MenurutSektorUsahaController::class, 'update'])->name('update');
+        Route::delete('/{menurut_sektor_usaha}', [MenurutSektorUsahaController::class, 'destroy'])->name('destroy');
+    });
 
 
     // AJAX: Ambil desa berdasarkan kecamatan

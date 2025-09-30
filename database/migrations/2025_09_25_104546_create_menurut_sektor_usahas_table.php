@@ -10,10 +10,15 @@ return new class extends Migration
     {
         Schema::create('menurut_sektor_usahas', function (Blueprint $table) {
             $table->id();
-            $table->string('sektor'); // nama sektor usaha (misal pertanian, industri, jasa)
-            $table->integer('tahun');
-            $table->bigInteger('jumlah'); // jumlah pendapatan/kontribusi
-            $table->string('satuan')->nullable(); // misalnya: Rupiah, %
+            $table->unsignedBigInteger('id_kec')->nullable();   // bisa dihapus kalau ga dipakai
+            $table->unsignedBigInteger('id_desa')->nullable();  // bisa dihapus kalau ga dipakai
+            $table->date('tanggal');
+            $table->unsignedBigInteger('id_komoditas_sektor')->nullable(); // opsional
+            $table->integer('kk');
+            $table->integer('anggota');
+            $table->integer('buruh');
+            $table->integer('anggota_buruh');
+            $table->bigInteger('pendapatan');
             $table->timestamps();
         });
     }

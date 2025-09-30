@@ -229,6 +229,15 @@ class PermissionSeeder extends Seeder
             'kesejahteraan.update',
             'kesejahteraan.delete',
 
+            // menurut sektor usaha
+            'menurut_sektor_usaha.view',
+            'menurut_sektor_usaha.create',
+            'menurut_sektor_usaha.store',
+            'menurut_sektor_usaha.edit',
+            'menurut_sektor_usaha.update',
+            'menurut_sektor_usaha.delete',
+
+
             // perkembangan penduduk
             'perkembangan-penduduk.view',
             'perkembangan-penduduk.create',
