@@ -7,59 +7,66 @@ use Illuminate\Http\Request;
 
 class MenurutSektorUsahaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $data = MenurutSektorUsaha::orderBy('tanggal', 'desc')->paginate(10);
+        return view('pages.perkembangan.pendapatanperkapital.menurut_sektor_usaha.index', compact('data'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('pages.perkembangan.pendapatanperkapital.menurut_sektor_usaha.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'tanggal' => 'required|date',
+            'kk' => 'required|integer',
+            'anggota' => 'required|integer',
+            'buruh' => 'required|integer',
+            'anggota_buruh' => 'required|integer',
+            'pendapatan' => 'required|integer',
+        ]);
+
+        MenurutSektorUsaha::create($request->all());
+
+        return redirect()->route('perkembangan.pendapatanperkapital.menurut_sektor_usaha.index')
+            ->with('success', 'Data berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(MenurutSektorUsaha $menurutSektorUsaha)
+    public function show(MenurutSektorUsaha $menurut_sektor_usaha)
     {
-        //
+        return view('pages.perkembangan.pendapatanperkapital.menurut_sektor_usaha.show', compact('menurut_sektor_usaha'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(MenurutSektorUsaha $menurutSektorUsaha)
+    public function edit(MenurutSektorUsaha $menurut_sektor_usaha)
     {
-        //
+        return view('pages.perkembangan.pendapatanperkapital.menurut_sektor_usaha.edit', compact('menurut_sektor_usaha'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, MenurutSektorUsaha $menurutSektorUsaha)
+    public function update(Request $request, MenurutSektorUsaha $menurut_sektor_usaha)
     {
-        //
+        $request->validate([
+            'tanggal' => 'required|date',
+            'kk' => 'required|integer',
+            'anggota' => 'required|integer',
+            'buruh' => 'required|integer',
+            'anggota_buruh' => 'required|integer',
+            'pendapatan' => 'required|integer',
+        ]);
+
+        $menurut_sektor_usaha->update($request->all());
+
+        return redirect()->route('perkembangan.pendapatanperkapital.menurut_sektor_usaha.index')
+            ->with('success', 'Data berhasil diperbarui');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(MenurutSektorUsaha $menurutSektorUsaha)
+    public function destroy(MenurutSektorUsaha $menurut_sektor_usaha)
     {
-        //
+        $menurut_sektor_usaha->delete();
+
+        return redirect()->route('perkembangan.pendapatanperkapital.menurut_sektor_usaha.index')
+            ->with('success', 'Data berhasil dihapus');
     }
 }
