@@ -1,4 +1,3 @@
-// resources/views/pages/perkembangan/produk-domestik/subsektor-kerajinan/edit.blade.php
 
 @extends('layouts.master')
 

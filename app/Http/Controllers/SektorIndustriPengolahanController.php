@@ -4,82 +4,69 @@ namespace App\Http\Controllers;
 
 use App\Models\SektorIndustriPengolahan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 class SektorIndustriPengolahanController extends Controller
 {
-    // ... (metode store, update, destroy tetap sama)
-
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
-    {
-        // Permission check
-        if (!Gate::allows('sektor_industri.view')) {
-            abort(403, 'Unauthorized action.');
-        }
-
-        $sektorIndustriPengolahans = SektorIndustriPengolahan::orderBy('tanggal', 'desc')->get();
-        
-        // PERUBAHAN PATH VIEW DI SINI
-        return view('pages.perkembangan.produk-domestik.sektorindustripengolahan.index', compact('sektorIndustriPengolahans'));
-    }
-
-        public function store(Request $request)
-    {
-        // Pastikan pengguna memiliki permission 'create'
-        if (!Gate::allows('sektor_industri.create')) {
-            abort(403, 'Unauthorized action.');
-        }
-
-        $validatedData = $request->validate([
-            'tanggal' => 'required|date',
-            'jenis_industri' => 'required|string|max:255',
-            'nilai_produksi_tahunan' => 'required|numeric|min:0',
-            'nilai_bahan_baku' => 'required|numeric|min:0',
-            'nilai_bahan_penolong' => 'required|numeric|min:0',
-            'biaya_antara' => 'required|numeric|min:0',
-            'jumlah_jenis_industri_tsb' => 'required|integer|min:0',
-        ]);
-
-        SektorIndustriPengolahan::create($validatedData);
-
-        return redirect()->route('sektor-industri-pengolahan.index')->with('success', 'Data Industri Pengolahan berhasil ditambahkan!');
-    }
-
-     public function update(Request $request, SektorIndustriPengolahan $sektorIndustriPengolahan)
-    {
-        // Pastikan pengguna memiliki permission 'update'
-        if (!Gate::allows('sektor_industri.update')) {
-            abort(403, 'Unauthorized action.');
-        }
-
-        $validatedData = $request->validate([
-            'tanggal' => 'required|date',
-            'jenis_industri' => 'required|string|max:255',
-            'nilai_produksi_tahunan' => 'required|numeric|min:0',
-            'nilai_bahan_baku' => 'required|numeric|min:0',
-            'nilai_bahan_penolong' => 'required|numeric|min:0',
-            'biaya_antara' => 'required|numeric|min:0',
-            'jumlah_jenis_industri_tsb' => 'required|integer|min:0',
-        ]);
-
-        $sektorIndustriPengolahan->update($validatedData);
-
-        return redirect()->route('sektor-industri-pengolahan.index')->with('success', 'Data Industri Pengolahan berhasil diubah!');
-    }
-   public function destroy(SektorIndustriPengolahan $sektorIndustriPengolahan)
-    {
-        // Pastikan pengguna memiliki permission 'delete'
-        if (!Gate::allows('sektor_industri.delete')) {
-            abort(403, 'Unauthorized action.');
-        }
-
-        $sektorIndustriPengolahan->delete();
-
-        return redirect()->route('sektor-industri-pengolahan.index')->with('success', 'Data Industri Pengolahan berhasil dihapus!');
-    }
+{
+    $sektors = SektorIndustriPengolahan::latest()->get();
+    return view('pages.perkembangan.produk-domestik.sektor-industri-pengolahan.index', compact('sektors'));
 }
 
-    
+    public function create()
+    {
+        return view('pages.perkembangan.produk-domestik.sektor-industri-pengolahan.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'tanggal' => 'required|date',
+            'jenis_industri' => 'required|string|max:255',
+            'nilai_produksi' => 'required|integer',
+            'nilai_bahan_baku' => 'required|integer',
+            'nilai_bahan_penolong' => 'required|integer',
+            'biaya_antara' => 'required|integer',
+            'jumlah_jenis_industri' => 'required|integer',
+        ]);
+
+        SektorIndustriPengolahan::create($request->all());
+
+        return redirect()->route('perkembangan.produk-domestik.sektor-industri-pengolahan.index')
+                         ->with('success', 'Data berhasil ditambahkan');
+    }
+
+    public function edit($id)
+    {
+        $sektor = SektorIndustriPengolahan::findOrFail($id);
+        return view('pages.perkembangan.produk-domestik.sektor-industri-pengolahan.edit', compact('sektor'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'tanggal' => 'required|date',
+            'jenis_industri' => 'required|string|max:255',
+            'nilai_produksi' => 'required|integer',
+            'nilai_bahan_baku' => 'required|integer',
+            'nilai_bahan_penolong' => 'required|integer',
+            'biaya_antara' => 'required|integer',
+            'jumlah_jenis_industri' => 'required|integer',
+        ]);
+
+        $sektor = SektorIndustriPengolahan::findOrFail($id);
+        $sektor->update($request->all());
+
+        return redirect()->route('perkembangan.produk-domestik.sektor-industri-pengolahan.index')
+                         ->with('success', 'Data berhasil diupdate');
+    }
+
+    public function destroy($id)
+    {
+        $sektor = SektorIndustriPengolahan::findOrFail($id);
+        $sektor->delete();
+
+        return redirect()->route('perkembangan.produk-domestik.sektor-industri-pengolahan.index')
+                         ->with('success', 'Data berhasil dihapus');
+    }
+}

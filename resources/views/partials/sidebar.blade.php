@@ -612,7 +612,12 @@
                                                         Subsektor Kerajinan
                                                     </a>
                                                 @endcan
-
+                                               @can('sektor-industri-pengolahan.view')
+                                            <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/sektor-industri-pengolahan*') ? 'active' : '' }}"
+                                            href="{{ route('perkembangan.produk-domestik.sektor-industri-pengolahan.index') }}">
+                                                Sektor Industri <br> Pengolahan
+                                            </a>
+                                            @endcan 
                                             </div>
                                         </div>
                                     @endcanany

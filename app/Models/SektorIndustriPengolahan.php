@@ -12,12 +12,10 @@ class SektorIndustriPengolahan extends Model
     protected $fillable = [
         'tanggal',
         'jenis_industri',
-        'nilai_produksi_tahunan',
+        'nilai_produksi',
         'nilai_bahan_baku',
         'nilai_bahan_penolong',
         'biaya_antara',
-        'jumlah_jenis_industri_tsb',
+        'jumlah_jenis_industri',
     ];
-
-    protected $table = 'sektor_industri_pengolahans';
 }
