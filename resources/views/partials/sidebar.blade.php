@@ -618,8 +618,6 @@
                                                 @endcan
 
                                     </div>
-=======
->>>>>>> 5d394bacd22432bae27c5c8a3db63b632cc18f12
                                         </div>
                                     </div>
                                     <div class="dropend">
@@ -705,7 +703,6 @@
                                         @endcan
                                     </div>
                                 </div>
-                            </div>
                         </div>
                     </li>
                 @endcanany
