@@ -464,6 +464,14 @@ Route::prefix('utama')->name('utama.')->middleware(['auth'])->group(function () 
     });
 
     Route::resource('glosarium', GlosariumController::class);
+     // Route untuk Glosarium dengan permission
+    Route::prefix('glosarium')->name('glosarium.')->group(function () {
+        Route::get('/', [GlosariumController::class, 'index'])->middleware('permission:glosarium.view')->name('index');
+        Route::post('/', [GlosariumController::class, 'store'])->middleware('permission:glosarium.create')->name('store');
+        Route::put('/{glosarium}', [GlosariumController::class, 'update'])->middleware('permission:glosarium.update')->name('update');
+        Route::delete('/{glosarium}', [GlosariumController::class, 'destroy'])->middleware('permission:glosarium.delete')->name('destroy');
+    });
+    
     Route::resource('galeri', GaleriController::class);
     Route::resource('tap', TapController::class);
     Route::prefix('galeri/{galeri}/photos')->name('galeri.photo.')->group(function () {
