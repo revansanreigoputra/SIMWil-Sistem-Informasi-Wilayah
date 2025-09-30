@@ -6,20 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('menurut_sektor_usahas', function (Blueprint $table) {
             $table->id();
+            $table->string('sektor'); // nama sektor usaha (misal pertanian, industri, jasa)
+            $table->integer('tahun');
+            $table->bigInteger('jumlah'); // jumlah pendapatan/kontribusi
+            $table->string('satuan')->nullable(); // misalnya: Rupiah, %
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('menurut_sektor_usahas');

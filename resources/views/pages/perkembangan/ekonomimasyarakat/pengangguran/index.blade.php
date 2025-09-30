@@ -28,7 +28,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($penganggurans as $index => $pengangguran)
+                    @foreach ($penganggurans as $index => $pengangguran)
                         <tr>
                             <td class="text-center">{{ $penganggurans->firstItem() + $index }}</td>
                             <td class="text-center">{{ \Carbon\Carbon::parse($pengangguran->tanggal)->format('d/m/Y') }}</td>
@@ -114,11 +114,7 @@
                                 @endcanany
                             </td>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="8" class="text-center">Tidak ada data pengangguran</td>
-                        </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
         </div>
