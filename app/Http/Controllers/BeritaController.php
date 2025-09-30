@@ -2,99 +2,107 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Berita;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class BeritaController extends Controller
 {
-    /**
-     * Menampilkan daftar berita (data dummy).
-     */
     public function index()
     {
-        // --- DATA DUMMY ---
-        $beritas = [
-            (object)[
-                'id' => 1,
-                'judul' => 'Judul Berita Pertama',
-                'isi_berita' => 'Ini adalah isi berita pertama.',
-                'gambar' => 'sample1.jpg',
-                'diupload' => 'Admin',
-                'tanggal2' => Carbon::now()->subDays(2)->toDateTimeString()
-            ],
-            (object)[
-                'id' => 2,
-                'judul' => 'Berita Kedua Tentang Teknologi Terkini',
-                'isi_berita' => 'Ini adalah isi berita kedua.',
-                'gambar' => 'sample2.jpg',
-                'diupload' => 'User',
-                'tanggal2' => Carbon::now()->subDays(5)->toDateTimeString()
-            ],
-        ];
-        // --- END DATA DUMMY ---
-
+        $beritas = Berita::latest()->get();
         return view('pages.utama.berita.index', compact('beritas'));
     }
 
-    /**
-     * Menampilkan form untuk membuat berita baru.
-     */
     public function create()
     {
-
         return view('pages.utama.berita.create');
     }
 
-    /**
-     * Menyimpan berita baru (simulasi).
-     */
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'judul' => 'required|max:255',
+            'isi_berita' => 'required',
+            'fupload' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
 
-        return redirect()->route('utama.berita.index')->with('success', 'Berita berhasil ditambahkan! (Simulasi)');
+        $gambarPath = $request->file('fupload')->store('public/foto_berita');
+
+        $dataToStore = [
+            'judul' => $validatedData['judul'],
+            'slug' => Str::slug($validatedData['judul'], '-'),
+            'isi_berita' => $validatedData['isi_berita'],
+            'gambar' => basename($gambarPath)
+        ];
+
+        Berita::create($dataToStore);
+
+        $notification = [
+            'message' => 'Berita berhasil ditambahkan!',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->route('utama.berita.index')->with($notification);
     }
 
-    /**
-     * Menampilkan form untuk mengedit berita.
-     */
-    public function edit(string $id)
+    public function edit(Berita $berita)
     {
-        // --- DATA DUMMY ---
-        $berita = (object)[
-            'id' => $id,
-            'judul' => 'Judul Berita yang Akan Diedit',
-            'isi_berita' => 'Ini adalah isi lengkap dari berita yang sedang diedit. Anda bisa mengubah teks ini di controller.',
-            'gambar' => 'sample_edit.jpg',
-        ];
-        // --- END DATA DUMMY ---
-
         return view('pages.utama.berita.edit', compact('berita'));
     }
 
-    /**
-     * Memperbarui berita yang ada (simulasi).
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Berita $berita)
     {
-        // LOGIKA DUMMY
-        return redirect()->route('utama.berita.index')->with('success', 'Berita berhasil diperbarui! (Simulasi)');
+        $validatedData = $request->validate([
+            'judul' => 'required|max:255',
+            'isi_berita' => 'required',
+            'fupload' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+
+        $dataToUpdate = [
+            'judul' => $validatedData['judul'],
+            'slug' => Str::slug($validatedData['judul'], '-'),
+            'isi_berita' => $validatedData['isi_berita'],
+        ];
+
+        if ($request->hasFile('fupload')) {
+            if ($berita->gambar) {
+                Storage::delete('public/foto_berita/' . $berita->gambar);
+            }
+
+            $gambarPath = $request->file('fupload')->store('public/foto_berita');
+            $dataToUpdate['gambar'] = basename($gambarPath);
+        }
+
+        $berita->update($dataToUpdate);
+
+        $notification = [
+            'message' => 'Berita berhasil diperbarui!',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->route('utama.berita.index')->with($notification);
     }
 
-    /**
-     * Menghapus berita (simulasi).
-     */
-    public function destroy(string $id)
+    public function destroy(Berita $berita)
     {
+        if ($berita->gambar) {
+            Storage::delete('public/foto_berita/' . $berita->gambar);
+        }
 
-        // LOGIKA DUMMY
-        return redirect()->route('utama.berita.index')->with('success', 'Berita berhasil dihapus! (Simulasi)');
+        $berita->delete();
+
+        $notification = [
+            'message' => 'Berita berhasil dihapus!',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->route('utama.berita.index')->with($notification);
     }
 
-   
-    public function show(string $id)
+    public function show(Berita $berita)
     {
-
-        return redirect()->route('utama.berita.index');
+        return view('pages.utama.berita.show', compact('berita'));
     }
 }

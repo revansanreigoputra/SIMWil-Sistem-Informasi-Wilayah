@@ -8,12 +8,12 @@
             <h3 class="card-title">Form Tambah Berita</h3>
         </div>
         <div class="card-body">
-            {{-- Form mengarah ke route 'store' untuk menyimpan data baru --}}
             <form action="{{ route('utama.berita.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
                     <label for="judul" class="form-label">Judul *</label>
-                    <input type="text" name="judul" id="judul" class="form-control" placeholder="Masukkan judul berita" required>
+                    <input type="text" name="judul" id="judul" class="form-control"
+                        placeholder="Masukkan judul berita" required>
                 </div>
 
                 <div class="mb-3">
@@ -23,7 +23,6 @@
 
                 <div class="mb-3">
                     <label for="isi_berita" class="form-label">Isi Berita *</label>
-                    {{-- ID 'loko1' dipertahankan jika Anda menggunakan editor teks seperti TinyMCE/CKEditor --}}
                     <textarea name="isi_berita" id="loko1" class="form-control" rows="10"></textarea>
                 </div>
 
@@ -37,13 +36,15 @@
 @endsection
 
 @push('addon-script')
-    {{-- Script tambahan bisa diletakkan di sini, misalnya untuk inisialisasi text editor --}}
-    {{-- Contoh:
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/9zjmg28d40yb4mn7sv8hwoop1c4aj6pbi8s08chgk8ythl65/tinymce/6/tinymce.min.js"
+        referrerpolicy="origin"></script>
     <script>
         tinymce.init({
-            selector: 'textarea#loko1'
+            selector: 'textarea#loko1',
+            plugins: 'autolink lists link image charmap print preview hr anchor pagebreak',
+            toolbar_mode: 'floating',
+            toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+            height: 350,
         });
     </script>
-    --}}
 @endpush

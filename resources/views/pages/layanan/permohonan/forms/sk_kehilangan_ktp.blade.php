@@ -10,73 +10,62 @@
 @section('content')
 <div class="container py-4">
     <div class="row justify-content-center">
-        <div class="col-lg-8">
-
-            <div class="card shadow-lg border-0 rounded-4">
-                <div class="card-header bg-primary text-white fw-bold rounded-top-4">
-                    <i class="fas fa-plus-circle me-2"></i> Tambah Surat Keterangan Kehilangan KTP
-                </div>
-                <div class="card-body p-4">
-
+        <div class="col-md-10">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
                     <form>
-                        {{-- NIK / Nama --}}
-                        <div class="mb-4">
-                            <label for="nik" class="form-label fw-semibold">NIK / Nama</label>
-                            <input type="text" class="form-control rounded-3 shadow-sm" 
-                                   id="nik" placeholder="Masukkan NIK/Nama, otomatis tampil jika sudah ada">
+                        {{-- Data Penduduk --}}
+                        <h5 class="mb-3 text-primary">Data Penduduk</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nama</label>
+                                <input type="text" class="form-control" value="Rizal">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Tempat / Tanggal Lahir</label>
+                                <input type="text" class="form-control" value="Indramayu / 13 Agustus 2025">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Jenis Kelamin</label>
+                                <input type="text" class="form-control" value="Perempuan">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Agama</label>
+                                <input type="text" class="form-control" value="Islam">
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">Alamat</label>
+                                <textarea rows="2" class="form-control">Jatibarang RT.21 RW.6 , Desa DABO BARU</textarea>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Kecamatan</label>
+                                <input type="text" class="form-control" value="LINGGA">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Kabupaten</label>
+                                <input type="text" class="form-control" value="LINGGA">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">NIK</label>
+                                <input type="text" class="form-control" value="32121">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">No KK</label>
+                                <input type="text" class="form-control" value="1234567">
+                            </div>
                         </div>
 
-                        {{-- No Surat --}}
-                        <div class="mb-4">
-                            <label for="no_surat" class="form-label fw-semibold">No Surat</label>
-                            <input type="text" class="form-control rounded-3 shadow-sm" 
-                                   id="no_surat" value="223/06/DS-LB/PEM/IX/2025">
-                        </div>
-
-                        {{-- Tanggal --}}
-                        <div class="mb-4">
-                            <label for="tanggal" class="form-label fw-semibold">Tanggal</label>
-                            <input type="date" class="form-control rounded-3 shadow-sm" id="tanggal">
-                        </div>
-
-                        {{-- Tanggal Kehilangan --}}
-                        <div class="mb-4">
-                            <label for="tgl_kehilangan" class="form-label fw-semibold">Tanggal Kehilangan</label>
-                            <input type="date" class="form-control rounded-3 shadow-sm" id="tgl_kehilangan">
-                        </div>
-
-                        {{-- Lokasi Kehilangan --}}
-                        <div class="mb-4">
-                            <label for="lokasi" class="form-label fw-semibold">Lokasi Kehilangan</label>
-                            <input type="text" class="form-control rounded-3 shadow-sm" 
-                                   id="lokasi" placeholder="Masukkan lokasi kehilangan">
-                        </div>
-
-                        {{-- Tanda Tangan --}}
-                        <div class="mb-4">
-                            <label for="ttd" class="form-label fw-semibold">Tanda Tangan</label>
-                            <select class="form-select rounded-3 shadow-sm" id="ttd">
-                                <option value="Carmadi :: Kepala Desa">Carmadi :: Kepala Desa</option>
-                                <option value="Esti :: Bendahara">Esti :: Bendahara</option>
-                                <option value="Asah :: Kepala Desa">Asah :: Kepala Desa</option>
-                            </select>
-                        </div>
-
-                        {{-- Tombol Aksi --}}
-                        <div class="d-flex justify-content-end gap-2">
-                            <a href="{{ url('layanan/permohonan') }}" 
-                               class="btn btn-light border rounded-pill px-4 shadow-sm">
+                        <div class="mt-4 text-end">
+                            <a href="{{ url('layanan/permohonan') }}" class="btn btn-light border">
                                 <i class="fas fa-times me-1"></i> Batal
                             </a>
-                            <button type="submit" class="btn btn-primary rounded-pill px-4 shadow-sm">
+                            <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-save me-1"></i> Simpan
                             </button>
                         </div>
                     </form>
-
                 </div>
             </div>
-
         </div>
     </div>
 </div>
