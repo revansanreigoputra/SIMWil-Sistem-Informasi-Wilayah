@@ -2,144 +2,129 @@
 
 @section('title')
     <div class="d-flex align-items-center border-bottom pb-3 mb-4">
-        <i class="fas fa-file-contract text-primary me-2"></i>
-        <h4 class="fw-bold mb-0 text-dark">Form Surat Penghibaan Tanah</h4>
+        <i class="fas fa-file-alt text-primary me-2"></i>
+        <h4 class="fw-bold mb-0 text-dark">Form Surat Penghibahan Tanah</h4>
     </div>
 @endsection
 
 @section('content')
 <div class="container py-4">
     <div class="row justify-content-center">
-        <div class="col-lg-10">
-
-            <div class="card shadow-lg border-0 rounded-4">
-                <div class="card-header bg-primary text-white fw-bold rounded-top-4">
-                    <i class="fas fa-plus-circle me-2"></i> Tambah Surat Penghibaan Tanah
-                </div>
-                <div class="card-body p-4">
-
+        <div class="col-md-10">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
                     <form>
-                        {{-- PIHAK PERTAMA --}}
-                        <h6 class="fw-bold text-primary mb-3">PIHAK PERTAMA</h6>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Nama</label>
-                            <input type="text" class="form-control rounded-3 shadow-sm">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Pekerjaan</label>
-                            <input type="text" class="form-control rounded-3 shadow-sm">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Tempat, Tanggal Lahir</label>
-                            <input type="text" class="form-control rounded-3 shadow-sm">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Tempat Lahir</label>
-                            <input type="text" class="form-control rounded-3 shadow-sm">
-                        </div>
-                        <div class="mb-4">
-                            <label class="form-label fw-semibold">Alamat</label>
-                            <textarea class="form-control rounded-3 shadow-sm" rows="2"></textarea>
-                        </div>
-
-                        {{-- PIHAK KEDUA --}}
-                        <h6 class="fw-bold text-primary mb-3">PIHAK KEDUA</h6>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Nama</label>
-                            <input type="text" class="form-control rounded-3 shadow-sm">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Pekerjaan</label>
-                            <input type="text" class="form-control rounded-3 shadow-sm">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Tempat, Tanggal Lahir</label>
-                            <input type="text" class="form-control rounded-3 shadow-sm">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Tempat Lahir</label>
-                            <input type="text" class="form-control rounded-3 shadow-sm">
-                        </div>
-                        <div class="mb-4">
-                            <label class="form-label fw-semibold">Alamat</label>
-                            <textarea class="form-control rounded-3 shadow-sm" rows="2"></textarea>
-                        </div>
-
-                        {{-- DETAIL HIBAH TANAH --}}
-                        <h6 class="fw-bold text-primary mb-3">DETAIL HIBAH TANAH</h6>
+                        {{-- Data Pihak Pertama --}}
+                        <h5 class="mb-3 text-primary">Data Pihak Pertama (Pemberi Hibah)</h5>
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">Panjang</label>
-                                <input type="text" class="form-control rounded-3 shadow-sm" placeholder="Contoh : 30 Meter">
+                                <label class="form-label">Nama</label>
+                                <input type="text" class="form-control" placeholder="Nama Pemberi">
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-semibold">Lebar</label>
-                                <input type="text" class="form-control rounded-3 shadow-sm" placeholder="Contoh : 40 Meter">
+                                <label class="form-label">Tempat/Tgl Lahir</label>
+                                <input type="text" class="form-control" placeholder="Yogyakarta, 10 Januari 1965">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Pekerjaan</label>
+                                <input type="text" class="form-control" placeholder="Petani">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">NIK</label>
+                                <input type="text" class="form-control" placeholder="3401123456789001">
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">Alamat</label>
+                                <textarea rows="2" class="form-control" placeholder="Alamat lengkap pemberi hibah"></textarea>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Luas Tanah (M²)</label>
-                            <input type="text" class="form-control rounded-3 shadow-sm" value="1200 M²">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Batas Timur</label>
-                            <input type="text" class="form-control rounded-3 shadow-sm" placeholder="Nama Warga Yang Berbatasan Dengan Timur">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Batas Barat</label>
-                            <input type="text" class="form-control rounded-3 shadow-sm" placeholder="Nama Warga Yang Berbatasan Dengan Barat">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Batas Utara</label>
-                            <input type="text" class="form-control rounded-3 shadow-sm" placeholder="Nama Warga Yang Berbatasan Dengan Utara">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Batas Selatan</label>
-                            <input type="text" class="form-control rounded-3 shadow-sm" placeholder="Nama Warga Yang Berbatasan Dengan Selatan">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Penggunaan Hibah</label>
-                            <input type="text" class="form-control rounded-3 shadow-sm" placeholder="Contoh : Untuk dipergunakan pembangunan TOWER TELKOMSEL">
-                        </div>
-                        <div class="mb-4">
-                            <label class="form-label fw-semibold">Tanggal Hibah</label>
-                            <input type="date" class="form-control rounded-3 shadow-sm">
+
+                        {{-- Data Pihak Kedua --}}
+                        <h5 class="mb-3 text-primary">Data Pihak Kedua (Penerima Hibah)</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nama</label>
+                                <input type="text" class="form-control" placeholder="Nama Penerima">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Tempat/Tgl Lahir</label>
+                                <input type="text" class="form-control" placeholder="Yogyakarta, 5 Mei 1990">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Pekerjaan</label>
+                                <input type="text" class="form-control" placeholder="Wiraswasta">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">NIK</label>
+                                <input type="text" class="form-control" placeholder="3401123456789002">
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">Alamat</label>
+                                <textarea rows="2" class="form-control" placeholder="Alamat lengkap penerima hibah"></textarea>
+                            </div>
                         </div>
 
-                        {{-- TANDA TANGAN --}}
-                        <h6 class="fw-bold text-primary mb-3">TANDA TANGAN</h6>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Tanda Tangan Kades</label>
-                            <select class="form-select rounded-3 shadow-sm">
-                                <option value="Carmadi :: Kepala Desa">Carmadi :: Kepala Desa</option>
-                                <option value="Esti :: Bendahara">Esti :: Bendahara</option>
-                                <option value="Asah :: Kepala Desa">Asah :: Kepala Desa</option>
-                            </select>
-                        </div>
-                        <div class="mb-4">
-                            <label class="form-label fw-semibold">Tanda Tangan Camat</label>
-                            <select class="form-select rounded-3 shadow-sm">
-                                <option value="Carmadi :: Kepala Desa">Carmadi :: Kepala Desa</option>
-                                <option value="Esti :: Bendahara">Esti :: Bendahara</option>
-                                <option value="Asah :: Kepala Desa">Asah :: Kepala Desa</option>
-                            </select>
+                        {{-- Data Tanah --}}
+                        <h5 class="mb-3 text-primary">Data Tanah</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Lokasi Tanah</label>
+                                <input type="text" class="form-control" placeholder="Dusun Karangjati, Desa Dabo Baru">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Luas Tanah</label>
+                                <input type="text" class="form-control" placeholder="300 m²">
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">Status Tanah</label>
+                                <input type="text" class="form-control" placeholder="Hak Milik (SHM No...)">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Batas Utara</label>
+                                <input type="text" class="form-control" placeholder="Tanah milik Bapak Suroso">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Batas Selatan</label>
+                                <input type="text" class="form-control" placeholder="Jalan Desa">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Batas Timur</label>
+                                <input type="text" class="form-control" placeholder="Tanah milik Ibu Sulastri">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Batas Barat</label>
+                                <input type="text" class="form-control" placeholder="Sungai Kecil">
+                            </div>
                         </div>
 
-                        {{-- TOMBOL --}}
-                        <div class="d-flex justify-content-end gap-2">
-                            <a href="{{ url('layanan/permohonan') }}" 
-                               class="btn btn-light border rounded-pill px-4 shadow-sm">
-                                <i class="fas fa-times me-1"></i> Batal
-                            </a>
-                            <button type="submit" class="btn btn-primary rounded-pill px-4 shadow-sm">
-                                <i class="fas fa-save me-1"></i> Simpan
+                        {{-- Saksi & Kepala Desa --}}
+                        <h5 class="mb-3 text-primary">Saksi & Kepala Desa</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Saksi 1</label>
+                                <input type="text" class="form-control" placeholder="Nama Saksi 1">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Saksi 2</label>
+                                <input type="text" class="form-control" placeholder="Nama Saksi 2">
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">Kepala Desa</label>
+                                <input type="text" class="form-control" value="Carmadi">
+                            </div>
+                        </div>
+
+                        <div class="mt-4 text-end">
+                            <button type="button" class="btn btn-primary">
+                                <i class="fas fa-eye me-1"></i> Preview Surat
+                            </button>
+                            <button type="reset" class="btn btn-secondary">
+                                Reset
                             </button>
                         </div>
                     </form>
-
                 </div>
             </div>
-
         </div>
     </div>
 </div>

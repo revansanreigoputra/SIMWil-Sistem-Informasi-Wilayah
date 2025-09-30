@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Surat Keterangan Umum</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 3cm 2.5cm 3cm 2.5cm;
+        }
+
+        body {
+            font-family: "Times New Roman", Times, serif;
+            margin: 0;
+        }
+
+        /* Halaman (untuk tampilan layar) */
+        .page {
+            background: #fff;
+            width: 21cm;
+            min-height: 29.7cm;
+            margin: 0 auto;
+            padding: 3cm 2.5cm;
+        }
+
+        /* Kop surat: logo di samping kiri, teks di kanan */
+        .kop {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding-bottom: 10px;
+            margin-bottom: 18px;
+            border-bottom: 3px solid #000;
+        }
+
+        .kop .logo {
+            flex: 0 0 90px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .kop .logo img {
+            width: 90px;
+            height: auto;
+            display: block;
+        }
+
+        .kop .header {
+            flex: 1;
+            text-align: center;
+        }
+
+        .kop .header h2 {
+            margin: 0;
+            font-size: 18pt;
+            font-weight: bold;
+            line-height: 1.1;
+        }
+
+        .kop .header h3 {
+            margin: 2px 0 0 0;
+            font-size: 14pt;
+            text-transform: uppercase;
+            line-height: 1.1;
+        }
+
+        .kop .header p {
+            margin: 6px 0 0 0;
+            font-size: 11pt;
+        }
+
+        .judul {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 12px;
+        }
+
+        .judul h3 {
+            font-size: 14pt;
+            font-weight: bold;
+            text-decoration: underline;
+            margin: 0;
+        }
+
+        .judul p {
+            font-size: 12pt;
+            margin: 6px 0 0 0;
+        }
+
+        .content {
+            font-size: 12pt;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        .content table {
+            margin: 15px 0 15px 30px;
+            border-collapse: collapse;
+        }
+
+        .content table td {
+            padding: 2px 6px;
+            vertical-align: top;
+        }
+
+        .ttd {
+            margin-top: 50px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .ttd .isi {
+            text-align: center;
+            font-size: 12pt;
+        }
+
+        .ttd .isi p {
+            margin: 5px 0;
+        }
+
+        /* Tampilan layar untuk memberi bayangan halaman */
+        @media screen {
+            body {
+                background: #f2f2f2;
+                padding: 20px;
+            }
+            .page {
+                box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page">
+
+    <!-- Kop Surat -->
+    <div class="kop">
+        <div class="logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Garuda_Pancasila_2.svg" alt="Logo Garuda">
+        </div>
+        <div class="header">
+            <h2>PEMERINTAH KABUPATEN CONTOH</h2>
+            <h3>KECAMATAN SIMWIL</h3>
+            <h3>DESA CONTOH</h3>
+            <p>Alamat: Jl. Raya Contoh No.123, Telp. (0274) 123456</p>
+        </div>
+    </div>
+
+    <!-- Judul Surat -->
+    <div class="judul">
+        <h3>SURAT KETERANGAN</h3>
+        <p>Nomor : {{ $nomor ?? '001/SKU/IX/2025' }}</p>
+    </div>
+
+    <!-- Isi Surat -->
+    <div class="content">
+        <p>Yang bertanda tangan di bawah ini, Kepala Desa Casmad, Kecamatan Simwil, Kabupaten Contoh, dengan ini menerangkan bahwa:</p>
+
+        <table>
+            <tr><td width="200">Nama</td><td>:</td><td><strong>{{ $nama ?? 'Nama Lengkap' }}</strong></td></tr>
+            <tr><td>NIK</td><td>:</td><td>{{ $nik ?? '1234567890123456' }}</td></tr>
+            <tr><td>Tempat/Tanggal Lahir</td><td>:</td><td>{{ $ttl ?? 'Contoh, 01 Januari 2000' }}</td></tr>
+            <tr><td>Jenis Kelamin</td><td>:</td><td>{{ $jk ?? 'Laki-laki' }}</td></tr>
+            <tr><td>Agama</td><td>:</td><td>{{ $agama ?? 'Islam' }}</td></tr>
+            <tr><td>Status</td><td>:</td><td>{{ $status ?? 'Belum Kawin' }}</td></tr>
+            <tr><td>Pekerjaan</td><td>:</td><td>{{ $pekerjaan ?? 'Pelajar/Mahasiswa' }}</td></tr>
+            <tr><td>Alamat</td><td>:</td><td>{{ $alamat ?? 'Dusun Contoh, Desa Contoh' }}</td></tr>
+        </table>
+
+        <p>
+            Adalah benar penduduk Desa Contoh, Kecamatan Simwil, Kabupaten Contoh.  
+            Surat keterangan ini dibuat untuk keperluan Persyaratan administrasi.
+        </p>
+
+        <p>
+            Demikian surat keterangan ini dibuat dengan sebenarnya untuk dapat dipergunakan sebagaimana mestinya.
+        </p>
+    </div>
+
+    <!-- Tanda Tangan -->
+    <div class="ttd">
+        <div class="isi">
+            <p>Yogyakarta, {{ now()->format('d F Y') }}</p>
+            <br><br><br>
+            <p><u>Casmad</u></p>
+            <p>Kepala Desa Simwil</p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

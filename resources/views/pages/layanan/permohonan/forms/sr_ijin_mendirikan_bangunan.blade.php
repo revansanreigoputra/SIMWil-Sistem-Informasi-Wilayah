@@ -10,67 +10,108 @@
 @section('content')
 <div class="container py-4">
     <div class="row justify-content-center">
-        <div class="col-lg-8">
-
-            <div class="card shadow-lg border-0 rounded-4">
-                <div class="card-header bg-primary text-white fw-bold rounded-top-4">
-                    <i class="fas fa-plus-circle me-2"></i> Tambah Surat Rekomendasi Ijin Mendirikan Bangunan
-                </div>
-                <div class="card-body p-4">
-
+        <div class="col-md-10">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
                     <form>
-                        {{-- NIK / Nama --}}
-                        <div class="mb-4">
-                            <label for="nik" class="form-label fw-semibold">NIK / Nama</label>
-                            <input type="text" class="form-control rounded-3 shadow-sm" 
-                                   id="nik" placeholder="Masukkan NIK/Nama, otomatis tampil jika sudah ada">
+                        {{-- Nomor Surat --}}
+                        <h5 class="mb-3 text-primary">Nomor Surat</h5>
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">Nomor Surat</label>
+                                <input type="text" class="form-control" value="001/KHC/I/2017">
+                            </div>
                         </div>
 
-                        {{-- No Surat --}}
-                        <div class="mb-4">
-                            <label for="no_surat" class="form-label fw-semibold">No Surat</label>
-                            <input type="text" class="form-control rounded-3 shadow-sm" 
-                                   id="no_surat" value="002/KHC/IX/2025">
+                        {{-- Data Pejabat Penandatangan --}}
+                        <h5 class="mb-3 text-primary">Data Pejabat Penandatangan</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nama Pejabat</label>
+                                <input type="text" class="form-control" value="Carmadi">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Jabatan</label>
+                                <input type="text" class="form-control" value="Kepala Desa">
+                            </div>
                         </div>
 
-                        {{-- Tanggal --}}
-                        <div class="mb-4">
-                            <label for="tanggal" class="form-label fw-semibold">Tanggal</label>
-                            <input type="date" class="form-control rounded-3 shadow-sm" id="tanggal">
+                        {{-- Data Pemohon --}}
+                        <h5 class="mb-3 text-primary">Data Pemohon</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nama</label>
+                                <input type="text" class="form-control" value="DESI MARETA">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Tempat / Tanggal Lahir</label>
+                                <input type="text" class="form-control" value="Dabo Singkep / 15 Mei 1984">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Jenis Kelamin</label>
+                                <select class="form-select">
+                                    <option selected>Perempuan</option>
+                                    <option>Laki-laki</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Agama</label>
+                                <select class="form-select">
+                                    <option selected>Islam</option>
+                                    <option>Kristen</option>
+                                    <option>Katolik</option>
+                                    <option>Hindu</option>
+                                    <option>Buddha</option>
+                                    <option>Konghucu</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">Alamat</label>
+                                <textarea rows="2" class="form-control">Jalan Lurung Rayan RT.12 RW.12, Desa Dabo Baru, Kecamatan Lingga, Kabupaten Lingga</textarea>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">NIK</label>
+                                <input type="text" class="form-control" value="2104015505840000">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">No KK</label>
+                                <input type="text" class="form-control" value="654321">
+                            </div>
                         </div>
 
-                        {{-- Nomor Tanah --}}
-                        <div class="mb-4">
-                            <label for="no_tanah" class="form-label fw-semibold">Nomor Tanah</label>
-                            <input type="text" class="form-control rounded-3 shadow-sm" 
-                                   id="no_tanah" placeholder="Masukkan nomor tanah">
+                        {{-- Data Tanah --}}
+                        <h5 class="mb-3 text-primary">Data Tanah</h5>
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">Nomor Sertifikat Tanah</label>
+                                <input type="text" class="form-control" value="0123456789">
+                            </div>
                         </div>
 
-                        {{-- Tanda Tangan --}}
-                        <div class="mb-4">
-                            <label for="ttd" class="form-label fw-semibold">Tanda Tangan</label>
-                            <select class="form-select rounded-3 shadow-sm" id="ttd">
-                                <option value="Carmadi :: Kepala Desa">Carmadi :: Kepala Desa</option>
-                                <option value="Esti :: Bendahara">Esti :: Bendahara</option>
-                                <option value="Asah :: Kepala Desa">Asah :: Kepala Desa</option>
-                            </select>
+                        {{-- Tanggal Surat --}}
+                        <h5 class="mb-3 text-primary">Tanggal Surat</h5>
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">Tanggal</label>
+                                <input type="date" class="form-control" value="2017-01-26">
+                            </div>
                         </div>
 
                         {{-- Tombol Aksi --}}
-                        <div class="d-flex justify-content-end gap-2">
-                            <a href="{{ url('layanan/permohonan') }}" 
-                               class="btn btn-light border rounded-pill px-4 shadow-sm">
+                        <div class="mt-4 text-end">
+                            <a href="{{ url('layanan/permohonan') }}" class="btn btn-light border shadow-sm">
                                 <i class="fas fa-times me-1"></i> Batal
                             </a>
-                            <button type="submit" class="btn btn-primary rounded-pill px-4 shadow-sm">
+                            <button type="button" class="btn btn-primary">
+                                <i class="fas fa-eye me-1"></i> Preview Surat
+                            </button>
+                            <button type="submit" class="btn btn-success">
                                 <i class="fas fa-save me-1"></i> Simpan
                             </button>
                         </div>
                     </form>
-
                 </div>
             </div>
-
         </div>
     </div>
 </div>

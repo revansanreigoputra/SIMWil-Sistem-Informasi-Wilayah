@@ -11,7 +11,8 @@ use App\Models\MasterDDK\{
     KB,
     Cacat,
     KedudukanPajak,
-    Lembaga
+    Lembaga,
+    HubunganKeluarga
 };
 use App\Models\DataKeluarga;
 use Illuminate\Database\Eloquent\Model;
@@ -41,8 +42,10 @@ class AnggotaKeluarga extends Model
         'nama_orang_tua',
         'kb_id',
         'cacat_id',
+        'nama_cacat',
         'kedudukan_pajak_id',
         'lembaga_id',
+        'nama_lembaga',
     ];
     public function dataKeluarga()
     {
@@ -92,5 +95,9 @@ class AnggotaKeluarga extends Model
     public function lembaga()
     {
         return $this->belongsTo(Lembaga::class, 'lembaga_id');
+    }
+    public function hubunganKeluarga()
+    {
+        return $this->belongsTo(HubunganKeluarga::class, 'hubungan_keluarga_id');
     }
 }

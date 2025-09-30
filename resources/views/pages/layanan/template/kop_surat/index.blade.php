@@ -1,11 +1,7 @@
 @extends('layouts.master')
 
-@section('title')
-    <div class="d-flex align-items-center border-bottom pb-2 mb-3">
-        <i class="fas fa-file-alt text-primary me-2"></i>
-        <h4 class="fw-bold mb-0 text-dark"> Kop Surat</h4>
-    </div>
-@endsection
+@section('title', 'Kop Surat')
+      
 
 @section('content')
 <div class="container mt-5">

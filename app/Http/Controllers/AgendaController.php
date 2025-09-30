@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Models\Agenda;
+use Illuminate\Http\Request;
 
 class AgendaController extends Controller
 {
     public function index()
     {
-        $agenda = [
-            ['id' => 1, 'tgl_dari' => '2025-09-20', 'tgl_sampai' => '2025-09-21', 'lokasi' => 'Balai Desa Sukamaju', 'kegiatan' => 'Musyawarah Desa', 'peserta' => 'Perangkat Desa & Warga', 'diupload' => 'Admin', 'tanggal' => '2025-09-17'],
-            ['id' => 2, 'tgl_dari' => '2025-09-25', 'tgl_sampai' => '2025-09-25', 'lokasi' => 'Kecamatan Harapan', 'kegiatan' => 'Rapat Koordinasi', 'peserta' => 'Camat & Kepala Desa', 'diupload' => 'Operator', 'tanggal' => '2025-09-16'],
-        ];
-
+        $agenda = Agenda::latest()->get();
         return view('pages.utama.agenda.index', compact('agenda'));
     }
 
@@ -21,17 +18,53 @@ class AgendaController extends Controller
         return view('pages.utama.agenda.create');
     }
 
-    public function edit($id)
+    public function store(Request $request)
     {
-        $data = [
-            'id' => $id,
-            'tgl_dari' => '2025-09-20',
-            'tgl_sampai' => '2025-09-21',
-            'lokasi' => 'Balai Desa Sukamaju',
-            'kegiatan' => 'Musyawarah Desa',
-            'peserta' => 'Perangkat Desa & Warga',
-        ];
+        $request->validate([
+            'tgl_dari' => 'required|date',
+            'tgl_sampai' => 'required|date|after_or_equal:tgl_dari',
+            'lokasi' => 'required|string|max:255',
+            'kegiatan' => 'required|string|max:255',
+            'peserta' => 'required|string',
+        ]);
 
-        return view('pages.utama.agenda.edit', compact('data'));
+        Agenda::create($request->all());
+
+        return redirect()->route('utama.agenda.index')
+            ->with('message', 'Agenda berhasil ditambahkan.');
+    }
+
+    public function show(Agenda $agenda)
+    {
+
+    }
+
+    public function edit(Agenda $agenda)
+    {
+        return view('pages.utama.agenda.edit', compact('agenda'));
+    }
+
+    public function update(Request $request, Agenda $agenda)
+    {
+        $request->validate([
+            'tgl_dari' => 'required|date',
+            'tgl_sampai' => 'required|date|after_or_equal:tgl_dari',
+            'lokasi' => 'required|string|max:255',
+            'kegiatan' => 'required|string|max:255',
+            'peserta' => 'required|string',
+        ]);
+
+        $agenda->update($request->all());
+
+        return redirect()->route('utama.agenda.index')
+            ->with('message', 'Agenda berhasil diperbarui.');
+    }
+
+    public function destroy(Agenda $agenda)
+    {
+        $agenda->delete();
+
+        return redirect()->route('utama.agenda.index')
+            ->with('message', 'Agenda berhasil dihapus.');
     }
 }
