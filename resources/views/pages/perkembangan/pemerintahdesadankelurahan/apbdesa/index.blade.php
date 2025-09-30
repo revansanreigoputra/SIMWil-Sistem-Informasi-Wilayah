@@ -3,7 +3,7 @@
 @section('title', 'Data APB Desa dan Kelurahan')
 
 @section('action')
-    <a href="{{ route('apb-desa.create') }}" class="btn btn-primary mb-3">
+    <a href="{{ route('apbdesa.create') }}" class="btn btn-primary mb-3">
         Tambah Data
     </a>
 @endsection
@@ -16,12 +16,23 @@
             @endif
 
             <div class="table-responsive">
-                <table id="apb-desa-table" class="table table-striped">
+                <<table id="apb-desa-table" class="table table-striped text-center">
                     <thead>
                         <tr>
                             <th>No</th>
                             <th>Tanggal</th>
+                            <th>APBD Kabupaten</th>
+                            <th>Bantuan Kab</th>
+                            <th>Bantuan Provinsi</th>
+                            <th>Bantuan Pusat</th>
+                            <th>Pendapatan Asli Desa</th>
+                            <th>Swadaya Masyarakat</th>
+                            <th>Alokasi Dana Desa</th>
+                            <th>Sumber Pendapatan Perusahaan</th>
+                            <th>Sumber Pendapatan Lain</th>
                             <th>Jumlah Penerimaan</th>
+                            <th>Belanja Publik</th>
+                            <th>Belanja Aparatur</th>
                             <th>Jumlah Belanja</th>
                             <th>Saldo Anggaran</th>
                             <th>Aksi</th>
@@ -32,12 +43,23 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->tanggal->format('Y-m-d') }}</td>
-                                <td>{{ number_format($item->jumlah_penerimaan, 0, ',', '.') }}</td>
-                                <td>{{ number_format($item->jumlah_belanja, 0, ',', '.') }}</td>
-                                <td>{{ number_format($item->saldo_anggaran, 0, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($item->apbd_kabupaten, 0, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($item->bantuan_pemerintah_kabupaten, 0, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($item->bantuan_pemerintah_provinsi, 0, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($item->bantuan_pemerintah_pusat, 0, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($item->pendapatan_asli_desa, 0, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($item->swadaya_masyarakat, 0, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($item->alokasi_dana_desa, 0, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($item->sumber_pendapatan_perusahaan, 0, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($item->sumber_pendapatan_lain, 0, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($item->jumlah_penerimaan, 0, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($item->jumlah_belanja_publik, 0, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($item->jumlah_belanja_aparatur, 0, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($item->jumlah_belanja, 0, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($item->saldo_anggaran, 0, ',', '.') }}</td>
                                 <td>
                                     <div class="d-flex gap-1 justify-content-center">
-                                        <a href="{{ route('apb-desa.edit', $item->id) }}" class="btn btn-sm btn-warning">
+                                        <a href="{{ route('apbdesa.edit', $item->id) }}" class="btn btn-sm btn-warning">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                 stroke-linecap="round" stroke-linejoin="round">
@@ -51,7 +73,7 @@
 
                                         <!-- Tombol Hapus dengan Modal -->
                                         <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                            data-bs-target="#delete-apb-desa-{{ $item->id }}">
+                                            data-bs-target="#delete-apbdesa-{{ $item->id }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                 stroke-linecap="round" stroke-linejoin="round">
@@ -65,7 +87,7 @@
                                         </button>
 
                                         <!-- Modal Delete -->
-                                        <div class="modal fade" id="delete-apb-desa-{{ $item->id }}" tabindex="-1"
+                                        <div class="modal fade" id="delete-apbdesa-{{ $item->id }}" tabindex="-1"
                                             aria-labelledby="deleteModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
@@ -81,7 +103,7 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
                                                             data-bs-dismiss="modal">Batal</button>
-                                                        <form action="{{ route('apb-desa.destroy', $item->id) }}" method="POST">
+                                                        <form action="{{ route('apbdesa.destroy', $item->id) }}" method="POST">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="btn btn-danger">Hapus</button>

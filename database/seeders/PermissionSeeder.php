@@ -85,7 +85,6 @@ class PermissionSeeder extends Seeder
             'mutasi.laporan.view',
             'mutasi.laporan.export',
 
-
             // ttd (penanda tangan) permissions
             'ttd.view',
             'ttd.create',
@@ -111,13 +110,6 @@ class PermissionSeeder extends Seeder
             'transportasi_darat.update',
             'transportasi_darat.delete',
 
-            // usia permissions
-            'usia.view',
-            'usia.create',
-            'usia.store',
-            'usia.update',
-            'usia.delete',
-
             // Irigasi
             'irigasi.view',
             'irigasi.create',
@@ -125,6 +117,57 @@ class PermissionSeeder extends Seeder
             'irigasi.edit',
             'irigasi.update',
             'irigasi.delete',
+            
+            // usia permissions
+            'usia.view',
+            'usia.create',
+            'usia.store',
+            'usia.update',
+            'usia.delete',
+            
+            // Irigasi
+            'irigasi.view',
+            'irigasi.create',
+            'irigasi.store',
+            'irigasi.edit',
+            'irigasi.update',
+            'irigasi.delete',
+            
+            // Sanitasi
+            'sanitasi.view',
+            'sanitasi.create',
+            'sanitasi.store',
+            'sanitasi.edit',
+            'sanitasi.update',
+            'sanitasi.delete',
+
+            // Air Bersih
+            'air_bersih.view',
+            'air_bersih.create',
+            'air_bersih.store',
+            'air_bersih.update',
+            'air_bersih.delete',
+            
+            // dkelurahan
+            'dkelurahan.view',
+            'dkelurahan.create',
+            'dkelurahan.store',
+            'dkelurahan.update',
+            'dkelurahan.delete',
+
+            // bpd
+            'bpd.view',
+            'bpd.create',
+            'bpd.store',
+            'bpd.update',
+            'bpd.delete',
+            
+            // dusun
+            'dusun.view',
+            'dusun.create',
+            'dusun.store',
+            'dusun.update',
+            'dusun.delete',
 
             // apb
             'apb.view',
@@ -133,6 +176,7 @@ class PermissionSeeder extends Seeder
             'apb.edit',
             'apb.update',
             'apb.delete',
+
 
             // pengangguran
             'pengangguran.view',
@@ -149,6 +193,35 @@ class PermissionSeeder extends Seeder
             'kesejahteraan.edit',
             'kesejahteraan.update',
             'kesejahteraan.delete',
+
+            // Pertanggungjawaban
+            'pertanggungjawaban.view',
+            'pertanggungjawaban.create',
+            'pertanggungjawaban.store',
+            'pertanggungjawaban.edit',
+            'pertanggungjawaban.update',
+            'pertanggungjawaban.delete',
+
+            //pembinaan Pusat
+            'pembinaanpusat.view',
+            'pembinaanpusat.create',
+            'pembinaanpusat.store',
+            'pembinaanpusat.edit',      
+            'pembinaanpusat.update',
+            'pembinaanpusat.delete',
+
+            //pembinaan Provinsi
+            'pembinaanprovinsi.view',
+            'pembinaanprovinsi.create',
+            'pembinaanprovinsi.store', 
+            'pembinaanprovinsi.edit',
+            'pembinaanprovinsi.update',
+            'pembinaanprovinsi.delete',
+
+
+
+
+
 
         ];
 
