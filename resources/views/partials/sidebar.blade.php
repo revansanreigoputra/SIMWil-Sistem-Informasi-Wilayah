@@ -227,7 +227,6 @@
                         </span>
                         <span class="nav-link-title"> Layanan Surat </span>
                     </a>
- 
                     <div class="dropdown-menu {{ request()->is('layanan-surat*') ? 'show' : '' }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
@@ -237,14 +236,15 @@
                                         href="#" data-bs-toggle="dropdown" data-bs-auto-close="false">
                                         Template Surat
                                     </a>
-                                    <div class="dropdown-menu {{ request()->is('layanan-surat/template*') ? 'show' : '' }}">
+                                    <div
+                                        class="dropdown-menu {{ request()->is('layanan-surat/template*') ? 'show' : '' }}">
                                         <a class="dropdown-item {{ request()->is('layanan-surat/template/kop-templates*') ? 'active' : '' }}"
                                             href="{{ route('kop_templates.index') }}">
                                             Kop Template
                                         </a>
                                         <a class="dropdown-item {{ request()->is('layanan-surat/template/jenis-surats*') ? 'active' : '' }}"
                                             href="{{ route('jenis_surats.index') }}">
-                                           Jenis Surat
+                                            Jenis Surat
                                         </a>
                                     </div>
                                 </div>
@@ -281,7 +281,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div> 
+                </div>
                 </li>
 
                 {{-- Awal Menu Dasar Data Keluarga --}}
@@ -506,7 +506,16 @@
                                 {{-- <a class="dropdown-item {{ request()->is('potensi/laporan*') ? 'active' : '' }}"
                                 href="{{ route('potensi.laporan.index') }}">
                                 Laporan Mutasi
-                                </a> --}}
+                                </a>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                                            {{-- <a class="dropdown-item {{ request()->is('potensi/laporan*') ? 'active' : '' }}"
+                                                href="{{ route('potensi.laporan.index') }}">
+                                                Laporan Mutasi
+                                            </a> --}}
+                                </div>
                             </div>
                         </div>
                     </li>
@@ -535,12 +544,13 @@
                                     <path d="M18 9v4" />
                                     <path d="M20 21l2 -2l-2 -2" />
                                     <path d="M17 17l-2 2l2 2" />
-                                    </svg>
+                                </svg>
                             </span>
 
                             <span class="nav-link-title"> Perkembangan </span>
                         </a>
                         <div class="dropdown-menu {{ request()->is('perkembangan*') ? 'show' : '' }}">
+                        <div class="dropdown-menu {{ request()->is('apb*') ? 'show' : '' }}">
                             <div class="dropdown-menu-columns">
                                 <div class="dropdown-menu-column">
                                     <div class="dropend">
@@ -582,16 +592,26 @@
                                                     href="#sidebar-lembagakemasyarakatan" data-bs-toggle="dropdown"
                                                     data-bs-auto-close="false" role="button" aria-expanded="false">
                                                     Lembaga Kemasyarakatan
+                                        </div>
+                                    </div>
+
+
+                                    {{-- PERKEMBANGAN PENDUDUK --}}
+
+                                    @can('perkembangan-penduduk.view')
+                                        <div class="dropend">
+                                            <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/penduduk*') ? 'active' : '' }}"
+                                                href="#sidebar-perkembanganpenduduk" data-bs-toggle="dropdown"
+                                                data-bs-auto-close="false" role="button" aria-expanded="false">
+                                                Perkembangan <br> Penduduk
+                                            </a>
+                                            <div
+                                                class="dropdown-menu {{ request()->is('perkembangan/penduduk*') ? 'show' : '' }}">
+                                                {{-- Tidak perlu cek @can lagi di sini karena sudah dicek di blok luar --}}
+                                                <a class="dropdown-item {{ request()->is('perkembangan-penduduk*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan-penduduk.index') }}">
+                                                    Penduduk dan <br> Kepala Keluarga
                                                 </a>
-                                                <div
-                                                    class="dropdown-menu {{ request()->is('perkembangan/lembagakemasyarakatan*') ? 'show' : '' }}">
-                                                    @can('organisasi.view')
-                                                        <a class="dropdown-item {{ request()->is('organisasi*') ? 'active' : '' }}"
-                                                            href="{{ route('perkembangan.lembagakemsyarakatan.organisasi.index') }}">
-                                                            organisasi Lemabaga <br> Masyarakat
-                                                        </a>
-                                                    @endcan
-                                                </div>
                                             </div>
                                             {{-- Ekonomi Masyarakat --}}
                                 <div class="dropend">
@@ -703,12 +723,34 @@
                                         @endcan
                                     </div>
                                 </div>
+                                        <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/lembagakemasyarakatan*') ? 'active' : '' }}"
+                                            href="#sidebar-lembagakemasyarakatan" data-bs-toggle="dropdown"
+                                            data-bs-auto-close="false" role="button" aria-expanded="false">
+                                            Lembaga Kemasyarakatan
+                                        </a>
+                                        <div
+                                            class="dropdown-menu {{ request()->is('perkembangan/lembagakemasyarakatan*') ? 'show' : '' }}">
+                                            @can('organisasi.view')
+                                                <a class="dropdown-item {{ request()->is('organisasi*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.lembagakemsyarakatan.organisasi.index') }}">
+                                                    organisasi Lemabaga <br> Masyarakat
+                                                </a>
+                                            @endcan
+                                        </div>
+                                    </div>
+                                    {{-- <a class="dropdown-item {{ request()->is('potensi/laporan*') ? 'active' : '' }}"
+                                                href="{{ route('potensi.laporan.index') }}">
+                                                Laporan Mutasi
+                                            </a> --}}
+                                </div>
+                            </div>
                         </div>
                     </li>
                 @endcanany
 
                 {{-- Master Data (Dropdown Menu) --}}
-                <li class="nav-item dropdown {{ request()->is('master-ddk*') || request()->is('master-perkembangan*') || request()->is('master-potensi*') || request()->is('user*') || request()->is('role*') ? 'active' : '' }}">
+                <li
+                    class="nav-item dropdown {{ request()->is('master-ddk*') || request()->is('master-perkembangan*') || request()->is('master-potensi*') || request()->is('user*') || request()->is('role*') ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">

@@ -8,6 +8,7 @@ use App\Http\Controllers\DesaController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UsiaController;
+use App\Http\Controllers\DusunController;
 use App\Http\Controllers\JumlahController;
 use App\Http\Controllers\MutasiController;
 use App\Http\Controllers\JabatanController;
@@ -19,14 +20,22 @@ use App\Http\Controllers\MasterDdkController;
 use App\Http\Controllers\DataKeluargaController;
 // use App\Http\Controllers\MutasiController;
 use App\Http\Controllers\APBDesaController;
-use App\Http\Controllers\PertanggungjawabanController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\DesaKelurahanController;
+use App\Http\Controllers\PerangkatDesaController;
 use App\Http\Controllers\PembinaanpusatController;
 use App\Http\Controllers\PembinaanprovinsiController;
-// use App\Http\Controllers\IrigasiController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\PerangkatDesaController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
+
+
 use App\Http\Controllers\TransportasiDaratController;
+use App\Http\Controllers\PertanggungjawabanController;
+// use App\Http\Controllers\PembinaanpusatController;
+// use App\Http\Controllers\PembinaanprovinsiController;
+// use App\Http\Controllers\IrigasiController;
+// use App\Http\Controllers\NotificationController;
+// use App\Http\Controllers\PerangkatDesaController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+// use App\Http\Controllers\TransportasiDaratController;
 use App\Http\Controllers\IrigasiController;
 use App\Http\Controllers\AnggotaKeluargaController;
 use App\Http\Controllers\AgendaController;
@@ -40,9 +49,9 @@ use App\Http\Controllers\GaleriController;
 // use App\Http\Controllers\SettingController;
 // use App\Http\Controllers\IrigasiController;
 use App\Http\Controllers\SanitasiController;
-use App\Http\Controllers\DesaKelurahanController;
+// use App\Http\Controllers\DesaKelurahanController;
 // use App\Http\Controllers\BpdController;
-use App\Http\Controllers\DusunController;
+// use App\Http\Controllers\DusunController;
 use App\Http\Controllers\EnergiPeneranganController;
 use App\Http\Controllers\KemasyarakatanController;
 
@@ -99,6 +108,12 @@ use App\Http\Controllers\SubsektorKerajinanController;
 
 use App\Http\Controllers\PerkembanganPendudukController;
 // use App\Http\Controllers\Auth\AuthenticatedSessionController;
+// use App\Http\Controllers\Auth\AuthenticatedSessionController;
+// use App\Http\Controllers\AnggotaKeluargaController;
+// use App\Http\Controllers\AgendaController;
+// use App\Http\Controllers\GlosariumController;
+// use App\Http\Controllers\BeritaController;
+// use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\TapController;
 use App\Http\Controllers\LayananSurat\{
     KopTemplateController,
@@ -368,15 +383,15 @@ Route::get('/get-desa-by-kecamatan', [\App\Http\Controllers\PengangguranControll
 
 // pertanggungjawaban Routes
 Route::resource('perkembangan/pemerintahdesadankelurahan/pertanggungjawaban', PertanggungjawabanController::class)
-     ->names('perkembangan.pemerintahdesadankelurahan.pertanggungjawaban');
+    ->names('perkembangan.pemerintahdesadankelurahan.pertanggungjawaban');
 
 // pembinaanpusat Routes
 Route::resource('perkembangan/pemerintahdesadankelurahan/pembinaanpusat', PembinaanpusatController::class)
-     ->names('perkembangan.pemerintahdesadankelurahan.pembinaanpusat');
+    ->names('perkembangan.pemerintahdesadankelurahan.pembinaanpusat');
 
 // pembinaanprovinsi Routes
 Route::resource('perkembangan/pemerintahdesadankelurahan/pembinaanprovinsi', PembinaanprovinsiController::class)
-     ->names('perkembangan.pemerintahdesadankelurahan.pembinaanprovinsi');
+    ->names('perkembangan.pemerintahdesadankelurahan.pembinaanprovinsi');
 
 
 // Desa routes
@@ -447,7 +462,7 @@ Route::prefix('utama')->name('utama.')->middleware(['auth'])->group(function () 
         Route::put('/{agenda}', [AgendaController::class, 'update'])->middleware('permission:agenda.update')->name('update');
         Route::delete('/{agenda}', [AgendaController::class, 'destroy'])->middleware('permission:agenda.delete')->name('destroy');
     });
-    
+
     Route::resource('glosarium', GlosariumController::class);
     Route::resource('galeri', GaleriController::class);
     Route::resource('tap', TapController::class);
@@ -575,7 +590,7 @@ Route::delete('perkembangan-penduduk/{id}', [PerkembanganPendudukController::cla
 // produk domestik desa
 
 Route::prefix('perkembangan/produk-domestik')->name('perkembangan.produk-domestik.')->group(function () {
-   Route::resource('sektor-pertambangan', SektorPertambanganController::class);
+    Route::resource('sektor-pertambangan', SektorPertambanganController::class);
 
     // Subsektor Kerajinan routes
 
