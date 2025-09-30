@@ -1,0 +1,34 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table('kemasyarakatans', function (Blueprint $table) {
+            $table->string('buku_administrasi_karang')->nullable()->change();
+            $table->string('buku_administrasi_rt')->nullable()->change();
+            $table->string('buku_administrasi_rw')->nullable()->change();
+            $table->string('buku_administrasi_forum')->nullable()->change();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table('kemasyarakatans', function (Blueprint $table) {
+            $table->enum('buku_administrasi_karang', ['Ada', 'Tidak Ada'])->nullable()->change();
+            $table->enum('buku_administrasi_rt', ['Ada', 'Tidak Ada'])->nullable()->change();
+            $table->enum('buku_administrasi_rw', ['Ada', 'Tidak Ada'])->nullable()->change();
+            $table->enum('buku_administrasi_forum', ['Ada', 'Tidak Ada'])->nullable()->change();
+        });
+    }
+};
