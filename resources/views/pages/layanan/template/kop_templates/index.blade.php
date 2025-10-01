@@ -49,13 +49,14 @@
                                    class="btn btn-sm btn-warning me-1">
                                     <i class="bi bi-pencil-square"></i> Edit
                                 </a>
-                                <form action="{{ route('kop_templates.destroy', $kopTemplate->id) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin hapus data ini?')">
-                                        <i class="bi bi-trash"></i> Hapus
-                                    </button>
-                                </form>
+                                @can('kop_template.delete')
+                                <button type="button" class="btn btn-danger btn-sm"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#delete-confirm-{{ $kopTemplate->id }}">
+                                            Hapus
+                                        </button>
+
+                               @endcan
                             </td>
                         </tr>
                         @endforeach
@@ -66,3 +67,12 @@
     </div>
 </div>
 @endsection
+@foreach ($kopTemplates as $kopTemplate)
+    <x-modal.delete-confirm
+        id="delete-confirm-{{ $kopTemplate->id }}"
+        title="Yakin hapus data ini?"
+        description="Aksi ini tidak bisa dikembalikan."
+        route="{{ route('kop_templates.destroy', $kopTemplate) }}"
+        item="{{ $kopTemplate->nama }}"
+    />
+@endforeach

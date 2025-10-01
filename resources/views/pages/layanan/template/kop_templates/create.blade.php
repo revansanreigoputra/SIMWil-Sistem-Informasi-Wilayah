@@ -19,7 +19,7 @@
                 {{-- Nama Kop Surat --}}
                 <div class="mb-3">
                     <label for="nama" class="form-label fw-semibold text-dark">Nama Kop Surat</label>
-                    <textarea class="form-control rounded-3" id="nama" name="nama" rows="3"> </textarea>
+                    <textarea class="form-control rounded-3 uppercase-input" id="nama" name="nama" rows="3"> </textarea>
                     <div class="form-text">Contoh: PEMERINTAH PROVINSI ... KABUPATEN ...</div>
                 </div>
 

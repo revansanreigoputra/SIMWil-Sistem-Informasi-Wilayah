@@ -235,8 +235,6 @@ Route::middleware('auth')->prefix('layanan-surat')->group(function () {
     });
 
     // ==== PERMOHONAN SURAT ====
-    // old
-      // Route::get('/permohonan/cetak/{id}', [LayananSuratController::class, 'cetak'])->name('layanan.permohonan.cetak');
     
     // new
     Route::get('/permohonan', [PermohonanSuratController::class, 'index'])->name('layanan.permohonan.index');
@@ -244,12 +242,15 @@ Route::middleware('auth')->prefix('layanan-surat')->group(function () {
     ->name('layanan.permohonan.create');
     Route::post('permohonan', [PermohonanSuratController::class, 'store'])->name('layanan.permohonan.store');
     Route::get('/permohonan/edit/{id}', [PermohonanSuratController::class, 'edit'])->name('layanan.permohonan.edit');
-    Route::get('/permohonan/delete/{id}', [PermohonanSuratController::class, 'delete'])->name('layanan.permohonan.delete');
+    Route::put('/permohonan/update/{id}', [PermohonanSuratController::class, 'update'])->name('layanan.permohonan.update');
+    Route::delete('/permohonan/destroy/{id}', [PermohonanSuratController::class, 'destroy'])->name('layanan.permohonan.destroy');
+   
     Route::get('/permohonan/cetak/{id}', [PermohonanSuratController::class, 'cetak'])->name('layanan.permohonan.cetak');
+    
     // FORMS PERMOHONAN SURAT
-    // new end point to get form
-    Route::get('layanan/permohonan/get-form/{jenisSuratId}', [PermohonanSuratController::class, 'getForm'])
-    ->name('layanan.permohonan.getForm');
+    // // new end point to get form
+    // Route::get('layanan/permohonan/get-form/{jenisSuratId}', [PermohonanSuratController::class, 'getForm'])
+    // ->name('layanan.permohonan.getForm');
     
     // ==== PROFIL DESA ====
     Route::get('profil-desa', [LayananSuratController::class, 'profilDesa'])->name('layanan.profil_desa.index');

@@ -124,7 +124,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary mt-4 w-100">
-                <i class="fas fa-paper-plane me-2"></i> Ajukan & Buat Permohonan Surat
+                <i class="bi bi-paper-plane me-2"></i>Buat Permohonan Surat
             </button>
         </form>
     </div>
