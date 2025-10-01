@@ -266,15 +266,32 @@ class PermissionSeeder extends Seeder
             'subsektor-kerajinan.destroy',
 
             // sektor industri pengolahan permissions
-                'sektor-industri-pengolahan.view',
-                'sektor-industri-pengolahan.create',
-                'sektor-industri-pengolahan.store',
-                'sektor-industri-pengolahan.edit',
-                'sektor-industri-pengolahan.update',
-                'sektor-industri-pengolahan.delete',
-                'sektor-industri-pengolahan.destroy',
-                
-                            
+            'sektor-industri-pengolahan.view',
+            'sektor-industri-pengolahan.create',
+            'sektor-industri-pengolahan.store',
+            'sektor-industri-pengolahan.edit',
+            'sektor-industri-pengolahan.update',
+            'sektor-industri-pengolahan.delete',
+            'sektor-industri-pengolahan.destroy',
+
+            // subsektor kehutanan permissions
+                'subsektor-kehutanan.view',
+                'subsektor-kehutanan.create',
+                'subsektor-kehutanan.store',
+                'subsektor-kehutanan.edit',
+                'subsektor-kehutanan.update',
+                'subsektor-kehutanan.delete',
+                'subsektor-kehutanan.destroy',
+
+             //sektor bangunan permissions
+             'sektor-bangunan.view',
+             'sektor-bangunan.create',
+             'sektor-bangunan.store',
+             'sektor-bangunan.edit',
+             'sektor-bangunan.update',
+             'sektor-bangunan.delete',
+             'sektor-bangunan.destroy',
+                                                    
 
             // Pertanggungjawaban
             'pertanggungjawaban.view',

@@ -694,7 +694,22 @@
                                                 Sektor Industri <br> Pengolahan
                                             </a>
                                             @endcan 
-                                            </div>
+
+                                               @can('subsektor-kehutanan.view')
+                                            <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/subsektor-kehutanan*') ? 'active' : '' }}"
+                                            href="{{ route('perkembangan.produk-domestik.subsektor-kehutanan.index') }}">
+                                                Subsektor <br> Kehutanan
+                                            </a>
+                                        @endcan
+
+                                         @can('sektor-bangunan.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/sektor-bangunan*') ? 'active' : '' }}"
+                                                href="{{ route('perkembangan.produk-domestik.sektor-bangunan.index') }}">
+                                                    Sektor <br> Bangunan
+                                                </a>
+                                            @endcan
+
+                                        </div>
                                         </div>
                                     @endcanany
 

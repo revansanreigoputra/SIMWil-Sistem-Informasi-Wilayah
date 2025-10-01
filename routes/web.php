@@ -96,6 +96,8 @@ use App\Http\Controllers\MataPencaharianPokokController;
 use App\Http\Controllers\SektorPertambanganController;
 use App\Http\Controllers\SubsektorKerajinanController;
 use App\Http\Controllers\SektorIndustriPengolahanController;
+use App\Http\Controllers\SubsektorKehutananController;
+use App\Http\Controllers\SektorBangunanController;
 
 use App\Http\Controllers\PerkembanganPendudukController;
 // use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -597,6 +599,20 @@ Route::prefix('perkembangan/produk-domestik')->name('perkembangan.produk-domesti
  // sektor industri pengolahan routes
 
     Route::resource('sektor-industri-pengolahan', SektorIndustriPengolahanController::class);
+
+// subsektor kehutanan
+  Route::prefix('perkembangan/produk-domestik')->group(function () {
+    Route::resource('subsektor-kehutanan', SubsektorKehutananController::class);
+
+// sektor bangunan
+Route::prefix('perkembangan/produk-domestik')
+    ->group(function () {
+        Route::resource('sektor-bangunan', SektorBangunanController::class);
+    });
+
+});
+
+
 });
 
 
