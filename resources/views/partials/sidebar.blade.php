@@ -576,6 +576,13 @@
                                                     Pembinaan<br> Pemerintah Provinsi
                                                 </a>
                                             @endcan
+                                            @can('pembinaankabupaten.view')
+                                            <a class="dropdown-item {{ request()->is('perkmebangan/pemerintahdesadankelurahan/pembinaankabupaten*') ? 'active' : '' }}"
+                                                href="{{ route('perkembangan.pemerintahdesadankelurahan.pembinaankabupaten.index') }}">
+                                                Pembinaan Pemerintah<br> Kabupaten/Kota
+                                            </a>
+                                            @endcan
+
                                         </div>
                                     </div>
 
@@ -694,101 +701,6 @@
                                 </div>
                             </div>
                         </div>
-                    </li>
-                @endcanany
-
-            {{-- perkembangan --}}
-                @canany(['apb.view', 'pertanggungjawaban.view', 'pembinaanpusat.view', 'pembinaanprovinsi.view', 'organisasi.view'])
-                    <li class="nav-item dropdown {{ request()->is('perkembangan*') ? 'active' : '' }}">
-                        <a class="nav-link dropdown-toggle" href="#navbar-perkembangan" data-bs-toggle="dropdown"
-                            data-bs-auto-close="false" role="button" aria-expanded="false">
-                            <span class="nav-link-icon d-md-none d-lg-inline-block">
-                               <svg  xmlns="http://www.w3.org/2000/svg"  
-                                width="24"  height="24"  viewBox="0 0 24 24"  
-                                fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  
-                                class="icon icon-tabler icons-tabler-outline icon-tabler-adjustments-code">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                <path d="M4 10a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                                <path d="M6 4v4" /><path d="M6 12v8" />
-                                <path d="M13.557 14.745a2 2 0 1 0 -1.557 3.255" />
-                                <path d="M12 4v10" /><path d="M12 18v2" />
-                                <path d="M16 7a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                                <path d="M18 4v1" />
-                                <path d="M18 9v4" />
-                                <path d="M20 21l2 -2l-2 -2" />
-                                <path d="M17 17l-2 2l2 2" />
-                                </svg>
-                                </span>
-
-                            <span class="nav-link-title"> Perkembangan </span>
-                        </a>
-                                 <div class="dropdown-menu {{ request()->is('apb*') ? 'show' : '' }}">
-                        <div class="dropdown-menu-columns">
-                            <div class="dropdown-menu-column">
-                                <div class="dropend">
-                                            <a class="dropdown-item dropdown-toggle {{ request()->is('perkmebangan/pemerintahdesadankelurahan*') ? : '' }}"
-                                                href="#sidebar-pemerintahandesadankelurahan" data-bs-toggle="dropdown"
-                                                data-bs-auto-close="false" role="button" aria-expanded="false">
-                                                Pemerintah Desa <br> dan Kelurahan
-                                         </a>
-                                    
-                                    <div
-                                        class="dropdown-menu {{ request()->is('perkmebangan/pemerintahdesadankelurahan/apbdesa*') ? 'show' : '' }}">
-                                        @can('apb.view')
-                                            <a class="dropdown-item {{ request()->is('perkembangan/pemerintahdesadankelurahan/apbdesa*') ? 'active' : '' }}"
-                                                href="{{ route('perkembangan.pemerintahdesadankelurahan.apbdesa.index') }}">
-                                                APB Desa dan <br> Anggaran Kelurahan
-                                            </a>
-                                        @endcan
-
-                                        @can('pertanggungjawaban.view')
-                                            <a class="dropdown-item {{ request()->is('perkmebangan/pemerintahdesadankelurahan/pertanggungjawaban*') ? 'active' : '' }}"
-                                                href="{{ route('perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.index') }}">
-                                                Pertanggungjawaban<br> Kepala Desa/Lurah
-                                            </a>
-                                        @endcan
-
-                                        @can('pembinaanpusat.view')
-                                            <a class="dropdown-item {{ request()->is('perkmebangan/pemerintahdesadankelurahan/pembinaanpusat*') ? 'active' : '' }}"
-                                                href="{{ route('perkembangan.pemerintahdesadankelurahan.pembinaanpusat.index') }}">
-                                                Pembinaan<br> Pemerintah Pusat
-                                            </a>
-                                        @endcan
-
-                                        @can('pembinaanprovinsi.view')
-                                            <a class="dropdown-item {{ request()->is('perkmebangan/pemerintahdesadankelurahan/pembinaanprovinsi*') ? 'active' : '' }}"
-                                                href="{{ route('perkembangan.pemerintahdesadankelurahan.pembinaanprovinsi.index') }}">
-                                                Pembinaan<br> Pemerintah Provinsi
-                                            </a>
-                                        @endcan
-
-                                        @can('pembinaankabupaten.view')
-                                            <a class="dropdown-item {{ request()->is('perkmebangan/pemerintahdesadankelurahan/pembinaankabupaten*') ? 'active' : '' }}"
-                                                href="{{ route('perkembangan.pemerintahdesadankelurahan.pembinaankabupaten.index') }}">
-                                                Pembinaan Pemerintah<br> Kabupaten/Kota
-                                            </a>
-                                        @endcan
-                                    </div>
-                                </div>
-                                <div class="dropend">
-                                    <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/lembagakemasyarakatan*') ? 'active' : '' }}"
-                                        href="#sidebar-lembagakemasyarakatan" data-bs-toggle="dropdown"
-                                        data-bs-auto-close="false" role="button" aria-expanded="false">
-                                        Lembaga Kemasyarakatan
-                                    </a>
-                                <div
-                                    class="dropdown-menu {{ request()->is('perkembangan/lembagakemasyarakatan*') ? 'show' : '' }}">
-                                    @can('organisasi.view')
-                                        <a class="dropdown-item {{ request()->is('organisasi*') ? 'active' : '' }}"
-                                            href="{{ route('perkembangan.lembagakemsyarakatan.organisasi.index') }}">
-                                            organisasi Lemabaga <br> Masyarakat
-                                        </a>
-                                    @endcan
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     </li>
                 @endcanany
 
