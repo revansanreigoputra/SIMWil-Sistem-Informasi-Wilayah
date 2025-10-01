@@ -129,6 +129,8 @@ use App\Http\Controllers\KesejahteraanKeluargaController;
 use App\Http\Controllers\MenurutSektorUsahaController;
 use App\Models\LayananSurat\JenisSurat;
 use App\Models\LayananSurat\KopTemplate;
+// kelembagaan
+use App\Http\Controllers\LembagaAdatController;
 
 Route::get('/', function () {
     return Auth::check()
@@ -179,6 +181,17 @@ Route::middleware(['auth', 'permission:kecamatan.view'])->prefix('kecamatan')->g
     Route::get('/{kecamatan}/edit', [KecamatanController::class, 'edit'])->middleware('permission:kecamatan.update')->name('kecamatan.edit');
     Route::put('/{kecamatan}', [KecamatanController::class, 'update'])->middleware('permission:kecamatan.update')->name('kecamatan.update');
     Route::delete('/{kecamatan}', [KecamatanController::class, 'destroy'])->middleware('permission:kecamatan.delete')->name('kecamatan.destroy');
+});
+
+// kelembagaan Adat
+Route::middleware(['auth'])->prefix('potensi/potensi-kelembagaan/lembagaAdat')->name('potensi.potensi-kelembagaan.lembagaAdat.')->group(function () {
+    Route::get('/', [LembagaAdatController::class, 'index'])->middleware('permission:adat.view')->name('index');
+    Route::get('/create', [LembagaAdatController::class, 'create'])->middleware('permission:adat.create')->name('create');
+    Route::post('/', [LembagaAdatController::class, 'store'])->middleware('permission:adat.store')->name('store');
+    Route::get('/{adat}', [LembagaAdatController::class, 'show'])->middleware('permission:adat.view')->name('show');
+    Route::get('/{adat}/edit', [LembagaAdatController::class, 'edit'])->middleware('permission:adat.update')->name('edit');
+    Route::put('/{adat}', [LembagaAdatController::class, 'update'])->middleware('permission:adat.update')->name('update');
+    Route::delete('/{adat}', [LembagaAdatController::class, 'destroy'])->middleware('permission:adat.delete')->name('destroy');
 });
 
 // Prasarana Sanitasi routes

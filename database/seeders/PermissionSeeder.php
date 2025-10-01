@@ -236,6 +236,13 @@ class PermissionSeeder extends Seeder
             'dusun.store',
             'dusun.update',
             'dusun.delete',
+
+            // potensi-kelembagaan-adat
+            'adat.view',
+            'adat.create',
+            'adat.store',
+            'adat.update',
+            'adat.delete',
             
             // kemasyarakatan
             'kemasyarakatan.view',
