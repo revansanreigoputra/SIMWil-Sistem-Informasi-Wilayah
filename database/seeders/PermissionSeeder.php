@@ -139,6 +139,18 @@ class PermissionSeeder extends Seeder
             'berita.update',
             'berita.delete',
 
+            // agenda permissions
+            'agenda.view',
+            'agenda.create',
+            'agenda.update',
+            'agenda.delete',
+            
+            // Glosarium permissions
+            'glosarium.view',
+            'glosarium.create',
+            'glosarium.update',
+            'glosarium.delete',
+
         ];
 
         foreach ($permissions as $permission) {

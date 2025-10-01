@@ -47,7 +47,6 @@
             border-color: #dc3545;
             color: white;
         }
-
     </style>
 @endpush
 
@@ -66,7 +65,7 @@
                             <th class="text-center">Judul</th>
                             <th class="text-center">Isi Berita</th>
                             <th class="text-center">Gambar</th>
-                            <th class="text-center">Tanggal</th>
+                            <th class="text-center text-nowrap">Tanggal</th>
                             <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
@@ -76,17 +75,16 @@
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td>{{ $berita->judul }}</td>
 
-                                <td>{{ Str::limit(strip_tags($berita->isi_berita), 100) }}</td>
+                                <td>{{ Str::limit(strip_tags($berita->isi_berita), 65) }}</td>
 
                                 <td class="text-center">
                                     <img src="{{ asset('storage/foto_berita/' . $berita->gambar) }}" class="table-image"
                                         alt="Gambar {{ $berita->judul }}">
                                 </td>
 
-                                <td>
-                                    {{ \Carbon\Carbon::parse($berita->tanggal2)->translatedFormat('d M Y') }}
-                                    <small
-                                        class="d-block text-muted">{{ \Carbon\Carbon::parse($berita->tanggal2)->diffForHumans() }}</small>
+                                <td class="text-nowrap">
+                                    {{ \Carbon\Carbon::parse($berita->updated_at)->translatedFormat('d M Y') }}
+                                    <small class="d-block text-muted">{{ $berita->created_at->diffForHumans() }}</small>
                                 </td>
 
                                 <td class="text-center">
@@ -159,12 +157,11 @@
             // Inisialisasi DataTables untuk tabel berita
             $('#berita-table').DataTable();
 
-            // // Inisialisasi semua tooltip di halaman
-            // // Kode ini dipindahkan ke dalam document.ready
-            // var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-            // var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-            //     return new bootstrap.Tooltip(tooltipTriggerEl)
-            // })
+            // Inisialisasi semua tooltip di halaman
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            })
         });
     </script>
 @endpush
