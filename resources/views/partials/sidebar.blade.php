@@ -586,7 +586,8 @@
                                             <a class="dropdown-item {{ request()->is('perkembangan/pemerintahdesadankelurahan/pembinaankecamatan*') ? 'active' : '' }}"
                                                 href        ="{{ route('perkembangan.pemerintahdesadankelurahan.pembinaankecamatan.index') }}">
                                                 Pembinaan dan<br> Pengawasan Camat
-
+                                            </a>
+                                            @endcan
                                         </div>
                                     </div>
 

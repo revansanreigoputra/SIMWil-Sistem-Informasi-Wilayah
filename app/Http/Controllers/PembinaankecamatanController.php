@@ -66,7 +66,7 @@ class PembinaankecamatanController extends Controller
     public function edit($id)
     {
         $pembinaankecamatan = PembinaanKecamatan::findOrFail($id);
-        return view('pages.perkembangan.pemerintahdesadankelurahan.pembinaankecamatan.edit', compact('pembinaan'));
+        return view('pages.perkembangan.pemerintahdesadankelurahan.pembinaankecamatan.edit', compact('pembinaankecamatan'));
     }
 
     /**
@@ -101,10 +101,11 @@ class PembinaankecamatanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(pembinaankecamatan $id)
+    public function destroy($id)
     {
         $pembinaankecamatan = Pembinaankecamatan::findOrFail($id);
         $pembinaankecamatan->delete();
-        return redirect()->route('perkembangan.pemerintahdesadankelurahan.pembinaankecamatan.index')->with('success', 'Data Pembinaan Kecamatan berhasil dihapus.');    
+        return redirect()->route('perkembangan.pemerintahdesadankelurahan.pembinaankecamatan.index')
+        ->with('success', 'Data Pembinaan Kecamatan berhasil dihapus.');    
     }
 }

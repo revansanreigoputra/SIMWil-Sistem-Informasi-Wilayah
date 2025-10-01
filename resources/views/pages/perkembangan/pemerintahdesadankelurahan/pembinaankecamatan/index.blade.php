@@ -45,22 +45,22 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
-                            <td>{{ $item->fasilitasi_penyusunan_perdes ?? '-' }}</td>
-                            <td>{{ $item->fasilitasi_administrasi_tata_pemerintahan ?? '-' }}</td>
-                            <td>{{ $item->fasilitasi_pengelolaan_keuangan ?? '-' }}</td>
-                            <td>{{ $item->fasilitasi_urusan_otonomi ?? '-' }}</td>
-                            <td>{{ $item->fasilitasi_penerapan_peraturan ?? '-' }}</td>
-                            <td>{{ $item->fasilitasi_penyediaan_data ?? '-' }}</td>
-                            <td>{{ $item->fasilitasi_pelaksanaan_tugas ?? '-' }}</td>
-                            <td>{{ $item->fasilitasi_ketenteraman ?? '-' }}</td>
-                            <td>{{ $item->fasilitasi_penetapan_penguatan ?? '-' }}</td>
-                            <td>{{ $item->penanggulangan_kemiskinan_apbd ?? '-' }}</td>
-                            <td>{{ $item->fasilitasi_partisipasi_masyarakat ?? '-' }}</td>
-                            <td>{{ $item->fasilitasi_kerjasama_desa ?? '-' }}</td>
-                            <td>{{ $item->fasilitasi_program_pemberdayaan ?? '-' }}</td>
-                            <td>{{ $item->fasilitasi_kerjasama_lembaga ?? '-' }}</td>
-                            <td>{{ $item->fasilitasi_bantuan_teknis ?? '-' }}</td>
-                            <td>{{ $item->fasilitasi_koordinasi_unit_kerja ?? '-' }}</td>
+                            <td class="text-center">{{ $item->fasilitasi_penyusunan_perdes ?? '-' }}</td>
+                            <td class="text-center">{{ $item->fasilitasi_administrasi_tata_pemerintahan ?? '-' }}</td>
+                            <td class="text-center">{{ $item->fasilitasi_pengelolaan_keuangan ?? '-' }}</td>
+                            <td class="text-center">{{ $item->fasilitasi_urusan_otonomi ?? '-' }}</td>
+                            <td class="text-center">{{ $item->fasilitasi_penerapan_peraturan ?? '-' }}</td>
+                            <td class="text-center">{{ $item->fasilitasi_penyediaan_data ?? '-' }}</td>
+                            <td class="text-center">{{ $item->fasilitasi_pelaksanaan_tugas ?? '-' }}</td>
+                            <td class="text-center">{{ $item->fasilitasi_ketenteraman ?? '-' }}</td>
+                            <td class="text-center">{{ $item->fasilitasi_penetapan_penguatan ?? '-' }}</td>
+                            <td class="text-center">{{ $item->penanggulangan_kemiskinan_apbd ?? '-' }}</td>
+                            <td class="text-center">{{ $item->fasilitasi_partisipasi_masyarakat ?? '-' }}</td>
+                            <td class="text-center">{{ $item->fasilitasi_kerjasama_desa ?? '-' }}</td>
+                            <td class="text-center">{{ $item->fasilitasi_program_pemberdayaan ?? '-' }}</td>
+                            <td class="text-center">{{ $item->fasilitasi_kerjasama_lembaga ?? '-' }}</td>
+                            <td class="text-center">{{ $item->fasilitasi_bantuan_teknis ?? '-' }}</td>
+                            <td class="text-center">{{ $item->fasilitasi_koordinasi_unit_kerja ?? '-' }}</td>
                             <td>
                                 <div class="d-flex gap-1 justify-content-center">
                                     <a href="{{ route('perkembangan.pemerintahdesadankelurahan.pembinaankecamatan.edit', $item->id) }}" class="btn btn-sm btn-warning">

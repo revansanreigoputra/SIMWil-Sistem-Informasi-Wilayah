@@ -10,7 +10,7 @@ class pembinaankecamatan extends Model
      use HasFactory;
 
     // Nama tabel
-    protected $table = 'pembinaan_camat';
+    protected $table = 'pembinaankecamatans';
 
     // Kolom yang bisa diisi (mass assignment)
     protected $fillable = [
