@@ -26,6 +26,7 @@ use App\Http\Controllers\PerangkatDesaController;
 use App\Http\Controllers\PembinaanpusatController;
 use App\Http\Controllers\PembinaanprovinsiController;
 use App\Http\Controllers\PembinaankabupatenController;
+use App\Http\Controllers\PembinaankecamatanController;
 // use App\Http\Controllers\IrigasiController;
 // use App\Http\Controllers\NotificationController;
 // use App\Http\Controllers\PerangkatDesaController;
@@ -350,8 +351,6 @@ Route::middleware(['auth'])->prefix('perkembangan/pemerintahdesadankelurahan/apb
     Route::delete('/{apbdesa}', [APBDesaController::class, 'destroy'])->name('destroy');
 });
 
-
-
 // Pengangguran
 Route::middleware(['auth'])
     ->prefix('perkembangan/ekonomimasyarakat/pengangguran')
@@ -443,16 +442,16 @@ Route::middleware(['auth'])->prefix('perkembangan/pemerintahdesadankelurahan/pem
     Route::delete('/{pembinaankabupaten}', [PembinaankabupatenController::class, 'destroy'])->name('destroy');
 });
 
-Route::resource('perkembangan/pemerintahdesadankelurahan/pertanggungjawaban', PertanggungjawabanController::class)
-    ->names('perkembangan.pemerintahdesadankelurahan.pertanggungjawaban');
-
-// pembinaanpusat Routes
-Route::resource('perkembangan/pemerintahdesadankelurahan/pembinaanpusat', PembinaanpusatController::class)
-    ->names('perkembangan.pemerintahdesadankelurahan.pembinaanpusat');
-
-// pembinaanprovinsi Routes
-Route::resource('perkembangan/pemerintahdesadankelurahan/pembinaanprovinsi', PembinaanprovinsiController::class)
-    ->names('perkembangan.pemerintahdesadankelurahan.pembinaanprovinsi');
+//pembinaankecamatan Routes
+Route::middleware(['auth'])->prefix('perkembangan/pemerintahdesadankelurahan/pembinaankecamatan')->name('perkembangan.pemerintahdesadankelurahan.pembinaankecamatan.')->group(function () {
+    Route::get('/', [PembinaankecamatanController::class, 'index'])->name('index');
+    Route::get('/create', [PembinaankecamatanController::class, 'create'])->name('create');
+    Route::post('/', [PembinaankecamatanController::class, 'store'])->name('store');
+    Route::get('/{pembinaankecamatan}', [PembinaankecamatanController::class, 'show'])->name('show');
+    Route::get('/{pembinaankecamatan}/edit', [PembinaankecamatanController::class, 'edit'])->name('edit');
+    Route::put('/{pembinaankecamatan}', [PembinaankecamatanController::class, 'update'])->name('update');
+    Route::delete('/{pembinaankecamatan}', [PembinaankecamatanController::class, 'destroy'])->name('destroy');
+});
 
 
 // Desa routes

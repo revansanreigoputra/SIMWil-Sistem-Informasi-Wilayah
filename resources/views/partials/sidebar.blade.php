@@ -582,6 +582,10 @@
                                                 Pembinaan Pemerintah<br> Kabupaten/Kota
                                             </a>
                                             @endcan
+                                            @can('pembinaankecamatan.view')
+                                            <a class="dropdown-item {{ request()->is('perkembangan/pemerintahdesadankelurahan/pembinaankecamatan*') ? 'active' : '' }}"
+                                                href        ="{{ route('perkembangan.pemerintahdesadankelurahan.pembinaankecamatan.index') }}">
+                                                Pembinaan dan<br> Pengawasan Camat
 
                                         </div>
                                     </div>
