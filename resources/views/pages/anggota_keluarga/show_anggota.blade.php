@@ -17,10 +17,10 @@
 
 
 @section('action')
-    @can('anggota_keluarga.create')
-        <a href="{{ route('anggota_keluarga.create', ['data_keluarga_id' => $dataKeluarga->id]) }}"
-            class="btn btn-primary mb-3">+ Anggota Keluarga</a>
-    @endcan
+@can('anggota_keluarga.create')
+<a href="{{ route('anggota_keluarga.create', ['data_keluarga_id' => $dataKeluarga->id]) }}"
+    class="btn btn-primary mb-3">+ Anggota Keluarga</a>
+@endcan
 @endsection
 
 @section('content')
@@ -49,7 +49,7 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $anggota->nik }}</td>
                         <td>{{ $anggota->nama }}</td>
-                        <td>{{ $anggota->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
+                        <td>{{ $anggota->jenis_kelamin == 'Laki-laki' ? 'Laki-laki' : 'Perempuan' }}</td>
                         <td>{{ $anggota->hubunganKeluarga?->nama }}</td>
                         <td>{{ $anggota->datakeluarga->no_kk ?? 'N/A' }}</td>
                         <td>{{ $anggota->datakeluarga->kepala_keluarga ?? 'N/A' }}</td>
@@ -61,43 +61,17 @@
 
                                 <a href="{{ route('anggota_keluarga.edit', $anggota->id) }}"
                                     class="btn btn-sm btn-warning">Edit</a>
-
-                                {{-- Hapus dengan modal --}}
-                                <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                    data-bs-target="#delete-anggota-{{ $anggota->id }}">
+                                @can('anggota_keluarga.delete')
+                                <button type="button" class="btn btn-danger btn-sm"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#delete-confirm-{{ $anggota->id }}">
                                     Hapus
                                 </button>
+                                @endcan
+
                             </div>
 
-                            <!-- Modal Hapus -->
-                            <div class="modal fade" id="delete-anggota-{{ $anggota->id }}" tabindex="-1"
-                                aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Hapus Data Anggota?</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>Data anggota <strong>{{ $anggota->nama_lengkap }}</strong> akan
-                                                dihapus dan tidak bisa dikembalikan.</p>
-                                            <p>Yakin ingin menghapus data ini?</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Batal</button>
-                                            {{-- Hapus --}}
-                                            <form action="{{ route('anggota_keluarga.destroy', $anggota->id) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Hapus</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                             <!-- modal detail -->
                             <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
@@ -135,10 +109,16 @@
     </div>
 </div>
 @endsection
-
+@foreach ($anggotaKeluargas as $anggota)
+<x-modal.delete-confirm
+    id="delete-confirm-{{ $anggota->id }}"
+    title="Yakin hapus data ini?"
+    description="Aksi ini tidak bisa dikembalikan."
+    route="{{ route('anggota_keluarga.destroy', $anggota) }}"
+    item="{{ $anggota->kepala_keluarga }}" />
+@endforeach
 @push('addon-script')
 <script>
-     
     $(document).ready(function() {
         $('#anggota-table').DataTable();
 
@@ -278,4 +258,4 @@
         });
     });
 </script>
-@endpush 
+@endpush

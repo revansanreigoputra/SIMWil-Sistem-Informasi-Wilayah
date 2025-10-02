@@ -93,20 +93,20 @@ class LayananSuratController extends Controller
         return view('pages.layanan.profil_desa.edit');
     }
     // ==== LAPORAN SURAT ====
-    public function indexSurat(Request $request)
-    {
-        $laporan = [];
+    // public function indexSurat(Request $request)
+    // {
+    //     $laporan = [];
 
-        if ($request->has('tanggal') || $request->has('jenis') || $request->has('ttd')) {
-            $laporan = Surat::query()
-                ->when($request->tanggal, fn($q) => $q->whereDate('tanggal', $request->tanggal))
-                ->when($request->jenis, fn($q) => $q->where('jenis', $request->jenis))
-                ->when($request->ttd, fn($q) => $q->where('ttd', $request->ttd))
-                ->get();
-        }
+    //     if ($request->has('tanggal') || $request->has('jenis') || $request->has('ttd')) {
+    //         $laporan = Surat::query()
+    //             ->when($request->tanggal, fn($q) => $q->whereDate('tanggal', $request->tanggal))
+    //             ->when($request->jenis, fn($q) => $q->where('jenis', $request->jenis))
+    //             ->when($request->ttd, fn($q) => $q->where('ttd', $request->ttd))
+    //             ->get();
+    //     }
 
-        return view('pages.layanan.laporan.surat.index', compact('laporan'));
-    }
+    //     return view('pages.layanan.laporan.surat.index', compact('laporan'));
+    // }
 
     public function cetakSurat($id)
     {
