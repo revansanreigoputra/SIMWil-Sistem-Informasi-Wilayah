@@ -206,6 +206,7 @@
                     </div>
                 </li>
                 @endcanany
+                
                 {{-- Layanan Surat --}}
                 <li class="nav-item dropdown {{ request()->is('layanan-surat*') ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-layanan" data-bs-toggle="dropdown"
@@ -232,8 +233,6 @@
                                         href="#" data-bs-toggle="dropdown" data-bs-auto-close="false">
                                         Template Dokumen
                                     </a>
-                                    <div
-                                        class="dropdown-menu {{ request()->is('layanan-surat/template*') ? 'show' : '' }}">
                                     <div class="dropdown-menu {{ request()->is('layanan-surat/template*') || request()->is('ttd*') || request()->is('layanan-surat/profil-desa*') ? 'show' : '' }}">
                                         {{-- Menu-menu anak (inner menus) --}}
 
