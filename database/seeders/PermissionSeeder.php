@@ -201,6 +201,14 @@ class PermissionSeeder extends Seeder
             'irigasi.edit',
             'irigasi.update',
             'irigasi.delete',
+            
+            // Sarana Transportasi
+            'angkutan.view',
+            'angkutan.create',
+            'angkutan.store',
+            'angkutan.edit',
+            'angkutan.update',
+            'angkutan.delete',
 
             // Sanitasi
             'sanitasi.view',

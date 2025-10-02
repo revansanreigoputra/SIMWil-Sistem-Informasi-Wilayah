@@ -31,6 +31,8 @@ class DatabaseSeeder extends Seeder
             LembagaSeeder::class,
             MataPencaharianSeeder::class,
             PendidikanSeeder::class,
+            KategoriTransportasiSeeder::class,
+            JenisTransportasiSeeder::class,
         ]);
     }
 }

@@ -463,6 +463,13 @@
                                                 </a>
                                             @endcan
 
+                                            @can('angkutan.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/angkutan*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-prasarana-dan-sarana.angkutan.index') }}">
+                                                    Prasarana Angkutan
+                                                </a>
+                                            @endcan
+
                                             @can('irigasi.view')
                                                 <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/irigasi*') ? 'active' : '' }}"
                                                     href="{{ route('potensi.potensi-prasarana-dan-sarana.irigasi.index') }}">
