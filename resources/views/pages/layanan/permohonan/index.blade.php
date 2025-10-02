@@ -29,11 +29,42 @@
         border-radius: 6px;
         color: #6a7f8e;
         transition: all 0.2s ease;
-        margin-right: 4px;
-        margin-bottom: 8px;
+        margin-right: 4px; 
         font-size: 0.85rem;
         font-weight: 600;
     }
+
+    .nav-primary-pills .nav-link {
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-weight: 700;
+        margin-right: 8px;
+
+        /* Contoh Style 1: Garis Bawah (Underline) */
+        /* Hapus background dan border-radius jika ingin gaya underline */
+        background-color: transparent !important;
+        border-radius: 0;
+        color: #333 !important;
+        border-bottom: 3px solid transparent;
+        transition: border-color 0.2s ease, color 0.2s ease;
+    }
+
+    /* Style Primary Nav: Active State */
+    .nav-primary-pills .nav-link.active {
+        background-color: transparent !important;
+        color: #007bff !important;
+        border-bottom: 3px solid #007bff;
+        box-shadow: none !important;
+        transform: none;
+    }
+
+    .nav-primary-pills .nav-link:hover:not(.active) {
+        background-color: transparent !important;
+        color: #007bff;
+        border-bottom: 3px solid #ccc;
+    }
+
+  
 
     .nav-pills .nav-link.active {
         background-color: #4CAF50 !important;
@@ -81,20 +112,19 @@
     <div class="card-body">
 
         {{-- TAB NAVIGATION ( ) --}}
-        <ul class="nav nav-pills mb-3" id="jenisSuratTab" role="tablist">
-            @foreach ($jenisSurats as $index => $format)
-            @php $tabId = \Illuminate\Support\Str::slug($format->id); @endphp
-            <li class="nav-item" role="presentation">
-                <a class="nav-link @if($index === 0) active @endif"
-                    id="{{ $tabId }}-tab"
+        <ul class="nav nav-pills mb-3 nav-primary-pills " id="kopTemplateTab" role="tablist">
+            @foreach ($groupedKopTemplates as $indexKop => $kopTemplate)
+            @php $kopId = 'kop-' . $kopTemplate->id; @endphp
+            <li class="nav-item" role="presentation" class="">
+                <a class="uppercase-input nav-link @if($indexKop === 0) active @endif"
+                    id="{{ $kopId }}-tab"
                     data-bs-toggle="tab"
-                    data-bs-target="#{{ $tabId }}"
+                    data-bs-target="#{{ $kopId }}"
                     type="button"
                     role="tab"
-                    aria-controls="{{ $tabId }}"
-                    aria-selected="{{ $index === 0 ? 'true' : 'false' }}"
-                    data-tab-param="{{ $tabId }}">
-                    {{ $format->nama }}
+                    aria-controls="{{ $kopId }}"
+                    aria-selected="{{ $indexKop === 0 ? 'true' : 'false' }}">
+                    {{ $kopTemplate->jenis_kop }}
                 </a>
             </li>
             @endforeach
@@ -103,73 +133,107 @@
         <hr>
 
         {{-- TAB CONTENT --}}
-        <div class="tab-content mt-3" id="jenisSuratTabContent">
+        <div class="tab-content mt-3" id="kopTemplateTabContent">
 
-            @foreach ($jenisSurats as $index => $format)
-            @php
-            $paneId = \Illuminate\Support\Str::slug($format->id);
-            @endphp
+            @foreach ($groupedKopTemplates as $indexKop => $kopTemplate)
+            @php $kopId = 'kop-' . $kopTemplate->id; @endphp
 
-            <div class="tab-pane fade @if($index === 0) show active @endif"
-                id="{{ $paneId }}"
+            <div class="tab-pane fade @if($indexKop === 0) show active @endif"
+                id="{{ $kopId }}"
                 role="tabpanel"
-                aria-labelledby="{{ $paneId }}-tab"
+                aria-labelledby="{{ $kopId }}-tab"
                 tabindex="0">
 
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped">
-                        <thead class="table-light">
-                            <tr>
-                                <th>No.</th>
-                                <th>Nomor Surat</th>
-                                <th>Tanggal Dibuat</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                {{-- START: SUB-TAB NAVIGATION (JENIS SURAT) --}}
+                <ul class="nav nav-pills mb-3" id="jenisSuratSubTab-{{ $kopId }}" role="tablist">
+                    @foreach ($kopTemplate->jenisSurats as $indexJenis => $jenisSurat)
+                    @php $jenisId = 'jenis-' . $jenisSurat->id; @endphp
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link @if($indexJenis === 0) active @endif"
+                            id="{{ $jenisId }}-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#{{ $jenisId }}"
+                            type="button"
+                            role="tab"
+                            aria-controls="{{ $jenisId }}"
+                            aria-selected="{{ $indexJenis === 0 ? 'true' : 'false' }}">
+                            {{ $jenisSurat->nama }}
+                        </a>
+                    </li>
+                    @endforeach
+                </ul>
+                {{-- END: SUB-TAB NAVIGATION --}}
 
-                            @forelse ($permohonans->where('id_format_nomor_surats', $format->id) as $permohonan)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $permohonan->nomor_surat }}</td>
-                                <td>{{ $permohonan->created_at->format('d-m-Y') }}</td>
-                                <td>
-                                    {{-- ACTION BUTTONS --}}
-                                    @can('permohonan.edit')
-                                    <a href="{{ route('layanan.permohonan.edit', $permohonan->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                    @endcan
-                                    @can('permohonan.delete')
-                                    <button type="button" class="btn btn-danger btn-sm"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#delete-confirm-{{ $permohonan->id }}">
-                                        Hapus
-                                    </button>
-                                    @endcan
-                                    <a href="{{ route('layanan.permohonan.cetak', $permohonan->id) }}" class="btn btn-sm btn-success" target="_blank">Cetak</a>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="4" class="text-center">Belum ada data permohonan untuk jenis surat ini ({{ $format->nama }}).</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                {{-- START: SUB-TAB CONTENT (DATA PERMOHONAN) --}}
+                <div class="tab-content mt-3" id="jenisSuratSubTabContent-{{ $kopId }}">
+                    @foreach ($kopTemplate->jenisSurats as $indexJenis => $jenisSurat)
+                    @php $jenisId = 'jenis-' . $jenisSurat->id; @endphp
+
+                    <div class="tab-pane fade @if($indexJenis === 0) show active @endif"
+                        id="{{ $jenisId }}"
+                        role="tabpanel"
+                        aria-labelledby="{{ $jenisId }}-tab"
+                        tabindex="0">
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                {{-- ... The table header (thead) remains the same ... --}}
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Nomor Surat</th>
+                                        <th>Tanggal Dibuat</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse ($permohonans->where('id_format_nomor_surats', $jenisSurat->id) as $permohonan)
+                                    {{-- ... Table row content remains the same ... --}}
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $permohonan->nomor_surat }}</td>
+                                        <td>{{ $permohonan->created_at->format('d-m-Y') }}</td>
+                                        <td>
+                                            {{-- ACTION BUTTONS --}}
+                                            @can('permohonan.edit')
+                                            <a href="{{ route('layanan.permohonan.edit', $permohonan->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                            @endcan
+                                            @can('permohonan.delete')
+                                            <button type="button" class="btn btn-danger btn-sm"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#delete-confirm-{{ $permohonan->id }}">
+                                                Hapus
+                                            </button>
+                                            @endcan
+                                            <a href="{{ route('layanan.permohonan.cetak', $permohonan->id) }}" class="btn btn-sm btn-success" target="_blank">Cetak</a>
+                                        </td>
+                                    </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan="4" class="text-center">Belum ada data permohonan untuk jenis surat ini ({{ $jenisSurat->nama }}).</td>
+                                    </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    @endforeach
                 </div>
+                {{-- END: SUB-TAB CONTENT --}}
 
             </div>
             @endforeach
         </div>
 
-    </div> 
-</div>  
+    </div>
+</div>
 @endsection
 @foreach ($permohonans as $permohonan)
-    <x-modal.delete-confirm
-        id="delete-confirm-{{ $permohonan->id }}"
-        title="Yakin hapus data ini?"
-        description="Aksi ini tidak bisa dikembalikan."
-        route="{{ route('layanan.permohonan.destroy', $permohonan) }}"
-        item="{{ $permohonan->nomor_surat }}"
-    />
+<x-modal.delete-confirm
+    id="delete-confirm-{{ $permohonan->id }}"
+    title="Yakin hapus data ini?"
+    description="Aksi ini tidak bisa dikembalikan."
+    route="{{ route('layanan.permohonan.destroy', $permohonan) }}"
+    item="{{ $permohonan->nomor_surat }}" />
 @endforeach

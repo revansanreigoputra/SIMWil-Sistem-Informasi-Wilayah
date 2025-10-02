@@ -14,26 +14,22 @@
             @method('PUT')
 
             {{-- Hidden JSON Data Map for JavaScript --}}
-            <div id="jenis-surat-map" data-map="{{ json_encode($jenisSurats) }}" style="display: none;"></div>
+            <div id="jenis-surat-map" data-map="{{ json_encode($allJenisSurats) }}" style="display: none;"></div>
             {{-- Data Permohonan yang sudah tersimpan untuk di-load di custom fields --}}
             <div id="data-storage-container"
                 data-old-custom-data="{{ json_encode(old('custom_data', $permohonan->custom_variables ?? [])) }}"
                 style="display: none;">
             </div>
 
-            {{-- Bagian I: Jenis Surat (NOW SELECTABLE) --}}
+            {{-- Bagian I: Jenis Surat  --}}
             <h5 class="mt-3 mb-3 pb-2 border-bottom">Jenis Surat</h5>
             <div class="mb-4">
                 <label for="jenis_surat_id" class="form-label fw-semibold">Jenis Surat</label>
                 <select name="jenis_surat_id" id="jenis_surat_id" class="form-select @error('jenis_surat_id') is-invalid @enderror" required>
-                    <option value="{{ $jenisSurats->first()->id ?? '' }}">-- Pilih Jenis Surat --</option>
-                    @foreach ($jenisSurats as $jenis)
-                    <option
-                        value="{{ $jenis->id }}"
-                         {{ (old('jenis_surat_id', $permohonan->jenis_surat_id) == $jenis->id) ? 'selected' : '' }}>
-                        {{ $jenis->nama }}
-                    </option>
-                    @endforeach
+                    {{-- The placeholder is only selected if NO value (old or stored) is present. --}}
+                    <!-- <option value="" disabled {{ !old('jenis_surat_id', $permohonan->jenis_surat_id) ? 'selected' : '' }}>-- Pilih Jenis Surat --</option> -->
+                    <option value="{{ $permohonan->jenisSurat->id }}" selected disabled>{{ $permohonan->jenisSurat->nama }}</option>
+
                 </select>
                 @error('jenis_surat_id')
                 <div class="invalid-feedback">{{ $message }}</div>
@@ -78,10 +74,49 @@
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-
             {{-- Bagian III: CUSTOM DYNAMIC FIELDS CONTAINER --}}
-            <h5 class="mt-4 mb-3 pb-2 border-bottom" id="custom-fields-title" style="display: none;">Data Tambahan Surat</h5>
-            <div id="custom-fields-container" class="row g-3 mb-4"></div>
+            @if ($customFields->isNotEmpty())
+            <h5 class="mt-4 mb-3 pb-2 border-bottom" id="custom-fields-title">Data Tambahan Surat</h5>
+            <div id="custom-fields-container" class="row g-3 mb-4">
+                @foreach ($customFields as $variable)
+                @php
+                $key = $variable['key'];
+                $label = $variable['label'];
+                $type = $variable['type'] ?? 'text';
+                $inputName = "custom_data[{$key}]";
+                // Use the passed storedCustomData variable
+                $fieldValue = $storedCustomData[$key] ?? '';
+                $isInvalid = $errors->has("custom_data.{$key}");
+                @endphp
+
+                <div class="col-md-12 mb-3">
+                    <label for="custom_{{ $key }}" class="form-label fw-semibold">{{ $label }} <span class="text-danger">*</span></label>
+
+                    @if ($type === 'textarea')
+                    <textarea
+                        name="{{ $inputName }}"
+                        id="custom_{{ $key }}"
+                        class="form-control @if($isInvalid) is-invalid @endif"
+                        rows="3"
+                        required>{{ $fieldValue }}</textarea>
+                    @else
+                    <input
+                        type="{{ $type }}"
+                        name="{{ $inputName }}"
+                        id="custom_{{ $key }}"
+                        class="form-control @if($isInvalid) is-invalid @endif"
+                        value="{{ $fieldValue }}"
+                        required>
+                    @endif
+
+                    @if($isInvalid)
+                    <div class="invalid-feedback">{{ $errors->first("custom_data.{$key}") }}</div>
+                    @endif
+                </div>
+                @endforeach
+            </div>
+            @endif
+            {{-- End of Custom Fields Container --}}
 
             {{-- Bagian IV: Isi dan Pengaturan Surat --}}
             <h5 class="mt-4 mb-3 pb-2 border-bottom">Isi dan Pengaturan Surat</h5>
@@ -110,22 +145,22 @@
                 </div>
 
                 <label class="form-label">Teks Pembuka Surat</label>
-                <textarea  class="form-control @error('paragraf_pembuka') is-invalid @enderror"
-                name="paragraf_pembuka" id="paragraf_pembuka">{{ old('paragraf_pembuka', $permohonan->paragraf_pembuka ?? optional($permohonan->jenisSurat)->paragraf_pembuka) }}</textarea>
+                <textarea class="form-control @error('paragraf_pembuka') is-invalid @enderror"
+                    name="paragraf_pembuka" id="paragraf_pembuka">{{ old('paragraf_pembuka', $permohonan->paragraf_pembuka ?? optional($permohonan->jenisSurat)->paragraf_pembuka) }}</textarea>
                 @error('paragraf_pembuka')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            
+
             {{-- Paragraf Penutup (Editable) --}}
-            <div class="mb-3"> 
+            <div class="mb-3">
                 <label for="paragraf_penutup" class="form-label">Teks Penutup Surat</label>
                 <textarea rows="5"
                     class="form-control"
                     name="paragraf_penutup"
                     id="paragraf_penutup"
                     required>{{ old('paragraf_penutup', $permohonan->paragraf_penutup ?? optional($permohonan->jenisSurat)->paragraf_penutup) }}</textarea>
- 
+
             </div>
 
             {{-- Bagian V: Penanda Tangan & Kop Surat --}}
@@ -176,94 +211,39 @@
     </div>
 </div>
 @endsection
-
 @push('addon-script')
 <script>
+    // Since Jenis Surat selection and dynamic fields are now rendered via PHP on page load,
+    // this script primarily maintains the data map structure for potential future use or debugging.
+
     // --- Global Data Setup ---
     let jenisSuratDataMap = {};
     let oldCustomData = {};
 
     // CAPTURE INITIAL VALUES (Saved values from $permohonan or old input)
+    // This is used for comparison in the syncParagraphs function if it were to run
     const initialPembuka = '{{ old("paragraf_pembuka", $permohonan->paragraf_pembuka ?? optional($permohonan->jenisSurat)->paragraf_pembuka) }}'.trim();
     const initialPenutup = '{{ old("paragraf_penutup", $permohonan->paragraf_penutup ?? optional($permohonan->jenisSurat)->paragraf_penutup) }}'.trim();
-
 
     // --- Utility Functions ---
 
     function initializeDataMap() {
+        // Only initializes data map from hidden element.
         const jsonString = $('#jenis-surat-map').data('map');
         if (jsonString) {
-            jenisSuratDataMap = jsonString.reduce((map, item) => {
-                map[item.id] = item;
-                return map;
-            }, {});
-        }
-
-        const dataContainer = document.getElementById('data-storage-container');
-        if (dataContainer) {
-            oldCustomData = JSON.parse(dataContainer.dataset.oldCustomData || '{}');
-        }
-    }
-
-    // Function to render custom fields (adapted for EDIT)
-    function renderCustomFields(jenisSuratId) {
-        const container = $('#custom-fields-container');
-        const title = $('#custom-fields-title');
-        container.empty();
-
-        if (!jenisSuratId || !jenisSuratDataMap[jenisSuratId]) {
-            title.hide();
-            return;
-        }
-
-        const templateData = jenisSuratDataMap[jenisSuratId];
-        const requiredVariables = templateData.required_variables || [];
-        let hasCustomFields = false;
-
-        requiredVariables.forEach(variable => {
-            if (variable.type !== 'system') {
-                hasCustomFields = true;
-                const key = variable.key;
-                const label = variable.label;
-                const type = variable.type || 'text';
-                const inputName = `custom_data[${key}]`;
-
-                // Retrieve old value from the global oldCustomData object
-                const oldValue = oldCustomData[key] || '';
-
-                const isInvalid = false; 
-
-                let inputHtml = '';
-
-                if (type === 'textarea') {
-                    inputHtml = `
-                        <textarea name="${inputName}" id="custom_${key}" class="form-control" rows="3" required>${oldValue}</textarea>
-                    `;
-                } else {
-                    inputHtml = `
-                        <input type="${type}" 
-                                name="${inputName}" 
-                                id="custom_${key}" 
-                                class="form-control ${isInvalid ? 'is-invalid' : ''}" 
-                                value="${oldValue}" 
-                                required>
-                        ${isInvalid ? '<div class="invalid-feedback">Field ini wajib diisi.</div>' : ''}
-                    `;
-                }
-
-                container.append(`
-                    <div class="col-md-6 mb-3">
-                        <label for="custom_${key}" class="form-label fw-semibold">${label} <span class="text-danger">*</span></label>
-                        ${inputHtml}
-                    </div>
-                `);
+            try {
+                jenisSuratDataMap = JSON.parse(jsonString).reduce((map, item) => {
+                    map[item.id] = item;
+                    return map;
+                }, {});
+            } catch (e) {
+                console.error("Error parsing Jenis Surat data map:", e);
             }
-        });
-
-        title.toggle(hasCustomFields);
+        }
     }
-    
-    // Function to synchronize paragraph fields based on selected Jenis Surat
+
+    // This function is kept for completeness, though currently unused without a 'change' listener.
+    // It handles the logic for updating paragraphs based on template values.
     function syncParagraphs(selectedId) {
         const templateData = jenisSuratDataMap[selectedId] || {};
         const newPembuka = templateData.paragraf_pembuka || '';
@@ -271,41 +251,22 @@
         const pembukaField = $('#paragraf_pembuka');
         const penutupField = $('#paragraf_penutup');
 
-        // Logic: Only update the textarea if the current value matches the initial value 
-        // (saved in the database) OR if the field is empty.
+        // Logic: Only update the textarea if the current value matches the initial saved value 
         if (pembukaField.val().trim() === initialPembuka || pembukaField.val().trim() === '') {
-             pembukaField.val(newPembuka);
+            pembukaField.val(newPembuka);
         }
         if (penutupField.val().trim() === initialPenutup || penutupField.val().trim() === '') {
-             penutupField.val(newPenutup);
+            penutupField.val(newPenutup);
         }
     }
 
-
     // --- Core Initialization Logic ---
     $(document).ready(function() {
+        // We still run this in case we need the map later, or for debugging.
         initializeDataMap();
 
-        const jenisSuratSelect = $('#jenis_surat_id');
-
-        // --- Event Listener: Jenis Surat Change ---
-        jenisSuratSelect.on('change', function() {
-            const selectedId = $(this).val();
-
-            // 1. Render Custom Fields based on the new Jenis Surat
-            renderCustomFields(selectedId);
-            
-            // 2. Synchronize Paragraphs based on the new Jenis Surat
-            syncParagraphs(selectedId);
-        });
-
-        // 1. Initial Render on page load
-        const initialJenisSuratId = jenisSuratSelect.val();
-        if (initialJenisSuratId) {
-             // Load existing custom field data
-             renderCustomFields(initialJenisSuratId);
-        }
-        // Note: Paragraphs are loaded via PHP on page render using the saved values.
+        // NO NEED to call renderCustomFields or syncParagraphs here, 
+        // as the initial values are handled by the PHP/Blade rendering logic.
     });
 </script>
 @endpush

@@ -128,12 +128,13 @@ use App\Http\Controllers\TapController;
 use App\Http\Controllers\LayananSurat\{
     KopTemplateController,
     JenisSuratController,
-    PermohonanSuratController
+    PermohonanSuratController,
+    LaporanSuratController
 };
-
+use App\Http\Controllers\LayananSuratController;
 use App\Http\Controllers\MasterPerkembanganController;
 use App\Http\Controllers\MasterPotensiController;
-use App\Http\Controllers\LayananSuratController;
+// use App\Http\Controllers\LayananSuratController;
 use App\Http\Controllers\PengangguranController;
 use App\Http\Controllers\KesejahteraanKeluargaController;
 use App\Http\Controllers\MenurutSektorUsahaController;
@@ -578,6 +579,7 @@ Route::prefix('utama')->name('utama.')->middleware(['auth'])->group(function () 
 
     Route::resource('glosarium', GlosariumController::class);
      // Route untuk Glosarium dengan permission
+    // Route untuk Glosarium dengan permission
     Route::prefix('glosarium')->name('glosarium.')->group(function () {
         Route::get('/', [GlosariumController::class, 'index'])->middleware('permission:glosarium.view')->name('index');
         Route::post('/', [GlosariumController::class, 'store'])->middleware('permission:glosarium.create')->name('store');
@@ -655,35 +657,13 @@ Route::middleware('auth')->prefix('layanan-surat')->group(function () {
         Route::get('jenis-surats/{id}/edit', [JenisSuratController::class, 'edit'])->name('jenis_surats.edit');
         Route::put('jenis-surats/{id}', [JenisSuratController::class, 'update'])->name('jenis_surats.update');
         Route::delete('jenis-surats/{id}', [JenisSuratController::class, 'destroy'])->name('jenis_surats.destroy');
-    });
 
-    // ==== PERMOHONAN SURAT ====
-    
-    // new
-    Route::get('/permohonan', [PermohonanSuratController::class, 'index'])->name('layanan.permohonan.index');
-    Route::get('/permohonan/create', [PermohonanSuratController::class, 'create'])
-        ->name('layanan.permohonan.create');
-    Route::post('permohonan', [PermohonanSuratController::class, 'store'])->name('layanan.permohonan.store');
-    Route::get('/permohonan/edit/{id}', [PermohonanSuratController::class, 'edit'])->name('layanan.permohonan.edit');
-    Route::put('/permohonan/update/{id}', [PermohonanSuratController::class, 'update'])->name('layanan.permohonan.update');
-    Route::delete('/permohonan/destroy/{id}', [PermohonanSuratController::class, 'destroy'])->name('layanan.permohonan.destroy');
-   
-    Route::get('/permohonan/cetak/{id}', [PermohonanSuratController::class, 'cetak'])->name('layanan.permohonan.cetak');
-    
-    // FORMS PERMOHONAN SURAT
-    // // new end point to get form
-    // Route::get('layanan/permohonan/get-form/{jenisSuratId}', [PermohonanSuratController::class, 'getForm'])
-    // ->name('layanan.permohonan.getForm');
-    
-    // ==== PROFIL DESA ====
-    Route::get('profil-desa', [LayananSuratController::class, 'profilDesa'])->name('layanan.profil_desa.index');
-    Route::get('profil-desa/show', [LayananSuratController::class, 'showProfilDesa'])->name('layanan.profil_desa.show');
-    Route::get('profil-desa/edit', [LayananSuratController::class, 'editProfilDesa'])->name('layanan.profil_desa.edit');
-    // ==== DATA LAPORAN (submenu baru) ====
-    // Laporan Surat
-    Route::get('laporan/surat', [LayananSuratController::class, 'indexSurat'])->name('layanan.laporan.surat.index');
-    Route::get('laporan/surat/{id}', [LayananSuratController::class, 'showSurat'])->name('layanan.laporan.surat.show');
-    Route::get('laporan/surat/{id}/cetak', [LayananSuratController::class, 'cetakSurat'])->name('layanan.laporan.surat.cetak');
+        // 
+        Route::get('/', [TtdController::class, 'index'])->name('ttd.index');
+    });
+    Route::get('laporan/surat', [LaporanSuratController::class, 'index'])->name('laporan-surat.index');
+
+    Route::get('laporan/surat/{id}', [LaporanSuratController::class, 'show'])->name('laporan-surat.show');
 });
 
 Route::middleware(['auth', 'permission:usia.view'])->prefix('potensi/potensi-sdm/usia')->name('potensi.potensi-sdm.usia.')->group(function () {
@@ -720,6 +700,27 @@ Route::prefix('perkembangan/produk-domestik')->name('perkembangan.produk-domesti
 
 
 });
+
+
+// ==== PERMOHONAN SURAT ====
+
+// new
+Route::get('/permohonan', [PermohonanSuratController::class, 'index'])->name('layanan.permohonan.index');
+Route::get('/permohonan/create', [PermohonanSuratController::class, 'create'])
+    ->name('layanan.permohonan.create');
+Route::post('permohonan', [PermohonanSuratController::class, 'store'])->name('layanan.permohonan.store');
+Route::get('/permohonan/edit/{id}', [PermohonanSuratController::class, 'edit'])->name('layanan.permohonan.edit');
+Route::put('/permohonan/update/{id}', [PermohonanSuratController::class, 'update'])->name('layanan.permohonan.update');
+Route::delete('/permohonan/destroy/{id}', [PermohonanSuratController::class, 'destroy'])->name('layanan.permohonan.destroy');
+
+Route::get('/permohonan/cetak/{id}', [PermohonanSuratController::class, 'cetak'])->name('layanan.permohonan.cetak');
+// FORMS PERMOHONAN SURAT
+// // new end point to get form
+// Route::get('layanan/permohonan/get-form/{jenisSuratId}', [PermohonanSuratController::class, 'getForm'])
+// ->name('layanan.permohonan.getForm');
+
+
+
 
 require __DIR__ . '/auth.php';
 
@@ -775,3 +776,45 @@ Route::get('/cetak/surat_penghibaan_tanah', function () {
 Route::get('/cetak/surat_rekomendasi_rt', function () {
     return view('pages.layanan.permohonan.surat_rekomendasi_rt');
 });
+// Route::prefix('layanan/permohonan')->group(function () {
+//     Route::view('/sk_domisili', 'pages.layanan.permohonan.forms.sk_domisili')->name('permohonan.sk_domisili');
+//     Route::view('/sk_belum_pernah_nikah', 'pages.layanan.permohonan.forms.sk_belum_pernah_nikah')->name('permohonan.sk_belum_pernah_nikah');
+//     Route::view('/sp_berlakuan_baik', 'pages.layanan.permohonan.forms.sp_berlakuan_baik')->name('permohonan.sp_berlakuan_baik');
+//     Route::view('/sk_tidak_mampu', 'pages.layanan.permohonan.forms.sk_tidak_mampu')->name('permohonan.sk_tidak_mampu');
+//     Route::view('/sk_kehilangan_ktp', 'pages.layanan.permohonan.forms.sk_kehilangan_ktp')->name('permohonan.sk_kehilangan_ktp');
+//     Route::view('/surat_penghibaan_tanah', 'pages.layanan.permohonan.forms.surat_penghibaan_tanah')->name('permohonan.surat_penghibaan_tanah');
+//     Route::view('/sk_umum', 'pages.layanan.permohonan.forms.sk_umum')->name('permohonan.sk_umum');
+//     Route::view('/surat_rekomendasi_rt', 'pages.layanan.permohonan.forms.surat_rekomendasi_rt')->name('permohonan.surat_rekomendasi_rt');
+//     Route::view('/sr_ijin_mendirikan_bangunan', 'pages.layanan.permohonan.forms.sr_ijin_mendirikan_bangunan')->name('permohonan.sr_ijin_mendirikan_bangunan');
+//     Route::view('/sr_ijin_tempat', 'pages.layanan.permohonan.forms.sr_ijin_tempat')->name('permohonan.sr_ijin_tempat');
+// });
+// Route::get('/cetak/sk_domisili', function () {
+//     return view('pages.layanan.permohonan.cetak.sk_domisili');
+// });
+// Route::get('/cetak/sp_berlakuan_baik', function () {
+//     return view('pages.layanan.permohonan.cetak.sp_berlakuan_baik');
+// });
+// Route::get('/cetak/sk_tidak_mampu', function () {
+//     return view('pages.layanan.permohonan.cetak.sk_tidak_mampu');
+// });
+// Route::get('/cetak/sk_belum_pernah_nikah', function () {
+//     return view('pages.layanan.permohonan.cetak.sk_belum_pernah_nikah');
+// });
+// Route::get('/cetak/sk_kehilangan_ktp', function () {
+//     return view('pages.layanan.permohonan.cetak.sk_kehilangan_ktp');
+// });
+// Route::get('/cetak/sk_umum', function () {
+//     return view('pages.layanan.permohonan.cetak.sk_umum');
+// });
+// Route::get('/cetak/sr_ijin_mendirikan_bangunan', function () {
+//     return view('pages.layanan.permohonan.cetak.sr_ijin_mendirikan_bangunan');
+// });
+// Route::get('/cetak/sr_ijin_tempat', function () {
+//     return view('pages.layanan.permohonan.cetak.sr_ijin_tempat');
+// });
+// Route::get('/cetak/surat_penghibaan_tanah', function () {
+//     return view('pages.layanan.permohonan.surat_penghibaan_tanah');
+// });
+// Route::get('/cetak/surat_rekomendasi_rt', function () {
+//     return view('pages.layanan.permohonan.surat_rekomendasi_rt');
+// });

@@ -8,7 +8,7 @@
 
         <div class="card-header bg-primary text-white rounded-top">
             <h5 class="mb-0 fw-bold">
-                <i class="fas fa-edit me-2"></i> Tambah Kop Surat
+                <i class="fas fa-edit me-2"></i> Tambah Kop Dokumen
             </h5>
         </div>
 
@@ -18,7 +18,7 @@
 
                 {{-- Nama Kop Surat --}}
                 <div class="mb-3">
-                    <label for="nama" class="form-label fw-semibold text-dark">Nama Kop Surat</label>
+                    <label for="nama" class="form-label fw-semibold text-dark">Nama Kop Dokumen</label>
                     <textarea class="form-control rounded-3 uppercase-input" id="nama" name="nama" rows="3"> </textarea>
                     <div class="form-text">Contoh: PEMERINTAH PROVINSI ... KABUPATEN ...</div>
                 </div>
@@ -27,7 +27,7 @@
                 <input type="hidden" name="jenis_kop" value="kop surat">
                 <div class="mb-3">
                     <label for="jenis_kop" class="form-label fw-semibold text-dark">Jenis Kop</label>
-                    <select class="form-select rounded-3" id="jenis_kop" name="jenis_kop">
+                    <select class="form-select rounded-3 uppercase-input" id="jenis_kop" name="jenis_kop">
                         @foreach (['kop surat', 'kop laporan'] as $jenis)
                             <option value="{{ $jenis }}" {{ old('jenis_kop') == $jenis ? 'selected' : '' }}>
                                 {{ ucfirst($jenis) }}
