@@ -32,7 +32,7 @@ use App\Http\Controllers\LayananSurat\{
 };
 use App\Http\Controllers\LayananSuratController;
 use App\Http\Controllers\MasterPerkembanganController;
-use App\Http\Controllers\MasterPotensiController; 
+use App\Http\Controllers\MasterPotensiController;
 use App\Models\LayananSurat\JenisSurat;
 use App\Models\LayananSurat\KopTemplate;
 
@@ -250,21 +250,15 @@ Route::middleware('auth')->prefix('layanan-surat')->group(function () {
         Route::get('jenis-surats/{id}/edit', [JenisSuratController::class, 'edit'])->name('jenis_surats.edit');
         Route::put('jenis-surats/{id}', [JenisSuratController::class, 'update'])->name('jenis_surats.update');
         Route::delete('jenis-surats/{id}', [JenisSuratController::class, 'destroy'])->name('jenis_surats.destroy');
-       
+
         // 
         Route::get('/', [TtdController::class, 'index'])->name('ttd.index');
     });
-        // ==== PROFIL DESA ====
-    // Route::get('profil-desa', [LayananSuratController::class, 'profilDesa'])->name('layanan.profil_desa.index');
-    // Route::get('profil-desa/show', [LayananSuratController::class, 'showProfilDesa'])->name('layanan.profil_desa.show');
-    // Route::get('profil-desa/edit', [LayananSuratController::class, 'editProfilDesa'])->name('layanan.profil_desa.edit');
-    // // ==== DATA LAPORAN (submenu baru) ====
-    // // Laporan Surat
-    // Route::get('laporan/surat', [LayananSuratController::class, 'indexSurat'])->name('layanan.laporan.surat.index');
-    // Route::get('laporan/surat/{id}', [LayananSuratController::class, 'showSurat'])->name('layanan.laporan.surat.show');
-    // Route::get('laporan/surat/{id}/cetak', [LayananSuratController::class, 'cetakSurat'])->name('layanan.laporan.surat.cetak');
+    Route::get('laporan/surat', [LaporanSuratController::class, 'index'])->name('laporan-surat.index');
+
+    Route::get('laporan/surat/{id}', [LaporanSuratController::class, 'show'])->name('laporan-surat.show');
 });
- 
+
 
 // ==== PERMOHONAN SURAT ====
 
@@ -283,8 +277,8 @@ Route::get('/permohonan/cetak/{id}', [PermohonanSuratController::class, 'cetak']
 // Route::get('layanan/permohonan/get-form/{jenisSuratId}', [PermohonanSuratController::class, 'getForm'])
 // ->name('layanan.permohonan.getForm');
 
- 
-Route::get('laporan/surat/{id}', [LaporanSuratController::class, 'show'])->name('layanan.laporan-surat.show');
+
+
 
 require __DIR__ . '/auth.php';
 

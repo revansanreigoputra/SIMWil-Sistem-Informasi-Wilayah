@@ -251,11 +251,7 @@
                                             Penanda Tangan Surat
                                         </a>
                                         @endcan
-
-                                        <a class="dropdown-item {{ request()->is('layanan-surat/profil-desa*') ? 'active' : '' }}"
-                                            href="{{ route('layanan.profil_desa.index') }}">
-                                            Profil Desa
-                                        </a>
+ 
 
                                     </div>
                                 </div>
@@ -268,20 +264,20 @@
 
 
                                 {{-- Data Laporan --}}
-                                <div class="dropend">
+                                {{-- <div class="dropend">
                                     <a class="dropdown-item {{ request()->is('layanan-surat/laporan/surat*') ? 'active' : '' }}"
-                                        href="{{ route('layanan.laporan-surat.index') }}">
+                                        href="{{ route('layanan-surat.laporan-surat.index') }}">
                                         Data Laporan Surat
                                     </a>
-                                    <!-- <div
+                                    <div
                                         class="dropdown-menu {{ request()->is('layanan-surat/laporan*') ? 'show' : '' }}">
                                         <a class="dropdown-item {{ request()->is('layanan-surat/laporan/surat*') ? 'active' : '' }}"
                                             href="{{ route('layanan.laporan-surat.index') }}">
                                             Data Laporan Surat
                                         </a>
                                          
-                                    </div> -->
-                                </div>
+                                    </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
