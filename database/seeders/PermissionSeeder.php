@@ -362,6 +362,14 @@ class PermissionSeeder extends Seeder
             'organisasi.update',
             'organisasi.delete',
 
+            //musrenbang
+            'musrenbangdesa.view',
+            'musrenbangdesa.create',
+            'musrenbangdesa.store',
+            'musrenbangdesa.edit',      
+            'musrenbangdesa.update',
+            'musrenbangdesa.delete',
+
             // potensi permissions
             'potensi.laporan.view',
             'potensi.laporan.export',
