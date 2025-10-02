@@ -32,9 +32,9 @@
             </dl>
 
             <div class="mt-4">
-                <a href="{{ route('apb-desa.index') }}" class="btn btn-secondary">Kembali</a>
-                <a href="{{ route('apb-desa.edit', $apbdesa->id) }}" class="btn btn-warning">Edit</a>
-                <form action="{{ route('apb-desa.destroy', $apbdesa->id) }}" method="POST" class="d-inline"
+                <a href="{{ route('perkembangan.pemerintahdesadankelurahan.apbdesa.index') }}" class="btn btn-secondary">Kembali</a>
+                <a href="{{ route('perkembangan.pemerintahdesadankelurahan.apbdesa.edit', $apbdesa->id) }}" class="btn btn-warning">Edit</a>
+                <form action="{{ route('perkembangan.pemerintahdesadankelurahan.apbdesa.destroy', $apbdesa->id) }}" method="POST" class="d-inline"
                       onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                     @csrf
                     @method('DELETE')

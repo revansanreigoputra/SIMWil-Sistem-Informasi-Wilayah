@@ -12,7 +12,7 @@
     </div>
 
     <div class="card-body">
-        <form action="{{ route('pembinaanprovinsi.store') }}" method="POST">
+        <form action="{{ route('perkembangan.pemerintahdesadankelurahan.pembinaanprovinsi.store') }}" method="POST">
             @csrf
 
             {{-- Tanggal --}}
@@ -99,7 +99,7 @@
                     <span class="text-danger">*</span> wajib diisi
                 </small>
                 <div class="btn-group gap-2">
-                    <a href="{{ route('pembinaanprovinsi.index') }}" class="btn btn-outline-secondary">
+                    <a href="{{ route('perkembangan.pemerintahdesadankelurahan.pembinaanprovinsi.index') }}" class="btn btn-outline-secondary">
                         <i class="fas fa-arrow-left me-1"></i> Kembali
                     </a>
                     <button type="submit" class="btn btn-primary">
