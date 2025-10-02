@@ -27,6 +27,7 @@ use App\Http\Controllers\PembinaanpusatController;
 use App\Http\Controllers\PembinaanprovinsiController;
 use App\Http\Controllers\PembinaankabupatenController;
 use App\Http\Controllers\PembinaankecamatanController;
+use App\Http\Controllers\OrganisasiController;
 // use App\Http\Controllers\IrigasiController;
 // use App\Http\Controllers\NotificationController;
 // use App\Http\Controllers\PerangkatDesaController;
@@ -452,6 +453,18 @@ Route::middleware(['auth'])->prefix('perkembangan/pemerintahdesadankelurahan/pem
     Route::put('/{pembinaankecamatan}', [PembinaankecamatanController::class, 'update'])->name('update');
     Route::delete('/{pembinaankecamatan}', [PembinaankecamatanController::class, 'destroy'])->name('destroy');
 });
+//organisasi routes
+
+Route::middleware(['auth'])->prefix('perkembangan/lembagakemasyarakatan/organisasi')->name('perkembangan.lembagakemasyarakatan.organisasi.')->group(function () {
+        Route::get('/', [OrganisasiController::class, 'index'])->name('index');
+        Route::get('/create', [OrganisasiController::class, 'create'])->name('create');
+        Route::post('/', [OrganisasiController::class, 'store'])->name('store');
+        Route::get('/{id}', [OrganisasiController::class, 'show'])->name('show');
+        Route::get('/{id}/edit', [OrganisasiController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [OrganisasiController::class, 'update'])->name('update');
+        Route::delete('/{id}', [OrganisasiController::class, 'destroy'])->name('destroy');
+    });
+
 
 
 // Desa routes
