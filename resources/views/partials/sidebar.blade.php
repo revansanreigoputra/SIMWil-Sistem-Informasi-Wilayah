@@ -644,7 +644,7 @@
                                         <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/peransertamasyarakat*') ? 'active' : '' }}"
                                             href="#sidebar-peransertamasyarakat" data-bs-toggle="dropdown"
                                             data-bs-auto-close="false" role="button" aria-expanded="false">
-                                            Peran Serta Masyarakat <br> dalam Pembangunan
+                                            Peran Masyarakat <br> dalam Pembangunan
                                         </a>
                                         <div class="dropdown-menu {{ request()->is('perkembangan/peransertamasyarakat*') ? 'show' : '' }}">
                                             @can('musrenbangdesa.view')
@@ -655,7 +655,7 @@
                                             @endcan
 
                                         </div>
-                                    </div>d
+                                    </div>
 
                                     {{-- Ekonomi Masyarakat --}}
                                     <div class="dropend">
