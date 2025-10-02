@@ -13,7 +13,7 @@
     <div class="card shadow-sm border-0 rounded-3">
         <div class="card-header bg-primary text-white rounded-top">
             <h5 class="mb-0 fw-bold">
-                <i class="fas fa-edit me-2"></i> Edit Format Nomor Surat
+                <i class="fas fa-edit me-2"></i> Edit Format Dokumen: {{ $jenisSurat->nama }}
             </h5>
         </div>
 
@@ -29,14 +29,14 @@
 
 
                 <div class="mb-3">
-                    <label for="kop_template_id" class="form-label fw-semibold text-dark">Template Kop Surat</label>
+                    <label for="kop_template_id" class="form-label fw-semibold text-dark">Template Kop Dokumen</label>
                     <select name="kop_template_id" id="kop_template_id" class="form-select
                         @error('kop_template_id') is-invalid @enderror" required>
-                        <option value="">-- Pilih Template Kop Surat --</option>
+                        <option value="">-- Pilih Template Kop Dokumen --</option>
                         @foreach ($kopTemplates as $template)
                         <option value="{{ $template->id }}"
                             {{ old('kop_template_id', $jenisSurat->kop_template_id) == $template->id ? 'selected' : '' }}>
-                            {{ $template->nama }} - {{ $template->deskripsi }}
+                            {{ $template->nama }} - {{ $template->jenis_kop }}
                         </option>
                         @endforeach
                     </select>
@@ -60,13 +60,13 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="nama" class="form-label fw-semibold text-dark">Nama Jenis Surat <span class="text-danger">*</span></label>
+                    <label for="nama" class="form-label fw-semibold text-dark">Nama Jenis Dokumen <span class="text-danger">*</span></label>
                     <input type="text"
                         class="form-control @error('nama') is-invalid @enderror"
                         id="nama"
                         name="nama"
                         value="{{ old('nama', $jenisSurat->nama) }}"
-                        placeholder="Contoh: SURAT KETERANGAN USAHA">
+                        placeholder="Contoh: SURAT KETERANGAN USAHA/LAPORAN PERTANGGUNGJAWABAN">
                     @error('nama')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

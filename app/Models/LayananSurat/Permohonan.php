@@ -18,7 +18,7 @@ class Permohonan extends Model
         'id_data_keluargas',
         'id_anggota_keluargas',
         'id_ttds',
-
+        'custom_variables',
         'nomor_surat',
         'tanggal_permohonan',
         'nomor_urut',

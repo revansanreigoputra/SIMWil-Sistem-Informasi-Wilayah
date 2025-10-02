@@ -27,11 +27,11 @@
                     <label for="kop_template_id" class="form-label fw-semibold text-dark">Template Kop Surat</label>
                     <select name="kop_template_id" id="kop_template_id" class="form-select
                         @error('kop_template_id') is-invalid @enderror" required>
-                        <option value="">-- Pilih Template Kop Surat --</option>
+                        <option value="">-- Pilih Template Kop Dokumen --</option>
                         @foreach ($kopTemplates as $template)
                         <option value="{{ $template->id }}"
                             {{ old('kop_template_id') == $template->id ? 'selected' : '' }}>
-                            {{ $template->nama }} - {{ $template->deskripsi }}
+                            {{ $template->nama }} - {{ $template->jenis_kop }}
                         </option>
                         @endforeach
                     </select>
@@ -51,7 +51,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="nama" class="form-label fw-semibold text-dark">Nama Jenis Surat <span class="text-danger">*</span></label>
+                    <label for="nama" class="form-label fw-semibold text-dark">Nama Jenis Laporan/Surat <span class="text-danger">*</span></label>
                     <input type="text"
                         class="form-control @error('nama') is-invalid @enderror"
                         id="nama"
@@ -72,7 +72,7 @@
                             <button type="button" id="add-variable-btn"
                                 class="btn btn-sm btn-primary p-2 mt-2">Tambah Data Inputan</button>
                         </div>
-                        <small class="text-muted">Isi data penduduk yang diperlukan sesuai jenis surat ini. </small>
+                        <small class="text-muted">Isi data penduduk yang diperlukan sesuai jenis surat/laporan ini. </small>
                         <small class="text-muted">Contoh: Nama, NIK, Alamat, dll.</small>
 
                         <div id="variable-list" class="mt-3">
@@ -118,7 +118,7 @@
                 <div class="mb-3">
                     <label for="paragraf_pembuka" class="form-label fw-semibold text-dark">Paragraf Pembuka <span class="text-danger">*</span></label>
 
-                    <textarea name="paragraf_pembuka" rows="3" id="paragraf_pembuka" class="form-control @error('paragraf_pembuka') is-invalid @enderror" placeholder="Ini paragraph pembuka disurat">{{ old('paragraf_pembuka') }}</textarea>
+                    <textarea name="paragraf_pembuka" rows="3" id="paragraf_pembuka" class="form-control @error('paragraf_pembuka') is-invalid @enderror" placeholder="Ini paragraph pembuka  ">{{ old('paragraf_pembuka') }}</textarea>
                     @error('paragraf_pembuka')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -127,7 +127,7 @@
                 <div class="mb-3">
                     <label for="paragraf_penutup" class="form-label fw-semibold text-dark">Paragraf Penutup <span class="text-danger">*</span></label>
 
-                    <textarea name="paragraf_penutup" rows="3" id="paragraf_penutup" class="form-control @error('paragraf_penutup') is-invalid @enderror" placeholder="Ini paragraf penutup disurat">{{ old('paragraf_penutup') }}</textarea>
+                    <textarea name="paragraf_penutup" rows="3" id="paragraf_penutup" class="form-control @error('paragraf_penutup') is-invalid @enderror" placeholder="Ini paragraf penutup  ">{{ old('paragraf_penutup') }}</textarea>
                     @error('paragraf_penutup')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
-@section('title', 'Jenis Surat Template')
+@section('title', 'Jenis Dokumen Template')
 
 
 @section('action')
 @can('jenis_surat.create')
 <a href="{{ route('jenis_surats.create') }}" class="btn btn-primary ">
-    <i class="bi bi-plus-circle me-2"></i> Tambah Jenis Surat
+    <i class="bi bi-plus-circle me-2"></i> Tambah Jenis Dokumen
 </a>
 @endcan
 @endsection
@@ -20,9 +20,9 @@
         {{-- <div class="row mb-3">
                 <div class="col-md-4">
                     <label for="search" class="form-label">
-                        <i class="fas fa-search"></i> Cari Jenis Surat
+                        <i class="fas fa-search"></i> Cari Jenis Dokumen
                     </label>
-                    <input type="text" id="search" class="form-control" placeholder="Cari format nomor surat...">
+                    <input type="text" id="search" class="form-control" placeholder="Cari format nomor dokumen...">
                 </div>
             </div> --}}
 
@@ -32,7 +32,7 @@
                 <thead class="table-primary">
                     <tr>
                         <th>No</th>
-                        <th>Kode Surat</th>
+                        <th>Kode Dokumen</th>
                         <th>Nama</th>
                         <th>Paragraf Pembuka</th>
                         <th>Paragraf Penutup</th>

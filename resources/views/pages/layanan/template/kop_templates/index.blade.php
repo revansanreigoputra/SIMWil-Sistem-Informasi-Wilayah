@@ -1,11 +1,11 @@
 @extends('layouts.master')
 
-@section('title', 'Kop Surat')
+@section('title', 'Kop Dokumen')
       
 @section('action')
   <a href="{{ route('kop_templates.create') }}" class="btn btn-primary ">
-    <i class="bi bi-plus-circle me-2"></i> Tambah Kop    
-  </a>  
+    <i class="bi bi-plus-circle me-2"></i> Tambah Kop Dokumen
+  </a>
 @endsection
 
 @section('content')
@@ -29,7 +29,7 @@
                             <td class="text-center fw-semibold">
                                 {{ $loop->iteration }}
                             </td>
-                            <td>
+                            <td class="uppercase-input">
                                 <strong>{{ $kopTemplate->jenis_kop }}</strong><br>
                                 
                             </td>

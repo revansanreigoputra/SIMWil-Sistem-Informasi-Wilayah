@@ -36,9 +36,9 @@ class PermohonanSuratController extends Controller
             'dataKeluarga'
         ])->get();
 
-        $jenisSurats = JenisSurat::all();
+        $groupedKopTemplates = KopTemplate::with('jenisSurats')->get();
 
-        return view('pages.layanan.permohonan.index', compact('permohonans', 'jenisSurats'));
+        return view('pages.layanan.permohonan.index', compact('permohonans', 'groupedKopTemplates'));
     }
     private function convertToRoman(int $number): string
     {
@@ -261,12 +261,25 @@ class PermohonanSuratController extends Controller
 
             $combinedAnggota = $anggotaKeluargas->concat($preparedDataKeluargas);
 
+            $requiredVariables = $permohonan->jenisSurat->required_variables ?? [];
+
+
+            $customFields = collect($requiredVariables)->filter(function ($variable) {
+                return ($variable['type'] ?? 'text') !== 'system';
+            });
+
+
+            $storedCustomData = old('custom_data', $permohonan->custom_variables ?? []);
+
+
             return view('pages.layanan.permohonan.edit', [
                 'permohonan' => $permohonan,
                 'kopTemplates' => $kopTemplates,
-                'jenisSurats' => $allJenisSurats,
+                'allJenisSurats' => $allJenisSurats,
                 'anggotaKeluargas' => $combinedAnggota,
                 'ttds' => $ttds,
+                'customFields' => $customFields,
+                'storedCustomData' => $storedCustomData,
             ]);
         } catch (ModelNotFoundException $e) {
             return redirect()->route('layanan.permohonan.index')->with('error', 'Permohonan Surat tidak ditemukan.');
@@ -408,7 +421,10 @@ class PermohonanSuratController extends Controller
 
         $data = [
             // Kop Data
-            'logo_url' => optional($kopTemplate)->logo ? Storage::url(optional($kopTemplate)->logo) : null,
+            // 'logo_url' => optional($kopTemplate)->logo ? Storage::url(optional($kopTemplate)->logo) : null,
+            'logo_url' => optional($kopTemplate)->logo
+                ? Storage::disk('public')->path(optional($kopTemplate)->logo) // <-- USE ABSOLUTE PATH
+                : null,
             'instansi_kabupaten' => optional($kopTemplate)->nama ?? 'N/A',
             'instansi_kecamatan' => optional($locationSource->kecamatans)->nama_kecamatan ?? 'N/A',
             'instansi_desa' => optional($locationSource->desas)->nama_desa ?? 'N/A',
@@ -480,5 +496,10 @@ class PermohonanSuratController extends Controller
 
         $pdf = PDF::loadView('pages.layanan.permohonan.cetak.cetak_surat', $data);
         return $pdf->download($filename);
+    }
+    //view ttd page
+    public function showTtdPage()
+    {
+        return view('pages.ttd.index');
     }
 }
