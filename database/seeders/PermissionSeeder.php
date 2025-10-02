@@ -362,6 +362,14 @@ class PermissionSeeder extends Seeder
             'pembinaankecamatan.update',
             'pembinaankecamatan.delete',
 
+            //organisasi
+            'organisasi.view',
+            'organisasi.create',
+            'organisasi.store',
+            'organisasi.edit',      
+            'organisasi.update',
+            'organisasi.delete',
+
             // potensi permissions
             'potensi.laporan.view',
             'potensi.laporan.export',

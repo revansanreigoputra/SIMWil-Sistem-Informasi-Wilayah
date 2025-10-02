@@ -620,10 +620,9 @@
                                         <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/lembagakemasyarakatan*') ? 'active' : '' }}"
                                             href="#sidebar-lembagakemasyarakatan" data-bs-toggle="dropdown"
                                             data-bs-auto-close="false" role="button" aria-expanded="false">
-                                            Lembaga Kemasyarakatan
+                                            Lembaga <br> Kemasyarakatan
                                         </a>
-                                        <div
-                                            class="dropdown-menu {{ request()->is('perkembangan/lembagakemasyarakatan*') ? 'show' : '' }}">
+                                        <div class="dropdown-menu {{ request()->is('perkembangan/lembagakemasyarakatan*') ? 'show' : '' }}">
                                             @can('organisasi.view')
                                                 <a class="dropdown-item {{ request()->is('perkembangan/lembagakemasyarakatan/organisasi*') ? 'active' : '' }}"
                                                     href="{{ route('perkembangan.lembagakemasyarakatan.organisasi.index') }}">
@@ -632,6 +631,24 @@
                                             @endcan
                                         </div>
                                     </div>
+
+                                    {{-- Peran Serta Masyarakat dalam Pembangunan --}}
+                                    <div class="dropend">
+                                        <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/peransertamasyarakat*') ? 'active' : '' }}"
+                                            href="#sidebar-peransertamasyarakat" data-bs-toggle="dropdown"
+                                            data-bs-auto-close="false" role="button" aria-expanded="false">
+                                            Peran Serta Masyarakat <br> dalam Pembangunan
+                                        </a>
+                                        <div class="dropdown-menu {{ request()->is('perkembangan/peransertamasyarakat*') ? 'show' : '' }}">
+                                            @can('musrenbangdesa.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/peransertamasyarakat/musrenbangdesa*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.peransertamasyarakat.musrenbangdesa.index') }}">
+                                                    Musrenbang <br> Desa/Kelurahan
+                                                </a>
+                                            @endcan
+
+                                        </div>
+                                    </div>d
 
                                     {{-- Ekonomi Masyarakat --}}
                                     <div class="dropend">
