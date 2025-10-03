@@ -65,12 +65,13 @@
                                     <td>{{ $ttd->keterangan ?? '-' }}</td>
                                 </tr>
                                 <tr>
+                                    @php use Carbon\Carbon; @endphp 
                                     <th>Dibuat</th>
-                                    <td>{{ $ttd->created_at->format('d/m/Y H:i') }}</td>
+                                    <td>{{ Carbon::parse($ttd->created_at)->format('d/m/Y H:i') }}</td>
                                 </tr>
                                 <tr>
                                     <th>Diubah</th>
-                                    <td>{{ $ttd->updated_at->format('d/m/Y H:i') }}</td>
+                                    <td>{{ Carbon::parse($ttd->updated_at)->format('d/m/Y H:i') }}</td>
                                 </tr>
                             </table>
                         </div>

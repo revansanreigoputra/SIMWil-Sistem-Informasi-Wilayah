@@ -49,4 +49,7 @@
         color: rgb(106, 106, 106);
         font-size: small;
     }
+    .uppercase-input{
+        text-transform: uppercase;
+    }
 </style>

@@ -8,20 +8,21 @@
             <h3 class="card-title">Form Edit Berita</h3>
         </div>
         <div class="card-body">
-            {{-- Form mengarah ke route 'update' untuk memperbarui data --}}
             <form action="{{ route('utama.berita.update', $berita->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                @method('PUT') {{-- Method spoofing untuk request UPDATE --}}
+                @method('PUT')
 
                 <div class="mb-3">
                     <label for="judul" class="form-label">Judul *</label>
-                    <input type="text" name="judul" id="judul" class="form-control" value="{{ old('judul', $berita->judul) }}" required>
+                    <input type="text" name="judul" id="judul" class="form-control"
+                        value="{{ old('judul', $berita->judul) }}" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="fupload" class="form-label">Gambar</label>
                     <p class="form-text text-muted">Gambar saat ini:</p>
-                    <img src="{{ asset('storage/foto_berita/' . $berita->gambar) }}" class="img-thumbnail mb-2" width="300" alt="Gambar {{ $berita->judul }}">
+                    <img src="{{ asset('storage/foto_berita/' . $berita->gambar) }}" class="img-thumbnail mb-2"
+                        style="max-width: 50px; height: auto;" alt="Gambar {{ $berita->judul }}">
                     <input type="file" name="fupload" id="fupload" class="form-control">
                     <small class="form-text text-danger">Kosongkan jika tidak ingin mengubah gambar.</small>
                 </div>
@@ -41,5 +42,15 @@
 @endsection
 
 @push('addon-script')
-    {{-- Script tambahan bisa diletakkan di sini --}}
+    <script src="https://cdn.tiny.cloud/1/9zjmg28d40yb4mn7sv8hwoop1c4aj6pbi8s08chgk8ythl65/tinymce/6/tinymce.min.js"
+        referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea#loko1',
+            plugins: 'autolink lists link image charmap print preview hr anchor pagebreak',
+            toolbar_mode: 'floating',
+            toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+            height: 350,
+        });
+    </script>
 @endpush
