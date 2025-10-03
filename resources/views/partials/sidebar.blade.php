@@ -227,7 +227,7 @@
                         </span>
                         <span class="nav-link-title"> Layanan Surat </span>
                     </a>
- 
+
                     <div class="dropdown-menu {{ request()->is('layanan-surat*') ? 'show' : '' }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
@@ -237,7 +237,8 @@
                                         href="#" data-bs-toggle="dropdown" data-bs-auto-close="false">
                                         Template Surat
                                     </a>
-                                    <div class="dropdown-menu {{ request()->is('layanan-surat/template*') ? 'show' : '' }}">
+                                    <div
+                                        class="dropdown-menu {{ request()->is('layanan-surat/template*') ? 'show' : '' }}">
                                         <a class="dropdown-item {{ request()->is('layanan-surat/template/kop-templates*') ? 'active' : '' }}"
                                             href="{{ route('kop_templates.index') }}">
                                             Kop Template
@@ -281,7 +282,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div> 
+                    </div>
                 </li>
 
                 {{-- Awal Menu Dasar Data Keluarga --}}
@@ -362,10 +363,11 @@
                     </div>
                 </li>
 
-                {{-- potensi --}}
+                {{-- Potensi --}}
                 <li class="nav-item dropdown {{ request()->is('potensi*') ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-potensi" data-bs-toggle="dropdown"
-                        data-bs-auto-close="false" role="button" aria-expanded="false">
+                        data-bs-auto-close="false" role="button"
+                        aria-expanded="{{ request()->is('potensi*') ? 'true' : 'false' }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chart-bar"
                                 width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
@@ -377,16 +379,18 @@
                                 <path d="M17 9v12" />
                             </svg>
                         </span>
-
                         <span class="nav-link-title"> Potensi </span>
                     </a>
                     <div class="dropdown-menu {{ request()->is('potensi*') ? 'show' : '' }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
+
+                                {{-- Potensi Sumber Daya Manusia --}}
                                 <div class="dropend">
                                     <a class="dropdown-item dropdown-toggle {{ request()->is('potensi/potensi-sdm*') ? 'active' : '' }}"
                                         href="#sidebar-potensi-sdm" data-bs-toggle="dropdown"
-                                        data-bs-auto-close="false" role="button" aria-expanded="false">
+                                        data-bs-auto-close="false" role="button"
+                                        aria-expanded="{{ request()->is('potensi/potensi-sdm*') ? 'true' : 'false' }}">
                                         Potensi Sumber <br> Daya Manusia
                                     </a>
                                     <div
@@ -397,17 +401,64 @@
                                         </a>
                                     </div>
                                 </div>
-                                {{-- <a class="dropdown-item {{ request()->is('potensi/laporan*') ? 'active' : '' }}"
-                                href="{{ route('potensi.laporan.index') }}">
-                                Laporan Mutasi
-                                </a> --}}
+
+                                {{-- Potensi Kelembagaan --}}
+                                <div class="dropend">
+                                    <a class="dropdown-item dropdown-toggle {{ request()->is('potensi/potensi-kelembagaan*') ? 'active' : '' }}"
+                                        href="#sidebar-potensi-kelembagaan" data-bs-toggle="dropdown"
+                                        data-bs-auto-close="false" role="button"
+                                        aria-expanded="{{ request()->is('potensi/potensi-kelembagaan*') ? 'true' : 'false' }}">
+                                        Potensi Kelembagaan
+                                    </a>
+                                    <div
+                                        class="dropdown-menu {{ request()->is('potensi/potensi-kelembagaan*') ? 'show' : '' }}">
+                                        <a class="dropdown-item {{ request()->is('potensi/potensi-kelembagaan/pemerintah*') ? 'active' : '' }}"
+                                            href="{{ route('potensi.kelembagaan.pemerintah.index') }}">
+                                            Lembaga Pemerintah
+                                        </a>
+                                        <a class="dropdown-item {{ request()->is('potensi/potensi-kelembagaan/kemasyarakatan*') ? 'active' : '' }}"
+                                            href="{{ route('potensi.kelembagaan.kemasyarakatan.index') }}">
+                                            Lembaga Kemasyarakatan
+                                        </a>
+                                        <a class="dropdown-item {{ request()->is('potensi/potensi-kelembagaan/politik*') ? 'active' : '' }}"
+                                            href="{{ route('potensi.kelembagaan.politik.index') }}">
+                                            Partisipasi Politik
+                                        </a>
+                                        <a class="dropdown-item {{ request()->is('potensi/potensi-kelembagaan/ekonomi*') ? 'active' : '' }}"
+                                            href="{{ route('potensi.kelembagaan.ekonomi.index') }}">
+                                            Lembaga Ekonomi
+                                        </a>
+                                        <a class="dropdown-item {{ request()->is('potensi/potensi-kelembagaan/pengangkutan*') ? 'active' : '' }}"
+                                            href="{{ route('potensi.kelembagaan.pengangkutan.index') }}">
+                                            Jasa Pengangkutan
+                                        </a>
+                                        <a class="dropdown-item {{ request()->is('potensi/potensi-kelembagaan/hiburan*') ? 'active' : '' }}"
+                                            href="{{ route('potensi.kelembagaan.hiburan.index') }}">
+                                            Jasa, Hiburan, DLL
+                                        </a>
+                                        <a class="dropdown-item {{ request()->is('potensi/potensi-kelembagaan/pendidikan*') ? 'active' : '' }}"
+                                            href="{{ route('potensi.kelembagaan.pendidikan.index') }}">
+                                            Lembaga Pendidikan
+                                        </a>
+                                        <a class="dropdown-item {{ request()->is('potensi/potensi-kelembagaan/adat*') ? 'active' : '' }}"
+                                            href="{{ route('potensi.kelembagaan.adat.index') }}">
+                                            Lembaga Adat
+                                        </a>
+                                        <a class="dropdown-item {{ request()->is('potensi/potensi-kelembagaan/keamanan*') ? 'active' : '' }}"
+                                            href="{{ route('potensi.kelembagaan.keamanan.index') }}">
+                                            Lembaga Keamanan
+                                        </a>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
                 </li>
 
                 {{-- Master Data (Dropdown Menu) --}}
-                <li class="nav-item dropdown {{ request()->is('master-ddk*') || request()->is('master-perkembangan*') || request()->is('master-potensi*') || request()->is('user*') || request()->is('role*') ? 'active' : '' }}">
+                <li
+                    class="nav-item dropdown {{ request()->is('master-ddk*') || request()->is('master-perkembangan*') || request()->is('master-potensi*') || request()->is('user*') || request()->is('role*') ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
