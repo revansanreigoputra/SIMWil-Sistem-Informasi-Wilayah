@@ -287,6 +287,12 @@ require __DIR__ . '/auth.php';
 Route::get('/anggota_keluarga/{id}/get_data', [AnggotaKeluargaController::class, 'get_data'])->name('anggota_keluarga.get_data');
 // routes for direct file (placeholder routes)
 Route::get('/master-ddk/{table?}', [MasterDDKController::class, 'index'])->name('master.ddk.index');
+Route::get('/master-ddk/{table}/create', [MasterDdkController::class, 'create'])->name('master.ddk.create');
+Route::post('/master-ddk/{table}', [MasterDdkController::class, 'store'])->name('master.ddk.store');
+Route::get('/master-ddk/{table}/{id}/edit', [MasterDdkController::class, 'edit'])->name('master.ddk.edit');
+Route::put('/master-ddk/{table}/{id}', [MasterDdkController::class, 'update'])->name('master.ddk.update');
+Route::delete('/master-ddk/{table}/{id}', [MasterDdkController::class, 'destroy'])->name('master.ddk.destroy');
+
 Route::get('/master-perkembangan', [MasterPerkembanganController::class, 'index'])->name('master.perkembangan.index');
 Route::get('/master-potensi', [MasterPotensiController::class, 'index'])->name('master.potensi.index');
 
