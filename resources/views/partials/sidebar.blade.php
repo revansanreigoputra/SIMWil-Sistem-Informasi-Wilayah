@@ -434,113 +434,6 @@
                                                 @endcan
                                             </div>
                                         </div>
-
-                                        {{-- Kelembagaan --}}
-                                        <div class="dropend">
-                                            <a class="dropdown-item dropdown-toggle {{ request()->is('potensi/potensi-kelembagaan*') ? 'active' : '' }}"
-                                                href="#sidebar-potensi-kelembagaan" data-bs-toggle="dropdown"
-                                                data-bs-auto-close="false" role="button" aria-expanded="false">
-                                                Potensi Kelembagaan
-                                            </a>
-
-                                            <div
-                                                class="dropdown-menu {{ request()->is('potensi/potensi-kelembagaan*') ? 'show' : '' }}">
-                                                @can('adat.view')
-                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-kelembagaan/lembagaAdat*') ? 'active' : '' }}"
-                                                        href="{{ route('potensi.potensi-kelembagaan.lembagaAdat.index') }}">
-                                                        Lembaga Adat
-                                                    </a>
-                                                @endcan
-
-                                            </div>
-                                        </div>
-
-                                        {{-- Prasarana dan Sarana --}}
-                                        <div class="dropend">
-                                            <a class="dropdown-item dropdown-toggle {{ request()->is('potensi/potensi-prasarana-dan-sarana*') ? 'active' : '' }}"
-                                                href="#sidebar-potensi-prasarana" data-bs-toggle="dropdown"
-                                                data-bs-auto-close="false" role="button" aria-expanded="false">
-                                                Potensi Prasarana<br>dan Sarana
-                                            </a>
-
-                                            <div
-                                                class="dropdown-menu {{ request()->is('potensi/potensi-prasarana-dan-sarana*') ? 'show' : '' }}">
-                                                @can('transportasi_darat.view')
-                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/transportasi-darat*') ? 'active' : '' }}"
-                                                        href="{{ route('potensi.potensi-prasarana-dan-sarana.transportasi-darat.index') }}">
-                                                        Transportasi Darat
-                                                    </a>
-                                                @endcan
-
-                                                @can('angkutan.view')
-                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/angkutan*') ? 'active' : '' }}"
-                                                        href="{{ route('potensi.potensi-prasarana-dan-sarana.angkutan.index') }}">
-                                                        Prasarana Angkutan
-                                                    </a>
-                                                @endcan
-
-                                                @can('irigasi.view')
-                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/irigasi*') ? 'active' : '' }}"
-                                                        href="{{ route('potensi.potensi-prasarana-dan-sarana.irigasi.index') }}">
-                                                        Prasarana dan Irigasi
-                                                    </a>
-                                                @endcan
-
-                                                @can('sanitasi.view')
-                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/sanitasi*') ? 'active' : '' }}"
-                                                        href="{{ route('potensi.potensi-prasarana-dan-sarana.prasarana-sanitasi.index') }}">
-                                                        Prasarana Sanitasi
-                                                    </a>
-                                                @endcan
-
-                                                @can('air_bersih.view')
-                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/air-bersih*') ? 'active' : '' }}"
-                                                        href="{{ route('potensi.potensi-prasarana-dan-sarana.prasarana-air-bersih.index') }}">
-                                                        Prasarana Air Bersih
-                                                    </a>
-                                                @endcan
-
-                                                <br>
-
-                                                @can('dkelurahan.view')
-                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/dkelurahan.view*') ? 'active' : '' }}"
-                                                        href="{{ route('potensi.potensi-prasarana-dan-sarana.prasarana-dkelurahan.index') }}">
-                                                        Desa atau Kelurahan
-                                                    </a>
-                                                @endcan
-
-                                                @can('bpd.view')
-                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/prasarana-bpd*') ? 'active' : '' }}"
-                                                        href="{{ route('potensi.potensi-prasarana-dan-sarana.prasarana-bpd.index') }}">
-                                                        Badan Perwakilan Desa
-                                                    </a>
-                                                @endcan
-
-                                                @can('dusun.view')
-                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/prasarana-dusun*') ? 'active' : '' }}"
-                                                        href="{{ route('potensi.potensi-prasarana-dan-sarana.prasarana-dusun.index') }}">
-                                                        Dusun atau Blok
-                                                    </a>
-                                                @endcan
-
-                                                <br>
-
-                                                @can('kemasyarakatan.view')
-                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/kemasyarakatan*') ? 'active' : '' }}"
-                                                        href="{{ route('potensi.potensi-prasarana-dan-sarana.kemasyarakatan.index') }}">
-                                                        Lemb. Kemasyarakatan
-                                                    </a>
-                                                @endcan
-
-                                                @can('kemasyarakatan.view')
-                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/energiPenerangan*') ? 'active' : '' }}"
-                                                        href="{{ route('potensi.potensi-prasarana-dan-sarana.energiPenerangan.index') }}">
-                                                        Energi & Penerangan
-                                                    </a>
-                                                @endcan
-
-                                            </div>
-                                        </div>
                                     </div>
 
                                     {{-- Potensi Kelembagaan --}}
@@ -677,7 +570,6 @@
                                                     Energi & Penerangan
                                                 </a>
                                             @endcan
-
                                         </div>
                                     </div>
 
@@ -959,7 +851,7 @@
                         </div>
                     </div>
                 </li>
-                <<<<<<< HEAD <li class="nav-item {{ request()->is('pengaturan*') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->is('pengaturan*') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('settings.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -973,72 +865,69 @@
                         </span>
                         <span class="nav-link-title"> Pengaturan </span>
                     </a>
-                    </li>
-                    =======
-                    >>>>>>> 669986bdd0ba12759515d9b6194df78cb9b8576e
-                    {{-- Menu Utama --}}
-                    <li class="nav-item dropdown {{ request()->is('utama/*') ? 'active' : '' }}">
-                        <a class="nav-link dropdown-toggle" href="#navbar-utama" data-bs-toggle="dropdown"
-                            data-bs-auto-close="false" role="button" aria-expanded="false">
-                            <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                {{-- Icon --}}
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list"
-                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <path d="M9 6h11"></path>
-                                    <path d="M9 12h11"></path>
-                                    <path d="M9 18h11"></path>
-                                    <path d="M5 6v.01"></path>
-                                    <path d="M5 12v.01"></path>
-                                    <path d="M5 18v.01"></path>
-                                </svg>
-                            </span>
-                            <span class="nav-link-title"> Utama </span>
-                        </a>
-                        <div class="dropdown-menu {{ request()->is('utama/*') ? 'show' : '' }}">
-                            <div class="dropdown-menu-columns">
-                                <div class="dropdown-menu-column">
-                                    <a class="dropdown-item {{ request()->routeIs('utama.agenda.*') ? 'active' : '' }}"
-                                        href="{{ route('utama.agenda.index') }}">
-                                        Agenda Kegiatan
-                                    </a>
-                                    <a class="dropdown-item {{ request()->routeIs('utama.glosarium.*') ? 'active' : '' }}"
-                                        href="{{ route('utama.glosarium.index') }}">
-                                        Glosarium
-                                    </a>
-                                    <a class="dropdown-item {{ request()->routeIs('utama.berita.*') ? 'active' : '' }}"
-                                        href="{{ route('utama.berita.index') }}">
-                                        Berita Penting
-                                    </a>
-                                    <a class="dropdown-item {{ request()->routeIs('utama.galeri.*') ? 'active' : '' }}"
-                                        href="{{ route('utama.galeri.index') }}">
-                                        Galeri Foto
-                                    </a>
-                                    <a class="dropdown-item {{ request()->routeIs('utama.tap.*') ? 'active' : '' }}"
-                                        href="{{ route('utama.tap.index') }}">
-                                        TA Pendamping
-                                    </a>
-                                </div>
+                </li>
+                {{-- Menu Utama --}}
+                <li class="nav-item dropdown {{ request()->is('utama/*') ? 'active' : '' }}">
+                    <a class="nav-link dropdown-toggle" href="#navbar-utama" data-bs-toggle="dropdown"
+                        data-bs-auto-close="false" role="button" aria-expanded="false">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            {{-- Icon --}}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list"
+                                width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M9 6h11"></path>
+                                <path d="M9 12h11"></path>
+                                <path d="M9 18h11"></path>
+                                <path d="M5 6v.01"></path>
+                                <path d="M5 12v.01"></path>
+                                <path d="M5 18v.01"></path>
+                            </svg>
+                        </span>
+                        <span class="nav-link-title"> Utama </span>
+                    </a>
+                    <div class="dropdown-menu {{ request()->is('utama/*') ? 'show' : '' }}">
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item {{ request()->routeIs('utama.agenda.*') ? 'active' : '' }}"
+                                    href="{{ route('utama.agenda.index') }}">
+                                    Agenda Kegiatan
+                                </a>
+                                <a class="dropdown-item {{ request()->routeIs('utama.glosarium.*') ? 'active' : '' }}"
+                                    href="{{ route('utama.glosarium.index') }}">
+                                    Glosarium
+                                </a>
+                                <a class="dropdown-item {{ request()->routeIs('utama.berita.*') ? 'active' : '' }}"
+                                    href="{{ route('utama.berita.index') }}">
+                                    Berita Penting
+                                </a>
+                                <a class="dropdown-item {{ request()->routeIs('utama.galeri.*') ? 'active' : '' }}"
+                                    href="{{ route('utama.galeri.index') }}">
+                                    Galeri Foto
+                                </a>
+                                <a class="dropdown-item {{ request()->routeIs('utama.tap.*') ? 'active' : '' }}"
+                                    href="{{ route('utama.tap.index') }}">
+                                    TA Pendamping
+                                </a>
                             </div>
                         </div>
-                    </li>
-                    <li class="nav-item {{ request()->is('pengaturan*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('settings.index') }}">
-                            <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
-                                    <path
-                                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 0 0 -1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
-                                    </path>
-                                    <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path>
-                                </svg>
-                            </span>
-                            <span class="nav-link-title"> Pengaturan </span>
-                        </a>
-                    </li>
+                    </div>
+                </li>
+                <li class="nav-item {{ request()->is('pengaturan*') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('settings.index') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
+                                <path
+                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 0 0 -1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                                </path>
+                                <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path>
+                            </svg>
+                        </span>
+                        <span class="nav-link-title"> Pengaturan </span>
+                    </a>
+                </li>
 
 
             </ul>
