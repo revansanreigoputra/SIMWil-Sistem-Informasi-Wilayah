@@ -33,6 +33,9 @@ class DatabaseSeeder extends Seeder
             PendidikanSeeder::class,
             KategoriTransportasiSeeder::class,
             JenisTransportasiSeeder::class,
+            KategoriKomunikasiSeeder::class,
+            JenisKomunikasiSeeder::class,
+            KomunikasiInformasiSeeder::class,
         ]);
     }
 }

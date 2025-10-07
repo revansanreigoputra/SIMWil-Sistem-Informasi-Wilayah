@@ -144,6 +144,7 @@ use App\Models\LayananSurat\KopTemplate;
 use App\Http\Controllers\LembagaAdatController;
 use App\Http\Controllers\SaranaTransportasiController;
 use App\Http\Controllers\JenisTransportasiController;
+use App\Http\Controllers\KomunikasiInformasiController;
 
 Route::get('/', function () {
     return Auth::check()
@@ -346,6 +347,19 @@ Route::middleware(['auth'])->prefix('transportasi-darat')->group(function () {
     Route::put('/{transportasiDarat}', [TransportasiDaratController::class, 'update'])->middleware('permission:transportasi_darat.update')->name('potensi.potensi-prasarana-dan-sarana.transportasi-darat.update');
     Route::delete('/{transportasiDarat}', [TransportasiDaratController::class, 'destroy'])->middleware('permission:transportasi_darat.delete')->name('potensi.potensi-prasarana-dan-sarana.transportasi-darat.destroy');
 });
+
+// Komunikasi dan Informasi
+Route::middleware(['auth'])->prefix('komunikasiinformasi')->group(function () {
+    Route::get('/', [KomunikasiInformasiController::class, 'index'])->middleware('permission:komunikasiinformasi.view')->name('potensi.potensi-prasarana-dan-sarana.komunikasiinformasi.index');
+    Route::get('/create', [KomunikasiInformasiController::class, 'create'])->middleware('permission:komunikasiinformasi.create')->name('potensi.potensi-prasarana-dan-sarana.komunikasiinformasi.create');
+    Route::post('/', [KomunikasiInformasiController::class, 'store'])->middleware('permission:komunikasiinformasi.store')->name('potensi.potensi-prasarana-dan-sarana.komunikasiinformasi.store');
+    Route::get('/{komunikasi_informasi}', [KomunikasiInformasiController::class, 'show'])->middleware('permission:komunikasiinformasi.view')->name('potensi.potensi-prasarana-dan-sarana.komunikasiinformasi.show');
+    Route::get('/{komunikasi_informasi}/edit', [KomunikasiInformasiController::class, 'edit'])->middleware('permission:komunikasiinformasi.update')->name('potensi.potensi-prasarana-dan-sarana.komunikasiinformasi.edit');
+    Route::put('/{komunikasi_informasi}', [KomunikasiInformasiController::class, 'update'])->middleware('permission:komunikasiinformasi.update')->name('potensi.potensi-prasarana-dan-sarana.komunikasiinformasi.update');
+    Route::delete('/{komunikasi_informasi}', [KomunikasiInformasiController::class, 'destroy'])->middleware('permission:komunikasiinformasi.delete')->name('potensi.potensi-prasarana-dan-sarana.komunikasiinformasi.destroy');
+});
+
+Route::get('/get-jenis-komunikasi-by-kategori/{id}', [\App\Http\Controllers\KomunikasiInformasiController::class, 'getJenisByKategori']);
 
 // Sarana Transportasi routes
 Route::middleware(['auth'])->prefix('angkutan')->group(function () {
@@ -833,7 +847,7 @@ Route::get('/cetak/sk_belum_pernah_nikah', function () {
     return view('pages.layanan.permohonan.cetak.sk_belum_pernah_nikah');
 });
 Route::get('/cetak/sk_kehilangan_ktp', function () {
-    return view('pages.layanan.permohonan.cetak.sk_kehilangan_ktp');
+    return view('pages
 });
 Route::get('/cetak/sk_umum', function () {
     return view('pages.layanan.permohonan.cetak.sk_umum');

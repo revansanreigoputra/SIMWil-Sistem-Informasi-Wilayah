@@ -245,6 +245,13 @@ class PermissionSeeder extends Seeder
             'dusun.store',
             'dusun.update',
             'dusun.delete',
+            
+            // komunikasiinformasi
+            'komunikasiinformasi.view',
+            'komunikasiinformasi.create',
+            'komunikasiinformasi.store',
+            'komunikasiinformasi.update',
+            'komunikasiinformasi.delete',
 
             // potensi-kelembagaan-adat
             'adat.view',

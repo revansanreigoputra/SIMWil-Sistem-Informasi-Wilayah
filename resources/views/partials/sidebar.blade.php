@@ -510,6 +510,13 @@
                                                     Prasarana Angkutan
                                                 </a>
                                             @endcan
+                                            
+                                            @can('komunikasiinformasi.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/komunikasiinformasi*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-prasarana-dan-sarana.komunikasiinformasi.index') }}">
+                                                    Komunikasi Informasi
+                                                </a>
+                                            @endcan
 
                                             @can('irigasi.view')
                                                 <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/irigasi*') ? 'active' : '' }}"
