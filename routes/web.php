@@ -216,6 +216,17 @@ Route::middleware(['auth', 'permission:p_agama.view'])->prefix('potensi/potensi-
     Route::delete('/{p_agama}', [App\Http\Controllers\PAgamaController::class, 'destroy'])->middleware('permission:p_agama.delete')->name('destroy');
 });
 
+// Potensi Kewarganegaraan routes
+Route::middleware(['auth', 'permission:p_kewarganegaraan.view'])->prefix('potensi/potensi-sdm/kewarganegaraan')->name('potensi.potensi-sdm.kewarganegaraan.')->group(function () {
+    Route::get('/', [App\Http\Controllers\PKewarganegaraanController::class, 'index'])->name('index');
+    Route::get('/create', [App\Http\Controllers\PKewarganegaraanController::class, 'create'])->middleware('permission:p_kewarganegaraan.create')->name('create');
+    Route::post('/', [App\Http\Controllers\PKewarganegaraanController::class, 'store'])->middleware('permission:p_kewarganegaraan.store')->name('store');
+    Route::get('/{pKewarganegaraan}', [App\Http\Controllers\PKewarganegaraanController::class, 'show'])->name('show');
+    Route::get('/{pKewarganegaraan}/edit', [App\Http\Controllers\PKewarganegaraanController::class, 'edit'])->middleware('permission:p_kewarganegaraan.update')->name('edit');
+    Route::put('/{pKewarganegaraan}', [App\Http\Controllers\PKewarganegaraanController::class, 'update'])->middleware('permission:p_kewarganegaraan.update')->name('update');
+    Route::delete('/{pKewarganegaraan}', [App\Http\Controllers\PKewarganegaraanController::class, 'destroy'])->middleware('permission:p_kewarganegaraan.delete')->name('destroy');
+});
+
 // Transportasi Darat routes
 Route::middleware(['auth'])->prefix('transportasi-darat')->group(function () {
     Route::get('/', [TransportasiDaratController::class, 'index'])->middleware('permission:transportasi_darat.view')->name('potensi.potensi-prasarana-dan-sarana.transportasi-darat.index');
@@ -521,4 +532,3 @@ Route::get('/cetak/surat_penghibaan_tanah', function () {
 Route::get('/cetak/surat_rekomendasi_rt', function () {
     return view('pages.layanan.permohonan.surat_rekomendasi_rt');
 });
-

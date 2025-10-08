@@ -421,6 +421,12 @@
                                                     href="{{ route('potensi.potensi-sdm.agama.index') }}">
                                                     Agama
                                                 </a>
+                                                @can('p_kewarganegaraan.view')
+                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/kewarganegaraan*') ? 'active' : '' }}"
+                                                        href="{{ route('potensi.potensi-sdm.kewarganegaraan.index') }}">
+                                                        Kewarganegaraan
+                                                    </a>
+                                                @endcan
                                             @endcan
                                         </div>
                                     </div>

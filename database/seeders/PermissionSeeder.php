@@ -187,6 +187,13 @@ class PermissionSeeder extends Seeder
             'p_agama.update',
             'p_agama.delete',
 
+            // Potensi Kewarganegaraan permissions
+            'p_kewarganegaraan.view',
+            'p_kewarganegaraan.create',
+            'p_kewarganegaraan.store',
+            'p_kewarganegaraan.update',
+            'p_kewarganegaraan.delete',
+
             // Irigasi
             'irigasi.view',
             'irigasi.create',
