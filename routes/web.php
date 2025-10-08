@@ -847,7 +847,7 @@ Route::get('/cetak/sk_belum_pernah_nikah', function () {
     return view('pages.layanan.permohonan.cetak.sk_belum_pernah_nikah');
 });
 Route::get('/cetak/sk_kehilangan_ktp', function () {
-    return view('pages
+    return view('pages.layanan.permohonan.cetak.sk_kehilangan_ktp');
 });
 Route::get('/cetak/sk_umum', function () {
     return view('pages.layanan.permohonan.cetak.sk_umum');
