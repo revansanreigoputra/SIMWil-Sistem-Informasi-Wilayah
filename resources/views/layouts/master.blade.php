@@ -13,9 +13,9 @@
 
 <body>
     <div class="page">
-        @include('partials.sidebar')
         @include('partials.navbar')
         <div class="page-wrapper">
+            @include('partials.sidebar')
             @include('partials.header')
             <div class="page-body">
                 <div class="container-xl">
