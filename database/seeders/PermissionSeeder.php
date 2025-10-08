@@ -291,10 +291,20 @@ class PermissionSeeder extends Seeder
              'sektor-bangunan.update',
              'sektor-bangunan.delete',
              'sektor-bangunan.destroy',
+
+             // kualitas ibu hamil permissions
+            'kualitas-ibu-hamil.view',
+            'kualitas-ibu-hamil.create',
+            'kualitas-ibu-hamil.store',
+            'kualitas-ibu-hamil.edit',
+            'kualitas-ibu-hamil.update',
+            'kualitas-ibu-hamil.delete',
+            'kualitas-ibu-hamil.destroy',
+
                                                     
 
             // Pertanggungjawaban
-            'pertanggungjawaban.view',
+            'pertanggungjawaban.view', 
             'pertanggungjawaban.create',
             'pertanggungjawaban.store',
             'pertanggungjawaban.edit',

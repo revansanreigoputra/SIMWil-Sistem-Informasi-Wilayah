@@ -98,6 +98,7 @@ use App\Http\Controllers\SubsektorKerajinanController;
 use App\Http\Controllers\SektorIndustriPengolahanController;
 use App\Http\Controllers\SubsektorKehutananController;
 use App\Http\Controllers\SektorBangunanController;
+use App\Http\Controllers\KualitasIbuHamilController;
 
 use App\Http\Controllers\PerkembanganPendudukController;
 // use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -597,24 +598,26 @@ Route::prefix('perkembangan/produk-domestik')->name('perkembangan.produk-domesti
  Route::resource('subsektor-kerajinan', SubsektorKerajinanController::class);
 
  // sektor industri pengolahan routes
-
     Route::resource('sektor-industri-pengolahan', SektorIndustriPengolahanController::class);
+
 
 // subsektor kehutanan
   Route::prefix('perkembangan/produk-domestik')->group(function () {
     Route::resource('subsektor-kehutanan', SubsektorKehutananController::class);
+  });
 
 // sektor bangunan
 Route::prefix('perkembangan/produk-domestik')
     ->group(function () {
         Route::resource('sektor-bangunan', SektorBangunanController::class);
     });
-
 });
 
-
-});
-
+  Route::prefix('perkembangan/kesehatan-masyarakat')
+    ->name('perkembangan.kesehatan-masyarakat.') // <--- INI PERBAIKAN UTAMA
+    ->group(function () {
+        Route::resource('kualitas-ibu-hamil', KualitasIbuHamilController::class);
+    });
 
 
 require __DIR__ . '/auth.php';

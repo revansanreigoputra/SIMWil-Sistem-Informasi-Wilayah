@@ -713,6 +713,27 @@
                                         </div>
                                     @endcanany
 
+                                     {{-- Kesehatan Masyarakat --}}
+                                    @canany(['kualitas-ibu-hamil.view'])
+                                        <div class="dropend">
+                                            <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/kesehatan-masyarakat*') ? 'active' : '' }}"
+                                                href="#sidebar-kesehatanmasyarakat" data-bs-toggle="dropdown"
+                                                data-bs-auto-close="false" role="button" aria-expanded="false">
+                                                Kesehatan Masyarakat
+                                            </a>
+
+                                            <div class="dropdown-menu {{ request()->is('perkembangan/kesehatan-masyarakat*') ? 'show' : '' }}">
+                                                @can('kualitas-ibu-hamil.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/kualitas-ibu-hamil*') ? 'active' : '' }}"
+                                                        href="{{ route('perkembangan.kesehatan-masyarakat.kualitas-ibu-hamil.index') }}">
+                                                        Kualitas Ibu Hamil
+                                                    </a>
+                                                @endcan
+                                            </div>
+                                        </div>
+                                    @endcanany
+
+
                                 </div>
                             </div>
                         </div>
