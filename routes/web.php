@@ -227,6 +227,17 @@ Route::middleware(['auth', 'permission:p_kewarganegaraan.view'])->prefix('potens
     Route::delete('/{pKewarganegaraan}', [App\Http\Controllers\PKewarganegaraanController::class, 'destroy'])->middleware('permission:p_kewarganegaraan.delete')->name('destroy');
 });
 
+// Potensi Cacat routes
+Route::middleware(['auth', 'permission:p_cacat.view'])->prefix('potensi/potensi-sdm/cacat')->name('potensi.potensi-sdm.cacat.')->group(function () {
+    Route::get('/', [App\Http\Controllers\PCacatController::class, 'index'])->name('index');
+    Route::get('/create', [App\Http\Controllers\PCacatController::class, 'create'])->middleware('permission:p_cacat.create')->name('create');
+    Route::post('/', [App\Http\Controllers\PCacatController::class, 'store'])->middleware('permission:p_cacat.store')->name('store');
+    Route::get('/{pCacat}', [App\Http\Controllers\PCacatController::class, 'show'])->name('show');
+    Route::get('/{pCacat}/edit', [App\Http\Controllers\PCacatController::class, 'edit'])->middleware('permission:p_cacat.update')->name('edit');
+    Route::put('/{pCacat}', [App\Http\Controllers\PCacatController::class, 'update'])->middleware('permission:p_cacat.update')->name('update');
+    Route::delete('/{pCacat}', [App\Http\Controllers\PCacatController::class, 'destroy'])->middleware('permission:p_cacat.delete')->name('destroy');
+});
+
 // Transportasi Darat routes
 Route::middleware(['auth'])->prefix('transportasi-darat')->group(function () {
     Route::get('/', [TransportasiDaratController::class, 'index'])->middleware('permission:transportasi_darat.view')->name('potensi.potensi-prasarana-dan-sarana.transportasi-darat.index');

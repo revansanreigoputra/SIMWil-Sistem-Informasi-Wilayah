@@ -428,6 +428,12 @@
                                                     </a>
                                                 @endcan
                                             @endcan
+                                            @can('p_cacat.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/cacat*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-sdm.cacat.index') }}">
+                                                    Cacat
+                                                </a>
+                                            @endcan
                                         </div>
                                     </div>
                                     <div class="dropend">

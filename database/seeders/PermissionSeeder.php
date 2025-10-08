@@ -194,6 +194,13 @@ class PermissionSeeder extends Seeder
             'p_kewarganegaraan.update',
             'p_kewarganegaraan.delete',
 
+            // Potensi Cacat permissions
+            'p_cacat.view',
+            'p_cacat.create',
+            'p_cacat.store',
+            'p_cacat.update',
+            'p_cacat.delete',
+
             // Irigasi
             'irigasi.view',
             'irigasi.create',
