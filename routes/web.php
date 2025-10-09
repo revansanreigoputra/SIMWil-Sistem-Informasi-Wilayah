@@ -38,11 +38,13 @@ use App\Models\LayananSurat\JenisSurat;
 use App\Models\LayananSurat\KopTemplate;
 use App\Models\PotensiKelembagaan\PotensiKelembagaan;
 
-Route::get('/', function () {
-    return Auth::check()
-        ? redirect()->route('dashboard')
-        : app(AuthenticatedSessionController::class)->create();
-});
+Route::get('/', function () { return view('frontend.home'); });
+
+// Route::get('/', function () {
+//     return Auth::check()
+//         ? redirect()->route('dashboard')
+//         : app(AuthenticatedSessionController::class)->create();
+// });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -253,7 +255,7 @@ Route::middleware('auth')->prefix('layanan-surat')->group(function () {
         Route::put('jenis-surats/{id}', [JenisSuratController::class, 'update'])->name('jenis_surats.update');
         Route::delete('jenis-surats/{id}', [JenisSuratController::class, 'destroy'])->name('jenis_surats.destroy');
 
-        // 
+        //
         Route::get('/', [TtdController::class, 'index'])->name('ttd.index');
     });
     Route::get('laporan/surat', [LaporanSuratController::class, 'index'])->name('laporan-surat.index');
@@ -302,7 +304,7 @@ Route::get('/master-potensi', [MasterPotensiController::class, 'index'])->name('
 Route::prefix('potensi/potensi-kelembagaan')->group(function () {
 
     // Pemerintah
-    // FINAL ROUTES WITH CONTROLLER STARTS HERE 
+    // FINAL ROUTES WITH CONTROLLER STARTS HERE
     // Rute Statis / Spesifik (CREATE dan PRINT harus di atas)
     Route::get('pemerintah/create', [PotensiKelembagaanController::class, 'create'])->name('potensi.kelembagaan.pemerintah.create');
     Route::post('pemerintah', [PotensiKelembagaanController::class, 'store'])->name('potensi.kelembagaan.pemerintah.store');
