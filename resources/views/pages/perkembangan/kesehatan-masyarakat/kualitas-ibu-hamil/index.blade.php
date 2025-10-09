@@ -31,13 +31,13 @@
                     <tbody>
                         @foreach ($kualitas as $item)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->tanggal }}</td>
-                                <td>{{ $item->jumlah_ibu_hamil }}</td>
-                                <td>{{ $item->total_pemeriksaan }}</td>
-                                <td>{{ $item->jumlah_melahirkan }}</td>
-                                <td>{{ $item->jumlah_kematian_ibu }}</td>
-                                <td>{{ $item->jumlah_ibu_nifas_hidup }}</td>
+                                <td class="text-center">{{ $loop->iteration }}</td>
+                                <td class="text-center">{{ $item->tanggal }}</td>
+                                <td class="text-center">{{ $item->jumlah_ibu_hamil }}</td>
+                                <td class="text-center">{{ $item->total_pemeriksaan }}</td>
+                                <td class="text-center">{{ $item->jumlah_melahirkan }}</td>
+                                <td class="text-center">{{ $item->jumlah_kematian_ibu }}</td>
+                                <td class="text-center">{{ $item->jumlah_ibu_nifas_hidup }}</td>
                                 <td>
                                     @canany(['kualitas-ibu-hamil.update', 'kualitas-ibu-hamil.delete'])
                                         <div class="d-flex gap-1 justify-content-center">

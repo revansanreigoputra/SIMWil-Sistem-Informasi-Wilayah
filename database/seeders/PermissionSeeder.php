@@ -301,6 +301,15 @@ class PermissionSeeder extends Seeder
             'kualitas-ibu-hamil.delete',
             'kualitas-ibu-hamil.destroy',
 
+            // kualitas bayi permession
+                'kualitas-bayi.view',
+                'kualitas-bayi.create',
+                'kualitas-bayi.store',
+                'kualitas-bayi.edit',
+                'kualitas-bayi.update',
+                'kualitas-bayi.delete',
+                'kualitas-bayi.destroy',
+
                                                     
 
             // Pertanggungjawaban

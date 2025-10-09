@@ -17,11 +17,11 @@
                         <tr>
                             <th>No</th>
                             <th>Tanggal</th>
-                            <th>Total Nilai Produksi Tahun Ini (Rp)</th>
-                            <th>Total Nilai Bahan Baku yang Digunakan (Rp)</th>
-                            <th>Total Nilai Bahan Penolong yang Digunakan (Rp)</th>
-                            <th>Total Biaya Antara yang Dihabiskan (Rp)</th>
-                            <th>Jumlah Total Jenis Bahan Tambang dan Galian (Buah)</th>
+                            <th>Total Nilai Produksi <br>Tahun Ini (Rp)</th>
+                            <th>Total Nilai Bahan Baku <br> yang Digunakan (Rp)</th>
+                            <th>Total Nilai Bahan Penolong <br> yang Digunakan (Rp)</th>
+                            <th>Total Biaya Antara <br> yang Dihabiskan (Rp)</th>
+                            <th>Jumlah Total Jenis Bahan <br>Tambang dan Galian (Buah)</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
