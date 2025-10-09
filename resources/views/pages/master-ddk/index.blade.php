@@ -121,7 +121,7 @@
 @endsection
 
 @section('action')
-    <a href="" class="btn btn-primary">Tambah DDK</a>
+    <a href="{{ route('master.ddk.create', ['table' => $activeTable]) }}" class="btn btn-primary">Tambah DDK</a>
 @endsection
 @section('content')
     <div class="card">
@@ -210,12 +210,39 @@
                                 @endif
 
                                 <td>
-                                    <a href="#" class="btn btn-sm btn-info">Edit</a>
-                                    <form action="#" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                                    </form>
+                                    <a href="{{ route('master.ddk.edit', ['table' => $activeTable, 'id' => $item->id]) }}"
+                                        class="btn btn-sm btn-info">Edit</a>
+                                    <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal{{ $item->id }}">
+                                        Hapus
+                                    </button>
+                                    <div class="modal fade" id="deleteModal{{ $item->id }}" tabindex="-1"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Konfirmasi Hapus</h5>
+                                                    <button type="button" class="btn-close"
+                                                        data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Apakah kamu yakin ingin menghapus data ini?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Batal</button>
+
+                                                    <form
+                                                        action="{{ route('master.ddk.destroy', ['table' => $activeTable, 'id' => $item->id]) }}"
+                                                        method="POST" class="d-inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger">Ya, Hapus</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         @empty
@@ -229,3 +256,14 @@
         </div>
     </div>
 @endsection
+@push('addon-script')
+    <script>
+        $(function() {
+            $('#mutasi-data-table').DataTable();
+            setTimeout(function() {
+                $('.alert-success').fadeOut('slow');
+            }, 2000);
+
+        });
+    </script>
+@endpush

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models\LayananSurat;
-
+use App\Models\LayananSurat\JenisSurat;
 use Illuminate\Database\Eloquent\Model;
 
 class KopTemplate extends Model
@@ -13,4 +13,8 @@ class KopTemplate extends Model
         'nama',
         'logo',
     ];
+    public function jenisSurats() 
+{ 
+    return $this->hasMany(JenisSurat::class, 'kop_template_id'); 
+}
 }

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
- 
+
 use App\Models\{
     Desa,
     Kecamatan,
@@ -28,7 +28,7 @@ class DataKeluarga extends Model
         'kecamatan_id',
         'nama_pengisi_id'
     ];
-
+     
     public function perangkatDesas()
     {
         return $this->belongsTo(PerangkatDesa::class, 'nama_pengisi_id');
@@ -46,5 +46,4 @@ class DataKeluarga extends Model
     {
         return $this->hasMany(AnggotaKeluarga::class, 'data_keluarga_id');
     }
-
 }

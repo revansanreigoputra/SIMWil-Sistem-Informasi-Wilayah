@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Permohonan Surat')
+@section('title', 'Data Permohonan Dokumen')
 
 
 @section('styles')
@@ -29,11 +29,42 @@
         border-radius: 6px;
         color: #6a7f8e;
         transition: all 0.2s ease;
-        margin-right: 4px;
-        margin-bottom: 8px;
+        margin-right: 4px; 
         font-size: 0.85rem;
         font-weight: 600;
     }
+
+    .nav-primary-pills .nav-link {
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-weight: 700;
+        margin-right: 8px;
+
+        /* Contoh Style 1: Garis Bawah (Underline) */
+        /* Hapus background dan border-radius jika ingin gaya underline */
+        background-color: transparent !important;
+        border-radius: 0;
+        color: #333 !important;
+        border-bottom: 3px solid transparent;
+        transition: border-color 0.2s ease, color 0.2s ease;
+    }
+
+    /* Style Primary Nav: Active State */
+    .nav-primary-pills .nav-link.active {
+        background-color: transparent !important;
+        color: #007bff !important;
+        border-bottom: 3px solid #007bff;
+        box-shadow: none !important;
+        transform: none;
+    }
+
+    .nav-primary-pills .nav-link:hover:not(.active) {
+        background-color: transparent !important;
+        color: #007bff;
+        border-bottom: 3px solid #ccc;
+    }
+
+  
 
     .nav-pills .nav-link.active {
         background-color: #4CAF50 !important;
@@ -67,7 +98,7 @@
 <a id="create-permohonan-btn"
     href="{{ route('layanan.permohonan.create')}}"
     class="btn btn-primary">
-    Tambah Permohonan untuk Jenis Surat Ini
+    Buat Dokumen Baru
 </a>
 
 
@@ -76,30 +107,24 @@
 @section('content')
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h5 class="card-title mb-0">Data Permohonan Surat</h5>
+        <h5 class="card-title mb-0">Data Permohonan Dokumen</h5>
     </div>
     <div class="card-body">
 
-        <ul class="nav nav-pills mb-3" id="jenisSuratTab" role="tablist">
-            @foreach ($jenisSurats as $index => $format)
-            @php
-            // Use the ID or the slug, depending on what your route expects.
-            // Let's assume your route expects the SLUG (like your original code)
-            $tabId = \Illuminate\Support\Str::slug($format->id);
-            @endphp
-
-            <li class="nav-item" role="presentation">
-                <a class="nav-link @if($index === 0) active @endif"
-                    id="{{ $tabId }}-tab"
+        {{-- TAB NAVIGATION ( ) --}}
+        <ul class="nav nav-pills mb-3 nav-primary-pills " id="kopTemplateTab" role="tablist">
+            @foreach ($groupedKopTemplates as $indexKop => $kopTemplate)
+            @php $kopId = 'kop-' . $kopTemplate->id; @endphp
+            <li class="nav-item" role="presentation" class="">
+                <a class="uppercase-input nav-link @if($indexKop === 0) active @endif"
+                    id="{{ $kopId }}-tab"
                     data-bs-toggle="tab"
-                    data-bs-target="#{{ $tabId }}"
+                    data-bs-target="#{{ $kopId }}"
                     type="button"
                     role="tab"
-                    aria-controls="{{ $tabId }}"
-                    aria-selected="{{ $index === 0 ? 'true' : 'false' }}"
-                  
-                    data-tab-param="{{ $tabId }}">
-                    {{ $format->nama }}
+                    aria-controls="{{ $kopId }}"
+                    aria-selected="{{ $indexKop === 0 ? 'true' : 'false' }}">
+                    {{ $kopTemplate->jenis_kop }}
                 </a>
             </li>
             @endforeach
@@ -107,145 +132,108 @@
 
         <hr>
 
-        <div class="tab-content mt-3" id="jenisSuratTabContent">
+        {{-- TAB CONTENT --}}
+        <div class="tab-content mt-3" id="kopTemplateTabContent">
 
-            @foreach ($jenisSurats as $index => $format)
-            @php
-            $paneId = \Illuminate\Support\Str::slug($format->id);
-            @endphp
+            @foreach ($groupedKopTemplates as $indexKop => $kopTemplate)
+            @php $kopId = 'kop-' . $kopTemplate->id; @endphp
 
-            <div class="tab-pane fade @if($index === 0) show active @endif"
-                id="{{ $paneId }}"
+            <div class="tab-pane fade @if($indexKop === 0) show active @endif"
+                id="{{ $kopId }}"
                 role="tabpanel"
-                aria-labelledby="{{ $paneId }}-tab"
+                aria-labelledby="{{ $kopId }}-tab"
                 tabindex="0">
 
-                {{-- CONTENT: Place the table structure inside the correct tab pane --}}
+                {{-- START: SUB-TAB NAVIGATION (JENIS SURAT) --}}
+                <ul class="nav nav-pills mb-3" id="jenisSuratSubTab-{{ $kopId }}" role="tablist">
+                    @foreach ($kopTemplate->jenisSurats as $indexJenis => $jenisSurat)
+                    @php $jenisId = 'jenis-' . $jenisSurat->id; @endphp
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link @if($indexJenis === 0) active @endif"
+                            id="{{ $jenisId }}-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#{{ $jenisId }}"
+                            type="button"
+                            role="tab"
+                            aria-controls="{{ $jenisId }}"
+                            aria-selected="{{ $indexJenis === 0 ? 'true' : 'false' }}">
+                            {{ $jenisSurat->nama }}
+                        </a>
+                    </li>
+                    @endforeach
+                </ul>
+                {{-- END: SUB-TAB NAVIGATION --}}
 
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped">
-                        <thead class="table-light">
-                            <tr>
-                                <th>No.</th>
-                                <th>No Surat</th>
-                                <th>NIK</th>
-                                <th>Nama</th>
-                                <th>Tempat/Tgl. Lahir</th>
-                                <th>Jenis Kelamin</th>
-                                <th>Dibuat/Diupdate</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{-- Here you would loop through $permohonans, filtering by the current $format->id --}}
-                            @forelse ($permohonans->where('jenis_surats_id', $format->id) as $permohonan)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $permohonan->nomor_surat }}</td>
-                                <td>{{ $permohonan->anggotaKeluarga->nik ?? 'N/A' }}</td>
-                                <td>{{ $permohonan->anggotaKeluarga->nama ?? 'N/A' }}</td>
-                                <td>{{ ($permohonan->anggotaKeluarga->tempat_lahir ?? '-') . ', ' . ($permohonan->anggotaKeluarga->tanggal_lahir ?? '-') }}</td>
-                                <td>{{ $permohonan->anggotaKeluarga->jenis_kelamin ?? 'N/A' }}</td>
-                                <td>{{ $permohonan->created_at->format('Y-m-d') }}</td>
-                                <td>
-                                    <a href="#" class="btn btn-sm btn-primary">Edit</a>
-                                    <form action="#" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                                    </form>
-                                    <a href="#" class="btn btn-sm btn-success" target="_blank">Cetak</a>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="8" class="text-center">Belum ada data permohonan untuk jenis surat ini ({{ $format->nama }}).</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                {{-- START: SUB-TAB CONTENT (DATA PERMOHONAN) --}}
+                <div class="tab-content mt-3" id="jenisSuratSubTabContent-{{ $kopId }}">
+                    @foreach ($kopTemplate->jenisSurats as $indexJenis => $jenisSurat)
+                    @php $jenisId = 'jenis-' . $jenisSurat->id; @endphp
+
+                    <div class="tab-pane fade @if($indexJenis === 0) show active @endif"
+                        id="{{ $jenisId }}"
+                        role="tabpanel"
+                        aria-labelledby="{{ $jenisId }}-tab"
+                        tabindex="0">
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                {{-- ... The table header (thead) remains the same ... --}}
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Nomor Surat</th>
+                                        <th>Tanggal Dibuat</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse ($permohonans->where('id_format_nomor_surats', $jenisSurat->id) as $permohonan)
+                                    {{-- ... Table row content remains the same ... --}}
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $permohonan->nomor_surat }}</td>
+                                        <td>{{ $permohonan->created_at->format('d-m-Y') }}</td>
+                                        <td>
+                                            {{-- ACTION BUTTONS --}}
+                                            @can('permohonan.edit')
+                                            <a href="{{ route('layanan.permohonan.edit', $permohonan->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                            @endcan
+                                            @can('permohonan.delete')
+                                            <button type="button" class="btn btn-danger btn-sm"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#delete-confirm-{{ $permohonan->id }}">
+                                                Hapus
+                                            </button>
+                                            @endcan
+                                            <a href="{{ route('layanan.permohonan.cetak', $permohonan->id) }}" class="btn btn-sm btn-success" target="_blank">Cetak</a>
+                                        </td>
+                                    </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan="4" class="text-center">Belum ada data permohonan untuk jenis surat ini ({{ $jenisSurat->nama }}).</td>
+                                    </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    @endforeach
                 </div>
+                {{-- END: SUB-TAB CONTENT --}}
 
             </div>
             @endforeach
         </div>
 
-    </div> {{-- end card-body --}}
-</div> {{-- end card --}}
-<!-- Modal Tambah Permohonan -->
-<!-- <div class="modal fade" id="modalTambahPermohonan" tabindex="-1" aria-labelledby="modalTambahPermohonanLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-md modal-dialog-centered">
-        <div class="modal-content border-0 rounded-4 shadow">
-            <div class="modal-body p-0"> 
-                <div class="card border-0 rounded-4 overflow-hidden">
-                    <div class="card-header bg-primary text-white fw-bold rounded-top-4">
-                        <h5 class="mb-0 fw-bold">Tambah Permohonan</h5>
-                    </div>
-                    <div class="card-body p-4">
-                        {{-- Ganti form dan hapus route yang salah --}}
-                        <div class="mb-3">
-                            <label for="jenis_surat_selector" class="form-label fw-semibold text-dark">Pilih Jenis Surat</label>
-                            <select name="jenis_surat_selector" id="jenis_surat_selector" class="form-select border-primary shadow-sm" required>
-                                <option value="">-- Pilih Jenis Surat untuk Membuat Permohonan --</option>
-                                @foreach ($jenisSurats as $format)
-                                {{-- Simpan URL yang BENAR sebagai value --}}
-                                <option value="{{ route('layanan.permohonan.create', ['kode' => $format->kode]) }}">
-                                    {{ $format->nama }}
-                                </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="d-flex justify-content-end gap-2">
-                            <button type="button" class="btn btn-light border"
-                                data-bs-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn btn-primary">Lanjut</button>
-                        </div>
-                        </form>
-                    </div>
-                    <div class="card-footer text-center small text-muted py-2 bg-light">
-                        Pastikan jenis surat sesuai dengan kebutuhan Anda
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
-</div> -->
+</div>
 @endsection
-@push('addon-script')
-<!-- <script>
-    $(function() {
-        const createButton = $('#create-permohonan-btn');
-        const baseUrl = '{{ route('layanan.permohonan.create', 'PLACEHOLDER') }}';
-        
-        // This function updates the 'Tambah Permohonan' button link
-        function updateCreatePermohonanLink() {
-            // Find the currently active tab link element
-            const activeTabLink = $('#jenisSuratTab').find('.nav-link.active');
-            
-            // Get the parameter value from the active tab's data attribute
-            // We use 'data-tab-param' to hold the slug (e.g., 'surat-domisili')
-            const tabParam = activeTabLink.data('tab-param');
-
-            if (tabParam) {
-                // Construct the new URL by replacing the placeholder in the base URL
-                const newHref = baseUrl.replace('PLACEHOLDER', tabParam);
-                createButton.attr('href', newHref);
-            } else {
-                // Fallback for safety if no tab is active or no data is found
-                console.error('Could not find active tab parameter.');
-            }
-        }
-
-        // --- Execution Flow ---
-
-        // 1. Run once on page load to set the initial link
-        updateCreatePermohonanLink();
-
-        // 2. On tab change (using Bootstrap's 'shown.bs.tab' event)
-        $('#jenisSuratTab a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
-            updateCreatePermohonanLink();
-        });
-    });
-</script> -->
-@endpush
+@foreach ($permohonans as $permohonan)
+<x-modal.delete-confirm
+    id="delete-confirm-{{ $permohonan->id }}"
+    title="Yakin hapus data ini?"
+    description="Aksi ini tidak bisa dikembalikan."
+    route="{{ route('layanan.permohonan.destroy', $permohonan) }}"
+    item="{{ $permohonan->nomor_surat }}" />
+@endforeach
