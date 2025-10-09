@@ -108,13 +108,14 @@ class PermissionSeeder extends Seeder
             'potensi.laporan.export',
 
             // layanan surat permissions
-            'layanan_surat.view',
-            'layanan_surat.create',
-            'layanan_surat.store',
-            'layanan_surat.edit',
-            'layanan_surat.update',
-            'layanan_surat.delete',
-            'layanan_surat.cetak',
+            'permohonan.view',
+            'permohonan.create',
+            'permohonan.store',
+            'permohonan.edit',
+            'permohonan.update',
+            'permohonan.delete',
+            'permohonan.cetak',
+            
             // template permissions
             'kop_template.view',
             'kop_template.create',
@@ -124,13 +125,13 @@ class PermissionSeeder extends Seeder
             'kop_template.delete',
             'kop_template.destroy',
 
-            'format_nomor_surat.view',
-            'format_nomor_surat.create',
-            'format_nomor_surat.store',
-            'format_nomor_surat.edit',
-            'format_nomor_surat.update',
-            'format_nomor_surat.delete',
-            'format_nomor_surat.destroy',
+            'jenis_surat.view',
+            'jenis_surat.create',
+            'jenis_surat.store',
+            'jenis_surat.edit',
+            'jenis_surat.update',
+            'jenis_surat.delete',
+            'jenis_surat.destroy',
 
             // berita permissions
             'berita.view',
@@ -143,6 +144,12 @@ class PermissionSeeder extends Seeder
             'agenda.create',
             'agenda.update',
             'agenda.delete',
+            
+            // Glosarium permissions
+            'glosarium.view',
+            'glosarium.create',
+            'glosarium.update',
+            'glosarium.delete',
 
             // transportasi_darat permissions
             'transportasi_darat.view',

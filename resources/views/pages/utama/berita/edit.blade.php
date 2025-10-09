@@ -22,7 +22,7 @@
                     <label for="fupload" class="form-label">Gambar</label>
                     <p class="form-text text-muted">Gambar saat ini:</p>
                     <img src="{{ asset('storage/foto_berita/' . $berita->gambar) }}" class="img-thumbnail mb-2"
-                        width="300" alt="Gambar {{ $berita->judul }}">
+                        style="max-width: 50px; height: auto;" alt="Gambar {{ $berita->judul }}">
                     <input type="file" name="fupload" id="fupload" class="form-control">
                     <small class="form-text text-danger">Kosongkan jika tidak ingin mengubah gambar.</small>
                 </div>

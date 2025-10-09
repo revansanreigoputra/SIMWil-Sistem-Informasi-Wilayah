@@ -47,7 +47,6 @@
             border-color: #dc3545;
             color: white;
         }
-
     </style>
 @endpush
 
@@ -76,17 +75,16 @@
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td>{{ $berita->judul }}</td>
 
-                                <td>{{ Str::limit(strip_tags($berita->isi_berita), 100) }}</td>
+                                <td>{{ Str::limit(strip_tags($berita->isi_berita), 65) }}</td>
 
                                 <td class="text-center">
                                     <img src="{{ asset('storage/foto_berita/' . $berita->gambar) }}" class="table-image"
                                         alt="Gambar {{ $berita->judul }}">
                                 </td>
 
-                                <td class="text-nowrap"> {{-- Ditambahkan class text-nowrap di sini --}}
-                                    {{ \Carbon\Carbon::parse($berita->tanggal2)->translatedFormat('d M Y') }}
-                                    <small
-                                        class="d-block text-muted">{{ $berita->created_at->diffForHumans() }}</small>
+                                <td class="text-nowrap">
+                                    {{ \Carbon\Carbon::parse($berita->updated_at)->translatedFormat('d M Y') }}
+                                    <small class="d-block text-muted">{{ $berita->created_at->diffForHumans() }}</small>
                                 </td>
 
                                 <td class="text-center">
