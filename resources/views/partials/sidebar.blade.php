@@ -394,12 +394,6 @@
                                             aria-expanded="{{ request()->is('potensi/potensi-sdm*') ? 'true' : 'false' }}">
                                             Potensi Sumber <br> Daya Manusia
                                         </a>
-                                        <div
-                                            class="dropdown-menu {{ request()->is('potensi/potensi-sdm*') ? 'show' : '' }}">
-                                            <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/jumlah*') ? 'active' : '' }}"
-                                                href="{{ route('potensi.potensi-sdm.jumlah.index') }}">
-                                                Jumlah
-                                            </a>
                                             <div
                                                 class="dropdown-menu {{ request()->is('potensi/potensi-sdm*') ? 'show' : '' }}">
                                                 @can('jumlah.view')
@@ -432,8 +426,7 @@
                                                         Agama
                                                     </a>
                                                 @endcan
-                                            </div>
-                                        </div>
+                                            </div>  
                                     </div>
 
                                     {{-- Potensi Kelembagaan --}}
