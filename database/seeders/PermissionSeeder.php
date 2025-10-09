@@ -266,6 +266,13 @@ class PermissionSeeder extends Seeder
             'kemasyarakatan.store',
             'kemasyarakatan.update',
             'kemasyarakatan.delete',
+            
+            // peribadatan
+            'peribadatan.view',
+            'peribadatan.create',
+            'peribadatan.store',
+            'peribadatan.update',
+            'peribadatan.delete',
 
             // energi dan penerangan
             'energiPenerangan.view',

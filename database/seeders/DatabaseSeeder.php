@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
             KategoriKomunikasiSeeder::class,
             JenisKomunikasiSeeder::class,
             KomunikasiInformasiSeeder::class,
+            TempatIbadahSeeder::class,
         ]);
     }
 }
