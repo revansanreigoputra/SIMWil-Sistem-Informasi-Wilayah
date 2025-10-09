@@ -29,6 +29,7 @@ use App\Http\Controllers\PembinaankabupatenController;
 use App\Http\Controllers\PembinaankecamatanController;
 use App\Http\Controllers\OrganisasiController;
 use App\Http\Controllers\MusrenbangdesaController;
+use App\Http\Controllers\HasilpembangunanController;
 // use App\Http\Controllers\IrigasiController;
 // use App\Http\Controllers\NotificationController;
 // use App\Http\Controllers\PerangkatDesaController;
@@ -475,6 +476,17 @@ Route::middleware(['auth'])->prefix('perkembangan/peransertamasyarakat/musrenban
     Route::get('/{id}/edit', [MusrenbangdesaController::class, 'edit'])->name('edit');
     Route::put('/{id}', [MusrenbangdesaController::class, 'update'])->name('update');
     Route::delete('/{id}', [MusrenbangdesaController::class, 'destroy'])->name('destroy');
+});
+
+//hasil pembangunan routes
+Route::middleware(['auth'])->prefix('perkembangan/peransertamasyarakat/hasilpembangunan')->name('perkembangan.peransertamasyarakat.hasilpembangunan.')->group(function () {
+    Route::get('/', [HasilPembangunanController::class, 'index'])->name('index');
+    Route::get('/create', [HasilPembangunanController::class, 'create'])->name('create');
+    Route::post('/', [HasilPembangunanController::class, 'store'])->name('store');
+    Route::get('/{id}', [HasilPembangunanController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [HasilPembangunanController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [HasilPembangunanController::class, 'update'])->name('update');
+    Route::delete('/{id}', [HasilPembangunanController::class, 'destroy'])->name('destroy');
 });
 
 
