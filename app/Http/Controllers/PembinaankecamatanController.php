@@ -57,7 +57,8 @@ class PembinaankecamatanController extends Controller
      */
     public function show($id)
     {
-        //
+         $pembinaankecamatan = PembinaanKecamatan::findOrFail($id);
+        return view('pages.perkembangan.pemerintahdesadankelurahan.pembinaankecamatan.show', compact('pembinaankecamatan'));
     }
 
     /**

@@ -48,7 +48,8 @@ class OrganisasiController extends Controller
      */
     public function show($id)
     {
-        //
+        $organisasi = organisasi::findOrFail($id);
+        return view('pages.perkembangan.lembagakemasyarakatan.organisasi.show', compact('organisasi'));
     }
 
     /**

@@ -52,9 +52,10 @@ class PembinaanpusatController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(pembinaanpusat $pembinaanpusat)
+    public function show($id)
     {
-        //
+        $pembinaan = PembinaanPusat::findOrFail($id);
+        return view('pages.perkembangan.pemerintahdesadankelurahan.pembinaanpusat.show', compact('pembinaan'));
     }
 
     /**

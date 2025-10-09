@@ -54,7 +54,8 @@ class PembinaanprovinsiController extends Controller
      */
     public function show($id)
     {
-        //
+        $pembinaan = pembinaanprovinsi::findOrFail($id);
+        return view('pages.perkembangan.pemerintahdesadankelurahan.pembinaanprovinsi.show', compact('pembinaan'));
     }
 
     /**

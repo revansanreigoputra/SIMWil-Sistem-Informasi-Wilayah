@@ -622,6 +622,12 @@
                                                     Musrenbang <br> Desa/Kelurahan
                                                 </a>
                                             @endcan
+                                            @can('hasilpembangunan.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/peransertamasyarakat/hasilpembangunan*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.peransertamasyarakat.hasilpembangunan.index') }}">
+                                                    pelaksaan <br> hasil Pembangunan
+                                                </a>
+                                            @endcan
 
                                         </div>
                                     </div>

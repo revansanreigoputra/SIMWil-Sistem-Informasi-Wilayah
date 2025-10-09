@@ -57,9 +57,11 @@ class APBDesaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(APBDesa $id)
+    public function show($id)
     {
-        return view('perkembangan.pemerintahdesadankelurahan.apbdesa.show', compact('apb'));
+        $apb = ApbDesa::findOrFail($id);
+        return view('pages.perkembangan.pemerintahdesadankelurahan.apbdesa.show', compact('apb'));
+
     }
 
     /**

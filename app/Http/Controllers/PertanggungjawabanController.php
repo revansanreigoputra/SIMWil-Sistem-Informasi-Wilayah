@@ -55,9 +55,11 @@ class PertanggungjawabanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(pertanggungjawaban $pertanggungjawaban)
+    public function show( $id)
     {
-        //
+        $pertanggungjawaban = pertanggungjawaban::findOrFail($id);
+        return view('pages.perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.show', compact('pertanggungjawaban'));
+
     }
 
     /**

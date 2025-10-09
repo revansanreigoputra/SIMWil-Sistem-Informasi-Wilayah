@@ -34,7 +34,7 @@ class HasilpembangunanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(hasilpembangunan $hasilpembangunan)
+    public function show($id)
     {
         //
     }
@@ -42,7 +42,7 @@ class HasilpembangunanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(hasilpembangunan $hasilpembangunan)
+    public function edit($id)
     {
         //
     }
@@ -50,7 +50,7 @@ class HasilpembangunanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, hasilpembangunan $hasilpembangunan)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -58,7 +58,7 @@ class HasilpembangunanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(hasilpembangunan $hasilpembangunan)
+    public function destroy($id)
     {
         //
     }

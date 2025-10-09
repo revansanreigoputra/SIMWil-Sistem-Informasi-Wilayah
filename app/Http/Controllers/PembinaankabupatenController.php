@@ -60,7 +60,8 @@ class PembinaankabupatenController extends Controller
      */
     public function show($id)
     {
-        //
+        $pembinaankabupaten = PembinaanKabupaten::findOrFail($id);
+        return view('pages.perkembangan.pemerintahdesadankelurahan.pembinaankabupaten.show', compact('pembinaankabupaten'));
     }
 
     /**

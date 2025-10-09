@@ -3,9 +3,10 @@
 @section('title', 'Data APB Desa dan Kelurahan')
 
 @section('action')
-    <a href="{{ route('perkembangan.pemerintahdesadankelurahan.apbdesa.create') }}" class="btn btn-primary mb-3">
-        Tambah Data
-    </a>
+        <a href="{{ route('perkembangan.pemerintahdesadankelurahan.apbdesa.create') }}" class="btn btn-primary">
+            Tambah Data
+        </a>
+
 @endsection
 
 @section('content')
@@ -59,6 +60,16 @@
                                 <td class="text-center">{{ number_format($item->saldo_anggaran, 0, ',', '.') }}</td>
                                 <td>
                                     <div class="d-flex gap-1 justify-content-center">
+                                        <!-- Tombol Detail -->
+                                            <a href="{{ route('perkembangan.pemerintahdesadankelurahan.apbdesa.show', $item->id) }}" class="btn btn-sm btn-info">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                                    <circle cx="12" cy="12" r="3" />
+                                                </svg>
+                                                Detail
+                                        <!-- Tombol Edit -->
                                         <a href="{{ route('perkembangan.pemerintahdesadankelurahan.apbdesa.edit', $item->id) }}" class="btn btn-sm btn-warning">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"

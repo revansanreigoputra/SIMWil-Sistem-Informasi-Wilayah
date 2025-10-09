@@ -59,7 +59,8 @@ class MusrenbangdesaController extends Controller
      */
     public function show($id)
     {
-        //
+         $musrenbangdesa = musrenbangdesa::findOrFail($id);
+        return view('pages.perkembangan.peransertamasyarakat.musrenbangdesa.show', compact('musrenbangdesa'));
     }
 
     /**
