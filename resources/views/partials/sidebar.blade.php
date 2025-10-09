@@ -233,8 +233,12 @@
                                         href="#" data-bs-toggle="dropdown" data-bs-auto-close="false">
                                         Template Dokumen
                                     </a>
+
                                     <div
                                         class="dropdown-menu {{ request()->is('layanan-surat/template*') || request()->is('ttd*') || request()->is('layanan-surat/profil-desa*') ? 'show' : '' }}">
+
+                                    <div class="dropdown-menu {{ request()->is('layanan-surat/template*') || request()->is('ttd*') || request()->is('layanan-surat/profil-desa*') ? 'show' : '' }}">
+
                                         {{-- Menu-menu anak (inner menus) --}}
 
                                         <a class="dropdown-item {{ request()->is('layanan-surat/template/kop-templates*') ? 'active' : '' }}"
@@ -472,6 +476,18 @@
                                                     href="{{ route('potensi.potensi-kelembagaan.lembagaAdat.index') }}">
                                                     Lembaga Adat
                                                 </a>
+                                                @can('p_kewarganegaraan.view')
+                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/kewarganegaraan*') ? 'active' : '' }}"
+                                                        href="{{ route('potensi.potensi-sdm.kewarganegaraan.index') }}">
+                                                        Kewarganegaraan
+                                                    </a>
+                                                @endcan
+                                            @endcan
+                                            @can('p_cacat.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/cacat*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-sdm.cacat.index') }}">
+                                                    Cacat
+                                                </a>
                                             @endcan
                                             <a class="dropdown-item {{ request()->is('potensi/potensi-kelembagaan/keamanan*') ? 'active' : '' }}"
                                                 href="{{ route('potensi.kelembagaan.keamanan.index') }}">
@@ -579,7 +595,6 @@
                                             @endcan
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
