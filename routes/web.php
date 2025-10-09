@@ -33,8 +33,10 @@ use App\Http\Controllers\LayananSurat\{
 use App\Http\Controllers\LayananSuratController;
 use App\Http\Controllers\MasterPerkembanganController;
 use App\Http\Controllers\MasterPotensiController;
+use App\Http\Controllers\PotensiKelembagaan\PotensiKelembagaanController;
 use App\Models\LayananSurat\JenisSurat;
 use App\Models\LayananSurat\KopTemplate;
+use App\Models\PotensiKelembagaan\PotensiKelembagaan;
 
 Route::get('/', function () {
     return Auth::check()
@@ -300,11 +302,18 @@ Route::get('/master-potensi', [MasterPotensiController::class, 'index'])->name('
 Route::prefix('potensi/potensi-kelembagaan')->group(function () {
 
     // Pemerintah
-    Route::view('/pemerintah', 'pages.potensi.kelembagaan.pemerintah.index')->name('potensi.kelembagaan.pemerintah.index');
-    Route::view('/pemerintah/create', 'pages.potensi.kelembagaan.pemerintah.create')->name('potensi.kelembagaan.pemerintah.create');
-    Route::view('/pemerintah/show', 'pages.potensi.kelembagaan.pemerintah.show')->name('potensi.kelembagaan.pemerintah.show'); // dummy
-    Route::view('/pemerintah/edit', 'pages.potensi.kelembagaan.pemerintah.edit')->name('potensi.kelembagaan.pemerintah.edit'); // dummy
-    Route::view('/pemerintah/print', 'pages.potensi.kelembagaan.pemerintah.print')->name('potensi.kelembagaan.pemerintah.print');
+    // FINAL ROUTES WITH CONTROLLER STARTS HERE 
+    // Rute Statis / Spesifik (CREATE dan PRINT harus di atas)
+    Route::get('pemerintah/create', [PotensiKelembagaanController::class, 'create'])->name('potensi.kelembagaan.pemerintah.create');
+    Route::post('pemerintah', [PotensiKelembagaanController::class, 'store'])->name('potensi.kelembagaan.pemerintah.store');
+    Route::get('pemerintah/{id}/edit', [PotensiKelembagaanController::class, 'edit'])->name('potensi.kelembagaan.pemerintah.edit');
+    Route::get('pemerintah/{id}/print', [PotensiKelembagaanController::class, 'print'])->name('potensi.kelembagaan.pemerintah.print');
+    // Rute Dinamis (menggunakan {id} harus diletakkan paling bawah)
+    Route::get('pemerintah', [PotensiKelembagaanController::class, 'index'])->name('potensi.kelembagaan.pemerintah.index');
+    Route::get('pemerintah/{id}', [PotensiKelembagaanController::class, 'show'])->name('potensi.kelembagaan.pemerintah.show'); // Show/Detail
+    Route::put('pemerintah/{id}', [PotensiKelembagaanController::class, 'update'])->name('potensi.kelembagaan.pemerintah.update');
+    Route::delete('pemerintah/{id}', [PotensiKelembagaanController::class, 'destroy'])->name('potensi.kelembagaan.pemerintah.destroy');
+    // FINAL ROUTES WITH CONTROLLER ENDS HERE
 
     // Kemasyarakatan
     Route::view('/kemasyarakatan', 'pages.potensi.kelembagaan.kemasyarakatan.index')->name('potensi.kelembagaan.kemasyarakatan.index');
@@ -361,7 +370,6 @@ Route::prefix('potensi/potensi-kelembagaan')->group(function () {
     Route::view('/keamanan/show', 'pages.potensi.kelembagaan.keamanan.show')->name('potensi.kelembagaan.keamanan.show'); // dummy
     Route::view('/keamanan/edit', 'pages.potensi.kelembagaan.keamanan.edit')->name('potensi.kelembagaan.keamanan.edit'); // dummy
     Route::view('/keamanan/print', 'pages.potensi.kelembagaan.keamanan.print')->name('potensi.kelembagaan.keamanan.print');
-
 });
 
 // ==== Route jenis Surat ====
