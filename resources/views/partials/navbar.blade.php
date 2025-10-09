@@ -1,15 +1,11 @@
-<header class="navbar navbar-expand-md navbar-light d-print-none">
+<header class="navbar navbar-expand-md d-none d-lg-flex d-print-none">
     <div class="container-xl">
-        <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
-            <a href="{{ route('dashboard') }}" aria-label="{{ $websiteSetting?->website_name ?? 'Laravel POS' }}">
-                @if ($websiteSetting?->logo)
-                    <img src="{{ asset('storage/' . $websiteSetting->logo) }}" alt="{{ $websiteSetting->website_name }}"
-                        class="navbar-brand-image" style="height: 32px; width: auto; max-width: 150px;">
-                @else
-                    {{ $websiteSetting?->website_name ?? 'Laravel POS' }}
-                @endif
-            </a>
-        </h1>
+        <!-- BEGIN NAVBAR TOGGLER -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu"
+            aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- END NAVBAR TOGGLER -->
         <div class="flex-row navbar-nav order-md-last">
             <div class="d-none d-md-flex">
                 <div class="nav-item dropdown d-none d-md-flex">
@@ -70,28 +66,7 @@
                 </div>
             </div>
         </div>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="navbar-collapse collapse" id="navbar-menu" style="">
-            <div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center">
-                <form action="./" method="get" autocomplete="off" novalidate>
-                    <div class="input-icon">
-                        <span class="input-icon-addon">
-                            <!-- Download SVG icon from http://tabler.io/icons/icon/search -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                                <path d="M21 21l-6 -6" />
-                            </svg>
-                        </span>
-                        <input type="text" value="" class="form-control" placeholder="Search…"
-                            aria-label="Search in website">
-                    </div>
-                </form>
-            </div>
+        <div class="collapse navbar-collapse" id="navbar-menu">
         </div>
     </div>
 </header>

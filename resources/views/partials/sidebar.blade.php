@@ -1,8 +1,87 @@
-<header class="navbar-expand-md bg-white border-bottom">
-    <div class="collapse navbar-collapse" id="sidebar-menu">
-        <div class="navbar">
-            <div class="container-xl">
-                <ul class="navbar-nav">
+<aside class="navbar navbar-vertical navbar-expand-lg">
+    <div class="container-fluid">
+        <!-- BEGIN NAVBAR TOGGLER -->
+        <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu"
+            aria-controls="sidebar-menu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- END NAVBAR TOGGLER -->
+        <!-- BEGIN NAVBAR LOGO -->
+        <div class="navbar-brand navbar-brand-autodark">
+            <a href="{{ route('dashboard') }}" aria-label="{{ $websiteSetting?->website_name ?? 'Laravel POS' }}">
+                @if ($websiteSetting?->logo)
+                    <img src="{{ asset('storage/' . $websiteSetting->logo) }}" alt="{{ $websiteSetting->website_name }}"
+                        class="navbar-brand-image" style="height: 32px; width: auto; max-width: 150px;">
+                @else
+                    {{ $websiteSetting?->website_name ?? 'Laravel POS' }}
+                @endif
+            </a>
+        </div>
+        <!-- MOBILE USER & NOTIFICATION -->
+        <div class="d-lg-none d-flex align-items-center gap-3">
+
+            <!-- MOBILE NOTIFICATION -->
+            <div class="dropdown">
+                <a href="#" class="nav-link position-relative p-0" data-bs-toggle="dropdown"
+                    aria-label="Show notifications" data-bs-auto-close="outside">
+                    <!-- ikon notifikasi -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="icon icon-1">
+                        <path
+                            d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6">
+                        </path>
+                        <path d="M9 17v1a3 3 0 0 0 6 0v-1"></path>
+                    </svg>
+                </a>
+
+                <!-- Dropdown isi notifikasi -->
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow dropdown-menu-card">
+                    <div class="card">
+                        <div class="card-header d-flex">
+                            <h3 class="card-title">Notifikasi Stok</h3>
+                            <button type="button" class="btn-close ms-auto" aria-label="Close"
+                                onclick="closeDropdown(this)"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DROPDOWN PROFIL MOBILE -->
+            <div class="dropdown">
+                <a href="#" class="nav-link p-0 d-flex align-items-center" data-bs-toggle="dropdown"
+                    aria-label="Open user menu">
+                    <span class="avatar avatar-sm me-2" style="background-image: url(./static/avatars/000m.jpg)"></span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <!-- Nama User -->
+                    <span class="dropdown-item-text fw-bold text-center">
+                        {{ auth()->user() ? auth()->user()->name : '' }}
+                    </span>
+                    <div class="dropdown-divider"></div>
+
+                    <!-- Settings -->
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-cog me-2"></i> Settings
+                    </a>
+
+                    <!-- Logout -->
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="dropdown-item">
+                            <i class="fas fa-sign-out-alt me-2"></i> Keluar
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <!-- END MOBILE USER & NOTIFICATION -->
+
+
+        <div class="navbar-collapse collapse" id="sidebar-menu" style="">
+            <!-- BEGIN NAVBAR MENU -->
+            <ul class="navbar-nav pt-lg-3">
                 {{-- Dashboard --}}
                 <li class="nav-item {{ request()->is('/') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('dashboard') }}">
@@ -858,11 +937,11 @@
                 </li>
 
 
-                </ul>
-            </div>
+            </ul>
+            <!-- END NAVBAR MENU -->
         </div>
     </div>
-</header>
+</aside>
 
 <script>
     function closeDropdown(btn) {
