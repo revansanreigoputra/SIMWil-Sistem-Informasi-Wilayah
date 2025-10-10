@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\pertanggungjawaban;
+use App\Models\Desa;
 use Illuminate\Http\Request;
 
 class PertanggungjawabanController extends Controller
@@ -12,7 +13,7 @@ class PertanggungjawabanController extends Controller
      */
     public function index()
     {
-        $data = Pertanggungjawaban::orderBy('tanggal', 'desc')->get();
+        $data = Pertanggungjawaban::with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.index', compact('data'));
     }
 
@@ -21,7 +22,8 @@ class PertanggungjawabanController extends Controller
      */
     public function create()
     {
-        return view('pages.perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.create');
+        $desas = Desa::orderBy('nama_desa')->get();
+        return view('pages.perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.create', compact('desas'));
     }
 
     /**
@@ -31,6 +33,7 @@ class PertanggungjawabanController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
+            'id_desa' => 'required|exists:desas,id',
             'penyampaian_laporan' => 'nullable|in:ada,tidak_ada',
             'jumlah_informasi' => 'nullable|numeric',
             'status_laporan' => 'nullable|in:diterima,ditolak',
@@ -58,6 +61,7 @@ class PertanggungjawabanController extends Controller
     public function show( $id)
     {
         $pertanggungjawaban = pertanggungjawaban::findOrFail($id);
+        $pertanggungjawaban->load(['desa']);
         return view('pages.perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.show', compact('pertanggungjawaban'));
 
     }
@@ -68,7 +72,8 @@ class PertanggungjawabanController extends Controller
     public function edit($id)
     {
         $pertanggungjawaban = Pertanggungjawaban::findOrFail($id);
-        return view('pages.perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.edit', compact('pertanggungjawaban'));
+        $desas = Desa::orderBy('nama_desa')->get();
+        return view('pages.perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.edit', compact('pertanggungjawaban', 'desas'));
     }
 
     /**
@@ -78,6 +83,7 @@ class PertanggungjawabanController extends Controller
     {
          $validated = $request->validate([
             'tanggal' => 'required|date',
+            'id_desa' => 'required|exists:desas,id',
             'penyampaian_laporan' => 'nullable|in:ada,tidak_ada',
             'jumlah_informasi' => 'nullable|numeric',
             'status_laporan' => 'nullable|in:diterima,ditolak',
@@ -111,5 +117,10 @@ class PertanggungjawabanController extends Controller
 
         return redirect()->route('perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.index')
                          ->with('success', 'Data pertanggungjawaban berhasil dihapus.');
+    }
+    public function getDesasByKecamatan($id_kecamatan)
+    {
+        $desas = Desa::where('id_kecamatan', $id_kecamatan)->get();
+        return response()->json($desas);
     }
 }

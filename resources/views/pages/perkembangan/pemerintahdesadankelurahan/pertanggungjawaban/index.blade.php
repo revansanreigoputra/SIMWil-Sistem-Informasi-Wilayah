@@ -19,15 +19,16 @@
                 <table id="pertanggungjawaban-table" class="table table-striped text-center">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>Tanggal</th>
-                            <th>Penyampaian Laporan Kepala Desa ke BPD</th>
-                            <th>Jumlah Informasi yang Disampakan</th>
-                            <th>Status Laporan Pertanggungjawaban</th>
-                            <th>Laporan Kinerja Kepala Desa/Lurah</th>
-                            <th>Jumlah Media Informasi</th>
-                            <th>Pengaduan (Selesai/Diterima)</th>
-                            <th>Aksi</th>
+                            <th class="text-center">No</th>
+                            <th class="text-center">Tanggal</th>
+                            <th class="text-center">Desa</th>
+                            <th class="text-center">Penyampaian Laporan Kepala Desa ke BPD</th>
+                            <th class="text-center">Jumlah Informasi yang Disampakan</th>
+                            <th class="text-center">Status Laporan Pertanggungjawaban</th>
+                            <th class="text-center">Laporan Kinerja Kepala Desa/Lurah</th>
+                            <th class="text-center">Jumlah Media Informasi</th>
+                            <th class="text-center">Pengaduan (Selesai/Diterima)</th>
+                            <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -35,6 +36,7 @@
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
+                                <td clas="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
                                 <td>
                                     @if($item->penyampaian_laporan === 'ada')
                                         <span class="badge bg-success">Ada</span>

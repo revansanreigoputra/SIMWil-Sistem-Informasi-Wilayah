@@ -21,6 +21,11 @@
                 <td width="10%">:</td>
                 <td>{{ \Carbon\Carbon::parse($pertanggungjawaban->tanggal)->format('d-m-Y') }}</td>
             </tr>
+            <tr>
+                        <td width="40%"><strong>Desa</strong></td>
+                        <td width="10%">:</td>
+                        <td>{{ $pertanggungjawaban->desa->nama_desa ?? '-' }}</td>
+            </tr>
         </table>
 
         <!-- Detail Data Pertanggungjawaban -->

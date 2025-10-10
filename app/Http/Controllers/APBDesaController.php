@@ -13,7 +13,7 @@ class APBDesaController extends Controller
      */
     public function index()
     {
-        $data = ApbDesa::with(['desa'])->orderBy('tanggal', 'desc')->paginate(10);
+        $data = ApbDesa::with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.pemerintahdesadankelurahan.apbdesa.index', compact('data'));
 
     }
@@ -104,7 +104,7 @@ class APBDesaController extends Controller
         // Bersihkan format rupiah → hanya angka
             foreach ($validated as $key => $value) {
                 if ($key !== 'tanggal' && is_string($value)) {
-        $validated[$key] = preg_replace('/[^0-9]/', '', $value);
+                    $validated[$key] = preg_replace('/[^0-9]/', '', $value);
                 }
             }
         $apb = ApbDesa::findOrFail($id);

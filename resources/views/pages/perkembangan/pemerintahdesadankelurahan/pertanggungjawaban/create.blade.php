@@ -15,23 +15,39 @@
         <form action="{{ route('perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.store') }}" method="POST">
             @csrf
 
-            {{-- Tanggal --}}
-            <div class="mb-4">
+            <div class="row">
+            <!-- Kolom Tanggal -->
+            <div class="col-md-6 mb-3">
                 <label for="tanggal" class="form-label fw-semibold">
-                    <i class="fas fa-calendar-alt me-1"></i> Tanggal <span class="text-danger">*</span>
+                    <i class="fas fa-calendar me-1"></i>
+                    Tanggal <span class="text-danger">*</span>
                 </label>
-                <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
-                    id="tanggal" name="tanggal" value="{{ old('tanggal') }}" required>
+                <input type="date" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal"
+                    name="tanggal" value="{{ old('tanggal') }}" required>
                 @error('tanggal')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
+            </div>
+
+            <!-- Kolom Desa -->
+            <div class="col-md-6 mb-3">
+                <label for="id_desa" class="form-label fw-semibold">
+                    <i class="fas fa-map-marker-alt me-1"></i>
+                    Desa <span class="text-danger">*</span>
+                </label>
+                <select name="id_desa" id="id_desa" class="form-control" required>
+                    <option value="">-- Pilih Desa --</option>
+                    @foreach ($desas as $item)
+                        <option value="{{ $item->id }}">{{ $item->nama_desa }}</option>
+                    @endforeach
+                </select>
             </div>
 
             {{-- Bagian Laporan & Informasi --}}
             <h5 class="fw-bold text-primary border-bottom pb-2 mb-3">
                 <i class="fas fa-file-alt me-1"></i> Laporan & Informasi
             </h5>
-            <div class="row g-3">
+            <div class="row">
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">Penyampaian Laporan Kepala Desa ke BPD</label>
                     <div class="d-flex gap-4">
@@ -60,7 +76,7 @@
                 </div>
             </div>
 
-            <div class="row g-3 mt-3">
+            <div class="row">
                 <div class="col-md-6">
                     <label class="form-label fw-semibold">Status Laporan Pertanggungjawaban</label>
                     <div class="d-flex gap-4">
@@ -98,7 +114,7 @@
             <h5 class="fw-bold text-primary border-bottom pb-2 mt-4 mb-3">
                 <i class="fas fa-bullhorn me-1"></i> Pengaduan & Media
             </h5>
-            <div class="row g-3">
+            <div class="row">
                 <div class="col-md-4">
                     <label for="jumlah_media_informasi" class="form-label fw-semibold">
                         Jumlah Media Informasi
