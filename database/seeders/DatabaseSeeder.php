@@ -39,6 +39,7 @@ class DatabaseSeeder extends Seeder
             TempatIbadahSeeder::class,
             JpolahragaSeeder::class,
             JpkesehatanSeeder::class,
+            JskesehatanSeeder::class,
         ]);
     }
 }

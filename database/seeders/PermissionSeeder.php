@@ -301,6 +301,13 @@ class PermissionSeeder extends Seeder
             'kesehatan.store',
             'kesehatan.update',
             'kesehatan.delete',
+            
+            // Sarana kesehatan
+            'skesehatan.view',
+            'skesehatan.create',
+            'skesehatan.store',
+            'skesehatan.update',
+            'skesehatan.delete',
 
             // energi dan penerangan
             'energiPenerangan.view',

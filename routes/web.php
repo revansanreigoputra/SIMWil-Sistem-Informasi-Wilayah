@@ -299,6 +299,17 @@ Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/keseha
     Route::delete('/{prasarana_kesehatan}', [PrasaranakesehatanController::class, 'destroy'])->name('destroy');
 });
 
+// Sarana Kesehatan 
+Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/skesehatan')->name('potensi.potensi-prasarana-dan-sarana.skesehatan.')->group(function () {
+    Route::get('/', [App\Http\Controllers\SaranakesehatanController::class, 'index'])->name('index');
+    Route::get('/create', [App\Http\Controllers\SaranakesehatanController::class, 'create'])->name('create');
+    Route::post('/', [App\Http\Controllers\SaranakesehatanController::class, 'store'])->name('store');
+    Route::get('/{saranakesehatan}', [App\Http\Controllers\SaranakesehatanController::class, 'show'])->name('show');
+    Route::get('/{saranakesehatan}/edit', [App\Http\Controllers\SaranakesehatanController::class, 'edit'])->name('edit');
+    Route::put('/{saranakesehatan}', [App\Http\Controllers\SaranakesehatanController::class, 'update'])->name('update');
+    Route::delete('/{saranakesehatan}', [App\Http\Controllers\SaranakesehatanController::class, 'destroy'])->name('destroy');
+});
+
 // dusun
 Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/prasarana-dusun')->name('potensi.potensi-prasarana-dan-sarana.prasarana-dusun.')->group(function () {
     Route::get('/', [DusunController::class, 'index'])->name('index');
