@@ -19,27 +19,29 @@
             <table id="pembinaan-pusat-table" class="table table-striped text-center align-middle">
                 <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Tanggal</th>
-                        <th>Pedoman Pelaksanaan</th>
-                        <th>Pedoman Pembiayaan</th>
-                        <th>Pedoman Administrasi</th>
-                        <th>Pedoman Tanda Jabatan</th>
-                        <th>Pedoman Diklat</th>
-                        <th>Jumlah Bimbingan</th>
-                        <th>Jumlah Kegiatan Pendidikan</th>
-                        <th>Jumlah Penelitian</th>
-                        <th>Jumlah Kegiatan APBN</th>
-                        <th>Jumlah Penghargaan</th>
-                        <th>Jumlah Sanksi</th>
-                        <th>Aksi</th>
+                        <th class="text-center">No</th>
+                        <th class="text-center">Tanggal</th>
+                        <th class="text-center">Desa</th>
+                        <th class="text-center">Pedoman Pelaksanaan</th>
+                        <th class="text-center">Pedoman Pembiayaan</th>
+                        <th class="text-center">Pedoman Administrasi</th>
+                        <th class="text-center">Pedoman Tanda Jabatan</th>
+                        <th class="text-center">Pedoman Diklat</th>
+                        <th class="text-center">Jumlah Bimbingan</th>
+                        <th class="text-center">Jumlah Kegiatan Pendidikan</th>
+                        <th class="text-center">Jumlah Penelitian</th>
+                        <th class="text-center">Jumlah Kegiatan APBN</th>
+                        <th class="text-center">Jumlah Penghargaan</th>
+                        <th class="text-center">Jumlah Sanksi</th>
+                        <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($data as $item)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->tanggal->format('Y-m-d') }}</td>
+                            <td class="text-center">{{ $loop->iteration }}</td>
+                            <td class="text-center">{{ $item->tanggal->format('Y-m-d') }}</td>
+                            <td clas="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
                             <td><span class="badge bg-{{ $item->pedoman_pelaksanaan_urusan === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pedoman_pelaksanaan_urusan ?? '-' }}</span></td>
                             <td><span class="badge bg-{{ $item->pedoman_bantuan_pembiayaan === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pedoman_bantuan_pembiayaan ?? '-' }}</span></td>
                             <td><span class="badge bg-{{ $item->pedoman_administrasi === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pedoman_administrasi ?? '-' }}</span></td>
