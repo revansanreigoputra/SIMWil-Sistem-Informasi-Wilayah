@@ -22,10 +22,10 @@
                 <td>{{ \Carbon\Carbon::parse($pembinaan->tanggal)->format('d-m-Y') }}</td>
             </tr>
             <tr>
-                        <td width="40%"><strong>Desa</strong></td>
-                        <td width="10%">:</td>
-                        <td>{{ $pembinaan->desa->nama_desa ?? '-' }}</td>
-                    </tr>
+                <td width="40%"><strong>Desa</strong></td>
+                <td width="10%">:</td>
+                <td>{{ $pembinaan->desa->nama_desa ?? '-' }}</td>
+            </tr>
         </table>
 
         <!-- Data Pembinaan Pemerintah Pusat -->

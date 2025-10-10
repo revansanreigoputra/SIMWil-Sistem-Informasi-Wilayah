@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\pembinaanprovinsi;
+use App\Models\Desa;
 use Illuminate\Http\Request;
 
 class PembinaanprovinsiController extends Controller
@@ -12,7 +13,7 @@ class PembinaanprovinsiController extends Controller
      */
     public function index()
     {
-         $data = PembinaanProvinsi::orderBy('tanggal', 'desc')->get();
+         $data = PembinaanProvinsi::with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.pemerintahdesadankelurahan.pembinaanprovinsi.index', compact('data'));
     }
 
@@ -21,7 +22,8 @@ class PembinaanprovinsiController extends Controller
      */
     public function create()
     {
-        return view('pages.perkembangan.pemerintahdesadankelurahan.pembinaanprovinsi.create');
+        $desas = Desa::orderBy('nama_desa')->get();
+        return view('pages.perkembangan.pemerintahdesadankelurahan.pembinaanprovinsi.create', compact('desas'));
     }
 
     /**
@@ -31,6 +33,7 @@ class PembinaanprovinsiController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
+            'id_desa' => 'required|exists:desas,id',
             'pedoman_pelaksanaan_tugas' => 'required|in:Ada,Tidak Ada',
             'pedoman_bantuan_keuangan' => 'required|in:Ada,Tidak Ada',
             'kegiatan_fasilitasi_keberadaan' => 'required|in:Ada,Tidak Ada',
@@ -55,6 +58,7 @@ class PembinaanprovinsiController extends Controller
     public function show($id)
     {
         $pembinaan = pembinaanprovinsi::findOrFail($id);
+        $pembinaan->load(['desa']);
         return view('pages.perkembangan.pemerintahdesadankelurahan.pembinaanprovinsi.show', compact('pembinaan'));
     }
 
@@ -64,7 +68,8 @@ class PembinaanprovinsiController extends Controller
     public function edit($id)
     {
         $pembinaan = PembinaanProvinsi::findOrFail($id);
-        return view('pages.perkembangan.pemerintahdesadankelurahan.pembinaanprovinsi.edit', compact('pembinaan'));
+        $desas = Desa::orderBy('nama_desa')->get();
+        return view('pages.perkembangan.pemerintahdesadankelurahan.pembinaanprovinsi.edit', compact('pembinaan', 'desas'));
     }
 
     /**
@@ -74,6 +79,7 @@ class PembinaanprovinsiController extends Controller
     {
          $validated = $request->validate([
             'tanggal' => 'required|date',
+            'id_desa' => 'required|exists:desas,id',
             'pedoman_pelaksanaan_tugas' => 'required|in:Ada,Tidak Ada',
             'pedoman_bantuan_keuangan' => 'required|in:Ada,Tidak Ada',
             'kegiatan_fasilitasi_keberadaan' => 'required|in:Ada,Tidak Ada',
@@ -103,5 +109,10 @@ class PembinaanprovinsiController extends Controller
         $pembinaan->delete();
 
         return redirect()->route('perkembangan.pemerintahdesadankelurahan.pembinaanprovinsi.index')->with('success', 'Data Pembinaan Provinsi berhasil dihapus.');
+    }
+     public function getDesasByKecamatan($id_kecamatan)
+    {
+        $desas = Desa::where('id_kecamatan', $id_kecamatan)->get();
+        return response()->json($desas);
     }
 }

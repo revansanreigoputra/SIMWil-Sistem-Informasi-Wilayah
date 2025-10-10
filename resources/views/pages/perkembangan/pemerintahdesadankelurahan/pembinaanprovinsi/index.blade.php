@@ -19,29 +19,31 @@
             <table id="pembinaan-provinsi-table" class="table table-striped text-center align-middle">
                 <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Tanggal</th>
-                        <th>Pedoman Pelaksanaan</th>
-                        <th>Pedoman Bantuan Keuangan</th>
-                        <th>Fasilitasi Keberadaan</th>
-                        <th>Fasilitasi Pelaksanaan</th>
-                        <th>Jumlah Kegiatan Pendidikan</th>
-                        <th>Penanggulangan Kemiskinan</th>
-                        <th>Penanganan Bencana</th>
-                        <th>Peningkatan Pendapatan</th>
-                        <th>Penyediaan Sarana</th>
-                        <th>Pemanfaatan SDA</th>
-                        <th>Pengembangan Sosial</th>
-                        <th>Pedoman Pendataan</th>
-                        <th>Pemberian Sanksi</th>
-                        <th>Aksi</th>
+                        <th class="text-center">No</th>
+                        <th class="text-center">Tanggal</th>
+                        <th class="text-center">Desa</th>
+                        <th class="text-center">Pedoman Pelaksanaan</th>
+                        <th class="text-center">Pedoman Bantuan Keuangan</th>
+                        <th class="text-center">Fasilitasi Keberadaan</th>
+                        <th class="text-center">Fasilitasi Pelaksanaan</th>
+                        <th class="text-center">Jumlah Kegiatan Pendidikan</th>
+                        <th class="text-center">Penanggulangan Kemiskinan</th>
+                        <th class="text-center">Penanganan Bencana</th>
+                        <th class="text-center">Peningkatan Pendapatan</th>
+                        <th class="text-center">Penyediaan Sarana</th>
+                        <th class="text-center">Pemanfaatan SDA</th>
+                        <th class="text-center">Pengembangan Sosial</th>
+                        <th class="text-center">Pedoman Pendataan</th>
+                        <th class="text-center">Pemberian Sanksi</th>
+                        <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($data as $item)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
+                            <td class="text-center">{{ $loop->iteration }}</td>
+                            <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
+                            <td clas="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
 
                             {{-- Badge Hijau jika "Ada", Abu-abu jika "Tidak Ada" --}}
                             <td><span class="badge bg-{{ $item->pedoman_pelaksanaan_tugas === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pedoman_pelaksanaan_tugas ?? '-' }}</span></td>

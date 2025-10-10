@@ -42,6 +42,7 @@
                     @endforeach
                 </select>
             </div>
+            </div>
 
             {{-- Bagian Pedoman --}}
             @php
