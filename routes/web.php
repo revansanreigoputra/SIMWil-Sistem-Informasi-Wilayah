@@ -146,6 +146,7 @@ use App\Http\Controllers\SaranaTransportasiController;
 use App\Http\Controllers\JenisTransportasiController;
 use App\Http\Controllers\KomunikasiInformasiController;
 use App\Http\Controllers\PrasaranaPeribadatanController;
+use App\Http\Controllers\PrasaranaolahragaController;
 
 Route::get('/', function () {
     return Auth::check()
@@ -273,6 +274,17 @@ Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/periba
     Route::get('/{prasarana_peribadatan}/edit', [PrasaranaPeribadatanController::class, 'edit'])->name('edit');
     Route::put('/{prasarana_peribadatan}', [PrasaranaPeribadatanController::class, 'update'])->name('update');
     Route::delete('/{prasarana_peribadatan}', [PrasaranaPeribadatanController::class, 'destroy'])->name('destroy');
+});
+
+// Olahraga 
+Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/olahraga')->name('potensi.potensi-prasarana-dan-sarana.olahraga.')->group(function () {
+    Route::get('/', [PrasaranaolahragaController::class, 'index'])->name('index');
+    Route::get('/create', [PrasaranaolahragaController::class, 'create'])->name('create');
+    Route::post('/', [PrasaranaolahragaController::class, 'store'])->name('store');
+    Route::get('/{prasarana_olahraga}', [PrasaranaolahragaController::class, 'show'])->name('show');
+    Route::get('/{prasarana_olahraga}/edit', [PrasaranaolahragaController::class, 'edit'])->name('edit');
+    Route::put('/{prasarana_olahraga}', [PrasaranaolahragaController::class, 'update'])->name('update');
+    Route::delete('/{prasarana_olahraga}', [PrasaranaolahragaController::class, 'destroy'])->name('destroy');
 });
 
 // dusun

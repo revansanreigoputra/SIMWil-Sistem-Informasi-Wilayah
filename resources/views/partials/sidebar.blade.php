@@ -586,6 +586,13 @@
                                                     Peribadatan
                                                 </a>
                                             @endcan
+                                            
+                                            @can('olahraga.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/olahraga*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-prasarana-dan-sarana.olahraga.index') }}">
+                                                    Prasarana Olahraga
+                                                </a>
+                                            @endcan
 
                                             @can('kemasyarakatan.view')
                                                 <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/energiPenerangan*') ? 'active' : '' }}"
