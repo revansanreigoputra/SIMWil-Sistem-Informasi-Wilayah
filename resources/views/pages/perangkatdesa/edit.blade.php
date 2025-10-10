@@ -139,6 +139,7 @@
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
+
                             </div>
 
                             <div class="row">
@@ -177,6 +178,22 @@
                                         </div>
                                     @endif
                                     @error('foto')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="pendidikan">Pendidikan</label>
+                                    <select name="pendidikan_id" id="pendidikan_id"
+                                        class="form-control @error('pendidikan_id') is-invalid @enderror">
+                                        <option value="">Pilih Pendidikan</option>
+                                        @foreach ($pendidikans as $pendidikan)
+                                            <option value="{{ $pendidikan->id }}"
+                                                {{ old('pendidikan_id', $perangkatDesa->pendidikan_id) == $pendidikan->id ? 'selected' : '' }}>
+                                                {{ $pendidikan->pendidikan }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('pendidikan_id')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -233,7 +250,7 @@
 
                 if (desa_id && jabatan_id && masa_jabatan) {
                     $.ajax({
-                        url: '{{ route("perangkat_desa.check_duplicate") }}',
+                        url: '{{ route('perangkat_desa.check_duplicate') }}',
                         method: 'POST',
                         data: {
                             desa_id: desa_id,
@@ -277,15 +294,15 @@
         }
 
         /* .card-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 0.375rem 0.375rem 0 0 !important;
-        }
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                border-radius: 0.375rem 0.375rem 0 0 !important;
+            }
 
-        .card-header .card-title {
-            color: white;
-            font-weight: 600;
-        } */
+            .card-header .card-title {
+                color: white;
+                font-weight: 600;
+            } */
 
         .form-group {
             margin-bottom: 1.5rem;
@@ -317,14 +334,14 @@
         }
 
         /* .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-        }
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border: none;
+            }
 
-        .btn-primary:hover {
-            background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
-            transform: translateY(-1px);
-        } */
+            .btn-primary:hover {
+                background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+                transform: translateY(-1px);
+            } */
 
         .btn-secondary {
             background-color: #6c757d;

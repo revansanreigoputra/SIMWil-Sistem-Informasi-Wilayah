@@ -107,6 +107,18 @@ class PermissionSeeder extends Seeder
             'potensi.laporan.view',
             'potensi.laporan.export',
 
+            // POTENSI KELEMBAGAAN permissions
+            // pemerintah permissions
+            'potensi.kelembagaan.pemerintah.view',
+            'potensi.kelembagaan.pemerintah.create',
+            'potensi.kelembagaan.pemerintah.store',
+            'potensi.kelembagaan.pemerintah.edit',
+            'potensi.kelembagaan.pemerintah.update',
+            'potensi.kelembagaan.pemerintah.delete',
+            'potensi.kelembagaan.pemerintah.destroy',
+            'potensi.kelembagaan.pemerintah.print',
+             
+
             // layanan surat permissions
             'permohonan.view',
             'permohonan.create',
