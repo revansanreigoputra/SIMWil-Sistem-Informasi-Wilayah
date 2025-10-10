@@ -593,6 +593,13 @@
                                                     Prasarana Olahraga
                                                 </a>
                                             @endcan
+                                            
+                                            @can('kesehatan.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/kesehatan*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-prasarana-dan-sarana.kesehatan.index') }}">
+                                                    Prasarana Kesehatan
+                                                </a>
+                                            @endcan
 
                                             @can('kemasyarakatan.view')
                                                 <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/energiPenerangan*') ? 'active' : '' }}"
