@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Bpd extends Model
 {
+
+    protected $table = 'bpd';
+    
     protected $fillable = [
         'tanggal',
         'gedung_kantor',
