@@ -20,30 +20,32 @@
                 <<table id="apb-desa-table" class="table table-striped text-center">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>Tanggal</th>
-                            <th>APBD Kabupaten</th>
-                            <th>Bantuan Kab</th>
-                            <th>Bantuan Provinsi</th>
-                            <th>Bantuan Pusat</th>
-                            <th>Pendapatan Asli Desa</th>
-                            <th>Swadaya Masyarakat</th>
-                            <th>Alokasi Dana Desa</th>
-                            <th>Sumber Pendapatan Perusahaan</th>
-                            <th>Sumber Pendapatan Lain</th>
-                            <th>Jumlah Penerimaan</th>
-                            <th>Belanja Publik</th>
-                            <th>Belanja Aparatur</th>
-                            <th>Jumlah Belanja</th>
-                            <th>Saldo Anggaran</th>
-                            <th>Aksi</th>
+                            <th class="text-center">No</th>
+                            <th class="text-center">Tanggal</th>
+                            <th class="text-center">Desa</th>
+                            <th class="text-center">APBD Kabupaten</th>
+                            <th class="text-center">Bantuan Kab</th>
+                            <th class="text-center">Bantuan Provinsi</th>
+                            <th class="text-center">Bantuan Pusat</th>
+                            <th class="text-center">Pendapatan Asli Desa</th>
+                            <th class="text-center">Swadaya Masyarakat</th>
+                            <th class="text-center">Alokasi Dana Desa</th>
+                            <th class="text-center">Sumber Pendapatan Perusahaan</th>
+                            <th class="text-center">Sumber Pendapatan Lain</th>
+                            <th class="text-center">Jumlah Penerimaan</th>
+                            <th class="text-center">Belanja Publik</th>
+                            <th class="text-center">Belanja Aparatur</th>
+                            <th class="text-center">Jumlah Belanja</th>
+                            <th class="text-center">Saldo Anggaran</th>
+                            <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($data as $item)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->tanggal->format('Y-m-d') }}</td>
+                                <td clas="text-center">{{ $loop->iteration }}</td>
+                                <td clas="text-center">{{ $item->tanggal->format('Y-m-d') }}</td>
+                                <td clas="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
                                 <td class="text-center">{{ number_format($item->apbd_kabupaten, 0, ',', '.') }}</td>
                                 <td class="text-center">{{ number_format($item->bantuan_pemerintah_kabupaten, 0, ',', '.') }}</td>
                                 <td class="text-center">{{ number_format($item->bantuan_pemerintah_provinsi, 0, ',', '.') }}</td>

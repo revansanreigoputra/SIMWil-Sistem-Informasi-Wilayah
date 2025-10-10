@@ -23,9 +23,15 @@
                         <td width="10%">:</td>
                         <td>{{ \Carbon\Carbon::parse($apb->tanggal)->format('d-m-Y') }}</td>
                     </tr>
+                    <tr>
+                        <td width="40%"><strong>Desa</strong></td>
+                        <td width="10%">:</td>
+                        <td>{{ $apb->desa->nama_desa ?? '-' }}</td>
+                    </tr>
                 </table>
             </div>
         </div>
+
 
         <!-- Data Penerimaan -->
         <h5 class="fw-bold text-primary mb-3">Data Penerimaan</h5>

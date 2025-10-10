@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\APBDesa;
+use App\Models\Desa;
 use Illuminate\Http\Request;
 
 class APBDesaController extends Controller
@@ -12,7 +13,7 @@ class APBDesaController extends Controller
      */
     public function index()
     {
-        $data = ApbDesa::orderBy('tanggal', 'desc')->get();
+        $data = ApbDesa::with(['desa'])->orderBy('tanggal', 'desc')->paginate(10);
         return view('pages.perkembangan.pemerintahdesadankelurahan.apbdesa.index', compact('data'));
 
     }
@@ -22,7 +23,8 @@ class APBDesaController extends Controller
      */
     public function create()
     {
-        return view('pages.perkembangan.pemerintahdesadankelurahan.apbdesa.create');
+        $desas = Desa::orderBy('nama_desa')->get();
+        return view('pages.perkembangan.pemerintahdesadankelurahan.apbdesa.create', compact('desas'));
 
     }
 
@@ -33,6 +35,7 @@ class APBDesaController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
+            'id_desa' => 'required|exists:desas,id',
             'apbd_kabupaten' => 'nullable|numeric',
             'bantuan_pemerintah_kabupaten' => 'nullable|numeric',
             'bantuan_pemerintah_provinsi' => 'nullable|numeric',
@@ -60,6 +63,7 @@ class APBDesaController extends Controller
     public function show($id)
     {
         $apb = ApbDesa::findOrFail($id);
+        $apb->load(['desa']); // pastikan relasi terload
         return view('pages.perkembangan.pemerintahdesadankelurahan.apbdesa.show', compact('apb'));
 
     }
@@ -70,7 +74,8 @@ class APBDesaController extends Controller
     public function edit($id)
     {
         $apb = ApbDesa::findOrFail($id);
-        return view('pages.perkembangan.pemerintahdesadankelurahan.apbdesa.edit', compact('apb'));
+        $desas = Desa::orderBy('nama_desa')->get();
+        return view('pages.perkembangan.pemerintahdesadankelurahan.apbdesa.edit', compact('apb', 'desas'));
     }
 
     /**
@@ -80,6 +85,7 @@ class APBDesaController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
+            'id_desa' => 'required|exists:desas,id',
             'apbd_kabupaten' => 'nullable|numeric',
             'bantuan_pemerintah_kabupaten' => 'nullable|numeric',
             'bantuan_pemerintah_provinsi' => 'nullable|numeric',
@@ -119,5 +125,12 @@ class APBDesaController extends Controller
         $apb->delete();
 
         return redirect()->route('perkembangan.pemerintahdesadankelurahan.apbdesa.index')->with('success', 'Data APB Desa berhasil dihapus.');
+    }
+
+    //Endpoint AJAX: Ambil desa 
+    public function getDesasByKecamatan($id_kecamatan)
+    {
+        $desas = Desa::where('id_kecamatan', $id_kecamatan)->get();
+        return response()->json($desas);
     }
 }
