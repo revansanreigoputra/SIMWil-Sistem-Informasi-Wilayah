@@ -19,28 +19,29 @@
             <table id="pembinaan-kabupaten-table" class="table table-striped text-center align-middle">
                 <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Tanggal</th>
-                        <th>Pelimpahan Tugas</th>
-                        <th>Pengaturan Kewenangan</th>
-                        <th>Pedoman Pelaksanaan Tugas</th>
-                        <th>Pedoman Penyusunan Peraturan</th>
-                        <th>Pedoman Penyusunan Perencanaan</th>
-                        <th>Kegiatan Fasilitasi Keberadaan</th>
-                        <th>Penetapan Pembiayaan</th>
-                        <th>Fasilitasi Pelaksanaan Pedoman</th>
-                        <th>Jumlah Kegiatan Pendidikan</th>
-                        <th>Kegiatan Penanggulangan Kemiskinan</th>
-                        <th>Kegiatan Penanganan Bencana</th>
-                        <th>Kegiatan Peningkatan Pendapatan</th>
-                        <th>Fasilitasi Penetapan Pedoman</th>
-                        <th>Kegiatan Fasilitasi Lanjutan</th>
-                        <th>Pedoman Pendataan</th>
-                        <th>Program Pemeliharaan Motivasi</th>
-                        <th>Pemberian Penghargaan</th>
-                        <th>Pemberian Sanksi</th>
-                        <th>Pengawasan Keuangan</th>
-                        <th>Aksi</th>
+                        <th class="text-center">No</th>
+                        <th class="text-center">Tanggal</th>
+                        <th class="text-center">Desa</th>
+                        <th class="text-center">Pelimpahan Tugas</th>
+                        <th class="text-center">Pengaturan Kewenangan</th>
+                        <th class="text-center">Pedoman Pelaksanaan Tugas</th>
+                        <th class="text-center">Pedoman Penyusunan Peraturan</th>
+                        <th class="text-center">Pedoman Penyusunan Perencanaan</th>
+                        <th class="text-center">Kegiatan Fasilitasi Keberadaan</th>
+                        <th class="text-center">Penetapan Pembiayaan</th>
+                        <th class="text-center">Fasilitasi Pelaksanaan Pedoman</th>
+                        <th class="text-center">Jumlah Kegiatan Pendidikan</th>
+                        <th class="text-center">Kegiatan Penanggulangan Kemiskinan</th>
+                        <th class="text-center">Kegiatan Penanganan Bencana</th>
+                        <th class="text-center">Kegiatan Peningkatan Pendapatan</th>
+                        <th class="text-center">Fasilitasi Penetapan Pedoman</th>
+                        <th class="text-center">Kegiatan Fasilitasi Lanjutan</th>
+                        <th class="text-center">Pedoman Pendataan</th>
+                        <th class="text-center">Program Pemeliharaan Motivasi</th>
+                        <th class="text-center">Pemberian Penghargaan</th>
+                        <th class="text-center">Pemberian Sanksi</th>
+                        <th class="text-center">Pengawasan Keuangan</th>
+                        <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,6 +49,7 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
+                            <td clas="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
 
                             {{-- Badge Hijau jika "Ada", Abu-abu jika "Tidak Ada"/null --}}
                             <td><span class="badge bg-{{ $item->pelimpahan_tugas === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pelimpahan_tugas ?? '-' }}</span></td>

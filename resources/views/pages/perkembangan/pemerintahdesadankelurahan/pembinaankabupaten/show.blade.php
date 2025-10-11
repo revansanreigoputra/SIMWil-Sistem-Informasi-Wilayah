@@ -14,10 +14,20 @@
 
     <div class="card shadow-sm">
         <div class="card-body">
-            <dl class="row mb-0">
-                <dt class="col-sm-3">Tanggal</dt>
-                <dd class="col-sm-9">{{ \Carbon\Carbon::parse($pembinaankabupaten->tanggal)->format('d-m-Y') }}</dd>
-            </dl>
+            <!-- Informasi Umum -->
+        <h5 class="fw-bold text-primary mb-3">Informasi Umum</h5>
+        <table class="table table-borderless mb-4">
+            <tr>
+                <td width="40%"><strong>Tanggal</strong></td>
+                <td width="10%">:</td>
+                <td>{{ \Carbon\Carbon::parse($pembinaankabupaten->tanggal)->format('d-m-Y') }}</td>
+            </tr>
+            <tr>
+                <td width="40%"><strong>Desa</strong></td>
+                <td width="10%">:</td>
+                <td>{{ $pembinaankabupaten->desa->nama_desa ?? '-' }}</td>
+            </tr>
+        </table>
 
             <hr>
 
