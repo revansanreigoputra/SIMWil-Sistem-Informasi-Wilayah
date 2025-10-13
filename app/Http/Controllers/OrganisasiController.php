@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\organisasi;
+use App\Models\Desa;
 use Illuminate\Http\Request;
 
 class OrganisasiController extends Controller
@@ -12,7 +13,7 @@ class OrganisasiController extends Controller
      */
     public function index()
     {
-        $data = organisasi::orderBy('tanggal', 'desc')->get();
+        $data = organisasi::with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.lembagakemasyarakatan.organisasi.index', compact('data'));
     }
 
@@ -21,7 +22,8 @@ class OrganisasiController extends Controller
      */
     public function create()
     {
-        return view('pages.perkembangan.lembagakemasyarakatan.organisasi.create');
+       $desas = Desa::orderBy('nama_desa')->get();
+        return view('pages.perkembangan.lembagakemasyarakatan.organisasi.create', compact('desas'));
     }
 
     /**
@@ -31,6 +33,7 @@ class OrganisasiController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
+            'id_desa' => 'required|exists:desas,id',
             'jenis_organisasi' => 'required|string',
             'kepengurusan' => 'nullable|string',
             'buku_administrasi' => 'nullable|string',
@@ -49,6 +52,7 @@ class OrganisasiController extends Controller
     public function show($id)
     {
         $organisasi = organisasi::findOrFail($id);
+        $organisasi->load(['desa']);
         return view('pages.perkembangan.lembagakemasyarakatan.organisasi.show', compact('organisasi'));
     }
 
@@ -58,7 +62,8 @@ class OrganisasiController extends Controller
     public function edit($id)
     {
         $organisasi = organisasi::findOrFail($id);
-        return view('pages.perkembangan.lembagakemasyarakatan.organisasi.edit', compact('organisasi'));
+        $desas = Desa::orderBy('nama_desa')->get();
+        return view('pages.perkembangan.lembagakemasyarakatan.organisasi.edit', compact('organisasi', 'desas'));
 
     }
 
@@ -69,6 +74,7 @@ class OrganisasiController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
+            'id_desa' => 'required|exists:desas,id',
             'jenis_organisasi' => 'required|string',
             'kepengurusan' => 'nullable|string',
             'buku_administrasi' => 'nullable|string',
@@ -89,5 +95,10 @@ class OrganisasiController extends Controller
         $organisasi->delete();
         return redirect()->route('perkembangan.lembagakemasyarakatan.organisasi.index')
                          ->with('success', 'Data organisasi berhasil dihapus.');
+    }
+    public function getDesasByKecamatan($id_kecamatan)
+    {
+        $desas = Desa::where('id_kecamatan', $id_kecamatan)->get();
+        return response()->json($desas);
     }
 }

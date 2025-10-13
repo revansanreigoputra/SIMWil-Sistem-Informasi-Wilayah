@@ -24,6 +24,11 @@
                         <td>{{ \Carbon\Carbon::parse($organisasi->tanggal)->format('d-m-Y') }}</td>
                     </tr>
                     <tr>
+                        <td width="40%"><strong>Desa</strong></td>
+                        <td width="10%">:</td>
+                        <td>{{ $organisasi->desa->nama_desa ?? '-' }}</td>
+                    </tr>
+                    <tr>
                         <td><strong>Jenis Organisasi</strong></td>
                         <td>:</td>
                         <td>{{ $organisasi->jenis_organisasi }}</td>

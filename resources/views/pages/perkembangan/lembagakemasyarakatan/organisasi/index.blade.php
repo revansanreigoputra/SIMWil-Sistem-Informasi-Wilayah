@@ -19,21 +19,23 @@
                 <table id="organisasi-table" class="table table-striped text-center">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>Tanggal</th>
-                            <th>Jenis Organisasi</th>
-                            <th>Kepengurusan</th>
-                            <th>Buku Administrasi</th>
-                            <th>Jumlah Kegiatan</th>
-                            <th>Dasar Hukum Pembentukan</th>
-                            <th>Aksi</th>
+                            <th class="text-center">No</th>
+                            <th class="text-center">Tanggal</th>
+                            <th class="text-center">Desa</th>
+                            <th class="text-center">Jenis Organisasi</th>
+                            <th class="text-center">Kepengurusan</th>
+                            <th class="text-center">Buku Administrasi</th>
+                            <th class="text-center">Jumlah Kegiatan</th>
+                            <th class="text-center">Dasar Hukum Pembentukan</th>
+                            <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($data as $item)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                <td class="text-center">{{ $loop->iteration }}</td>
                                 <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
+                                <td>{{ $item->desa->nama_desa ?? '-' }}</td>
                                 <td >{{ $item->jenis_organisasi }}</td>
                                 <td>{{ $item->kepengurusan ?? '-' }}</td>
                                 <td class="text-center">{{ $item->buku_administrasi ?? '-' }}</td>

@@ -15,20 +15,39 @@
         <form action="{{ route('perkembangan.lembagakemasyarakatan.organisasi.store') }}" method="POST">
             @csrf
 
-            {{-- Tanggal --}}
-            <div class="mb-3">
+            <div class="row">
+            <!-- Kolom Tanggal -->
+            <div class="col-md-6 mb-3">
                 <label for="tanggal" class="form-label fw-semibold">
-                    <i class="fas fa-calendar me-1"></i> Tanggal <span class="text-danger">*</span>
+                    <i class="fas fa-calendar me-1"></i>
+                    Tanggal <span class="text-danger">*</span>
                 </label>
-                <input type="date" class="form-control @error('tanggal') is-invalid @enderror" 
-                    id="tanggal" name="tanggal" value="{{ old('tanggal') }}" required>
+                <input type="date" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal"
+                    name="tanggal" value="{{ old('tanggal') }}" required>
                 @error('tanggal')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
+            <!-- Kolom Desa -->
+            <div class="col-md-6 mb-3">
+                <label for="id_desa" class="form-label fw-semibold">
+                    <i class="fas fa-map-marker-alt me-1"></i>
+                    Desa <span class="text-danger">*</span>
+                </label>
+                <select name="id_desa" id="id_desa" class="form-control" required>
+                    <option value="">-- Pilih Desa --</option>
+                    @foreach ($desas as $item)
+                        <option value="{{ $item->id }}">{{ $item->nama_desa }}</option>
+                    @endforeach
+                </select>
+            </div>
+            </div>
+
+           
+           <div class="row">
             {{-- Jenis Organisasi --}}
-            <div class="mb-3">
+            <div class="col-md-6 mb-3">
                 <label for="jenis_organisasi" class="form-label fw-semibold">Jenis Organisasi <span class="text-danger">*</span></label>
                 <select class="form-select @error('jenis_organisasi') is-invalid @enderror" 
                     id="jenis_organisasi" name="jenis_organisasi" required>
@@ -63,7 +82,7 @@
             </div>
 
             {{-- Kepengurusan --}}
-            <div class="mb-3">
+            <div class="col-md-6 mb-3">
                 <label for="kepengurusan" class="form-label fw-semibold">Kepengurusan</label>
                 <select class="form-select @error('kepengurusan') is-invalid @enderror" 
                     id="kepengurusan" name="kepengurusan">
@@ -78,9 +97,11 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
+            </div>
 
+            <div class="row">
             {{-- Buku Administrasi --}}
-            <div class="mb-3">
+            <div class="col-md-6 mb-3">
                 <label for="buku_administrasi" class="form-label fw-semibold">Buku Administrasi</label>
                 <input type="text" class="form-control @error('buku_administrasi') is-invalid @enderror" 
                     id="buku_administrasi" name="buku_administrasi" 
@@ -91,7 +112,7 @@
             </div>
 
             {{-- Jumlah Kegiatan --}}
-            <div class="mb-3">
+            <div class="col-md-6 mb-3">
                 <label for="jumlah_kegiatan" class="form-label fw-semibold">Jumlah Kegiatan</label>
                 <input type="number" class="form-control @error('jumlah_kegiatan') is-invalid @enderror" 
                     id="jumlah_kegiatan" name="jumlah_kegiatan" 
@@ -99,6 +120,7 @@
                 @error('jumlah_kegiatan')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
+            </div>
             </div>
 
             {{-- Dasar Hukum Pembentukan --}}

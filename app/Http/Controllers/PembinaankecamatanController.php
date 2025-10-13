@@ -13,7 +13,7 @@ class PembinaankecamatanController extends Controller
      */
     public function index()
     {
-         $data = PembinaanKecamatan::orderBy('tanggal', 'desc')->get();
+         $data = PembinaanKecamatan::with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.pemerintahdesadankelurahan.pembinaankecamatan.index', compact('data'));
     }
 
