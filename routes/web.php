@@ -149,6 +149,7 @@ use App\Http\Controllers\PrasaranaPeribadatanController;
 use App\Http\Controllers\PrasaranaolahragaController;
 use App\Http\Controllers\PrasaranakesehatanController;
 use App\Http\Controllers\PrasaranapendidikanController;
+use App\Http\Controllers\PrasaranaHiburanController;
 use App\Http\Controllers\PotensiKelembagaan\PotensiKelembagaanController;
 // use App\Models\LayananSurat\JenisSurat;
 // use App\Models\LayananSurat\KopTemplate;
@@ -328,6 +329,17 @@ Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/ppendi
     Route::get('/{prasaranapendidikan}/edit', [App\Http\Controllers\PrasaranapendidikanController::class, 'edit'])->name('edit');
     Route::put('/{prasaranapendidikan}', [App\Http\Controllers\PrasaranapendidikanController::class, 'update'])->name('update');
     Route::delete('/{prasaranapendidikan}', [App\Http\Controllers\PrasaranapendidikanController::class, 'destroy'])->name('destroy');
+});
+
+// Prasarana Hiburan 
+Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/hiburan')->name('potensi.potensi-prasarana-dan-sarana.hiburan.')->group(function () {
+    Route::get('/', [App\Http\Controllers\PrasaranaHiburanController::class, 'index'])->name('index');
+    Route::get('/create', [App\Http\Controllers\PrasaranaHiburanController::class, 'create'])->name('create');
+    Route::post('/', [App\Http\Controllers\PrasaranaHiburanController::class, 'store'])->name('store');
+    Route::get('/{prasaranahiburan}', [App\Http\Controllers\PrasaranaHiburanController::class, 'show'])->name('show');
+    Route::get('/{prasaranahiburan}/edit', [App\Http\Controllers\PrasaranaHiburanController::class, 'edit'])->name('edit');
+    Route::put('/{prasaranahiburan}', [App\Http\Controllers\PrasaranaHiburanController::class, 'update'])->name('update');
+    Route::delete('/{prasaranahiburan}', [App\Http\Controllers\PrasaranaHiburanController::class, 'destroy'])->name('destroy');
 });
 
 // dusun

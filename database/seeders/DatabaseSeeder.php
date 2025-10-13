@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\JpHiburan;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -41,6 +42,7 @@ class DatabaseSeeder extends Seeder
             JpkesehatanSeeder::class,
             JskesehatanSeeder::class,
             JpgedungSeeder::class,
+            JpHiburanSeeder::class,
         ]);
     }
 }

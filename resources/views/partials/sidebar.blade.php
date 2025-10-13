@@ -614,6 +614,13 @@
                                                     Prasarana Pendidikan
                                                 </a>
                                             @endcan
+                                            
+                                            @can('hiburan.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/hiburan*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-prasarana-dan-sarana.hiburan.index') }}">
+                                                    Prasarana Hiburan
+                                                </a>
+                                            @endcan
 
                                             @can('kemasyarakatan.view')
                                                 <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/energiPenerangan*') ? 'active' : '' }}"
