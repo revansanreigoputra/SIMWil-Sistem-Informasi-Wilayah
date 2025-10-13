@@ -12,6 +12,7 @@ class hasilpembangunan extends Model
     protected $table = 'hasilpembangunans';
 
     protected $fillable = [
+        'id_desa',
         'tanggal',
         'jumlah_masyarakat_terlibat',
         'jumlah_penduduk_dilibatkan',
@@ -33,4 +34,8 @@ class hasilpembangunan extends Model
         'jumlah_kegiatan_didanai_apbd_provinsi',
         'jumlah_kegiatan_didanai_apbn',
     ];
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class, 'id_desa');
+    }
 }

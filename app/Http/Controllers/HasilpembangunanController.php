@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\hasilpembangunan;
+use App\Models\Desa;
 use Illuminate\Http\Request;
 
 class HasilpembangunanController extends Controller
@@ -12,7 +13,7 @@ class HasilpembangunanController extends Controller
      */
     public function index()
     {
-        $data = hasilpembangunan::orderBy('tanggal', 'desc')->get();
+        $data = hasilpembangunan::with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.peransertamasyarakat.hasilpembangunan.index', compact('data'));
     }
 
@@ -21,7 +22,8 @@ class HasilpembangunanController extends Controller
      */
     public function create()
     {
-        return view('pages.perkembangan.peransertamasyarakat.hasilpembangunan.create');
+        $desas = Desa::orderBy('nama_desa')->get();
+        return view('pages.perkembangan.peransertamasyarakat.hasilpembangunan.create', compact('desas'));
     }
 
     /**
@@ -31,6 +33,7 @@ class HasilpembangunanController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
+            'id_desa' => 'required|exists:desas,id',
             'jumlah_masyarakat_terlibat' => 'nullable|integer',
             'jumlah_penduduk_dilibatkan' => 'nullable|integer',
             'jumlah_kegiatan_masyarakat' => 'nullable|integer',
@@ -63,6 +66,7 @@ class HasilpembangunanController extends Controller
     public function show($id)
     {
         $hasilpembangunan = hasilpembangunan::findOrFail($id);
+        $hasilpembangunan->load(['desa']);
         return view('pages.perkembangan.peransertamasyarakat.hasilpembangunan.show', compact('hasilpembangunan'));
     }
 
@@ -72,7 +76,8 @@ class HasilpembangunanController extends Controller
     public function edit($id)
     {
         $hasilpembangunan = hasilpembangunan::findOrFail($id);
-        return view('pages.perkembangan.peransertamasyarakat.hasilpembangunan.edit', compact('hasilpembangunan'));
+        $desas = Desa::orderBy('nama_desa')->get();
+        return view('pages.perkembangan.peransertamasyarakat.hasilpembangunan.edit', compact('hasilpembangunan', 'desas'));
     }
 
     /**
@@ -82,6 +87,7 @@ class HasilpembangunanController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
+            'id_desa' => 'required|exists:desas,id',
             'jumlah_masyarakat_terlibat' => 'nullable|integer',
             'jumlah_penduduk_dilibatkan' => 'nullable|integer',
             'jumlah_kegiatan_masyarakat' => 'nullable|integer',
@@ -115,5 +121,10 @@ class HasilpembangunanController extends Controller
         $hasilpembangunan = hasilpembangunan::findOrFail($id);
         $hasilpembangunan->delete();
         return redirect()->route('perkembangan.peransertamasyarakat.hasilpembangunan.index')->with('success', 'Data hasil pembangunan berhasil dihapus.');
+    }
+    public function getDesasByKecamatan($id_kecamatan)
+    {
+        $desas = Desa::where('id_kecamatan', $id_kecamatan)->get();
+        return response()->json($desas);
     }
 }

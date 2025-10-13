@@ -19,40 +19,42 @@
             <table id="hasilpembangunan-table" class="table table-striped text-center align-middle">
                 <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Tanggal</th>
-                        <th>Jumlah Masyarakat Terlibat</th>
-                        <th>Jumlah Penduduk Dilibatkan</th>
-                        <th>Jumlah Kegiatan Masyarakat</th>
-                        <th>Jumlah Kegiatan Pihak Ketiga</th>
-                        <th>Jumlah Kegiatan Luar Musrenbang</th>
-                        <th>Usulan Masyarakat Disetujui</th>
-                        <th>Usulan Pemerintah Disetujui</th>
-                        <th>Usulan Rencana Kerja</th>
-                        <th>Musyawarah</th>
-                        <th>Kegiatan Belum Selesai</th>
-                        <th>Kegiatan APB Desa</th>
-                        <th>Kegiatan APB Kab/Kota</th>
-                        <th>Kegiatan APBD Provinsi</th>
-                        <th>Kegiatan APBN</th>
-                        <th>Aksi</th>
+                        <th class="text-center">No</th>
+                        <th class="text-center">Tanggal</th>
+                        <th class="text-center">Desa</th>
+                        <th class="text-center">Jumlah Masyarakat Terlibat</th>
+                        <th class="text-center">Jumlah Penduduk Dilibatkan</th>
+                        <th class="text-center">Jumlah Kegiatan Masyarakat</th>
+                        <th class="text-center">Jumlah Kegiatan Pihak Ketiga</th>
+                        <th class="text-center">Jumlah Kegiatan Luar Musrenbang</th>
+                        <th class="text-center">Usulan Masyarakat Disetujui</th>
+                        <th class="text-center">Usulan Pemerintah Disetujui</th>
+                        <th class="text-center">Usulan Rencana Kerja</th>
+                        <th class="text-center">Musyawarah</th>
+                        <th class="text-center">Kegiatan Belum Selesai</th>
+                        <th class="text-center">Kegiatan APB Desa</th>
+                        <th class="text-center">Kegiatan APB Kab/Kota</th>
+                        <th class="text-center">Kegiatan APBD Provinsi</th>
+                        <th class="text-center">Kegiatan APBN</th>
+                        <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($data as $item)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
+                            <td class="text-center">{{ $loop->iteration }}</td>
+                            <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
+                            <td class="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
 
                             {{-- Kolom angka --}}
-                            <td>{{ $item->jumlah_masyarakat_terlibat ?? '-' }}</td>
-                            <td>{{ $item->jumlah_penduduk_dilibatkan ?? '-' }}</td>
-                            <td>{{ $item->jumlah_kegiatan_masyarakat ?? '-' }}</td>
-                            <td>{{ $item->jumlah_kegiatan_pihak_ketiga ?? '-' }}</td>
-                            <td>{{ $item->jumlah_kegiatan_luar_musrenbang ?? '-' }}</td>
-                            <td>{{ $item->jumlah_masyarakat_disetujui_rk ?? '-' }}</td>
-                            <td>{{ $item->usulan_pemerintah_desa_kelurahan_disetujui_rk ?? '-' }}</td>
-                            <td>{{ $item->usulan_rencana_kerja_program ?? '-' }}</td>
+                            <td class="text-center">{{ $item->jumlah_masyarakat_terlibat ?? '-' }}</td>
+                            <td class="text-center">{{ $item->jumlah_penduduk_dilibatkan ?? '-' }}</td>
+                            <td class="text-center">{{ $item->jumlah_kegiatan_masyarakat ?? '-' }}</td>
+                            <td class="text-center">{{ $item->jumlah_kegiatan_pihak_ketiga ?? '-' }}</td>
+                            <td class="text-center">{{ $item->jumlah_kegiatan_luar_musrenbang ?? '-' }}</td>
+                            <td class="text-center">{{ $item->jumlah_masyarakat_disetujui_rk ?? '-' }}</td>
+                            <td class="text-center">{{ $item->usulan_pemerintah_desa_kelurahan_disetujui_rk ?? '-' }}</td>
+                            <td class="text-center">{{ $item->usulan_rencana_kerja_program ?? '-' }}</td>
 
                             {{-- Kolom status dengan badge --}}
                             <td>

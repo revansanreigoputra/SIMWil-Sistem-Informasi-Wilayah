@@ -15,13 +15,20 @@
     <div class="card shadow-sm">
         <div class="card-body">
 
-            {{-- Informasi Umum --}}
-            <table class="table table-bordered mb-4">
-                <tr>
-                    <th style="width: 30%;">Tanggal</th>
-                    <td>{{ \Carbon\Carbon::parse($hasilpembangunan->tanggal)->format('d-m-Y') }}</td>
-                </tr>
-            </table>
+            <!-- Informasi Umum -->
+        <h5 class="fw-bold text-primary mb-3">Informasi Umum</h5>
+        <table class="table table-borderless mb-4">
+            <tr>
+                <td width="40%"><strong>Tanggal</strong></td>
+                <td width="10%">:</td>
+                <td>{{ \Carbon\Carbon::parse($hasilpembangunan->tanggal)->format('d-m-Y') }}</td>
+            </tr>
+            <tr>
+                <td width="40%"><strong>Desa</strong></td>
+                <td width="10%">:</td>
+                <td>{{ $hasilpembangunan->desa->nama_desa ?? '-' }}</td>
+            </tr>
+        </table>
 
             {{-- Seksi 1: Partisipasi dan Kegiatan --}}
             <h5 class="fw-bold text-primary mt-4 mb-2">Partisipasi dan Kegiatan</h5>
@@ -101,26 +108,28 @@
 
             {{-- Seksi 5: Pendanaan dan Pemeliharaan --}}
             <h5 class="fw-bold text-primary mt-4 mb-2">Pendanaan dan Pemeliharaan</h5>
-            <table class="table table-bordered text-center">
-                <thead class="table-light">
-                    <tr>
-                        <th>Jenis Kegiatan Pemeliharaan</th>
-                        <th>Didanai APB Desa</th>
-                        <th>Didanai APB Kabupaten</th>
-                        <th>Didanai APBD Provinsi</th>
-                        <th>Didanai APBN</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{{ $hasilpembangunan->jenis_kegiatan_pemeliharaan ?? '-' }}</td>
-                        <td>{{ $hasilpembangunan->jumlah_kegiatan_didanai_apb_desa ?? '-' }}</td>
-                        <td>{{ $hasilpembangunan->jumlah_kegiatan_didanai_apb_kabupaten ?? '-' }}</td>
-                        <td>{{ $hasilpembangunan->jumlah_kegiatan_didanai_apbd_provinsi ?? '-' }}</td>
-                        <td>{{ $hasilpembangunan->jumlah_kegiatan_didanai_apbn ?? '-' }}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-bordered text-center align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Jenis Kegiatan Pemeliharaan</th>
+                            <th>Didanai APB Desa</th>
+                            <th>Didanai APB Kabupaten</th>
+                            <th>Didanai APBD Provinsi</th>
+                            <th>Didanai APBN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ $hasilpembangunan->jenis_kegiatan_pemeliharaan ?? '-' }}</td>
+                            <td>{{ $hasilpembangunan->jumlah_kegiatan_didanai_apb_desa ?? '-' }}</td>
+                            <td>{{ $hasilpembangunan->jumlah_kegiatan_didanai_apb_kabupaten ?? '-' }}</td>
+                            <td>{{ $hasilpembangunan->jumlah_kegiatan_didanai_apbd_provinsi ?? '-' }}</td>
+                            <td>{{ $hasilpembangunan->jumlah_kegiatan_didanai_apbn ?? '-' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             {{-- Tombol Aksi --}}
             <div class="d-flex justify-content-end gap-2 mt-4">
