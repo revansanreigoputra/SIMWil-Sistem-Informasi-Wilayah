@@ -607,6 +607,13 @@
                                                     Sarana Kesehatan
                                                 </a>
                                             @endcan
+                                            
+                                            @can('ppendidikan.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/ppendidikan*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-prasarana-dan-sarana.ppendidikan.index') }}">
+                                                    Prasarana Pendidikan
+                                                </a>
+                                            @endcan
 
                                             @can('kemasyarakatan.view')
                                                 <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/energiPenerangan*') ? 'active' : '' }}"

@@ -148,6 +148,7 @@ use App\Http\Controllers\KomunikasiInformasiController;
 use App\Http\Controllers\PrasaranaPeribadatanController;
 use App\Http\Controllers\PrasaranaolahragaController;
 use App\Http\Controllers\PrasaranakesehatanController;
+use App\Http\Controllers\PrasaranapendidikanController;
 use App\Http\Controllers\PotensiKelembagaan\PotensiKelembagaanController;
 // use App\Models\LayananSurat\JenisSurat;
 // use App\Models\LayananSurat\KopTemplate;
@@ -316,6 +317,17 @@ Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/skeseh
     Route::get('/{saranakesehatan}/edit', [App\Http\Controllers\SaranakesehatanController::class, 'edit'])->name('edit');
     Route::put('/{saranakesehatan}', [App\Http\Controllers\SaranakesehatanController::class, 'update'])->name('update');
     Route::delete('/{saranakesehatan}', [App\Http\Controllers\SaranakesehatanController::class, 'destroy'])->name('destroy');
+});
+
+// Prasarana Pendidikan 
+Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/ppendidikan')->name('potensi.potensi-prasarana-dan-sarana.ppendidikan.')->group(function () {
+    Route::get('/', [App\Http\Controllers\PrasaranapendidikanController::class, 'index'])->name('index');
+    Route::get('/create', [App\Http\Controllers\PrasaranapendidikanController::class, 'create'])->name('create');
+    Route::post('/', [App\Http\Controllers\PrasaranapendidikanController::class, 'store'])->name('store');
+    Route::get('/{prasaranapendidikan}', [App\Http\Controllers\PrasaranapendidikanController::class, 'show'])->name('show');
+    Route::get('/{prasaranapendidikan}/edit', [App\Http\Controllers\PrasaranapendidikanController::class, 'edit'])->name('edit');
+    Route::put('/{prasaranapendidikan}', [App\Http\Controllers\PrasaranapendidikanController::class, 'update'])->name('update');
+    Route::delete('/{prasaranapendidikan}', [App\Http\Controllers\PrasaranapendidikanController::class, 'destroy'])->name('destroy');
 });
 
 // dusun

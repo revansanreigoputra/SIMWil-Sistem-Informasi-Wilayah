@@ -40,6 +40,7 @@ class DatabaseSeeder extends Seeder
             JpolahragaSeeder::class,
             JpkesehatanSeeder::class,
             JskesehatanSeeder::class,
+            JpgedungSeeder::class,
         ]);
     }
 }
