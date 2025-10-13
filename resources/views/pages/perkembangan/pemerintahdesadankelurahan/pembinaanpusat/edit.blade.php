@@ -30,7 +30,6 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-
             <!-- Kolom Desa -->
             <div class="col-md-6 mb-3">
                 <label for="id_desa" class="form-label fw-semibold">

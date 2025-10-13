@@ -19,25 +19,26 @@
             <table id="pembinaan-kecamatan-table" class="table table-striped text-center align-middle">
                 <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Tanggal</th>
-                        <th>Fasilitasi Penyusunan Perdes</th>
-                        <th>Fasilitasi Administrasi Tata Pemerintahan</th>
-                        <th>Fasilitasi Pengelolaan Keuangan</th>
-                        <th>Fasilitasi Urusan Otonomi</th>
-                        <th>Fasilitasi Penerapan Peraturan</th>
-                        <th>Fasilitasi Penyediaan Data</th>
-                        <th>Fasilitasi Pelaksanaan Tugas</th>
-                        <th>Fasilitasi Ketenteraman</th>
-                        <th>Fasilitasi Penetapan Penguatan</th>
-                        <th>Penanggulangan Kemiskinan (APBD)</th>
-                        <th>Fasilitasi Partisipasi Masyarakat</th>
-                        <th>Fasilitasi Kerjasama Desa</th>
-                        <th>Fasilitasi Program Pemberdayaan</th>
-                        <th>Fasilitasi Kerjasama Lembaga</th>
-                        <th>Fasilitasi Bantuan Teknis</th>
-                        <th>Fasilitasi Koordinasi Unit Kerja</th>
-                        <th>Aksi</th>
+                        <th class="text-center">No</th>
+                        <th class="text-center">Tanggal</th>
+                        <th class="text-center">Desa</th>
+                        <th class="text-center">Fasilitasi Penyusunan Perdes</th>
+                        <th class="text-center">Fasilitasi Administrasi Tata Pemerintahan</th>
+                        <th class="text-center">Fasilitasi Pengelolaan Keuangan</th>
+                        <th class="text-center">Fasilitasi Urusan Otonomi</th>
+                        <th class="text-center">Fasilitasi Penerapan Peraturan</th>
+                        <th class="text-center">Fasilitasi Penyediaan Data</th>
+                        <th class="text-center">Fasilitasi Pelaksanaan Tugas</th>
+                        <th class="text-center">Fasilitasi Ketenteraman</th>
+                        <th class="text-center">Fasilitasi Penetapan Penguatan</th>
+                        <th class="text-center">Penanggulangan Kemiskinan (APBD)</th>
+                        <th class="text-center">Fasilitasi Partisipasi Masyarakat</th>
+                        <th class="text-center">Fasilitasi Kerjasama Desa</th>
+                        <th class="text-center">Fasilitasi Program Pemberdayaan</th>
+                        <th class="text-center">Fasilitasi Kerjasama Lembaga</th>
+                        <th class="text-center">Fasilitasi Bantuan Teknis</th>
+                        <th class="text-center">Fasilitasi Koordinasi Unit Kerja</th>
+                        <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,6 +46,7 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
+                            <td clas="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
                             <td class="text-center">{{ $item->fasilitasi_penyusunan_perdes ?? '-' }}</td>
                             <td class="text-center">{{ $item->fasilitasi_administrasi_tata_pemerintahan ?? '-' }}</td>
                             <td class="text-center">{{ $item->fasilitasi_pengelolaan_keuangan ?? '-' }}</td>

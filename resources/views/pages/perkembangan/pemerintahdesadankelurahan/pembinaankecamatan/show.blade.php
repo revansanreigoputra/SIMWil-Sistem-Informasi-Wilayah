@@ -18,9 +18,15 @@
             <h5 class="mb-3 text-primary">Informasi Umum</h5>
             <table class="table table-borderless">
                 <tr>
-                    <th width="30%">Tanggal</th>
-                    <td>{{ \Carbon\Carbon::parse($pembinaankecamatan->tanggal)->format('d-m-Y') }}</td>
-                </tr>
+                <td width="40%"><strong>Tanggal</strong></td>
+                <td width="10%">:</td>
+                <td>{{ \Carbon\Carbon::parse($pembinaankecamatan->tanggal)->format('d-m-Y') }}</td>
+            </tr>
+            <tr>
+                <td width="40%"><strong>Desa</strong></td>
+                <td width="10%">:</td>
+                <td>{{ $pembinaankecamatan->desa->nama_desa ?? '-' }}</td>
+            </tr>
             </table>
 
             <hr>
