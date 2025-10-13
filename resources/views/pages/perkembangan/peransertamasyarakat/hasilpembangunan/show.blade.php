@@ -16,19 +16,19 @@
         <div class="card-body">
 
             <!-- Informasi Umum -->
-        <h5 class="fw-bold text-primary mb-3">Informasi Umum</h5>
-        <table class="table table-borderless mb-4">
-            <tr>
-                <td width="40%"><strong>Tanggal</strong></td>
-                <td width="10%">:</td>
-                <td>{{ \Carbon\Carbon::parse($hasilpembangunan->tanggal)->format('d-m-Y') }}</td>
-            </tr>
-            <tr>
-                <td width="40%"><strong>Desa</strong></td>
-                <td width="10%">:</td>
-                <td>{{ $hasilpembangunan->desa->nama_desa ?? '-' }}</td>
-            </tr>
-        </table>
+            <h5 class="fw-bold text-primary mb-3">Informasi Umum</h5>
+            <table class="table table-borderless mb-4">
+                <tr>
+                    <td width="40%"><strong>Tanggal</strong></td>
+                    <td width="10%">:</td>
+                    <td>{{ \Carbon\Carbon::parse($hasilpembangunan->tanggal)->format('d-m-Y') }}</td>
+                </tr>
+                <tr>
+                    <td width="40%"><strong>Desa</strong></td>
+                    <td width="10%">:</td>
+                    <td>{{ $hasilpembangunan->desa->nama_desa ?? '-' }}</td>
+                </tr>
+            </table>
 
             {{-- Seksi 1: Partisipasi dan Kegiatan --}}
             <h5 class="fw-bold text-primary mt-4 mb-2">Partisipasi dan Kegiatan</h5>

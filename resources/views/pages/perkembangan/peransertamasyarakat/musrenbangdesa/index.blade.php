@@ -21,6 +21,7 @@
                     <tr>
                         <th>No</th>
                         <th>Tanggal</th>
+                        <th>Desa</th>
                         <th>Penggunaan Profil Desa</th>
                         <th>Penggunaan Data BPS</th>
                         <th>Pelibatan Masyarakat</th>
@@ -46,6 +47,7 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
+                            <td>{{ $item->desa->nama_desa ?? '-' }}</td>
 
                             {{-- Badge Hijau jika "Ada", Abu-abu jika "Tidak Ada"/null --}}
                             <td><span class="badge bg-{{ $item->penggunaan_profil_desa === 'Ada' ? 'success' : 'secondary' }}">{{ $item->penggunaan_profil_desa ?? '-' }}</span></td>
