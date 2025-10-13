@@ -69,10 +69,10 @@
                             </td>
 
                             {{-- Kolom kegiatan didanai --}}
-                            <td>{{ $item->jumlah_kegiatan_didanai_apb_desa ?? '-' }}</td>
-                            <td>{{ $item->jumlah_kegiatan_didanai_apb_kabupaten ?? '-' }}</td>
-                            <td>{{ $item->jumlah_kegiatan_didanai_apbd_provinsi ?? '-' }}</td>
-                            <td>{{ $item->jumlah_kegiatan_didanai_apbn ?? '-' }}</td>
+                            <td class="text-center">{{ $item->jumlah_kegiatan_didanai_apb_desa ?? '-' }}</td>
+                            <td class="text-center">{{ $item->jumlah_kegiatan_didanai_apb_kabupaten ?? '-' }}</td>
+                            <td class="text-center">{{ $item->jumlah_kegiatan_didanai_apbd_provinsi ?? '-' }}</td>
+                            <td class="text-center">{{ $item->jumlah_kegiatan_didanai_apbn ?? '-' }}</td>
 
                             {{-- Aksi --}}
                             <td>

@@ -43,9 +43,9 @@
                     <tbody>
                         @foreach ($data as $item)
                             <tr>
-                                <td clas="text-center">{{ $loop->iteration }}</td>
-                                <td clas="text-center">{{ $item->tanggal->format('Y-m-d') }}</td>
-                                <td clas="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
+                                <td class="text-center">{{ $loop->iteration }}</td>
+                                <td class="text-center">{{ $item->tanggal->format('Y-m-d') }}</td>
+                                <td class="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
                                 <td class="text-center">{{ number_format($item->apbd_kabupaten, 0, ',', '.') }}</td>
                                 <td class="text-center">{{ number_format($item->bantuan_pemerintah_kabupaten, 0, ',', '.') }}</td>
                                 <td class="text-center">{{ number_format($item->bantuan_pemerintah_provinsi, 0, ',', '.') }}</td>

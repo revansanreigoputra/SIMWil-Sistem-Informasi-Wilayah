@@ -44,8 +44,8 @@
                 <tbody>
                     @foreach ($data as $item)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
+                            <td class="text-center">{{ $loop->iteration }}</td>
+                            <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
                             <td clas="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
                             <td class="text-center">{{ $item->fasilitasi_penyusunan_perdes ?? '-' }}</td>
                             <td class="text-center">{{ $item->fasilitasi_administrasi_tata_pemerintahan ?? '-' }}</td>

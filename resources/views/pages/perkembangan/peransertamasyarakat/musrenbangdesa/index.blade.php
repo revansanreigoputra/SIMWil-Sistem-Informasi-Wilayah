@@ -19,35 +19,35 @@
             <table id="musrenbangdesa-table" class="table table-striped text-center align-middle">
                 <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Tanggal</th>
-                        <th>Desa</th>
-                        <th>Penggunaan Profil Desa</th>
-                        <th>Penggunaan Data BPS</th>
-                        <th>Pelibatan Masyarakat</th>
-                        <th>Dokumen RKPDes</th>
-                        <th>Dokumen RPJMDes</th>
-                        <th>Dokumen Hasil Musrenbang</th>
-                        <th>Jumlah Musrenbang Desa/Kelurahan</th>
-                        <th>Jumlah Kehadiran Masyarakat</th>
-                        <th>Peserta Laki-laki</th>
-                        <th>Peserta Perempuan</th>
-                        <th>Musrenbang Antar Desa</th>
-                        <th>Usulan Masyarakat Disetujui</th>
-                        <th>Usulan Pemdes Disetujui</th>
-                        <th>Usulan Rencana Kerja Pemkab</th>
-                        <th>Usulan Rencana Kerja Ditolak</th>
-                        <th>Kegiatan Terdanai</th>
-                        <th>Kegiatan Tidak Sesuai</th>
-                        <th>Aksi</th>
+                        <th class="text-center">No</th>
+                        <th class="text-center">Tanggal</th>
+                        <th class="text-center">Desa</th>
+                        <th class="text-center">Penggunaan Profil Desa</th>
+                        <th class="text-center">Penggunaan Data BPS</th>
+                        <th class="text-center">Pelibatan Masyarakat</th>
+                        <th class="text-center">Dokumen RKPDes</th>
+                        <th class="text-center">Dokumen RPJMDes</th>
+                        <th class="text-center">Dokumen Hasil Musrenbang</th>
+                        <th class="text-center">Jumlah Musrenbang Desa/Kelurahan</th>
+                        <th class="text-center">Jumlah Kehadiran Masyarakat</th>
+                        <th class="text-center">Peserta Laki-laki</th>
+                        <th class="text-center">Peserta Perempuan</th>
+                        <th class="text-center">Musrenbang Antar Desa</th>
+                        <th class="text-center">Usulan Masyarakat Disetujui</th>
+                        <th class="text-center">Usulan Pemdes Disetujui</th>
+                        <th class="text-center">Usulan Rencana Kerja Pemkab</th>
+                        <th class="text-center">Usulan Rencana Kerja Ditolak</th>
+                        <th class="text-center">Kegiatan Terdanai</th>
+                        <th class="text-center">Kegiatan Tidak Sesuai</th>
+                        <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($data as $item)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
-                            <td>{{ $item->desa->nama_desa ?? '-' }}</td>
+                            <td class="text-center">{{ $loop->iteration }}</td>
+                            <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
+                            <td class="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
 
                             {{-- Badge Hijau jika "Ada", Abu-abu jika "Tidak Ada"/null --}}
                             <td><span class="badge bg-{{ $item->penggunaan_profil_desa === 'Ada' ? 'success' : 'secondary' }}">{{ $item->penggunaan_profil_desa ?? '-' }}</span></td>

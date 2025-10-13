@@ -47,9 +47,9 @@
                 <tbody>
                     @foreach ($data as $item)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
-                            <td clas="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
+                            <td class="text-center">{{ $loop->iteration }}</td>
+                            <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
+                            <td class="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
 
                             {{-- Badge Hijau jika "Ada", Abu-abu jika "Tidak Ada"/null --}}
                             <td><span class="badge bg-{{ $item->pelimpahan_tugas === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pelimpahan_tugas ?? '-' }}</span></td>

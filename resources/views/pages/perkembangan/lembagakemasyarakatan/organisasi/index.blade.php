@@ -34,13 +34,13 @@
                         @foreach ($data as $item)
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
-                                <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
-                                <td>{{ $item->desa->nama_desa ?? '-' }}</td>
-                                <td >{{ $item->jenis_organisasi }}</td>
-                                <td>{{ $item->kepengurusan ?? '-' }}</td>
+                                <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
+                                <td class="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
+                                <td class="text-center">{{ $item->jenis_organisasi }}</td>
+                                <td class="text-center">{{ $item->kepengurusan ?? '-' }}</td>
                                 <td class="text-center">{{ $item->buku_administrasi ?? '-' }}</td>
                                 <td class="text-center">{{ $item->jumlah_kegiatan ?? 0 }}</td>
-                                <td>{{ $item->dasar_hukum_pembentukan ?? '-' }}</td>
+                                <td class="text-center">{{ $item->dasar_hukum_pembentukan ?? '-' }}</td>
                                 <td>
                                     <div class="d-flex gap-1 justify-content-center">
                                         <!-- Tombol Detail -->
