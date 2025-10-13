@@ -238,6 +238,17 @@ Route::middleware(['auth', 'permission:p_cacat.view'])->prefix('potensi/potensi-
     Route::delete('/{pCacat}', [App\Http\Controllers\PCacatController::class, 'destroy'])->middleware('permission:p_cacat.delete')->name('destroy');
 });
 
+// Potensi Etnis/Suku routes
+Route::middleware(['auth', 'permission:p_etnis_suku.view'])->prefix('potensi/potensi-sdm/etnis-suku')->name('potensi.potensi-sdm.etnis-suku.')->group(function () {
+    Route::get('/', [App\Http\Controllers\PEtnisSukuController::class, 'index'])->name('index');
+    Route::get('/create', [App\Http\Controllers\PEtnisSukuController::class, 'create'])->middleware('permission:p_etnis_suku.create')->name('create');
+    Route::post('/', [App\Http\Controllers\PEtnisSukuController::class, 'store'])->middleware('permission:p_etnis_suku.store')->name('store');
+    Route::get('/{pEtnisSuku}', [App\Http\Controllers\PEtnisSukuController::class, 'show'])->name('show');
+    Route::get('/{pEtnisSuku}/edit', [App\Http\Controllers\PEtnisSukuController::class, 'edit'])->middleware('permission:p_etnis_suku.update')->name('edit');
+    Route::put('/{pEtnisSuku}', [App\Http\Controllers\PEtnisSukuController::class, 'update'])->middleware('permission:p_etnis_suku.update')->name('update');
+    Route::delete('/{pEtnisSuku}', [App\Http\Controllers\PEtnisSukuController::class, 'destroy'])->middleware('permission:p_etnis_suku.delete')->name('destroy');
+});
+
 // Transportasi Darat routes
 Route::middleware(['auth'])->prefix('transportasi-darat')->group(function () {
     Route::get('/', [TransportasiDaratController::class, 'index'])->middleware('permission:transportasi_darat.view')->name('potensi.potensi-prasarana-dan-sarana.transportasi-darat.index');

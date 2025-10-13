@@ -427,12 +427,18 @@
                                                     </a>
                                                 @endcan
                                             @endcan
-                                            @can('p_cacat.view')
-                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/cacat*') ? 'active' : '' }}"
-                                                    href="{{ route('potensi.potensi-sdm.cacat.index') }}">
-                                                    Cacat
-                                                </a>
-                                            @endcan
+                                                @can('p_cacat.view')
+                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/cacat*') ? 'active' : '' }}"
+                                                        href="{{ route('potensi.potensi-sdm.cacat.index') }}">
+                                                        Cacat
+                                                    </a>
+                                                @endcan
+                                                @can('p_etnis_suku.view')
+                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/etnis-suku*') ? 'active' : '' }}"
+                                                        href="{{ route('potensi.potensi-sdm.etnis-suku.index') }}">
+                                                        Etnis/Suku
+                                                    </a>
+                                                @endcan
                                         </div>
                                     </div>
                                     <div class="dropend">
