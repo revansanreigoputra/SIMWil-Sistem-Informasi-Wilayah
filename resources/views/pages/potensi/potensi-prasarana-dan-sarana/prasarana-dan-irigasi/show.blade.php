@@ -11,8 +11,12 @@
         </a>
     </div>
     <div class="card-body">
-        <!-- Tanggal -->
+        <!-- Desa dan Tanggal -->
         <div class="row mb-4">
+            <div class="col-md-6">
+                <h6 class="fw-bold text-primary">Desa</h6>
+                <p class="mb-0">{{ $irigasi->desa->nama_desa }}</p>
+            </div>
             <div class="col-md-6">
                 <h6 class="fw-bold text-primary">Tanggal</h6>
                 <p class="mb-0">{{ $irigasi->tanggal->format('d-m-Y') }}</p>
