@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('komunikasi_informasis', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('desa_id')->constrained('desas')->onDelete('cascade');
             $table->date('tanggal');
             $table->foreignId('kategori_id')
                 ->constrained('kategori_komunikasis')

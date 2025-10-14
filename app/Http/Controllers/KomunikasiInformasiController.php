@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Desa;
 use App\Models\KomunikasiInformasi;
 use App\Models\KategoriKomunikasi;
 use App\Models\JenisKomunikasi;
@@ -14,16 +15,18 @@ class KomunikasiInformasiController extends Controller
      */
     public function index()
     {
-        $komunikasiInformasis = KomunikasiInformasi::with(['kategori', 'jenis'])->orderBy('tanggal', 'desc')->paginate(10);
+        $komunikasiInformasis = KomunikasiInformasi::with(['desa', 'kategori', 'jenis'])->orderBy('tanggal', 'desc')->paginate(10);
         return view('pages.potensi.potensi-prasarana-dan-sarana.komunikasiinformasi.index', compact('komunikasiInformasis'));
     }
 
     /**
      * Show the form for creating a new resource.
-     */    public function create()
+     */
+    public function create()
     {
+        $desas = Desa::all();
         $kategoris = KategoriKomunikasi::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.komunikasiinformasi.create', compact('kategoris'));
+        return view('pages.potensi.potensi-prasarana-dan-sarana.komunikasiinformasi.create', compact('desas', 'kategoris'));
     }
 
     /**
@@ -32,6 +35,7 @@ class KomunikasiInformasiController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'kategori_id' => 'required|exists:kategori_komunikasis,id',
             'jenis_id' => 'required|exists:jenis_komunikasis,id',
@@ -49,7 +53,7 @@ class KomunikasiInformasiController extends Controller
      */
     public function show(KomunikasiInformasi $komunikasiInformasi)
     {
-        $komunikasiInformasi->load(['kategori', 'jenis']);
+        $komunikasiInformasi->load(['desa', 'kategori', 'jenis']);
         return view('pages.potensi.potensi-prasarana-dan-sarana.komunikasiinformasi.show', compact('komunikasiInformasi'));
     }
 
@@ -58,10 +62,11 @@ class KomunikasiInformasiController extends Controller
      */
     public function edit(KomunikasiInformasi $komunikasiInformasi)
     {
-        $komunikasiInformasi->load(['kategori', 'jenis']);
+        $komunikasiInformasi->load(['desa', 'kategori', 'jenis']);
+        $desas = Desa::all();
         $kategoris = KategoriKomunikasi::all();
         $jenises = JenisKomunikasi::where('kategori_id', $komunikasiInformasi->kategori_id)->get();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.komunikasiinformasi.edit', compact('komunikasiInformasi', 'kategoris', 'jenises'));
+        return view('pages.potensi.potensi-prasarana-dan-sarana.komunikasiinformasi.edit', compact('komunikasiInformasi', 'desas', 'kategoris', 'jenises'));
     }
 
     /**
@@ -70,6 +75,7 @@ class KomunikasiInformasiController extends Controller
     public function update(Request $request, KomunikasiInformasi $komunikasiInformasi)
     {
         $validated = $request->validate([
+            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'kategori_id' => 'required|exists:kategori_komunikasis,id',
             'jenis_id' => 'required|exists:jenis_komunikasis,id',

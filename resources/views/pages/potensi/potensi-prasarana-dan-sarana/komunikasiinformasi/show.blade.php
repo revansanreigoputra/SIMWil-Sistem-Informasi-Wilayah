@@ -28,6 +28,23 @@
                     </div>
                     
                     <div class="row g-3">
+                        <div class="col-md-12">
+                            <div class="card border border-light-subtle h-100 hover-shadow transition-all">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-start">
+                                        <div class="flex-shrink-0">
+                                            <div class="icon-wrapper bg-primary bg-opacity-10 rounded-2 p-2">
+                                                <i class="fas fa-map-marker-alt text-primary"></i>
+                                            </div>
+                                        </div>
+                                        <div class="flex-grow-1 ms-3">
+                                            <label class="text-muted small mb-1 d-block">Desa</label>
+                                            <h6 class="mb-0 fw-bold text-dark">{{ $komunikasiInformasi->desa?->nama_desa ?? '-' }}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-md-6">
                             <div class="card border border-light-subtle h-100 hover-shadow transition-all">
                                 <div class="card-body">
@@ -45,7 +62,6 @@
                                 </div>
                             </div>
                         </div>
-                        
                         <div class="col-md-6">
                             <div class="card border border-light-subtle h-100 hover-shadow transition-all">
                                 <div class="card-body">

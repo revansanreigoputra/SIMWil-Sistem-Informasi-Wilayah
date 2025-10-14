@@ -13,6 +13,7 @@ class KomunikasiInformasiSeeder extends Seeder
         $data = [
             [
                 'tanggal' => Carbon::now(),
+                'desa_id' => 1, // Pastikan untuk menyesuaikan dengan ID desa yang ada
                 'kategori_id' => 1, // Telepon
                 'jenis_id' => 2,    // Warnet
                 'jumlah' => 3,
@@ -20,6 +21,7 @@ class KomunikasiInformasiSeeder extends Seeder
             ],
             [
                 'tanggal' => Carbon::now(),
+                'desa_id' => 1, // Pastikan untuk menyesuaikan dengan ID desa yang ada
                 'kategori_id' => 2, // Radio/TV
                 'jenis_id' => 4,    // Jumlah Parabola
                 'jumlah' => 12,
@@ -27,6 +29,7 @@ class KomunikasiInformasiSeeder extends Seeder
             ],
             [
                 'tanggal' => Carbon::now(),
+                'desa_id' => 2, // Pastikan untuk menyesuaikan dengan ID desa yang ada
                 'kategori_id' => 3, // Internet
                 'jenis_id' => 7,    // BTS
                 'jumlah' => 5,

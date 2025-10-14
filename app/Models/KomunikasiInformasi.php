@@ -11,6 +11,7 @@ class KomunikasiInformasi extends Model
 
     protected $table = 'komunikasi_informasis';
     protected $fillable = [
+        'desa_id',
         'tanggal',
         'kategori_id',
         'jenis_id',
@@ -36,5 +37,13 @@ class KomunikasiInformasi extends Model
     public function jenis()
     {
         return $this->belongsTo(JenisKomunikasi::class, 'jenis_id');
+    }
+
+    /**
+     * Relasi ke desa
+     */
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class, 'desa_id');
     }
 }
