@@ -30,6 +30,17 @@
                                 <tbody>
                                     <tr>
                                         <td width="30%" class="fw-semibold text-muted">
+                                            <i class="fas fa-map-marker-alt me-2"></i>Desa
+                                        </td>
+                                        <td width="5%" class="text-center">:</td>
+                                        <td>
+                                            <span class="badge bg-primary">
+                                                {{ $saranaTransportasi->desa->nama_desa ?? 'N/A' }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="30%" class="fw-semibold text-muted">
                                             <i class="fas fa-calendar me-2"></i>Tanggal
                                         </td>
                                         <td width="5%" class="text-center">:</td>

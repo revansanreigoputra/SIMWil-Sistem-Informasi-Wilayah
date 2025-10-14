@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Desa;
 use App\Models\SaranaTransportasi;
 use App\Models\KategoriTransportasi;
 use App\Models\JenisTransportasi;
@@ -11,20 +12,22 @@ class SaranaTransportasiController extends Controller
 {
     public function index()
     {
-        $saranaTransportasis = SaranaTransportasi::with(['kategori', 'jenis'])->get();
+        $saranaTransportasis = SaranaTransportasi::with(['desa', 'kategori', 'jenis'])->get();
         return view('pages.potensi.potensi-prasarana-dan-sarana.angkutan.index', compact('saranaTransportasis'));
     }
 
     public function create()
     {
+        $desas = Desa::all();
         $kategoriTransportasis = KategoriTransportasi::all();
         $jenisTransportasis = JenisTransportasi::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.angkutan.create', compact('kategoriTransportasis', 'jenisTransportasis'));
+        return view('pages.potensi.potensi-prasarana-dan-sarana.angkutan.create', compact('desas', 'kategoriTransportasis', 'jenisTransportasis'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'kategori_id' => 'required|exists:kategori_transportasis,id',
             'jenis_id' => 'required|exists:jenis_transportasis,id',
@@ -38,20 +41,22 @@ class SaranaTransportasiController extends Controller
 
     public function show(SaranaTransportasi $saranaTransportasi)
     {
-        $saranaTransportasi->load(['kategori', 'jenis']);
+        $saranaTransportasi->load(['desa', 'kategori', 'jenis']);
         return view('pages.potensi.potensi-prasarana-dan-sarana.angkutan.show', compact('saranaTransportasi'));
     }
 
     public function edit(SaranaTransportasi $saranaTransportasi)
     {
+        $desas = Desa::all();
         $kategoriTransportasis = KategoriTransportasi::all();
         $jenisTransportasis = JenisTransportasi::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.angkutan.edit', compact('saranaTransportasi', 'kategoriTransportasis', 'jenisTransportasis'));
+        return view('pages.potensi.potensi-prasarana-dan-sarana.angkutan.edit', compact('saranaTransportasi', 'desas', 'kategoriTransportasis', 'jenisTransportasis'));
     }
 
     public function update(Request $request, SaranaTransportasi $saranaTransportasi)
     {
         $validated = $request->validate([
+            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'kategori_id' => 'required|exists:kategori_transportasis,id',
             'jenis_id' => 'required|exists:jenis_transportasis,id',

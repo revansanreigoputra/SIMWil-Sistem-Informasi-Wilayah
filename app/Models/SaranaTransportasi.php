@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class SaranaTransportasi extends Model
 {
     protected $fillable = [
+        'desa_id',
         'tanggal',
         'kategori_id',
         'jenis_id',
@@ -25,5 +26,10 @@ class SaranaTransportasi extends Model
     public function jenis()
     {
         return $this->belongsTo(JenisTransportasi::class, 'jenis_id');
+    }
+
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class);
     }
 }

@@ -20,6 +20,7 @@
                     <thead>
                         <tr>
                             <th class="text-center">No</th>
+                            <th class="text-center">Desa</th>
                             <th class="text-center">Tanggal</th>
                             <th class="text-center">Kategori</th>
                             <th class="text-center">Jenis</th>
@@ -31,6 +32,7 @@
                         @foreach ($saranaTransportasis as $index => $sarana)
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
+                                <td class="text-center">{{ $sarana->desa->nama_desa ?? 'N/A' }}</td>
                                 <td class="text-center">{{ $sarana->tanggal->format('Y-m-d') }}</td>
                                 <td class="text-center">{{ $sarana->kategori->nama_kategori ?? 'N/A' }}</td>
                                 <td class="text-center">{{ $sarana->jenis->nama_jenis ?? 'N/A' }}</td>
