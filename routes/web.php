@@ -32,6 +32,7 @@ use App\Http\Controllers\MusrenbangdesaController;
 use App\Http\Controllers\HasilpembangunanController;
 use App\Http\Controllers\GotongroyongController;
 use App\Http\Controllers\AdatIstiadatController;
+use App\Http\Controllers\SikapdanmentalController;
 // use App\Http\Controllers\IrigasiController;
 // use App\Http\Controllers\NotificationController;
 // use App\Http\Controllers\PerangkatDesaController;
@@ -511,6 +512,17 @@ Route::middleware(['auth'])->prefix('perkembangan/peransertamasyarakat/adatistia
     Route::get('/{id}/edit', [AdatIstiadatController::class, 'edit'])->name('edit');
     Route::put('/{id}', [AdatIstiadatController::class, 'update'])->name('update');
     Route::delete('/{id}', [AdatIstiadatController::class, 'destroy'])->name('destroy');
+});
+
+//sikap dan mental routes
+Route::middleware(['auth'])->prefix('perkembangan/peransertamasyarakat/sikapdanmental')->name('perkembangan.peransertamasyarakat.sikapdanmental.')->group(function () {
+    Route::get('/', [SikapDanMentalController::class, 'index'])->name('index');
+    Route::get('/create', [SikapDanMentalController::class, 'create'])->name('create');
+    Route::post('/', [SikapDanMentalController::class, 'store'])->name('store');
+    Route::get('/{id}', [SikapDanMentalController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [SikapDanMentalController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [SikapDanMentalController::class, 'update'])->name('update');
+    Route::delete('/{id}', [SikapDanMentalController::class, 'destroy'])->name('destroy');
 });
 
 

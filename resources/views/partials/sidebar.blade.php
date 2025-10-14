@@ -640,6 +640,12 @@
                                                     Adat Istiadat
                                                 </a>
                                             @endcan
+                                            @can('sikapdanmental.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/peransertamasyarakat/sikapdanmental*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.peransertamasyarakat.sikapdanmental.index') }}">
+                                                    Sikap dan Mental <br> Masyarakat
+                                                </a>
+                                            @endcan
 
                                         </div>
                                     </div>

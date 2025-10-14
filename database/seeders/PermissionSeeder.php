@@ -394,6 +394,14 @@ class PermissionSeeder extends Seeder
             'adatistiadat.update',
             'adatistiadat.delete',
 
+            //sikap dan mental
+            'sikapdanmental.view',
+            'sikapdanmental.create',
+            'sikapdanmental.store',
+            'sikapdanmental.edit',
+            'sikapdanmental.update',
+            'sikapdanmental.delete',
+
             // potensi permissions
             'potensi.laporan.view',
             'potensi.laporan.export',
