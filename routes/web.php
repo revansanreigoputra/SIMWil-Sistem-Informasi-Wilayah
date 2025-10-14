@@ -207,33 +207,22 @@ Route::middleware(['auth', 'permission:ttd.view'])->prefix('ttd')->group(functio
     Route::delete('/{ttd}', [TtdController::class, 'destroy'])->middleware('permission:ttd.delete')->name('ttd.destroy');
 });
 
-// Mutasi Routes
-Route::prefix('mutasi')->middleware(['auth'])->group(function () {
-
-    Route::prefix('data')->middleware('permission:mutasi.data.view')->group(function () {
-        Route::get('/', [MutasiController::class, 'indexData'])->name('mutasi.data.index');
-        Route::get('/create', [MutasiController::class, 'createData'])->name('mutasi.data.create')->middleware('permission:mutasi.data.create');
-        Route::post('/', [MutasiController::class, 'storeData'])->name('mutasi.data.store')->middleware('permission:mutasi.data.store');
-        Route::get('/{id}/edit', [MutasiController::class, 'editData'])->name('mutasi.data.edit')->middleware('permission:mutasi.data.edit');
-        Route::put('/{id}', [MutasiController::class, 'updateData'])->name('mutasi.data.update')->middleware('permission:mutasi.data.update');
-        Route::delete('/{id}', [MutasiController::class, 'destroyData'])->name('mutasi.data.destroy')->middleware('permission:mutasi.data.delete');
-        Route::get('/{id}', [MutasiController::class, 'showData'])->name('mutasi.data.show');
-    });
-
-    // Route::prefix('masuk')->middleware('permission:mutasi.masuk.view')->group(function() {
-    //     Route::get('/', [MutasiController::class, 'indexMasuk'])->name('mutasi.masuk.index');
-    //     Route::get('/create', [MutasiController::class, 'createMasuk'])->name('mutasi.masuk.create')->middleware('permission:mutasi.masuk.create');
-    //     Route::post('/', [MutasiController::class, 'storeMasuk'])->name('mutasi.masuk.store')->middleware('permission:mutasi.masuk.store');
-    //     Route::get('/{id}/edit', [MutasiController::class, 'editMasuk'])->name('mutasi.masuk.edit')->middleware('permission:mutasi.masuk.edit');
-    //     Route::put('/{id}', [MutasiController::class, 'updateMasuk'])->name('mutasi.masuk.update')->middleware('permission:mutasi.masuk.update');
-    //     Route::delete('/{id}', [MutasiController::class, 'destroyMasuk'])->name('mutasi.masuk.destroy')->middleware('permission:mutasi.masuk.delete');
-    //     Route::get('/{id}', [MutasiController::class, 'showMasuk'])->name('mutasi.masuk.show')->middleware('permission:mutasi.masuk.view');
-    // });
-
-    Route::prefix('laporan')->middleware('permission:mutasi.laporan.view')->group(function () {
-        Route::get('/', [MutasiController::class, 'laporan'])->name('mutasi.laporan.index');
-        Route::get('/export', [MutasiController::class, 'exportLaporan'])->name('mutasi.laporan.export')->middleware('permission:mutasi.laporan.export');
-    });
+// Mutasi Routes FINAL
+Route::prefix('mutasi')->name('mutasi.')->middleware(['auth'])->group(function () {
+    Route::get('/', [MutasiController::class, 'index'])->name('index');
+    Route::get('/create', [MutasiController::class, 'create'])->name('create');
+    Route::post('/', [MutasiController::class, 'store'])->name('store');
+    Route::get('/{id}/edit', [MutasiController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [MutasiController::class, 'update'])->name('update');
+    Route::delete('/{id}', [MutasiController::class, 'destroy'])->name('destroy');
+    Route::get('/{id}/show', [MutasiController::class, 'show'])->name('show');
+    // Mutasi Data Routes
+    // Route::get('/data', [MutasiController::class, 'indexData'])->name('data.index');
+    // Route::get('/data/create', [MutasiController::class, 'createData'])->name('data.create');
+    // Route::post('/data', [MutasiController::class, 'storeData'])->name('data.store');
+    // Route::get('/data/{id}/edit', [MutasiController::class, 'editData'])->name('data.edit');
+    // Route::put('/data/{id}', [MutasiController::class, 'updateData'])->name('data.update');
+    // Route::delete('/data/{id}', [MutasiController::class, 'destroyData'])->name('data.destroy');
 });
 // FINAL CONSOLIDATED LAYANAN SURAT ROUTES
 Route::middleware('auth')->prefix('layanan-surat')->group(function () {
