@@ -309,7 +309,14 @@ Route::get('/master-ddk/{table}/{id}/edit', [MasterDdkController::class, 'edit']
 Route::put('/master-ddk/{table}/{id}', [MasterDdkController::class, 'update'])->name('master.ddk.update');
 Route::delete('/master-ddk/{table}/{id}', [MasterDdkController::class, 'destroy'])->name('master.ddk.destroy');
 
-Route::get('/master-perkembangan', [MasterPerkembanganController::class, 'index'])->name('master.perkembangan.index');
+Route::prefix('master-perkembangan')->name('master-perkembangan.')->group(function () {
+    Route::get('/', [MasterPerkembanganController::class, 'index'])->name('index');
+    Route::post('/store', [MasterPerkembanganController::class, 'store'])->name('store');
+    Route::get('/edit/{id}', [MasterPerkembanganController::class, 'edit'])->name('edit');
+    Route::put('/update/{id}', [MasterPerkembanganController::class, 'update'])->name('update');
+    Route::delete('/delete/{id}', [MasterPerkembanganController::class, 'destroy'])->name('destroy');
+});
+
 Route::get('/master-potensi', [MasterPotensiController::class, 'index'])->name('master.potensi.index');
 
 // ==== POTENSI KELEMBAGAAN ==== //
