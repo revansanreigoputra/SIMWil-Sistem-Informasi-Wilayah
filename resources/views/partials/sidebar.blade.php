@@ -634,6 +634,12 @@
                                                     Gotongroyong <br> Penduduk
                                                 </a>
                                             @endcan
+                                            @can('adatistiadat.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/peransertamasyarakat/adatistiadat*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.peransertamasyarakat.adatistiadat.index') }}">
+                                                    Adat Istiadat
+                                                </a>
+                                            @endcan
 
                                         </div>
                                     </div>

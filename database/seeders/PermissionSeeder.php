@@ -386,6 +386,14 @@ class PermissionSeeder extends Seeder
             'gotongroyong.update',
             'gotongroyong.delete',
 
+            // adat istiadat
+            'adatistiadat.view',
+            'adatistiadat.create',
+            'adatistiadat.store',
+            'adatistiadat.edit',
+            'adatistiadat.update',
+            'adatistiadat.delete',
+
             // potensi permissions
             'potensi.laporan.view',
             'potensi.laporan.export',

@@ -31,6 +31,7 @@ use App\Http\Controllers\OrganisasiController;
 use App\Http\Controllers\MusrenbangdesaController;
 use App\Http\Controllers\HasilpembangunanController;
 use App\Http\Controllers\GotongroyongController;
+use App\Http\Controllers\AdatIstiadatController;
 // use App\Http\Controllers\IrigasiController;
 // use App\Http\Controllers\NotificationController;
 // use App\Http\Controllers\PerangkatDesaController;
@@ -499,6 +500,17 @@ Route::middleware(['auth'])->prefix('perkembangan/peransertamasyarakat/gotongroy
     Route::get('/{id}/edit', [GotongRoyongController::class, 'edit'])->name('edit');
     Route::put('/{id}', [GotongRoyongController::class, 'update'])->name('update');
     Route::delete('/{id}', [GotongRoyongController::class, 'destroy'])->name('destroy');
+});
+
+//Adat Istiadat routes
+Route::middleware(['auth'])->prefix('perkembangan/peransertamasyarakat/adatistiadat')->name('perkembangan.peransertamasyarakat.adatistiadat.')->group(function () {
+    Route::get('/', [AdatIstiadatController::class, 'index'])->name('index');
+    Route::get('/create', [AdatIstiadatController::class, 'create'])->name('create');
+    Route::post('/', [AdatIstiadatController::class, 'store'])->name('store');
+    Route::get('/{id}', [AdatIstiadatController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [AdatIstiadatController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [AdatIstiadatController::class, 'update'])->name('update');
+    Route::delete('/{id}', [AdatIstiadatController::class, 'destroy'])->name('destroy');
 });
 
 
