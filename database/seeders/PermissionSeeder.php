@@ -378,6 +378,14 @@ class PermissionSeeder extends Seeder
             'hasilpembangunan.update',
             'hasilpembangunan.delete',
 
+            // gotong royong
+            'gotongroyong.view',
+            'gotongroyong.create',
+            'gotongroyong.store',
+            'gotongroyong.edit',
+            'gotongroyong.update',
+            'gotongroyong.delete',
+
             // potensi permissions
             'potensi.laporan.view',
             'potensi.laporan.export',

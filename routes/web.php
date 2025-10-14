@@ -30,6 +30,7 @@ use App\Http\Controllers\PembinaankecamatanController;
 use App\Http\Controllers\OrganisasiController;
 use App\Http\Controllers\MusrenbangdesaController;
 use App\Http\Controllers\HasilpembangunanController;
+use App\Http\Controllers\GotongroyongController;
 // use App\Http\Controllers\IrigasiController;
 // use App\Http\Controllers\NotificationController;
 // use App\Http\Controllers\PerangkatDesaController;
@@ -487,6 +488,17 @@ Route::middleware(['auth'])->prefix('perkembangan/peransertamasyarakat/hasilpemb
     Route::get('/{id}/edit', [HasilPembangunanController::class, 'edit'])->name('edit');
     Route::put('/{id}', [HasilPembangunanController::class, 'update'])->name('update');
     Route::delete('/{id}', [HasilPembangunanController::class, 'destroy'])->name('destroy');
+});
+
+//gotong royong routes
+Route::middleware(['auth'])->prefix('perkembangan/peransertamasyarakat/gotongroyong')->name('perkembangan.peransertamasyarakat.gotongroyong.')->group(function () {
+    Route::get('/', [GotongRoyongController::class, 'index'])->name('index');
+    Route::get('/create', [GotongRoyongController::class, 'create'])->name('create');
+    Route::post('/', [GotongRoyongController::class, 'store'])->name('store');
+    Route::get('/{id}', [GotongRoyongController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [GotongRoyongController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [GotongRoyongController::class, 'update'])->name('update');
+    Route::delete('/{id}', [GotongRoyongController::class, 'destroy'])->name('destroy');
 });
 
 

@@ -628,6 +628,12 @@
                                                     Pelaksaan <br> Hasil Pembangunan
                                                 </a>
                                             @endcan
+                                            @can('gotongroyong.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/peransertamasyarakat/gotongroyong*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.peransertamasyarakat.gotongroyong.index') }}">
+                                                    Gotongroyong <br> Penduduk
+                                                </a>
+                                            @endcan
 
                                         </div>
                                     </div>
