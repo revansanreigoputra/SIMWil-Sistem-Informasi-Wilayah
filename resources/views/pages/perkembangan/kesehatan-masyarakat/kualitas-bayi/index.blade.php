@@ -4,9 +4,9 @@
 
 @section('action')
     @can('kualitas-bayi.create')
-        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createModal">
+        <a href="{{ route('perkembangan.kesehatan-masyarakat.kualitas-bayi.create') }}" class="btn btn-primary mb-3">
             + Data Baru
-        </button>
+        </a>
     @endcan
 @endsection
 
@@ -16,120 +16,87 @@
             <div class="table-responsive">
                 <table id="kualitas-bayi-table" class="table table-striped">
                     <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Tanggal</th>
-                            <th>Keguguran</th>
-                            <th>Bayi Lahir</th>
-                            <th>Lahir Hidup</th>
-                            <th>Lahir Mati</th>
-                            <th>Berat < 2.5 kg</th>
-                            <th>Cacat 0-5 thn</th>
-                            <th>Aksi</th>
-                        </tr>
+                       <tr>
+                        <th class="text-center">No</th>
+                        <th>Tanggal</th>
+                        <th>Jml Keguguran</th>
+                        <th>Jml Lahir</th>
+                        <th>jml lahir bayi <br> mati</th>
+                        <th>Jml Lahir bayi <br>Hidup</th>
+                        <th>Mati (0-1 bln)</th>
+                        <th>Mati (1-12 bln)</th>
+                        <th>Berat < 2.5 kg</th>
+                        <th>Disabilitas (0-5 thn)</th>
+                        <th class="text-center">Aksi</th>
+                    </tr>
                     </thead>
                     <tbody>
                         @foreach ($kualitas as $item)
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
-                                <td class="text-center">{{ $item->tanggal }}</td>
-                                <td class="text-center">{{ $item->jumlah_keguguran }}</td>
+                                <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
+                                <td class="text-center">{{ $item->jumlah_keguguran_kandungan }}</td>
                                 <td class="text-center">{{ $item->jumlah_bayi_lahir }}</td>
                                 <td class="text-center">{{ $item->jumlah_bayi_lahir_hidup }}</td>
                                 <td class="text-center">{{ $item->jumlah_bayi_lahir_mati }}</td>
-                                <td class="text-center">{{ $item->jumlah_bayi_berat_kurang_25 }}</td>
-                                <td class="text-center">{{ $item->jumlah_bayi_cacat }}</td>
+                                <td class="text-center">{{ $item->jumlah_bayi_mati_0_1_bulan }}</td>
+                                <td class="text-center">{{ $item->jumlah_bayi_mati_1_12_bulan }}</td>
+                                <td class="text-center">{{ $item->jumlah_bayi_lahir_berat_kurang_2_5_kg }}</td>
+                                <td class="text-center">{{ $item->jumlah_bayi_0_5_tahun_hidup_disabilitas }}</td>
                                 <td>
-                                    @canany(['kualitas-bayi.update', 'kualitas-bayi.delete'])
-                                        <div class="d-flex gap-1 justify-content-center">
-                                            @can('kualitas-bayi.update')
-                                                <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
-                                                    data-bs-target="#editModal-{{ $item->id }}">Edit</button>
-                                            @endcan
+                                    <div class="d-flex gap-1 justify-content-center">
+                                        {{-- Tombol Detail --}}
+                                        @can('kualitas-bayi.show')
+                                            <a href="{{ route('perkembangan.kesehatan-masyarakat.kualitas-bayi.show', $item->id) }}"
+                                                class="btn btn-sm btn-info">Detail</a>
+                                        @endcan
 
-                                            @can('kualitas-bayi.delete')
-                                                <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                                    data-bs-target="#deleteModal-{{ $item->id }}">Hapus</button>
-                                            @endcan
-                                        </div>
+                                        {{-- Tombol Edit --}}
+                                        @can('kualitas-bayi.update')
+                                            <a href="{{ route('perkembangan.kesehatan-masyarakat.kualitas-bayi.edit', $item->id) }}"
+                                                class="btn btn-sm btn-warning">Edit</a>
+                                        @endcan
 
-                                        {{-- MODAL EDIT --}}
-                                        <div class="modal fade" id="editModal-{{ $item->id }}" tabindex="-1"
-                                            aria-labelledby="editModalLabel-{{ $item->id }}" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <form action="{{ route('perkembangan.kesehatan-masyarakat.kualitas-bayi.update', $item->id) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title">Edit Data Kualitas Bayi</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="mb-3">
-                                                                <label>Tanggal</label>
-                                                                <input type="date" name="tanggal" class="form-control" value="{{ $item->tanggal }}" required>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label>Keguguran</label>
-                                                                <input type="number" name="jumlah_keguguran" class="form-control" value="{{ $item->jumlah_keguguran }}" required>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label>Bayi Lahir</label>
-                                                                <input type="number" name="jumlah_bayi_lahir" class="form-control" value="{{ $item->jumlah_bayi_lahir }}" required>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label>Lahir Hidup</label>
-                                                                <input type="number" name="jumlah_bayi_lahir_hidup" class="form-control" value="{{ $item->jumlah_bayi_lahir_hidup }}" required>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label>Lahir Mati</label>
-                                                                <input type="number" name="jumlah_bayi_lahir_mati" class="form-control" value="{{ $item->jumlah_bayi_lahir_mati }}" required>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label>Berat &lt; 2.5 kg</label>
-                                                                <input type="number" name="jumlah_bayi_berat_kurang_25" class="form-control" value="{{ $item->jumlah_bayi_berat_kurang_25 }}" required>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label>Cacat 0-5 tahun</label>
-                                                                <input type="number" name="jumlah_bayi_cacat" class="form-control" value="{{ $item->jumlah_bayi_cacat }}" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                                            <button type="submit" class="btn btn-success">Simpan</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        {{-- Tombol Hapus --}}
+                                        @can('kualitas-bayi.delete')
+                                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#delete-kualitas-bayi-{{ $item->id }}">
+                                                Hapus
+                                            </button>
+                                        @endcan
+                                    </div>
 
-                                        {{-- MODAL DELETE --}}
-                                        <div class="modal fade" id="deleteModal-{{ $item->id }}" tabindex="-1"
+                                    {{-- Modal Delete --}}
+                                    @can('kualitas-bayi.delete')
+                                        <div class="modal fade" id="delete-kualitas-bayi-{{ $item->id }}" tabindex="-1"
                                             aria-labelledby="deleteModalLabel-{{ $item->id }}" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title">Hapus Data?</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                        <h5 class="modal-title" id="deleteModalLabel-{{ $item->id }}">Hapus Data?</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        Yakin ingin menghapus data tanggal <strong>{{ $item->tanggal }}</strong>?
+                                                        Yakin ingin menghapus data tanggal
+                                                        <strong>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</strong>?
+                                                        <p>Data yang dihapus tidak dapat dikembalikan.</p>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <form action="{{ route('perkembangan.kesehatan-masyarakat.kualitas-bayi.destroy', $item->id) }}"
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Batal</button>
+                                                        <form
+                                                            action="{{ route('perkembangan.kesehatan-masyarakat.kualitas-bayi.destroy', $item->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                                                             <button type="submit" class="btn btn-danger">Hapus</button>
                                                         </form>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    @endcanany
+                                    @endcan
                                 </td>
                             </tr>
                         @endforeach
@@ -138,62 +105,11 @@
             </div>
         </div>
     </div>
-
-    {{-- MODAL CREATE --}}
-    @can('kualitas-bayi.create')
-        <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form action="{{ route('perkembangan.kesehatan-masyarakat.kualitas-bayi.store') }}" method="POST">
-                        @csrf
-                        <div class="modal-header">
-                            <h5 class="modal-title">Tambah Data Kualitas Bayi</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label>Tanggal</label>
-                                <input type="date" name="tanggal" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label>Keguguran</label>
-                                <input type="number" name="jumlah_keguguran" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label>Bayi Lahir</label>
-                                <input type="number" name="jumlah_bayi_lahir" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label>Lahir Hidup</label>
-                                <input type="number" name="jumlah_bayi_lahir_hidup" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label>Lahir Mati</label>
-                                <input type="number" name="jumlah_bayi_lahir_mati" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label>Berat &lt; 2.5 kg</label>
-                                <input type="number" name="jumlah_bayi_berat_kurang_25" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label>Cacat 0–5 tahun</label>
-                                <input type="number" name="jumlah_bayi_cacat" class="form-control" required>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    @endcan
 @endsection
 
 @push('addon-script')
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('#kualitas-bayi-table').DataTable();
         });
     </script>

@@ -6,11 +6,10 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
+        Schema::dropIfExists('kualitas_ibu_hamils');
+
         Schema::create('kualitas_ibu_hamils', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal')->nullable();
@@ -19,13 +18,17 @@ return new class extends Migration
             $table->integer('jumlah_melahirkan')->default(0);
             $table->integer('jumlah_kematian_ibu')->default(0);
             $table->integer('jumlah_ibu_nifas_hidup')->default(0);
+            $table->integer('periksa_posyandu')->default(0);
+            $table->integer('periksa_puskesmas')->default(0);
+            $table->integer('periksa_rumah_sakit')->default(0);
+            $table->integer('periksa_dokter_praktek')->default(0);
+            $table->integer('periksa_bidan_praktek')->default(0);
+            $table->integer('periksa_dukun_terlatih')->default(0);
+            $table->integer('jumlah_ibu_nifas')->default(0);
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('kualitas_ibu_hamils');

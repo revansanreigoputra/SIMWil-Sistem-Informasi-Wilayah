@@ -2,52 +2,78 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KualitasBayi;
 use Illuminate\Http\Request;
-use App\Models\KualitasBayi; // pastikan model di-import
 
 class KualitasBayiController extends Controller
 {
     public function index()
     {
-        $kualitas = KualitasBayi::all();
+        $kualitas = KualitasBayi::latest()->get();
         return view('pages.perkembangan.kesehatan-masyarakat.kualitas-bayi.index', compact('kualitas'));
+    }
+
+    public function create()
+    {
+        return view('pages.perkembangan.kesehatan-masyarakat.kualitas-bayi.create');
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'tanggal' => 'required|date',
-            'jumlah_keguguran' => 'required|integer',
-            'jumlah_bayi_lahir' => 'required|integer',
-            'jumlah_bayi_lahir_hidup' => 'required|integer',
-            'jumlah_bayi_lahir_mati' => 'required|integer',
-            'jumlah_bayi_berat_kurang_25' => 'required|integer',
-            'jumlah_bayi_cacat' => 'required|integer',
+            'jumlah_keguguran_kandungan' => 'required|integer|min:0',
+            'jumlah_bayi_lahir' => 'required|integer|min:0',
+            'jumlah_bayi_lahir_hidup' => 'required|integer|min:0',
+            'jumlah_bayi_mati_0_1_bulan' => 'required|integer|min:0',
+            'jumlah_bayi_mati_1_12_bulan' => 'required|integer|min:0',
+            'jumlah_bayi_lahir_berat_kurang_2_5_kg' => 'required|integer|min:0',
+            'jumlah_bayi_0_5_tahun_hidup_disabilitas' => 'required|integer|min:0',
         ]);
 
-        KualitasBayi::create($validated);
-        return back()->with('success', 'Data berhasil ditambahkan.');
+        KualitasBayi::create($request->all());
+        return redirect()->route('perkembangan.kesehatan-masyarakat.kualitas-bayi.index')
+            ->with('success', 'Data kualitas bayi berhasil ditambahkan.');
     }
 
-    public function update(Request $request, KualitasBayi $kualitas_bayi)
+    public function show($id)
     {
-        $validated = $request->validate([
+        $data = KualitasBayi::findOrFail($id);
+        return view('pages.perkembangan.kesehatan-masyarakat.kualitas-bayi.show', compact('data'));
+    }
+
+    public function edit($id)
+    {
+        $data = KualitasBayi::findOrFail($id);
+        return view('pages.perkembangan.kesehatan-masyarakat.kualitas-bayi.edit', compact('data'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
             'tanggal' => 'required|date',
-            'jumlah_keguguran' => 'required|integer',
-            'jumlah_bayi_lahir' => 'required|integer',
-            'jumlah_bayi_lahir_hidup' => 'required|integer',
-            'jumlah_bayi_lahir_mati' => 'required|integer',
-            'jumlah_bayi_berat_kurang_25' => 'required|integer',
-            'jumlah_bayi_cacat' => 'required|integer',
+            'jumlah_keguguran_kandungan' => 'required|integer|min:0',
+            'jumlah_bayi_lahir' => 'required|integer|min:0',
+            'jumlah_bayi_lahir_hidup' => 'required|integer|min:0',
+            'jumlah_bayi_mati_0_1_bulan' => 'required|integer|min:0',
+            'jumlah_bayi_mati_1_12_bulan' => 'required|integer|min:0',
+            'jumlah_bayi_lahir_berat_kurang_2_5_kg' => 'required|integer|min:0',
+            'jumlah_bayi_0_5_tahun_hidup_disabilitas' => 'required|integer|min:0',
         ]);
 
-        $kualitas_bayi->update($validated);
-        return back()->with('success', 'Data berhasil diperbarui.');
+        $data = KualitasBayi::findOrFail($id);
+        $data->update($request->all());
+
+        return redirect()->route('perkembangan.kesehatan-masyarakat.kualitas-bayi.index')
+            ->with('success', 'Data kualitas bayi berhasil diperbarui.');
     }
 
-    public function destroy(KualitasBayi $kualitas_bayi)
+    public function destroy($id)
     {
-        $kualitas_bayi->delete();
-        return back()->with('success', 'Data berhasil dihapus.');
+        $data = KualitasBayi::findOrFail($id);
+        $data->delete();
+
+        return redirect()->route('perkembangan.kesehatan-masyarakat.kualitas-bayi.index')
+            ->with('success', 'Data kualitas bayi berhasil dihapus.');
     }
 }

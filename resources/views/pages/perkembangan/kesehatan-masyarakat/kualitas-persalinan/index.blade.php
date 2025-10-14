@@ -1,11 +1,11 @@
 @extends('layouts.master')
 
-@section('title', 'Daftar - KUALITAS IBU HAMIL')
+@section('title', 'Daftar - KUALITAS PERSALINAN')
 
 @section('action')
     {{-- TOMBOL +DATA BARU --}}
-    @can('kualitas-ibu-hamil.create')
-    <a href="{{ route('perkembangan.kesehatan-masyarakat.kualitas-ibu-hamil.create') }}" class="btn btn-primary mb-3">
+    @can('kualitas-persalinan.create')
+    <a href="{{ route('perkembangan.kesehatan-masyarakat.kualitas-persalinan.create') }}" class="btn btn-primary mb-3">
         + Data Baru
     </a>
     @endcan
@@ -15,16 +15,15 @@
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
-                <table id="kualitas-ibu-hamil-table" class="table table-striped">
+                <table id="kualitas-persalinan-table" class="table table-striped">
                     <thead>
                         <tr>
                             <th>No</th>
                             <th>Tanggal</th>
-                            <th>Jumlah Ibu Hamil</th>
-                            <th>Total Pemeriksaan</th>
-                            <th>Jumlah Melahirkan</th>
-                            <th>Kematian Ibu</th>
-                            <th>Ibu Nifas Hidup</th>
+                            <th>Persalinan RS Umum</th>
+                            <th>Persalinan Puskesmas</th>
+                            <th>Persalinan Praktek Bidan</th>
+                            <th>Total Persalinan</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -32,38 +31,37 @@
                         @foreach ($kualitas as $item)
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
-                                <td class="text-center">{{ $item->tanggal }}</td>
-                                <td class="text-center">{{ $item->jumlah_ibu_hamil }}</td>
-                                <td class="text-center">{{ $item->total_pemeriksaan }}</td>
-                                <td class="text-center">{{ $item->jumlah_melahirkan }}</td>
-                                <td class="text-center">{{ $item->jumlah_kematian_ibu }}</td>
-                                <td class="text-center">{{ $item->jumlah_ibu_nifas_hidup }}</td>
+                                <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
+                                <td class="text-center">{{ number_format($item->persalinan_rumah_sakit_umum ?? 0) }}</td>
+                                <td class="text-center">{{ number_format($item->persalinan_puskesmas ?? 0) }}</td>
+                                <td class="text-center">{{ number_format($item->persalinan_praktek_bidan ?? 0) }}</td>
+                                <td class="text-center fw-bold text-primary">{{ number_format($item->total_persalinan ?? 0) }}</td>
                                 <td>
                                     <div class="d-flex gap-1 justify-content-center">
                                         {{-- Tombol Detail --}}
-                                        <a href="{{ route('perkembangan.kesehatan-masyarakat.kualitas-ibu-hamil.show', $item->id) }}" class="btn btn-sm btn-info">
+                                        <a href="{{ route('perkembangan.kesehatan-masyarakat.kualitas-persalinan.show', $item->id) }}" class="btn btn-sm btn-info">
                                             Detail
                                         </a>
 
                                         {{-- Tombol Edit --}}
-                                        @can('kualitas-ibu-hamil.update')
-                                        <a href="{{ route('perkembangan.kesehatan-masyarakat.kualitas-ibu-hamil.edit', $item->id) }}" class="btn btn-sm btn-warning">
+                                        @can('kualitas-persalinan.update')
+                                        <a href="{{ route('perkembangan.kesehatan-masyarakat.kualitas-persalinan.edit', $item->id) }}" class="btn btn-sm btn-warning">
                                             Edit
                                         </a>
                                         @endcan
 
                                         {{-- Tombol Delete --}}
-                                        @can('kualitas-ibu-hamil.delete')
+                                        @can('kualitas-persalinan.delete')
                                         <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                            data-bs-target="#delete-kualitas-ibu-hamil-{{ $item->id }}">
+                                            data-bs-target="#delete-kualitas-persalinan-{{ $item->id }}">
                                             Hapus
                                         </button>
                                         @endcan
                                     </div>
 
                                     {{-- MODAL DELETE --}}
-                                    @can('kualitas-ibu-hamil.delete')
-                                    <div class="modal fade" id="delete-kualitas-ibu-hamil-{{ $item->id }}" tabindex="-1" aria-labelledby="deleteModalLabel-{{ $item->id }}" aria-hidden="true">
+                                    @can('kualitas-persalinan.delete')
+                                    <div class="modal fade" id="delete-kualitas-persalinan-{{ $item->id }}" tabindex="-1" aria-labelledby="deleteModalLabel-{{ $item->id }}" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -72,12 +70,12 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     Yakin ingin menghapus data tanggal
-                                                    <strong>{{ $item->tanggal }}</strong>?
+                                                    <strong>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</strong>?
                                                     <p>Data yang dihapus tidak bisa dikembalikan.</p>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                                    <form action="{{ route('perkembangan.kesehatan-masyarakat.kualitas-ibu-hamil.destroy', $item->id) }}" method="POST">
+                                                    <form action="{{ route('perkembangan.kesehatan-masyarakat.kualitas-persalinan.destroy', $item->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger">Hapus</button>
@@ -100,7 +98,7 @@
 @push('addon-script')
     <script>
         $(document).ready(function() {
-            $('#kualitas-ibu-hamil-table').DataTable();
+            $('#kualitas-persalinan-table').DataTable();
         });
     </script>
 @endpush

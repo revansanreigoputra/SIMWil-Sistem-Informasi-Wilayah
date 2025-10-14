@@ -759,7 +759,7 @@
                                          @can('sektor-bangunan.view')
                                                 <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/sektor-bangunan*') ? 'active' : '' }}"
                                                 href="{{ route('perkembangan.produk-domestik.sektor-bangunan.index') }}">
-                                                    Sektor <br> Bangunan
+                                                    Sektor <br> Bangunan/konstruksi
                                                 </a>
                                             @endcan
 
@@ -790,6 +790,21 @@
                                                 Kualitas Bayi
                                             </a>
                                         @endcan
+
+                                             @can('kualitas-persalinan.view')
+                                            <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/kualitas-persalinan*') ? 'show' : '' }}"
+                                                href="{{ route('perkembangan.kesehatan-masyarakat.kualitas-persalinan.index') }}">
+                                                Kualitas persalinan
+                                            </a>
+                                        @endcan
+
+                                         @can('cakupan-imunisasi.view')
+                                        <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/cakupan-imunisasi*') ? 'show' : '' }}"
+                                                href="{{ route('perkembangan.kesehatan-masyarakat.cakupan-imunisasi.index') }}">
+                                                Cakupan imunisasi
+                                            </a>
+                                    @endcan
+
 
                                             </div>
                                         </div>

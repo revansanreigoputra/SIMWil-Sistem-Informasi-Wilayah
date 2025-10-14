@@ -100,6 +100,8 @@ use App\Http\Controllers\SubsektorKehutananController;
 use App\Http\Controllers\SektorBangunanController;
 use App\Http\Controllers\KualitasIbuHamilController;
 use App\Http\Controllers\KualitasBayiController;
+use App\Http\Controllers\KualitasPersalinanController;
+use App\Http\Controllers\CakupanImunisasiController;
 
 use App\Http\Controllers\PerkembanganPendudukController;
 // use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -113,7 +115,7 @@ use App\Http\Controllers\LayananSurat\{
 use App\Http\Controllers\LayananSuratController;
 use App\Http\Controllers\MasterPerkembanganController;
 use App\Http\Controllers\MasterPotensiController;
-use App\Http\Controllers\LayananSuratController;
+//use App\Http\Controllers\LayananSuratController;
 use App\Http\Controllers\PengangguranController;
 use App\Http\Controllers\KesejahteraanKeluargaController;
 use App\Http\Controllers\MenurutSektorUsahaController;
@@ -604,7 +606,7 @@ Route::prefix('perkembangan/produk-domestik')
   // kualitas ibu hamil 
 
   Route::prefix('perkembangan/kesehatan-masyarakat')
-    ->name('perkembangan.kesehatan-masyarakat.') // <--- INI PERBAIKAN UTAMA
+    ->name('perkembangan.kesehatan-masyarakat.') 
     ->group(function () {
         Route::resource('kualitas-ibu-hamil', KualitasIbuHamilController::class);
     });
@@ -614,8 +616,24 @@ Route::prefix('perkembangan/produk-domestik')
     ->name('perkembangan.kesehatan-masyarakat.')
     ->group(function () {
         Route::resource('kualitas-bayi', KualitasBayiController::class);
-});
-=======
+
+    });
+
+   // kualitas persalinan
+    Route::prefix('perkembangan/kesehatan-masyarakat')
+    ->name('perkembangan.kesehatan-masyarakat.')
+    ->group(function () {
+        Route::resource('kualitas-persalinan', KualitasPersalinanController::class);
+    });
+
+
+    // cakupan amunisasi
+
+    Route::prefix('perkembangan/kesehatan-masyarakat')
+    ->name('perkembangan.kesehatan-masyarakat.')
+    ->group(function () {
+        Route::resource('cakupan-imunisasi', CakupanImunisasiController::class);
+    });
 
 // ==== PERMOHONAN SURAT ====
 
@@ -765,6 +783,7 @@ Route::get('/cetak/surat_penghibaan_tanah', function () {
 Route::get('/cetak/surat_rekomendasi_rt', function () {
     return view('pages.layanan.permohonan.surat_rekomendasi_rt');
 });
+
 // Route::prefix('layanan/permohonan')->group(function () {
 //     Route::view('/sk_domisili', 'pages.layanan.permohonan.forms.sk_domisili')->name('permohonan.sk_domisili');
 //     Route::view('/sk_belum_pernah_nikah', 'pages.layanan.permohonan.forms.sk_belum_pernah_nikah')->name('permohonan.sk_belum_pernah_nikah');

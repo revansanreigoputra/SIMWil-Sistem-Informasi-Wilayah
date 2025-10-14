@@ -300,6 +300,7 @@ class PermissionSeeder extends Seeder
             'kualitas-ibu-hamil.update',
             'kualitas-ibu-hamil.delete',
             'kualitas-ibu-hamil.destroy',
+             'kualitas-ibu-hamil.show',
 
             // kualitas bayi permession
                 'kualitas-bayi.view',
@@ -309,7 +310,27 @@ class PermissionSeeder extends Seeder
                 'kualitas-bayi.update',
                 'kualitas-bayi.delete',
                 'kualitas-bayi.destroy',
+                 'kualitas-bayi.show',
 
+                // kualitas persalinan permission
+                'kualitas-persalinan.view',
+                'kualitas-persalinan.create',
+                'kualitas-persalinan.store',
+                'kualitas-persalinan.edit',
+                'kualitas-persalinan.update',
+                'kualitas-persalinan.delete',
+                'kualitas-persalinan.destroy',
+                'kualitas-persalinan.show',
+                                    
+                // cakupan imunisasi permission
+                'cakupan-imunisasi.view',
+                'cakupan-imunisasi.create',
+                'cakupan-imunisasi.store',
+                'cakupan-imunisasi.edit',
+                'cakupan-imunisasi.update',
+                'cakupan-imunisasi.delete',
+                'cakupan-imunisasi.destroy',
+                'cakupan-imunisasi.show',
                                                     
 
             // Pertanggungjawaban
