@@ -9,52 +9,42 @@
         </div>
         <div class="card-body">
 
-            {{-- Data Umum --}}
             <h6 class="fw-bold mb-3">Data Umum</h6>
             <div class="table-responsive mb-4">
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
                             <th width="30%">Tanggal</th>
-                            <td>02-10-2025</td>
+                            <td>{{ \Carbon\Carbon::parse($data->tanggal)->format('d-m-Y') }}</td>
                         </tr>
                         <tr>
                             <th>Kategori</th>
-                            <td>Angkutan Penumpang</td>
+                            <td>{{ $data->kategori }}</td>
                         </tr>
                         <tr>
                             <th>Jenis Angkutan</th>
-                            <td>Bus</td>
+                            <td>{{ $data->jenis_angkutan }}</td>
                         </tr>
                         <tr>
                             <th>Jumlah (Unit)</th>
-                            <td>5</td>
+                            <td>{{ $data->jumlah_unit }}</td>
                         </tr>
                         <tr>
                             <th>Jumlah Pemilik (Orang)</th>
-                            <td>10</td>
+                            <td>{{ $data->jumlah_pemilik }}</td>
                         </tr>
                         <tr>
                             <th>Kapasitas (Orang/Unit)</th>
-                            <td>40</td>
+                            <td>{{ $data->kapasitas_per_unit }}</td>
                         </tr>
                         <tr>
                             <th>Tenaga Kerja (Orang)</th>
-                            <td>12</td>
-                        </tr>
-                        <tr>
-                            <th>Alamat Kantor</th>
-                            <td>Jl. Contoh No.1, Desa XYZ</td>
-                        </tr>
-                        <tr>
-                            <th>Ruang Lingkup Kegiatan</th>
-                            <td>Desa / Kecamatan</td>
+                            <td>{{ $data->tenaga_kerja }}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            {{-- Tombol Kembali --}}
             <div class="mt-4 d-flex justify-content-end">
                 <a href="{{ route('potensi.kelembagaan.pengangkutan.index') }}" class="btn btn-outline-secondary">
                     <i class="bi bi-arrow-left"></i> Kembali

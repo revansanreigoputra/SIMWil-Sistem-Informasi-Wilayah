@@ -476,7 +476,7 @@
                                     class="dropdown-item {{ request()->is('master-ddk*') ? 'active' : '' }}">
                                     Master DDK
                                 </a>
-                                <a href="{{ route('master.perkembangan.index') }}"
+                                <a href="{{ route('master-perkembangan.index') }}"
                                     class="dropdown-item {{ request()->is('master-perkembangan*') ? 'active' : '' }}">
                                     Master Perkembangan
                                 </a>
