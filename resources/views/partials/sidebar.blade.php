@@ -439,6 +439,12 @@
                                                         Etnis/Suku
                                                     </a>
                                                 @endcan
+                                                @can('p_tenaga_kerja.view')
+                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/tenaga-kerja*') ? 'active' : '' }}"
+                                                        href="{{ route('potensi.potensi-sdm.tenaga-kerja.index') }}">
+                                                        Tenaga Kerja
+                                                    </a>
+                                                @endcan
                                         </div>
                                     </div>
                                     <div class="dropend">

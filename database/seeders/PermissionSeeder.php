@@ -215,6 +215,13 @@ class PermissionSeeder extends Seeder
             'p_etnis_suku.update',
             'p_etnis_suku.delete',
 
+            // Potensi Tenaga Kerja permissions
+            'p_tenaga_kerja.view',
+            'p_tenaga_kerja.create',
+            'p_tenaga_kerja.store',
+            'p_tenaga_kerja.update',
+            'p_tenaga_kerja.delete',
+
             // Irigasi
             'irigasi.view',
             'irigasi.create',
