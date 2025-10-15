@@ -38,7 +38,9 @@
                 <select name="id_desa" id="id_desa" class="form-control" required>
                     <option value="">-- Pilih Desa --</option>
                     @foreach ($desas as $item)
-                        <option value="{{ $item->id }}">{{ $item->nama_desa }}</option>
+                        <option value="{{ $item->id }}" {{ old('id_desa') == $item->id ? 'selected' : '' }}>
+                            {{ $item->nama_desa }}
+                        </option>
                     @endforeach
                 </select>
             </div>
@@ -68,11 +70,11 @@
 
             @foreach ($numericFields as $name => $label)
                 <div class="row mb-3">
-                    <label class="col-sm-9 col-form-label">{{ $label }}</label>
+                    <label class="col-sm-9 col-form-label">{{ $label }} <span class="text-danger">*</span></label>
                     <div class="col-sm-3">
                         <input type="number" name="{{ $name }}" min="0"
                                class="form-control @error($name) is-invalid @enderror"
-                               value="{{ old($name) }}">
+                               value="{{ old($name) }}" required>
                         @error($name)
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -82,11 +84,11 @@
 
             {{-- Field teks --}}
             <div class="row mb-3">
-                <label class="col-sm-9 col-form-label">Jenis kegiatan masyarakat untuk melestarikan hasil pembangunan yang didinaskan pemerintah desa/kelurahan</label>
+                <label class="col-sm-9 col-form-label">Jenis kegiatan masyarakat untuk melestarikan hasil pembangunan yang didinaskan pemerintah desa/kelurahan <span class="text-danger">*</span></label>
                 <div class="col-sm-3">
                     <input type="text" name="jenis_kegiatan_pemeliharaan"
                            class="form-control @error('jenis_kegiatan_pemeliharaan') is-invalid @enderror"
-                           value="{{ old('jenis_kegiatan_pemeliharaan') }}">
+                           value="{{ old('jenis_kegiatan_pemeliharaan') }}" required>
                     @error('jenis_kegiatan_pemeliharaan')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -103,10 +105,10 @@
 
             @foreach ($radioFields as $name => $label)
                 <div class="row mb-3">
-                    <label class="col-sm-9 col-form-label">{{ $label }}</label>
+                    <label class="col-sm-9 col-form-label">{{ $label }} <span class="text-danger">*</span></label>
                     <div class="col-sm-3">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="{{ $name }}" value="Ada"
+                            <input class="form-check-input" type="radio" name="{{ $name }}" value="Ada" required
                                    {{ old($name) === 'Ada' ? 'checked' : '' }}>
                             <label class="form-check-label">Ada</label>
                         </div>

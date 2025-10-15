@@ -35,7 +35,7 @@
                         <i class="fas fa-map-marker-alt me-1"></i>
                         Desa <span class="text-danger">*</span>
                     </label>
-                    <select name="id_desa" id="id_desa" class="form-control" required>
+                    <select name="id_desa" id="id_desa" class="form-control @error('id_desa') is-invalid @enderror" required>
                         <option value="">-- Pilih Desa --</option>
                         @foreach ($desas as $item)
                             <option value="{{ $item->id }}" {{ old('id_desa') == $item->id ? 'selected' : '' }}>
@@ -67,7 +67,9 @@
 
             @foreach ($radioFields as $name => $label)
                 <div class="row mb-3">
-                    <label class="col-sm-6 col-form-label">{{ $label }} *</label>
+                    <label class="col-sm-6 col-form-label">
+                        {{ $label }} <span class="text-danger">*</span>
+                    </label>
                     <div class="col-sm-6">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="{{ $name }}" value="Aktif"
@@ -76,12 +78,12 @@
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="{{ $name }}" value="Tidak Aktif"
-                                   {{ old($name) === 'Tidak Aktif' ? 'checked' : '' }}>
+                                   {{ old($name) === 'Tidak Aktif' ? 'checked' : '' }} required>
                             <label class="form-check-label">Tidak Aktif</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="{{ $name }}" value="Pernah Ada"
-                                   {{ old($name) === 'Pernah Ada' ? 'checked' : '' }}>
+                                   {{ old($name) === 'Pernah Ada' ? 'checked' : '' }} required>
                             <label class="form-check-label">Pernah Ada</label>
                         </div>
                         @error($name)
@@ -105,7 +107,6 @@
                     </button>
                 </div>
             </div>
-
         </form>
     </div>
 </div>

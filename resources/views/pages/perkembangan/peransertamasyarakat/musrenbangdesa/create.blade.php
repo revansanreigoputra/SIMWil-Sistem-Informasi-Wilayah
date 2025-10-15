@@ -58,7 +58,7 @@
 
             @foreach ($radioFields as $name => $label)
                 <div class="row mb-3">
-                    <label class="col-sm-9 col-form-label">{{ $label }} *</label>
+                    <label class="col-sm-9 col-form-label">{{ $label }} <span class="text-danger">*</span></label>
                     <div class="col-sm-3">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="{{ $name }}" value="Ada"
@@ -67,7 +67,7 @@
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="{{ $name }}" value="Tidak Ada"
-                                   {{ old($name) === 'Tidak Ada' ? 'checked' : '' }}>
+                                   {{ old($name) === 'Tidak Ada' ? 'checked' : '' }} required>
                             <label class="form-check-label">Tidak Ada</label>
                         </div>
                         @error($name)
@@ -96,11 +96,11 @@
 
             @foreach ($numericFields as $name => $label)
                 <div class="row mb-3">
-                    <label class="col-sm-9 col-form-label">{{ $label }}</label>
+                    <label class="col-sm-9 col-form-label">{{ $label }} <span class="text-danger">*</span></label>
                     <div class="col-sm-3">
                         <input type="number" name="{{ $name }}" min="0"
                                class="form-control @error($name) is-invalid @enderror"
-                               value="{{ old($name) }}">
+                               value="{{ old($name) }}" required>
                         @error($name)
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

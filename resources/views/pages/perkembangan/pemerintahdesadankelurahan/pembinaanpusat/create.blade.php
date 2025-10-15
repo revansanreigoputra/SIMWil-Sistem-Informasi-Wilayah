@@ -16,32 +16,32 @@
             @csrf
 
             <div class="row">
-            <!-- Kolom Tanggal -->
-            <div class="col-md-6 mb-3">
-                <label for="tanggal" class="form-label fw-semibold">
-                    <i class="fas fa-calendar me-1"></i>
-                    Tanggal <span class="text-danger">*</span>
-                </label>
-                <input type="date" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal"
-                    name="tanggal" value="{{ old('tanggal') }}" required>
-                @error('tanggal')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
+                <!-- Kolom Tanggal -->
+                <div class="col-md-6 mb-3">
+                    <label for="tanggal" class="form-label fw-semibold">
+                        <i class="fas fa-calendar me-1"></i>
+                        Tanggal <span class="text-danger">*</span>
+                    </label>
+                    <input type="date" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal"
+                        name="tanggal" value="{{ old('tanggal') }}" required>
+                    @error('tanggal')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
-            <!-- Kolom Desa -->
-            <div class="col-md-6 mb-3">
-                <label for="id_desa" class="form-label fw-semibold">
-                    <i class="fas fa-map-marker-alt me-1"></i>
-                    Desa <span class="text-danger">*</span>
-                </label>
-                <select name="id_desa" id="id_desa" class="form-control" required>
-                    <option value="">-- Pilih Desa --</option>
-                    @foreach ($desas as $item)
-                        <option value="{{ $item->id }}">{{ $item->nama_desa }}</option>
-                    @endforeach
-                </select>
-            </div>
+                <!-- Kolom Desa -->
+                <div class="col-md-6 mb-3">
+                    <label for="id_desa" class="form-label fw-semibold">
+                        <i class="fas fa-map-marker-alt me-1"></i>
+                        Desa <span class="text-danger">*</span>
+                    </label>
+                    <select name="id_desa" id="id_desa" class="form-control" required>
+                        <option value="">-- Pilih Desa --</option>
+                        @foreach ($desas as $item)
+                            <option value="{{ $item->id }}">{{ $item->nama_desa }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
 
             {{-- Bagian Pedoman --}}
@@ -61,16 +61,18 @@
                 </h5>
                 @foreach ($radioFields as $name => $label)
                     <div class="d-flex align-items-center justify-content-between mb-3">
-                        <label class="form-label mb-0 w-75">{{ $label }}</label>
+                        <label class="form-label mb-0 w-75">
+                            {{ $label }} <span class="text-danger">*</span>
+                        </label>
                         <div class="d-flex gap-4">
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="{{ $name }}" value="Ada"
-                                    {{ old($name) == 'Ada' ? 'checked' : '' }}>
+                                    {{ old($name) == 'Ada' ? 'checked' : '' }} required>
                                 <label class="form-check-label">Ada</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="{{ $name }}" value="Tidak Ada"
-                                    {{ old($name) == 'Tidak Ada' ? 'checked' : '' }}>
+                                    {{ old($name) == 'Tidak Ada' ? 'checked' : '' }} required>
                                 <label class="form-check-label">Tidak Ada</label>
                             </div>
                         </div>
@@ -96,9 +98,11 @@
                 </h5>
                 @foreach ($numericFields as $name => $label)
                     <div class="d-flex align-items-center justify-content-between mb-3">
-                        <label for="{{ $name }}" class="form-label mb-0 w-75">{{ $label }}</label>
+                        <label for="{{ $name }}" class="form-label mb-0 w-75">
+                            {{ $label }} <span class="text-danger">*</span>
+                        </label>
                         <input type="number" class="form-control w-25 text-end @error($name) is-invalid @enderror"
-                            id="{{ $name }}" name="{{ $name }}" min="0" value="{{ old($name) }}">
+                            id="{{ $name }}" name="{{ $name }}" min="0" value="{{ old($name) }}" required>
                         @error($name)
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

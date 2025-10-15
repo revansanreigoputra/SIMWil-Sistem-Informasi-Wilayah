@@ -35,7 +35,7 @@
                         <i class="fas fa-map-marker-alt me-1"></i>
                         Desa <span class="text-danger">*</span>
                     </label>
-                    <select name="id_desa" id="id_desa" class="form-control" required>
+                    <select name="id_desa" id="id_desa" class="form-control @error('id_desa') is-invalid @enderror" required>
                         <option value="">-- Pilih Desa --</option>
                         @foreach ($desas as $item)
                             <option value="{{ $item->id }}" {{ old('id_desa') == $item->id ? 'selected' : '' }}>
@@ -49,18 +49,24 @@
                 </div>
             </div>
 
-            {{-- Input angka --}}
+            {{-- Input angka wajib --}}
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label class="form-label fw-semibold">Jumlah Kelompok Arisan</label>
-                    <input type="number" name="jumlah_kelompok_arisan" min="0" class="form-control"
-                        value="{{ old('jumlah_kelompok_arisan') }}">
+                    <label class="form-label fw-semibold">Jumlah Kelompok Arisan <span class="text-danger">*</span></label>
+                    <input type="number" name="jumlah_kelompok_arisan" min="0" class="form-control @error('jumlah_kelompok_arisan') is-invalid @enderror"
+                        value="{{ old('jumlah_kelompok_arisan') }}" required>
+                    @error('jumlah_kelompok_arisan')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="col-md-6 mb-3">
-                    <label class="form-label fw-semibold">Jumlah Penduduk Orang Tua Asuh</label>
-                    <input type="number" name="jumlah_penduduk_orang_tua_asuh" min="0" class="form-control"
-                        value="{{ old('jumlah_penduduk_orang_tua_asuh') }}">
+                    <label class="form-label fw-semibold">Jumlah Penduduk Orang Tua Asuh <span class="text-danger">*</span></label>
+                    <input type="number" name="jumlah_penduduk_orang_tua_asuh" min="0" class="form-control @error('jumlah_penduduk_orang_tua_asuh') is-invalid @enderror"
+                        value="{{ old('jumlah_penduduk_orang_tua_asuh') }}" required>
+                    @error('jumlah_penduduk_orang_tua_asuh')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
 
@@ -85,7 +91,7 @@
 
             @foreach ($radioFields as $name => $label)
                 <div class="row mb-3">
-                    <label class="col-sm-9 col-form-label">{{ $label }} *</label>
+                    <label class="col-sm-9 col-form-label">{{ $label }} <span class="text-danger">*</span></label>
                     <div class="col-sm-3">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="{{ $name }}" value="Ada"
@@ -94,7 +100,7 @@
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="{{ $name }}" value="Tidak Ada"
-                                   {{ old($name) === 'Tidak Ada' ? 'checked' : '' }}>
+                                   {{ old($name) === 'Tidak Ada' ? 'checked' : '' }} required>
                             <label class="form-check-label">Tidak Ada</label>
                         </div>
                         @error($name)
