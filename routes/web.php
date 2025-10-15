@@ -34,6 +34,7 @@ use App\Http\Controllers\GotongroyongController;
 use App\Http\Controllers\AdatIstiadatController;
 use App\Http\Controllers\SikapdanmentalController;
 use App\Http\Controllers\BerbangsaController;
+use App\Http\Controllers\PajakController;
 // use App\Http\Controllers\IrigasiController;
 // use App\Http\Controllers\NotificationController;
 // use App\Http\Controllers\PerangkatDesaController;
@@ -537,7 +538,16 @@ route::middleware(['auth'])->prefix('perkembangan/kedaulatanmasyarakat/berbangsa
     Route::delete('/{id}', [BerbangsaController::class, 'destroy'])->name('destroy');
 });
 
-
+//membayar pajak
+route::middleware(['auth'])->prefix('perkembangan/kedaulatanmasyarakat.pajak')->name('perkembangan.kedaulatanmasyarakat.pajak.')->group(function () {
+    Route::get('/', [PajakController::class, 'index'])->name('index');
+    Route::get('/create', [PajakController::class, 'create'])->name('create');
+    Route::post('/', [PajakController::class, 'store'])->name('store');
+    Route::get('/{id}', [PajakController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [PajakController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [PajakController::class, 'update'])->name('update');
+    Route::delete('/{id}', [PajakController::class, 'destroy'])->name('destroy');
+});
 
 // Desa routes
 Route::resource('desa', DesaController::class);

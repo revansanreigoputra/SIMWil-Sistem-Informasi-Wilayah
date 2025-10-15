@@ -664,6 +664,12 @@
                                                     Kesadaran Berbangsa <br>dan Bernegara
                                                 </a>
                                             @endcan
+                                            @can('pajak.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/kedaulatanmasyarakat/pajak*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.kedaulatanmasyarakat.pajak.index') }}">
+                                                    Kesadaran Membayar <br> Pajak dan Retribusi
+                                                </a>
+                                            @endcan
                                         </div>
                                     </div>
 

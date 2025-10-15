@@ -410,6 +410,14 @@ class PermissionSeeder extends Seeder
             'berbangsa.update',
             'berbangsa.delete',
 
+            //pajak
+            'pajak.view',
+            'pajak.create',
+            'pajak.store',
+            'pajak.edit',
+            'pajak.update',
+            'pajak.delete',
+
 
             // potensi permissions
             'potensi.laporan.view',

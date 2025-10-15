@@ -12,7 +12,7 @@
     </div>
 
     <div class="card-body">
-        <form action="{{ route('perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.update', $pertanggungjawaban->id) }}" method="POST">
+        <form id="formPertanggungjawaban"action="{{ route('perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.update', $pertanggungjawaban->id) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -155,4 +155,18 @@
         </form>
     </div>
 </div>
+{{-- ✅ JavaScript Validasi Jumlah Pengaduan --}}
+<script>
+document.getElementById('formPertanggungjawaban').addEventListener('submit', function(e) {
+    const diterima = parseInt(document.getElementById('jumlah_pengaduan_diterima').value) || 0;
+    const selesai = parseInt(document.getElementById('jumlah_pengaduan_selesai').value) || 0;
+
+    if (selesai > diterima) {
+        e.preventDefault();
+        alert('Jumlah pengaduan selesai tidak boleh lebih besar dari jumlah pengaduan yang diterima.');
+        document.getElementById('jumlah_pengaduan_selesai').focus();
+    }
+});
+</script>
+
 @endsection
