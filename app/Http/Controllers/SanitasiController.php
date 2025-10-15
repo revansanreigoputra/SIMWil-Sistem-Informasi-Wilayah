@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Desa;
 use App\Models\Sanitasi;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,7 @@ class SanitasiController extends Controller
      */
     public function index()
     {
-        $sanitasies = Sanitasi::orderBy('tanggal', 'desc')->paginate(10);
+        $sanitasies = Sanitasi::with('desa')->orderBy('tanggal', 'desc')->paginate(10);
         return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-sanitasi.index', compact('sanitasies'));
     }
 
@@ -21,9 +22,10 @@ class SanitasiController extends Controller
      */
     public function create()
     {
+        $desas = Desa::all();
         $saluranDrainaseOptions = Sanitasi::getSaluranDrainaseOptions();
         $kondisiSaluranOptions = Sanitasi::getKondisiSaluranOptions();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-sanitasi.create', compact('saluranDrainaseOptions', 'kondisiSaluranOptions'));
+        return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-sanitasi.create', compact('desas', 'saluranDrainaseOptions', 'kondisiSaluranOptions'));
     }
 
     /**
@@ -32,6 +34,7 @@ class SanitasiController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'sumur_resapan_air' => 'required|integer|min:0',
             'mck_umum' => 'required|integer|min:0',
@@ -58,9 +61,10 @@ class SanitasiController extends Controller
      */
     public function edit(Sanitasi $sanitasi)
     {
+        $desas = Desa::all();
         $saluranDrainaseOptions = Sanitasi::getSaluranDrainaseOptions();
         $kondisiSaluranOptions = Sanitasi::getKondisiSaluranOptions();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-sanitasi.edit', compact('sanitasi', 'saluranDrainaseOptions', 'kondisiSaluranOptions'));
+        return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-sanitasi.edit', compact('sanitasi', 'desas', 'saluranDrainaseOptions', 'kondisiSaluranOptions'));
     }
 
     /**
@@ -69,6 +73,7 @@ class SanitasiController extends Controller
     public function update(Request $request, Sanitasi $sanitasi)
     {
         $validated = $request->validate([
+            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'sumur_resapan_air' => 'required|integer|min:0',
             'mck_umum' => 'required|integer|min:0',
