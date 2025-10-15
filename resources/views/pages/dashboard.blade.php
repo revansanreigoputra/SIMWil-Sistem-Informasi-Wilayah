@@ -1,59 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Dashboard')
-
-@section('content')
-{{-- <div class="container-fluid">
-    <div class="mb-4 row">
-        <div class="mb-3 col-md-4">
-            <div class="border-0 shadow-sm card h-100">
-                <div class="text-center card-body">
-                    <div class="mb-2">
-                        <i class="bi bi-box-seam" style="font-size:2rem;color:#000ba6;"></i>
-                    </div>
-                    <h5 class="mb-1 card-title">Total Produk</h5>
-                    <h2 class="fw-bold">{{ $totalProducts }}</h2>
-                </div>
-            </div>
-        </div>
-        <div class="mb-3 col-md-4">
-            <div class="border-0 shadow-sm card h-100">
-                <div class="text-center card-body">
-                    <div class="mb-2">
-                        <i class="bi bi-people" style="font-size:2rem;color:#000ba6;"></i>
-                    </div>
-                    <h5 class="mb-1 card-title">Total Pelanggan</h5>
-                    <h2 class="fw-bold">{{ $totalCustomers }}</h2>
-                </div>
-            </div>
-        </div>
-        <div class="mb-3 col-md-4">
-            <div class="border-0 shadow-sm card h-100">
-                <div class="text-center card-body">
-                    <div class="mb-2">
-                        <i class="bi bi-cash-stack" style="font-size:2rem;color:#000ba6;"></i>
-                    </div>
-                    <h5 class="mb-1 card-title">Pendapatan Hari Ini</h5>
-                    <h2 class="fw-bold">Rp {{ number_format($todayRevenue, 0, ',', '.') }}</h2>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="border-0 shadow-sm card">
-                <div class="card-body">
-                    <h5 class="mb-4 card-title">Penjualan Bulan Ini</h5>
-                    <canvas id="salesChart" height="100"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> --}}
-@endsection
-=======
 @section('title', '')
->>>>>>> a320d32962834b96c2347c7ae8d01dd821f3ab33
 
 @push('addon-style')
     <link href="{{ asset('backend/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
