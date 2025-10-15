@@ -26,6 +26,7 @@
                     <thead class="table-light">
                         <tr>
                             <th width="50">No</th>
+                            <th>Desa</th>
                             <th>Tanggal</th>
                             <th>Gedung Kantor</th>
                             <th>Ruang Kerja</th>
@@ -40,6 +41,7 @@
                         @foreach($desaKelurahans as $item)
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
+                                <td>{{ $item->desa->nama_desa }}</td>
                                 <td>{{ $item->tanggal->format('d-m-Y') }}</td>
                                 <td>
                                     @if ($item->gedung_kantor == 'ada')
