@@ -16,7 +16,9 @@
         @include('partials.sidebar')
         @include('partials.navbar')
         <div class="page-wrapper">
-            @include('partials.header')
+            @if (!request()->is('dashboard*'))
+                @include('partials.header')
+            @endif
             <div class="page-body">
                 <div class="container-xl">
                     @include('partials.alert')

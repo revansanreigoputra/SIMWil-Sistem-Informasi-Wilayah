@@ -1,0 +1,23 @@
+
+/*# sourceMappingURL=custom.min.css.map */
+.bg-semidark {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    top: 0;
+    opacity: .5;
+    background-color: #000;
+}
+.apexcharts-canvas {
+    -webkit-user-select: none; /* Untuk Safari lama */
+    -moz-user-select: none;    /* Untuk Firefox lama */
+    -ms-user-select: none;     /* Untuk Internet Explorer */
+    user-select: none;         /* Versi standar */
+}
+
+.topbar-user {
+    background-color: transparent !important;
+}

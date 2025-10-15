@@ -350,21 +350,17 @@
                     <div class="dropdown-menu {{ request()->is('mutasi*') ? 'show' : '' }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
-                                <a class="dropdown-item {{ request()->is('mutasi/data*') ? 'active' : '' }}"
-                                    href="{{ route('mutasi.data.index') }}">
-                                    Data Mutasi
+                                <a class="dropdown-item {{ request()->is('mutasi*') ? 'active' : '' }}"
+                                    href="{{ route('mutasi.index') }}">
+                                    Mutasi Data Penduduk
                                 </a>
-                                {{-- <a class="dropdown-item {{ request()->is('mutasi/masuk*') ? 'active' : '' }}"
-                                href="{{ route('mutasi.masuk.index') }}">
-                                Masuk Desa
+                                {{-- <a class="dropdown-item {{ request()->is('mutasi/histori*') ? 'active' : '' }}"
+                                    href="{{ route('mutasi.index') }}">
+                                    Histori Mutasi Penduduk
                                 </a> --}}
-                                <a class="dropdown-item {{ request()->is('mutasi/laporan*') ? 'active' : '' }}"
-                                    href="{{ route('mutasi.laporan.index') }}">
-                                    Laporan Mutasi
-                                </a>
                             </div>
                         </div>
-                    </div>
+                     
                 </li>
 
                 {{-- potensi --}}
@@ -891,7 +887,7 @@
                                     class="dropdown-item {{ request()->is('master-ddk*') ? 'active' : '' }}">
                                     Master DDK
                                 </a>
-                                <a href="{{ route('master.perkembangan.index') }}"
+                                <a href="{{ route('master-perkembangan.index') }}"
                                     class="dropdown-item {{ request()->is('master-perkembangan*') ? 'active' : '' }}">
                                     Master Perkembangan
                                 </a>

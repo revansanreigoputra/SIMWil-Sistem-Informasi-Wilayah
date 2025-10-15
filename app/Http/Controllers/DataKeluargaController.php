@@ -29,9 +29,33 @@ class DataKeluargaController extends Controller
     /**
      * Display a listing of the resource.
      */
+    
     public function index()
     {
-        $dataKeluargas = DataKeluarga::with(['desas', 'kecamatans', 'perangkatDesas'])->get();
+        $kepalaKeluargaRelasi = HubunganKeluarga::where('nama', 'Kepala Keluarga')->first();
+        $idKepalaKeluarga = optional($kepalaKeluargaRelasi)->id;
+
+        if ($idKepalaKeluarga) {
+            $dataKeluargas = DataKeluarga::whereHas('anggotaKeluarga', function ($query) use ($idKepalaKeluarga) {
+                $query->where('status_kehidupan', 'hidup')
+                    ->where('hubungan_keluarga_id', $idKepalaKeluarga);
+            })
+            ->with([
+                'desas',
+                'kecamatans',
+                'perangkatDesas',
+                'anggotaKeluarga' => function ($query) { 
+                    $query->where('status_kehidupan', 'hidup');
+                }
+            ])
+            ->get();
+        } else {
+            // Fallback jika ID 'Kepala Keluarga' tidak ditemukan
+            $dataKeluargas = collect();
+            // Jika Anda ingin menampilkan SEMUA KK tanpa filter (tidak disarankan):
+            // $dataKeluargas = \App\Models\DataKeluarga::with(['desas', 'kecamatans', 'perangkatDesas'])->get();
+        }
+
         return view('pages.data_keluarga.index', compact('dataKeluargas'));
     }
 
@@ -138,7 +162,8 @@ class DataKeluargaController extends Controller
 
         $dataKeluarga = DataKeluarga::create($dataKeluargaData);
         $anggotaKeluargaData['data_keluarga_id'] = $dataKeluarga->id;
-        $anggotaKeluargaData['no_urut'] = 1; // Always 1 for the Head of Household
+        $anggotaKeluargaData['no_urut'] = 1;
+
         $anggotaKeluargaData['nama'] = $dataKeluarga->kepala_keluarga; // Use the name from the family data
         AnggotaKeluarga::create($anggotaKeluargaData);
         return redirect()->route('data_keluarga.index')->with('success', 'Data Kepala Keluarga berhasil ditambahkan.');
@@ -184,77 +209,99 @@ class DataKeluargaController extends Controller
             'lembaga'
         ));
     }
-public function update(Request $request, DataKeluarga $dataKeluarga)
-{
-    
-    $kepalaKeluarga = $dataKeluarga->anggotaKeluarga()->where('no_urut', 1)->firstOrFail();
+    public function update(Request $request, DataKeluarga $dataKeluarga)
+    {
 
-    $validatedData = $request->validate([
-        'no_kk' => 'required|string|unique:data_keluargas,no_kk,' . $dataKeluarga->id,
-        'kepala_keluarga' => 'required|string',
-        'alamat' => 'required|string',
-        'rt' => 'required|string',
-        'rw' => 'required|string',
-        'desa_id' => 'required|exists:desas,id',
-        'kecamatan_id' => 'required|exists:kecamatans,id',
-        'nama_pengisi_id' => 'required|exists:perangkat_desas,id',
- 
-        'nik' => 'nullable|string|size:16|unique:anggota_keluargas,nik,' . $kepalaKeluarga->id,
-        'no_akta_kelahiran' => 'nullable|string',
-        'jenis_kelamin' => 'nullable|in:Laki-laki,Perempuan',
-        'hubungan_keluarga_id' => 'nullable|exists:hubungan_keluarga,id',
-        'tempat_lahir' => 'nullable|string',
-        'tanggal_lahir' => 'nullable|date',
-        'tanggal_pencatatan' => 'nullable|date',
-        'status_perkawinan' => 'nullable|in:Belum Menikah,Menikah,Cerai,Cerai Mati',
-        'agama_id' => 'nullable|exists:agama,id',
-        'golongan_darah_id' => 'nullable|exists:golongan_darahs,id',
-        'kewarganegaraan_id' => 'nullable|exists:kewarganegaraans,id',
-        'etnis' => 'nullable|string',
-        'pendidikan_id' => 'nullable|exists:pendidikans,id',
-        'mata_pencaharian_id' => 'nullable|exists:mata_pencaharians,id',
-        'nama_orang_tua' => 'nullable|string',  
-        'kb_id' => 'nullable|exists:kb,id',
-        'cacat_id' => 'nullable|exists:cacats,id',
-        'nama_cacat' => 'nullable|string',
-        'kedudukan_pajak_id' => 'nullable|exists:kedudukan_pajaks,id',
-        'lembaga_id' => 'nullable|exists:lembagas,id',
-        'nama_lembaga' => 'nullable|string',
-    ]);
+        $kepalaKeluarga = $dataKeluarga->anggotaKeluarga()->where('no_urut', 1)->firstOrFail();
 
-   
-    $dataKeluargaData = $request->only([
-        'no_kk', 'kepala_keluarga', 'alamat', 'rt', 'rw', 'desa_id', 'kecamatan_id', 'nama_pengisi_id'
-    ]);
-    
-    $anggotaKeluargaData = $request->only([
-        'nik', 'no_akta_kelahiran', 'jenis_kelamin', 'hubungan_keluarga_id',
-        'tempat_lahir', 'tanggal_lahir', 'tanggal_pencatatan', 'status_perkawinan',
-        'agama_id', 'golongan_darah_id', 'kewarganegaraan_id', 'etnis',
-        'pendidikan_id', 'mata_pencaharian_id', 'nama_orang_tua', 'kb_id', 'cacat_id', 
-        'nama_cacat', 'kedudukan_pajak_id', 'lembaga_id', 'nama_lembaga'
-    ]);
+        $validatedData = $request->validate([
+            'no_kk' => 'required|string|unique:data_keluargas,no_kk,' . $dataKeluarga->id,
+            'kepala_keluarga' => 'required|string',
+            'alamat' => 'required|string',
+            'rt' => 'required|string',
+            'rw' => 'required|string',
+            'desa_id' => 'required|exists:desas,id',
+            'kecamatan_id' => 'required|exists:kecamatans,id',
+            'nama_pengisi_id' => 'required|exists:perangkat_desas,id',
 
-   
-    $dataKeluarga->update($dataKeluargaData);
+            'nik' => 'nullable|string|size:16|unique:anggota_keluargas,nik,' . $kepalaKeluarga->id,
+            'no_akta_kelahiran' => 'nullable|string',
+            'jenis_kelamin' => 'nullable|in:Laki-laki,Perempuan',
+            'hubungan_keluarga_id' => 'nullable|exists:hubungan_keluarga,id',
+            'tempat_lahir' => 'nullable|string',
+            'tanggal_lahir' => 'nullable|date',
+            'tanggal_pencatatan' => 'nullable|date',
+            'status_perkawinan' => 'nullable|in:Belum Menikah,Menikah,Cerai,Cerai Mati',
+            'agama_id' => 'nullable|exists:agama,id',
+            'golongan_darah_id' => 'nullable|exists:golongan_darahs,id',
+            'kewarganegaraan_id' => 'nullable|exists:kewarganegaraans,id',
+            'etnis' => 'nullable|string',
+            'pendidikan_id' => 'nullable|exists:pendidikans,id',
+            'mata_pencaharian_id' => 'nullable|exists:mata_pencaharians,id',
+            'nama_orang_tua' => 'nullable|string',
+            'kb_id' => 'nullable|exists:kb,id',
+            'cacat_id' => 'nullable|exists:cacats,id',
+            'nama_cacat' => 'nullable|string',
+            'kedudukan_pajak_id' => 'nullable|exists:kedudukan_pajaks,id',
+            'lembaga_id' => 'nullable|exists:lembagas,id',
+            'nama_lembaga' => 'nullable|string',
+        ]);
 
-  
-    $anggotaKeluargaData['nama'] = $dataKeluargaData['kepala_keluarga']; // Ensure member name matches new family head name
-    $anggotaKeluargaData['no_urut'] = 1; 
 
-    $kepalaKeluarga->update($anggotaKeluargaData);
+        $dataKeluargaData = $request->only([
+            'no_kk',
+            'kepala_keluarga',
+            'alamat',
+            'rt',
+            'rw',
+            'desa_id',
+            'kecamatan_id',
+            'nama_pengisi_id'
+        ]);
 
-    return redirect()->route('data_keluarga.index')->with('success', 'Data Keluarga dan Kepala Keluarga berhasil diperbarui.');
-}
+        $anggotaKeluargaData = $request->only([
+            'nik',
+            'no_akta_kelahiran',
+            'jenis_kelamin',
+            'hubungan_keluarga_id',
+            'tempat_lahir',
+            'tanggal_lahir',
+            'tanggal_pencatatan',
+            'status_perkawinan',
+            'agama_id',
+            'golongan_darah_id',
+            'kewarganegaraan_id',
+            'etnis',
+            'pendidikan_id',
+            'mata_pencaharian_id',
+            'nama_orang_tua',
+            'kb_id',
+            'cacat_id',
+            'nama_cacat',
+            'kedudukan_pajak_id',
+            'lembaga_id',
+            'nama_lembaga'
+        ]);
 
- 
-public function destroy(DataKeluarga $dataKeluarga)
-{
-    // Delete all associated AnggotaKeluarga records first
-    $dataKeluarga->anggotaKeluarga()->delete(); 
-    $dataKeluarga->delete();
 
-    return redirect()->route('data_keluarga.index')->with('success', 'Data Keluarga dan seluruh anggotanya berhasil dihapus.');
-}
+        $dataKeluarga->update($dataKeluargaData);
 
+
+        $anggotaKeluargaData['nama'] = $dataKeluargaData['kepala_keluarga']; // Ensure member name matches new family head name
+        $anggotaKeluargaData['no_urut'] = 1;
+
+        $kepalaKeluarga->update($anggotaKeluargaData);
+
+        return redirect()->route('data_keluarga.index')->with('success', 'Data Keluarga dan Kepala Keluarga berhasil diperbarui.');
+    }
+
+
+    public function destroy(DataKeluarga $dataKeluarga)
+    {
+        // Delete all associated AnggotaKeluarga records first
+        $dataKeluarga->anggotaKeluarga()->delete();
+        $dataKeluarga->delete();
+
+        return redirect()->route('data_keluarga.index')->with('success', 'Data Keluarga dan seluruh anggotanya berhasil dihapus.');
+    }
 }
