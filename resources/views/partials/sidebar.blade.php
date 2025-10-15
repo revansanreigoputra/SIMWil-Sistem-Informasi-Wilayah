@@ -445,6 +445,12 @@
                                                         Tenaga Kerja
                                                     </a>
                                                 @endcan
+                                                @can('p_kualitas_angkatan_kerja.view')
+                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/kualitas-angkatan-kerja*') ? 'active' : '' }}"
+                                                        href="{{ route('potensi.potensi-sdm.kualitas-angkatan-kerja.index') }}">
+                                                        Kualitas Angkatan <br> Kerja
+                                                    </a>
+                                                @endcan
                                         </div>
                                     </div>
                                     <div class="dropend">

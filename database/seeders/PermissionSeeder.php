@@ -222,6 +222,13 @@ class PermissionSeeder extends Seeder
             'p_tenaga_kerja.update',
             'p_tenaga_kerja.delete',
 
+            // Potensi Kualitas Angkatan Kerja permissions
+            'p_kualitas_angkatan_kerja.view',
+            'p_kualitas_angkatan_kerja.create',
+            'p_kualitas_angkatan_kerja.store',
+            'p_kualitas_angkatan_kerja.update',
+            'p_kualitas_angkatan_kerja.delete',
+
             // Irigasi
             'irigasi.view',
             'irigasi.create',
