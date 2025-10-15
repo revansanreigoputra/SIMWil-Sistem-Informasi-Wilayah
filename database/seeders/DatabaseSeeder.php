@@ -60,7 +60,7 @@ class DatabaseSeeder extends Seeder
             KebiasaanBerobatSeeder::class,
             KejahatanSeeder::class,
             KekerasanSeeder::class,
-            KesejahteraanKeluargaSeeder::class,
+            KesejahteraanKeluargaMasterSeeder::class,
             KomoditasAlatPerikananSeeder::class,
             KomoditasBuahSeeder::class,
             KomoditasHasilTernakSeeder::class,
