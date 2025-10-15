@@ -33,6 +33,7 @@ use App\Http\Controllers\HasilpembangunanController;
 use App\Http\Controllers\GotongroyongController;
 use App\Http\Controllers\AdatIstiadatController;
 use App\Http\Controllers\SikapdanmentalController;
+use App\Http\Controllers\BerbangsaController;
 // use App\Http\Controllers\IrigasiController;
 // use App\Http\Controllers\NotificationController;
 // use App\Http\Controllers\PerangkatDesaController;
@@ -523,6 +524,17 @@ Route::middleware(['auth'])->prefix('perkembangan/peransertamasyarakat/sikapdanm
     Route::get('/{id}/edit', [SikapDanMentalController::class, 'edit'])->name('edit');
     Route::put('/{id}', [SikapDanMentalController::class, 'update'])->name('update');
     Route::delete('/{id}', [SikapDanMentalController::class, 'destroy'])->name('destroy');
+});
+
+//berngsa dan bernegara routes
+route::middleware(['auth'])->prefix('perkembangan/kedaulatanmasyarakat/berbangsa')->name('perkembangan.kedaulatanmasyarakat.berbangsa.')->group(function () {
+    Route::get('/', [BerbangsaController::class, 'index'])->name('index');
+    Route::get('/create', [BerbangsaController::class, 'create'])->name('create');
+    Route::post('/', [BerbangsaController::class, 'store'])->name('store');
+    Route::get('/{id}', [BerbangsaController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [BerbangsaController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [BerbangsaController::class, 'update'])->name('update');
+    Route::delete('/{id}', [BerbangsaController::class, 'destroy'])->name('destroy');
 });
 
 

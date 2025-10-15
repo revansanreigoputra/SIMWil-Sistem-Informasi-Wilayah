@@ -402,6 +402,15 @@ class PermissionSeeder extends Seeder
             'sikapdanmental.update',
             'sikapdanmental.delete',
 
+            //berbangsa
+            'berbangsa.view',
+            'berbangsa.create',
+            'berbangsa.store',
+            'berbangsa.edit',
+            'berbangsa.update',
+            'berbangsa.delete',
+
+
             // potensi permissions
             'potensi.laporan.view',
             'potensi.laporan.export',

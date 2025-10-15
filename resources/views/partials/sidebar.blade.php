@@ -650,6 +650,23 @@
                                         </div>
                                     </div>
 
+                                    {{-- Kedaulatan Politik Masyarakat --}}
+                                    <div class="dropend">
+                                        <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/kedaulatanmasyarakatan*') ? 'active' : '' }}"
+                                            href="#sidebar-kedaulatanmasyarakatan" data-bs-toggle="dropdown"
+                                            data-bs-auto-close="false" role="button" aria-expanded="false">
+                                            Kedaulatan <br> Politik Masyarakat
+                                        </a>
+                                        <div class="dropdown-menu {{ request()->is('perkembangan/Kedaulatanmasyarakat*') ? 'show' : '' }}">
+                                            @can('berbangsa.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/kedaulatanmasyarakat/berbangsa*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.kedaulatanmasyarakat.berbangsa.index') }}">
+                                                    Kesadaran Berbangsa <br>dan Bernegara
+                                                </a>
+                                            @endcan
+                                        </div>
+                                    </div>
+
                                     {{-- Ekonomi Masyarakat --}}
                                     <div class="dropend">
                                         <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/ekonomi*') ? 'active' : '' }}"
