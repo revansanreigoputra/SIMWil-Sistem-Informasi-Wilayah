@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('transportasi_darats', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('desa_id')->constrained('desas')->onUpdate('cascade')->onDelete('cascade');
+
             $table->date('tanggal');
 
             // Enum kategori

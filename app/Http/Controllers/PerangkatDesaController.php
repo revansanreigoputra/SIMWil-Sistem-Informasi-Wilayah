@@ -30,8 +30,9 @@ class PerangkatDesaController extends Controller
     {
         $desas = DB::table('desas')->get();
         $jabatans = DB::table('jabatans')->get();
+        $pendidikans = DB::table('pendidikans')->get();
 
-        return view('pages.perangkatdesa.create', compact('desas', 'jabatans'));
+        return view('pages.perangkatdesa.create', compact('desas', 'jabatans', 'pendidikans'));
     }
 
     /**
@@ -53,6 +54,7 @@ class PerangkatDesaController extends Controller
             'jumlah_anak' => 'nullable|integer|min:0',
             'sambutan' => 'nullable|string',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'pendidikan_id' => 'nullable|exists:pendidikans,id',
         ]);
 
         if ($validator->fails()) {
@@ -130,8 +132,9 @@ class PerangkatDesaController extends Controller
 
         $desas = DB::table('desas')->get();
         $jabatans = DB::table('jabatans')->get();
+        $pendidikans = DB::table('pendidikans')->get();
 
-        return view('pages.perangkatdesa.edit', compact('perangkatDesa', 'desas', 'jabatans'));
+        return view('pages.perangkatdesa.edit', compact('perangkatDesa', 'desas', 'jabatans', 'pendidikans'));
     }
 
     /**
@@ -153,6 +156,7 @@ class PerangkatDesaController extends Controller
             'jumlah_anak' => 'nullable|integer|min:0',
             'sambutan' => 'nullable|string',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'pendidikan_id' => 'nullable|exists:pendidikans,id',
         ]);
 
         if ($validator->fails()) {

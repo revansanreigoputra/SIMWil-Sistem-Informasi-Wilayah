@@ -17,6 +17,11 @@
                 <h6 class="fw-bold text-primary mb-3">Informasi Umum</h6>
                 <table class="table table-borderless">
                     <tr>
+                        <td width="40%"><strong>Desa</strong></td>
+                        <td width="10%">:</td>
+                        <td>{{ $transportasiDarat->desa->nama_desa }}</td>
+                    </tr>
+                    <tr>
                         <td width="40%"><strong>Tanggal</strong></td>
                         <td width="10%">:</td>
                         <td>{{ $transportasiDarat->tanggal->format('d-m-Y') }}</td>

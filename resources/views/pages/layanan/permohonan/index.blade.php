@@ -183,6 +183,7 @@
                                         <th>No.</th>
                                         <th>Nomor Surat</th>
                                         <th>Tanggal Dibuat</th>
+                                        <th>Status</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -194,9 +195,31 @@
                                         <td>{{ $permohonan->nomor_surat }}</td>
                                         <td>{{ $permohonan->created_at->format('d-m-Y') }}</td>
                                         <td>
+                                            @php
+                                            $statusClass = '';
+                                            switch ($permohonan->status) {
+                                            case 'belum_diverifikasi':
+                                            $statusClass = 'badge bg-secondary';
+                                            break;
+                                            case 'diverifikasi':
+                                            $statusClass = 'badge bg-primary';
+                                            break;
+                                            case 'ditolak':
+                                            $statusClass = 'badge bg-danger';
+                                            break;
+                                            case 'sudah_diambil':
+                                            $statusClass = 'badge bg-success';
+                                            break;
+                                            default:
+                                            $statusClass = 'badge bg-secondary';
+                                            }
+                                            @endphp
+                                            <span class="{{ $statusClass }}">{{ ucfirst($permohonan->status) }}</span>
+                                        </td>
+                                        <td>
                                             {{-- ACTION BUTTONS --}}
                                             @can('permohonan.edit')
-                                            <a href="{{ route('layanan.permohonan.edit', $permohonan->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                            <a href="{{ route('layanan.permohonan.edit', $permohonan->id) }}" class="btn btn-sm btn-warning">Edit</a>
                                             @endcan
                                             @can('permohonan.delete')
                                             <button type="button" class="btn btn-danger btn-sm"

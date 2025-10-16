@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Bpd extends Model
 {
+
+    protected $table = 'bpd';
+    
     protected $fillable = [
+        'desa_id',
         'tanggal',
         'gedung_kantor',
         'ruang_kerja',
@@ -32,4 +36,9 @@ class Bpd extends Model
     protected $casts = [
         'tanggal' => 'date',
     ];
+
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class);
+    }
 }

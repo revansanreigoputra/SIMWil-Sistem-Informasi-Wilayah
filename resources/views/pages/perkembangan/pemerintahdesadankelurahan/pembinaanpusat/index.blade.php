@@ -45,12 +45,12 @@
                             <td><span class="badge bg-{{ $item->pedoman_administrasi === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pedoman_administrasi ?? '-' }}</span></td>
                             <td><span class="badge bg-{{ $item->pedoman_tanda_jabatan === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pedoman_tanda_jabatan ?? '-' }}</span></td>
                             <td><span class="badge bg-{{ $item->pedoman_pendidikan_pelatihan === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pedoman_pendidikan_pelatihan ?? '-' }}</span></td>
-                            <td>{{ $item->jumlah_bimbingan ?? '-' }}</td>
-                            <td>{{ $item->jumlah_kegiatan_pendidikan ?? '-' }}</td>
-                            <td>{{ $item->jumlah_penelitian_pengkajian ?? '-' }}</td>
-                            <td>{{ $item->jumlah_kegiatan_terkait_apbn ?? '-' }}</td>
-                            <td>{{ $item->jumlah_penghargaan ?? '-' }}</td>
-                            <td>{{ $item->jumlah_sanksi ?? '-' }}</td>
+                            <td class="text-center">{{ $item->jumlah_bimbingan ?? '-' }}</td>
+                            <td class="text-center">{{ $item->jumlah_kegiatan_pendidikan ?? '-' }}</td>
+                            <td class="text-center">{{ $item->jumlah_penelitian_pengkajian ?? '-' }}</td>
+                            <td class="text-center">{{ $item->jumlah_kegiatan_terkait_apbn ?? '-' }}</td>
+                            <td class="text-center">{{ $item->jumlah_penghargaan ?? '-' }}</td>
+                            <td class="text-center">{{ $item->jumlah_sanksi ?? '-' }}</td>
                             <td>
                                 <div class="d-flex gap-1 justify-content-center">
                                     <a href="{{ route('perkembangan.pemerintahdesadankelurahan.pembinaanpusat.edit', $item->id) }}" class="btn btn-sm btn-warning">

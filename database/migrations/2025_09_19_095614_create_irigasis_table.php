@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('irigasis', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('desa_id')->constrained('desas')->cascadeOnUpdate()->cascadeOnDelete();
             $table->date('tanggal');
             
             // Saluran

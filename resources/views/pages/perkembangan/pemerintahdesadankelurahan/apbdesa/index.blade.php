@@ -3,7 +3,7 @@
 @section('title', 'Data APB Desa dan Kelurahan')
 
 @section('action')
-    <a href="{{ route('apbdesa.create') }}" class="btn btn-primary mb-3">
+    <a href="{{ route('perkembangan.pemerintahdesadankelurahan.apbdesa.create') }}" class="btn btn-primary mb-3">
         Tambah Data
     </a>
 @endsection
@@ -59,7 +59,7 @@
                                 <td class="text-center">{{ number_format($item->saldo_anggaran, 0, ',', '.') }}</td>
                                 <td>
                                     <div class="d-flex gap-1 justify-content-center">
-                                        <a href="{{ route('apbdesa.edit', $item->id) }}" class="btn btn-sm btn-warning">
+                                        <a href="{{ route('perkembangan.pemerintahdesadankelurahan.apbdesa.edit', $item->id) }}" class="btn btn-sm btn-warning">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                 stroke-linecap="round" stroke-linejoin="round">
@@ -103,7 +103,7 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
                                                             data-bs-dismiss="modal">Batal</button>
-                                                        <form action="{{ route('apbdesa.destroy', $item->id) }}" method="POST">
+                                                        <form action="{{ route('perkembangan.pemerintahdesadankelurahan.apbdesa.destroy', $item->id) }}" method="POST">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="btn btn-danger">Hapus</button>
