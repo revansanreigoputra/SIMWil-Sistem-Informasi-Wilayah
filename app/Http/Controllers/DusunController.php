@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Desa;
 use App\Models\Dusun;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -13,7 +14,7 @@ class DusunController extends Controller
      */
     public function index()
     {
-        $dusuns = Dusun::orderBy('tanggal', 'desc')->paginate(10);
+        $dusuns = Dusun::with('desa')->orderBy('tanggal', 'desc')->paginate(10);
         return view('pages.potensi.potensi-prasarana-dan-sarana.dusun.index', compact('dusuns'));
     }
 
@@ -22,7 +23,8 @@ class DusunController extends Controller
      */
     public function create()
     {
-        return view('pages.potensi.potensi-prasarana-dan-sarana.dusun.create');
+        $desas = Desa::all();
+        return view('pages.potensi.potensi-prasarana-dan-sarana.dusun.create', compact('desas'));
     }
 
     /**
@@ -31,6 +33,7 @@ class DusunController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'gedung_kantor' => 'nullable|in:ada,tidak ada',
             'alat_tulis_kantor' => 'nullable|in:ada,tidak ada',
@@ -66,7 +69,8 @@ class DusunController extends Controller
      */
     public function edit(Dusun $dusun)
     {
-        return view('pages.potensi.potensi-prasarana-dan-sarana.dusun.edit', compact('dusun'));
+        $desas = Desa::all();
+        return view('pages.potensi.potensi-prasarana-dan-sarana.dusun.edit', compact('dusun', 'desas'));
     }
 
     /**
@@ -75,6 +79,7 @@ class DusunController extends Controller
     public function update(Request $request, Dusun $dusun)
     {
         $validator = Validator::make($request->all(), [
+            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'gedung_kantor' => 'nullable|in:ada,tidak ada',
             'alat_tulis_kantor' => 'nullable|in:ada,tidak ada',
