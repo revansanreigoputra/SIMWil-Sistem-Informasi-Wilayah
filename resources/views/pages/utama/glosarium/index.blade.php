@@ -12,9 +12,17 @@
 @endpush
 
 @section('action')
-    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#create-glosarium">
-        <i></i>Tambah Glosari
+<div class="d-flex gap-2">
+    {{-- Tombol Tambah --}}
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-glosarium">
+        <i></i> Tambah Glosari
     </button>
+
+    {{-- Tombol Cetak Laporan --}}
+    <a href="{{ route('utama.glosarium.cetak') }}" target="_blank" class="btn btn-success">
+        <i></i> Cetak
+    </a>
+</div>
 @endsection
 
 @section('content')
