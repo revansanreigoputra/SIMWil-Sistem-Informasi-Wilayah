@@ -16,14 +16,31 @@
             @csrf
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="desa_id" class="form-label fw-semibold">
+                            <i class="fas fa-map-marker-alt me-1"></i>
+                            Desa <span class="text-danger">*</span>
+                        </label>
+                        <select class="form-select @error('desa_id') is-invalid @enderror" id="desa_id" name="desa_id" required>
+                            <option value="" disabled selected>Pilih Desa</option>
+                            @foreach ($desas as $desa)
+                                <option value="{{ $desa->id }}" {{ old('desa_id') == $desa->id ? 'selected' : '' }}>{{ $desa->nama_desa }}</option>
+                            @endforeach
+                        </select>
+                        @error('desa_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-md-6">
                     <div class="mb-3">
                         <label for="tanggal" class="form-label fw-semibold">
                             <i class="fas fa-calendar me-1"></i>
                             Tanggal <span class="text-danger">*</span>
                         </label>
                         <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
-                               id="tanggal" name="tanggal" value="{{ old('tanggal') }}" required>
+                               id="tanggal" name="tanggal" value="{{ old('tanggal', now()->format('Y-m-d')) }}" required>
                         @error('tanggal')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

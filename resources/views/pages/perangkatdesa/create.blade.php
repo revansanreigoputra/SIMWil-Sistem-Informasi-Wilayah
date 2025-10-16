@@ -184,17 +184,20 @@
                                         @enderror
                                     </div>
                                 </div>
-                            </div>
-
-                            {{-- Row 5: Nama Pasangan & Jumlah Anak --}}
-                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="nama_pasangan">Nama Pasangan</label>
-                                        <input type="text" name="nama_pasangan" id="nama_pasangan"
-                                            class="form-control @error('nama_pasangan') is-invalid @enderror"
-                                            value="{{ old('nama_pasangan') }}" placeholder="Masukkan nama pasangan">
-                                        @error('nama_pasangan')
+                                        <label for="pendidikan_id">Pendidikan</label>
+                                        <select name="pendidikan_id" id="pendidikan_id"
+                                            class="form-control @error('pendidikan_id') is-invalid @enderror">
+                                            <option value="">-- Pilih Pendidikan --</option>
+                                            @foreach ($pendidikans as $pendidikan)
+                                                <option value="{{ $pendidikan->id }}"
+                                                    {{ old('pendidikan_id') == $pendidikan->id ? 'selected' : '' }}>
+                                                    {{ $pendidikan->pendidikan }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('pendidikan_id')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -202,90 +205,107 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="jumlah_anak">Jumlah Anak</label>
-                                        <input type="number" name="jumlah_anak" id="jumlah_anak"
-                                            class="form-control @error('jumlah_anak') is-invalid @enderror"
-                                            value="{{ old('jumlah_anak', 0) }}" min="0" max="20"
-                                            placeholder="0">
-                                        @error('jumlah_anak')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-
-                            {{-- Row 6: Foto --}}
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="foto">Foto Profil</label>
-                                        <div class="custom-file">
-                                            <input type="file" name="foto" id="foto"
-                                                class="custom-file-input @error('foto') is-invalid @enderror"
-                                                accept="image/jpeg,image/png,image/jpg">
-                                            <label class="custom-file-label" for="foto">Pilih file foto...</label>
+                                {{-- Row 5: Nama Pasangan & Jumlah Anak --}}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="nama_pasangan">Nama Pasangan</label>
+                                            <input type="text" name="nama_pasangan" id="nama_pasangan"
+                                                class="form-control @error('nama_pasangan') is-invalid @enderror"
+                                                value="{{ old('nama_pasangan') }}" placeholder="Masukkan nama pasangan">
+                                            @error('nama_pasangan')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
-                                        <small class="form-text text-muted">
-                                            Format yang didukung: JPG, JPEG, PNG. Maksimal 2MB.
-                                        </small>
-                                        @error('foto')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
                                     </div>
-                                </div>
-                            </div>
 
-                            {{-- Row 7: Alamat --}}
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="alamat">Alamat Lengkap</label>
-                                        <textarea name="alamat" id="alamat" class="form-control @error('alamat') is-invalid @enderror" rows="3"
-                                            placeholder="Masukkan alamat lengkap...">{{ old('alamat') }}</textarea>
-                                        @error('alamat')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="jumlah_anak">Jumlah Anak</label>
+                                            <input type="number" name="jumlah_anak" id="jumlah_anak"
+                                                class="form-control @error('jumlah_anak') is-invalid @enderror"
+                                                value="{{ old('jumlah_anak', 0) }}" min="0" max="20"
+                                                placeholder="0">
+                                            @error('jumlah_anak')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            {{-- Row 8: Sambutan --}}
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="sambutan">Sambutan/Visi Misi</label>
-                                        <textarea name="sambutan" id="sambutan" class="form-control @error('sambutan') is-invalid @enderror"
-                                            rows="4" placeholder="Masukkan sambutan atau visi misi...">{{ old('sambutan') }}</textarea>
-                                        @error('sambutan')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                {{-- Row 6: Foto --}}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="foto">Foto Profil</label>
+                                            <div class="custom-file">
+                                                <input type="file" name="foto" id="foto"
+                                                    class="custom-file-input @error('foto') is-invalid @enderror"
+                                                    accept="image/jpeg,image/png,image/jpg">
+                                                <label class="custom-file-label" for="foto">Pilih file
+                                                    foto...</label>
+                                            </div>
+                                            <small class="form-text text-muted">
+                                                Format yang didukung: JPG, JPEG, PNG. Maksimal 2MB.
+                                            </small>
+                                            @error('foto')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            {{-- Action Buttons --}}
-                            <div class="row mt-3">
-                                <div class="col-12">
-                                    <div class="form-group d-flex justify-content-end">
-                                        <a href="{{ route('perangkat_desa.index') }}" class="btn btn-secondary mr-3">
-                                            <i class="fas fa-times"></i> Batal
-                                        </a>
-                                        <button type="submit" class="btn btn-primary">
-                                            <i class="fas fa-save"></i> Simpan Data
-                                        </button>
+                                {{-- Row 7: Alamat --}}
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="alamat">Alamat Lengkap</label>
+                                            <textarea name="alamat" id="alamat" class="form-control @error('alamat') is-invalid @enderror" rows="3"
+                                                placeholder="Masukkan alamat lengkap...">{{ old('alamat') }}</textarea>
+                                            @error('alamat')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+
+                                {{-- Row 8: Sambutan --}}
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="sambutan">Sambutan/Visi Misi</label>
+                                            <textarea name="sambutan" id="sambutan" class="form-control @error('sambutan') is-invalid @enderror"
+                                                rows="4" placeholder="Masukkan sambutan atau visi misi...">{{ old('sambutan') }}</textarea>
+                                            @error('sambutan')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- Action Buttons --}}
+                                <div class="row mt-3">
+                                    <div class="col-12">
+                                        <div class="form-group d-flex justify-content-end">
+                                            <a href="{{ route('perangkat_desa.index') }}" class="btn btn-secondary mr-3">
+                                                <i class="fas fa-times"></i> Batal
+                                            </a>
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fas fa-save"></i> Simpan Data
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
 
                         </form>
                     </div>
@@ -384,7 +404,7 @@
 
                 if (desa_id && jabatan_id && masa_jabatan) {
                     $.ajax({
-                        url: '{{ route("perangkat_desa.check_duplicate") }}',
+                        url: '{{ route('perangkat_desa.check_duplicate') }}',
                         method: 'POST',
                         data: {
                             desa_id: desa_id,
@@ -427,15 +447,15 @@
         }
 
         /* .card-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 0.375rem 0.375rem 0 0 !important;
-        } */
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    border-radius: 0.375rem 0.375rem 0 0 !important;
+                } */
 
         /* .card-header .card-title {
-            color: white;
-            font-weight: 600;
-        } */
+                    color: white;
+                    font-weight: 600;
+                } */
 
         .form-group {
             margin-bottom: 1.5rem;
@@ -467,14 +487,14 @@
         }
 
         /* .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-        }
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    border: none;
+                }
 
-        .btn-primary:hover {
-            background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
-            transform: translateY(-1px);
-        } */
+                .btn-primary:hover {
+                    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+                    transform: translateY(-1px);
+                } */
 
         .btn-secondary {
             background-color: #6c757d;

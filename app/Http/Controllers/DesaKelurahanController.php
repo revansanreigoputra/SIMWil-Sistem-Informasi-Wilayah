@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Desa;
 use App\Models\DesaKelurahan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -13,7 +14,7 @@ class DesaKelurahanController extends Controller
      */
     public function index()
     {
-        $desaKelurahans = DesaKelurahan::orderBy('tanggal', 'desc')->paginate(10);
+        $desaKelurahans = DesaKelurahan::with('desa')->orderBy('tanggal', 'desc')->paginate(10);
         return view('pages.potensi.potensi-prasarana-dan-sarana.dkelurahan.index', compact('desaKelurahans'));
     }
 
@@ -22,7 +23,8 @@ class DesaKelurahanController extends Controller
      */
     public function create()
     {
-        return view('pages.potensi.potensi-prasarana-dan-sarana.dkelurahan.create');
+        $desas = Desa::all();
+        return view('pages.potensi.potensi-prasarana-dan-sarana.dkelurahan.create', compact('desas'));
     }
 
     /**
@@ -31,6 +33,7 @@ class DesaKelurahanController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
 
             // Gedung Kantor
@@ -111,7 +114,8 @@ class DesaKelurahanController extends Controller
      */
     public function edit(DesaKelurahan $desaKelurahan)
     {
-        return view('pages.potensi.potensi-prasarana-dan-sarana.dkelurahan.edit', compact('desaKelurahan'));
+        $desas = Desa::all();
+        return view('pages.potensi.potensi-prasarana-dan-sarana.dkelurahan.edit', compact('desaKelurahan', 'desas'));
     }
 
     /**
@@ -120,6 +124,7 @@ class DesaKelurahanController extends Controller
     public function update(Request $request, DesaKelurahan $desaKelurahan)
     {
         $validator = Validator::make($request->all(), [
+            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
 
             // Gedung Kantor

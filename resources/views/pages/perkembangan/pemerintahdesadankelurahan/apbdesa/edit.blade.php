@@ -3,21 +3,14 @@
 @section('title', 'Edit Data APB Desa')
 
 @section('content')
-<div class="card">
+<div class="card-header text-dark">
+        <h5 class="card-title mb-0">
+            <i class="fas fa-edit me-2"></i>
+            Edit Data APB Desa
+        </h5>
+    </div>
+
     <div class="card-body">
-        <h4 class="mb-4">Edit Data APB Desa</h4>
-
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <strong>Terjadi Kesalahan!</strong>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
         <form action="{{ route('perkembangan.pemerintahdesadankelurahan.apbdesa.update', $apb->id) }}" method="POST">
             @csrf
             @method('PUT')
@@ -85,10 +78,22 @@
                     <input type="number" class="form-control" id="saldo_anggaran" name="saldo_anggaran" value="{{ old('saldo_anggaran', $apb->saldo_anggaran) }}">
                 </div>
             </div>
+            
+            <hr class="my-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">
+                    Field dengan tanda <span class="text-danger">*</span> wajib diisi
+                </small>
 
-            <div class="mt-3">
-                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                <a href="{{ route('perkembangan.pemerintahdesadankelurahan.apbdesa.index') }}" class="btn btn-secondary">Batal</a>
+                <div class="btn-group gap-2">
+                    <a href="{{ route('perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.index') }}"
+                        class="btn btn-outline-secondary rounded">
+                        Kembali
+                    </a>
+                    <button type="submit" class="btn btn-primary rounded">
+                        Perbarui Data
+                    </button>
+                </div>
             </div>
         </form>
     </div>

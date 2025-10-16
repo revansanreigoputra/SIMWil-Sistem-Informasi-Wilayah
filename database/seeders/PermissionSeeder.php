@@ -107,6 +107,18 @@ class PermissionSeeder extends Seeder
             'potensi.laporan.view',
             'potensi.laporan.export',
 
+            // POTENSI KELEMBAGAAN permissions
+            // pemerintah permissions
+            'potensi.kelembagaan.pemerintah.view',
+            'potensi.kelembagaan.pemerintah.create',
+            'potensi.kelembagaan.pemerintah.store',
+            'potensi.kelembagaan.pemerintah.edit',
+            'potensi.kelembagaan.pemerintah.update',
+            'potensi.kelembagaan.pemerintah.delete',
+            'potensi.kelembagaan.pemerintah.destroy',
+            'potensi.kelembagaan.pemerintah.print',
+             
+
             // layanan surat permissions
             'permohonan.view',
             'permohonan.create',
@@ -236,6 +248,14 @@ class PermissionSeeder extends Seeder
             'irigasi.edit',
             'irigasi.update',
             'irigasi.delete',
+            
+            // Sarana Transportasi
+            'angkutan.view',
+            'angkutan.create',
+            'angkutan.store',
+            'angkutan.edit',
+            'angkutan.update',
+            'angkutan.delete',
 
             // Sanitasi
             'sanitasi.view',
@@ -272,6 +292,83 @@ class PermissionSeeder extends Seeder
             'dusun.store',
             'dusun.update',
             'dusun.delete',
+            
+            // komunikasiinformasi
+            'komunikasiinformasi.view',
+            'komunikasiinformasi.create',
+            'komunikasiinformasi.store',
+            'komunikasiinformasi.update',
+            'komunikasiinformasi.delete',
+
+            // potensi-kelembagaan-adat
+            'adat.view',
+            'adat.create',
+            'adat.store',
+            'adat.update',
+            'adat.delete',
+            
+            // kemasyarakatan
+            'kemasyarakatan.view',
+            'kemasyarakatan.create',
+            'kemasyarakatan.store',
+            'kemasyarakatan.update',
+            'kemasyarakatan.delete',
+            
+            // peribadatan
+            'peribadatan.view',
+            'peribadatan.create',
+            'peribadatan.store',
+            'peribadatan.update',
+            'peribadatan.delete',
+            
+            // olahraga
+            'olahraga.view',
+            'olahraga.create',
+            'olahraga.store',
+            'olahraga.update',
+            'olahraga.delete',
+            
+            // kesehatan
+            'kesehatan.view',
+            'kesehatan.create',
+            'kesehatan.store',
+            'kesehatan.update',
+            'kesehatan.delete',
+            
+            // ppendidikan
+            'ppendidikan.view',
+            'ppendidikan.create',
+            'ppendidikan.store',
+            'ppendidikan.update',
+            'ppendidikan.delete',
+            
+            // hiburan
+            'hiburan.view',
+            'hiburan.create',
+            'hiburan.store',
+            'hiburan.update',
+            'hiburan.delete',
+            
+            // kebersihan
+            'kebersihan.view',
+            'kebersihan.create',
+            'kebersihan.store',
+            'kebersihan.update',
+            'kebersihan.delete',
+            
+            // Sarana kesehatan
+            'skesehatan.view',
+            'skesehatan.create',
+            'skesehatan.store',
+            'skesehatan.update',
+            'skesehatan.delete',
+
+            // energi dan penerangan
+            'energiPenerangan.view',
+            'energiPenerangan.create',
+            'energiPenerangan.store',
+            'energiPenerangan.update',
+            'energiPenerangan.delete',
 
             // apb
             'apb.view',
@@ -280,6 +377,32 @@ class PermissionSeeder extends Seeder
             'apb.edit',
             'apb.update',
             'apb.delete',
+
+
+            // pengangguran
+            'pengangguran.view',
+            'pengangguran.create',
+            'pengangguran.store',
+            'pengangguran.edit',
+            'pengangguran.update',
+            'pengangguran.delete',
+
+            // kesejahteraan keluarga
+            'kesejahteraan.view',
+            'kesejahteraan.create',
+            'kesejahteraan.store',
+            'kesejahteraan.edit',
+            'kesejahteraan.update',
+            'kesejahteraan.delete',
+
+            // menurut sektor usaha
+            'menurut_sektor_usaha.view',
+            'menurut_sektor_usaha.create',
+            'menurut_sektor_usaha.store',
+            'menurut_sektor_usaha.edit',
+            'menurut_sektor_usaha.update',
+            'menurut_sektor_usaha.delete',
+
 
             // perkembangan penduduk
             'perkembangan-penduduk.view',
@@ -333,6 +456,81 @@ class PermissionSeeder extends Seeder
             'pembinaanprovinsi.edit',
             'pembinaanprovinsi.update',
             'pembinaanprovinsi.delete',
+
+            //pembinaan Kabupaten
+            'pembinaankabupaten.view',
+            'pembinaankabupaten.create',
+            'pembinaankabupaten.store',
+            'pembinaankabupaten.edit',      
+            'pembinaankabupaten.update',
+            'pembinaankabupaten.delete',
+
+            //pembinaan Kecamatan
+            'pembinaankecamatan.view',
+            'pembinaankecamatan.create',
+            'pembinaankecamatan.store',
+            'pembinaankecamatan.edit',      
+            'pembinaankecamatan.update',
+            'pembinaankecamatan.delete',
+
+            //organisasi
+            'organisasi.view',
+            'organisasi.create',
+            'organisasi.store',
+            'organisasi.edit',      
+            'organisasi.update',
+            'organisasi.delete',
+
+            //musrenbang
+            'musrenbangdesa.view',
+            'musrenbangdesa.create',
+            'musrenbangdesa.store',
+            'musrenbangdesa.edit',      
+            'musrenbangdesa.update',
+            'musrenbangdesa.delete',
+
+            // potensi permissions
+            'potensi.laporan.view',
+            'potensi.laporan.export',
+
+            // layanan surat permissions
+            'layanan_surat.view',
+            'layanan_surat.create',
+            'layanan_surat.store',
+            'layanan_surat.edit',
+            'layanan_surat.update',
+            'layanan_surat.delete',
+            'layanan_surat.cetak',
+            // template permissions
+            'kop_template.view',
+            'kop_template.create',
+            'kop_template.store',
+            'kop_template.edit',
+            'kop_template.update',
+            'kop_template.delete',
+            'kop_template.destroy',
+
+            'format_nomor_surat.view',
+            'format_nomor_surat.create',
+            'format_nomor_surat.store',
+            'format_nomor_surat.edit',
+            'format_nomor_surat.update',
+            'format_nomor_surat.delete',
+            'format_nomor_surat.destroy',
+
+            // berita permissions
+            'berita.view',
+            'berita.create',
+            'berita.update',
+            'berita.delete',
+
+            // agenda permissions
+            'agenda.view',
+            'agenda.create',
+            'agenda.update',
+            'agenda.delete',
+
+
         ];
 
         foreach ($permissions as $permission) {

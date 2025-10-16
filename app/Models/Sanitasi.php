@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sanitasi extends Model
 {
     protected $fillable = [
+        'desa_id',
         'tanggal',
         'sumur_resapan_air',
         'mck_umum',
@@ -17,6 +18,7 @@ class Sanitasi extends Model
 
     protected $casts = [
         'tanggal' => 'date',
+        'desa_id' => 'integer',
         'sumur_resapan_air' => 'integer',
         'mck_umum' => 'integer',
         'jamban_keluarga' => 'integer',
@@ -40,5 +42,10 @@ class Sanitasi extends Model
             'kurang memadai' => 'Kurang Memadai',
             'baik' => 'Baik',
         ];
+    }
+
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class);
     }
 }

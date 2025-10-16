@@ -26,9 +26,14 @@ class DataKeluarga extends Model
         'rt',
         'rw',
         'kecamatan_id',
-        'nama_pengisi_id'
+        'nama_pengisi_id',
+        'status_kk_record',
+        'tanggal_inaktif',
     ];
-     
+    protected $attributes = [
+        'status_kk_record' => 'active',
+    ];
+    
     public function perangkatDesas()
     {
         return $this->belongsTo(PerangkatDesa::class, 'nama_pengisi_id');

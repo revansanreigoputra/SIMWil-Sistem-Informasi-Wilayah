@@ -63,83 +63,94 @@
             text-align: right;
             font-size: 13px;
         }
+        .section-title {
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 15px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body onload="window.print()">
 
     <div class="header">
-        <h2>Detail Data Lembaga Pemerintahan</h2>
-        <h4>Desa Contoh, Kecamatan Contoh</h4>
+        <h2>DETAIL DATA POTENSI KELEMBAGAAN</h2>
+        <h4>PEMERINTAHAN DESA</h4>
         <hr>
     </div>
-
+    
+    <div class="section-title">A. Data Umum Organisasi</div>
     <table>
         <tbody>
             <tr>
-                <th width="30%">Tanggal</th>
-                <td>02-10-2025</td>
+                <th width="30%">Tanggal Data</th>
+                <td>{{ \Carbon\Carbon::parse($potensi->tanggal_data)->format('d-m-Y') }}</td>
             </tr>
             <tr>
-                <th>Dasar Hukum Pembentukan</th>
-                <td>Peraturan Desa No. 1/2020</td>
+                <th>Dasar Hukum Pembentukan (Lembaga)</th>
+                <td>{{ $potensi->dasar_hukum_pembentukan ?? '-' }}</td>
             </tr>
             <tr>
-                <th>Dasar Hukum BPD</th>
-                <td>Peraturan BPD No. 2/2020</td>
+                <th>Dasar Hukum Pembentukan BPD</th>
+                <td>{{ $potensi->dasar_hukum_pembentukan_bpd ?? '-' }}</td>
             </tr>
             <tr>
-                <th>Jumlah Aparat</th>
-                <td>10</td>
+                <th>Jumlah Aparat Pemerintah</th>
+                <td>{{ $potensi->jumlah_aparat_pemerintah ?? 0 }}</td>
             </tr>
             <tr>
                 <th>Jumlah Perangkat Desa</th>
-                <td>5</td>
-            </tr>
-            <tr>
-                <th>Kepala Desa</th>
-                <td>Ahmad</td>
-            </tr>
-            <tr>
-                <th>Sekretaris Desa</th>
-                <td>Siti</td>
+                <td>{{ $potensi->jumlah_perangkat_desa ?? 0 }}</td>
             </tr>
             <tr>
                 <th>Jumlah Staf</th>
-                <td>3</td>
+                <td>{{ $potensi->jumlah_staf ?? 0 }}</td>
+            </tr>
+             <tr>
+                <th>Jumlah Dusun</th>
+                <td>{{ $potensi->jumlah_dusun ?? 0 }}</td>
+            </tr>
+            <tr>
+                <th>Keberadaan BPD</th>
+                <td>{{ optional($bpd)->keberadaan_bpd ?? 'Tidak Ada Data' }}</td>
+            </tr>
+            <tr>
+                <th>Jumlah Anggota BPD</th>
+                <td>{{ optional($bpd)->jumlah_anggota ?? 0 }}</td>
             </tr>
         </tbody>
     </table>
 
-    <h4>Data Anggota BPD</h4>
+    <div class="section-title">B. Data Personil & Status Jabatan</div>
     <table>
         <thead>
             <tr>
-                <th class="text-center" width="10%">No</th>
-                <th>Nama</th>
-                <th>Pendidikan</th>
+                <th class="text-center" width="5%">No</th>
+                <th width="20%">Jabatan</th>
+                <th width="30%">Nama Personil</th>
+                <th width="20%">Status</th>
+                <th>Keterangan</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td class="text-center">1</td>
-                <td>Alice</td>
-                <td>SMA</td>
-            </tr>
-            <tr>
-                <td class="text-center">2</td>
-                <td>Bob</td>
-                <td>D3</td>
-            </tr>
-            <tr>
-                <td class="text-center">3</td>
-                <td>Charlie</td>
-                <td>S1</td>
-            </tr>
+            @forelse ($anggotaOrganisasis as $anggota)
+                <tr>
+                    <td class="text-center">{{ $loop->iteration }}</td>
+                    <td>{{ optional($anggota->jabatan)->nama_jabatan ?? 'N/A' }}</td>
+                    <td>{{ optional($anggota->perangkatDesa)->nama ?? 'Belum Ditunjuk' }}</td>
+                    <td>{{ $anggota->status_jabatan }}</td>
+                    <td>{{ $anggota->keterangan_tambahan ?? '-' }}</td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="5" class="text-center">Belum ada penunjukan personil yang tersimpan.</td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
 
     <div class="footer">
-        <p>......................., .................. 2025</p>
+        <p>......................., .................. {{ date('Y') }}</p>
         <br><br><br>
         <p>(_____________________)</p>
     </div>

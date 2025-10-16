@@ -21,5 +21,11 @@ class JabatanSeeder extends Seeder
         Jabatan::create([
             'nama_jabatan' => 'Kepala Dusun',
         ]);
+        Jabatan::create([
+            'nama_jabatan' => 'Kepala BPD',
+        ]);
+        Jabatan::create([
+            'nama_jabatan' => 'Anggota BPD',
+        ]);
     }
 }

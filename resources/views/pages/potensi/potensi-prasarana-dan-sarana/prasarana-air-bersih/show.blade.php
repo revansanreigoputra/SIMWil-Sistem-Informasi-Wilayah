@@ -13,7 +13,16 @@
 
     <div class="card-body">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label fw-semibold text-muted">
+                        <i class="fas fa-map-marker-alt me-1"></i>
+                        Desa
+                    </label>
+                    <p class="form-control-plaintext fw-bold fs-6">{{ $airBersih->desa->nama_desa }}</p>
+                </div>
+            </div>
+            <div class="col-md-6">
                 <div class="mb-3">
                     <label class="form-label fw-semibold text-muted">
                         <i class="fas fa-calendar me-1"></i>

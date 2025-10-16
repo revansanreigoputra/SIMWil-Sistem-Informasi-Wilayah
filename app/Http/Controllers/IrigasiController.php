@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Desa;
 use App\Models\Irigasi;
 use Illuminate\Http\Request;
 
@@ -9,18 +10,20 @@ class IrigasiController extends Controller
 {
     public function index()
     {
-        $irigasis = Irigasi::all();
+        $irigasis = Irigasi::with('desa')->get();
         return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-dan-irigasi.index', compact('irigasis'));
     }
 
     public function create()
     {
-        return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-dan-irigasi.create');
+        $desas = Desa::all();
+        return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-dan-irigasi.create', compact('desas'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
+            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'saluran_primer' => 'required|numeric|min:0',
             'saluran_primer_rusak' => 'required|numeric|min:0|lte:saluran_primer',
@@ -45,12 +48,14 @@ class IrigasiController extends Controller
 
     public function edit(Irigasi $irigasi)
     {
-        return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-dan-irigasi.edit', compact('irigasi'));
+        $desas = Desa::all();
+        return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-dan-irigasi.edit', compact('irigasi', 'desas'));
     }
 
     public function update(Request $request, Irigasi $irigasi)
     {
         $request->validate([
+            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'saluran_primer' => 'required|numeric|min:0',
             'saluran_primer_rusak' => 'required|numeric|min:0|lte:saluran_primer',

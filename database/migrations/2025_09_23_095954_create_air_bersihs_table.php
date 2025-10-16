@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('air_bersihs', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('desa_id')->constrained('desas')->cascadeOnUpdate()->cascadeOnDelete();
+            
             $table->date('tanggal');
             $table->integer('sumur_pompa')->default(0);
             $table->integer('sumur_gali')->default(0);

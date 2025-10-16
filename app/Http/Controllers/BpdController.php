@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bpd;
+use App\Models\Desa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -13,7 +14,7 @@ class BpdController extends Controller
      */
     public function index()
     {
-        $bpds = Bpd::orderBy('tanggal', 'desc')->paginate(10);
+        $bpds = Bpd::with('desa')->orderBy('tanggal', 'desc')->paginate(10);
         return view('pages.potensi.potensi-prasarana-dan-sarana.bpd.index', compact('bpds'));
     }
 
@@ -22,7 +23,8 @@ class BpdController extends Controller
      */
     public function create()
     {
-        return view('pages.potensi.potensi-prasarana-dan-sarana.bpd.create');
+        $desas = Desa::all();
+        return view('pages.potensi.potensi-prasarana-dan-sarana.bpd.create', compact('desas'));
     }
 
     /**
@@ -31,6 +33,7 @@ class BpdController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'gedung_kantor' => 'nullable|in:ada,tidak ada',
             'ruang_kerja' => 'nullable|integer|min:0',
@@ -78,7 +81,8 @@ class BpdController extends Controller
      */
     public function edit(Bpd $bpd)
     {
-        return view('pages.potensi.potensi-prasarana-dan-sarana.bpd.edit', compact('bpd'));
+        $desas = Desa::all();
+        return view('pages.potensi.potensi-prasarana-dan-sarana.bpd.edit', compact('bpd', 'desas'));
     }
 
     /**
@@ -87,6 +91,7 @@ class BpdController extends Controller
     public function update(Request $request, Bpd $bpd)
     {
         $validator = Validator::make($request->all(), [
+            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'gedung_kantor' => 'nullable|in:ada,tidak ada',
             'ruang_kerja' => 'nullable|integer|min:0',
