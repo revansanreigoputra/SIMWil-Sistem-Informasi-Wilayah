@@ -35,6 +35,7 @@ use App\Http\Controllers\AdatIstiadatController;
 use App\Http\Controllers\SikapdanmentalController;
 use App\Http\Controllers\BerbangsaController;
 use App\Http\Controllers\PajakController;
+use App\Http\Controllers\PolitikController;
 // use App\Http\Controllers\IrigasiController;
 // use App\Http\Controllers\NotificationController;
 // use App\Http\Controllers\PerangkatDesaController;
@@ -547,6 +548,17 @@ route::middleware(['auth'])->prefix('perkembangan/kedaulatanmasyarakat.pajak')->
     Route::get('/{id}/edit', [PajakController::class, 'edit'])->name('edit');
     Route::put('/{id}', [PajakController::class, 'update'])->name('update');
     Route::delete('/{id}', [PajakController::class, 'destroy'])->name('destroy');
+});
+
+//partisipasi politik
+route::middleware(['auth'])->prefix('perkembangan/kedaulatanmasyarakat/politik')->name('perkembangan.kedaulatanmasyarakat.politik.')->group(function () {
+    Route::get('/', [PolitikController::class, 'index'])->name('index');
+    Route::get('/create', [PolitikController::class, 'create'])->name('create');
+    Route::post('/', [PolitikController::class, 'store'])->name('store');
+    Route::get('/{id}', [PolitikController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [PolitikController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [PolitikController::class, 'update'])->name('update');
+    Route::delete('/{id}', [PolitikController::class, 'destroy'])->name('destroy');
 });
 
 // Desa routes

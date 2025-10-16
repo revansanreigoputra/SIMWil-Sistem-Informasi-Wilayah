@@ -670,6 +670,12 @@
                                                     Kesadaran Membayar <br> Pajak dan Retribusi
                                                 </a>
                                             @endcan
+                                            @can('politik.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/kedaulatanmasyarakat/politik*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.kedaulatanmasyarakat.politik.index') }}">
+                                                    Partisipasi <br> Politik
+                                                </a>
+                                            @endcan
                                         </div>
                                     </div>
 
