@@ -39,11 +39,14 @@ class KualitasPersalinanController extends Controller
         return view('pages.perkembangan.kesehatan-masyarakat.kualitas-persalinan.show', compact('data'));
     }
 
-    public function edit($id)
-    {
-        $data = KualitasPersalinan::findOrFail($id);
-        return view('pages.perkembangan.kesehatan-masyarakat.kualitas-persalinan.edit', compact('data'));
-    }
+   public function edit($id)
+{
+    // Mengubah nama variabel menjadi $data agar sesuai dengan View
+    $data = KualitasPersalinan::findOrFail($id); 
+    
+    // Menggunakan compact('data') atau array ['data' => $data]
+    return view('pages.perkembangan.kesehatan-masyarakat.kualitas-persalinan.edit', compact('data'));
+}
 
     public function update(Request $request, $id)
     {

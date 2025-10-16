@@ -102,6 +102,8 @@ use App\Http\Controllers\KualitasIbuHamilController;
 use App\Http\Controllers\KualitasBayiController;
 use App\Http\Controllers\KualitasPersalinanController;
 use App\Http\Controllers\CakupanImunisasiController;
+use App\Http\Controllers\WabahPenyakitController;
+use App\Http\Controllers\StatusGiziBalitaController;
 
 use App\Http\Controllers\PerkembanganPendudukController;
 // use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -635,6 +637,20 @@ Route::prefix('perkembangan/produk-domestik')
         Route::resource('cakupan-imunisasi', CakupanImunisasiController::class);
     });
 
+    // wabah penyakit 
+    Route::prefix('perkembangan/kesehatan-masyarakat')
+    ->name('perkembangan.kesehatan-masyarakat.')
+    ->group(function () {
+        Route::resource('wabah-penyakit', WabahPenyakitController::class);
+    });
+
+    // status gizi balita 
+    Route::prefix('perkembangan/kesehatan-masyarakat')
+    ->name('perkembangan.kesehatan-masyarakat.')
+    ->group(function () {
+        Route::resource('gizi-balita', StatusGiziBalitaController::class);
+    });
+    
 // ==== PERMOHONAN SURAT ====
 
 // new

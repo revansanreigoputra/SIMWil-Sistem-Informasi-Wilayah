@@ -805,7 +805,19 @@
                                             </a>
                                     @endcan
 
+                                     @can('wabah-penyakit.view')
+                                        <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/wabah-penyakit*') ? 'show' : '' }}"
+                                                href="{{ route('perkembangan.kesehatan-masyarakat.wabah-penyakit.index') }}">
+                                                Wabah penyakit
+                                            </a>
+                                    @endcan
 
+                                      @can('gizi-balita.view')
+                                        <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/gizi-balita*') ? 'show' : '' }}"
+                                                href="{{ route('perkembangan.kesehatan-masyarakat.gizi-balita.index') }}">
+                                             Status Gizi Balita
+                                            </a>
+                                    @endcan
                                             </div>
                                         </div>
                                     @endcanany

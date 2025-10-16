@@ -325,13 +325,26 @@ class PermissionSeeder extends Seeder
                 // cakupan imunisasi permission
                 'cakupan-imunisasi.view',
                 'cakupan-imunisasi.create',
-                'cakupan-imunisasi.store',
                 'cakupan-imunisasi.edit',
-                'cakupan-imunisasi.update',
                 'cakupan-imunisasi.delete',
-                'cakupan-imunisasi.destroy',
-                'cakupan-imunisasi.show',
-                                                    
+                'cakupan-imunisasi.update',
+                'cakupan-imunisasi.show',   
+
+                
+                // wabah penyakit
+               'wabah-penyakit.view',
+                'wabah-penyakit.create',
+                'wabah-penyakit.edit',
+                'wabah-penyakit.delete',
+                'wabah-penyakit.show',
+
+                // status gizi balita
+                'gizi-balita.view',
+                'gizi-balita.create',
+                'gizi-balita.edit',
+                 'gizi-balita.delete',
+                  'gizi-balita.show',
+
 
             // Pertanggungjawaban
             'pertanggungjawaban.view', 

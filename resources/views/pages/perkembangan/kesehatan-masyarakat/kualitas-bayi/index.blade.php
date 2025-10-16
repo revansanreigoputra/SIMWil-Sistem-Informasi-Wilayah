@@ -21,7 +21,7 @@
                         <th>Tanggal</th>
                         <th>Jml Keguguran</th>
                         <th>Jml Lahir</th>
-                        <th>jml lahir bayi <br> mati</th>
+                        <th>jml lahir bayi <br>mati </th>
                         <th>Jml Lahir bayi <br>Hidup</th>
                         <th>Mati (0-1 bln)</th>
                         <th>Mati (1-12 bln)</th>
@@ -37,8 +37,8 @@
                                 <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
                                 <td class="text-center">{{ $item->jumlah_keguguran_kandungan }}</td>
                                 <td class="text-center">{{ $item->jumlah_bayi_lahir }}</td>
-                                <td class="text-center">{{ $item->jumlah_bayi_lahir_hidup }}</td>
                                 <td class="text-center">{{ $item->jumlah_bayi_lahir_mati }}</td>
+                                <td class="text-center">{{ $item->jumlah_bayi_lahir_hidup}}</td>
                                 <td class="text-center">{{ $item->jumlah_bayi_mati_0_1_bulan }}</td>
                                 <td class="text-center">{{ $item->jumlah_bayi_mati_1_12_bulan }}</td>
                                 <td class="text-center">{{ $item->jumlah_bayi_lahir_berat_kurang_2_5_kg }}</td>
