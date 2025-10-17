@@ -524,6 +524,14 @@ class PermissionSeeder extends Seeder
             'politik.update',
             'politik.delete',
 
+            //Konflik Sara
+            'konfliksara.view',
+            'konfliksara.create',
+            'konfliksara.store',
+            'konfliksara.edit',
+            'konfliksara.update',
+            'konfliksara.delete',
+
 
             // potensi permissions
             'potensi.laporan.view',

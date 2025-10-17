@@ -804,9 +804,27 @@
                                             @can('politik.view')
                                                 <a class="dropdown-item {{ request()->is('perkembangan/kedaulatanmasyarakat/politik*') ? 'active' : '' }}"
                                                     href="{{ route('perkembangan.kedaulatanmasyarakat.politik.index') }}">
-                                                    Partisipasi <br> Politik
+                                                    Partisipasi Politik
                                                 </a>
                                             @endcan
+                                        </div>
+                                    </div>
+
+                                    {{-- Keamanan dan ketertiban --}}
+                                    <div class="dropend">
+                                        <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/keamanandanketertiban*') ? 'active' : '' }}"
+                                            href="#sidebar-keamanandanketertiban" data-bs-toggle="dropdown"
+                                            data-bs-auto-close="false" role="button" aria-expanded="false">
+                                            Keamanan dan <br> Ketertiban 
+                                        </a>
+                                        <div class="dropdown-menu {{ request()->is('perkembangan/keamanandanketertiban*') ? 'show' : '' }}">
+                                            @can('konfliksara.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/keamanandanketertiban/konfliksara*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.keamanandanketertiban.konfliksara.index') }}">
+                                                    Konflik Sara
+                                                </a>
+                                            @endcan
+                                            
                                         </div>
                                     </div>
 

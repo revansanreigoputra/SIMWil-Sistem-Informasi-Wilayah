@@ -36,6 +36,7 @@ use App\Http\Controllers\SikapdanmentalController;
 use App\Http\Controllers\BerbangsaController;
 use App\Http\Controllers\PajakController;
 use App\Http\Controllers\PolitikController;
+use App\Http\Controllers\KonfliksaraController;
 // use App\Http\Controllers\IrigasiController;
 // use App\Http\Controllers\NotificationController;
 // use App\Http\Controllers\PerangkatDesaController;
@@ -717,6 +718,17 @@ route::middleware(['auth'])->prefix('perkembangan/kedaulatanmasyarakat/politik')
     Route::get('/{id}/edit', [PolitikController::class, 'edit'])->name('edit');
     Route::put('/{id}', [PolitikController::class, 'update'])->name('update');
     Route::delete('/{id}', [PolitikController::class, 'destroy'])->name('destroy');
+});
+
+//Konflik SARA routes
+Route::middleware(['auth'])->prefix('perkembangan/keamanandanketertiban/konfliksara')->name('perkembangan.keamanandanketertiban.konfliksara.')->group(function () {
+    Route::get('/', [KonfliksaraController::class, 'index'])->name('index');
+    Route::get('/create', [KonfliksaraController::class, 'create'])->name('create');
+    Route::post('/', [KonfliksaraController::class, 'store'])->name('store');
+    Route::get('/{id}', [KonfliksaraController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [KonfliksaraController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [KonfliksaraController::class, 'update'])->name('update');
+    Route::delete('/{id}', [KonfliksaraController::class, 'destroy'])->name('destroy');
 });
 
 // Pengangkutan
