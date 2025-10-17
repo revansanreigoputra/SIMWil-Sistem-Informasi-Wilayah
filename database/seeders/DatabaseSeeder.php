@@ -97,6 +97,8 @@ class DatabaseSeeder extends Seeder
             StatusKepemilikanSeeder::class,
             TempatPerawatanSeeder::class,
             TempatpersalinanSeeder::class,
+            JenisWabahSeeder::class,
+            JenisPenyakitSeeder::class,
         ]);
     }
 }

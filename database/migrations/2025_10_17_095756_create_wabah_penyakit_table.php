@@ -12,17 +12,7 @@ return new class extends Migration
         Schema::create('wabah_penyakit', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal');
-            $table->enum('jenis_wabah', [
-                'Busung lapar',
-                'Cikungunya',
-                'Demam berdarah',
-                'Flu burung',
-                'Ispa',
-                'Kelaparan',
-                'Kolera',
-                'Muntaber',
-                'Polio'
-            ]);
+            $table->foreignId('jenis_wabah_id')->constrained('jenis_wabahs')->onDelete('cascade');
             $table->integer('jumlah_kejadian_tahun_ini');
             $table->integer('jumlah_meninggal');
             $table->timestamps();

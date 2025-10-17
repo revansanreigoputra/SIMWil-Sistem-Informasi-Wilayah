@@ -928,6 +928,27 @@
                                              Status Gizi Balita
                                             </a>
                                     @endcan
+
+                                      @can('subsektor-harapan.view')
+                                        <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/subsektor-harapan*') ? 'show' : '' }}"
+                                                href="{{ route('perkembangan.kesehatan-masyarakat.subsektor-harapan.index') }}">
+                                              Angka Harapan <br> Hidup
+                                            </a>
+                                    @endcan
+
+                                      @can('penderita-sakit.view')
+                                        <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/penderita-sakit*') ? 'show' : '' }}"
+                                                href="{{ route('perkembangan.kesehatan-masyarakat.penderita-sakit.index') }}">
+                                              Penderita Sakit
+                                            </a>
+                                    @endcan
+
+                                     @can('sarana-prasarana.view')
+                                        <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/sarana-prasarana*') ? 'show' : '' }}"
+                                                href="{{ route('perkembangan.kesehatan-masyarakat.sarana-prasarana.index') }}">
+                                              Perkembangan sarana <br> dan prasarana 
+                                            </a>
+                                    @endcan
                                             </div>
                                         </div>
                                     @endcanany

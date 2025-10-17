@@ -490,6 +490,31 @@ class PermissionSeeder extends Seeder
                  'gizi-balita.delete',
                   'gizi-balita.show',
 
+                  // subsektor harapan
+                'subsektor-harapan.view',
+                'subsektor-harapan.create',
+                'subsektor-harapan.show',
+                'subsektor-harapan.edit',
+                'subsektor-harapan.delete',
+
+                // penderita-sakit permession
+
+                'penderita-sakit.view',
+                'penderita-sakit.create',
+                'penderita-sakit.show',
+                'penderita-sakit.edit',
+                'penderita-sakit.delete',
+
+                // sarana dan prasana 
+
+                // sarana dan prasana 
+                'sarana-prasarana.view',
+                'sarana-prasarana.create',
+                 'sarana-prasarana.update',
+                'sarana-prasarana.delete',
+                'sarana-prasarana.show',
+
+
 
             // Pertanggungjawaban
             'pertanggungjawaban.view', 

@@ -1,10 +1,10 @@
 @extends('layouts.master')
 
-@section('title', 'Daftar - WABAH PENYAKIT')
+@section('title', 'Daftar - PENDERITA SAKIT')
 
 @section('action')
     {{-- TOMBOL +DATA BARU --}}
-    @can('wabah-penyakit.create')
+    @can('penderita-sakit.create')
         <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createModal">
             + Data Baru
         </button>
@@ -15,90 +15,96 @@
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
-                <table id="wabah-penyakit-table" class="table table-striped">
+                <table id="penderita-sakit-table" class="table table-striped">
                     <thead>
                         <tr>
                             <th>No</th>
                             <th>Tanggal</th>
-                            <th>Jenis Wabah</th>
-                            <th>Jumlah Kejadian Tahun Ini</th>
-                            <th>Jumlah Meninggal (Orang)</th>
+                            <th>Jenis Penyakit</th>
+                            <th>Jumlah Penderita (Orang)</th>
+                            <th>Tempat Perawatan</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($wabahPenyakit as $item)
+                        @foreach ($penderitaSakit as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
-                                <td class="text-center">{{ $item->jenisWabah->nama ?? '-' }}</td>
-                                <td class="text-center">{{ number_format($item->jumlah_kejadian_tahun_ini, 0, ',', '.') }}</td>
-                                <td class="text-center">{{ number_format($item->jumlah_meninggal, 0, ',', '.') }}</td>
+                                <td class="text-center">{{ $item->jenisPenyakit->nama ?? '-' }}</td>
+                                <td class="text-center">{{ number_format($item->jumlah_penderita, 0, ',', '.') }}</td>
+                                <td class="text-center">{{ $item->tempatPerawatan->nama ?? '-' }}</td>
                                 <td>
-                                    @canany(['wabah-penyakit.edit', 'wabah-penyakit.delete', 'wabah-penyakit.show'])
-                                        <div class="d-flex gap-1 justify-content-center">
-                                            
-                                            {{-- TOMBOL DETAIL --}}
-                                            @can('wabah-penyakit.show')
-                                                <a href="{{ route('perkembangan.kesehatan-masyarakat.wabah-penyakit.show', $item->id) }}" 
-                                                    class="btn btn-sm btn-info">Detail</a>
+                                   @canany(['penderita-sakit.edit', 'penderita-sakit.delete', 'penderita-sakit.show'])
+                                        <div class="d-flex justify-content-center gap-1">
+                                            @can('penderita-sakit.show')
+                                                <a href="{{ route('perkembangan.kesehatan-masyarakat.penderita-sakit.show', $item->id) }}" 
+                                                class="btn btn-sm btn-info">
+                                                    Detail
+                                                </a>
                                             @endcan
 
-                                            {{-- TOMBOL EDIT --}}
-                                            @can('wabah-penyakit.edit')
+                                            @can('penderita-sakit.edit')
                                                 <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
                                                     data-bs-target="#editModal-{{ $item->id }}">
                                                     Edit
                                                 </button>
                                             @endcan
 
-                                            {{-- TOMBOL HAPUS --}}
-                                            @can('wabah-penyakit.delete')
+                                            @can('penderita-sakit.delete')
                                                 <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                                    data-bs-target="#delete-wabah-penyakit-{{ $item->id }}">
+                                                    data-bs-target="#delete-penderita-sakit-{{ $item->id }}">
                                                     Hapus
                                                 </button>
                                             @endcan
+                                        </div>
                                         </div>
 
                                         {{-- MODAL EDIT --}}
                                         <div class="modal fade" id="editModal-{{ $item->id }}" tabindex="-1">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
-                                                    <form action="{{ route('perkembangan.kesehatan-masyarakat.wabah-penyakit.update', $item->id) }}" method="POST">
+                                                    <form action="{{ route('perkembangan.kesehatan-masyarakat.penderita-sakit.update', $item->id) }}" method="POST">
                                                         @csrf
                                                         @method('PUT')
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title">Edit Data Wabah Penyakit</h5>
+                                                            <h5 class="modal-title">Edit Data Penderita Sakit</h5>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                         </div>
                                                         <div class="modal-body">
                                                             <div class="mb-3">
                                                                 <label>Tanggal *</label>
                                                                 <input type="date" name="tanggal" class="form-control" 
-                                                                    value="{{ $item->tanggal->format('Y-m-d') }}" required>
+                                                                  value="{{ \Carbon\Carbon::parse($item->tanggal)->format('Y-m-d') }}">
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label>Jenis Wabah *</label>
-                                                                <select name="jenis_wabah_id" class="form-control" required>
-                                                                    <option value="">Pilih Jenis Wabah</option>
-                                                                    @foreach ($jenisWabah as $jw)
-                                                                        <option value="{{ $jw->id }}" 
-                                                                            {{ $item->jenis_wabah_id == $jw->id ? 'selected' : '' }}>
-                                                                            {{ $jw->nama }}
+                                                                <label>Jenis Penyakit *</label>
+                                                                <select name="jenis_penyakit_id" class="form-control" required>
+                                                                    <option value="">Pilih Jenis Penyakit</option>
+                                                                    @foreach ($jenisPenyakit as $jp)
+                                                                        <option value="{{ $jp->id }}" 
+                                                                            {{ $item->jenis_penyakit_id == $jp->id ? 'selected' : '' }}>
+                                                                            {{ $jp->nama }}
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label>Jumlah Kejadian Tahun Ini</label>
-                                                                <input type="number" name="jumlah_kejadian_tahun_ini" 
-                                                                    class="form-control" value="{{ $item->jumlah_kejadian_tahun_ini }}" required>
+                                                                <label>Jumlah Penderita (Orang)</label>
+                                                                <input type="number" name="jumlah_penderita" 
+                                                                    class="form-control" value="{{ $item->jumlah_penderita }}" required>
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label>Jumlah Meninggal (Orang)</label>
-                                                                <input type="number" name="jumlah_meninggal" 
-                                                                    class="form-control" value="{{ $item->jumlah_meninggal }}" required>
+                                                                <label>Tempat Perawatan *</label>
+                                                                <select name="tempat_perawatan_id" class="form-control" required>
+                                                                    <option value="">Pilih Tempat Perawatan</option>
+                                                                    @foreach ($tempatPerawatan as $tp)
+                                                                        <option value="{{ $tp->id }}" 
+                                                                            {{ $item->tempat_perawatan_id == $tp->id ? 'selected' : '' }}>
+                                                                            {{ $tp->nama }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
@@ -111,22 +117,22 @@
                                         </div>
 
                                         {{-- MODAL DELETE --}}
-                                        <div class="modal fade" id="delete-wabah-penyakit-{{ $item->id }}" tabindex="-1">
+                                        <div class="modal fade" id="delete-penderita-sakit-{{ $item->id }}" tabindex="-1">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title">Hapus Data Wabah Penyakit?</h5>
+                                                        <h5 class="modal-title">Hapus Data Penderita Sakit?</h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <p>Data wabah penyakit <strong>{{ $item->jenisWabah->nama ?? '-' }}</strong> 
+                                                        <p>Data penderita sakit <strong>{{ $item->jenisPenyakit->nama ?? '-' }}</strong> 
                                                             tanggal <strong>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</strong> 
                                                             akan dihapus dan tidak bisa dikembalikan.</p>
                                                         <p>Yakin ingin menghapus data ini?</p>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                                        <form action="{{ route('perkembangan.kesehatan-masyarakat.wabah-penyakit.destroy', $item->id) }}" method="POST">
+                                                        <form action="{{route('perkembangan.kesehatan-masyarakat.penderita-sakit.destroy', $item->id) }}" method="POST">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="btn btn-danger">Hapus</button>
@@ -151,10 +157,10 @@
     <div class="modal fade" id="createModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{{ route('perkembangan.kesehatan-masyarakat.wabah-penyakit.store') }}" method="POST">
+                <form action="{{ route('perkembangan.kesehatan-masyarakat.penderita-sakit.store') }}" method="POST">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title">Tambah Data Wabah Penyakit</h5>
+                        <h5 class="modal-title">Tambah Data Penderita Sakit</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
@@ -163,21 +169,26 @@
                             <input type="date" name="tanggal" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label>Jenis Wabah *</label>
-                            <select name="jenis_wabah_id" class="form-control" required>
-                                <option value="">Pilih Jenis Wabah</option>
-                                @foreach ($jenisWabah as $jw)
-                                    <option value="{{ $jw->id }}">{{ $jw->nama }}</option>
+                            <label>Jenis Penyakit *</label>
+                            <select name="jenis_penyakit_id" class="form-control" required>
+                                <option value="">Pilih Jenis Penyakit</option>
+                                @foreach ($jenisPenyakit as $jp)
+                                    <option value="{{ $jp->id }}">{{ $jp->nama }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label>Jumlah Kejadian Tahun Ini</label>
-                            <input type="number" name="jumlah_kejadian_tahun_ini" class="form-control" required>
+                            <label>Jumlah Penderita (Orang)</label>
+                            <input type="number" name="jumlah_penderita" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label>Jumlah Meninggal (Orang)</label>
-                            <input type="number" name="jumlah_meninggal" class="form-control" required>
+                            <label>Tempat Perawatan *</label>
+                            <select name="tempat_perawatan_id" class="form-control" required>
+                                <option value="">Pilih Tempat Perawatan</option>
+                                @foreach ($tempatPerawatan as $tp)
+                                    <option value="{{ $tp->id }}">{{ $tp->nama }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -193,7 +204,7 @@
 @push('addon-script')
     <script>
         $(document).ready(function() {
-            $('#wabah-penyakit-table').DataTable();
+            $('#penderita-sakit-table').DataTable();
         });
     </script>
 @endpush
