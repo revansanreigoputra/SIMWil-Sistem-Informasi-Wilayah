@@ -98,11 +98,11 @@ class DatabaseSeeder extends Seeder
             StatusKepemilikanSeeder::class,
             TempatPerawatanSeeder::class,
             TempatpersalinanSeeder::class,
-            JenisSuratSeeder::class,
+
             JenisDampakSeeder::class,
             JenisHutanSeeder::class,
             JenisTernakSeeder::class,
-            JenisUsahaPengolahanHasilTernak::class,
+            JenisUsahaPengolahanHasilTernakSeeder::class,
             AlatProduksiIkanLautSeeder::class,
             AlatProduksiIkanTawarSeeder::class,
             SatuanProduksiTernakSeeder::class,
@@ -118,9 +118,9 @@ class DatabaseSeeder extends Seeder
             KategoriLembagaEkonomiSeeder::class,
             JenisLembagaEkonomiSeeder::class,
             KategoriUsahaPengangkutanSeeder::class,
-            KategoriUsahaJasaDanHiburanSeeder::class,  
-            KategoriSekolahSeeder::class,    
-            JenisSekolahTingkatanSeeder::class, 
+            KategoriUsahaJasaDanHiburanSeeder::class,
+            KategoriSekolahSeeder::class,
+            JenisSekolahTingkatanSeeder::class,
             KategoriPrasaranaTransportasiDaratSeeder::class,
             JenisPrasaranaTransportasiDaratSeeder::class,
             KategoriPrasaranaTransportasiLainnyaSeeder::class,
@@ -133,6 +133,7 @@ class DatabaseSeeder extends Seeder
             JenisSaranaKesehatanSeeder::class,
             JenisPrasaranaOlahRagaSeeder::class,
             TempatIbadahSeeder::class,
-         ]);
+            JenisSuratSeeder::class,
+        ]);
     }
 }

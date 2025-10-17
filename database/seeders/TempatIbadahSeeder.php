@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class TempatIbadahSeeder extends Seeder
 {
     public function run(): void
-    {
+    { 
         DB::table('tempat_ibadahs')->insert([
             ['nama_tempat' => 'Pura'],
             ['nama_tempat' => 'Kelenteng'],
