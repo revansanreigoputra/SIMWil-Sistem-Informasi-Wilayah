@@ -28,6 +28,13 @@
                         </p>
                     </div>
 
+                    <div class="mb-3">
+                        <label class="form-label text-muted">ID Desa</label>
+                        <p class="fw-semibold">
+                            {{ $usia->desa_id }}
+                        </p>
+                    </div>
+
                     <div class="row mt-4">
                         <div class="col-md-6">
                             <h5 class="text-info border-bottom pb-2 mb-3">Data Laki-laki</h5>

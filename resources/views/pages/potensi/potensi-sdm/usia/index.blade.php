@@ -17,6 +17,7 @@
                         <tr>
                             <th>No</th>
                             <th>Tanggal</th>
+                            <th>ID Desa</th>
                             @for ($i = 0; $i <= 1; $i++)
                                 <th>Laki-laki {{ $i }} tahun</th>
                             @endfor
@@ -31,6 +32,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ \Carbon\Carbon::parse($usia->tanggal)->format('d/m/Y') }}</td>
+                                <td>{{ $usia->desa_id }}</td>
 
                                 @for ($i = 0; $i <= 1; $i++)
                                     <td>{{ $usia->{"l{$i}"} ?? 0 }}</td>
