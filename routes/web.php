@@ -38,6 +38,7 @@ use App\Http\Controllers\PajakController;
 use App\Http\Controllers\PolitikController;
 use App\Http\Controllers\KonfliksaraController;
 use App\Http\Controllers\PerkelahianController;
+use App\Http\Controllers\PencurianController;
 // use App\Http\Controllers\IrigasiController;
 // use App\Http\Controllers\NotificationController;
 // use App\Http\Controllers\PerangkatDesaController;
@@ -742,6 +743,18 @@ Route::middleware(['auth'])->prefix('perkembangan/keamanandanketertiban/perkelah
     Route::put('/{id}', [PerkelahianController::class, 'update'])->name('update');
     Route::delete('/{id}', [PerkelahianController::class, 'destroy'])->name('destroy');
 });
+
+//Pencurian routes
+Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.pencurian')->name('perkembangan.keamanandanketertiban.pencurian.')->group(function(){
+    Route::get('/', [PencurianController::class, 'index'])->name('index');
+    Route::get('/create', [PencurianController::class, 'create'])->name('create');
+    Route::post('/', [PencurianController::class, 'store'])->name('store');
+    Route::get('/{id}', [PencurianController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [PencurianController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [PencurianController::class, 'update'])->name('update');
+    Route::delete('/{id}', [PencurianController::class, 'destroy'])->name('destroy');
+});
+
 
 // Pengangkutan
 Route::prefix('potensi/kelembagaan/pengangkutan')->name('potensi.kelembagaan.pengangkutan.')->group(function () {

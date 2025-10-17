@@ -830,6 +830,12 @@
                                                     Perkelahian
                                                 </a>
                                             @endcan
+                                            @can('pencurian.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/keamanandanketertiban/pencurian*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.keamanandanketertiban.pencurian.index') }}">
+                                                    pencurian
+                                                </a>
+                                            @endcan
                                             
                                         </div>
                                     </div>
