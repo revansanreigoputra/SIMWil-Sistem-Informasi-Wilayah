@@ -13,6 +13,7 @@ use App\Models\{
     AnggotaKeluarga,
     Ttd,
 };
+use App\Models\MasterDDK\HubunganKeluarga;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -24,6 +25,21 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Storage;
+use App\Models\MasterDDK\{
+    Cacat,
+    Agama,
+    GolonganDarah,
+    Kewarganegaraan,
+    Pendidikan,
+    MataPencaharian,
+    KB,
+    KedudukanPajak
+};
+use App\Models\MasterDDK\Lembaga;
+use Dflydev\DotAccessData\Data;
+use Illuminate\Support\Collection;
+
+use Throwable;
 
 class PermohonanSuratController extends Controller
 {
@@ -40,6 +56,58 @@ class PermohonanSuratController extends Controller
 
         return view('pages.layanan.permohonan.index', compact('permohonans', 'groupedKopTemplates'));
     }
+
+    // handle mutasi masuk form
+    public function createMasukDomisili($anggotaKeluargaId)
+    {
+        // Cari data Anggota Keluarga yang baru disimpan (mutasi masuk)
+        $newAnggota = \App\Models\AnggotaKeluarga::findOrFail($anggotaKeluargaId);
+
+        // Cari Jenis Surat 'Surat Keterangan Masuk Domisili'
+        $jenisSuratMasuk = \App\Models\LayananSurat\JenisSurat::where('mutasi_type', 'mutasi_masuk_kk')->first();
+
+        if (!$jenisSuratMasuk) {
+            return redirect()->route('layanan.permohonan.create')->withErrors('Jenis Surat Masuk Domisili tidak ditemukan.');
+        }
+
+        // Asumsi Anda memiliki metode untuk memuat semua data master (agama, ttd, dll.)
+        $data = [
+            // Data Khusus untuk Pre-selection
+            'preselected_jenis_surat_id' => $jenisSuratMasuk->id,
+            'preselected_pemohon_id' => $newAnggota->id,
+            // $defaultJenisSurat digunakan untuk paragraf pembuka/penutup
+            'defaultJenisSurat' => $jenisSuratMasuk,
+
+            // Data yang WAJIB ada di form create.blade.php Anda:
+            'jenisSurats' => JenisSurat::all(), // Daftar semua jenis surat
+            'anggotaKeluargas' => AnggotaKeluarga::select('id', 'nik', 'nama', 'is_kk')->where('status_penduduk', 'Aktif')->get(),
+            'dataKeluargas' => DataKeluarga::select('id', 'no_kk', 'kepala_keluarga')->get(), // Untuk Kelahiran
+            'ttds' => Ttd::all(), // Pejabat penanda tangan
+            'kopTemplates' => KopTemplate::all(), // Kop Surat
+
+            // Data Master untuk dynamic fields (required_variables)
+            'agamaList' => Agama::all(),
+            'hubunganKeluargaList' => HubunganKeluarga::all(),
+            'golonganDarahList' => GolonganDarah::all(),
+            'kewarganegaraanList' => Kewarganegaraan::all(),
+            'pendidikanList' => Pendidikan::all(),
+            'mataPencaharianList' => MataPencaharian::all(),
+
+            // Data Nomor Surat Otomatis
+            'nextNomorUrut' => Permohonan::getNextNomorUrut(), // Asumsi ini ada
+            'defaultCode' => $jenisSuratMasuk->kode ?? 'SKD',
+            'romanMonth' => date('roman', time()), // Format bulan Romawi
+            'currentYear' => date('Y'), // Tahun saat ini
+
+            'preselected_jenis_surat_id' => $jenisSuratMasuk->id,
+            'preselected_pemohon_id' => $newAnggota->id,
+        ];
+
+
+        // Tampilkan form create standar, tetapi dengan data yang sudah diisi sebelumnya.
+        return view('pages.layanan.permohonan.create', $data);
+    }
+
     private function convertToRoman(int $number): string
     {
         $map = array('M' => 1000, 'CM' => 900, 'D' => 500, 'CD' => 400, 'C' => 100, 'XC' => 90, 'L' => 50, 'XL' => 40, 'X' => 10, 'IX' => 9, 'V' => 5, 'IV' => 4, 'I' => 1);
@@ -55,15 +123,188 @@ class PermohonanSuratController extends Controller
         }
         return $returnValue;
     }
+ 
+    // handle mutasi update data
+    protected function handleMutasiUpdateKK(AnggotaKeluarga $anggota, Permohonan $permohonan, string $mutasiType)
+    {
+        // Lakukan ini di dalam transaksi di fungsi store/update utama.
+        $tanggalPeristiwa = $permohonan->tanggal_permohonan;
+        $dataKeluarga = $anggota->dataKeluarga; // Anggota harus dimuat dengan relasi dataKeluarga
+
+        if (!$dataKeluarga) {
+            throw new Exception("Mutasi gagal: Data Keluarga tidak ditemukan untuk anggota ini.");
+        }
+
+        // --- 1. AMBIL ID HUBUNGAN KELUARGA DINAMIS (Tidak Ada Asumsi ID) ---
+        // Pastikan kolom di tabel HubunganKeluarga adalah 'nama'
+        $relasiIds = HubunganKeluarga::whereIn('nama', ['Kepala Keluarga', 'Istri'])
+            ->pluck('id', 'nama');
+
+        $idKepalaKeluarga = $relasiIds['Kepala Keluarga'] ?? null;
+        $idIstri = $relasiIds['Istri'] ?? null;
+
+        if (!$idKepalaKeluarga) {
+            throw new Exception("Mutasi gagal: Hubungan 'Kepala Keluarga' tidak ditemukan di master data.");
+        }
+
+        // Panggil mutasi pada Anggota Keluarga yang meninggal/pindah (handleMutasi di model)
+        $anggota->handleMutasi($mutasiType, ['tanggal_surat' => $tanggalPeristiwa, 'permohonan_id' => $permohonan->id]);
+
+        // --- Cek Anggota Keluarga yang Tersisa ---
+        $anggotaAktifLainnya = $dataKeluarga->anggotaKeluarga()
+            ->where('status_kehidupan', 'hidup')
+            ->where('id', '!=', $anggota->id) // Exclude anggota yang baru dimutasi
+            // Filter anggota lain yang bukan Kepala Keluarga (jika ada Kepala Keluarga aktif lain, abaikan logic promosi)
+            ->get();
+
+        if ($anggotaAktifLainnya->isNotEmpty()) {
+            // ADA ANGGOTA LAIN YANG HIDUP: Lakukan promosi
+
+            // 2. Tandai KK lama sebagai INAKTIF
+            $dataKeluarga->update([
+                'status_kk_record' => 'inactive_pending',
+                'tanggal_inaktif' => $tanggalPeristiwa,
+            ]);
+
+            // 3. Promosikan Anggota Lain menjadi KK Sementara
+
+            // Prioritas 1: Cari Istri yang aktif
+            $newHead = $anggotaAktifLainnya
+                ->where('hubungan_keluarga_id', $idIstri)
+                ->first();
+
+            if (!$newHead) {
+                // Prioritas 2: Jika Istri tidak ada, ambil anggota aktif tertua/pertama
+                // Urutkan berdasarkan tanggal lahir (jika tersedia) atau ID
+                $newHead = $anggotaAktifLainnya->sortByDesc('tanggal_lahir')->first();
+            }
+
+            if ($newHead) {
+                // 4. Update Anggota Baru menjadi Kepala Keluarga
+                $newHead->update([
+                    'hubungan_keluarga_id' => $idKepalaKeluarga,
+                    'catatan_mutasi' => 'Dipromosikan menjadi Kepala Keluarga sementara karena mutasi ID ' . $permohonan->id,
+                ]);
+
+                // 5. Update Nama Kepala Keluarga di DataKeluarga
+                $dataKeluarga->update([
+                    'kepala_keluarga' => $newHead->nama,
+                ]);
+            }
+        } else {
+            // TIDAK ADA ANGGOTA LAIN YANG HIDUP: Tutup KK
+            $dataKeluarga->update([
+                'status_kk_record' => 'closed',
+                'tanggal_inaktif' => $tanggalPeristiwa,
+            ]);
+        }
+    }
+
+    protected function handlePencatatanKelahiran(Permohonan $permohonan, int $dataKeluargaId): ?array
+    {
+        $customData = $permohonan->custom_variables;
+
+        // --- Data Mapping (Kept for integrity) ---
+        $jenisKelaminInput = $customData['jenis_kelamin'] ?? null;
+        $jenisKelaminFixed = $jenisKelaminInput ? ucwords(strtolower($jenisKelaminInput)) : null;
+
+        $statusPerkawinanInput = $customData['status_perkawinan'] ?? null;
+        $statusPerkawinanFixed = match (strtoupper($statusPerkawinanInput ?? '')) {
+            'BELUM KAWIN', 'BELUM MENIKAH' => 'Belum Menikah',
+            'KAWIN', 'MENIKAH' => 'Menikah',
+            'CERAI HIDUP', 'CERAI MATI', 'CERAI' => 'Cerai',
+            default => null,
+        };
+        // ------------------------------------------
+
+        try {
+            return DB::transaction(function () use ($customData, $dataKeluargaId, $jenisKelaminFixed, $statusPerkawinanFixed) {
+
+                // Step 1: Fetch Data Keluarga (KK)
+                // IMPORTANT: Eager load anggotaKeluarga to find the Head of Household efficiently
+                $dataKeluarga = DataKeluarga::with(['anggotaKeluarga' => function ($query) {
+                    // Assuming Kepala Keluarga has a specific relationship ID or attribute
+                    // This will need adjustment based on how you identify the KK
+                    $query->where('hubungan_keluarga_id', 1); // <--- REPLACE 1 with your actual Kepala Keluarga ID
+                }])->findOrFail($dataKeluargaId);
+
+                // Step 2.1: DETERMINE NAMA ORANG TUA
+                // Find the head of household among the family members
+                $kepalaKeluarga = $dataKeluarga->anggotaKeluarga->first();
+
+                // Use the Kepala Keluarga's name, or a safe default if not found
+                $namaOrangTua = $kepalaKeluarga->nama ?? 'Kepala Keluarga Tidak Ditemukan';
+
+                // 1. Hitung No Urut Berikutnya
+                $lastAnggota = $dataKeluarga->anggotaKeluarga()->orderBy('no_urut', 'desc')->first();
+                $nextNoUrut = ($lastAnggota->no_urut ?? 0) + 1;
+
+                // 2. Siapkan Data Anggota Keluarga Baru
+                $anggotaKeluargaData = [
+                    'data_keluarga_id' => $dataKeluargaId,
+                    'no_urut' => $nextNoUrut,
+
+                    // DATA FIELDS
+                    'nama' => $customData['nama'] ?? null,
+                    'hubungan_keluarga_id' => $customData['hubungan_keluarga_id'] ?? null,
+                    'nik' => $customData['nik'] ?? null,
+                    'no_akta_kelahiran' => $customData['no_akta_kelahiran'] ?? null,
+
+                    // FIXED REQUIRED FIELDS
+                    'jenis_kelamin' => $jenisKelaminFixed,
+                    'status_perkawinan' => $statusPerkawinanFixed,
+                    'nama_orang_tua' => $namaOrangTua, // <--- FIXED: Using KK's name
+
+                    // OTHER FIELDS
+                    'tempat_lahir' => $customData['tempat_lahir'] ?? null,
+                    'tanggal_lahir' => $customData['tanggal_lahir'] ?? null,
+                    'tanggal_pencatatan' => $customData['tanggal_pencatatan'] ?? null,
+                    'agama_id' => $customData['agama_id'] ?? null,
+                    'golongan_darah_id' => $customData['golongan_darah_id'] ?? null,
+                    'kewarganegaraan_id' => $customData['kewarganegaraan_id'] ?? null,
+                    'etnis' => $customData['etnis'] ?? null,
+                    'pendidikan_id' => $customData['pendidikan_id'] ?? null,
+                    'mata_pencaharian_id' => $customData['mata_pencaharian_id'] ?? null,
+                    'status_kehidupan' => 'hidup',
+                ];
+
+                // 3. Buat Anggota Keluarga
+                $anggotaKeluarga = AnggotaKeluarga::create($anggotaKeluargaData);
+
+                return [
+                    'anggota_keluarga_id' => $anggotaKeluarga->id,
+                    'data_keluarga_id' => $dataKeluargaId,
+                ];
+            });
+        } catch (Throwable $e) {
+            throw $e;
+        }
+    }
+
 
     public function create(Request $request)
     {
-        $kopTemplates = KopTemplate::all();
-        $allJenisSurats = JenisSurat::all();
-        $ttds = Ttd::all();
-        $defaultJenisSurat = JenisSurat::first();
-        // Pre-calculation for Nomor Surat Display 
+        // Read the query parameters passed from the MutasiMasukKK flow
+        $preselected_jenis_surat_id = $request->get('preselected_jenis_surat_id');
+        $preselected_pemohon_id = $request->get('preselected_pemohon_id');
 
+        $kopTemplates = KopTemplate::all();
+        $allJenisSurats = JenisSurat::all()->map(function ($item) {
+            if (is_string($item->required_variables)) {
+                $item->required_variables = json_decode($item->required_variables, true);
+            }
+            return $item;
+        });
+
+        $ttds = Ttd::all();
+        // Use the pre-selected ID if available, otherwise fall back to the first JenisSurat
+        if ($preselected_jenis_surat_id) {
+            $defaultJenisSurat = $allJenisSurats->firstWhere('id', $preselected_jenis_surat_id);
+        } else {
+            $defaultJenisSurat = JenisSurat::first();
+        }
+
+        // Pre-calculation for Nomor Surat Display 
         $currentYear = Carbon::now()->year;
         $romanMonth = $this->convertToRoman(Carbon::now()->month);
         $defaultCode = $defaultJenisSurat->kode ?? 'XXXX';
@@ -71,37 +312,61 @@ class PermohonanSuratController extends Controller
 
         $nextNomorUrut = 1;
 
-        $anggotaKeluargas = AnggotaKeluarga::select('id', 'nik', 'nama')->get();
+        $anggotaKeluargas = AnggotaKeluarga::select('id', 'nik', 'nama')
+            ->where('status_kehidupan', 'hidup')
+            ->get();
 
 
-        $dataKeluargas = DataKeluarga::select('id', 'no_kk', 'kepala_keluarga')->get();
+        // filter data keluarga
+        $kepalaKeluargaRelasi = HubunganKeluarga::where('nama', 'Kepala Keluarga')->first();
+        $idKepalaKeluarga = optional($kepalaKeluargaRelasi)->id;
 
-
-        $preparedDataKeluargas = $dataKeluargas->map(function ($keluarga) {
-
-            return (object) [
-                'id' => 'kk_' . $keluarga->id,
-                'nik' => $keluarga->no_kk,
-                'nama' => '(KK) ' . $keluarga->kepala_keluarga,
-                'is_kk' => true,
-            ];
-        });
-
-
-        $combinedAnggota = $anggotaKeluargas->concat($preparedDataKeluargas);
-
-
+        if ($idKepalaKeluarga) {
+            $dataKeluargas = DataKeluarga::whereHas('anggotaKeluarga', function ($query) use ($idKepalaKeluarga) {
+                $query->where('status_kehidupan', 'hidup') // ✅ only alive
+                    ->where('hubungan_keluarga_id', $idKepalaKeluarga);
+            })
+                ->with([
+                    'desas',
+                    'kecamatans',
+                    'perangkatDesas',
+                    'anggotaKeluarga' => function ($query) {
+                        $query->where('status_kehidupan', 'hidup');
+                    }
+                ])
+                ->get();
+        } else {
+            $dataKeluargas = collect();
+        }
+        // tambah kelahiran data
+        $agamaList = Agama::select('id', 'agama')->get();
+        $hubunganKeluargaList = HubunganKeluarga::select('id', 'nama')->get();
+        $golonganDarahList = GolonganDarah::select('id', 'golongan_darah')->get();
+        $kewarganegaraanList = Kewarganegaraan::select('id', 'kewarganegaraan')->get();
+        $pendidikanList = Pendidikan::select('id', 'pendidikan')->get();
+        $mataPencaharianList = MataPencaharian::select('id', 'mata_pencaharian')->get();
 
         return view('pages.layanan.permohonan.create', [
             'kopTemplates' => $kopTemplates,
             'jenisSurats' => $allJenisSurats,
-            'anggotaKeluargas' => $combinedAnggota,
+            'anggotaKeluargas' => $anggotaKeluargas,
             'ttds' => $ttds,
             'defaultJenisSurat' => $defaultJenisSurat,
             'currentYear' => $currentYear,
             'romanMonth' => $romanMonth,
             'defaultCode' => $defaultCode,
             'nextNomorUrut' => $nextNomorUrut,
+            'dataKeluargas' => $dataKeluargas,
+            // tambah kelahiran data
+            'agamaList' => $agamaList,
+            'hubunganKeluargaList' => $hubunganKeluargaList,
+            'golonganDarahList' => $golonganDarahList,
+            'kewarganegaraanList' => $kewarganegaraanList,
+            'pendidikanList' => $pendidikanList,
+            'mataPencaharianList' => $mataPencaharianList,
+            'preselected_jenis_surat_id' => $preselected_jenis_surat_id,
+            'preselected_pemohon_id' => $preselected_pemohon_id,
+
 
         ]);
     }
@@ -109,35 +374,31 @@ class PermohonanSuratController extends Controller
 
     public function store(Request $request)
     {
-        // 1. Fetch the selected JenisSurat to get its required variables
+        // 1. Fetch JenisSurat dan Mutasi Type
         $jenisSurat = JenisSurat::findOrFail($request->input('jenis_surat_id'));
         $templateVariables = $jenisSurat->required_variables ?? [];
+
+        $mutasiType = $jenisSurat->mutasi_type ?? 'none';
+        $isMutasiMasukKK = $mutasiType === 'mutasi_masuk_kk';
+        $isKelahiran = $mutasiType === 'pencatatan_kelahiran';
+        $isUpdateMutasi = in_array($mutasiType, ['meninggal', 'pindah_keluar']);
 
         // --- AUTO-NUMBERING LOGIC ---
         $currentYear = Carbon::now()->year;
         $romanMonth = $this->convertToRoman(Carbon::now()->month);
 
-        // --- Determine Sequential Number ---
         $userNomorUrut = $request->input('nomor_urut_input');
-        $nextNomorUrut = 0; // Initialize
         if (!empty($userNomorUrut) && is_numeric($userNomorUrut)) {
-            // OPTION 1: User provided a specific number (e.g., 10 or 50)
             $nextNomorUrut = (int)$userNomorUrut;
         } else {
-            // OPTION 2: Auto-calculate the next sequential number
-            // FIX: Ensure the WHERE clause is correct here (using id_format_nomor_surats)
             $lastPermohonan = Permohonan::where('id_format_nomor_surats', $jenisSurat->id)
                 ->where('tahun', $currentYear)
                 ->orderBy('nomor_urut', 'desc')
                 ->first();
 
-            $lastNomor = $lastPermohonan->nomor_urut ?? 0;
-
-            // If the query failed to find 'nomor_urut' or found none, we default to 1.
-            $nextNomorUrut = $lastNomor + 1;
+            $nextNomorUrut = ($lastPermohonan->nomor_urut ?? 0) + 1;
         }
 
-        // Construct the final Nomor Surat: 001/SKUMUM/IX/2025
         $fullNomorSurat = sprintf(
             "%s/%s/%s/%s",
             str_pad($nextNomorUrut, 3, '0', STR_PAD_LEFT),
@@ -147,21 +408,22 @@ class PermohonanSuratController extends Controller
         );
         // --- END AUTO-NUMBERING ---
 
-        // 2. Define Base Validation Rules
+        // 2. Base Validation Rules
         $rules = [
             'jenis_surat_id' => 'required|exists:jenis_surats,id',
-
             'id_kop_templates' => 'required|exists:kop_templates,id',
             'id_ttds' => 'required|exists:ttds,id',
             'tanggal_permohonan' => 'required|date',
             'paragraf_pembuka' => 'required|string',
             'paragraf_penutup' => 'required|string',
+            'status' => 'required|in:belum_diverifikasi,diverifikasi,ditolak,sudah_diambil',
+            'catatan_penolakan' => 'nullable|string|max:1000',
 
-            // Custom Rule for combined selection (as defined in your code)
+            // Dynamic: anggota keluarga ID rules
             'id_anggota_keluargas' => [
-                'required',
-                function ($attribute, $value, $fail) {
-                    // Assuming DB is aliased or available via use statement
+                ($isMutasiMasukKK || $isKelahiran) ? 'nullable' : 'required',
+                function ($attribute, $value, $fail) use ($isMutasiMasukKK, $isKelahiran) {
+                    if ($isMutasiMasukKK || $isKelahiran || !$value) return;
                     if (str_starts_with($value, 'kk_')) {
                         $id = (int) substr($value, 3);
                         if (!DB::table('data_keluargas')->where('id', $id)->exists()) {
@@ -174,69 +436,148 @@ class PermohonanSuratController extends Controller
                     }
                 },
             ],
+            'nomor_urut_input' => [
+                'required',
+                'integer',
+                'min:1',
+                // --- ATURAN UNIQUE BARU ---
+                Rule::unique('permohonans', 'nomor_urut')->where(function ($query) use ($request, $currentYear) {
+                    return $query->where('id_format_nomor_surats', $request->input('jenis_surat_id'))
+                        ->where('tahun', $currentYear);
+                }),
+            ],
+
+            // Mutasi type handling
         ];
 
+        // 3. Add dynamic rules for custom variables
         $customVariableRules = [];
-        $customVariableData = [];
-
-        // 3. Dynamically Add Rules for Custom Variables
         foreach ($templateVariables as $variable) {
-            $key = $variable['key'];
-            $label = $variable['label'];
-            $type = $variable['type'] ?? 'text'; // This tells us if it's a system field
+            if (($variable['type'] ?? 'text') !== 'system') {
+                $key = $variable['key'];
+                $isRequired = ($variable['required'] ?? true);
+                $rule = $isRequired ? 'required|' : 'nullable|';
+                $rule .= 'string|max:1000';
 
-            // FIX 1: ONLY add validation rules for fields that are NOT type 'system'.
-            if ($type !== 'system') {
-                // Validation for fields that MUST be manually entered (Custom Fields)
-                $customVariableRules["custom_data.$key"] = 'required|string|max:1000';
+                if ($isMutasiMasukKK || $isKelahiran) {
+                    if ($key === 'nik') {
+                        $rule = ($isRequired ? 'required' : 'nullable') . '|string|size:16|unique:anggota_keluargas,nik';
+                    }
+                    if ($key === 'no_kk' && $isMutasiMasukKK) {
+                        $rule = ($isRequired ? 'required' : 'nullable') . '|string|unique:data_keluargas,no_kk';
+                    }
+                    if (in_array($key, ['agama_id', 'pendidikan_id'])) {
+                        $tableMap = [
+                            'agama_id' => 'agama',
+                            'pendidikan_id' => 'pendidikans',
+                        ];
+                        $rule = 'required|exists:' . $tableMap[$key] . ',id';
+                    }
+                }
+                $customVariableRules["custom_data.$key"] = $rule;
             }
         }
-        // Merge base rules with custom variable rules
         $rules = array_merge($rules, $customVariableRules);
 
-        // 4. Validate the full request
+        // 4. Validate request
         $validatedData = $request->validate($rules);
 
-        // 5. Prepare Core Permohonan Data
+        // 5. Prepare data
         $data = $validatedData;
-
-        // Pisahkan custom_data dan hapus dari $data karena akan disimpan di field terpisah (custom_variables)
         $customData = $validatedData['custom_data'] ?? [];
-        unset($data['custom_data']);
-
-        // Hapus field yang hanya digunakan untuk input/validasi
-        unset($data['nomor_urut_input']);
-        // Note: id_anggota_keluargas juga akan di-unset/ditimpa di bawah
-
-        // Ambil ID pemohon (Bisa Anggota Keluarga atau KK)
-        $selectedId = $request->input('id_anggota_keluargas');
-
-        // Tambahkan detail nomor surat yang sudah dihitung
-        $data['nomor_surat'] = $fullNomorSurat; // Contoh: 001/SKUMUM/IX/2025
-        $data['nomor_urut'] = $nextNomorUrut; // Contoh: 1
-        $data['tahun'] = $currentYear; // Contoh: 2025
-
-        // --- Pisahkan ID Anggota Keluarga vs ID Data Keluarga (KK) ---
-        $data['id_anggota_keluargas'] = null;
-        $data['id_data_keluargas'] = null;
-        if (str_starts_with($selectedId, 'kk_')) {
-            $data['id_data_keluargas'] = (int) substr($selectedId, 3);
-        } else {
-            $data['id_anggota_keluargas'] = (int) $selectedId;
+        foreach ($customData as $key => $value) {
+            if ($value === '') {
+                $customData[$key] = null;
+            }
         }
+        unset($data['custom_data'], $data['nomor_urut_input']);
 
-        // Tambahkan ID format surat
+        $data['nomor_surat'] = $fullNomorSurat;
+        $data['nomor_urut'] = $nextNomorUrut;
+        $data['tahun'] = $currentYear;
         $data['id_format_nomor_surats'] = $data['jenis_surat_id'];
-
-        // --- Save Dynamic Custom Data ---
-        // Variabel custom diambil dari data yang sudah divalidasi
         $data['custom_variables'] = $customData;
 
+        $selectedId = $request->input('id_anggota_keluargas');
+        if ($isKelahiran) {
+            $selectedId = $request->input('selected_id');
+        }
 
-        // 7. Create the Permohonan
-        Permohonan::create($data);
+        $data['id_anggota_keluargas'] = null;
+        $data['id_data_keluargas'] = null;
 
-        return redirect()->route('layanan.permohonan.index')->with('success', 'Permohonan Surat berhasil dibuat.');
+        $permohonan = null;
+
+        try {
+            DB::transaction(function () use (&$permohonan, &$data, $isMutasiMasukKK, $isKelahiran, $selectedId, $mutasiType, $isUpdateMutasi) {
+                if ($isMutasiMasukKK) {
+                    $anggota = AnggotaKeluarga::select('id', 'data_keluarga_id')->find($selectedId);
+
+                    if (!$anggota) {
+                        throw new \Exception("Gagal menemukan data Anggota Keluarga baru dengan ID: " . $selectedId);
+                    }
+
+                    // Assign the IDs of the already-created entities
+                    $data['id_anggota_keluargas'] = $anggota->id;
+                    $data['id_data_keluargas'] = $anggota->data_keluarga_id;
+
+                } elseif ($isKelahiran) {
+                    $permohonanTemp = new Permohonan($data);
+
+                    // Determine which KK is selected
+                    if (str_starts_with($selectedId, 'kk_')) {
+                        $dataKeluargaId = (int) substr($selectedId, 3);
+                    } else {
+                        $anggota = AnggotaKeluarga::find($selectedId);
+                        if (!$anggota || !$anggota->data_keluarga_id) {
+                            throw new \Exception("Data Keluarga ID wajib diisi untuk pencatatan kelahiran.");
+                        }
+                        $dataKeluargaId = $anggota->data_keluarga_id;
+                    }
+
+                    // Now call handlePencatatanKelahiran safely
+                    $newIds = $this->handlePencatatanKelahiran($permohonanTemp, $dataKeluargaId);
+
+                    if ($newIds) {
+                        $data['id_anggota_keluargas'] = $newIds['anggota_keluarga_id'];
+                        $data['id_data_keluargas'] = $newIds['data_keluarga_id'];
+                    } else {
+                        throw new \Exception("Pencatatan kelahiran gagal memproses data.");
+                    }
+                } else {
+                    if (str_starts_with($selectedId, 'kk_')) {
+                        $data['id_data_keluargas'] = (int)substr($selectedId, 3);
+                    } else {
+                        $data['id_anggota_keluargas'] = (int)$selectedId;
+                    }
+                }
+
+                $permohonan = Permohonan::create($data);
+
+                if ($isUpdateMutasi && $permohonan->id_anggota_keluargas) {
+                    $anggota = AnggotaKeluarga::with(['dataKeluarga', 'dataKeluarga.anggotaKeluarga'])
+                        ->find($permohonan->id_anggota_keluargas);
+
+                    if ($anggota) {
+                        if ($anggota->isKepalaKeluarga()) {
+                            $this->handleMutasiUpdateKK($anggota, $permohonan, $mutasiType);
+                        } else {
+                            $dataMutasi = [
+                                'tanggal_surat' => $permohonan->tanggal_permohonan,
+                                'permohonan_id' => $permohonan->id,
+                            ];
+                            $anggota->handleMutasi($mutasiType, $dataMutasi);
+                        }
+                    }
+                }
+            });
+        } catch (\Throwable $e) {
+            Log::error('DEBUG MUTASI FAILED: ' . $e->getMessage() . ' Trace: ' . $e->getTraceAsString());
+            throw $e;
+        }
+
+        return redirect()->route('permohonan.index')
+            ->with('success', 'Permohonan Surat berhasil dibuat dan mutasi data diproses.');
     }
 
     public function edit($id)
@@ -246,7 +587,6 @@ class PermohonanSuratController extends Controller
             $kopTemplates = KopTemplate::all();
             $allJenisSurats = JenisSurat::all();
             $ttds = Ttd::all();
-
             $anggotaKeluargas = AnggotaKeluarga::select('id', 'nik', 'nama')->get();
             $dataKeluargas = DataKeluarga::select('id', 'no_kk', 'kepala_keluarga')->get();
 
@@ -282,10 +622,10 @@ class PermohonanSuratController extends Controller
                 'storedCustomData' => $storedCustomData,
             ]);
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('layanan.permohonan.index')->with('error', 'Permohonan Surat tidak ditemukan.');
+            return redirect()->route('permohonan.index')->with('error', 'Permohonan Surat tidak ditemukan.');
         } catch (Exception $e) {
             Log::error('Error loading edit form for Permohonan ID ' . $id . ': ' . $e->getMessage());
-            return redirect()->route('layanan.permohonan.index')->with('error', 'Terjadi kesalahan saat memuat formulir edit.');
+            return redirect()->route('permohonan.index')->with('error', 'Terjadi kesalahan saat memuat formulir edit.');
         }
     }
 
@@ -303,6 +643,8 @@ class PermohonanSuratController extends Controller
                 'paragraf_pembuka' => 'required|string',
                 'paragraf_penutup' => 'required|string',
                 'id_anggota_keluargas' => 'required',
+                'status' => 'required|in:belum_diverifikasi,diverifikasi,ditolak,sudah_diambil',
+                'catatan_penolakan' => 'nullable|string|max:1000',
             ];
 
             $validatedData = $request->validate($rules);
@@ -326,12 +668,12 @@ class PermohonanSuratController extends Controller
 
             $permohonan->update($data);
 
-            return redirect()->route('layanan.permohonan.index')->with('success', 'Permohonan Surat berhasil diperbarui.');
+            return redirect()->route('permohonan.index')->with('success', 'Permohonan Surat berhasil diperbarui.');
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('layanan.permohonan.index')->with('error', 'Permohonan Surat tidak ditemukan.');
+            return redirect()->route('permohonan.index')->with('error', 'Permohonan Surat tidak ditemukan.');
         } catch (Exception $e) {
             Log::error('Error updating Permohonan ID ' . $id . ': ' . $e->getMessage());
-            return redirect()->route('layanan.permohonan.index')->with('error', 'Terjadi kesalahan saat memperbarui Permohonan Surat.');
+            return redirect()->route('permohonan.index')->with('error', 'Terjadi kesalahan saat memperbarui Permohonan Surat.');
         }
     }
 
@@ -341,12 +683,12 @@ class PermohonanSuratController extends Controller
             $permohonan = Permohonan::findOrFail($id);
             $permohonan->delete();
 
-            return redirect()->route('layanan.permohonan.index')->with('success', 'Permohonan Surat berhasil dihapus.');
+            return redirect()->route('permohonan.index')->with('success', 'Permohonan Surat berhasil dihapus.');
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('layanan.permohonan.index')->with('error', 'Permohonan Surat tidak ditemukan.');
+            return redirect()->route('permohonan.index')->with('error', 'Permohonan Surat tidak ditemukan.');
         } catch (Exception $e) {
             Log::error('Error deleting Permohonan ID ' . $id . ': ' . $e->getMessage());
-            return redirect()->route('layanan.permohonan.index')->with('error', 'Terjadi kesalahan saat menghapus Permohonan Surat.');
+            return redirect()->route('permohonan.index')->with('error', 'Terjadi kesalahan saat menghapus Permohonan Surat.');
         }
     }
 

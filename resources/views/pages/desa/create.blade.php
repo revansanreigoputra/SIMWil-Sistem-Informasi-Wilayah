@@ -11,18 +11,6 @@
         </div>
 
         <div class="card-body">
-            {{-- Error Alert --}}
-            {{-- @if ($errors->any())
-                        <div class="alert alert-danger alert-dismissible fade show">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <h5><i class="icon fas fa-ban"></i> Error!</h5>
-                            <ul class="mb-0">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif --}}
 
             <form action="{{ route('desa.store') }}" method="POST" id="form-desa">
                 @csrf

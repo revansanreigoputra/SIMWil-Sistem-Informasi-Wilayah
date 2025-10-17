@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\JpHiburan;
+use App\Models\LayananSurat\JenisSurat;
 use App\Models\User;
 
 use Illuminate\Database\Seeder;
@@ -31,6 +33,17 @@ class DatabaseSeeder extends Seeder
             LembagaSeeder::class,
             MataPencaharianSeeder::class,
             PendidikanSeeder::class,
+            KategoriTransportasiSeeder::class,
+            JenisTransportasiSeeder::class,
+            KategoriKomunikasiSeeder::class,
+            JenisKomunikasiSeeder::class,
+            KomunikasiInformasiSeeder::class,
+            TempatIbadahSeeder::class,
+            JpolahragaSeeder::class,
+            JpkesehatanSeeder::class,
+            JskesehatanSeeder::class,
+            JpgedungSeeder::class,
+            JpHiburanSeeder::class,
             AsetAtapSeeder::class,
             AsetDindingSeeder::class,
             AsetLantaiSeeder::class,
@@ -48,7 +61,7 @@ class DatabaseSeeder extends Seeder
             KebiasaanBerobatSeeder::class,
             KejahatanSeeder::class,
             KekerasanSeeder::class,
-            KesejahteraanKeluargaSeeder::class,
+            KesejahteraanKeluargaMasterSeeder::class,
             KomoditasAlatPerikananSeeder::class,
             KomoditasBuahSeeder::class,
             KomoditasHasilTernakSeeder::class,
@@ -85,6 +98,7 @@ class DatabaseSeeder extends Seeder
             StatusKepemilikanSeeder::class,
             TempatPerawatanSeeder::class,
             TempatpersalinanSeeder::class,
+            JenisSuratSeeder::class,
             JenisDampakSeeder::class,
             JenisHutanSeeder::class,
             JenisTernakSeeder::class,

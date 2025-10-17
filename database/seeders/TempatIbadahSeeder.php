@@ -3,23 +3,18 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\MasterPotensi\TempatIbadah;
+use Illuminate\Support\Facades\DB;
 
 class TempatIbadahSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $data = [
-            ['nama' => 'Jumlah Wihara'],
-            ['nama' => 'Jumlah Gereja'],
-            ['nama' => 'Jumlah Masjid'],
-            ['nama' => 'Jumlah Kelenteng'],
-            ['nama' => 'Jumlah Pura'],
-        ];
-
-       TempatIbadah::insert($data);
+        DB::table('tempat_ibadahs')->insert([
+            ['nama_tempat' => 'Pura'],
+            ['nama_tempat' => 'Kelenteng'],
+            ['nama_tempat' => 'Masjid'],
+            ['nama_tempat' => 'Gereja'],
+            ['nama_tempat' => 'Wihara'],
+        ]);
     }
 }

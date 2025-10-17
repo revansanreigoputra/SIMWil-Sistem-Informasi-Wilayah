@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kesejahteraan_keluargas', function (Blueprint $table) {
+        Schema::create('prasarana_peribadatans', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
+            $table->date('tanggal');
+            $table->foreignId('tempat_ibadah_id')->constrained('tempat_ibadahs')->onDelete('cascade');
+            $table->integer('jumlah')->default(0);
             $table->timestamps();
         });
     }
@@ -23,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kesejahteraan_keluargas');
+        Schema::dropIfExists('prasarana_peribadatans');
     }
 };
