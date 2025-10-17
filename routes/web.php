@@ -452,6 +452,39 @@ Route::middleware(['auth', 'permission:p_cacat.view'])->prefix('potensi/potensi-
     Route::delete('/{pCacat}', [App\Http\Controllers\PCacatController::class, 'destroy'])->middleware('permission:p_cacat.delete')->name('destroy');
 });
 
+// Potensi Etnis/Suku routes
+Route::middleware(['auth', 'permission:p_etnis_suku.view'])->prefix('potensi/potensi-sdm/etnis-suku')->name('potensi.potensi-sdm.etnis-suku.')->group(function () {
+    Route::get('/', [App\Http\Controllers\PEtnisSukuController::class, 'index'])->name('index');
+    Route::get('/create', [App\Http\Controllers\PEtnisSukuController::class, 'create'])->middleware('permission:p_etnis_suku.create')->name('create');
+    Route::post('/', [App\Http\Controllers\PEtnisSukuController::class, 'store'])->middleware('permission:p_etnis_suku.store')->name('store');
+    Route::get('/{pEtnisSuku}', [App\Http\Controllers\PEtnisSukuController::class, 'show'])->name('show');
+    Route::get('/{pEtnisSuku}/edit', [App\Http\Controllers\PEtnisSukuController::class, 'edit'])->middleware('permission:p_etnis_suku.update')->name('edit');
+    Route::put('/{pEtnisSuku}', [App\Http\Controllers\PEtnisSukuController::class, 'update'])->middleware('permission:p_etnis_suku.update')->name('update');
+    Route::delete('/{pEtnisSuku}', [App\Http\Controllers\PEtnisSukuController::class, 'destroy'])->middleware('permission:p_etnis_suku.delete')->name('destroy');
+});
+
+// Potensi Tenaga Kerja routes
+Route::middleware(['auth', 'permission:p_tenaga_kerja.view'])->prefix('potensi/potensi-sdm/tenaga-kerja')->name('potensi.potensi-sdm.tenaga-kerja.')->group(function () {
+    Route::get('/', [App\Http\Controllers\PTenagaKerjaController::class, 'index'])->name('index');
+    Route::get('/create', [App\Http\Controllers\PTenagaKerjaController::class, 'create'])->middleware('permission:p_tenaga_kerja.create')->name('create');
+    Route::post('/', [App\Http\Controllers\PTenagaKerjaController::class, 'store'])->middleware('permission:p_tenaga_kerja.store')->name('store');
+    Route::get('/{pTenagaKerja}', [App\Http\Controllers\PTenagaKerjaController::class, 'show'])->name('show');
+    Route::get('/{pTenagaKerja}/edit', [App\Http\Controllers\PTenagaKerjaController::class, 'edit'])->middleware('permission:p_tenaga_kerja.update')->name('edit');
+    Route::put('/{pTenagaKerja}', [App\Http\Controllers\PTenagaKerjaController::class, 'update'])->middleware('permission:p_tenaga_kerja.update')->name('update');
+    Route::delete('/{pTenagaKerja}', [App\Http\Controllers\PTenagaKerjaController::class, 'destroy'])->middleware('permission:p_tenaga_kerja.delete')->name('destroy');
+});
+
+// Potensi Kualitas Angkatan Kerja routes
+Route::middleware(['auth', 'permission:p_kualitas_angkatan_kerja.view'])->prefix('potensi/potensi-sdm/kualitas-angkatan-kerja')->name('potensi.potensi-sdm.kualitas-angkatan-kerja.')->group(function () {
+    Route::get('/', [App\Http\Controllers\PKualitasAngkatanKerjaController::class, 'index'])->name('index');
+    Route::get('/create', [App\Http\Controllers\PKualitasAngkatanKerjaController::class, 'create'])->middleware('permission:p_kualitas_angkatan_kerja.create')->name('create');
+    Route::post('/', [App\Http\Controllers\PKualitasAngkatanKerjaController::class, 'store'])->middleware('permission:p_kualitas_angkatan_kerja.store')->name('store');
+    Route::get('/{pKualitasAngkatanKerja}', [App\Http\Controllers\PKualitasAngkatanKerjaController::class, 'show'])->name('show');
+    Route::get('/{pKualitasAngkatanKerja}/edit', [App\Http\Controllers\PKualitasAngkatanKerjaController::class, 'edit'])->middleware('permission:p_kualitas_angkatan_kerja.update')->name('edit');
+    Route::put('/{pKualitasAngkatanKerja}', [App\Http\Controllers\PKualitasAngkatanKerjaController::class, 'update'])->middleware('permission:p_kualitas_angkatan_kerja.update')->name('update');
+    Route::delete('/{pKualitasAngkatanKerja}', [App\Http\Controllers\PKualitasAngkatanKerjaController::class, 'destroy'])->middleware('permission:p_kualitas_angkatan_kerja.delete')->name('destroy');
+});
+
 // Transportasi Darat routes
 Route::middleware(['auth'])->prefix('transportasi-darat')->group(function () {
     Route::get('/', [TransportasiDaratController::class, 'index'])->middleware('permission:transportasi_darat.view')->name('potensi.potensi-prasarana-dan-sarana.transportasi-darat.index');

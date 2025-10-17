@@ -127,7 +127,7 @@ class PermissionSeeder extends Seeder
             'permohonan.update',
             'permohonan.delete',
             'permohonan.cetak',
-            
+
             // template permissions
             'kop_template.view',
             'kop_template.create',
@@ -156,7 +156,7 @@ class PermissionSeeder extends Seeder
             'agenda.create',
             'agenda.update',
             'agenda.delete',
-            
+
             // Glosarium permissions
             'glosarium.view',
             'glosarium.create',
@@ -219,6 +219,27 @@ class PermissionSeeder extends Seeder
             'p_cacat.store',
             'p_cacat.update',
             'p_cacat.delete',
+
+            // Potensi Etnis Suku permissions
+            'p_etnis_suku.view',
+            'p_etnis_suku.create',
+            'p_etnis_suku.store',
+            'p_etnis_suku.update',
+            'p_etnis_suku.delete',
+
+            // Potensi Tenaga Kerja permissions
+            'p_tenaga_kerja.view',
+            'p_tenaga_kerja.create',
+            'p_tenaga_kerja.store',
+            'p_tenaga_kerja.update',
+            'p_tenaga_kerja.delete',
+
+            // Potensi Kualitas Angkatan Kerja permissions
+            'p_kualitas_angkatan_kerja.view',
+            'p_kualitas_angkatan_kerja.create',
+            'p_kualitas_angkatan_kerja.store',
+            'p_kualitas_angkatan_kerja.update',
+            'p_kualitas_angkatan_kerja.delete',
 
             // Irigasi
             'irigasi.view',

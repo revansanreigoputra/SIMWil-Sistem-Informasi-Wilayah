@@ -489,6 +489,30 @@
                                                 href="{{ route('potensi.kelembagaan.keamanan.index') }}">
                                                 Lembaga Keamanan
                                             </a>
+                                                @can('p_cacat.view')
+                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/cacat*') ? 'active' : '' }}"
+                                                        href="{{ route('potensi.potensi-sdm.cacat.index') }}">
+                                                        Cacat
+                                                    </a>
+                                                @endcan
+                                                @can('p_etnis_suku.view')
+                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/etnis-suku*') ? 'active' : '' }}"
+                                                        href="{{ route('potensi.potensi-sdm.etnis-suku.index') }}">
+                                                        Etnis/Suku
+                                                    </a>
+                                                @endcan
+                                                @can('p_tenaga_kerja.view')
+                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/tenaga-kerja*') ? 'active' : '' }}"
+                                                        href="{{ route('potensi.potensi-sdm.tenaga-kerja.index') }}">
+                                                        Tenaga Kerja
+                                                    </a>
+                                                @endcan
+                                                @can('p_kualitas_angkatan_kerja.view')
+                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/kualitas-angkatan-kerja*') ? 'active' : '' }}"
+                                                        href="{{ route('potensi.potensi-sdm.kualitas-angkatan-kerja.index') }}">
+                                                        Kualitas Angkatan <br> Kerja
+                                                    </a>
+                                                @endcan
                                         </div>
                                     </div>
 

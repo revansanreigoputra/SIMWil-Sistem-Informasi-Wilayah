@@ -9,7 +9,8 @@ class JumlahController extends Controller
 {
     public function index()
     {
-        $jumlahs = Jumlah::latest()->paginate(10);
+        $desaId = session('desa_id');
+        $jumlahs = Jumlah::where('desa_id', $desaId)->latest()->paginate(10);
         return view('pages.potensi.potensi-sdm.jumlah.index', compact('jumlahs'));
     }
 
@@ -33,7 +34,10 @@ class JumlahController extends Controller
             return redirect()->back()->withErrors($validator)->withInput()->with('error', 'Gagal menambahkan data jumlah.');
         }
 
-        Jumlah::create($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        Jumlah::create($data);
 
         return redirect()->route('potensi.potensi-sdm.jumlah.index')->with('success', 'Data jumlah berhasil ditambahkan.');
     }
@@ -63,7 +67,10 @@ class JumlahController extends Controller
             return redirect()->back()->withErrors($validator)->withInput()->with('error', 'Gagal memperbarui data jumlah.');
         }
 
-        $jumlah->update($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id'); // Ensure desa_id is updated if needed, or kept consistent
+
+        $jumlah->update($data);
 
         return redirect()->route('potensi.potensi-sdm.jumlah.index')->with('success', 'Data jumlah berhasil diperbarui.');
     }
