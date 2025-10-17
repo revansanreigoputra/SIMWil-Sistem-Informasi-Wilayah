@@ -484,7 +484,7 @@
                                     class="dropdown-item {{ request()->is('master-perkembangan*') ? 'active' : '' }}">
                                     Master Perkembangan
                                 </a>
-                                <a href="{{ route('master.potensi.index') }}"
+                                <a href="{{ route('master-potensi.index') }}"
                                     class="dropdown-item {{ request()->is('master-potensi*') ? 'active' : '' }}">
                                     Master Potensi
                                 </a>

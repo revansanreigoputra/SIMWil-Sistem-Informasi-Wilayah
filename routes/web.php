@@ -319,7 +319,14 @@ Route::prefix('master-perkembangan')->name('master-perkembangan.')->group(functi
     Route::delete('/delete/{id}', [MasterPerkembanganController::class, 'destroy'])->name('destroy');
 });
 
-Route::get('/master-potensi', [MasterPotensiController::class, 'index'])->name('master.potensi.index');
+Route::prefix('master-potensi')->name('master-potensi.')->group(function () {
+    Route::get('/', [MasterPotensiController::class, 'index'])->name('index');
+    Route::post('/store', [MasterPotensiController::class, 'store'])->name('store');
+    Route::get('/edit/{id}', [MasterPotensiController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [MasterPotensiController::class, 'update'])->name('update'); // URL jadi /master-potensi/{id}
+    Route::delete('/{id}', [MasterPotensiController::class, 'destroy'])->name('destroy'); // URL jadi /master-potensi/{id}
+    // Route::delete('/delete/{id}', [MasterPotensiController::class, 'destroy'])->name('destroy');
+});
 
 // ==== POTENSI KELEMBAGAAN ==== //
 Route::prefix('potensi/potensi-kelembagaan')->group(function () {
