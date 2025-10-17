@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Desa;
 use App\Models\Kemasyarakatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -13,7 +14,7 @@ class KemasyarakatanController extends Controller
      */
     public function index()
     {
-        $kemasyarakatans = Kemasyarakatan::orderBy('tanggal', 'desc')->paginate(10);
+        $kemasyarakatans = Kemasyarakatan::with('desa')->orderBy('tanggal', 'desc')->paginate(10);
         return view('pages.potensi.potensi-prasarana-dan-sarana.kemasyarakatan.index', compact('kemasyarakatans'));
     }
 
@@ -22,7 +23,8 @@ class KemasyarakatanController extends Controller
      */
     public function create()
     {
-        return view('pages.potensi.potensi-prasarana-dan-sarana.kemasyarakatan.create');
+        $desas = Desa::all();
+        return view('pages.potensi.potensi-prasarana-dan-sarana.kemasyarakatan.create', compact('desas'));
     }
 
     /**
@@ -31,6 +33,7 @@ class KemasyarakatanController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             // GEDUNG KANTOR LKD/LKK
             'gedung_lembaga_kemasyarakatan' => 'nullable|in:Ada,Tidak Ada',
@@ -126,7 +129,8 @@ class KemasyarakatanController extends Controller
      */
     public function edit(Kemasyarakatan $kemasyarakatan)
     {
-        return view('pages.potensi.potensi-prasarana-dan-sarana.kemasyarakatan.edit', compact('kemasyarakatan'));
+        $desas = Desa::all();
+        return view('pages.potensi.potensi-prasarana-dan-sarana.kemasyarakatan.edit', compact('kemasyarakatan', 'desas'));
     }
 
     /**
@@ -135,6 +139,7 @@ class KemasyarakatanController extends Controller
     public function update(Request $request, Kemasyarakatan $kemasyarakatan)
     {
         $validator = Validator::make($request->all(), [
+            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             // GEDUNG KANTOR LKD/LKK
             'gedung_lembaga_kemasyarakatan' => 'nullable|in:Ada,Tidak Ada',

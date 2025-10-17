@@ -15,6 +15,12 @@
                         <div class="row mb-4">
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label class="font-weight-bold">Desa</label>
+                                    <p class="form-control-plaintext">{{ $bpd->desa->nama_desa }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label class="font-weight-bold">Tanggal</label>
                                     <p class="form-control-plaintext">{{ $bpd->tanggal->format('d-m-Y') }}</p>
                                 </div>

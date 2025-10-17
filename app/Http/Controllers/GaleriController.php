@@ -2,126 +2,99 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Galeri;
+use App\Models\Photo;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class GaleriController extends Controller
 {
-
-    /**
-     * Menampilkan halaman utama galeri beserta form tambah album.
-     */
     public function index()
     {
-        // --- DATA DUMMY ---
-        $albums = [
-            (object)[
-                'id' => 1,
-                'album' => 'Kegiatan 17 Agustus',
-                'photos_count' => 5
-            ],
-            (object)[
-                'id' => 2,
-                'album' => 'Studi Tur ke Jakarta',
-                'photos_count' => 12
-            ],
-            (object)[
-                'id' => 3,
-                'album' => 'Acara Perpisahan Sekolah',
-                'photos_count' => 8
-            ],
-        ];
-        // --- END DATA DUMMY ---
-
+        $albums = Galeri::withCount('photos')->latest()->get();
         return view('pages.utama.galeri.index', compact('albums'));
     }
 
-    /**
-     * Menyimpan album baru (simulasi).
-     */
     public function store(Request $request)
     {
-        // LOGIKA BACKEND (Dilewati): Validasi dan simpan ke database
-        return redirect()->route('utama.galeri.index')->with('success', 'Album baru berhasil dibuat!');
+        $request->validateWithBag('storeAlbum', [
+            'album' => 'required|string|max:255|unique:galeris,album',
+        ]);
+
+        Galeri::create(['album' => $request->album]);
+        // Diubah dari 'success' menjadi 'message'
+        return redirect()->route('utama.galeri.index')->with('message', 'Album baru berhasil dibuat!');
     }
 
-    /**
-     * Menampilkan detail album beserta foto-fotonya.
-     */
-    public function show(string $id)
+    public function show(Galeri $galeri)
     {
-        // --- DATA DUMMY ---
-        $album = (object)[
-            'id' => $id,
-            'album' => 'Kegiatan 17 Agustus',
-            'photos' => [
-                (object)['id' => 101, 'foto' => 'foto1.jpg'],
-                (object)['id' => 102, 'foto' => 'foto2.jpg'],
-                (object)['id' => 103, 'foto' => 'foto3.jpg'],
-            ]
-        ];
-        // --- END DATA DUMMY ---
-
-        return view('pages.utama.galeri.show', compact('album'));
+        $galeri->load('photos');
+        return view('pages.utama.galeri.show', ['album' => $galeri]);
     }
 
-    /**
-     * Menampilkan form untuk edit nama album.
-     */
-    public function edit(string $id)
+    public function update(Request $request, Galeri $galeri)
     {
-        // --- DATA DUMMY ---
-        $galeri = (object)[
-            'id' => $id,
-            'album' => 'Kegiatan 17 Agustus (Nama Lama)',
-        ];
-        // --- END DATA DUMMY ---
+        $request->validateWithBag('updateAlbum', [
+            'album' => 'required|string|max:255|unique:galeris,album,' . $galeri->id,
+        ]);
 
-        return view('pages.utama.galeri.edit', compact('galeri'));
+        $galeri->update(['album' => $request->album]);
+        // Diubah dari 'success' menjadi 'message'
+        return redirect()->route('utama.galeri.index')->with('message', 'Nama album berhasil diperbarui!');
     }
 
-    /**
-     * Memperbarui nama album (simulasi).
-     */
-    public function update(Request $request, string $id)
+    public function destroy(Galeri $galeri)
     {
-        return redirect()->route('utama.galeri.index')->with('success', 'Nama album berhasil diperbarui!');
+        $galeri->load('photos');
+        foreach ($galeri->photos as $photo) {
+            Storage::delete('public/foto_foto/' . $photo->foto);
+        }
+        $galeri->delete();
+        // Diubah dari 'success' menjadi 'message'
+        return redirect()->route('utama.galeri.index')->with('message', 'Album dan seluruh fotonya berhasil dihapus!');
     }
 
-    /**
-     * Menghapus sebuah album (simulasi).
-     */
-    public function destroy(string $id)
+    /*
+    |--------------------------------------------------------------------------
+    | FUNGSI UNTUK MANAJEMEN FOTO
+    |--------------------------------------------------------------------------
+    */
+
+    public function createPhoto(Galeri $galeri)
     {
-        return redirect()->route('utama.galeri.index')->with('success', 'Album berhasil dihapus!');
+        return view('pages.utama.galeri.photo.create', ['album' => $galeri]);
     }
 
-
-
-    public function createPhoto(string $galeri_id)
+    public function storePhoto(Request $request, Galeri $galeri)
     {
-        // --- DATA DUMMY ---
-        $album = (object)[
-            'id' => $galeri_id,
-            'album' => 'Kegiatan 17 Agustus',
-        ];
-        // --- END DATA DUMMY ---
+        $request->validate([
+            'fupload'   => 'required|array',
+            'fupload.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
 
-        return view('pages.utama.galeri.photo.create', compact('album'));
+        if ($request->hasFile('fupload')) {
+            foreach ($request->file('fupload') as $file) {
+                $filename = $file->hashName();
+                $file->storeAs('public/foto_foto', $filename);
+                Photo::create([
+                    'galeri_id' => $galeri->id,
+                    'foto' => $filename
+                ]);
+            }
+        }
+        // Diubah dari 'success' menjadi 'message'
+        return redirect()->route('utama.galeri.show', $galeri->id)->with('message', 'Foto-foto baru berhasil diunggah!');
     }
 
-    /**
-     * Menyimpan foto baru ke dalam album (simulasi).
-     */
-    public function storePhoto(Request $request, string $galeri_id)
+    public function destroyPhoto(Galeri $galeri, Photo $photo)
     {
-        return redirect()->route('utama.galeri.show', $galeri_id)->with('success', 'Foto berhasil diupload!');
-    }
-
-    /**
-     * Menghapus sebuah foto dari album (simulasi).
-     */
-    public function destroyPhoto(string $galeri_id, string $photo_id)
-    {
-        return redirect()->route('utama.galeri.show', $galeri_id)->with('success', 'Foto berhasil dihapus!');
+        if ($photo->galeri_id != $galeri->id) {
+            abort(404);
+        }
+        Storage::delete('public/foto_foto/' . $photo->foto);
+        $photo->delete();
+        // Diubah dari 'success' menjadi 'message'
+        return redirect()->route('utama.galeri.show', $galeri->id)->with('message', 'Foto berhasil dihapus!');
     }
 }

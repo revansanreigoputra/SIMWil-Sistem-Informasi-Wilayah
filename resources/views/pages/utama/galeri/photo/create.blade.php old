@@ -1,0 +1,169 @@
+@extends('layouts.master')
+
+@section('title', 'Tambah Foto Baru')
+
+@push('addon-style')
+    {{-- Menambahkan CSS kustom untuk area drag & drop dan pratinjau --}}
+    <style>
+        #drop-zone {
+            border: 2px dashed #ccc;
+            border-radius: 0.5rem;
+            padding: 2.5rem;
+            text-align: center;
+            font-size: 1.1rem;
+            color: #6c757d;
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+
+        #drop-zone.drag-over {
+            border-color: #0d6efd;
+            background-color: #e9f2ff;
+        }
+
+        #drop-zone .icon {
+            font-size: 3rem;
+            color: #adb5bd;
+        }
+
+        .preview-container {
+            margin-top: 1.5rem;
+        }
+
+        .preview-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 0.375rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .preview-img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 0.25rem;
+            margin-right: 1rem;
+        }
+
+        .preview-details {
+            flex-grow: 1;
+        }
+
+        .preview-details .name {
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 300px; /* Atur sesuai kebutuhan */
+        }
+    </style>
+@endpush
+
+@section('content')
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Tambah Foto ke Album: <strong>{{ $album->album }}</strong></h3>
+        </div>
+        <div class="card-body">
+            <form action="{{ route('utama.galeri.photo.store', $album->id) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+
+                {{-- Input file tersembunyi, tapi ini yang akan menangani file --}}
+                <input type="file" name="fupload[]" id="fupload" class="d-none" multiple required>
+
+                {{-- Area Drag & Drop yang terlihat oleh user --}}
+                <label for="fupload" id="drop-zone">
+                    <div class="icon">
+                        <i class="bi bi-cloud-arrow-up-fill"></i>
+                    </div>
+                    <strong>Tarik & Lepaskan File di Sini</strong>
+                    <p class="mb-0 text-muted">atau klik untuk memilih file</p>
+                    <small class="form-text text-muted">Anda bisa memilih satu atau beberapa file sekaligus.</small>
+                </label>
+
+                {{-- Kontainer untuk menampilkan pratinjau file yang dipilih --}}
+                <div id="preview-container" class="preview-container"></div>
+
+                <div class="d-flex justify-content-end mt-4">
+                    <a href="{{ route('utama.galeri.index') }}" class="btn btn-warning me-2">Kembali</a>
+                    <button type="submit" class="btn btn-primary">
+                        <i></i> Upload dan Simpan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+@endsection
+
+@push('addon-script')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropZone = document.getElementById('drop-zone');
+            const fileInput = document.getElementById('fupload');
+            const previewContainer = document.getElementById('preview-container');
+
+            // Fungsi untuk membuat pratinjau
+            const handleFiles = (files) => {
+                previewContainer.innerHTML = ''; // Kosongkan pratinjau sebelumnya
+                if (files.length === 0) return;
+
+                // Loop setiap file dan buat elemen pratinjau
+                Array.from(files).forEach(file => {
+                    // Hanya tampilkan pratinjau untuk file gambar
+                    if (!file.type.startsWith('image/')) return;
+
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const previewItem = `
+                            <div class="preview-item">
+                                <img src="${e.target.result}" alt="${file.name}" class="preview-img">
+                                <div class="preview-details">
+                                    <div class="name">${file.name}</div>
+                                    <div class="size text-muted">${formatBytes(file.size)}</div>
+                                </div>
+                            </div>
+                        `;
+                        previewContainer.innerHTML += previewItem;
+                    };
+                    reader.readAsDataURL(file);
+                });
+            };
+
+            // Event listener untuk saat file dipilih melalui dialog
+            fileInput.addEventListener('change', () => {
+                handleFiles(fileInput.files);
+            });
+
+            // Event listener untuk Drag & Drop
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('drag-over');
+            });
+
+            dropZone.addEventListener('dragleave', () => {
+                dropZone.classList.remove('drag-over');
+            });
+
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('drag-over');
+                const droppedFiles = e.dataTransfer.files;
+                fileInput.files = droppedFiles; // Masukkan file yang di-drop ke input
+                handleFiles(droppedFiles); // Tampilkan pratinjau
+            });
+
+            // Fungsi helper untuk format ukuran file
+            function formatBytes(bytes, decimals = 2) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const dm = decimals < 0 ? 0 : decimals;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+            }
+        });
+    </script>
+@endpush

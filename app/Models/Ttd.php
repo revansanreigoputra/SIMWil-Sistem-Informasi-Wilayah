@@ -22,8 +22,9 @@ class Ttd extends Model
 
     protected $casts = [
         'status_aktif' => 'boolean',
+        'created_at' => 'datetime',
     ];
-
+    
     /**
      * Relasi ke PerangkatDesa
      */

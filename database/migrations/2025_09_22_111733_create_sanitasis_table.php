@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('sanitasis', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('desa_id')
+                ->constrained('desas')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+                
             $table->date('tanggal');
             $table->integer('sumur_resapan_air')->default(0);
             $table->integer('mck_umum')->default(0);

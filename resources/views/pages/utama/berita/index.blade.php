@@ -83,7 +83,7 @@
                                 </td>
 
                                 <td class="text-nowrap">
-                                    {{ \Carbon\Carbon::parse($berita->tanggal2)->translatedFormat('d M Y') }}
+                                    {{ \Carbon\Carbon::parse($berita->updated_at)->translatedFormat('d M Y') }}
                                     <small class="d-block text-muted">{{ $berita->created_at->diffForHumans() }}</small>
                                 </td>
 
