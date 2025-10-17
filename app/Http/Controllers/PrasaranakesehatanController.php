@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Desa;
 use App\Models\Jpkesehatan;
 use App\Models\Prasaranakesehatan;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class PrasaranakesehatanController extends Controller
     public function index()
     {
         Gate::authorize('kesehatan.view');
-        $prasaranakesehatans = Prasaranakesehatan::with('jpkesehatan')->latest()->get();
+        $prasaranakesehatans = Prasaranakesehatan::with('jpkesehatan', 'desa')->latest()->get();
         return view('pages.potensi.potensi-prasarana-dan-sarana.kesehatan.index', compact('prasaranakesehatans'));
     }
 
@@ -26,7 +27,8 @@ class PrasaranakesehatanController extends Controller
     {
         Gate::authorize('kesehatan.create');
         $jpkesehatans = Jpkesehatan::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.kesehatan.create', compact('jpkesehatans'));
+        $desas = Desa::all();
+        return view('pages.potensi.potensi-prasarana-dan-sarana.kesehatan.create', compact('jpkesehatans', 'desas'));
     }
 
     /**
@@ -36,6 +38,7 @@ class PrasaranakesehatanController extends Controller
     {
         Gate::authorize('kesehatan.create');
         $request->validate([
+            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'jpkesehatan_id' => 'required|exists:jpkesehatans,id',
             'jumlah' => 'required|integer|min:0',
@@ -65,9 +68,11 @@ class PrasaranakesehatanController extends Controller
     {
         Gate::authorize('kesehatan.update');
         $jpkesehatans = Jpkesehatan::all();
+        $desas = Desa::all();
         return view('pages.potensi.potensi-prasarana-dan-sarana.kesehatan.edit', [
             'prasaranaKesehatan' => $prasarana_kesehatan,
-            'jpkesehatans' => $jpkesehatans
+            'jpkesehatans' => $jpkesehatans,
+            'desas' => $desas
         ]);
     }
 
@@ -78,6 +83,7 @@ class PrasaranakesehatanController extends Controller
     {
         Gate::authorize('kesehatan.update');
         $request->validate([
+            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'jpkesehatan_id' => 'required|exists:jpkesehatans,id',
             'jumlah' => 'required|integer|min:0',
