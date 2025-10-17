@@ -2,17 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Jumlah extends Model
+class PKualitasAngkatanKerja extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'tanggal',
-        'jumlah_laki',
+        'angkatan_kerja',
+        'jumlah_laki_laki',
         'jumlah_perempuan',
         'jumlah_total',
-        'jumlah_kk',
-        'jumlah_penduduk',
-        'desa_id',
     ];
 }
