@@ -14,6 +14,7 @@ class Prasaranaolahraga extends Model
         'tanggal',
         'jpolahraga_id',
         'jumlah',
+        'desa_id',
     ];
 
     protected $casts = [
@@ -27,5 +28,14 @@ class Prasaranaolahraga extends Model
     public function jpolahraga()
     {
         return $this->belongsTo(Jpolahraga::class, 'jpolahraga_id');
+    }
+
+    /**
+     * Relasi ke desa
+     * Setiap prasarana olahraga dimiliki oleh satu desa
+     */
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class, 'desa_id');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Desa;
 use App\Models\Jpolahraga;
 use App\Models\Prasaranaolahraga;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ class PrasaranaolahragaController extends Controller
      */
     public function index()
     {
-        $prasaranaolahragas = Prasaranaolahraga::with('jpolahraga')->latest()->get();
+        $prasaranaolahragas = Prasaranaolahraga::with('jpolahraga', 'desa')->latest()->get();
         return view('pages.potensi.potensi-prasarana-dan-sarana.olahraga.index', compact('prasaranaolahragas'));
     }
 
@@ -23,7 +24,8 @@ class PrasaranaolahragaController extends Controller
     public function create()
     {
         $jpolahragas = Jpolahraga::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.olahraga.create', compact('jpolahragas'));
+        $desas = Desa::all();
+        return view('pages.potensi.potensi-prasarana-dan-sarana.olahraga.create', compact('jpolahragas', 'desas'));
     }
 
     /**
@@ -32,6 +34,7 @@ class PrasaranaolahragaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'jpolahraga_id' => 'required|exists:jpolahragas,id',
             'jumlah' => 'required|integer|min:0',
@@ -56,7 +59,8 @@ class PrasaranaolahragaController extends Controller
     public function edit(Prasaranaolahraga $prasarana_olahraga)
     {
         $jpolahragas = Jpolahraga::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.olahraga.edit', ['prasaranaOlahraga' => $prasarana_olahraga, 'jpolahragas' => $jpolahragas]);
+        $desas = Desa::all();
+        return view('pages.potensi.potensi-prasarana-dan-sarana.olahraga.edit', ['prasaranaOlahraga' => $prasarana_olahraga, 'jpolahragas' => $jpolahragas, 'desas' => $desas]);
     }
 
     /**
@@ -65,6 +69,7 @@ class PrasaranaolahragaController extends Controller
     public function update(Request $request, Prasaranaolahraga $prasarana_olahraga)
     {
         $request->validate([
+            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'jpolahraga_id' => 'required|exists:jpolahragas,id',
             'jumlah' => 'required|integer|min:0',
