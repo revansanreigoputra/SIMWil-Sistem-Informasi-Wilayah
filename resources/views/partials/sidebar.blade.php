@@ -234,9 +234,7 @@
                                         Template Dokumen
                                     </a>
 
-                                    <div
-                                        class="dropdown-menu {{ request()->is('layanan-surat/template*') || request()->is('ttd*') || request()->is('layanan-surat/profil-desa*') ? 'show' : '' }}">
-
+                                    
                                     <div class="dropdown-menu {{ request()->is('layanan-surat/template*') || request()->is('ttd*') || request()->is('layanan-surat/profil-desa*') ? 'show' : '' }}">
 
                                         {{-- Menu-menu anak (inner menus) --}}
@@ -264,7 +262,7 @@
 
                                 {{-- Permohonan Surat --}}
                                 <a class="dropdown-item {{ request()->is('layanan-surat/permohonan*') ? 'active' : '' }}"
-                                    href="{{ route('layanan.permohonan.index') }}">
+                                    href="{{ route('permohonan.index') }}">
                                     Permohonan Surat +
                                 </a>
 

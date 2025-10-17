@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\JpHiburan;
+use App\Models\LayananSurat\JenisSurat;
 use App\Models\User;
 
 use Illuminate\Database\Seeder;
@@ -97,6 +98,7 @@ class DatabaseSeeder extends Seeder
             StatusKepemilikanSeeder::class,
             TempatPerawatanSeeder::class,
             TempatpersalinanSeeder::class,
+            JenisSuratSeeder::class,
         ]);
     }
 }

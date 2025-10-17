@@ -96,7 +96,7 @@
 
 @section('action')
 <a id="create-permohonan-btn"
-    href="{{ route('layanan.permohonan.create')}}"
+    href="{{ route('permohonan.create')}}"
     class="btn btn-primary">
     Buat Dokumen Baru
 </a>
@@ -219,7 +219,7 @@
                                         <td>
                                             {{-- ACTION BUTTONS --}}
                                             @can('permohonan.edit')
-                                            <a href="{{ route('layanan.permohonan.edit', $permohonan->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                            <a href="{{ route('permohonan.edit', $permohonan->id) }}" class="btn btn-sm btn-warning">Edit</a>
                                             @endcan
                                             @can('permohonan.delete')
                                             <button type="button" class="btn btn-danger btn-sm"
@@ -228,7 +228,7 @@
                                                 Hapus
                                             </button>
                                             @endcan
-                                            <a href="{{ route('layanan.permohonan.cetak', $permohonan->id) }}" class="btn btn-sm btn-success" target="_blank">Cetak</a>
+                                            <a href="{{ route('permohonan.cetak', $permohonan->id) }}" class="btn btn-sm btn-success" target="_blank">Cetak</a>
                                         </td>
                                     </tr>
                                     @empty
@@ -257,6 +257,6 @@
     id="delete-confirm-{{ $permohonan->id }}"
     title="Yakin hapus data ini?"
     description="Aksi ini tidak bisa dikembalikan."
-    route="{{ route('layanan.permohonan.destroy', $permohonan) }}"
+    route="{{ route('permohonan.destroy', $permohonan) }}"
     item="{{ $permohonan->nomor_surat }}" />
 @endforeach
