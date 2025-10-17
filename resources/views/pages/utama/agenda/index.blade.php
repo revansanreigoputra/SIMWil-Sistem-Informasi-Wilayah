@@ -3,9 +3,19 @@
 @section('title', 'Agenda Kegiatan')
 
 @section('action')
-    <a href="{{ route('utama.agenda.create') }}" class="btn btn-primary mb-3">Tambah Agenda</a>
-@endsection
+    {{-- Grup Tombol Aksi --}}
+    <div class="d-flex gap-2">
+        {{-- Tombol Tambah --}}
+        <a href="{{ route('utama.agenda.create') }}" class="btn btn-primary">
+            <i></i> Tambah Agenda
+        </a>
 
+        {{-- Tombol Cetak Laporan BARU --}}
+        <a href="{{ route('utama.agenda.cetak') }}" target="_blank" class="btn btn-success">
+            <i></i> Cetak
+        </a>
+    </div>
+@endsection
 @section('content')
     <div class="card">
         <div class="card-body">
