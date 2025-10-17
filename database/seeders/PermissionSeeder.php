@@ -532,6 +532,14 @@ class PermissionSeeder extends Seeder
             'konfliksara.update',
             'konfliksara.delete',
 
+            //Perkelahian
+            'perkelahian.view',
+            'perkelahian.create',
+            'perkelahian.store',
+            'perkelahian.edit',
+            'perkelahian.update',
+            'perkelahian.delete',
+
 
             // potensi permissions
             'potensi.laporan.view',

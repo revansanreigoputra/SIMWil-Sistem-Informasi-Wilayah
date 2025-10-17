@@ -824,6 +824,12 @@
                                                     Konflik Sara
                                                 </a>
                                             @endcan
+                                            @can('perkelahian.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/keamanandanketertiban/perkelahian*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.keamanandanketertiban.perkelahian.index') }}">
+                                                    Perkelahian
+                                                </a>
+                                            @endcan
                                             
                                         </div>
                                     </div>
