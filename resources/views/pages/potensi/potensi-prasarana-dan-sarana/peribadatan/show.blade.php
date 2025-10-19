@@ -13,7 +13,7 @@
                 <div class="d-flex align-items-center">
                     <div>
                         <h3 class="mb-0 fw-bold text-dark">
-                            {{ $prasaranaPeribadatan->tanggal?->format('d F Y') ?? '-' }}
+                            {{ $prasaranaPeribadatan->desa->nama_desa }} - {{ $prasaranaPeribadatan->tanggal?->format('d F Y') ?? '-' }}
                         </h3>
                     </div>
                 </div>

@@ -12,24 +12,39 @@
     </div>
 
     <div class="card-body">
-        <form action="{{ route('perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.update', $pertanggungjawaban->id) }}" method="POST">
+        <form id="formPertanggungjawaban"action="{{ route('perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.update', $pertanggungjawaban->id) }}" method="POST">
             @csrf
             @method('PUT')
 
             <div class="row">
-                <div class="col-md-12">
-                    <div class="mb-3">
-                        <label for="tanggal" class="form-label fw-semibold">
-                            <i class="fas fa-calendar me-1"></i>
-                            Tanggal <span class="text-danger">*</span>
-                        </label>
-                        <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
-                            id="tanggal" name="tanggal"
-                            value="{{ old('tanggal', $pertanggungjawaban->tanggal ? $pertanggungjawaban->tanggal->format('Y-m-d') : '') }}"
-                            required>
-                        @error('tanggal')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                    </div>
-                </div>
+            <!-- Kolom Tanggal -->
+            <div class="col-md-6 mb-3">
+                <label for="tanggal" class="form-label fw-semibold">
+                    <i class="fas fa-calendar me-1"></i>
+                    Tanggal <span class="text-danger">*</span>
+                </label>
+                <input type="date" class="form-control @error('tanggal') is-invalid @enderror" 
+                    id="tanggal" name="tanggal"
+                    value="{{ old('tanggal', \Carbon\Carbon::parse($pertanggungjawaban->tanggal)->format('Y-m-d')) }}" required>
+                @error('tanggal')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <!-- Kolom Desa -->
+            <div class="col-md-6 mb-3">
+                <label for="id_desa" class="form-label fw-semibold">
+                    <i class="fas fa-map-marker-alt me-1"></i>
+                    Desa <span class="text-danger">*</span>
+                </label>
+                <select name="id_desa" id="id_desa" class="form-control" required>
+                    <option value="">-- Pilih Desa --</option>
+                    @foreach ($desas as $item)
+                        <option value="{{ $item->id }}" {{ old('id_desa', $pertanggungjawaban->id_desa) == $item->id ? 'selected' : '' }}>
+                            {{ $item->nama_desa }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
 
             <h5 class="fw-bold text-primary mb-3">Laporan & Informasi</h5>
@@ -140,4 +155,18 @@
         </form>
     </div>
 </div>
+{{-- ✅ JavaScript Validasi Jumlah Pengaduan --}}
+<script>
+document.getElementById('formPertanggungjawaban').addEventListener('submit', function(e) {
+    const diterima = parseInt(document.getElementById('jumlah_pengaduan_diterima').value) || 0;
+    const selesai = parseInt(document.getElementById('jumlah_pengaduan_selesai').value) || 0;
+
+    if (selesai > diterima) {
+        e.preventDefault();
+        alert('Jumlah pengaduan selesai tidak boleh lebih besar dari jumlah pengaduan yang diterima.');
+        document.getElementById('jumlah_pengaduan_selesai').focus();
+    }
+});
+</script>
+
 @endsection

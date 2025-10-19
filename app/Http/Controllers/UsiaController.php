@@ -15,7 +15,8 @@ class UsiaController extends Controller
      */
     public function index()
     {
-        $usias = Usia::orderBy('tanggal', 'desc')->paginate(10);
+        $desaId = session('desa_id');
+        $usias = Usia::where('desa_id', $desaId)->orderBy('tanggal', 'desc')->paginate(10);
         return view('pages.potensi.potensi-sdm.usia.index', compact('usias'));
     }
 
@@ -52,7 +53,9 @@ class UsiaController extends Controller
             $validatedData = $request->validate($rules);
 
             DB::beginTransaction();
-            Usia::create($validatedData);
+            $data = $validatedData;
+            $data['desa_id'] = session('desa_id');
+            Usia::create($data);
             DB::commit();
 
             return redirect()
@@ -107,9 +110,10 @@ class UsiaController extends Controller
 
             $validatedData = $request->validate($rules);
 
-
             DB::beginTransaction();
-            $usia->update($validatedData);
+            $data = $validatedData;
+            $data['desa_id'] = session('desa_id');
+            $usia->update($data);
             DB::commit();
 
             return redirect()->route('potensi.potensi-sdm.usia.index')->with('success', 'Data usia berhasil diperbarui!');

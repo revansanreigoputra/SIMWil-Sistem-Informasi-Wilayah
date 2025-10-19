@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('organisasis', function (Blueprint $table) {
             $table->id();
-             $table->date('tanggal');
+            $table->unsignedBigInteger('id_desa');
+            $table->date('tanggal');
 
             $table->enum('jenis_organisasi', [
                 'Pemberdayaan dan Kesejahteraan Keluarga (PKK)',

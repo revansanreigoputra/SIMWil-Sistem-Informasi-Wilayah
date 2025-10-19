@@ -15,16 +15,33 @@
         <form action="{{ route('perkembangan.peransertamasyarakat.musrenbangdesa.store') }}" method="POST">
             @csrf
 
-            {{-- Input tanggal --}}
-            <div class="mb-3">
+            <div class="row">
+            <!-- Kolom Tanggal -->
+            <div class="col-md-6 mb-3">
                 <label for="tanggal" class="form-label fw-semibold">
-                    <i class="fas fa-calendar-alt me-1"></i> Tanggal <span class="text-danger">*</span>
+                    <i class="fas fa-calendar me-1"></i>
+                    Tanggal <span class="text-danger">*</span>
                 </label>
-                <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
-                       id="tanggal" name="tanggal" value="{{ old('tanggal') }}" required>
+                <input type="date" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal"
+                    name="tanggal" value="{{ old('tanggal') }}" required>
                 @error('tanggal')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
+            </div>
+
+            <!-- Kolom Desa -->
+            <div class="col-md-6 mb-3">
+                <label for="id_desa" class="form-label fw-semibold">
+                    <i class="fas fa-map-marker-alt me-1"></i>
+                    Desa <span class="text-danger">*</span>
+                </label>
+                <select name="id_desa" id="id_desa" class="form-control" required>
+                    <option value="">-- Pilih Desa --</option>
+                    @foreach ($desas as $item)
+                        <option value="{{ $item->id }}">{{ $item->nama_desa }}</option>
+                    @endforeach
+                </select>
+            </div>
             </div>
 
             {{-- Daftar Field Radio --}}
@@ -41,7 +58,7 @@
 
             @foreach ($radioFields as $name => $label)
                 <div class="row mb-3">
-                    <label class="col-sm-9 col-form-label">{{ $label }} *</label>
+                    <label class="col-sm-9 col-form-label">{{ $label }} <span class="text-danger">*</span></label>
                     <div class="col-sm-3">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="{{ $name }}" value="Ada"
@@ -50,7 +67,7 @@
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="{{ $name }}" value="Tidak Ada"
-                                   {{ old($name) === 'Tidak Ada' ? 'checked' : '' }}>
+                                   {{ old($name) === 'Tidak Ada' ? 'checked' : '' }} required>
                             <label class="form-check-label">Tidak Ada</label>
                         </div>
                         @error($name)
@@ -79,11 +96,11 @@
 
             @foreach ($numericFields as $name => $label)
                 <div class="row mb-3">
-                    <label class="col-sm-9 col-form-label">{{ $label }}</label>
+                    <label class="col-sm-9 col-form-label">{{ $label }} <span class="text-danger">*</span></label>
                     <div class="col-sm-3">
                         <input type="number" name="{{ $name }}" min="0"
                                class="form-control @error($name) is-invalid @enderror"
-                               value="{{ old($name) }}">
+                               value="{{ old($name) }}" required>
                         @error($name)
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

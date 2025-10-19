@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('pembinaanprovinsis', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('id_desa');
             $table->date('tanggal');
             $table->enum('pedoman_pelaksanaan_tugas', ['Ada', 'Tidak Ada']);
             $table->enum('pedoman_bantuan_keuangan', ['Ada', 'Tidak Ada']);

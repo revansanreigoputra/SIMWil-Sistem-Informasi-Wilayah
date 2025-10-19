@@ -10,6 +10,7 @@ class PrasaranaPeribadatan extends Model
     use HasFactory;
 
     protected $fillable = [
+        'desa_id',
         'tanggal',
         'tempat_ibadah_id',
         'jumlah',
@@ -22,5 +23,10 @@ class PrasaranaPeribadatan extends Model
     public function tempatIbadah()
     {
         return $this->belongsTo(TempatIbadah::class);
+    }
+
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class);
     }
 }

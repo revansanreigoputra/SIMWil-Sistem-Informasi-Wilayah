@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Glosarium; // Import model Glosarium
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class GlosariumController extends Controller
 {
@@ -69,4 +70,20 @@ class GlosariumController extends Controller
         return redirect()->route('utama.glosarium.index')
             ->with('message', 'Istilah berhasil dihapus.');
     }
+    public function cetak()
+    {
+        // 1. Ambil semua data glosarium
+        $glosarium = Glosarium::all();
+
+        // 2. Load view untuk PDF dan kirim data ke dalamnya
+        //    (Pastikan Anda sudah membuat file view di langkah selanjutnya)
+        $pdf = PDF::loadView('pages.utama.glosarium.cetak', compact('glosarium'));
+
+        // 3. Atur orientasi kertas dan nama file
+        $pdf->setPaper('a4', 'portrait');
+
+        // 4. Tampilkan PDF di browser dengan nama file 'laporan-glosarium.pdf'
+        return $pdf->stream('laporan-glosarium.pdf');
+    }
 }
+

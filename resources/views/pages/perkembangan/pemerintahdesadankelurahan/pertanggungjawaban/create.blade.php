@@ -12,37 +12,56 @@
     </div>
 
     <div class="card-body">
-        <form action="{{ route('perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.store') }}" method="POST">
+        <form id="formPertanggungjawaban" action="{{ route('perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.store') }}" method="POST">
             @csrf
 
-            {{-- Tanggal --}}
-            <div class="mb-4">
-                <label for="tanggal" class="form-label fw-semibold">
-                    <i class="fas fa-calendar-alt me-1"></i> Tanggal <span class="text-danger">*</span>
-                </label>
-                <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
-                    id="tanggal" name="tanggal" value="{{ old('tanggal') }}" required>
-                @error('tanggal')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+            <div class="row">
+                <!-- Kolom Tanggal -->
+                <div class="col-md-6 mb-3">
+                    <label for="tanggal" class="form-label fw-semibold">
+                        <i class="fas fa-calendar me-1"></i>
+                        Tanggal <span class="text-danger">*</span>
+                    </label>
+                    <input type="date" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal"
+                        name="tanggal" value="{{ old('tanggal') }}" required>
+                    @error('tanggal')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <!-- Kolom Desa -->
+                <div class="col-md-6 mb-3">
+                    <label for="id_desa" class="form-label fw-semibold">
+                        <i class="fas fa-map-marker-alt me-1"></i>
+                        Desa <span class="text-danger">*</span>
+                    </label>
+                    <select name="id_desa" id="id_desa" class="form-control" required>
+                        <option value="">-- Pilih Desa --</option>
+                        @foreach ($desas as $item)
+                            <option value="{{ $item->id }}">{{ $item->nama_desa }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
 
             {{-- Bagian Laporan & Informasi --}}
             <h5 class="fw-bold text-primary border-bottom pb-2 mb-3">
                 <i class="fas fa-file-alt me-1"></i> Laporan & Informasi
             </h5>
-            <div class="row g-3">
+            <div class="row">
                 <div class="col-md-6">
-                    <label class="form-label fw-semibold">Penyampaian Laporan Kepala Desa ke BPD</label>
+                    <label class="form-label fw-semibold">
+                        Penyampaian Laporan Kepala Desa ke BPD <span class="text-danger">*</span>
+                    </label>
                     <div class="d-flex gap-4">
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="penyampaian_laporan" value="ada"
-                                {{ old('penyampaian_laporan') == 'ada' ? 'checked' : '' }}>
+                                {{ old('penyampaian_laporan') == 'ada' ? 'checked' : '' }} required>
                             <label class="form-check-label">Ada</label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="penyampaian_laporan" value="tidak_ada"
-                                {{ old('penyampaian_laporan') == 'tidak_ada' ? 'checked' : '' }}>
+                                {{ old('penyampaian_laporan') == 'tidak_ada' ? 'checked' : '' }} required>
                             <label class="form-check-label">Tidak Ada</label>
                         </div>
                     </div>
@@ -50,44 +69,48 @@
 
                 <div class="col-md-6">
                     <label for="jumlah_informasi" class="form-label fw-semibold">
-                        Jumlah Informasi yang Disampaikan
+                        Jumlah Informasi yang Disampaikan <span class="text-danger">*</span>
                     </label>
                     <input type="number" class="form-control @error('jumlah_informasi') is-invalid @enderror"
-                        name="jumlah_informasi" id="jumlah_informasi" value="{{ old('jumlah_informasi') }}">
+                        name="jumlah_informasi" id="jumlah_informasi" value="{{ old('jumlah_informasi') }}" required>
                     @error('jumlah_informasi')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
             </div>
 
-            <div class="row g-3 mt-3">
+            <div class="row">
                 <div class="col-md-6">
-                    <label class="form-label fw-semibold">Status Laporan Pertanggungjawaban</label>
+                    <label class="form-label fw-semibold">
+                        Status Laporan Pertanggungjawaban <span class="text-danger">*</span>
+                    </label>
                     <div class="d-flex gap-4">
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="status_laporan" value="diterima"
-                                {{ old('status_laporan') == 'diterima' ? 'checked' : '' }}>
+                                {{ old('status_laporan') == 'diterima' ? 'checked' : '' }} required>
                             <label class="form-check-label">Diterima</label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="status_laporan" value="ditolak"
-                                {{ old('status_laporan') == 'ditolak' ? 'checked' : '' }}>
+                                {{ old('status_laporan') == 'ditolak' ? 'checked' : '' }} required>
                             <label class="form-check-label">Ditolak</label>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label fw-semibold">Laporan Kinerja Kepala Desa/Lurah</label>
+                    <label class="form-label fw-semibold">
+                        Laporan Kinerja Kepala Desa/Lurah <span class="text-danger">*</span>
+                    </label>
                     <div class="d-flex gap-4">
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="laporan_kinerja" value="diterima"
-                                {{ old('laporan_kinerja') == 'diterima' ? 'checked' : '' }}>
+                                {{ old('laporan_kinerja') == 'diterima' ? 'checked' : '' }} required>
                             <label class="form-check-label">Diterima</label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="laporan_kinerja" value="ditolak"
-                                {{ old('laporan_kinerja') == 'ditolak' ? 'checked' : '' }}>
+                                {{ old('laporan_kinerja') == 'ditolak' ? 'checked' : '' }} required>
                             <label class="form-check-label">Ditolak</label>
                         </div>
                     </div>
@@ -98,13 +121,13 @@
             <h5 class="fw-bold text-primary border-bottom pb-2 mt-4 mb-3">
                 <i class="fas fa-bullhorn me-1"></i> Pengaduan & Media
             </h5>
-            <div class="row g-3">
+            <div class="row">
                 <div class="col-md-4">
                     <label for="jumlah_media_informasi" class="form-label fw-semibold">
-                        Jumlah Media Informasi
+                        Jumlah Media Informasi <span class="text-danger">*</span>
                     </label>
                     <input type="number" class="form-control @error('jumlah_media_informasi') is-invalid @enderror"
-                        name="jumlah_media_informasi" id="jumlah_media_informasi" value="{{ old('jumlah_media_informasi') }}">
+                        name="jumlah_media_informasi" id="jumlah_media_informasi" value="{{ old('jumlah_media_informasi') }}" required>
                     @error('jumlah_media_informasi')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -112,10 +135,10 @@
 
                 <div class="col-md-4">
                     <label for="jumlah_pengaduan_diterima" class="form-label fw-semibold">
-                        Jumlah Pengaduan Diterima Kepala desa/Lurah
+                        Jumlah Pengaduan Diterima Kepala desa/Lurah <span class="text-danger">*</span>
                     </label>
                     <input type="number" class="form-control @error('jumlah_pengaduan_diterima') is-invalid @enderror"
-                        name="jumlah_pengaduan_diterima" id="jumlah_pengaduan_diterima" value="{{ old('jumlah_pengaduan_diterima') }}">
+                        name="jumlah_pengaduan_diterima" id="jumlah_pengaduan_diterima" value="{{ old('jumlah_pengaduan_diterima') }}" required>
                     @error('jumlah_pengaduan_diterima')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -123,10 +146,10 @@
 
                 <div class="col-md-4">
                     <label for="jumlah_pengaduan_selesai" class="form-label fw-semibold">
-                        Jumlah Pengaduan Selesai
+                        Jumlah Pengaduan Selesai <span class="text-danger">*</span>
                     </label>
                     <input type="number" class="form-control @error('jumlah_pengaduan_selesai') is-invalid @enderror"
-                        name="jumlah_pengaduan_selesai" id="jumlah_pengaduan_selesai" value="{{ old('jumlah_pengaduan_selesai') }}">
+                        name="jumlah_pengaduan_selesai" id="jumlah_pengaduan_selesai" value="{{ old('jumlah_pengaduan_selesai') }}" required>
                     @error('jumlah_pengaduan_selesai')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -153,4 +176,18 @@
         </form>
     </div>
 </div>
+{{-- ✅ JavaScript Validasi Jumlah Pengaduan --}}
+<script>
+document.getElementById('formPertanggungjawaban').addEventListener('submit', function(e) {
+    const diterima = parseInt(document.getElementById('jumlah_pengaduan_diterima').value) || 0;
+    const selesai = parseInt(document.getElementById('jumlah_pengaduan_selesai').value) || 0;
+
+    if (selesai > diterima) {
+        e.preventDefault();
+        alert('Jumlah pengaduan selesai tidak boleh lebih besar dari jumlah pengaduan yang diterima.');
+        document.getElementById('jumlah_pengaduan_selesai').focus();
+    }
+});
+</script>
+
 @endsection
