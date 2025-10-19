@@ -10,13 +10,13 @@ class WabahPenyakit extends Model
     use HasFactory;
 
     protected $table = 'wabah_penyakit';
-
-    protected $fillable = [
-        'tanggal',
-        'jenis_wabah_id',
-        'jumlah_kejadian_tahun_ini',
-        'jumlah_meninggal',
-    ];
+protected $fillable = [
+    'desa_id',
+    'tanggal',
+    'jenis_wabah_id',
+    'jumlah_kejadian_tahun_ini',
+    'jumlah_meninggal',
+];
 
     protected $casts = [
         'tanggal' => 'date',
@@ -26,4 +26,10 @@ class WabahPenyakit extends Model
     {
         return $this->belongsTo(JenisWabah::class, 'jenis_wabah_id');
     }
+    
+    public function desa()
+{
+    return $this->belongsTo(Desa::class, 'desa_id');
+}
+
 }

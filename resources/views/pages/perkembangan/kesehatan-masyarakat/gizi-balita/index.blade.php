@@ -18,6 +18,7 @@
                     <thead class="text-center">
                         <tr>
                             <th>No</th>
+                            <th>Desa</th>
                             <th>Tanggal</th>
                             <th>Bergizi Buruk</th>
                             <th>Bergizi Kurang</th>
@@ -31,6 +32,7 @@
                         @foreach ($giziBalita as $item)
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
+                                <td class="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
                                 <td class="text-center">{{ $item->tanggal ? $item->tanggal->format('d-m-Y') : '-' }}</td>
                                 <td class="text-center">{{ $item->bergizi_buruk }}</td>
                                 <td class="text-center">{{ $item->bergizi_kurang }}</td>
@@ -82,6 +84,19 @@
                                                             <button type="button" class="btn-close btn-close-white"
                                                                 data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
+                                                         <div class="mb-3">
+                                                                <label for="desa_id" class="form-label">Desa *</label>
+                                                                <select name="desa_id" class="form-control" required>
+                                                                    <option value="">-- Pilih Desa --</option>
+                                                                    @foreach ($desas as $desa)
+                                                                        <option value="{{ $desa->id }}"
+                                                                            {{ $item->desa_id == $desa->id ? 'selected' : '' }}>
+                                                                            {{ $desa->nama_desa }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+
                                                         <div class="modal-body">
                                                             <div class="row g-3">
                                                                 <div class="col-md-6">
@@ -168,50 +183,62 @@
     </div>
 
     {{-- Modal Tambah Data --}}
-    @can('gizi-balita.create')
-        <div class="modal fade" id="tambahModal" tabindex="-1" aria-labelledby="tambahModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <form action="{{ route('perkembangan.kesehatan-masyarakat.gizi-balita.store') }}" method="POST">
-                        @csrf
-                        <div class="modal-header bg-primary text-white">
-                            <h5 class="modal-title" id="tambahModalLabel">Tambah Data Gizi Balita</h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+@can('gizi-balita.create')
+    <div class="modal fade" id="tambahModal" tabindex="-1" aria-labelledby="tambahModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <form action="{{ route('perkembangan.kesehatan-masyarakat.gizi-balita.store') }}" method="POST">
+                    @csrf
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title" id="tambahModalLabel">Tambah Data Gizi Balita</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="desa_id" class="form-label">Desa *</label>
+                            <select name="desa_id" class="form-control" required>
+                                <option value="">-- Pilih Desa --</option>
+                                @foreach ($desas as $desa)
+                                    <option value="{{ $desa->id }}" {{ old('desa_id') == $desa->id ? 'selected' : '' }}>
+                                        {{ $desa->nama_desa }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="modal-body">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label class="form-label">Tanggal</label>
-                                    <input type="date" name="tanggal" class="form-control" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Bergizi Buruk</label>
-                                    <input type="number" name="bergizi_buruk" class="form-control" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Bergizi Kurang</label>
-                                    <input type="number" name="bergizi_kurang" class="form-control" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Bergizi Baik</label>
-                                    <input type="number" name="bergizi_baik" class="form-control" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Bergizi Lebih</label>
-                                    <input type="number" name="bergizi_lebih" class="form-control" required>
-                                </div>
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Tanggal</label>
+                                <input type="date" name="tanggal" class="form-control" value="{{ old('tanggal') }}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Bergizi Buruk</label>
+                                <input type="number" name="bergizi_buruk" class="form-control" value="{{ old('bergizi_buruk', 0) }}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Bergizi Kurang</label>
+                                <input type="number" name="bergizi_kurang" class="form-control" value="{{ old('bergizi_kurang', 0) }}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Bergizi Baik</label>
+                                <input type="number" name="bergizi_baik" class="form-control" value="{{ old('bergizi_baik', 0) }}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Bergizi Lebih</label>
+                                <input type="number" name="bergizi_lebih" class="form-control" value="{{ old('bergizi_lebih', 0) }}" required>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
             </div>
         </div>
-    @endcan
+    </div>
+@endcan
 @endsection
 
 @push('addon-script')

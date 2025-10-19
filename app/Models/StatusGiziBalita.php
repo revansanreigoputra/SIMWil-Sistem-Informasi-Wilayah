@@ -12,6 +12,7 @@ class StatusGiziBalita extends Model
     protected $table = 'status_gizi_balita';
 
     protected $fillable = [
+        'desa_id',
         'tanggal',
         'bergizi_buruk',
         'bergizi_baik',
@@ -23,4 +24,9 @@ class StatusGiziBalita extends Model
     protected $casts = [
         'tanggal' => 'date',
     ];
+
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class, 'desa_id');
+    }
 }

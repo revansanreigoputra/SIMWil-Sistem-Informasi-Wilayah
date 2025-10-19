@@ -12,15 +12,22 @@ class CakupanImunisasi extends Model
     protected $table = 'cakupan_imunisasis';
 
     protected $fillable = [
-        'tanggal',
-        'bayi_usia_2_bulan',
-        'bayi_2_bulan_dpt1_bcg_polio1',
-        'bayi_usia_3_bulan',
-        'bayi_3_bulan_dpt2_polio2',
-        'bayi_usia_4_bulan',
-        'bayi_4_bulan_dpt3_polio3',
-        'bayi_usia_9_bulan',
-        'bayi_9_bulan_campak',
-        'bayi_imunisasi_cacar',
-    ];
+    'desa_id',
+    'tanggal',
+    'bayi_usia_2_bulan',
+    'bayi_2_bulan_dpt1_bcg_polio1',
+    'bayi_usia_3_bulan',
+    'bayi_3_bulan_dpt2_polio2',
+    'bayi_usia_4_bulan',
+    'bayi_4_bulan_dpt3_polio3',
+    'bayi_usia_9_bulan',
+    'bayi_9_bulan_campak',
+    'bayi_imunisasi_cacar',
+];
+
+public function desa()
+{
+    return $this->belongsTo(Desa::class);
+}
+
 }

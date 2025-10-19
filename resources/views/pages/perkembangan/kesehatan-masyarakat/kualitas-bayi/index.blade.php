@@ -18,6 +18,7 @@
                     <thead>
                        <tr>
                         <th class="text-center">No</th>
+                        <th>Desa</th>
                         <th>Tanggal</th>
                         <th>Jml Keguguran</th>
                         <th>Jml Lahir</th>
@@ -34,6 +35,7 @@
                         @foreach ($kualitas as $item)
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
+                                <td class="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
                                 <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
                                 <td class="text-center">{{ $item->jumlah_keguguran_kandungan }}</td>
                                 <td class="text-center">{{ $item->jumlah_bayi_lahir }}</td>

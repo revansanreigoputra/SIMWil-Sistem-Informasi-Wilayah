@@ -12,6 +12,7 @@ class KualitasPersalinan extends Model
     protected $table = 'kualitas_persalinans';
 
     protected $fillable = [
+        'desa_id',
         'tanggal',
         'persalinan_rumah_sakit_umum',
         'persalinan_puskesmas',
@@ -29,4 +30,10 @@ class KualitasPersalinan extends Model
         'ditolong_dukun_bersalin',
         'ditolong_keluarga',
     ];
+
+public function desa()
+{
+    return $this->belongsTo(Desa::class);
+}
+
 }

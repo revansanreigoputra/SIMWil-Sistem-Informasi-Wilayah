@@ -19,6 +19,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Desa</th>
                             <th>Tanggal</th>
                             <th>Jumlah Ibu Hamil</th>
                             <th>Total Pemeriksaan</th>
@@ -32,6 +33,7 @@
                         @foreach ($kualitas as $item)
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
+                                <td class="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
                                 <td class="text-center">{{ $item->tanggal }}</td>
                                 <td class="text-center">{{ $item->jumlah_ibu_hamil }}</td>
                                 <td class="text-center">{{ $item->total_pemeriksaan }}</td>

@@ -19,6 +19,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Desa</th>
                             <th>Tanggal</th>
                             <th>Jenis Wabah</th>
                             <th>Jumlah Kejadian Tahun Ini</th>
@@ -30,6 +31,7 @@
                         @foreach ($wabahPenyakit as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
+                                <td class="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
                                 <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
                                 <td class="text-center">{{ $item->jenisWabah->nama ?? '-' }}</td>
                                 <td class="text-center">{{ number_format($item->jumlah_kejadian_tahun_ini, 0, ',', '.') }}</td>
@@ -37,7 +39,7 @@
                                 <td>
                                     @canany(['wabah-penyakit.edit', 'wabah-penyakit.delete', 'wabah-penyakit.show'])
                                         <div class="d-flex gap-1 justify-content-center">
-                                            
+
                                             {{-- TOMBOL DETAIL --}}
                                             @can('wabah-penyakit.show')
                                                 <a href="{{ route('perkembangan.kesehatan-masyarakat.wabah-penyakit.show', $item->id) }}" 
@@ -73,6 +75,21 @@
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                         </div>
                                                         <div class="modal-body">
+
+                                                            {{-- Input Desa --}}
+                                                            <div class="mb-3">
+                                                                <label for="desa_id" class="form-label">Desa *</label>
+                                                                <select name="desa_id" class="form-control" required>
+                                                                    <option value="">-- Pilih Desa --</option>
+                                                                    @foreach ($desas as $desa)
+                                                                        <option value="{{ $desa->id }}"
+                                                                            {{ $item->desa_id == $desa->id ? 'selected' : '' }}>
+                                                                            {{ $desa->nama_desa }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+
                                                             <div class="mb-3">
                                                                 <label>Tanggal *</label>
                                                                 <input type="date" name="tanggal" class="form-control" 
@@ -158,6 +175,18 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
+
+                        {{-- Input Desa --}}
+                        <div class="mb-3">
+                            <label for="desa_id" class="form-label">Desa *</label>
+                            <select name="desa_id" class="form-control" required>
+                                <option value="">-- Pilih Desa --</option>
+                                @foreach ($desas as $desa)
+                                    <option value="{{ $desa->id }}">{{ $desa->nama_desa }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <div class="mb-3">
                             <label>Tanggal *</label>
                             <input type="date" name="tanggal" class="form-control" required>

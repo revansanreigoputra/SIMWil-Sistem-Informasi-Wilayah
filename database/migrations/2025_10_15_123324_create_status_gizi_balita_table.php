@@ -9,6 +9,7 @@ return new class extends Migration {
     {
         Schema::create('status_gizi_balita', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('desa_id')->constrained('desas')->onDelete('cascade');
             $table->date('tanggal');
             $table->integer('bergizi_buruk')->default(0);
             $table->integer('bergizi_baik')->default(0);

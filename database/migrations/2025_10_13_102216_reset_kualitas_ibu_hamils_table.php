@@ -12,6 +12,11 @@ return new class extends Migration
 
         Schema::create('kualitas_ibu_hamils', function (Blueprint $table) {
             $table->id();
+
+            // 🔹 Tambahkan kolom desa_id sebagai foreign key
+            $table->unsignedBigInteger('desa_id')->nullable();
+            $table->foreign('desa_id')->references('id')->on('desas')->onDelete('set null');
+
             $table->date('tanggal')->nullable();
             $table->integer('jumlah_ibu_hamil')->default(0);
             $table->integer('total_pemeriksaan')->default(0);

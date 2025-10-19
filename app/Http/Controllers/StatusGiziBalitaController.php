@@ -3,19 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\StatusGiziBalita;
+use App\Models\Desa;
 use Illuminate\Http\Request;
 
 class StatusGiziBalitaController extends Controller
 {
-    public function index()
-    {
-        $giziBalita = StatusGiziBalita::latest()->get();
-        return view('pages.perkembangan.kesehatan-masyarakat.gizi-balita.index', compact('giziBalita'));
-    }
+   public function index()
+{
+    $giziBalita = StatusGiziBalita::latest()->get();
+    $desas = \App\Models\Desa::all(); // ✅ ambil semua data desa
+
+    return view('pages.perkembangan.kesehatan-masyarakat.gizi-balita.index', compact('giziBalita', 'desas'));
+}
 
     public function store(Request $request)
     {
         $request->validate([
+            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'bergizi_buruk' => 'required|numeric',
             'bergizi_baik' => 'required|numeric',
@@ -26,6 +30,7 @@ class StatusGiziBalitaController extends Controller
         $jumlah_balita = $request->bergizi_buruk + $request->bergizi_baik + $request->bergizi_kurang + $request->bergizi_lebih;
 
         StatusGiziBalita::create([
+            'desa_id' => $request->desa_id,
             'tanggal' => $request->tanggal,
             'bergizi_buruk' => $request->bergizi_buruk,
             'bergizi_baik' => $request->bergizi_baik,
@@ -42,6 +47,7 @@ class StatusGiziBalitaController extends Controller
         $data = StatusGiziBalita::findOrFail($id);
 
         $request->validate([
+            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'bergizi_buruk' => 'required|numeric',
             'bergizi_baik' => 'required|numeric',
@@ -52,6 +58,7 @@ class StatusGiziBalitaController extends Controller
         $jumlah_balita = $request->bergizi_buruk + $request->bergizi_baik + $request->bergizi_kurang + $request->bergizi_lebih;
 
         $data->update([
+            'desa_id' => $request->desa_id,
             'tanggal' => $request->tanggal,
             'bergizi_buruk' => $request->bergizi_buruk,
             'bergizi_baik' => $request->bergizi_baik,
@@ -64,11 +71,12 @@ class StatusGiziBalitaController extends Controller
     }
 
     public function edit($id)
-{
-    $data = StatusGiziBalita::findOrFail($id);
-    return view('pages.perkembangan.kesehatan-masyarakat.gizi-balita.edit', compact('data'));
-}
+    {
+        $data = StatusGiziBalita::findOrFail($id);
+        $desas = Desa::orderBy('nama_desa')->get();
 
+        return view('pages.perkembangan.kesehatan-masyarakat.gizi-balita.edit', compact('data', 'desas'));
+    }
 
     public function destroy($id)
     {
@@ -80,10 +88,7 @@ class StatusGiziBalitaController extends Controller
 
     public function show($id)
     {
-        $data = StatusGiziBalita::findOrFail($id);
+        $data = StatusGiziBalita::with('desa')->findOrFail($id);
         return view('pages.perkembangan.kesehatan-masyarakat.gizi-balita.show', compact('data'));
     }
 }
-
-
-

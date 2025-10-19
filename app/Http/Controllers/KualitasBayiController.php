@@ -3,24 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Models\KualitasBayi;
+use App\Models\Desa; //  Tambahkan model Desa
 use Illuminate\Http\Request;
 
 class KualitasBayiController extends Controller
 {
     public function index()
     {
-        $kualitas = KualitasBayi::latest()->get();
+        //  Tampilkan data dengan relasi desa
+        $kualitas = KualitasBayi::with('desa')->latest()->get();
         return view('pages.perkembangan.kesehatan-masyarakat.kualitas-bayi.index', compact('kualitas'));
     }
 
     public function create()
     {
-        return view('pages.perkembangan.kesehatan-masyarakat.kualitas-bayi.create');
+        //  Ambil semua desa untuk dropdown
+        $desas = Desa::all();
+        return view('pages.perkembangan.kesehatan-masyarakat.kualitas-bayi.create', compact('desas'));
     }
 
     public function store(Request $request)
     {
+        // Tambahkan validasi desa_id
         $request->validate([
+            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'jumlah_keguguran_kandungan' => 'required|integer|min:0',
             'jumlah_bayi_lahir' => 'required|integer|min:0',
@@ -38,19 +44,23 @@ class KualitasBayiController extends Controller
 
     public function show($id)
     {
-        $data = KualitasBayi::findOrFail($id);
+        // Sertakan relasi desa
+        $data = KualitasBayi::with('desa')->findOrFail($id);
         return view('pages.perkembangan.kesehatan-masyarakat.kualitas-bayi.show', compact('data'));
     }
 
     public function edit($id)
     {
         $data = KualitasBayi::findOrFail($id);
-        return view('pages.perkembangan.kesehatan-masyarakat.kualitas-bayi.edit', compact('data'));
+        $desas = Desa::all(); //  Untuk dropdown di edit
+        return view('pages.perkembangan.kesehatan-masyarakat.kualitas-bayi.edit', compact('data', 'desas'));
     }
 
     public function update(Request $request, $id)
     {
+        //  Validasi termasuk desa_id
         $request->validate([
+            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'jumlah_keguguran_kandungan' => 'required|integer|min:0',
             'jumlah_bayi_lahir' => 'required|integer|min:0',

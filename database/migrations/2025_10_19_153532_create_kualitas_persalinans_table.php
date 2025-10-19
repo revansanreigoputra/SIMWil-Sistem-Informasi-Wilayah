@@ -8,10 +8,13 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::dropIfExists('kualitas_persalinans');
-
         Schema::create('kualitas_persalinans', function (Blueprint $table) {
             $table->id();
+
+            // ✅ Tambahan kolom id desa
+            $table->unsignedBigInteger('desa_id')->nullable();
+            $table->foreign('desa_id')->references('id')->on('desas')->onDelete('cascade');
+
             $table->date('tanggal')->nullable();
 
             // Kolom utama

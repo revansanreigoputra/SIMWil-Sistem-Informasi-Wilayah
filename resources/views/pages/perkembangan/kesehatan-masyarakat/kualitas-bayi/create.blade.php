@@ -10,6 +10,17 @@
     <div class="card-body">
         <form action="{{ route('perkembangan.kesehatan-masyarakat.kualitas-bayi.store') }}" method="POST">
             @csrf
+
+             <div class="col-md-6 mb-3">
+            <label for="desa_id">Desa</label>
+            <select name="desa_id" class="form-control" required>
+                <option value="">-- Pilih Desa --</option>
+                @foreach ($desas as $desa)
+                    <option value="{{ $desa->id }}">{{ $desa->nama_desa }}</option>
+                @endforeach
+            </select>
+        </div>
+        
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="tanggal" class="form-label">Tanggal</label>
@@ -25,7 +36,7 @@
                 </div>
                   <div class="col-md-6 mb-3">
                     <label for="jumlah_bayi_lahir_mati" class="form-label">Jumlah bayi lahir mati</label>
-                    <input type="number" name="jumlah_bayi_lahir" class="form-control" value="0" required>
+                    <input type="number" name="jumlah_bayi_lahir_mati" class="form-control" value="0" required>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="jumlah_bayi_lahir_hidup" class="form-label">Jumlah Bayi Lahir Hidup</label>

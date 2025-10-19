@@ -19,6 +19,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Desa</th>
                             <th>Tanggal</th>
                             <th>Persalinan RS Umum</th>
                             <th>Persalinan Puskesmas</th>
@@ -31,6 +32,7 @@
                         @foreach ($kualitas as $item)
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
+                                 <td class="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
                                 <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
                                 <td class="text-center">{{ number_format($item->persalinan_rumah_sakit_umum ?? 0) }}</td>
                                 <td class="text-center">{{ number_format($item->persalinan_puskesmas ?? 0) }}</td>

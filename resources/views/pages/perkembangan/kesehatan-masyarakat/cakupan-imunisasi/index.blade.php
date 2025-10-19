@@ -18,6 +18,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Desa</th>
                         <th>Tanggal</th>
                         <th>Bayi 2 Bln</th>
                         <th>DPT1+BCG+Polio1</th>
@@ -35,6 +36,7 @@
                     @foreach ($cakupan as $item)
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
+                            <td class="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
                             <td class="text-center">{{ $item->tanggal }}</td>
                             <td class="text-center">{{ $item->bayi_usia_2_bulan }}</td>
                             <td class="text-center">{{ $item->bayi_2_bulan_dpt1_bcg_polio1 }}</td>
