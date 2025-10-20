@@ -12,27 +12,28 @@ class SaranaTransportasiController extends Controller
 {
     public function index()
     {
-        $saranaTransportasis = SaranaTransportasi::with(['desa', 'kategori', 'jenis'])->get();
+        $desaId = session('desa_id');
+        $saranaTransportasis = SaranaTransportasi::where('desa_id', $desaId)->with(['desa', 'kategori', 'jenis'])->get();
         return view('pages.potensi.potensi-prasarana-dan-sarana.angkutan.index', compact('saranaTransportasis'));
     }
 
     public function create()
     {
-        $desas = Desa::all();
         $kategoriTransportasis = KategoriTransportasi::all();
         $jenisTransportasis = JenisTransportasi::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.angkutan.create', compact('desas', 'kategoriTransportasis', 'jenisTransportasis'));
+        return view('pages.potensi.potensi-prasarana-dan-sarana.angkutan.create', compact('kategoriTransportasis', 'jenisTransportasis'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'kategori_id' => 'required|exists:kategori_transportasis,id',
             'jenis_id' => 'required|exists:jenis_transportasis,id',
             'jumlah' => 'required|integer|min:0',
         ]);
+
+        $validated['desa_id'] = session('desa_id');
 
         SaranaTransportasi::create($validated);
 
@@ -47,16 +48,14 @@ class SaranaTransportasiController extends Controller
 
     public function edit(SaranaTransportasi $saranaTransportasi)
     {
-        $desas = Desa::all();
         $kategoriTransportasis = KategoriTransportasi::all();
         $jenisTransportasis = JenisTransportasi::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.angkutan.edit', compact('saranaTransportasi', 'desas', 'kategoriTransportasis', 'jenisTransportasis'));
+        return view('pages.potensi.potensi-prasarana-dan-sarana.angkutan.edit', compact('saranaTransportasi', 'kategoriTransportasis', 'jenisTransportasis'));
     }
 
     public function update(Request $request, SaranaTransportasi $saranaTransportasi)
     {
         $validated = $request->validate([
-            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'kategori_id' => 'required|exists:kategori_transportasis,id',
             'jenis_id' => 'required|exists:jenis_transportasis,id',
