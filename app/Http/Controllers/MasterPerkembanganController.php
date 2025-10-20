@@ -58,18 +58,16 @@ class MasterPerkembanganController extends Controller
         $data = collect();
         $provinsiList = collect();
 
-        if ($activeTab) {
-            $model = $this->getModelForTab($activeTab);
-            $data = $model::orderBy('id')->get();
-        }
         if ($activeTab === 'provinsi') {
             $data = Provinsi::orderBy('id')->get();
         } elseif ($activeTab === 'kabupaten_kota') {
             $data = KabupatenKota::orderBy('id')->get();
             $provinsiList = Provinsi::orderBy('nama')->get();
-        } else {
-            $data = collect();
+        } elseif ($activeTab) {
+            $model = $this->getModelForTab($activeTab);
+            $data = $model::orderBy('id')->get();
         }
+
         return view('pages.master-perkembangan.index', compact('menu', 'activeBagian', 'activeTab', 'data', 'provinsiList'));
     }
     
