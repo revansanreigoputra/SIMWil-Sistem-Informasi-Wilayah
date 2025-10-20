@@ -9,7 +9,7 @@
         </div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route('layanan.permohonan.update', $permohonan->id) }}">
+            <form method="POST" action="{{ route('permohonan.update', $permohonan->id) }}">
                 @csrf
                 @method('PUT')
 
@@ -49,27 +49,15 @@
                         <option value="">-- Pilih Anggota Keluarga/Penduduk --</option>
                         @foreach ($anggotaKeluargas as $anggota)
                             @php
-                                $permohonanSelectedId = $permohonan->id_data_keluargas
-                                    ? 'kk_' . $permohonan->id_data_keluargas
-                                    : $permohonan->id_anggota_keluargas;
-
-                                $selectedValue = old('id_anggota_keluargas', $permohonanSelectedId);
-
-                                $currentOptionValue =
-                                    isset($anggota->is_kk) && $anggota->is_kk ? 'kk_' . $anggota->id : $anggota->id;
+                                // Determine the selected ID: prefer old input, otherwise use the stored AnggotaKeluarga ID
+                                $selectedValue = old('id_anggota_keluargas', $permohonan->id_anggota_keluargas);
+                                $isKKLeader = isset($anggota->is_kk) && $anggota->is_kk;
                             @endphp
-                            @if (isset($anggota->is_kk) && $anggota->is_kk)
-                                <option value="{{ $currentOptionValue }}"
-                                    style="font-weight: bold; background-color: #f0f0f0;"
-                                    {{ $selectedValue == $currentOptionValue ? 'selected' : '' }}>
-                                    {{ $anggota->nik }} - {{ $anggota->nama }} (Kepala Keluarga)
-                                </option>
-                            @else
-                                <option value="{{ $currentOptionValue }}"
-                                    {{ $selectedValue == $currentOptionValue ? 'selected' : '' }}>
-                                    {{ $anggota->nik }} - {{ $anggota->nama }}
-                                </option>
-                            @endif
+                            <option value="{{ $anggota->id }}"
+                                {{ $isKKLeader ? 'style="font-weight: bold; background-color: #f0f0f0;"' : '' }}
+                                {{ $selectedValue == $anggota->id ? 'selected' : '' }}>
+                                {{ $anggota->nik }} - {{ $anggota->nama }} {{ $isKKLeader ? '(Kepala Keluarga)' : '' }}
+                            </option>
                         @endforeach
                     </select>
                     @error('id_anggota_keluargas')
@@ -232,7 +220,7 @@
                 </div>
 
                 <div class="d-flex justify-content-between mt-4">
-                    <a href="{{ route('layanan.permohonan.index') }}" class="btn btn-light border">
+                    <a href="{{ route('permohonan.index') }}" class="btn btn-light border">
                         <i class="fas fa-arrow-left me-2"></i> Kembali
                     </a>
                     <button type="submit" class="btn btn-primary">

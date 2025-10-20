@@ -1,5 +1,3 @@
-{{-- resources/views/pages/master-ddk/edit.blade.php --}}
-
 @extends('layouts.master')
 
 @section('title', 'Edit ' . Str::headline($activeTable))

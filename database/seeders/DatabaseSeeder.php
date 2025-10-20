@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\JpHiburan;
+use App\Models\LayananSurat\JenisSurat;
+use App\Models\LayananSurat\KopTemplate;
 use App\Models\User;
 
 use Illuminate\Database\Seeder;
@@ -60,6 +62,11 @@ class DatabaseSeeder extends Seeder
             KebiasaanBerobatSeeder::class,
             KejahatanSeeder::class,
             KekerasanSeeder::class,
+            KerukunanSeeder::class,
+            KeteranganAirSeeder::class,
+            KomoditasGalianSeeder::class,
+            KomoditasPerkebunanSeeder::class,
+            PersalinanSeeder::class,
             KesejahteraanKeluargaMasterSeeder::class,
             KomoditasAlatPerikananSeeder::class,
             KomoditasBuahSeeder::class,
@@ -84,6 +91,7 @@ class DatabaseSeeder extends Seeder
             PenentuanLurahSeeder::class,
             PenentuanKetuaBpdSeeder::class,
             PenentuanPerangkatDesaSeeder::class,
+            PenentuanKepalaDesaSeeder::class,
             PenentuanSekretarisDesaSeeder::class,
             PengurusLkdSeeder::class,
             PengurusLkkSeeder::class,
@@ -97,6 +105,43 @@ class DatabaseSeeder extends Seeder
             StatusKepemilikanSeeder::class,
             TempatPerawatanSeeder::class,
             TempatpersalinanSeeder::class,
+
+            JenisDampakSeeder::class,
+            JenisHutanSeeder::class,
+            JenisTernakSeeder::class,
+            JenisUsahaPengolahanHasilTernakSeeder::class,
+            AlatProduksiIkanLautSeeder::class,
+            AlatProduksiIkanTawarSeeder::class,
+            SatuanProduksiTernakSeeder::class,
+            NamaIkanSeeder::class,
+            JenisPotensiAirSeeder::class,
+            PengelolaanPotensiAirSeeder::class,
+            SumberAirBersihSeeder::class,
+            JenisAirMinumSeeder::class,
+            SumberAirPanasSeeder::class,
+            JenisLembagaSeeder::class,
+            DasarHukumSeeder::class,
+            JenisPemilihanSeeder::class,
+            KategoriLembagaEkonomiSeeder::class,
+            JenisLembagaEkonomiSeeder::class,
+            KategoriUsahaPengangkutanSeeder::class,
+            KategoriUsahaJasaDanHiburanSeeder::class,
+            KategoriSekolahSeeder::class,
+            JenisSekolahTingkatanSeeder::class,
+            KategoriPrasaranaTransportasiDaratSeeder::class,
+            JenisPrasaranaTransportasiDaratSeeder::class,
+            KategoriPrasaranaTransportasiLainnyaSeeder::class,
+            JenisPrasaranaTransportasiLainnyaSeeder::class,
+            KategoriPrasaranaKomunikasiInformasiSeeder::class,
+            JenisPrasaranaKomunikasiInformasiSeeder::class,
+            JenisPenginapanSeeder::class,
+            JenisGedungSeeder::class,
+            JenisPrasaranaKesehatanSeeder::class,
+            JenisSaranaKesehatanSeeder::class,
+            JenisPrasaranaOlahRagaSeeder::class,
+            TempatIbadahSeeder::class,
+            KopTemplateSeeder::class,
+            JenisSuratSeeder::class,
         ]);
     }
 }
