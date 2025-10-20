@@ -24,7 +24,7 @@ class MasterPerkembanganController extends Controller
             ],
             'III' => [
                 'kebiasaan_berobat','kejahatan', 'kekerasan', 'kerukunan',
-                'kesejahteraan_keluarga', 'keterangan_air', 'komoditas_alat_perikanan'
+                'kesejahteraan_keluarga_master', 'keterangan_air', 'komoditas_alat_perikanan'
             ],
             'IV' => [
                 'komoditas_buah', 'komoditas_galian', 'komoditas_hasil_ternak', 'komoditas_hutan', 'komoditas_industri',
