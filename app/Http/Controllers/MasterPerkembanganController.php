@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\View;
+use App\Models\MasterPerkembangan\KabupatenKota;
+use App\Models\MasterPerkembangan\Provinsi;
 
 class MasterPerkembanganController extends Controller
 {
@@ -54,13 +56,23 @@ class MasterPerkembanganController extends Controller
 
         // Coba ambil model sesuai tab aktif
         $data = collect();
+        $provinsiList = collect();
+
         if ($activeTab) {
             $model = $this->getModelForTab($activeTab);
             $data = $model::orderBy('id')->get();
         }
-
-        return view('pages.master-perkembangan.index', compact('menu', 'activeBagian', 'activeTab', 'data'));
+        if ($activeTab === 'provinsi') {
+            $data = Provinsi::orderBy('id')->get();
+        } elseif ($activeTab === 'kabupaten_kota') {
+            $data = KabupatenKota::orderBy('id')->get();
+            $provinsiList = Provinsi::orderBy('nama')->get();
+        } else {
+            $data = collect();
+        }
+        return view('pages.master-perkembangan.index', compact('menu', 'activeBagian', 'activeTab', 'data', 'provinsiList'));
     }
+    
 
     /**
      * Menentukan model mana yang dipakai berdasarkan tab yang aktif.
@@ -80,15 +92,20 @@ class MasterPerkembanganController extends Controller
     /**
      * Tambah data baru.
      */
-    public function store(Request $request)
+     public function store(Request $request)
     {
-        $request->validate([
-            'nama' => 'required|string|max:255',
-            'tab'  => 'required|string'
-        ]);
+        $tab = $request->input('tab');
 
-        $model = $this->getModelForTab($request->input('tab'));
-        $model::create(['nama' => $request->nama]);
+        if ($tab === 'provinsi') {
+            Provinsi::create([
+                'nama' => $request->nama,
+            ]);
+        } elseif ($tab === 'kabupaten_kota') {
+            KabupatenKota::create([
+                'provinsi' => $request->provinsi, // simpan nama provinsi, bukan ID
+                'nama' => $request->nama,
+            ]);
+        }
 
         return back()->with('success', 'Data berhasil ditambahkan!');
     }
@@ -98,14 +115,18 @@ class MasterPerkembanganController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'nama' => 'required|string|max:255',
-            'tab'  => 'required|string'
-        ]);
+        $tab = $request->input('tab');
 
-        $model = $this->getModelForTab($request->input('tab'));
-        $item = $model::findOrFail($id);
-        $item->update(['nama' => $request->nama]);
+        if ($tab === 'provinsi') {
+            $item = Provinsi::findOrFail($id);
+            $item->update(['nama' => $request->nama]);
+        } elseif ($tab === 'kabupaten_kota') {
+            $item = KabupatenKota::findOrFail($id);
+            $item->update([
+                'provinsi' => $request->provinsi,
+                'nama' => $request->nama,
+            ]);
+        }
 
         return back()->with('success', 'Data berhasil diperbarui!');
     }
@@ -115,14 +136,26 @@ class MasterPerkembanganController extends Controller
      */
     public function destroy(Request $request, $id)
     {
+        $tab = $request->input('tab');
+
+        if ($tab === 'provinsi') {
+            Provinsi::destroy($id);
+        } elseif ($tab === 'kabupaten_kota') {
+            KabupatenKota::destroy($id);
+        }
+
+        return back()->with('success', 'Data berhasil dihapus!');
+    }
+
+    public function edit(Request $request, $id)
+    {
         $request->validate([
             'tab' => 'required|string'
         ]);
 
         $model = $this->getModelForTab($request->input('tab'));
         $item = $model::findOrFail($id);
-        $item->delete();
 
-        return back()->with('success', 'Data berhasil dihapus!');
+        return response()->json($item);
     }
 }
