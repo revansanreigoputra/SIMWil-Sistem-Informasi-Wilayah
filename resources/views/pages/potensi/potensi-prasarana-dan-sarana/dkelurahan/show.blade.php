@@ -155,7 +155,7 @@
                         </div>
 
                         <!-- Bagian Kondisi dan Keterangan -->
-                        <div class="card card-info">
+                        <div class="card card-info mt-3">
                             <div class="card-header">
                                 <h3 class="card-title">Kondisi dan Keterangan</h3>
                             </div>
@@ -194,7 +194,7 @@
                         </div>
 
                         <!-- Bagian Fasilitas Tambahan -->
-                        <div class="card card-success">
+                        <div class="card card-success mt-3">
                             <div class="card-header">
                                 <h3 class="card-title">Fasilitas Tambahan</h3>
                             </div>
@@ -255,7 +255,7 @@
                         </div>
 
                         <!-- Informasi Tambahan -->
-                        <div class="card card-secondary">
+                        <div class="card card-secondary mt-3">
                             <div class="card-header">
                                 <h3 class="card-title">Informasi Tambahan</h3>
                             </div>

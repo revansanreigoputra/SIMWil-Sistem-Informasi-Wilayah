@@ -14,7 +14,8 @@ class DesaKelurahanController extends Controller
      */
     public function index()
     {
-        $desaKelurahans = DesaKelurahan::with('desa')->orderBy('tanggal', 'desc')->paginate(10);
+        $desaId = session('desa_id');
+        $desaKelurahans = DesaKelurahan::with('desa')->where('desa_id', $desaId)->orderBy('tanggal', 'desc')->paginate(10);
         return view('pages.potensi.potensi-prasarana-dan-sarana.dkelurahan.index', compact('desaKelurahans'));
     }
 
@@ -23,8 +24,7 @@ class DesaKelurahanController extends Controller
      */
     public function create()
     {
-        $desas = Desa::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.dkelurahan.create', compact('desas'));
+        return view('pages.potensi.potensi-prasarana-dan-sarana.dkelurahan.create');
     }
 
     /**
@@ -33,7 +33,6 @@ class DesaKelurahanController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
 
             // Gedung Kantor
@@ -95,7 +94,10 @@ class DesaKelurahanController extends Controller
                 ->withInput();
         }
 
-        DesaKelurahan::create($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        DesaKelurahan::create($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.prasarana-dkelurahan.index')
             ->with('success', 'Data Desa/Kelurahan berhasil ditambahkan.');
@@ -114,8 +116,7 @@ class DesaKelurahanController extends Controller
      */
     public function edit(DesaKelurahan $desaKelurahan)
     {
-        $desas = Desa::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.dkelurahan.edit', compact('desaKelurahan', 'desas'));
+        return view('pages.potensi.potensi-prasarana-dan-sarana.dkelurahan.edit', compact('desaKelurahan'));
     }
 
     /**
@@ -124,7 +125,6 @@ class DesaKelurahanController extends Controller
     public function update(Request $request, DesaKelurahan $desaKelurahan)
     {
         $validator = Validator::make($request->all(), [
-            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
 
             // Gedung Kantor
@@ -185,7 +185,10 @@ class DesaKelurahanController extends Controller
                 ->withInput();
         }
 
-        $desaKelurahan->update($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        $desaKelurahan->update($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.prasarana-dkelurahan.index')
             ->with('success', 'Data Desa/Kelurahan berhasil diperbarui.');
