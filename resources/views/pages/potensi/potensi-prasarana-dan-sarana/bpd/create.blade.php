@@ -29,7 +29,7 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="desa_id" class="form-label fw-semibold">
                                             <i class="fas fa-map-marker-alt text-muted me-1"></i>
@@ -37,7 +37,7 @@
                                         </label>
                                         <select class="form-select @error('desa_id') is-invalid @enderror" id="desa_id" name="desa_id" required>
                                             <option value="">-- Pilih Desa --</option>
-                                            @foreach($desas as $desa)
+                                            @foreach ($desas as $desa)
                                                 <option value="{{ $desa->id }}" {{ old('desa_id') == $desa->id ? 'selected' : '' }}>{{ $desa->nama_desa }}</option>
                                             @endforeach
                                         </select>
@@ -45,7 +45,7 @@
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="tanggal" class="form-label fw-semibold">
@@ -53,7 +53,8 @@
                                             Tanggal <span class="text-danger">*</span>
                                         </label>
                                         <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
-                                            id="tanggal" name="tanggal" value="{{ old('tanggal', now()->format('Y-m-d')) }}" required>
+                                            id="tanggal" name="tanggal"
+                                            value="{{ old('tanggal', now()->format('Y-m-d')) }}" required>
                                         @error('tanggal')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -125,8 +126,8 @@
                                         <label for="balai_bpd" class="form-label fw-semibold">
                                             Balai BPD
                                         </label>
-                                        <select class="form-select @error('balai_bpd') is-invalid @enderror"
-                                            id="balai_bpd" name="balai_bpd">
+                                        <select class="form-select @error('balai_bpd') is-invalid @enderror" id="balai_bpd"
+                                            name="balai_bpd">
                                             <option value="">-- Pilih Status --</option>
                                             <option value="ada" {{ old('balai_bpd') == 'ada' ? 'selected' : '' }}>Ada
                                             </option>
@@ -164,8 +165,8 @@
                                         <label for="listrik" class="form-label fw-semibold">
                                             Listrik
                                         </label>
-                                        <select class="form-select @error('listrik') is-invalid @enderror"
-                                            id="listrik" name="listrik">
+                                        <select class="form-select @error('listrik') is-invalid @enderror" id="listrik"
+                                            name="listrik">
                                             <option value="">-- Pilih Status --</option>
                                             <option value="ada" {{ old('listrik') == 'ada' ? 'selected' : '' }}>Ada
                                             </option>
@@ -186,13 +187,16 @@
                                             id="air_bersih" name="air_bersih">
                                             <option value="">-- Pilih Status --</option>
                                             <option value="ada dan kondisi baik"
-                                                {{ old('air_bersih') == 'ada dan kondisi baik' ? 'selected' : '' }}>Ada dan Kondisi Baik
+                                                {{ old('air_bersih') == 'ada dan kondisi baik' ? 'selected' : '' }}>Ada dan
+                                                Kondisi Baik
                                             </option>
                                             <option value="ada dan kondisi rusak"
-                                                {{ old('air_bersih') == 'ada dan kondisi rusak' ? 'selected' : '' }}>Ada dan Kondisi Rusak
+                                                {{ old('air_bersih') == 'ada dan kondisi rusak' ? 'selected' : '' }}>Ada
+                                                dan Kondisi Rusak
                                             </option>
                                             <option value="tidak ada air bersih"
-                                                {{ old('air_bersih') == 'tidak ada air bersih' ? 'selected' : '' }}>Tidak Ada Air Bersih
+                                                {{ old('air_bersih') == 'tidak ada air bersih' ? 'selected' : '' }}>Tidak
+                                                Ada Air Bersih
                                             </option>
                                         </select>
                                         @error('air_bersih')
@@ -205,8 +209,8 @@
                                         <label for="telepon" class="form-label fw-semibold">
                                             Telepon
                                         </label>
-                                        <select class="form-select @error('telepon') is-invalid @enderror"
-                                            id="telepon" name="telepon">
+                                        <select class="form-select @error('telepon') is-invalid @enderror" id="telepon"
+                                            name="telepon">
                                             <option value="">-- Pilih Status --</option>
                                             <option value="ada" {{ old('telepon') == 'ada' ? 'selected' : '' }}>Ada
                                             </option>
@@ -304,7 +308,8 @@
                                             <label for="{{ $field }}" class="form-label fw-semibold">
                                                 {{ $label }}
                                             </label>
-                                            <input type="number" class="form-control @error($field) is-invalid @enderror"
+                                            <input type="number"
+                                                class="form-control @error($field) is-invalid @enderror"
                                                 id="{{ $field }}" name="{{ $field }}"
                                                 value="{{ old($field, 0) }}" min="0" placeholder="Jumlah">
                                             @error($field)
@@ -322,10 +327,12 @@
                                 <select class="form-select @error('administrasi_lainnya') is-invalid @enderror"
                                     id="administrasi_lainnya" name="administrasi_lainnya">
                                     <option value="">-- Pilih Status --</option>
-                                    <option value="ada" {{ old('administrasi_lainnya') == 'ada' ? 'selected' : '' }}>Ada
+                                    <option value="ada" {{ old('administrasi_lainnya') == 'ada' ? 'selected' : '' }}>
+                                        Ada
                                     </option>
                                     <option value="tidak ada"
-                                        {{ old('administrasi_lainnya') == 'tidak ada' ? 'selected' : '' }}>Tidak Ada</option>
+                                        {{ old('administrasi_lainnya') == 'tidak ada' ? 'selected' : '' }}>Tidak Ada
+                                    </option>
                                 </select>
                                 @error('administrasi_lainnya')
                                     <div class="invalid-feedback">{{ $message }}</div>

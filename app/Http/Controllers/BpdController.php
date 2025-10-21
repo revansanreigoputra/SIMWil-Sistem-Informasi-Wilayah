@@ -14,7 +14,8 @@ class BpdController extends Controller
      */
     public function index()
     {
-        $bpds = Bpd::with('desa')->orderBy('tanggal', 'desc')->paginate(10);
+        $desaId = session('desa_id');
+        $bpds = Bpd::with('desa')->where('desa_id', $desaId)->orderBy('tanggal', 'desc')->paginate(10);
         return view('pages.potensi.potensi-prasarana-dan-sarana.bpd.index', compact('bpds'));
     }
 
@@ -23,8 +24,7 @@ class BpdController extends Controller
      */
     public function create()
     {
-        $desas = Desa::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.bpd.create', compact('desas'));
+        return view('pages.potensi.potensi-prasarana-dan-sarana.bpd.create');
     }
 
     /**
@@ -33,7 +33,6 @@ class BpdController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'gedung_kantor' => 'nullable|in:ada,tidak ada',
             'ruang_kerja' => 'nullable|integer|min:0',
@@ -62,7 +61,10 @@ class BpdController extends Controller
                 ->withInput();
         }
 
-        Bpd::create($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        Bpd::create($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.prasarana-bpd.index')
             ->with('success', 'Data BPD berhasil ditambahkan.');
@@ -81,8 +83,7 @@ class BpdController extends Controller
      */
     public function edit(Bpd $bpd)
     {
-        $desas = Desa::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.bpd.edit', compact('bpd', 'desas'));
+        return view('pages.potensi.potensi-prasarana-dan-sarana.bpd.edit', compact('bpd'));
     }
 
     /**
@@ -91,7 +92,6 @@ class BpdController extends Controller
     public function update(Request $request, Bpd $bpd)
     {
         $validator = Validator::make($request->all(), [
-            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'gedung_kantor' => 'nullable|in:ada,tidak ada',
             'ruang_kerja' => 'nullable|integer|min:0',
@@ -120,7 +120,10 @@ class BpdController extends Controller
                 ->withInput();
         }
 
-        $bpd->update($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        $bpd->update($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.prasarana-bpd.index')
             ->with('success', 'Data BPD berhasil diperbarui.');

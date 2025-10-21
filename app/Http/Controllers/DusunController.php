@@ -14,7 +14,8 @@ class DusunController extends Controller
      */
     public function index()
     {
-        $dusuns = Dusun::with('desa')->orderBy('tanggal', 'desc')->paginate(10);
+        $desaId = session('desa_id');
+        $dusuns = Dusun::with('desa')->where('desa_id', $desaId)->orderBy('tanggal', 'desc')->paginate(10);
         return view('pages.potensi.potensi-prasarana-dan-sarana.dusun.index', compact('dusuns'));
     }
 
@@ -23,8 +24,7 @@ class DusunController extends Controller
      */
     public function create()
     {
-        $desas = Desa::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.dusun.create', compact('desas'));
+        return view('pages.potensi.potensi-prasarana-dan-sarana.dusun.create');
     }
 
     /**
@@ -33,7 +33,6 @@ class DusunController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'gedung_kantor' => 'nullable|in:ada,tidak ada',
             'alat_tulis_kantor' => 'nullable|in:ada,tidak ada',
@@ -50,7 +49,10 @@ class DusunController extends Controller
                 ->withInput();
         }
 
-        Dusun::create($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        Dusun::create($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.prasarana-dusun.index')
             ->with('success', 'Data Dusun berhasil ditambahkan.');
@@ -69,8 +71,7 @@ class DusunController extends Controller
      */
     public function edit(Dusun $dusun)
     {
-        $desas = Desa::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.dusun.edit', compact('dusun', 'desas'));
+        return view('pages.potensi.potensi-prasarana-dan-sarana.dusun.edit', compact('dusun'));
     }
 
     /**
@@ -79,7 +80,6 @@ class DusunController extends Controller
     public function update(Request $request, Dusun $dusun)
     {
         $validator = Validator::make($request->all(), [
-            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'gedung_kantor' => 'nullable|in:ada,tidak ada',
             'alat_tulis_kantor' => 'nullable|in:ada,tidak ada',
@@ -96,7 +96,10 @@ class DusunController extends Controller
                 ->withInput();
         }
 
-        $dusun->update($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        $dusun->update($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.prasarana-dusun.index')
             ->with('success', 'Data Dusun berhasil diperbarui.');

@@ -28,7 +28,7 @@
                         </div>
 
                         <!-- Bagian Gedung Kantor -->
-                        <div class="card card-primary">
+                        <div class="card card-primary mb-4">
                             <div class="card-header">
                                 <h3 class="card-title">Bagian Gedung Kantor</h3>
                             </div>
@@ -59,7 +59,7 @@
                         </div>
 
                         <!-- Bagian Kondisi -->
-                        <div class="card card-info">
+                        <div class="card card-info mb-4">
                             <div class="card-header">
                                 <h3 class="card-title">Kondisi</h3>
                             </div>
@@ -144,7 +144,7 @@
                         </div>
 
                         <!-- Bagian Inventaris dan Alat Tulis Kantor -->
-                        <div class="card card-success">
+                        <div class="card card-success mb-4">
                             <div class="card-header">
                                 <h3 class="card-title">Inventaris dan Alat Tulis Kantor</h3>
                             </div>
@@ -209,7 +209,7 @@
                         </div>
 
                         <!-- Bagian Administrasi BPD -->
-                        <div class="card card-warning">
+                        <div class="card card-warning mb-4">
                             <div class="card-header">
                                 <h3 class="card-title">Administrasi BPD</h3>
                             </div>
@@ -262,7 +262,7 @@
                         </div>
 
                         <!-- Informasi Tambahan -->
-                        <div class="card card-secondary">
+                        <div class="card card-secondary mb-4">
                             <div class="card-header">
                                 <h3 class="card-title">Informasi Tambahan</h3>
                             </div>
