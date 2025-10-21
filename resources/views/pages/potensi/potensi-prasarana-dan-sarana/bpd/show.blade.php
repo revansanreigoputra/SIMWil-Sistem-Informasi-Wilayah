@@ -6,9 +6,9 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Detail Data BPD</h3>
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="card-title mb-0"><i class="fas fa-info-circle me-2"></i>Detail Data BPD</h3>
                     </div>
                     <div class="card-body">
                         <!-- Tanggal -->
@@ -30,7 +30,7 @@
                         <!-- Bagian Gedung Kantor -->
                         <div class="card card-primary mb-4">
                             <div class="card-header">
-                                <h3 class="card-title">Bagian Gedung Kantor</h3>
+                                <h3 class="card-title"><i class="fas fa-building me-2"></i>Gedung Kantor</h3>
                             </div>
                             <div class="card-body">
                                 <div class="row">
@@ -38,12 +38,12 @@
                                         <div class="form-group">
                                             <label class="font-weight-bold">Gedung Kantor</label>
                                             <p class="form-control-plaintext">
-                                                @if($bpd->gedung_kantor == 'ada')
-                                                    <span class="badge badge-success">Ada</span>
+                                                @if ($bpd->gedung_kantor == 'ada')
+                                                    <span class="badge bg-success">Ada</span>
                                                 @elseif($bpd->gedung_kantor == 'tidak ada')
-                                                    <span class="badge badge-danger">Tidak Ada</span>
+                                                    <span class="badge bg-danger">Tidak Ada</span>
                                                 @else
-                                                    <span class="badge badge-secondary">-</span>
+                                                    <span class="badge bg-secondary">-</span>
                                                 @endif
                                             </p>
                                         </div>
@@ -61,7 +61,7 @@
                         <!-- Bagian Kondisi -->
                         <div class="card card-info mb-4">
                             <div class="card-header">
-                                <h3 class="card-title">Kondisi</h3>
+                                <h3 class="card-title"><i class="fas fa-heartbeat me-2"></i>Kondisi</h3>
                             </div>
                             <div class="card-body">
                                 <div class="row">
@@ -70,11 +70,11 @@
                                             <label class="font-weight-bold">Balai BPD</label>
                                             <p class="form-control-plaintext">
                                                 @if($bpd->balai_bpd == 'ada')
-                                                    <span class="badge badge-success">Ada</span>
+                                                    <span class="badge bg-success">Ada</span>
                                                 @elseif($bpd->balai_bpd == 'tidak ada')
-                                                    <span class="badge badge-danger">Tidak Ada</span>
+                                                    <span class="badge bg-danger">Tidak Ada</span>
                                                 @else
-                                                    <span class="badge badge-secondary">-</span>
+                                                    <span class="badge bg-secondary">-</span>
                                                 @endif
                                             </p>
                                         </div>
@@ -84,11 +84,11 @@
                                             <label class="font-weight-bold">Kondisi</label>
                                             <p class="form-control-plaintext">
                                                 @if($bpd->kondisi == 'baik')
-                                                    <span class="badge badge-success">Baik</span>
+                                                    <span class="badge bg-success">Baik</span>
                                                 @elseif($bpd->kondisi == 'rusak')
-                                                    <span class="badge badge-danger">Rusak</span>
+                                                    <span class="badge bg-danger">Rusak</span>
                                                 @else
-                                                    <span class="badge badge-secondary">-</span>
+                                                    <span class="badge bg-secondary">-</span>
                                                 @endif
                                             </p>
                                         </div>
@@ -100,11 +100,11 @@
                                             <label class="font-weight-bold">Listrik</label>
                                             <p class="form-control-plaintext">
                                                 @if($bpd->listrik == 'ada')
-                                                    <span class="badge badge-success">Ada</span>
+                                                    <span class="badge bg-success">Ada</span>
                                                 @elseif($bpd->listrik == 'tidak ada')
-                                                    <span class="badge badge-danger">Tidak Ada</span>
+                                                    <span class="badge bg-danger">Tidak Ada</span>
                                                 @else
-                                                    <span class="badge badge-secondary">-</span>
+                                                    <span class="badge bg-secondary">-</span>
                                                 @endif
                                             </p>
                                         </div>
@@ -114,13 +114,13 @@
                                             <label class="font-weight-bold">Air Bersih</label>
                                             <p class="form-control-plaintext">
                                                 @if($bpd->air_bersih == 'ada dan kondisi baik')
-                                                    <span class="badge badge-success">Ada dan Kondisi Baik</span>
+                                                    <span class="badge bg-success">Ada dan Kondisi Baik</span>
                                                 @elseif($bpd->air_bersih == 'ada dan kondisi rusak')
-                                                    <span class="badge badge-warning">Ada dan Kondisi Rusak</span>
+                                                    <span class="badge bg-warning">Ada dan Kondisi Rusak</span>
                                                 @elseif($bpd->air_bersih == 'tidak ada air bersih')
-                                                    <span class="badge badge-danger">Tidak Ada Air Bersih</span>
+                                                    <span class="badge bg-danger">Tidak Ada Air Bersih</span>
                                                 @else
-                                                    <span class="badge badge-secondary">-</span>
+                                                    <span class="badge bg-secondary">-</span>
                                                 @endif
                                             </p>
                                         </div>
@@ -130,11 +130,11 @@
                                             <label class="font-weight-bold">Telepon</label>
                                             <p class="form-control-plaintext">
                                                 @if($bpd->telepon == 'ada')
-                                                    <span class="badge badge-success">Ada</span>
+                                                    <span class="badge bg-success">Ada</span>
                                                 @elseif($bpd->telepon == 'tidak ada')
-                                                    <span class="badge badge-danger">Tidak Ada</span>
+                                                    <span class="badge bg-danger">Tidak Ada</span>
                                                 @else
-                                                    <span class="badge badge-secondary">-</span>
+                                                    <span class="badge bg-secondary">-</span>
                                                 @endif
                                             </p>
                                         </div>
@@ -146,7 +146,7 @@
                         <!-- Bagian Inventaris dan Alat Tulis Kantor -->
                         <div class="card card-success mb-4">
                             <div class="card-header">
-                                <h3 class="card-title">Inventaris dan Alat Tulis Kantor</h3>
+                                <h3 class="card-title"><i class="fas fa-pencil-ruler me-2"></i>Inventaris dan Alat Tulis Kantor</h3>
                             </div>
                             <div class="card-body">
                                 <div class="row">
@@ -195,11 +195,11 @@
                                             <label class="font-weight-bold">Inventaris Lainnya</label>
                                             <p class="form-control-plaintext">
                                                 @if($bpd->inventaris_lainnya == 'ada')
-                                                    <span class="badge badge-success">Ada</span>
+                                                    <span class="badge bg-success">Ada</span>
                                                 @elseif($bpd->inventaris_lainnya == 'tidak ada')
-                                                    <span class="badge badge-danger">Tidak Ada</span>
+                                                    <span class="badge bg-danger">Tidak Ada</span>
                                                 @else
-                                                    <span class="badge badge-secondary">-</span>
+                                                    <span class="badge bg-secondary">-</span>
                                                 @endif
                                             </p>
                                         </div>
@@ -211,7 +211,7 @@
                         <!-- Bagian Administrasi BPD -->
                         <div class="card card-warning mb-4">
                             <div class="card-header">
-                                <h3 class="card-title">Administrasi BPD</h3>
+                                <h3 class="card-title"><i class="fas fa-book me-2"></i>Administrasi BPD</h3>
                             </div>
                             <div class="card-body">
                                 <div class="row">
@@ -248,11 +248,11 @@
                                             <label class="font-weight-bold">Administrasi Lainnya</label>
                                             <p class="form-control-plaintext">
                                                 @if($bpd->administrasi_lainnya == 'ada')
-                                                    <span class="badge badge-success">Ada</span>
+                                                    <span class="badge bg-success">Ada</span>
                                                 @elseif($bpd->administrasi_lainnya == 'tidak ada')
-                                                    <span class="badge badge-danger">Tidak Ada</span>
+                                                    <span class="badge bg-danger">Tidak Ada</span>
                                                 @else
-                                                    <span class="badge badge-secondary">-</span>
+                                                    <span class="badge bg-secondary">-</span>
                                                 @endif
                                             </p>
                                         </div>
@@ -264,7 +264,7 @@
                         <!-- Informasi Tambahan -->
                         <div class="card card-secondary mb-4">
                             <div class="card-header">
-                                <h3 class="card-title">Informasi Tambahan</h3>
+                                <h3 class="card-title"><i class="fas fa-plus-circle me-2"></i>Informasi Tambahan</h3>
                             </div>
                             <div class="card-body">
                                 <div class="row">
@@ -286,23 +286,19 @@
                     </div>
 
                     <div class="card-footer">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="float-right">
-                                    @can('bpd.update')
-                                        <a href="{{ route('potensi.potensi-prasarana-dan-sarana.prasarana-bpd.edit', $bpd) }}"
-                                            class="btn btn-warning mr-2">
-                                            <i class="fas fa-edit"></i> Edit
-                                        </a>
-                                    @endcan
-                                    @can('bpd.delete')
-                                        <button class="btn btn-danger" data-bs-toggle="modal"
-                                            data-bs-target="#delete-bpd-{{ $bpd->id }}">
-                                            <i class="fas fa-trash"></i> Hapus
-                                        </button>
-                                    @endcan
-                                </div>
-                            </div>
+                        <div class="d-flex justify-content-end">
+                            @can('bpd.update')
+                                <a href="{{ route('potensi.potensi-prasarana-dan-sarana.prasarana-bpd.edit', $bpd) }}"
+                                    class="btn btn-warning me-2">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                            @endcan
+                            @can('bpd.delete')
+                                <button class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#delete-bpd-{{ $bpd->id }}">
+                                    <i class="fas fa-trash"></i> Hapus
+                                </button>
+                            @endcan
                         </div>
                     </div>
                 </div>

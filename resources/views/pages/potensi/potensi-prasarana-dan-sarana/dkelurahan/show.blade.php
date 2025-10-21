@@ -6,15 +6,9 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Detail Data Desa/Kelurahan</h3>
-                        {{-- <div class="card-tools">
-                            <a href="{{ route('potensi.potensi-prasarana-dan-sarana.prasarana-dkelurahan.index') }}"
-                                class="btn btn-secondary btn-sm">
-                                <i class="fas fa-arrow-left"></i> Kembali
-                            </a>
-                        </div> --}}
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="card-title mb-0"><i class="fas fa-info-circle me-2"></i>Detail Data Desa/Kelurahan</h3>
                     </div>
                     <div class="card-body">
                         <!-- Desa and Tanggal -->
@@ -36,7 +30,7 @@
                         <!-- Bagian Gedung Kantor -->
                         <div class="card card-primary mb-4">
                             <div class="card-header">
-                                <h3 class="card-title">Bagian Gedung Kantor</h3>
+                                <h3 class="card-title"><i class="fas fa-building me-2"></i>Gedung Kantor</h3>
                             </div>
                             <div class="card-body">
                                 <div class="row">
@@ -45,11 +39,11 @@
                                             <label class="font-weight-bold">Gedung Kantor</label>
                                             <p class="form-control-plaintext">
                                                 @if($desaKelurahan->gedung_kantor == 'ada')
-                                                    <span class="badge badge-success">Ada</span>
+                                                    <span class="badge bg-success">Ada</span>
                                                 @elseif($desaKelurahan->gedung_kantor == 'tidak ada')
-                                                    <span class="badge badge-danger">Tidak Ada</span>
+                                                    <span class="badge bg-danger">Tidak Ada</span>
                                                 @else
-                                                    <span class="badge badge-secondary">-</span>
+                                                    <span class="badge bg-secondary">-</span>
                                                 @endif
                                             </p>
                                         </div>
@@ -67,11 +61,11 @@
                                             <label class="font-weight-bold">Balai Desa</label>
                                             <p class="form-control-plaintext">
                                                 @if($desaKelurahan->balai_desa == 'ada')
-                                                    <span class="badge badge-success">Ada</span>
+                                                    <span class="badge bg-success">Ada</span>
                                                 @elseif($desaKelurahan->balai_desa == 'tidak ada')
-                                                    <span class="badge badge-danger">Tidak Ada</span>
+                                                    <span class="badge bg-danger">Tidak Ada</span>
                                                 @else
-                                                    <span class="badge badge-secondary">-</span>
+                                                    <span class="badge bg-secondary">-</span>
                                                 @endif
                                             </p>
                                         </div>
@@ -81,11 +75,11 @@
                                             <label class="font-weight-bold">Listrik</label>
                                             <p class="form-control-plaintext">
                                                 @if($desaKelurahan->listrik == 'ada')
-                                                    <span class="badge badge-success">Ada</span>
+                                                    <span class="badge bg-success">Ada</span>
                                                 @elseif($desaKelurahan->listrik == 'tidak ada')
-                                                    <span class="badge badge-danger">Tidak Ada</span>
+                                                    <span class="badge bg-danger">Tidak Ada</span>
                                                 @else
-                                                    <span class="badge badge-secondary">-</span>
+                                                    <span class="badge bg-secondary">-</span>
                                                 @endif
                                             </p>
                                         </div>
@@ -97,11 +91,11 @@
                                             <label class="font-weight-bold">Air Bersih</label>
                                             <p class="form-control-plaintext">
                                                 @if($desaKelurahan->air_bersih == 'ada')
-                                                    <span class="badge badge-success">Ada</span>
+                                                    <span class="badge bg-success">Ada</span>
                                                 @elseif($desaKelurahan->air_bersih == 'tidak ada')
-                                                    <span class="badge badge-danger">Tidak Ada</span>
+                                                    <span class="badge bg-danger">Tidak Ada</span>
                                                 @else
-                                                    <span class="badge badge-secondary">-</span>
+                                                    <span class="badge bg-secondary">-</span>
                                                 @endif
                                             </p>
                                         </div>
@@ -111,11 +105,11 @@
                                             <label class="font-weight-bold">Telepon</label>
                                             <p class="form-control-plaintext">
                                                 @if($desaKelurahan->telepon == 'ada')
-                                                    <span class="badge badge-success">Ada</span>
+                                                    <span class="badge bg-success">Ada</span>
                                                 @elseif($desaKelurahan->telepon == 'tidak ada')
-                                                    <span class="badge badge-danger">Tidak Ada</span>
+                                                    <span class="badge bg-danger">Tidak Ada</span>
                                                 @else
-                                                    <span class="badge badge-secondary">-</span>
+                                                    <span class="badge bg-secondary">-</span>
                                                 @endif
                                             </p>
                                         </div>
@@ -127,11 +121,11 @@
                                             <label class="font-weight-bold">Rumah Dinas Kepala Desa</label>
                                             <p class="form-control-plaintext">
                                                 @if($desaKelurahan->rumah_dinas_kepala_desa == 'ada')
-                                                    <span class="badge badge-success">Ada</span>
+                                                    <span class="badge bg-success">Ada</span>
                                                 @elseif($desaKelurahan->rumah_dinas_kepala_desa == 'tidak ada')
-                                                    <span class="badge badge-danger">Tidak Ada</span>
+                                                    <span class="badge bg-danger">Tidak Ada</span>
                                                 @else
-                                                    <span class="badge badge-secondary">-</span>
+                                                    <span class="badge bg-secondary">-</span>
                                                 @endif
                                             </p>
                                         </div>
@@ -141,11 +135,11 @@
                                             <label class="font-weight-bold">Rumah Dinas Perangkat</label>
                                             <p class="form-control-plaintext">
                                                 @if($desaKelurahan->rumah_dinas_perangkat == 'ada')
-                                                    <span class="badge badge-success">Ada</span>
+                                                    <span class="badge bg-success">Ada</span>
                                                 @elseif($desaKelurahan->rumah_dinas_perangkat == 'tidak ada')
-                                                    <span class="badge badge-danger">Tidak Ada</span>
+                                                    <span class="badge bg-danger">Tidak Ada</span>
                                                 @else
-                                                    <span class="badge badge-secondary">-</span>
+                                                    <span class="badge bg-secondary">-</span>
                                                 @endif
                                             </p>
                                         </div>
@@ -157,7 +151,7 @@
                         <!-- Bagian Kondisi dan Keterangan -->
                         <div class="card card-info mb-4">
                             <div class="card-header">
-                                <h3 class="card-title">Kondisi dan Keterangan</h3>
+                                <h3 class="card-title"><i class="fas fa-heartbeat me-2"></i>Kondisi dan Keterangan</h3>
                             </div>
                             <div class="card-body">
                                 <div class="row">
@@ -166,11 +160,11 @@
                                             <label class="font-weight-bold">Kondisi Umum</label>
                                             <p class="form-control-plaintext">
                                                 @if($desaKelurahan->kondisi == 'baik')
-                                                    <span class="badge badge-success">Baik</span>
+                                                    <span class="badge bg-success">Baik</span>
                                                 @elseif($desaKelurahan->kondisi == 'buruk')
-                                                    <span class="badge badge-danger">Buruk</span>
+                                                    <span class="badge bg-danger">Buruk</span>
                                                 @else
-                                                    <span class="badge badge-secondary">-</span>
+                                                    <span class="badge bg-secondary">-</span>
                                                 @endif
                                             </p>
                                         </div>
@@ -196,7 +190,7 @@
                         <!-- Bagian Fasilitas Tambahan -->
                         <div class="card card-success mb-4">
                             <div class="card-header">
-                                <h3 class="card-title">Fasilitas Tambahan</h3>
+                                <h3 class="card-title"><i class="fas fa-plus-circle me-2"></i>Fasilitas Tambahan</h3>
                             </div>
                             <div class="card-body">
                                 <div class="row">
@@ -205,11 +199,11 @@
                                             <label class="font-weight-bold">Pos Kamling</label>
                                             <p class="form-control-plaintext">
                                                 @if($desaKelurahan->pos_kamling == 'ada')
-                                                    <span class="badge badge-success">Ada</span>
+                                                    <span class="badge bg-success">Ada</span>
                                                 @elseif($desaKelurahan->pos_kamling == 'tidak ada')
-                                                    <span class="badge badge-danger">Tidak Ada</span>
+                                                    <span class="badge bg-danger">Tidak Ada</span>
                                                 @else
-                                                    <span class="badge badge-secondary">-</span>
+                                                    <span class="badge bg-secondary">-</span>
                                                 @endif
                                             </p>
                                         </div>
@@ -227,11 +221,11 @@
                                             <label class="font-weight-bold">Lapangan Olahraga</label>
                                             <p class="form-control-plaintext">
                                                 @if($desaKelurahan->lapangan_olahraga == 'ada')
-                                                    <span class="badge badge-success">Ada</span>
+                                                    <span class="badge bg-success">Ada</span>
                                                 @elseif($desaKelurahan->lapangan_olahraga == 'tidak ada')
-                                                    <span class="badge badge-danger">Tidak Ada</span>
+                                                    <span class="badge bg-danger">Tidak Ada</span>
                                                 @else
-                                                    <span class="badge badge-secondary">-</span>
+                                                    <span class="badge bg-secondary">-</span>
                                                 @endif
                                             </p>
                                         </div>
@@ -241,11 +235,11 @@
                                             <label class="font-weight-bold">Tempat Parkir</label>
                                             <p class="form-control-plaintext">
                                                 @if($desaKelurahan->tempat_parkir == 'ada')
-                                                    <span class="badge badge-success">Ada</span>
+                                                    <span class="badge bg-success">Ada</span>
                                                 @elseif($desaKelurahan->tempat_parkir == 'tidak ada')
-                                                    <span class="badge badge-danger">Tidak Ada</span>
+                                                    <span class="badge bg-danger">Tidak Ada</span>
                                                 @else
-                                                    <span class="badge badge-secondary">-</span>
+                                                    <span class="badge bg-secondary">-</span>
                                                 @endif
                                             </p>
                                         </div>
@@ -257,7 +251,7 @@
                         <!-- Informasi Tambahan -->
                         <div class="card card-secondary mb-4">
                             <div class="card-header">
-                                <h3 class="card-title">Informasi Tambahan</h3>
+                                <h3 class="card-title"><i class="fas fa-calendar-alt me-2"></i>Informasi Tambahan</h3>
                             </div>
                             <div class="card-body">
                                 <div class="row">
@@ -279,23 +273,19 @@
                     </div>
 
                     <div class="card-footer">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="float-right">
-                                    @can('dkelurahan.update')
-                                        <a href="{{ route('potensi.potensi-prasarana-dan-sarana.prasarana-dkelurahan.edit', $desaKelurahan) }}"
-                                            class="btn btn-warning mr-2">
-                                            <i class="fas fa-edit"></i> Edit
-                                        </a>
-                                    @endcan
-                                    @can('dkelurahan.delete')
-                                        <button class="btn btn-danger" data-bs-toggle="modal"
-                                            data-bs-target="#delete-desa-kelurahan-{{ $desaKelurahan->id }}">
-                                            <i class="fas fa-trash"></i> Hapus
-                                        </button>
-                                    @endcan
-                                </div>
-                            </div>
+                        <div class="d-flex justify-content-end">
+                            @can('dkelurahan.update')
+                                <a href="{{ route('potensi.potensi-prasarana-dan-sarana.prasarana-dkelurahan.edit', $desaKelurahan) }}"
+                                    class="btn btn-warning me-2">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                            @endcan
+                            @can('dkelurahan.delete')
+                                <button class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#delete-desa-kelurahan-{{ $desaKelurahan->id }}">
+                                    <i class="fas fa-trash"></i> Hapus
+                                </button>
+                            @endcan
                         </div>
                     </div>
                 </div>
