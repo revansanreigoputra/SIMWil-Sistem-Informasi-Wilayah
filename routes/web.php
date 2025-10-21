@@ -157,12 +157,19 @@ use App\Http\Controllers\PotensiKelembagaan\PotensiKelembagaanController;
 // use App\Models\LayananSurat\JenisSurat;
 // use App\Models\LayananSurat\KopTemplate;
 use App\Http\Controllers\PotensiKelembagaan\JasaPengangkutanController;
+use App\Http\Controllers\LandingPage\HomeController;
+use App\Http\Controllers\LandingPage\PublicBeritaController;
 
 use App\Models\PotensiKelembagaan\PotensiKelembagaan;
 
-Route::get('/', function () {
-    return view('frontend.home');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
+// Route::get('/', function () {
+//     return view('frontend.home');
+// })->name('home');
+
+Route::get('/berita', [PublicBeritaController::class, 'index'])->name('public.berita.index');
+
+Route::get('/berita/{slug}', [PublicBeritaController::class, 'show'])->name('public.berita.show');
 
 // Route::get('/', function () {
 //     return Auth::check()
@@ -809,9 +816,9 @@ Route::middleware('auth')->prefix('layanan-surat')->group(function () {
     // PERMOHONAN SURAT/MASUK kk
     Route::get('permohonan/masuk-kk', [PermohonanMasukController::class, 'createNewKKForm'])->name('permohonan.masuk_kk.create');
     Route::get('permohonan/masuk-kk/create-existing-kk', [PermohonanMasukController::class, 'createExistingKK'])->name('permohonan.masuk_kk.create_existing_kk');
-    Route::post('permohonan/masuk-kk/store-new-kk', [PermohonanMasukController::class, 'storeNewKK'])->name('permohonan.masuk_kk.store_new_kk'); 
+    Route::post('permohonan/masuk-kk/store-new-kk', [PermohonanMasukController::class, 'storeNewKK'])->name('permohonan.masuk_kk.store_new_kk');
    Route::post('permohonan/masuk-kk/store-existing-kk', [PermohonanMasukController::class, 'storeExistingKK'])->name('permohonan.masuk_kk.store_existing_kk');
-   
+
     Route::get('laporan/surat', [LaporanSuratController::class, 'index'])->name('laporan-surat.index');
 
     Route::get('laporan/surat/{id}', [LaporanSuratController::class, 'show'])->name('laporan-surat.show');
