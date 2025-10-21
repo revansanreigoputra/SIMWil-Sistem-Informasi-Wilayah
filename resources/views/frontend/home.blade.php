@@ -54,11 +54,14 @@
                         </div>
                         <nav id="navigation" class="style_one">
                             <ul id="responsive">
-                                <li><a class="current" href="#">Home</a></li>
+                                {{-- Ganti link Home yang lama dengan ini --}}
+                                <li><a class="{{ request()->routeIs('home') ? 'current' : '' }}"
+                                        href="{{ route('home') }}">Home</a></li>
                                 {{-- Link ke Halaman Berita Publik --}}
                                 <li><a class="{{ request()->routeIs('public.berita.*') ? 'current' : '' }}"
                                         href="{{ route('public.berita.index') }}">Berita</a></li>
-                                <li><a href="#">Galeri</a></li>
+                                <li><a class="{{ request()->routeIs('public.galeri.*') ? 'current' : '' }}"
+                                        href="{{ route('public.galeri.index') }}">Galeri</a></li>
                                 <li><a href="#">Agenda</a></li>
                                 <li><a href="#">Kontak</a></li>
                             </ul>

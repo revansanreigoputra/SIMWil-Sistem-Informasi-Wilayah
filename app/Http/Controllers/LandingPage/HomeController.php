@@ -4,7 +4,8 @@ namespace App\Http\Controllers\LandingPage;
 
 use Illuminate\Http\Request;
 use App\Models\Berita;
-use App\Http\Controllers\Controller; // <--- INI YANG HILANG. TAMBAHKAN BARIS INI
+use App\Http\Controllers\Controller;
+use App\Models\Photo;
 
 class HomeController extends Controller
 {
@@ -15,13 +16,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // 2. Ambil 4 berita terbaru dari database
         $beritas = Berita::latest()->take(4)->get();
+        $foto_terbaru = Photo::latest()->take(8)->get();
 
-        // 3. Kirim data 'beritas' ke view halaman depan Anda
-        // Berdasarkan log eror, nama view Anda adalah 'frontend.home'
+
         return view('frontend.home', [
-            'beritas' => $beritas
+            'beritas' => $beritas,
+            'foto_terbaru' => $foto_terbaru
         ]);
     }
 }

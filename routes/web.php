@@ -159,17 +159,23 @@ use App\Http\Controllers\PotensiKelembagaan\PotensiKelembagaanController;
 use App\Http\Controllers\PotensiKelembagaan\JasaPengangkutanController;
 use App\Http\Controllers\LandingPage\HomeController;
 use App\Http\Controllers\LandingPage\PublicBeritaController;
+use App\Http\Controllers\LandingPage\PublicGaleriController;
 
 use App\Models\PotensiKelembagaan\PotensiKelembagaan;
 
+// Route Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
 // Route::get('/', function () {
 //     return view('frontend.home');
 // })->name('home');
 
+// Route Berita Public
 Route::get('/berita', [PublicBeritaController::class, 'index'])->name('public.berita.index');
-
 Route::get('/berita/{slug}', [PublicBeritaController::class, 'show'])->name('public.berita.show');
+
+// Route Galeri Public
+Route::get('/galeri', [PublicGaleriController::class, 'index'])->name('public.galeri.index');
+Route::get('/galeri/{galeri}', [PublicGaleriController::class, 'show'])->name('public.galeri.show');
 
 // Route::get('/', function () {
 //     return Auth::check()

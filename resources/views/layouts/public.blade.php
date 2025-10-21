@@ -18,6 +18,32 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700,800" rel="stylesheet" type="text/css">
 
     @stack('style')
+
+    {{-- STYLE UNTUK GALERI --}}
+    <style>
+        .utf_gallery_container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        .utf_gallery_item {
+            display: block;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            aspect-ratio: 1 / 1; /* Membuat gambar kotak */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .utf_gallery_item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        .utf_gallery_item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Gambar memenuhi kotak tanpa distorsi */
+        }
+    </style>
 </head>
 
 <body>
@@ -48,10 +74,18 @@
                                 </span>
                             </button>
                         </div>
+
+                        {{-- Navigasi yang sudah benar --}}
                         <nav id="navigation" class="style_one">
                             <ul id="responsive">
-                                <li><a class="{{ request()->routeIs('home') ? 'current' : '' }}" href="{{ route('home') }}">Home</a></li>
-                                <li><a class="{{ request()->routeIs('public.berita.*') ? 'current' : '' }}" href="{{ route('public.berita.index') }}">Berita</a></li>
+                                <li><a class="{{ request()->routeIs('home') ? 'current' : '' }}"
+                                       href="{{ route('home') }}">Home</a></li>
+                                <li><a class="{{ request()->routeIs('public.berita.*') ? 'current' : '' }}"
+                                       href="{{ route('public.berita.index') }}">Berita</a></li>
+                                <li><a class="{{ request()->routeIs('public.galeri.*') ? 'current' : '' }}"
+                                       href="{{ route('public.galeri.index') }}">Galeri</a></li>
+                                <li><a href="#">Agenda</a></li>
+                                <li><a href="#">Kontak</a></li>
                             </ul>
                         </nav>
                         <div class="clearfix"></div>
@@ -59,7 +93,6 @@
                     <div class="utf_right_side">
                         <div class="header_widget">
                             <a href="{{ route('login') }}" class="button border">
-                                {{-- Menggunakan ikon FA6 --}}
                                 <i class="fa-solid fa-right-to-bracket"></i> Sign In
                             </a>
                         </div>
@@ -77,18 +110,19 @@
             <div class="container">
                 <div class="row">
 
-                    {{-- Kolom 1: Logo & Deskripsi --}}
-                    <div class="col-md-3 col-sm-12 col-xs-12">
+                    {{-- Kolom 1: Logo & Deskripsi (Lebih Lebar) --}}
+                    <div class="col-md-4 col-sm-12 col-xs-12">
                         <a href="{{ url('/') }}"><img class="footer-logo" src="{{ asset('frontend/images/logo-dark.png') }}" alt=""></a>
-                        {{-- <p>Sistem Informasi Wilayah yang memberikan kemudahan bagi anda dalam mengurus segala bentuk urusan.</p> --}}
+                        <p>Sistem Informasi Wilayah yang memberikan kemudahan bagi anda dalam mengurus segala bentuk urusan.</p>
                     </div>
 
-                    {{-- Kolom 2: Tautan --}}
-                    <div class="col-md-3 col-sm-4 col-xs-12">
+                    {{-- Kolom 2: Tautan (Lebih Sempit) --}}
+                    <div class="col-md-2 col-sm-4 col-xs-12">
                         <h4>Tautan</h4>
                         <ul class="utf_footer_links">
                             <li><a href="{{ route('home') }}">Home</a></li>
                             <li><a href="{{ route('public.berita.index') }}">Berita</a></li>
+                            <li><a href="{{ route('public.galeri.index') }}">Galeri</a></li>
                         </ul>
                     </div>
 
@@ -112,12 +146,8 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row margin-top-40" style="padding-bottom: 30px;">
                     <div class="col-md-12">
-                        {{--
-                            PERBAIKAN:
-                            Menambahkan class 'text-center' untuk membuat copyright di tengah.
-                        --}}
                         <div class="copyrights text-center">Copyright © {{ date('Y') }} All Rights Reserved.</div>
                     </div>
                 </div>
