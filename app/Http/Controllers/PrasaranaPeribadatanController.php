@@ -13,29 +13,31 @@ class PrasaranaPeribadatanController extends Controller
     public function index()
     {
         Gate::authorize('peribadatan.view');
-        $prasaranaPeribadatans = PrasaranaPeribadatan::with('tempatIbadah', 'desa')->latest()->get();
+        $desaId = session('desa_id');
+        $prasaranaPeribadatans = PrasaranaPeribadatan::with('tempatIbadah', 'desa')->where('desa_id', $desaId)->latest()->get();
         return view('pages.potensi.potensi-prasarana-dan-sarana.peribadatan.index', compact('prasaranaPeribadatans'));
     }
 
     public function create()
     {
         Gate::authorize('peribadatan.create');
-        $desas = Desa::all();
         $tempatIbadahs = TempatIbadah::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.peribadatan.create', compact('tempatIbadahs', 'desas'));
+        return view('pages.potensi.potensi-prasarana-dan-sarana.peribadatan.create', compact('tempatIbadahs'));
     }
 
     public function store(Request $request)
     {
         Gate::authorize('peribadatan.create');
         $request->validate([
-            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'tempat_ibadah_id' => 'required|exists:tempat_ibadahs,id',
             'jumlah' => 'required|integer|min:0',
         ]);
 
-        PrasaranaPeribadatan::create($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        PrasaranaPeribadatan::create($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.peribadatan.index')
             ->with('success', 'Data prasarana peribadatan berhasil ditambahkan.');
@@ -50,22 +52,23 @@ class PrasaranaPeribadatanController extends Controller
     public function edit(PrasaranaPeribadatan $prasaranaPeribadatan)
     {
         Gate::authorize('peribadatan.update');
-        $desas = Desa::all();
         $tempatIbadahs = TempatIbadah::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.peribadatan.edit', compact('prasaranaPeribadatan', 'tempatIbadahs', 'desas'));
+        return view('pages.potensi.potensi-prasarana-dan-sarana.peribadatan.edit', compact('prasaranaPeribadatan', 'tempatIbadahs'));
     }
 
     public function update(Request $request, PrasaranaPeribadatan $prasaranaPeribadatan)
     {
         Gate::authorize('peribadatan.update');
         $request->validate([
-            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'tempat_ibadah_id' => 'required|exists:tempat_ibadahs,id',
             'jumlah' => 'required|integer|min:0',
         ]);
 
-        $prasaranaPeribadatan->update($request->all());
+        $data = $request->all();
+        $data['desa_id'] = $prasaranaPeribadatan->desa_id;
+
+        $prasaranaPeribadatan->update($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.peribadatan.index')
             ->with('success', 'Data prasarana peribadatan berhasil diupdate.');
