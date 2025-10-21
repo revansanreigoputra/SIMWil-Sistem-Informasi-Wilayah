@@ -12,6 +12,7 @@ class PerkembanganSaranaPrasarana extends Model
     protected $table = 'perkembangan_sarana_prasarana';
 
     protected $fillable = [
+        'desa_id',
         'tanggal',
         'fasilitas_umum',
         'tenaga_kesehatan_aktif',
@@ -36,4 +37,10 @@ class PerkembanganSaranaPrasarana extends Model
         'jumlah_kegiatan_pemberantasan_psn',
         'jumlah_kegiatan_pembersihan_lingkungan',
     ];
+
+    // 🔹 Relasi ke desa
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class, 'desa_id');
+    }
 }

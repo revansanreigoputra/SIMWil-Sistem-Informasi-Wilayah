@@ -18,11 +18,12 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Desa</th>
                         <th>Tanggal</th>
-                        <th>Angka Harapan Hidup Desa/Kelurahan</th>
-                        <th>Angka Harapan Hidup Kabupaten/Kota</th>
-                        <th>Angka Harapan Hidup Provinsi</th>
-                        <th>Angka Harapan Hidup Nasional</th>
+                        <th>Angka Harapan Hidup <br> Desa/Kelurahan</th>
+                        <th>Angka Harapan Hidup<br> Kabupaten/Kota</th>
+                        <th>Angka Harapan Hidup <br> Provinsi</th>
+                        <th>Angka Harapan Hidup <br> Nasional</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -30,6 +31,7 @@
                     @foreach ($data as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
+                            <td class="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
                             <td>{{ $item->tanggal->format('d-m-Y') }}</td>
                             <td>{{ $item->angka_harapan_hidup_desa }}</td>
                             <td>{{ $item->angka_harapan_hidup_kabupaten }}</td>
@@ -135,13 +137,34 @@
                     <h5 class="modal-title">Tambah Data Subsektor Harapan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
+
                 <div class="modal-body">
-                    <div class="mb-3"><label>Tanggal *</label><input type="date" name="tanggal" class="form-control" required></div>
-                    <div class="mb-3"><label>Angka Harapan Hidup Desa/Kelurahan *</label><input type="number" name="angka_harapan_hidup_desa" class="form-control" required></div>
-                    <div class="mb-3"><label>Angka Harapan Hidup Kabupaten/Kota *</label><input type="number" name="angka_harapan_hidup_kabupaten" class="form-control" required></div>
-                    <div class="mb-3"><label>Angka Harapan Hidup Provinsi *</label><input type="number" name="angka_harapan_hidup_provinsi" class="form-control" required></div>
-                    <div class="mb-3"><label>Angka Harapan Hidup Nasional *</label><input type="number" name="angka_harapan_hidup_nasional" class="form-control" required></div>
+                    <div class="mb-3">
+                        <label>Tanggal *</label>
+                        <input type="date" name="tanggal" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Angka Harapan Hidup Desa/Kelurahan *</label>
+                        <input type="number" name="angka_harapan_hidup_desa" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Angka Harapan Hidup Kabupaten/Kota *</label>
+                        <input type="number" name="angka_harapan_hidup_kabupaten" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Angka Harapan Hidup Provinsi *</label>
+                        <input type="number" name="angka_harapan_hidup_provinsi" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Angka Harapan Hidup Nasional *</label>
+                        <input type="number" name="angka_harapan_hidup_nasional" class="form-control" required>
+                    </div>
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-primary">Simpan</button>
@@ -150,6 +173,7 @@
         </div>
     </div>
 </div>
+
 @endsection
 
 @push('addon-script')

@@ -18,6 +18,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Desa</th>
                         <th>Tanggal</th>
                         <th>Fasilitas Umum</th>
                         <th>Tenaga Kesehatan Aktif</th>
@@ -33,6 +34,7 @@
                     @foreach ($data as $item)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
+                       <td>{{ $item->desa->nama_desa ?? '-' }}</td>
                         <td class="text-center">{{ $item->tanggal }}</td>
                         <td class="text-center">{{ $item->fasilitas_umum }}</td>
                         <td class="text-center">{{ $item->tenaga_kesehatan_aktif }}</td>

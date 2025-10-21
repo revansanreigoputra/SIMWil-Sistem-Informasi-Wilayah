@@ -16,6 +16,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Desa</th>
                             <th>Tanggal</th>
                             <th>Total Nilai Produksi <br>Tahun Ini (Rp)</th>
                             <th>Total Nilai Bahan Baku <br> yang Digunakan (Rp)</th>
@@ -29,6 +30,7 @@
                         @foreach ($data_pertambangan as $pertambangan)
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
+                                <td class="text-center">{{ $pertambangan->desa->nama_desa ?? '-' }}</td>
                                 <td class="text-center">{{ $pertambangan->tanggal }}</td>
                                 <td class="text-center">{{ $pertambangan->total_nilai_produksi_tahun_ini }}</td>
                                 <td class="text-center">{{ $pertambangan->total_nilai_bahan_baku_digunakan }}</td>

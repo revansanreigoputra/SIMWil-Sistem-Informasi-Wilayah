@@ -9,17 +9,22 @@ class SektorBangunan extends Model
 {
     use HasFactory;
 
-    // Laravel otomatis baca tabel jamak dari nama model.
-    // Karena migration bikin `sektor_bangunans`, otomatis kebaca.
-    // Tapi kalau mau eksplisit, bisa tambahin $table.
     protected $table = 'sektor_bangunans';
 
-    // Kolom yang bisa diisi secara mass assignment
     protected $fillable = [
+        'desa_id', // 🔹 Tambahkan desa_id
         'tanggal',
         'jumlah_bangunan_tahun_ini',
         'biaya_pemeliharaan',
         'total_nilai_bangunan',
         'biaya_antara_lainnya',
     ];
+
+    /**
+     * Relasi ke desa
+     */
+    public function desa()
+    {
+        return $this->belongsTo(\App\Models\Desa::class, 'desa_id');
+    }
 }

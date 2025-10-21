@@ -4,7 +4,7 @@
 
 @section('action')
     @can('sektor-bangunan.create')
-    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createModal">+ Data Baru</button>
+        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createModal">+ Data Baru</button>
     @endcan
 @endsection
 
@@ -16,6 +16,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Desa</th>
                         <th>Tanggal</th>
                         <th>Jumlah bangunan tahun ini (Unit)</th>
                         <th>Biaya pemeliharaan (Rp)</th>
@@ -27,12 +28,13 @@
                 <tbody>
                     @foreach ($bangunans as $bangunan)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $bangunan->tanggal }}</td>
-                            <td>{{ $bangunan->jumlah_bangunan_tahun_ini }}</td>
-                            <td>{{ number_format($bangunan->biaya_pemeliharaan, 0, ',', '.') }}</td>
-                            <td>{{ number_format($bangunan->total_nilai_bangunan, 0, ',', '.') }}</td>
-                            <td>{{ number_format($bangunan->biaya_antara_lainnya, 0, ',', '.') }}</td>
+                            <td class="text-center">{{ $loop->iteration }}</td>
+                            <td class="text-center">{{ $bangunan->desa->nama_desa ?? '-' }}</td>
+                            <td class="text-center">{{ $bangunan->tanggal }}</td>
+                            <td class="text-center">{{ $bangunan->jumlah_bangunan_tahun_ini }}</td>
+                            <td class="text-center">{{ number_format($bangunan->biaya_pemeliharaan, 0, ',', '.') }}</td>
+                            <td class="text-center">{{ number_format($bangunan->total_nilai_bangunan, 0, ',', '.') }}</td>
+                            <td class="text-center">{{ number_format($bangunan->biaya_antara_lainnya, 0, ',', '.') }}</td>
                             <td>
                                 @canany(['sektor-bangunan.update','sektor-bangunan.delete'])
                                     <div class="d-flex gap-1">
@@ -43,32 +45,16 @@
                                             </button>
                                         @endcan
 
-                                       {{-- MODAL DELETE --}}
-                                        <div class="modal fade" id="delete-bangunan-{{ $item->id }}" tabindex="-1">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Hapus Data Kehutanan?</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>Data subsektor bangunan tanggal <strong>{{ $item->tanggal }}</strong> akan dihapus dan tidak bisa dikembalikan.</p>
-                                                        <p>Yakin ingin menghapus data ini?</p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                                        <form action="{{ route('perkembangan.produk-domestik.sektor-bangunan.destroy', $item->id) }}" method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-danger">Hapus</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @else
-                                        <span class="text-muted">Tidak ada aksi</span>
-                                    @endcanany
+                                        {{-- Delete --}}
+                                        @can('sektor-bangunan.delete')
+                                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $bangunan->id }}">
+                                                Hapus
+                                            </button>
+                                        @endcan
+                                    </div>
+                                @else
+                                    <span class="text-muted">Tidak ada aksi</span>
+                                @endcanany
                             </td>
                         </tr>
 
@@ -109,6 +95,30 @@
                                         <button type="submit" class="btn btn-success">Simpan</button>
                                     </div>
                                 </form>
+                            </div>
+                        </div>
+
+                        {{-- Delete Modal --}}
+                        <div class="modal fade" id="deleteModal-{{ $bangunan->id }}" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Hapus Data Bangunan?</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Data subsektor bangunan tanggal <strong>{{ $bangunan->tanggal }}</strong> akan dihapus dan tidak bisa dikembalikan.</p>
+                                        <p>Yakin ingin menghapus data ini?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                        <form action="{{ route('perkembangan.produk-domestik.sektor-bangunan.destroy', $bangunan->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Hapus</button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     @endforeach

@@ -1,92 +1,105 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\WabahPenyakit;
-use App\Models\JenisWabah; 
-use App\Models\Desa;
+use App\Models\JenisWabah;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class WabahPenyakitController extends Controller
 {
-    
-   public function index()
-{
-    $wabahPenyakit = WabahPenyakit::with(['jenisWabah', 'desa'])->orderBy('tanggal', 'desc')->get();
-    $jenisWabah = JenisWabah::orderBy('nama')->get();
-    $desas = Desa::orderBy('nama_desa')->get();
+    public function index()
+    {
+        $desaId = session('desa_id'); // ambil dari session login
 
-    return view('pages.perkembangan.kesehatan-masyarakat.wabah-penyakit.index', compact('wabahPenyakit', 'jenisWabah', 'desas'));
-}
+        $wabahPenyakit = WabahPenyakit::with(['jenisWabah', 'desa'])
+            ->where('desa_id', $desaId)
+            ->orderBy('tanggal', 'desc')
+            ->paginate(10);
+
+        $jenisWabah = JenisWabah::orderBy('nama')->get();
+
+        return view('pages.perkembangan.kesehatan-masyarakat.wabah-penyakit.index', compact('wabahPenyakit', 'jenisWabah'));
+    }
 
     public function create()
-{
-    $jenisWabah = JenisWabah::orderBy('nama')->get();
-    $desas = Desa::orderBy('nama_desa')->get(); // 🔥 Tambahkan ini
-    return view('pages.perkembangan.kesehatan-masyarakat.wabah-penyakit.create', compact('jenisWabah', 'desas'));
-}
+    {
+        $jenisWabah = JenisWabah::orderBy('nama')->get();
+        // Tidak perlu kirim $desas karena desa otomatis dari session
+        return view('pages.perkembangan.kesehatan-masyarakat.wabah-penyakit.create', compact('jenisWabah'));
+    }
 
     public function store(Request $request)
     {
-        $request->validate([
-    'desa_id' => 'required|exists:desas,id',
-    'tanggal' => 'required|date',
-    'jenis_wabah_id' => 'required|exists:jenis_wabahs,id',
-    'jumlah_kejadian_tahun_ini' => 'required|integer|min:0',
-    'jumlah_meninggal' => 'required|integer|min:0',
-]);
+        $validator = Validator::make($request->all(), [
+            'tanggal' => 'required|date',
+            'jenis_wabah_id' => 'required|exists:jenis_wabahs,id',
+            'jumlah_kejadian_tahun_ini' => 'required|integer|min:0',
+            'jumlah_meninggal' => 'required|integer|min:0',
+        ]);
 
-        try {
-            WabahPenyakit::create($request->all());
-            return redirect()->route('perkembangan.kesehatan-masyarakat.wabah-penyakit.index')
-                ->with('success', 'Data wabah penyakit berhasil ditambahkan.');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan data.');
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Gagal menambahkan data wabah penyakit.');
         }
+
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id'); // otomatis isi desa_id
+
+        WabahPenyakit::create($data);
+
+        return redirect()
+            ->route('perkembangan.kesehatan-masyarakat.wabah-penyakit.index')
+            ->with('success', 'Data wabah penyakit berhasil ditambahkan.');
     }
 
-    public function show($id)
+    public function show(WabahPenyakit $wabahPenyakit)
     {
-        $data = WabahPenyakit::with('jenisWabah')->findOrFail($id);
-        return view('pages.perkembangan.kesehatan-masyarakat.wabah-penyakit.show', compact('data'));
+        return view('pages.perkembangan.kesehatan-masyarakat.wabah-penyakit.show', compact('wabahPenyakit'));
     }
 
-   public function edit($id)
-{
-    $data = WabahPenyakit::findOrFail($id);
-    $jenisWabah = JenisWabah::orderBy('nama')->get();
-    $desas = Desa::orderBy('nama_desa')->get(); // 🔥 Tambahkan ini
-    return view('pages.perkembangan.kesehatan-masyarakat.wabah-penyakit.edit', compact('data', 'jenisWabah', 'desas'));
-}
-
-    public function update(Request $request, $id)
+    public function edit(WabahPenyakit $wabahPenyakit)
     {
-       $request->validate([
-    'desa_id' => 'required|exists:desas,id',
-    'tanggal' => 'required|date',
-    'jenis_wabah_id' => 'required|exists:jenis_wabahs,id',
-    'jumlah_kejadian_tahun_ini' => 'required|integer|min:0',
-    'jumlah_meninggal' => 'required|integer|min:0',
-]);
-
-        try {
-            $wabahPenyakit = WabahPenyakit::findOrFail($id);
-            $wabahPenyakit->update($request->all());
-            return redirect()->route('perkembangan.kesehatan-masyarakat.wabah-penyakit.index')
-                ->with('success', 'Data wabah penyakit berhasil diperbarui.');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Terjadi kesalahan saat memperbarui data.');
-        }
+        $jenisWabah = JenisWabah::orderBy('nama')->get();
+        // desa tidak perlu dikirim karena sudah otomatis dari session
+        return view('pages.perkembangan.kesehatan-masyarakat.wabah-penyakit.edit', compact('wabahPenyakit', 'jenisWabah'));
     }
 
-    public function destroy($id)
+    public function update(Request $request, WabahPenyakit $wabahPenyakit)
     {
-        try {
-            $wabahPenyakit = WabahPenyakit::findOrFail($id);
-            $wabahPenyakit->delete();
-            return redirect()->route('perkembangan.kesehatan-masyarakat.wabah-penyakit.index')
-                ->with('success', 'Data wabah penyakit berhasil dihapus.');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus data.');
+        $validator = Validator::make($request->all(), [
+            'tanggal' => 'required|date',
+            'jenis_wabah_id' => 'required|exists:jenis_wabahs,id',
+            'jumlah_kejadian_tahun_ini' => 'required|integer|min:0',
+            'jumlah_meninggal' => 'required|integer|min:0',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Gagal memperbarui data wabah penyakit.');
         }
+
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id'); // otomatis isi ulang
+
+        $wabahPenyakit->update($data);
+
+        return redirect()
+            ->route('perkembangan.kesehatan-masyarakat.wabah-penyakit.index')
+            ->with('success', 'Data wabah penyakit berhasil diperbarui.');
+    }
+
+    public function destroy(WabahPenyakit $wabahPenyakit)
+    {
+        $wabahPenyakit->delete();
+
+        return redirect()
+            ->route('perkembangan.kesehatan-masyarakat.wabah-penyakit.index')
+            ->with('success', 'Data wabah penyakit berhasil dihapus.');
     }
 }

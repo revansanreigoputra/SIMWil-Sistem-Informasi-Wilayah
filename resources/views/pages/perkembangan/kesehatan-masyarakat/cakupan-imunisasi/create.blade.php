@@ -7,18 +7,6 @@
     <div class="card-body">
         <form action="{{ route('perkembangan.kesehatan-masyarakat.cakupan-imunisasi.store') }}" method="POST">
             @csrf
-
-             <div class="col-md-6 mb-3">
-            <label for="desa_id">Desa</label>
-            <select name="desa_id" class="form-control" required>
-                <option value="">-- Pilih Desa --</option>
-                @foreach ($desas as $desa)
-                    <option value="{{ $desa->id }}">{{ $desa->nama_desa }}</option>
-                @endforeach
-            </select>
-        </div>
-        
-
             <div class="mb-3">
                 <label class="form-label">Tanggal</label>
                 <input type="date" name="tanggal" class="form-control" required>

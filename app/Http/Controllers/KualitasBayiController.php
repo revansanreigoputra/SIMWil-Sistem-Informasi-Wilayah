@@ -2,77 +2,99 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Desa;
 use App\Models\KualitasBayi;
-use App\Models\Desa; //  Tambahkan model Desa
 use Illuminate\Http\Request;
 
 class KualitasBayiController extends Controller
 {
     public function index()
     {
-        //  Tampilkan data dengan relasi desa
-        $kualitas = KualitasBayi::with('desa')->latest()->get();
+        $user = auth()->user();
+        $desaId = session('desa_id') ?? $user?->desa_id ?? null;
+
+        // Jika bukan admin kabupaten dan belum ada desa aktif
+        if (!$desaId && (!$user || $user->role != 'admin_kabupaten')) {
+            return redirect()->back()->with('error', 'Silakan pilih desa terlebih dahulu.');
+        }
+
+        $kualitas = KualitasBayi::with('desa')
+            ->when($desaId, fn($q) => $q->where('desa_id', $desaId))
+            ->latest()
+            ->get();
+
         return view('pages.perkembangan.kesehatan-masyarakat.kualitas-bayi.index', compact('kualitas'));
     }
 
     public function create()
     {
-        //  Ambil semua desa untuk dropdown
         $desas = Desa::all();
         return view('pages.perkembangan.kesehatan-masyarakat.kualitas-bayi.create', compact('desas'));
     }
 
     public function store(Request $request)
     {
-        // Tambahkan validasi desa_id
         $request->validate([
-            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
-            'jumlah_keguguran_kandungan' => 'required|integer|min:0',
-            'jumlah_bayi_lahir' => 'required|integer|min:0',
-            'jumlah_bayi_lahir_hidup' => 'required|integer|min:0',
-            'jumlah_bayi_mati_0_1_bulan' => 'required|integer|min:0',
-            'jumlah_bayi_mati_1_12_bulan' => 'required|integer|min:0',
-            'jumlah_bayi_lahir_berat_kurang_2_5_kg' => 'required|integer|min:0',
-            'jumlah_bayi_0_5_tahun_hidup_disabilitas' => 'required|integer|min:0',
+            'jumlah_keguguran_kandungan' => 'nullable|integer|min:0',
+            'jumlah_bayi_lahir' => 'nullable|integer|min:0',
+            'jumlah_bayi_lahir_hidup' => 'nullable|integer|min:0',
+            'jumlah_bayi_mati_0_1_bulan' => 'nullable|integer|min:0',
+            'jumlah_bayi_mati_1_12_bulan' => 'nullable|integer|min:0',
+            'jumlah_bayi_lahir_berat_kurang_2_5_kg' => 'nullable|integer|min:0',
+            'jumlah_bayi_0_5_tahun_hidup_disabilitas' => 'nullable|integer|min:0',
         ]);
 
-        KualitasBayi::create($request->all());
+        $user = auth()->user();
+        $desaId = session('desa_id') ?? $user?->desa_id;
+
+        if (is_null($desaId)) {
+            return redirect()->back()->with('error', 'Akses ditolak: tidak ada desa aktif.');
+        }
+
+        KualitasBayi::create(array_merge($request->all(), [
+            'desa_id' => $desaId,
+        ]));
+
         return redirect()->route('perkembangan.kesehatan-masyarakat.kualitas-bayi.index')
             ->with('success', 'Data kualitas bayi berhasil ditambahkan.');
     }
 
-    public function show($id)
-    {
-        // Sertakan relasi desa
-        $data = KualitasBayi::with('desa')->findOrFail($id);
-        return view('pages.perkembangan.kesehatan-masyarakat.kualitas-bayi.show', compact('data'));
-    }
-
     public function edit($id)
     {
-        $data = KualitasBayi::findOrFail($id);
-        $desas = Desa::all(); //  Untuk dropdown di edit
-        return view('pages.perkembangan.kesehatan-masyarakat.kualitas-bayi.edit', compact('data', 'desas'));
+        $user = auth()->user();
+        $desaId = session('desa_id') ?? $user?->desa_id;
+
+        $data = KualitasBayi::where('id', $id)
+            ->when($desaId, fn($q) => $q->where('desa_id', $desaId))
+            ->firstOrFail();
+
+        return view('pages.perkembangan.kesehatan-masyarakat.kualitas-bayi.edit', compact('data'));
     }
 
     public function update(Request $request, $id)
     {
-        //  Validasi termasuk desa_id
         $request->validate([
-            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
-            'jumlah_keguguran_kandungan' => 'required|integer|min:0',
-            'jumlah_bayi_lahir' => 'required|integer|min:0',
-            'jumlah_bayi_lahir_hidup' => 'required|integer|min:0',
-            'jumlah_bayi_mati_0_1_bulan' => 'required|integer|min:0',
-            'jumlah_bayi_mati_1_12_bulan' => 'required|integer|min:0',
-            'jumlah_bayi_lahir_berat_kurang_2_5_kg' => 'required|integer|min:0',
-            'jumlah_bayi_0_5_tahun_hidup_disabilitas' => 'required|integer|min:0',
+            'jumlah_keguguran_kandungan' => 'nullable|integer|min:0',
+            'jumlah_bayi_lahir' => 'nullable|integer|min:0',
+            'jumlah_bayi_lahir_hidup' => 'nullable|integer|min:0',
+            'jumlah_bayi_mati_0_1_bulan' => 'nullable|integer|min:0',
+            'jumlah_bayi_mati_1_12_bulan' => 'nullable|integer|min:0',
+            'jumlah_bayi_lahir_berat_kurang_2_5_kg' => 'nullable|integer|min:0',
+            'jumlah_bayi_0_5_tahun_hidup_disabilitas' => 'nullable|integer|min:0',
         ]);
 
-        $data = KualitasBayi::findOrFail($id);
-        $data->update($request->all());
+        $user = auth()->user();
+        $desaId = session('desa_id') ?? $user?->desa_id;
+
+        $data = KualitasBayi::where('id', $id)
+            ->when($desaId, fn($q) => $q->where('desa_id', $desaId))
+            ->firstOrFail();
+
+        $data->update(array_merge($request->all(), [
+            'desa_id' => $desaId,
+        ]));
 
         return redirect()->route('perkembangan.kesehatan-masyarakat.kualitas-bayi.index')
             ->with('success', 'Data kualitas bayi berhasil diperbarui.');
@@ -80,10 +102,28 @@ class KualitasBayiController extends Controller
 
     public function destroy($id)
     {
-        $data = KualitasBayi::findOrFail($id);
+        $user = auth()->user();
+        $desaId = session('desa_id') ?? $user?->desa_id;
+
+        $data = KualitasBayi::where('id', $id)
+            ->when($desaId, fn($q) => $q->where('desa_id', $desaId))
+            ->firstOrFail();
+
         $data->delete();
 
         return redirect()->route('perkembangan.kesehatan-masyarakat.kualitas-bayi.index')
             ->with('success', 'Data kualitas bayi berhasil dihapus.');
+    }
+
+    public function show($id)
+    {
+        $user = auth()->user();
+        $desaId = session('desa_id') ?? $user?->desa_id;
+
+        $data = KualitasBayi::with('desa')
+            ->when($desaId, fn($q) => $q->where('desa_id', $desaId))
+            ->findOrFail($id);
+
+        return view('pages.perkembangan.kesehatan-masyarakat.kualitas-bayi.show', compact('data'));
     }
 }

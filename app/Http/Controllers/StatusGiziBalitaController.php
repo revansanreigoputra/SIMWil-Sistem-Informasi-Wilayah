@@ -5,90 +5,107 @@ namespace App\Http\Controllers;
 use App\Models\StatusGiziBalita;
 use App\Models\Desa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class StatusGiziBalitaController extends Controller
 {
-   public function index()
-{
-    $giziBalita = StatusGiziBalita::latest()->get();
-    $desas = \App\Models\Desa::all(); // ✅ ambil semua data desa
+    public function index()
+    {
+        $desaId = session('desa_id'); // Ambil ID desa dari session login
+        $giziBalita = StatusGiziBalita::with('desa')
+            ->where('desa_id', $desaId)
+            ->latest()
+            ->paginate(10);
 
-    return view('pages.perkembangan.kesehatan-masyarakat.gizi-balita.index', compact('giziBalita', 'desas'));
-}
+        return view('pages.perkembangan.kesehatan-masyarakat.gizi-balita.index', compact('giziBalita'));
+    }
+
+    public function create()
+    {
+        // Tidak perlu kirim $desas karena dropdown desa tidak ditampilkan
+        return view('pages.perkembangan.kesehatan-masyarakat.gizi-balita.create');
+    }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'desa_id' => 'required|exists:desas,id',
+        $validator = Validator::make($request->all(), [
             'tanggal' => 'required|date',
-            'bergizi_buruk' => 'required|numeric',
-            'bergizi_baik' => 'required|numeric',
-            'bergizi_kurang' => 'required|numeric',
-            'bergizi_lebih' => 'required|numeric',
+            'bergizi_buruk' => 'required|numeric|min:0',
+            'bergizi_baik' => 'required|numeric|min:0',
+            'bergizi_kurang' => 'required|numeric|min:0',
+            'bergizi_lebih' => 'required|numeric|min:0',
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Gagal menambahkan data status gizi balita.');
+        }
 
         $jumlah_balita = $request->bergizi_buruk + $request->bergizi_baik + $request->bergizi_kurang + $request->bergizi_lebih;
 
-        StatusGiziBalita::create([
-            'desa_id' => $request->desa_id,
-            'tanggal' => $request->tanggal,
-            'bergizi_buruk' => $request->bergizi_buruk,
-            'bergizi_baik' => $request->bergizi_baik,
-            'bergizi_kurang' => $request->bergizi_kurang,
-            'bergizi_lebih' => $request->bergizi_lebih,
-            'jumlah_balita' => $jumlah_balita,
-        ]);
+        $data = $request->all();
+        $data['jumlah_balita'] = $jumlah_balita;
+        $data['desa_id'] = session('desa_id'); // Otomatis isi dari session
 
-        return redirect()->back()->with('success', 'Data berhasil ditambahkan.');
+        StatusGiziBalita::create($data);
+
+        return redirect()
+            ->route('perkembangan.kesehatan-masyarakat.gizi-balita.index')
+            ->with('success', 'Data status gizi balita berhasil ditambahkan.');
     }
 
-    public function update(Request $request, $id)
+    public function edit(StatusGiziBalita $statusGiziBalitum)
     {
-        $data = StatusGiziBalita::findOrFail($id);
-
-        $request->validate([
-            'desa_id' => 'required|exists:desas,id',
-            'tanggal' => 'required|date',
-            'bergizi_buruk' => 'required|numeric',
-            'bergizi_baik' => 'required|numeric',
-            'bergizi_kurang' => 'required|numeric',
-            'bergizi_lebih' => 'required|numeric',
+        // Tidak perlu kirim $desas karena desa otomatis dari session
+        return view('pages.perkembangan.kesehatan-masyarakat.gizi-balita.edit', [
+            'data' => $statusGiziBalitum
         ]);
+    }
+
+    public function update(Request $request, StatusGiziBalita $statusGiziBalitum)
+    {
+        $validator = Validator::make($request->all(), [
+            'tanggal' => 'required|date',
+            'bergizi_buruk' => 'required|numeric|min:0',
+            'bergizi_baik' => 'required|numeric|min:0',
+            'bergizi_kurang' => 'required|numeric|min:0',
+            'bergizi_lebih' => 'required|numeric|min:0',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Gagal memperbarui data status gizi balita.');
+        }
 
         $jumlah_balita = $request->bergizi_buruk + $request->bergizi_baik + $request->bergizi_kurang + $request->bergizi_lebih;
 
-        $data->update([
-            'desa_id' => $request->desa_id,
-            'tanggal' => $request->tanggal,
-            'bergizi_buruk' => $request->bergizi_buruk,
-            'bergizi_baik' => $request->bergizi_baik,
-            'bergizi_kurang' => $request->bergizi_kurang,
-            'bergizi_lebih' => $request->bergizi_lebih,
-            'jumlah_balita' => $jumlah_balita,
-        ]);
+        $data = $request->all();
+        $data['jumlah_balita'] = $jumlah_balita;
+        $data['desa_id'] = session('desa_id'); // Otomatis isi ulang
 
-        return redirect()->back()->with('success', 'Data berhasil diperbarui.');
+        $statusGiziBalitum->update($data);
+
+        return redirect()
+            ->route('perkembangan.kesehatan-masyarakat.gizi-balita.index')
+            ->with('success', 'Data status gizi balita berhasil diperbarui.');
     }
 
-    public function edit($id)
+  public function destroy($id)
+{
+    $data = StatusGiziBalita::findOrFail($id);
+    $data->delete();
+
+    return redirect()
+        ->route('perkembangan.kesehatan-masyarakat.gizi-balita.index')
+        ->with('success', 'Data status gizi balita berhasil dihapus.');
+}
+
+    public function show(StatusGiziBalita $statusGiziBalitum)
     {
-        $data = StatusGiziBalita::findOrFail($id);
-        $desas = Desa::orderBy('nama_desa')->get();
-
-        return view('pages.perkembangan.kesehatan-masyarakat.gizi-balita.edit', compact('data', 'desas'));
-    }
-
-    public function destroy($id)
-    {
-        $data = StatusGiziBalita::findOrFail($id);
-        $data->delete();
-
-        return redirect()->back()->with('success', 'Data berhasil dihapus.');
-    }
-
-    public function show($id)
-    {
-        $data = StatusGiziBalita::with('desa')->findOrFail($id);
-        return view('pages.perkembangan.kesehatan-masyarakat.gizi-balita.show', compact('data'));
+        return view('pages.perkembangan.kesehatan-masyarakat.gizi-balita.show', compact('statusGiziBalitum'));
     }
 }

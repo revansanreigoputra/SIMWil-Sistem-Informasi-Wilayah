@@ -5,80 +5,107 @@ namespace App\Http\Controllers;
 use App\Models\CakupanImunisasi;
 use App\Models\Desa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CakupanImunisasiController extends Controller
 {
     public function index()
     {
-        $cakupan = CakupanImunisasi::latest()->get();
+        $desaId = session('desa_id');
+        $cakupan = CakupanImunisasi::with('desa')
+                    ->where('desa_id', $desaId)
+                    ->latest()
+                    ->paginate(10);
+
         return view('pages.perkembangan.kesehatan-masyarakat.cakupan-imunisasi.index', compact('cakupan'));
     }
 
-   public function create()
+  public function create()
 {
-    $desas = Desa::all(); // ambil semua data desa
-    return view('pages.perkembangan.kesehatan-masyarakat.cakupan-imunisasi.create', compact('desas'));
+    // Tidak perlu kirim $desas karena dropdown tidak ditampilkan
+    return view('pages.perkembangan.kesehatan-masyarakat.cakupan-imunisasi.create');
 }
 
-   public function store(Request $request)
-{
-    $request->validate([
-        'desa_id' => 'required|exists:desas,id',
-        'tanggal' => 'required|date',
-    ]);
-
-    // Simpan data ke database
-    CakupanImunisasi::create([
-        'desa_id' => $request->desa_id,
-        'tanggal' => $request->tanggal,
-        'bayi_usia_2_bulan' => $request->bayi_usia_2_bulan,
-        'bayi_2_bulan_dpt1_bcg_polio1' => $request->bayi_2_bulan_dpt1_bcg_polio1,
-        'bayi_usia_3_bulan' => $request->bayi_usia_3_bulan,
-        'bayi_3_bulan_dpt2_polio2' => $request->bayi_3_bulan_dpt2_polio2,
-        'bayi_usia_4_bulan' => $request->bayi_usia_4_bulan,
-        'bayi_4_bulan_dpt3_polio3' => $request->bayi_4_bulan_dpt3_polio3,
-        'bayi_usia_9_bulan' => $request->bayi_usia_9_bulan,
-        'bayi_9_bulan_campak' => $request->bayi_9_bulan_campak,
-        'bayi_imunisasi_cacar' => $request->bayi_imunisasi_cacar,
-    ]);
-
-    return redirect()->route('perkembangan.kesehatan-masyarakat.cakupan-imunisasi.index')
-        ->with('success', 'Data Cakupan Imunisasi berhasil ditambahkan.');
-}
-
-    public function show($id)
+    public function store(Request $request)
     {
-        $data = CakupanImunisasi::findOrFail($id);
-        return view('pages.perkembangan.kesehatan-masyarakat.cakupan-imunisasi.show', compact('data'));
-    }
-    
- public function edit($id)
-{
-    $data = CakupanImunisasi::findOrFail($id);
-    $desas = Desa::all(); // Ambil semua data desa untuk dropdown
-
-    return view('pages.perkembangan.kesehatan-masyarakat.cakupan-imunisasi.edit', compact('data', 'desas'));
-}
-
-    public function update(Request $request, $id)
-    {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'tanggal' => 'required|date',
+            'bayi_usia_2_bulan' => 'nullable|integer|min:0',
+            'bayi_2_bulan_dpt1_bcg_polio1' => 'nullable|integer|min:0',
+            'bayi_usia_3_bulan' => 'nullable|integer|min:0',
+            'bayi_3_bulan_dpt2_polio2' => 'nullable|integer|min:0',
+            'bayi_usia_4_bulan' => 'nullable|integer|min:0',
+            'bayi_4_bulan_dpt3_polio3' => 'nullable|integer|min:0',
+            'bayi_usia_9_bulan' => 'nullable|integer|min:0',
+            'bayi_9_bulan_campak' => 'nullable|integer|min:0',
+            'bayi_imunisasi_cacar' => 'nullable|integer|min:0',
         ]);
 
-        $data = CakupanImunisasi::findOrFail($id);
-        $data->update($request->all());
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Gagal menambahkan data cakupan imunisasi.');
+        }
 
-        return redirect()->route('perkembangan.kesehatan-masyarakat.cakupan-imunisasi.index')
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        CakupanImunisasi::create($data);
+
+        return redirect()
+            ->route('perkembangan.kesehatan-masyarakat.cakupan-imunisasi.index')
+            ->with('success', 'Data Cakupan Imunisasi berhasil ditambahkan.');
+    }
+
+    public function show(CakupanImunisasi $cakupanImunisasi)
+    {
+        return view('pages.perkembangan.kesehatan-masyarakat.cakupan-imunisasi.show', compact('cakupanImunisasi'));
+    }
+
+    public function edit(CakupanImunisasi $cakupanImunisasi)
+    {
+        return view('pages.perkembangan.kesehatan-masyarakat.cakupan-imunisasi.edit', compact('cakupanImunisasi'));
+    }
+
+    public function update(Request $request, CakupanImunisasi $cakupanImunisasi)
+    {
+        $validator = Validator::make($request->all(), [
+            'tanggal' => 'required|date',
+            'bayi_usia_2_bulan' => 'nullable|integer|min:0',
+            'bayi_2_bulan_dpt1_bcg_polio1' => 'nullable|integer|min:0',
+            'bayi_usia_3_bulan' => 'nullable|integer|min:0',
+            'bayi_3_bulan_dpt2_polio2' => 'nullable|integer|min:0',
+            'bayi_usia_4_bulan' => 'nullable|integer|min:0',
+            'bayi_4_bulan_dpt3_polio3' => 'nullable|integer|min:0',
+            'bayi_usia_9_bulan' => 'nullable|integer|min:0',
+            'bayi_9_bulan_campak' => 'nullable|integer|min:0',
+            'bayi_imunisasi_cacar' => 'nullable|integer|min:0',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Gagal memperbarui data cakupan imunisasi.');
+        }
+
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        $cakupanImunisasi->update($data);
+
+        return redirect()
+            ->route('perkembangan.kesehatan-masyarakat.cakupan-imunisasi.index')
             ->with('success', 'Data Cakupan Imunisasi berhasil diperbarui.');
     }
 
-    public function destroy($id)
+    public function destroy(CakupanImunisasi $cakupanImunisasi)
     {
-        $data = CakupanImunisasi::findOrFail($id);
-        $data->delete();
+        $cakupanImunisasi->delete();
 
-        return redirect()->route('perkembangan.kesehatan-masyarakat.cakupan-imunisasi.index')
+        return redirect()
+            ->route('perkembangan.kesehatan-masyarakat.cakupan-imunisasi.index')
             ->with('success', 'Data Cakupan Imunisasi berhasil dihapus.');
     }
 }

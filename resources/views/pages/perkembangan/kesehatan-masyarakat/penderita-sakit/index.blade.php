@@ -19,6 +19,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Desa</th>
                             <th>Tanggal</th>
                             <th>Jenis Penyakit</th>
                             <th>Jumlah Penderita (Orang)</th>
@@ -30,6 +31,7 @@
                         @foreach ($penderitaSakit as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
+                                 <td class="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
                                 <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
                                 <td class="text-center">{{ $item->jenisPenyakit->nama ?? '-' }}</td>
                                 <td class="text-center">{{ number_format($item->jumlah_penderita, 0, ',', '.') }}</td>
@@ -70,7 +72,8 @@
                                                         <div class="modal-header">
                                                             <h5 class="modal-title">Edit Data Penderita Sakit</h5>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                        </div>
+                                                            </div>
+
                                                         <div class="modal-body">
                                                             <div class="mb-3">
                                                                 <label>Tanggal *</label>
@@ -163,6 +166,7 @@
                         <h5 class="modal-title">Tambah Data Penderita Sakit</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
+
                     <div class="modal-body">
                         <div class="mb-3">
                             <label>Tanggal *</label>

@@ -10,6 +10,10 @@ return new class extends Migration
     {
         Schema::create('perkembangan_sarana_prasarana', function (Blueprint $table) {
             $table->id();
+
+            // 🔹 Tambahan relasi desa
+            $table->unsignedBigInteger('desa_id');
+
             $table->date('tanggal')->nullable();
 
             // 8 Kolom utama untuk tampilan index
@@ -39,6 +43,9 @@ return new class extends Migration
             $table->integer('jumlah_kegiatan_pembersihan_lingkungan')->nullable();
 
             $table->timestamps();
+
+            // 🔹 Foreign key ke tabel desas
+            $table->foreign('desa_id')->references('id')->on('desas')->onDelete('cascade');
         });
     }
 

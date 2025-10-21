@@ -14,13 +14,14 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Desa</th>
                             <th>Tanggal</th>
                             <th>Jenis Industri</th>
-                            <th>Total nilai produksi tahun ini (Rp)</th>
-                            <th>Total nilai bahan baku (Rp)</th>
-                            <th>Total nilai bahan penolong (Rp)</th>
+                            <th>Total nilai produksi <br>tahun ini (Rp)</th>
+                            <th>Total nilai bahan <br>baku (Rp)</th>
+                            <th>Total nilai bahan<br> penolong (Rp)</th>
                             <th>Total biaya antara (Rp)</th>
-                            <th>Total jumlah jenis industri (Jenis)</th>
+                            <th>Total jumlah jenis <br> industri (Jenis)</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -28,13 +29,14 @@
                         @foreach ($sektors as $sektor)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $sektor->tanggal }}</td>
-                                <td>{{ $sektor->jenis_industri }}</td>
-                                <td>{{ number_format($sektor->nilai_produksi, 0, ',', '.') }}</td>
-                                <td>{{ number_format($sektor->nilai_bahan_baku, 0, ',', '.') }}</td>
-                                <td>{{ number_format($sektor->nilai_bahan_penolong, 0, ',', '.') }}</td>
-                                <td>{{ number_format($sektor->biaya_antara, 0, ',', '.') }}</td>
-                                <td>{{ number_format($sektor->jumlah_jenis_industri, 0, ',', '.') }}</td>
+                                <td class="text-center">{{ $sektor->desa->nama_desa ?? '-' }}</td> 
+                                <td class="text-center">{{ $sektor->tanggal }}</td>
+                                <td class="text-center">{{ $sektor->jenis_industri }}</td>
+                                <td class="text-center">{{ number_format($sektor->nilai_produksi, 0, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($sektor->nilai_bahan_baku, 0, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($sektor->nilai_bahan_penolong, 0, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($sektor->biaya_antara, 0, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($sektor->jumlah_jenis_industri, 0, ',', '.') }}</td>
                                 <td>
                                     @canany(['sektor-industri-pengolahan.update', 'sektor-industri-pengolahan.delete'])
                                         <div class="d-flex gap-1 justify-content-center">

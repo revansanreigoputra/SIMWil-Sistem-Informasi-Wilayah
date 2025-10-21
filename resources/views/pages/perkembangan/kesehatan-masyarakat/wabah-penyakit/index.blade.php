@@ -76,20 +76,6 @@
                                                         </div>
                                                         <div class="modal-body">
 
-                                                            {{-- Input Desa --}}
-                                                            <div class="mb-3">
-                                                                <label for="desa_id" class="form-label">Desa *</label>
-                                                                <select name="desa_id" class="form-control" required>
-                                                                    <option value="">-- Pilih Desa --</option>
-                                                                    @foreach ($desas as $desa)
-                                                                        <option value="{{ $desa->id }}"
-                                                                            {{ $item->desa_id == $desa->id ? 'selected' : '' }}>
-                                                                            {{ $desa->nama_desa }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-
                                                             <div class="mb-3">
                                                                 <label>Tanggal *</label>
                                                                 <input type="date" name="tanggal" class="form-control" 
@@ -175,17 +161,6 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-
-                        {{-- Input Desa --}}
-                        <div class="mb-3">
-                            <label for="desa_id" class="form-label">Desa *</label>
-                            <select name="desa_id" class="form-control" required>
-                                <option value="">-- Pilih Desa --</option>
-                                @foreach ($desas as $desa)
-                                    <option value="{{ $desa->id }}">{{ $desa->nama_desa }}</option>
-                                @endforeach
-                            </select>
-                        </div>
 
                         <div class="mb-3">
                             <label>Tanggal *</label>

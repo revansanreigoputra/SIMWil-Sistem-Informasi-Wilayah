@@ -84,18 +84,6 @@
                                                             <button type="button" class="btn-close btn-close-white"
                                                                 data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
-                                                         <div class="mb-3">
-                                                                <label for="desa_id" class="form-label">Desa *</label>
-                                                                <select name="desa_id" class="form-control" required>
-                                                                    <option value="">-- Pilih Desa --</option>
-                                                                    @foreach ($desas as $desa)
-                                                                        <option value="{{ $desa->id }}"
-                                                                            {{ $item->desa_id == $desa->id ? 'selected' : '' }}>
-                                                                            {{ $desa->nama_desa }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
 
                                                         <div class="modal-body">
                                                             <div class="row g-3">
@@ -161,13 +149,11 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
                                                             data-bs-dismiss="modal">Batal</button>
-                                                        <form
-                                                            action="{{ route('perkembangan.kesehatan-masyarakat.gizi-balita.destroy', $item->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-danger">Hapus</button>
-                                                        </form>
+                                                        <form action="{{ route('perkembangan.kesehatan-masyarakat.gizi-balita.destroy', $item->id) }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                                    </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -195,17 +181,6 @@
                             aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="desa_id" class="form-label">Desa *</label>
-                            <select name="desa_id" class="form-control" required>
-                                <option value="">-- Pilih Desa --</option>
-                                @foreach ($desas as $desa)
-                                    <option value="{{ $desa->id }}" {{ old('desa_id') == $desa->id ? 'selected' : '' }}>
-                                        {{ $desa->nama_desa }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
 
                         <div class="row g-3">
                             <div class="col-md-6">

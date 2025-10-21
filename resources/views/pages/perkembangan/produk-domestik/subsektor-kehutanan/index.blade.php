@@ -17,6 +17,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Desa</th>
                             <th>Tanggal</th>
                             <th>Total nilai produksi tahun ini (Rp)</th>
                             <th>Total nilai bahan baku <br> yang digunakan (Rp)</th>
@@ -29,6 +30,7 @@
                         @foreach ($kehutanan as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
+                                <td>{{ $item->desa->nama_desa ?? '-' }}</td>
                                 <td class="text-center">{{ $item->tanggal }}</td>
                                 <td class="text-center">{{ number_format($item->total_nilai_produksi_tahun_ini, 0, ',', '.') }}</td>
                                 <td class="text-center">{{ number_format($item->total_nilai_bahan_baku_digunakan, 0, ',', '.') }}</td>

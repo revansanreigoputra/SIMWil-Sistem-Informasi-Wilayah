@@ -10,6 +10,7 @@ class SektorIndustriPengolahan extends Model
     use HasFactory;
 
     protected $fillable = [
+        'desa_id',
         'tanggal',
         'jenis_industri',
         'nilai_produksi',
@@ -18,4 +19,9 @@ class SektorIndustriPengolahan extends Model
         'biaya_antara',
         'jumlah_jenis_industri',
     ];
+
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class);
+    }
 }

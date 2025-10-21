@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Models; // ← WAJIB ada
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model; // ← Tambahkan baris ini!
+use App\Models\Desa;
 
 class SubsektorHarapan extends Model
 {
@@ -12,6 +13,7 @@ class SubsektorHarapan extends Model
     protected $table = 'subsektor_harapans';
 
     protected $fillable = [
+        'desa_id',
         'tanggal',
         'angka_harapan_hidup_desa',
         'angka_harapan_hidup_kabupaten',
@@ -22,4 +24,9 @@ class SubsektorHarapan extends Model
     protected $casts = [
         'tanggal' => 'date',
     ];
+
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class);
+    }
 }

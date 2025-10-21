@@ -15,12 +15,13 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Desa</th>
                             <th>Tanggal</th>
-                            <th>Total nilai produksi tahun ini (Rp)</th>
-                            <th>Total nilai bahan baku yang digunakan (Rp)</th>
-                            <th>Total nilai bahan penolong yang digunakan (Rp)</th>
-                            <th>Total biaya antara yang dihabiskan (Rp)</th>
-                            <th>Total jenis kerajinan rumah tangga (Jenis)</th>
+                            <th>Total nilai produksi <br>tahun ini (Rp)</th>
+                            <th>Total nilai bahan baku <br> yang digunakan (Rp)</th>
+                            <th>Total nilai bahan penolong<br> yang digunakan (Rp)</th>
+                            <th>Total biaya antara yang <br>dihabiskan (Rp)</th>
+                            <th>Total jenis kerajinan<br> rumah tangga (Jenis)</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
