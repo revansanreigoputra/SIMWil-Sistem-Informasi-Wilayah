@@ -864,6 +864,12 @@
                                                     Penjarahan dan <br> Penyerobotan Tanah
                                                 </a>
                                             @endcan
+                                            @can('perjudian.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/keamanandanketertiban/perjudian*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.keamanandanketertiban.perjudian.index') }}">
+                                                    Perjudian, Penipuan<br> dan Penggelapan
+                                                </a>
+                                            @endcan
                                             
                                         </div>
                                     </div>

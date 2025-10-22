@@ -40,6 +40,7 @@ use App\Http\Controllers\KonfliksaraController;
 use App\Http\Controllers\PerkelahianController;
 use App\Http\Controllers\PencurianController;
 use App\Http\Controllers\PenjarahanController;
+use App\Http\Controllers\PerjudianController;
 // use App\Http\Controllers\IrigasiController;
 // use App\Http\Controllers\NotificationController;
 // use App\Http\Controllers\PerangkatDesaController;
@@ -802,6 +803,17 @@ Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.penjarah
     Route::get('/{id}/edit', [PenjarahanController::class, 'edit'])->name('edit');
     Route::put('/{id}', [PenjarahanController::class, 'update'])->name('update');
     Route::delete('/{id}', [PenjarahanController::class, 'destroy'])->name('destroy');
+});
+
+//perjudian route
+Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.perjudian')->name('perkembangan.keamanandanketertiban.perjudian.')->group(function(){
+    Route::get('/', [PerjudianController::class, 'index'])->name('index');
+    Route::get('/create', [PerjudianController::class, 'create'])->name('create');
+    Route::post('/', [PerjudianController::class, 'store'])->name('store');
+    Route::get('/{id}', [PerjudianController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [PerjudianController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [PerjudianController::class, 'update'])->name('update');
+    Route::delete('/{id}', [PerjudianController::class, 'destroy'])->name('destroy');
 });
 
 

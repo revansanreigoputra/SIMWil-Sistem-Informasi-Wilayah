@@ -577,6 +577,14 @@ class PermissionSeeder extends Seeder
             'penjarahan.update',
             'penjarahan.delete',
 
+            //Perjudian
+            'perjudian.view',
+            'perjudian.create',
+            'perjudian.store',
+            'perjudian.edit',
+            'perjudian.update',
+            'perjudian.delete',
+
 
             // potensi permissions
             'potensi.laporan.view',
