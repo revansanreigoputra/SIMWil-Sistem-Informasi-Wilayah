@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Data Perjudian')
+@section('title', 'Data Perjudian, Penipuan, dan Penggelapan')
 
 @section('action')
     <a href="{{ route('perkembangan.keamanandanketertiban.perjudian.create') }}" class="btn btn-primary mb-3">

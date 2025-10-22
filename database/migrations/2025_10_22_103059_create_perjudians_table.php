@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_desa');
             $table->date('tanggal');
-            $table->integer('jumlah_penduduk_berjudi')->default(0);
+            $table->integer('jumlah_penduduk_berjudi')->nullable();
             $table->string('jenis_perjudian')->nullable();
-            $table->integer('jumlah_kasus_penipuan_penggelapan')->default(0);
-            $table->integer('jumlah_kasus_sengketa_warisan_jualbeli_utangpiutang')->default(0);
+            $table->integer('jumlah_kasus_penipuan_penggelapan')->nullable();
+            $table->integer('jumlah_kasus_sengketa_warisan_jualbeli_utangpiutang')->nullable();
             $table->timestamps();
         });
     }

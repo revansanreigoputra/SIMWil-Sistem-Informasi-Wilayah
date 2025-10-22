@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_desa');
             $table->date('tanggal');
-            $table->integer('kasus_tahun_ini')->default(0);
-            $table->integer('korban_penduduk_setempat')->default(0);
-            $table->integer('pelaku_penduduk_setempat')->default(0);
-            $table->integer('pencurian_bersenjata_api')->default(0);
-            $table->integer('pelaku_diadili')->default(0);
+            $table->integer('kasus_tahun_ini')->nullable();
+            $table->integer('korban_penduduk_setempat')->nullable();
+            $table->integer('pelaku_penduduk_setempat')->nullable();
+            $table->integer('pencurian_bersenjata_api')->nullable();
+            $table->integer('pelaku_diadili')->nullable();
             $table->timestamps();
         });
     }

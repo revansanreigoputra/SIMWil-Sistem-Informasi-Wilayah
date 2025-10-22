@@ -876,6 +876,12 @@
                                                     Pemakaian Miras<br> dan Narkoba
                                                 </a>
                                             @endcan
+                                            @can(abilities: 'prostitusi.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/keamanandanketertiban/prostitusi*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.keamanandanketertiban.prostitusi.index') }}">
+                                                    Prostitusi
+                                                </a>
+                                            @endcan
                                             
                                         </div>
                                     </div>

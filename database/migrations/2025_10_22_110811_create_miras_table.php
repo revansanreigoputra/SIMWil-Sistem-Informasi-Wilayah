@@ -15,15 +15,15 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_desa'); // relasi ke tabel desa jika ada
             $table->date('tanggal');
-            $table->integer('jumlah_warung_miras')->default(0);
-            $table->integer('jumlah_penduduk_miras')->default(0);
-            $table->integer('jumlah_kasus_mabuk_miras')->default(0);
-            $table->integer('jumlah_pengedar_narkoba')->default(0);
-            $table->integer('jumlah_penduduk_narkoba')->default(0);
-            $table->integer('jumlah_kasus_teler_narkoba')->default(0);
-            $table->integer('jumlah_kasus_kematian_narkoba')->default(0);
-            $table->integer('jumlah_pelaku_miras_diadili')->default(0);
-            $table->integer('jumlah_pelaku_narkoba_diadili')->default(0);
+            $table->integer('jumlah_warung_miras')->nullable();
+            $table->integer('jumlah_penduduk_miras')->nullable();
+            $table->integer('jumlah_kasus_mabuk_miras')->nullable();
+            $table->integer('jumlah_pengedar_narkoba')->nullable();
+            $table->integer('jumlah_penduduk_narkoba')->nullable();
+            $table->integer('jumlah_kasus_teler_narkoba')->nullable();
+            $table->integer('jumlah_kasus_kematian_narkoba')->nullable();
+            $table->integer('jumlah_pelaku_miras_diadili')->nullable();
+            $table->integer('jumlah_pelaku_narkoba_diadili')->nullable();
             $table->timestamps();
         });
     }

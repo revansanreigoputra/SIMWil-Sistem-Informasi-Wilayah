@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Tambah Data Perjudian')
+@section('title', 'Tambah Data Perjudian, Penipuan, dan Penggelapan')
 
 @section('content')
 <div class="card shadow-sm border-0">
