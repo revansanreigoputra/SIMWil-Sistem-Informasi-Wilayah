@@ -13,7 +13,8 @@ class PrasaranaHiburanController extends Controller
      */
     public function index()
     {
-        $prasaranahiburans = PrasaranaHiburan::with('jphiburan')->latest()->get();
+        $desaId = session('desa_id');
+        $prasaranahiburans = PrasaranaHiburan::with('jphiburan', 'desa')->where('desa_id', $desaId)->latest()->get();
         return view('pages.potensi.potensi-prasarana-dan-sarana.hiburan.index', compact('prasaranahiburans'));
     }
 
@@ -37,7 +38,10 @@ class PrasaranaHiburanController extends Controller
             'jumlah' => 'required|integer|min:0',
         ]);
 
-        PrasaranaHiburan::create($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        PrasaranaHiburan::create($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.hiburan.index')->with('success', 'Data prasarana hiburan berhasil ditambahkan.');
     }

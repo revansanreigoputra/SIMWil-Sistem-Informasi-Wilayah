@@ -13,7 +13,7 @@
                 <div class="d-flex align-items-center">
                     <div>
                         <h3 class="mb-0 fw-bold text-dark">
-                            Detail Prasarana Kebersihan - {{ $prasaranakebersihan->tanggal?->format('d F Y') ?? '-' }}
+                            Detail Prasarana Kebersihan - {{ $prasaranakebersihan->desa->nama_desa }} - {{ $prasaranakebersihan->tanggal?->format('d F Y') ?? '-' }}
                         </h3>
                     </div>
                 </div>

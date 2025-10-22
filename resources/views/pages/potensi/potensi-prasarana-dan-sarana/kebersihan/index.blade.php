@@ -23,6 +23,7 @@
                     <thead>
                         <tr>
                             <th class="text-center">No</th>
+                            <th class="text-center">Desa</th>
                             <th class="text-center">Tanggal</th>
                             <th class="text-center">Lokasi TPS</th>
                             <th class="text-center">Lokasi TPA</th>
@@ -36,6 +37,7 @@
                         @foreach ($prasaranakebersihan as $item)
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
+                                <td class="text-center">{{ $item->desa->nama_desa }}</td>
                                 <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
                                 <td class="text-center">{{ $item->tps_lokasi ?? '-' }}</td>
                                 <td class="text-center">{{ $item->tpa_lokasi ?? '-' }}</td>
