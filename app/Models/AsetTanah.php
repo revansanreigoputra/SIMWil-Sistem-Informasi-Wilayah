@@ -9,7 +9,7 @@ class AsetTanah extends Model
 {
     use HasFactory;
 
-    protected $table = 'aset_tanah'; // 🔥 ini kunci utamanya
+    protected $table = 'aset_tanahs'; // 🔥 ini kunci utamanya
 
     protected $fillable = [
         'id_desa',
