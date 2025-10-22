@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Desa;
-use App\Models\Jpkesehatan;
+use App\Models\MasterPotensi\JenisPrasaranaKesehatan;
 use App\Models\Prasaranakesehatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -17,7 +17,7 @@ class PrasaranakesehatanController extends Controller
     {
         Gate::authorize('kesehatan.view');
         $desaId = session('desa_id');
-        $prasaranakesehatans = Prasaranakesehatan::with('jpkesehatan', 'desa')->where('desa_id', $desaId)->latest()->get();
+        $prasaranakesehatans = Prasaranakesehatan::with('jenisPrasaranaKesehatan', 'desa')->where('desa_id', $desaId)->latest()->get();
         return view('pages.potensi.potensi-prasarana-dan-sarana.kesehatan.index', compact('prasaranakesehatans'));
     }
 
@@ -27,8 +27,8 @@ class PrasaranakesehatanController extends Controller
     public function create()
     {
         Gate::authorize('kesehatan.create');
-        $jpkesehatans = Jpkesehatan::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.kesehatan.create', compact('jpkesehatans'));
+        $jenisPrasaranaKesehatans = JenisPrasaranaKesehatan::all();
+        return view('pages.potensi.potensi-prasarana-dan-sarana.kesehatan.create', compact('jenisPrasaranaKesehatans'));
     }
 
     /**
@@ -39,7 +39,7 @@ class PrasaranakesehatanController extends Controller
         Gate::authorize('kesehatan.create');
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'jpkesehatan_id' => 'required|exists:jpkesehatans,id',
+            'jenis_prasarana_kesehatan_id' => 'required|exists:jenis_prasarana_kesehatan,id',
             'jumlah' => 'required|integer|min:0',
         ]);
 
@@ -70,10 +70,10 @@ class PrasaranakesehatanController extends Controller
     public function edit(Prasaranakesehatan $prasarana_kesehatan)
     {
         Gate::authorize('kesehatan.update');
-        $jpkesehatans = Jpkesehatan::all();
+        $jenisPrasaranaKesehatans = JenisPrasaranaKesehatan::all();
         return view('pages.potensi.potensi-prasarana-dan-sarana.kesehatan.edit', [
             'prasaranaKesehatan' => $prasarana_kesehatan,
-            'jpkesehatans' => $jpkesehatans,
+            'jenisPrasaranaKesehatans' => $jenisPrasaranaKesehatans,
         ]);
     }
 
@@ -85,7 +85,7 @@ class PrasaranakesehatanController extends Controller
         Gate::authorize('kesehatan.update');
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'jpkesehatan_id' => 'required|exists:jpkesehatans,id',
+            'jenis_prasarana_kesehatan_id' => 'required|exists:jenis_prasarana_kesehatan,id',
             'jumlah' => 'required|integer|min:0',
         ]);
 
