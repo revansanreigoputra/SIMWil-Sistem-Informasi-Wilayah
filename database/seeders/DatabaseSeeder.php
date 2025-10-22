@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\JenisAtap;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -31,6 +32,10 @@ class DatabaseSeeder extends Seeder
             LembagaSeeder::class,
             MataPencaharianSeeder::class,
             PendidikanSeeder::class,
+            JenisAsetSeeder::class,
+            JenisDindingSeeder::class,
+            JenisLantaiSeeder::class,
+            JenisAtapSeeder::class,
         ]);
     }
 }
