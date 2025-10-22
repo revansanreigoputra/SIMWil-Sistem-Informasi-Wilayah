@@ -95,7 +95,7 @@ use App\Http\Controllers\MataPencaharianPokokController;
 // use App\Http\Controllers\PertanggungjawabanController;
 use App\Http\Controllers\SektorPertambanganController;
 use App\Http\Controllers\SubsektorKerajinanController;
-
+use App\Http\Controllers\SektorIndustriPengolahanController;
 
 use App\Http\Controllers\PerkembanganPendudukController;
 // use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -592,10 +592,14 @@ Route::prefix('perkembangan/produk-domestik')->name('perkembangan.produk-domesti
 
     // Subsektor Kerajinan routes
 
-    Route::resource('subsektor-kerajinan', SubsektorKerajinanController::class);
+ Route::resource('subsektor-kerajinan', SubsektorKerajinanController::class);
 
+ // sektor industri pengolahan routes
 
+    Route::resource('sektor-industri-pengolahan', SektorIndustriPengolahanController::class);
 });
+
+
 
 require __DIR__ . '/auth.php';
 
