@@ -136,6 +136,9 @@ use App\Http\Controllers\StatusGiziBalitaController;
 use App\Http\Controllers\SubsektorHarapanController;
 use App\Http\Controllers\PenderitaSakitController;
 use App\Http\Controllers\PerkembanganSaranaPrasaranaController;
+use App\Http\Controllers\PerkembanganPasanganUsiaSuburKbController;
+use App\Http\Controllers\CakupanAirBersihController;
+use App\Http\Controllers\PerilakuHidupBersihDanSehatController;
 
 use App\Http\Controllers\PerkembanganPendudukController;
 // use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -1104,6 +1107,23 @@ Route::prefix('perkembangan/produk-domestik')
     ->group(function () {
         Route::resource('sarana-prasarana', PerkembanganSaranaPrasaranaController::class);
     });
+
+
+    // pasangan usia subur
+    Route::prefix('perkembangan/kesehatan-masyarakat')
+    ->name('perkembangan.kesehatan-masyarakat.')
+    ->group(function () {
+        Route::resource('pasangan-usia-subur', PerkembanganPasanganUsiaSuburKbController::class);
+    });
+
+    // cakupan air bersih
+    Route::resource('perkembangan/kesehatan-masyarakat/cakupan-air-bersih', CakupanAirBersihController::class)
+    ->names('perkembangan.kesehatan-masyarakat.cakupan-air-bersih');
+
+        // Perilaku hidup sehat
+        Route::prefix('perkembangan/kesehatan-masyarakat')->name('perkembangan.kesehatan-masyarakat.')->group(function () {
+    Route::resource('perilaku-hidup-bersih-dan-sehat', PerilakuHidupBersihDanSehatController::class);
+});
 
 // ==== PERMOHONAN SURAT ====
 

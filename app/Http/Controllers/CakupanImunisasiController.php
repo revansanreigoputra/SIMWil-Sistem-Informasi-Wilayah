@@ -58,10 +58,11 @@ class CakupanImunisasiController extends Controller
             ->with('success', 'Data Cakupan Imunisasi berhasil ditambahkan.');
     }
 
-    public function show(CakupanImunisasi $cakupanImunisasi)
-    {
-        return view('pages.perkembangan.kesehatan-masyarakat.cakupan-imunisasi.show', compact('cakupanImunisasi'));
-    }
+  public function show($id)
+{
+    $data = CakupanAirBersih::with('desa')->findOrFail($id);
+    return view('perkembangan.kesehatan_masyarakat.cakupan_air_bersih.show', compact('data'));
+}
 
     public function edit(CakupanImunisasi $cakupanImunisasi)
     {

@@ -1056,6 +1056,25 @@
                                               Perkembangan sarana <br> dan prasarana 
                                             </a>
                                     @endcan
+
+                                     @can('pasangan-usia-subur.view')
+                                        <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/pasangan-usia-subur*') ? 'show' : '' }}"
+                                                href="{{ route('perkembangan.kesehatan-masyarakat.pasangan-usia-subur.index') }}">
+                                               Pasangan usia subur<br> KB
+                                            </a>
+                                    @endcan
+                                     @can('cakupan-air-bersih.view')
+                                        <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/cakupan-air-bersih*') ? 'show' : '' }}"
+                                                href="{{ route('perkembangan.kesehatan-masyarakat.cakupan-air-bersih.index') }}">
+                                               Cakupan pemenuhan <br>kebutuhan air<br> bersih
+                                            </a>
+                                    @endcan
+                                     @can('perilaku-hidup-bersih-dan-sehat.view')
+                                        <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/perilaku-hidup-bersih-dan-sehat*') ? 'show' : '' }}"
+                                                href="{{ route('perkembangan.kesehatan-masyarakat.perilaku-hidup-bersih-dan-sehat.index') }}">
+                                               Perilaku hidup bersih <br> dan sehat
+                                            </a>
+                                    @endcan
                                             </div>
                                         </div>
                                     @endcanany

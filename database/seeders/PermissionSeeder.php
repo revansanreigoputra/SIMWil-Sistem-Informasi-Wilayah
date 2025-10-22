@@ -535,6 +535,31 @@ class PermissionSeeder extends Seeder
                 'sarana-prasarana.delete',
                 'sarana-prasarana.show',
 
+                // perkembangan pasangan subur dini hari
+
+                
+                'pasangan-usia-subur.view',
+                'pasangan-usia-subur.create',
+                'pasangan-usia-subur.update',
+                'pasangan-usia-subur.delete',
+                'pasangan-usia-subur.show',
+
+                // cakupan air bersih 
+                
+                'cakupan-air-bersih.view',
+                'cakupan-air-bersih.create',
+                'cakupan-air-bersih.show',
+                'cakupan-air-bersih.update',
+                'cakupan-air-bersih.delete',
+
+                //perilaku hidup bersih
+                'perilaku-hidup-bersih-dan-sehat.view',
+                'perilaku-hidup-bersih-dan-sehat.create',
+                'perilaku-hidup-bersih-dan-sehat.show',
+                'perilaku-hidup-bersih-dan-sehat.update',
+                'perilaku-hidup-bersih-dan-sehat.delete',
+                                
+
 
 
             // Pertanggungjawaban
