@@ -2,12 +2,6 @@
 
 @section('title', 'Edit Pembinaan Pemerintah Provinsi')
 
-@section('action')
-    <a href="{{ route('pembinaanprovinsi.index') }}" class="btn btn-warning mb-3">
-        <i class="fas fa-arrow-left me-1"></i> Kembali
-    </a>
-@endsection
-
 @section('content')
 <div class="card shadow-sm">
     <div class="card-header text-dark">
@@ -18,20 +12,40 @@
     </div>
 
     <div class="card-body">
-        <form action="{{ route('pembinaanprovinsi.update', $pembinaanprovinsi->id) }}" method="POST">
+        <form action="{{ route('perkembangan.pemerintahdesadankelurahan.pembinaanprovinsi.update', $pembinaan->id) }}" method="POST">
             @csrf
             @method('PUT')
 
-            {{-- Tanggal --}}
-            <div class="row mb-3">
-                <label class="col-sm-3 col-form-label fw-semibold">Tanggal *</label>
-                <div class="col-sm-9">
-                    <input type="date" name="tanggal" class="form-control @error('tanggal') is-invalid @enderror"
-                           value="{{ old('tanggal', \Carbon\Carbon::parse($pembinaanprovinsi->tanggal)->format('Y-m-d')) }}" required>
-                    @error('tanggal')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
+            <div class="row">
+            <!-- Kolom Tanggal -->
+            <div class="col-md-6 mb-3">
+                <label for="tanggal" class="form-label fw-semibold">
+                    <i class="fas fa-calendar me-1"></i>
+                    Tanggal <span class="text-danger">*</span>
+                </label>
+                <input type="date" class="form-control @error('tanggal') is-invalid @enderror" 
+                    id="tanggal" name="tanggal"
+                    value="{{ old('tanggal', \Carbon\Carbon::parse($pembinaan->tanggal)->format('Y-m-d')) }}" required>
+                @error('tanggal')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <!-- Kolom Desa -->
+            <div class="col-md-6 mb-3">
+                <label for="id_desa" class="form-label fw-semibold">
+                    <i class="fas fa-map-marker-alt me-1"></i>
+                    Desa <span class="text-danger">*</span>
+                </label>
+                <select name="id_desa" id="id_desa" class="form-control" required>
+                    <option value="">-- Pilih Desa --</option>
+                    @foreach ($desas as $item)
+                        <option value="{{ $item->id }}" {{ old('id_desa', $pembinaan->id_desa) == $item->id ? 'selected' : '' }}>
+                            {{ $item->nama_desa }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
             </div>
 
             {{-- Radio Button Section --}}
@@ -50,12 +64,12 @@
                     <div class="col-sm-3">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="{{ $name }}" value="Ada"
-                                {{ old($name, $pembinaanprovinsi->$name) === 'Ada' ? 'checked' : '' }}>
+                                {{ old($name, $pembinaan->$name) === 'Ada' ? 'checked' : '' }}>
                             <label class="form-check-label">Ada</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="{{ $name }}" value="Tidak Ada"
-                                {{ old($name, $pembinaanprovinsi->$name) === 'Tidak Ada' ? 'checked' : '' }}>
+                                {{ old($name, $pembinaan->$name) === 'Tidak Ada' ? 'checked' : '' }}>
                             <label class="form-check-label">Tidak Ada</label>
                         </div>
                     </div>
@@ -82,7 +96,7 @@
                     <label class="col-sm-9 col-form-label">{{ $label }}</label>
                     <div class="col-sm-3">
                         <input type="number" name="{{ $name }}" class="form-control @error($name) is-invalid @enderror"
-                               min="0" value="{{ old($name, $pembinaanprovinsi->$name) }}">
+                               min="0" value="{{ old($name, $pembinaan->$name) }}">
                         @error($name)
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -90,10 +104,21 @@
                 </div>
             @endforeach
 
-            <div class="text-end">
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save me-1"></i> Update Data
-                </button>
+            <hr class="my-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">
+                    Field dengan tanda <span class="text-danger">*</span> wajib diisi
+                </small>
+
+                <div class="btn-group gap-2">
+                    <a href="{{ route('perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.index') }}"
+                        class="btn btn-outline-secondary rounded">
+                        Kembali
+                    </a>
+                    <button type="submit" class="btn btn-primary rounded">
+                        Perbarui Data
+                    </button>
+                </div>
             </div>
         </form>
     </div>

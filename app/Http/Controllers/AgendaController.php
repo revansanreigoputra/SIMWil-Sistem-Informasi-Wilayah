@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Agenda;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AgendaController extends Controller
 {
@@ -66,5 +67,15 @@ class AgendaController extends Controller
 
         return redirect()->route('utama.agenda.index')
             ->with('message', 'Agenda berhasil dihapus.');
+    }
+public function cetak()
+    {
+        $agenda = Agenda::orderBy('tgl_dari', 'asc')->get();
+        $pdf = PDF::loadView('pages.utama.agenda.cetak', compact('agenda'));
+
+        // Karena tabel agenda memiliki banyak kolom, orientasi landscape lebih disarankan
+        $pdf->setPaper('a4', 'landscape');
+
+        return $pdf->stream('laporan-agenda-kegiatan.pdf');
     }
 }

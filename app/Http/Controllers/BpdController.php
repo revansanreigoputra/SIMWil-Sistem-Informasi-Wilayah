@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bpd;
+use App\Models\Desa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -13,7 +14,8 @@ class BpdController extends Controller
      */
     public function index()
     {
-        $bpds = Bpd::orderBy('tanggal', 'desc')->paginate(10);
+        $desaId = session('desa_id');
+        $bpds = Bpd::with('desa')->where('desa_id', $desaId)->orderBy('tanggal', 'desc')->paginate(10);
         return view('pages.potensi.potensi-prasarana-dan-sarana.bpd.index', compact('bpds'));
     }
 
@@ -59,7 +61,10 @@ class BpdController extends Controller
                 ->withInput();
         }
 
-        Bpd::create($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        Bpd::create($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.prasarana-bpd.index')
             ->with('success', 'Data BPD berhasil ditambahkan.');
@@ -115,7 +120,10 @@ class BpdController extends Controller
                 ->withInput();
         }
 
-        $bpd->update($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        $bpd->update($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.prasarana-bpd.index')
             ->with('success', 'Data BPD berhasil diperbarui.');

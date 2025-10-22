@@ -23,6 +23,7 @@ return new class extends Migration {
             for ($i = 0; $i <= 75; $i++) {
                 $table->integer("p{$i}")->nullable();
             }
+            $table->foreignId('desa_id')->constrained('desas')->onDelete('cascade');
             $table->timestamps();
         });
     }

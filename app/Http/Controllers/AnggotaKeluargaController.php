@@ -31,7 +31,33 @@ class AnggotaKeluargaController extends Controller
      */
     public function index()
     {
-        $dataKeluargas = DataKeluarga::with(['anggotaKeluarga', 'desas', 'kecamatans', 'perangkatDesas'])->get();
+        // Asumsi: Variabel $idKepalaKeluarga sudah diambil seperti di DataKeluargaController
+        $kepalaKeluargaRelasi = HubunganKeluarga::where('nama', 'Kepala Keluarga')->first();
+        $idKepalaKeluarga = optional($kepalaKeluargaRelasi)->id;
+
+        // Filter utama (whereHas): Pastikan hanya DataKeluarga yang memiliki anggota aktif yang dimuat
+        $query = DataKeluarga::whereHas('anggotaKeluarga', function ($q) {
+            $q->where('status_kehidupan', 'hidup');
+        });
+
+        if ($idKepalaKeluarga) {
+            // Filter tambahan: Pastikan Kepala Keluarga (KK) sendiri juga berstatus aktif/hidup
+            $query->whereHas('anggotaKeluarga', function ($q) use ($idKepalaKeluarga) {
+                $q->where('status_kehidupan', 'hidup')
+                    ->where('hubungan_keluarga_id', $idKepalaKeluarga);
+            });
+        }
+
+        // Memuat relasi (with): FILTER relasi Anggota Keluarga agar hanya memuat yang 'hidup'
+        $dataKeluargas = $query->with([
+            'anggotaKeluarga' => function ($q) {
+                // FILTER KRITIS: Hanya muat anggota yang berstatus 'hidup'
+                $q->where('status_kehidupan', 'hidup');
+            },
+            'desas',
+            'kecamatans',
+            'perangkatDesas'
+        ])->get();
 
         return view('pages.anggota_keluarga.index', compact('dataKeluargas'));
     }
@@ -44,19 +70,21 @@ class AnggotaKeluargaController extends Controller
      */
     public function showAnggota(DataKeluarga $dataKeluarga)
     {
-        $anggotaKeluargas = $dataKeluarga->anggotaKeluarga()->with([
-            'agama',
-            'golonganDarah',
-            'kewarganegaraan',
-            'pendidikan',
-            'mataPencaharian',
-            'kb',
-            'cacat',
-            'kedudukanPajak',
-            'lembaga',
-            'hubunganKeluarga',
-            'datakeluarga'
-        ])->get();
+        $anggotaKeluargas = $dataKeluarga->anggotaKeluarga()
+            ->where('status_kehidupan', 'hidup')
+            ->with([
+                'agama',
+                'golonganDarah',
+                'kewarganegaraan',
+                'pendidikan',
+                'mataPencaharian',
+                'kb',
+                'cacat',
+                'kedudukanPajak',
+                'lembaga',
+                'hubunganKeluarga',
+                'datakeluarga'
+            ])->get();
 
         return view('pages.anggota_keluarga.show_anggota', compact('dataKeluarga', 'anggotaKeluargas'));
     }
@@ -188,7 +216,7 @@ class AnggotaKeluargaController extends Controller
         return view('anggota_keluarga.show', compact('anggotaKeluarga'));
     }
 
-     public function edit(AnggotaKeluarga $anggota_keluarga)
+    public function edit(AnggotaKeluarga $anggota_keluarga)
     {
         // Muat relasi yang diperlukan untuk form
         $anggota_keluarga->load(['datakeluarga', 'cacat', 'lembaga']);
@@ -221,7 +249,7 @@ class AnggotaKeluargaController extends Controller
         ));
     }
 
-   
+
     public function update(Request $request, AnggotaKeluarga $anggota_keluarga)
     {
         $validatedData = $request->validate([
@@ -251,7 +279,7 @@ class AnggotaKeluargaController extends Controller
             'lembaga_id' => 'nullable|exists:lembagas,id',
             'nama_lembaga' => 'nullable|string|max:255',
         ]);
-        
+
         // Handle Cacat logic
         if ($validatedData['nama_cacat'] && $validatedData['cacat_id']) {
             $selectedCacat = Cacat::find($validatedData['cacat_id']);
@@ -285,7 +313,7 @@ class AnggotaKeluargaController extends Controller
         $anggota_keluarga->update($validatedData);
 
         return redirect()->route('anggota_keluarga.show', $anggota_keluarga->data_keluarga_id)->with('success', 'Data anggota keluarga berhasil diperbarui.');
-    } 
+    }
     /**
      * Remove the specified resource from storage.
      *

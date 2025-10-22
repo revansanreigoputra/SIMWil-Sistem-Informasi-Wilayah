@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Desa;
 use App\Models\Kemasyarakatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -13,7 +14,8 @@ class KemasyarakatanController extends Controller
      */
     public function index()
     {
-        $kemasyarakatans = Kemasyarakatan::orderBy('tanggal', 'desc')->paginate(10);
+        $desaId = session('desa_id');
+        $kemasyarakatans = Kemasyarakatan::with('desa')->where('desa_id', $desaId)->orderBy('tanggal', 'desc')->paginate(10);
         return view('pages.potensi.potensi-prasarana-dan-sarana.kemasyarakatan.index', compact('kemasyarakatans'));
     }
 
@@ -106,8 +108,11 @@ class KemasyarakatanController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
+        
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
 
-        Kemasyarakatan::create($request->all());
+        Kemasyarakatan::create($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.kemasyarakatan.index')
             ->with('success', 'Data Kemasyarakatan berhasil ditambahkan.');

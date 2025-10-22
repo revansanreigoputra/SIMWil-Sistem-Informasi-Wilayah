@@ -5,7 +5,7 @@
     @push('addon-style')
         <style>
             .article-container {
-                max-width: 880px;
+                max-width: 900px;
                 margin: 0 auto;
                 padding: 0.5rem 1rem 2rem;
             }
@@ -25,22 +25,25 @@
                 text-align: center;
             }
 
+            /* === BAGIAN YANG DIUBAH ADA DI SINI === */
             .article-banner {
                 display: block;
-                margin-left: auto;
-                margin-right: auto;
-                max-width: 100%;
-                width: auto;
+                width: 15%;
+                /* Membuat gambar selebar kontainer */
                 max-height: 200px;
+                /* Atur tinggi maksimal gambar di sini (misal: 400px) */
                 object-fit: cover;
+                /* Memastikan gambar tidak gepeng/distorsi */
                 border-radius: 8px;
                 box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
-                margin-bottom: 1.25rem;
+                margin-bottom: 2rem;
+                margin-left: auto;
+                margin-right: auto;
             }
 
             .article-body {
                 font-size: 1.05rem;
-                line-height: 1.8;
+                line-height: 1.6;
                 color: #374151;
                 text-align: justify;
             }

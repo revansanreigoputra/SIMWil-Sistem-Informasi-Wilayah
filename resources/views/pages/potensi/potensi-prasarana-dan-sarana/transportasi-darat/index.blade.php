@@ -20,6 +20,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Desa</th>
                             <th>Tanggal</th>
                             <th>Kategori</th>
                             <th>Jenis Sarana Prasarana</th>
@@ -33,6 +34,7 @@
                         @foreach ($transportasiDarats as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
+                                <td>{{ $item->desa->nama_desa }}</td>
                                 <td>{{ $item->tanggal->format('Y-m-d') }}</td>
                                 <td>{{ $item->getKategoriOptions()[$item->kategori] ?? $item->kategori }}</td>
                                 <td>{{ $item->getJenisSaranaPrasaranaOptions()[$item->jenis_sarana_prasarana] ?? $item->jenis_sarana_prasarana }}</td>

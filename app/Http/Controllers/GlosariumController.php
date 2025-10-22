@@ -3,27 +3,87 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Glosarium; // Import model Glosarium
+use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class GlosariumController extends Controller
 {
     /**
-     * Dummy dataset (hanya untuk demo frontend dengan modal).
-     */
-    private function dummyData(): array
-    {
-        return [
-            ['id' => 1, 'istilah' => 'Desa', 'deskripsi' => 'Wilayah administrasi setingkat kelurahan', 'diupload' => 'Admin', 'tanggal' => '2025-09-10'],
-            ['id' => 2, 'istilah' => 'BPD', 'deskripsi' => 'Badan Permusyawaratan Desa', 'diupload' => 'Sekretaris', 'tanggal' => '2025-09-12'],
-            ['id' => 3, 'istilah' => 'CRUD', 'deskripsi' => 'Create Read Update Delete', 'diupload' => 'Operator', 'tanggal' => '2025-09-15'],
-        ];
-    }
-
-    /**
-     * Tampilkan daftar glosarium dengan modal tambah & edit.
+     * Tampilkan daftar glosarium dari database.
      */
     public function index()
     {
-        $glosarium = $this->dummyData();
+        // Ambil semua data dari tabel glosarium, diurutkan dari yang terbaru
+        $glosarium = Glosarium::latest()->get();
         return view('pages.utama.glosarium.index', compact('glosarium'));
     }
+
+    /**
+     * Simpan data glosarium baru ke database.
+     */
+    public function store(Request $request)
+    {
+        // Validasi data yang masuk
+        $request->validate([
+            'istilah' => 'required|string|max:255|unique:glosarium,istilah',
+            'deskripsi' => 'required|string',
+        ]);
+
+        // Buat data baru
+        Glosarium::create($request->all());
+
+        // Redirect kembali dengan pesan sukses
+        return redirect()->route('utama.glosarium.index')
+            ->with('message', 'Istilah baru berhasil ditambahkan.');
+    }
+
+    /**
+     * Perbarui data glosarium yang ada di database.
+     */
+    public function update(Request $request, Glosarium $glosarium)
+    {
+        // Validasi data yang masuk
+        $request->validate([
+            // Pastikan istilah unik, kecuali untuk dirinya sendiri
+            'istilah' => 'required|string|max:255|unique:glosarium,istilah,' . $glosarium->id,
+            'deskripsi' => 'required|string',
+        ]);
+
+        // Update data
+        $glosarium->update($request->all());
+
+        // Redirect kembali dengan pesan sukses
+        return redirect()->route('utama.glosarium.index')
+            ->with('message', 'Istilah berhasil diperbarui.');
+    }
+
+    /**
+     * Hapus data glosarium dari database.
+     */
+    public function destroy(Glosarium $glosarium)
+    {
+        // Hapus data
+        $glosarium->delete();
+
+        // Redirect kembali dengan pesan sukses
+        return redirect()->route('utama.glosarium.index')
+            ->with('message', 'Istilah berhasil dihapus.');
+    }
+    public function cetak()
+    {
+        // 1. Ambil semua data glosarium
+        $glosarium = Glosarium::all();
+
+        // 2. Load view untuk PDF dan kirim data ke dalamnya
+        //    (Pastikan Anda sudah membuat file view di langkah selanjutnya)
+        $pdf = PDF::loadView('pages.utama.glosarium.cetak', compact('glosarium'));
+
+        // 3. Atur orientasi kertas dan nama file
+        $pdf->setPaper('a4', 'portrait');
+
+        // 4. Tampilkan PDF di browser dengan nama file 'laporan-glosarium.pdf'
+        return $pdf->stream('laporan-glosarium.pdf');
+    }
 }
+

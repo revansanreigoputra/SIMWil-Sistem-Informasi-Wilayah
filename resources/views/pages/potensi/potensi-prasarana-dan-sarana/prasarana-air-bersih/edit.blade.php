@@ -17,7 +17,24 @@
             @method('PUT')
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
+                    {{-- <div class="mb-3">
+                        <label for="desa_id" class="form-label fw-semibold">
+                            <i class="fas fa-map-marker-alt me-1"></i>
+                            Desa <span class="text-danger">*</span>
+                        </label>
+                        <select class="form-select @error('desa_id') is-invalid @enderror" id="desa_id" name="desa_id" required>
+                            <option value="" disabled>Pilih Desa</option>
+                            @foreach ($desas as $desa)
+                                <option value="{{ $desa->id }}" {{ old('desa_id', $airBersih->desa_id) == $desa->id ? 'selected' : '' }}>{{ $desa->nama_desa }}</option>
+                            @endforeach
+                        </select>
+                        @error('desa_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div> --}}
+                </div>
+                <div class="col-md-6">
                     <div class="mb-3">
                         <label for="tanggal" class="form-label fw-semibold">
                             <i class="fas fa-calendar me-1"></i>

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Kemasyarakatan extends Model
 {
     protected $fillable = [
+        'desa_id',
         'tanggal',
         // GEDUNG KANTOR LKD/LKK
         'gedung_lembaga_kemasyarakatan',
@@ -80,4 +81,9 @@ class Kemasyarakatan extends Model
     protected $casts = [
         'tanggal' => 'date',
     ];
+
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class);
+    }
 }

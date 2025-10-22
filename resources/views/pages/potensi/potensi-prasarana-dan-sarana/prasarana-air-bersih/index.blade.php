@@ -21,6 +21,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Desa</th>
                             <th>Tanggal</th>
                             <th>Sumur Pompa</th>
                             <th>Sumur Gali</th>
@@ -38,6 +39,7 @@
                         @foreach ($airBersihs as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
+                                <td>{{ $item->desa->nama_desa }}</td>
                                 <td>{{ $item->tanggal->format('d-m-Y') }}</td>
                                 <td>{{ number_format($item->sumur_pompa) }} unit</td>
                                 <td>{{ number_format($item->sumur_gali) }} unit</td>

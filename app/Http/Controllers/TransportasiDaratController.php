@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Desa;
 use App\Models\TransportasiDarat;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,8 @@ class TransportasiDaratController extends Controller
      */
     public function index()
     {
-        $transportasiDarats = TransportasiDarat::orderBy('tanggal', 'desc')->paginate(10);
+        $desaId = session('desa_id');
+        $transportasiDarats = TransportasiDarat::where('desa_id', $desaId)->with('desa')->orderBy('tanggal', 'desc')->paginate(10);
         return view('pages.potensi.potensi-prasarana-dan-sarana.transportasi-darat.index', compact('transportasiDarats'));
     }
 
@@ -39,6 +41,8 @@ class TransportasiDaratController extends Controller
             'kondisi_rusak' => 'required|integer|min:0',
             'jumlah' => 'required|integer|min:0',
         ]);
+
+        $validated['desa_id'] = session('desa_id');
 
         TransportasiDarat::create($validated);
 

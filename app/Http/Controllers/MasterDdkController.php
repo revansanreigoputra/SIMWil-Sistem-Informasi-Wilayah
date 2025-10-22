@@ -53,4 +53,119 @@ class MasterDdkController extends Controller
 
         return view('pages.master-ddk.index', compact('data', 'tableName', 'activeTable'));
     }
+    public function create(string $table)
+    {
+        if (!isset($this->models[$table])) {
+            abort(404);
+        }
+        return view('pages.master-ddk.create', ['activeTable' => $table]);
+    }
+
+    // BARU: Method untuk menyimpan data baru
+    public function store(Request $request, string $table)
+    {
+        $modelClass = $this->models[$table] ?? null;
+        if (!$modelClass) {
+            abort(404);
+        }
+
+        $data = $this->prepareAndValidateData($request, $table);
+        
+        $modelClass::create($data); // Menggunakan create yang lebih ringkas
+
+        return redirect()->route('master.ddk.index', ['table' => $table])
+                         ->with('success', 'Data berhasil ditambahkan.');
+    }
+
+    // BARU: Method untuk menampilkan form edit
+    public function edit(string $table, int $id)
+    {
+        $modelClass = $this->models[$table] ?? null;
+        if (!$modelClass) {
+            abort(404);
+        }
+
+        $item = $modelClass::findOrFail($id);
+
+        return view('pages.master-ddk.edit', [
+            'item' => $item,
+            'activeTable' => $table,
+        ]);
+    }
+
+    // BARU: Method untuk mengupdate data
+    public function update(Request $request, string $table, int $id)
+    {
+        $modelClass = $this->models[$table] ?? null;
+        if (!$modelClass) {
+            abort(404);
+        }
+        
+        $item = $modelClass::findOrFail($id);
+        $data = $this->prepareAndValidateData($request, $table, $item);
+
+        $item->update($data);
+
+        return redirect()->route('master.ddk.index', ['table' => $table])
+                         ->with('success', 'Data berhasil diperbarui.');
+    }
+
+    // BARU: Method untuk menghapus data
+    public function destroy(string $table, int $id)
+    {
+        $modelClass = $this->models[$table] ?? null;
+        if (!$modelClass) {
+            abort(404);
+        }
+
+        $item = $modelClass::findOrFail($id);
+        $item->delete();
+
+        return redirect()->route('master.ddk.index', ['table' => $table])
+                         ->with('success', 'Data berhasil dihapus.');
+    }
+
+    // BARU: Helper method untuk validasi & menyiapkan data
+    private function prepareAndValidateData(Request $request, string $table, $item = null)
+    {
+        $rules = [];
+        $data = [];
+
+        // Logika dinamis untuk validasi dan nama kolom
+        switch ($table) {
+            case 'lembaga':
+                $rules = [
+                    'jenis_lembaga' => 'required|string|max:255',
+                    'nama_lembaga' => 'required|string|max:255',
+                ];
+                $data = $request->only(['jenis_lembaga', 'nama_lembaga']);
+                break;
+            case 'cacat':
+                 $rules = [
+                    'tipe' => 'required|string|max:255',
+                    'nama_cacat' => 'required|string|max:255',
+                ];
+                $data = $request->only(['tipe', 'nama_cacat']);
+                break;
+            // Untuk tabel-tabel yang hanya punya satu kolom nama unik
+            case 'agama':
+            case 'pendidikan':
+            case 'kb':
+            case 'golongandarah':
+            case 'kewarganegaraan':
+                // Mengambil nama kolom dari model jika ada, jika tidak default ke nama tabel
+                $column = (new $this->models[$table])->getFillable()[0] ?? $table;
+                $rules = [$column => 'required|string|max:255'];
+                $data = $request->only([$column]);
+                break;
+            // Default untuk tabel-tabel dengan kolom 'nama'
+            default:
+                $rules = ['nama' => 'required|string|max:255'];
+                $data = $request->only(['nama']);
+                break;
+        }
+
+        $request->validate($rules);
+        return $data;
+    }
 }

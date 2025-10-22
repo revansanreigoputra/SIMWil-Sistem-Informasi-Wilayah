@@ -23,7 +23,7 @@
                             Tanggal <span class="text-danger">*</span>
                         </label>
                         <input type="date" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal"
-                            name="tanggal" value="{{ old('tanggal') }}" required>
+                            name="tanggal" value="{{ old('tanggal', now()->format('Y-m-d')) }}" required>
                         @error('tanggal')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

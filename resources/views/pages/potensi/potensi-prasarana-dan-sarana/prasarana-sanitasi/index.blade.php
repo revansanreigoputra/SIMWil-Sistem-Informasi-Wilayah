@@ -21,6 +21,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Desa</th>
                             <th>Tanggal</th>
                             <th>Sumur Resapan Air</th>
                             <th>MCK Umum</th>
@@ -34,6 +35,7 @@
                         @foreach ($sanitasies as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
+                                <td>{{ $item->desa->nama_desa }}</td>
                                 <td>{{ $item->tanggal->format('d-m-Y') }}</td>
                                 <td>{{ number_format($item->sumur_resapan_air) }} unit</td>
                                 <td>{{ number_format($item->mck_umum) }} unit</td>

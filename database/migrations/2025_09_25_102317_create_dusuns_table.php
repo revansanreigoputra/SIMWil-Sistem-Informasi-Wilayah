@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('dusuns', function (Blueprint $table) {
             $table->id();
 
+            $table->foreignId('desa_id')->constrained('desas')->cascadeOnDelete();
+
             // Data umum
             $table->date('tanggal');
             $table->enum('gedung_kantor', ['ada', 'tidak ada'])->nullable();

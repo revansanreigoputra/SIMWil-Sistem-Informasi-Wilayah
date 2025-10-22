@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Desa;
 use App\Models\Sanitasi;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,8 @@ class SanitasiController extends Controller
      */
     public function index()
     {
-        $sanitasies = Sanitasi::orderBy('tanggal', 'desc')->paginate(10);
+        $desaId = session('desa_id');
+        $sanitasies = Sanitasi::with('desa')->where('desa_id', $desaId)->orderBy('tanggal', 'desc')->paginate(10);
         return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-sanitasi.index', compact('sanitasies'));
     }
 
@@ -40,7 +42,10 @@ class SanitasiController extends Controller
             'kondisi_saluran' => 'required|in:rusak,mampet,kurang memadai,baik',
         ]);
 
-        Sanitasi::create($validated);
+        $data = $validated;
+        $data['desa_id'] = session('desa_id');
+
+        Sanitasi::create($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.prasarana-sanitasi.index')->with('success', 'Data prasarana sanitasi berhasil ditambahkan.');
     }
@@ -77,7 +82,10 @@ class SanitasiController extends Controller
             'kondisi_saluran' => 'required|in:rusak,mampet,kurang memadai,baik',
         ]);
 
-        $sanitasi->update($validated);
+        $data = $validated;
+        $data['desa_id'] = session('desa_id');
+
+        $sanitasi->update($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.prasarana-sanitasi.index')->with('success', 'Data prasarana sanitasi berhasil diperbarui.');
     }
