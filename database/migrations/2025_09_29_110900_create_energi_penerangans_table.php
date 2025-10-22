@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('energi_penerangans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('desa_id')->constrained('desas')->onDelete('cascade');
             $table->date('tanggal');
             $table->unsignedInteger('listrik_pln')->default(0);
             $table->unsignedInteger('diesel_umum')->default(0);
