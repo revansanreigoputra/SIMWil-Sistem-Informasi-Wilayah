@@ -39,6 +39,7 @@ use App\Http\Controllers\PolitikController;
 use App\Http\Controllers\KonfliksaraController;
 use App\Http\Controllers\PerkelahianController;
 use App\Http\Controllers\PencurianController;
+use App\Http\Controllers\PenjarahanController;
 // use App\Http\Controllers\IrigasiController;
 // use App\Http\Controllers\NotificationController;
 // use App\Http\Controllers\PerangkatDesaController;
@@ -790,6 +791,17 @@ Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.pencuria
     Route::get('/{id}/edit', [PencurianController::class, 'edit'])->name('edit');
     Route::put('/{id}', [PencurianController::class, 'update'])->name('update');
     Route::delete('/{id}', [PencurianController::class, 'destroy'])->name('destroy');
+});
+
+//Penjarahan routes
+Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.penjarahan')->name('perkembangan.keamanandanketertiban.penjarahan.')->group(function(){
+    Route::get('/', [PenjarahanController::class, 'index'])->name('index');
+    Route::get('/create', [PenjarahanController::class, 'create'])->name('create');
+    Route::post('/', [PenjarahanController::class, 'store'])->name('store');
+    Route::get('/{id}', [PenjarahanController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [PenjarahanController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [PenjarahanController::class, 'update'])->name('update');
+    Route::delete('/{id}', [PenjarahanController::class, 'destroy'])->name('destroy');
 });
 
 

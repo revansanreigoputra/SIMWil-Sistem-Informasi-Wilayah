@@ -855,7 +855,13 @@
                                             @can('pencurian.view')
                                                 <a class="dropdown-item {{ request()->is('perkembangan/keamanandanketertiban/pencurian*') ? 'active' : '' }}"
                                                     href="{{ route('perkembangan.keamanandanketertiban.pencurian.index') }}">
-                                                    pencurian
+                                                    Pencurian
+                                                </a>
+                                            @endcan
+                                            @can('penjarahan.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/keamanandanketertiban/penjarahan*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.keamanandanketertiban.penjarahan.index') }}">
+                                                    Penjarahan dan <br> Penyerobotan Tanah
                                                 </a>
                                             @endcan
                                             

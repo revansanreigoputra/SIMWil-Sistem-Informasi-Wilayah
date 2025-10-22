@@ -561,13 +561,21 @@ class PermissionSeeder extends Seeder
             'perkelahian.update',
             'perkelahian.delete',
 
-            //pencurian
+            //Pencurian
             'pencurian.view',
             'pencurian.create',
             'pencurian.store',
             'pencurian.edit',
             'pencurian.update',
             'pencurian.delete',
+
+            //Penjarahan
+            'penjarahan.view',
+            'penjarahan.create',
+            'penjarahan.store',
+            'penjarahan.edit',
+            'penjarahan.update',
+            'penjarahan.delete',
 
 
             // potensi permissions
