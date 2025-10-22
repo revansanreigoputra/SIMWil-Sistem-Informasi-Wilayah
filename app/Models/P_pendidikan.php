@@ -13,6 +13,7 @@ class P_pendidikan extends Model
         'id_pendidikan',
         'laki',
         'perempuan',
+        'desa_id',
     ];
 
     /**
