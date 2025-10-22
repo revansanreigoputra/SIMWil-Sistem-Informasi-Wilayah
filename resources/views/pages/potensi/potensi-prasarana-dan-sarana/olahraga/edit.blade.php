@@ -46,9 +46,9 @@
                                 <i class="fas fa-calendar me-1"></i>
                                 Tanggal <span class="text-danger">*</span>
                             </label>
-                            <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
-                                id="tanggal" name="tanggal"
-                                value="{{ old('tanggal', $prasaranaOlahraga->tanggal?->format('Y-m-d')) }}" required>
+                            <input type="date" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal"
+                                name="tanggal" value="{{ old('tanggal', $prasaranaOlahraga->tanggal?->format('Y-m-d')) }}"
+                                required>
                             @error('tanggal')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -64,17 +64,17 @@
                                 <i class="fas fa-futbol me-1"></i>
                                 Jenis Prasarana Olahraga <span class="text-danger">*</span>
                             </label>
-                            <select class="form-select @error('jpolahraga_id') is-invalid @enderror"
-                                id="jpolahraga_id" name="jpolahraga_id" required>
+                            <select class="form-select @error('jenis_prasarana_olah_raga_id') is-invalid @enderror"
+                                id="jenis_prasarana_olah_raga_id" name="jenis_prasarana_olah_raga_id" required>
                                 <option value="">Pilih Jenis Prasarana Olahraga</option>
-                                @foreach ($jpolahragas as $jenis)
+                                @foreach ($jenisPrasaranaOlahRagas as $jenis)
                                     <option value="{{ $jenis->id }}"
-                                        {{ old('jpolahraga_id', $prasaranaOlahraga->jpolahraga_id) == $jenis->id ? 'selected' : '' }}>
+                                        {{ old('jenis_prasarana_olah_raga_id', $prasaranaOlahraga->jenis_prasarana_olah_raga_id) == $jenis->id ? 'selected' : '' }}>
                                         {{ $jenis->nama }}
                                     </option>
                                 @endforeach
                             </select>
-                            @error('jpolahraga_id')
+                            @error('jenis_prasarana_olah_raga_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -85,9 +85,9 @@
                                 <i class="fas fa-hashtag me-1"></i>
                                 Jumlah <span class="text-danger">*</span>
                             </label>
-                            <input type="number" class="form-control @error('jumlah') is-invalid @enderror"
-                                id="jumlah" name="jumlah"
-                                value="{{ old('jumlah', $prasaranaOlahraga->jumlah) }}" min="0" required>
+                            <input type="number" class="form-control @error('jumlah') is-invalid @enderror" id="jumlah"
+                                name="jumlah" value="{{ old('jumlah', $prasaranaOlahraga->jumlah) }}" min="0"
+                                required>
                             @error('jumlah')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

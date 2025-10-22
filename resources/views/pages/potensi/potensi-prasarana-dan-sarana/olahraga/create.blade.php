@@ -60,17 +60,17 @@
                                 <i class="fas fa-futbol me-1"></i>
                                 Jenis Prasarana Olahraga <span class="text-danger">*</span>
                             </label>
-                            <select class="form-select @error('jpolahraga_id') is-invalid @enderror" id="jpolahraga_id"
-                                name="jpolahraga_id" required>
+                            <select class="form-select @error('jenis_prasarana_olah_raga_id') is-invalid @enderror"
+                                id="jenis_prasarana_olah_raga_id" name="jenis_prasarana_olah_raga_id" required>
                                 <option value="">Pilih Jenis Prasarana Olahraga</option>
-                                @foreach ($jpolahragas as $jenis)
+                                @foreach ($jenisPrasaranaOlahRagas as $jenis)
                                     <option value="{{ $jenis->id }}"
-                                        {{ old('jpolahraga_id') == $jenis->id ? 'selected' : '' }}>
+                                        {{ old('jenis_prasarana_olah_raga_id') == $jenis->id ? 'selected' : '' }}>
                                         {{ $jenis->nama }}
                                     </option>
                                 @endforeach
                             </select>
-                            @error('jpolahraga_id')
+                            @error('jenis_prasarana_olah_raga_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

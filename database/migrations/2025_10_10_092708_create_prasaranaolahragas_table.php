@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('desa_id')->constrained('desas')->onDelete('cascade');
             $table->date('tanggal');
-            $table->foreignId('jpolahraga_id')->constrained('jpolahragas')->onDelete('cascade');
+            $table->foreignId('jenis_prasarana_olah_raga_id')->constrained('jenis_prasarana_olah_raga')->onDelete('cascade');
             $table->integer('jumlah')->default(0);
             $table->timestamps();
         });

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\MasterPotensi\JenisPrasaranaOlahRaga;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,7 +13,7 @@ class Prasaranaolahraga extends Model
     protected $table = 'prasaranaolahragas';
     protected $fillable = [
         'tanggal',
-        'jpolahraga_id',
+        'jenis_prasarana_olah_raga_id',
         'jumlah',
         'desa_id',
     ];
@@ -25,9 +26,9 @@ class Prasaranaolahraga extends Model
      * Relasi ke jenis prasarana olahraga
      * Setiap prasarana olahraga dimiliki oleh satu jenis prasarana
      */
-    public function jpolahraga()
+    public function jenisPrasaranaOlahRaga()
     {
-        return $this->belongsTo(Jpolahraga::class, 'jpolahraga_id');
+        return $this->belongsTo(JenisPrasaranaOlahRaga::class, 'jenis_prasarana_olah_raga_id');
     }
 
     /**
