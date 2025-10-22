@@ -585,6 +585,14 @@ class PermissionSeeder extends Seeder
             'perjudian.update',
             'perjudian.delete',
 
+            //Miras
+            'miras.view',
+            'miras.create',
+            'miras.store',
+            'miras.edit',
+            'miras.update',
+            'miras.delete',
+
 
             // potensi permissions
             'potensi.laporan.view',

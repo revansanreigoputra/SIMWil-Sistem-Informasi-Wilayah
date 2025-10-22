@@ -870,6 +870,12 @@
                                                     Perjudian, Penipuan<br> dan Penggelapan
                                                 </a>
                                             @endcan
+                                            @can('miras.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/keamanandanketertiban/miras*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.keamanandanketertiban.miras.index') }}">
+                                                    Pemakaian Miras<br> dan Narkoba
+                                                </a>
+                                            @endcan
                                             
                                         </div>
                                     </div>

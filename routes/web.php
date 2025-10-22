@@ -41,6 +41,7 @@ use App\Http\Controllers\PerkelahianController;
 use App\Http\Controllers\PencurianController;
 use App\Http\Controllers\PenjarahanController;
 use App\Http\Controllers\PerjudianController;
+use App\Http\Controllers\MirasController;
 // use App\Http\Controllers\IrigasiController;
 // use App\Http\Controllers\NotificationController;
 // use App\Http\Controllers\PerangkatDesaController;
@@ -816,6 +817,16 @@ Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.perjudia
     Route::delete('/{id}', [PerjudianController::class, 'destroy'])->name('destroy');
 });
 
+//miras route
+route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.miras')->name('perkembangan.keamanandanketertiban.miras.')->group(function(){
+    Route::get('/', [MirasController::class, 'index'])->name('index');
+    Route::get('/create', [MirasController::class, 'create'])->name('create');
+    Route::post('/', [MirasController::class, 'store'])->name('store');
+    Route::get('/{id}', [MirasController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [MirasController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [MirasController::class, 'update'])->name('update');
+    Route::delete('/{id}', [MirasController::class, 'destroy'])->name('destroy');
+});
 
 // Pengangkutan
 Route::prefix('potensi/kelembagaan/pengangkutan')->name('potensi.kelembagaan.pengangkutan.')->group(function () {

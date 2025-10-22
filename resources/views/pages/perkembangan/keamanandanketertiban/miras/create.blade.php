@@ -1,18 +1,18 @@
 @extends('layouts.master')
 
-@section('title', 'Tambah Data Perjudian')
+@section('title', 'Tambah Data Miras dan Narkoba')
 
 @section('content')
 <div class="card shadow-sm border-0">
     <div class="card-header bg-white border-bottom">
         <h5 class="card-title mb-0">
             <i class="fas fa-plus-circle me-2 text-primary"></i>
-            Tambah Data Perjudian
+            Tambah Data Miras dan Narkoba
         </h5>
     </div>
 
     <div class="card-body">
-        <form action="{{ route('perkembangan.keamanandanketertiban.perjudian.store') }}" method="POST">
+        <form action="{{ route('perkembangan.keamanandanketertiban.miras.store') }}" method="POST">
             @csrf
 
             <div class="row">
@@ -47,16 +47,21 @@
                 </div>
             </div>
 
-            {{-- Input angka & teks sesuai migration --}}
+            {{-- Input angka sesuai migration --}}
             @php
-                $fields = [
-                    'jumlah_penduduk_berjudi' => 'Jumlah Penduduk Berjudi',
-                    'jenis_perjudian' => 'Jenis Perjudian',
-                    'jumlah_kasus_penipuan_penggelapan' => 'Jumlah Kasus Penipuan / Penggelapan',
-                    'jumlah_kasus_sengketa_warisan_jualbeli_utangpiutang' => 'Jumlah Kasus Sengketa Warisan / Jual Beli / Utang Piutang',
+                $numericFields = [
+                    'jumlah_warung_miras' => 'Jumlah Warung Miras',
+                    'jumlah_penduduk_miras' => 'Jumlah Penduduk Miras',
+                    'jumlah_kasus_mabuk_miras' => 'Jumlah Kasus Mabuk Miras',
+                    'jumlah_pengedar_narkoba' => 'Jumlah Pengedar Narkoba',
+                    'jumlah_penduduk_narkoba' => 'Jumlah Penduduk Narkoba',
+                    'jumlah_kasus_teler_narkoba' => 'Jumlah Kasus Teler Narkoba',
+                    'jumlah_kasus_kematian_narkoba' => 'Jumlah Kasus Kematian Narkoba',
+                    'jumlah_pelaku_miras_diadili' => 'Jumlah Pelaku Miras Diadili',
+                    'jumlah_pelaku_narkoba_diadili' => 'Jumlah Pelaku Narkoba Diadili',
                 ];
 
-                $chunks = array_chunk($fields, 2, true);
+                $chunks = array_chunk($numericFields, 2, true);
             @endphp
 
             @foreach ($chunks as $pair)
@@ -66,15 +71,9 @@
                             <label for="{{ $name }}" class="form-label fw-semibold">
                                 {{ $label }} <span class="text-danger">*</span>
                             </label>
-                            @if ($name === 'jenis_perjudian')
-                                <input type="text" name="{{ $name }}" id="{{ $name }}" required
-                                       class="form-control @error($name) is-invalid @enderror"
-                                       value="{{ old($name) }}" placeholder="Contoh: Judi Online, Togel, Sabung Ayam">
-                            @else
-                                <input type="number" name="{{ $name }}" id="{{ $name }}" min="0" required
-                                       class="form-control @error($name) is-invalid @enderror"
-                                       value="{{ old($name) }}">
-                            @endif
+                            <input type="number" name="{{ $name }}" id="{{ $name }}" min="0" required
+                                   class="form-control @error($name) is-invalid @enderror"
+                                   value="{{ old($name) }}">
                             @error($name)
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -89,7 +88,7 @@
                     <span class="text-danger">*</span> wajib diisi
                 </small>
                 <div class="btn-group gap-2">
-                    <a href="{{ route('perkembangan.keamanandanketertiban.perjudian.index') }}" class="btn btn-outline-secondary">
+                    <a href="{{ route('perkembangan.keamanandanketertiban.miras.index') }}" class="btn btn-outline-secondary">
                         <i class="fas fa-arrow-left me-1"></i> Kembali
                     </a>
                     <button type="submit" class="btn btn-primary">
