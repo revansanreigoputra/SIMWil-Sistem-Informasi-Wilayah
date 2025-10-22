@@ -11,6 +11,7 @@ class Prasaranapendidikan extends Model
 
     protected $table = 'prasaranapendidikans';
     protected $fillable = [
+        'desa_id',
         'tanggal',
         'jpgedung_id',
         'jumlah_sewa',
@@ -27,5 +28,13 @@ class Prasaranapendidikan extends Model
     public function jpgedung()
     {
         return $this->belongsTo(Jpgedung::class, 'jpgedung_id');
+    }
+
+    /**
+     * Relasi ke Desa
+     */
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class, 'desa_id');
     }
 }

@@ -38,14 +38,14 @@
                 <div class="card bg-light p-3 mb-4">
                     <h6 class="text-primary mb-3">II. Data Alamat</h6>
                     <div class="row g-3">
-                        <div class="col-md-3">
+                        <div class="col-md-6">
                             <label class="form-label" for="rt">RT <span class="text-danger">*</span></label>
                             <input type="number" name="rt" id="rt" class="form-control @error('rt') is-invalid @enderror" value="{{ old('rt') }}" required>
                             @error('rt')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-6">
                             <label class="form-label" for="rw">RW <span class="text-danger">*</span></label>
                             <input type="number" name="rw" id="rw" class="form-control @error('rw') is-invalid @enderror" value="{{ old('rw') }}" required>
                             @error('rw')
@@ -80,7 +80,7 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-12">
+                        <div class="col-md-12">
                             <label class="form-label" for="alamat">Alamat Lengkap <span class="text-danger">*</span></label>
                             <textarea name="alamat" id="alamat" class="form-control @error('alamat') is-invalid @enderror" rows="2" required>{{ old('alamat') }}</textarea>
                             @error('alamat')
@@ -265,7 +265,8 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-md-6" id="nama-cacat-container" >  
+                        <div class="col-md-6" id="nama-cacat-container" >
+                            <label class="form-label" for="nama_cacat">Jika Cacat, Sebutkan</label>  
                             <input type="text" name="nama_cacat" id="nama_cacat" class="form-control" value="{{ old('nama_cacat') }}">
                         </div>
 

@@ -28,6 +28,7 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th width="50">No</th>
+                                        <th>Desa</th>
                                         <th>Tanggal</th>
                                         <th>Listrik PLN</th>
                                         <th>Diesel Umum</th>
@@ -43,6 +44,7 @@
                                     @foreach ($energiPenerangans as $item)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
+                                            <td class="text-center">{{ $item->desa->nama_desa }}</td>
                                             <td class="text-center">{{ $item->tanggal->format('d-m-Y') }}</td>
                                             <td class="text-center">{{ number_format($item->listrik_pln) }} unit</td>
                                             <td class="text-center">{{ number_format($item->diesel_umum) }} unit</td>

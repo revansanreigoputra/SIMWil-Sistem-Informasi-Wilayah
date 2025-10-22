@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jpolahragas', function (Blueprint $table) {
+        Schema::create('jenis_penginapan', function (Blueprint $table) {
             $table->id();
-            $table->string('nama'); // contoh: Lapangan Sepak Bola, Lapangan Basket, dll
+            $table->string('nama');
             $table->timestamps();
         });
     }
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jpolahragas');
+        Schema::dropIfExists('jenis_penginapan');
     }
 };

@@ -10,6 +10,7 @@ class PrasaranaHiburan extends Model
     use HasFactory;
 
     protected $fillable = [
+        'desa_id',
         'tanggal',
         'jphiburan_id',
         'jumlah',
@@ -22,5 +23,10 @@ class PrasaranaHiburan extends Model
     public function jphiburan()
     {
         return $this->belongsTo(JpHiburan::class, 'jphiburan_id');
+    }
+
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class);
     }
 }

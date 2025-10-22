@@ -13,7 +13,8 @@ class SaranakesehatanController extends Controller
      */
     public function index()
     {
-        $saranakesehatans = Saranakesehatan::with('jskesehatan')->latest()->get();
+        $desaId = session('desa_id');
+        $saranakesehatans = Saranakesehatan::with(['jskesehatan', 'desa'])->where('desa_id', $desaId)->latest()->get();
         return view('pages.potensi.potensi-prasarana-dan-sarana.skesehatan.index', compact('saranakesehatans'));
     }
 
@@ -37,7 +38,10 @@ class SaranakesehatanController extends Controller
             'jumlah' => 'required|integer|min:0',
         ]);
 
-        Saranakesehatan::create($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        Saranakesehatan::create($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.skesehatan.index')->with('success', 'Data Sarana Kesehatan berhasil ditambahkan.');
     }
