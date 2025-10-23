@@ -894,6 +894,12 @@
                                                     Penculikan
                                                 </a>
                                             @endcan
+                                            @can(abilities: 'seksual.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/keamanandanketertiban/seksual*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.keamanandanketertiban.seksual.index') }}">
+                                                    Kejahatan Seksual
+                                                </a>
+                                            @endcan
                                             
                                         </div>
                                     </div>
