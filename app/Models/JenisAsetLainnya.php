@@ -18,3 +18,4 @@ class JenisAsetLainnya extends Model
         return $this->hasMany(PemilikAsetEkonomiLainnya::class, 'id_jenis_aset_lainnya');
     }
 }
+ 

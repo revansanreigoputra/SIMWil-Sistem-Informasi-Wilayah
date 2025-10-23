@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\JenisAsetLainnya;
 use App\Models\JenisAtap;
 use App\Models\JpHiburan;
 use App\Models\LayananSurat\JenisSurat;
@@ -147,6 +148,7 @@ class DatabaseSeeder extends Seeder
             TempatIbadahSeeder::class,
             KopTemplateSeeder::class,
             JenisSuratSeeder::class,
+            JenisAsetLainnyaSeeder::class,
         ]);
     }
 }

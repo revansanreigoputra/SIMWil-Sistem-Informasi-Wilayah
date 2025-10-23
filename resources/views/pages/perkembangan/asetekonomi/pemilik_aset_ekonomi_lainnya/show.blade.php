@@ -5,9 +5,6 @@
 @section('content')
 <div class="container">
     <h4>Detail Data Pemilik Aset Ekonomi Lainnya</h4>
-
-    <a href="{{ route('perkembangan.asetekonomi.pemilik_aset_ekonomi_lainnya.index') }}" class="btn btn-secondary mb-3">Kembali</a>
-
     <div class="card mt-3">
         <div class="card-body">
             <table class="table table-borderless">
@@ -17,7 +14,7 @@
                 </tr>
                 <tr>
                     <th>Jenis Aset</th>
-                    <td>{{ $item->jenisAsetLainnya->nama ?? '-' }}</td>
+                    <td>{{ $item->jenisAsetLainnya->nama_jenis_aset ?? '-' }}</td>
                 </tr>
                 <tr>
                     <th>Tanggal</th>
@@ -25,9 +22,14 @@
                 </tr>
                 <tr>
                     <th>Jumlah</th>
-                    <td>{{ $item->jumlah }}</td>
+                    <td>{{ number_format($item->jumlah, 0, ',', '.') }}</td>
                 </tr>
             </table>
+
+            <div class="mt-3">
+                <a href="{{ route('perkembangan.asetekonomi.pemilik_aset_ekonomi_lainnya.index') }}" class="btn btn-secondary">Kembali</a>
+                <a href="{{ route('perkembangan.asetekonomi.pemilik_aset_ekonomi_lainnya.edit', $item->id) }}" class="btn btn-warning">Edit</a>
+            </div>
         </div>
     </div>
 </div>
