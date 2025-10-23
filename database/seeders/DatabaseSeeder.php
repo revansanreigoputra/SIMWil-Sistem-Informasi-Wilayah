@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\JenisAsetLainnya;
+use App\Models\JenisAtap;
 use App\Models\JpHiburan;
 use App\Models\LayananSurat\JenisSurat;
 use App\Models\LayananSurat\KopTemplate;
@@ -34,6 +36,10 @@ class DatabaseSeeder extends Seeder
             LembagaSeeder::class,
             MataPencaharianSeeder::class,
             PendidikanSeeder::class,
+            JenisAsetSeeder::class,
+            JenisDindingSeeder::class,
+            JenisLantaiSeeder::class,
+            JenisAtapSeeder::class,
             KategoriTransportasiSeeder::class,
             JenisTransportasiSeeder::class,
             KategoriKomunikasiSeeder::class,
@@ -139,6 +145,7 @@ class DatabaseSeeder extends Seeder
             TempatIbadahSeeder::class,
             KopTemplateSeeder::class,
             JenisSuratSeeder::class,
+            JenisAsetLainnyaSeeder::class,
         ]);
     }
 }

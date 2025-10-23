@@ -39,6 +39,7 @@ use App\Http\Controllers\PolitikController;
 use App\Http\Controllers\KonfliksaraController;
 use App\Http\Controllers\PerkelahianController;
 use App\Http\Controllers\PencurianController;
+use App\Http\Controllers\PenjarahanController;
 // use App\Http\Controllers\IrigasiController;
 // use App\Http\Controllers\NotificationController;
 // use App\Http\Controllers\PerangkatDesaController;
@@ -124,7 +125,7 @@ use App\Http\Controllers\MataPencaharianPokokController;
 // use App\Http\Controllers\PertanggungjawabanController;
 use App\Http\Controllers\SektorPertambanganController;
 use App\Http\Controllers\SubsektorKerajinanController;
-
+use App\Http\Controllers\SektorIndustriPengolahanController;
 
 use App\Http\Controllers\PerkembanganPendudukController;
 // use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -149,6 +150,19 @@ use App\Http\Controllers\MasterPotensiController;
 use App\Http\Controllers\PengangguranController;
 use App\Http\Controllers\KesejahteraanKeluargaController;
 use App\Http\Controllers\MenurutSektorUsahaController;
+use App\Http\Controllers\PendapatanRillKeluargaController;
+use App\Http\Controllers\TingkatPendidikanMasyarakatController;
+use App\Http\Controllers\WajibBelajar9TahunController;
+use App\Http\Controllers\RasioGuruDanMuridController;  
+use App\Http\Controllers\KelembagaanPendidikanMasyarakatController;
+use App\Http\Controllers\AsetTanahController;
+use App\Http\Controllers\SaranaProduksiController;
+use App\Http\Controllers\SaranaTransportasiUmumController;
+use App\Http\Controllers\RumahMenurutDindingController;
+use app\Http\Controllers\RumahMenurutAtapController;
+use app\Http\Controllers\PemilikAsetEkonomiLainnyaController;
+
+
 use App\Models\LayananSurat\JenisSurat;
 use App\Models\LayananSurat\KopTemplate;
 
@@ -624,10 +638,176 @@ Route::middleware(['auth'])
         Route::delete('/{menurut_sektor_usaha}', [MenurutSektorUsahaController::class, 'destroy'])->name('destroy');
     });
 
+// Pendapatan Rill Keluarga
+Route::middleware(['auth'])
+    ->prefix('perkembangan/pendapatanperkapital/pendapatan_rill_keluarga')
+    ->name('perkembangan.pendapatanperkapital.pendapatan_rill_keluarga.')
+    ->group(function () {
+        Route::get('/', [\App\Http\Controllers\PendapatanRillKeluargaController::class, 'index'])->name('index');
+        Route::get('/create', [\App\Http\Controllers\PendapatanRillKeluargaController::class, 'create'])->name('create');
+        Route::post('/store', [\App\Http\Controllers\PendapatanRillKeluargaController::class, 'store'])->name('store');
+        Route::get('/show/{id}', [\App\Http\Controllers\PendapatanRillKeluargaController::class, 'show'])->name('show'); // 👈 tambahkan ini
+        Route::get('/edit/{id}', [\App\Http\Controllers\PendapatanRillKeluargaController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [\App\Http\Controllers\PendapatanRillKeluargaController::class, 'update'])->name('update');
+        Route::delete('/destroy/{id}', [\App\Http\Controllers\PendapatanRillKeluargaController::class, 'destroy'])->name('destroy');
+    });
 
 // AJAX: Ambil desa berdasarkan kecamatan
 Route::get('/get-desa-by-kecamatan', [\App\Http\Controllers\PengangguranController::class, 'getDesaByKecamatan'])->name('getDesaByKecamatan');
 
+
+// Tingkat Pendidikan Masyarakat
+Route::middleware(['auth'])
+    ->prefix('perkembangan/pendidikanmasyarakat/tingkat_pendidikan_masyarakat')
+    ->name('perkembangan.pendidikanmasyarakat.tingkat_pendidikan_masyarakat.')
+    ->group(function () {
+        Route::get('/', [\App\Http\Controllers\TingkatPendidikanMasyarakatController::class, 'index'])->name('index');
+        Route::get('/create', [\App\Http\Controllers\TingkatPendidikanMasyarakatController::class, 'create'])->name('create');
+        Route::post('/store', [\App\Http\Controllers\TingkatPendidikanMasyarakatController::class, 'store'])->name('store');
+        Route::get('/show/{id}', [\App\Http\Controllers\TingkatPendidikanMasyarakatController::class, 'show'])->name('show');
+        Route::get('/edit/{id}', [\App\Http\Controllers\TingkatPendidikanMasyarakatController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [\App\Http\Controllers\TingkatPendidikanMasyarakatController::class, 'update'])->name('update');
+        Route::delete('/destroy/{id}', [\App\Http\Controllers\TingkatPendidikanMasyarakatController::class, 'destroy'])->name('destroy');
+
+        // Route tambahan untuk ambil data desa berdasarkan kecamatan
+        Route::get('/get-desa/{id}', [\App\Http\Controllers\TingkatPendidikanMasyarakatController::class, 'getDesa'])
+            ->name('getDesa');
+    });
+
+// Wajib Belajar 9 Tahun
+Route::middleware(['auth'])
+    ->prefix('perkembangan/pendidikanmasyarakat/wajib_belajar_9_tahun')
+    ->name('perkembangan.pendidikanmasyarakat.wajib_belajar_9_tahun.')
+    ->group(function () {
+        Route::get('/', [\App\Http\Controllers\WajibBelajar9TahunController::class, 'index'])->name('index');
+        Route::get('/create', [\App\Http\Controllers\WajibBelajar9TahunController::class, 'create'])->name('create');
+        Route::post('/store', [\App\Http\Controllers\WajibBelajar9TahunController::class, 'store'])->name('store');
+        Route::get('/show/{id}', [\App\Http\Controllers\WajibBelajar9TahunController::class, 'show'])->name('show');
+        Route::get('/edit/{id}', [\App\Http\Controllers\WajibBelajar9TahunController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [\App\Http\Controllers\WajibBelajar9TahunController::class, 'update'])->name('update');
+        Route::delete('/destroy/{id}', [\App\Http\Controllers\WajibBelajar9TahunController::class, 'destroy'])->name('destroy');
+    });
+
+   // Rasio Guru dan Murid
+Route::middleware(['auth'])
+    ->prefix('perkembangan/pendidikanmasyarakat/rasio_guru_dan_murid')
+    ->name('perkembangan.pendidikanmasyarakat.rasio_guru_dan_murid.')
+    ->group(function () {
+        Route::get('/', [RasioGuruDanMuridController::class, 'index'])->name('index');
+        Route::get('/create', [RasioGuruDanMuridController::class, 'create'])->name('create');
+        Route::post('/store', [RasioGuruDanMuridController::class, 'store'])->name('store');
+        Route::get('/show/{id}', [RasioGuruDanMuridController::class, 'show'])->name('show');
+        Route::get('/edit/{id}', [RasioGuruDanMuridController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [RasioGuruDanMuridController::class, 'update'])->name('update');
+        Route::delete('/destroy/{id}', [RasioGuruDanMuridController::class, 'destroy'])->name('destroy');
+    });
+    
+// Kelembagaan Pendidikan Masyarakat
+Route::middleware(['auth'])
+    ->prefix('perkembangan/pendidikanmasyarakat/kelembagaan')
+    ->name('perkembangan.pendidikanmasyarakat.kelembagaan.')
+    ->group(function () {
+        Route::get('/', [KelembagaanPendidikanMasyarakatController::class, 'index'])->name('index');
+        Route::get('/create', [KelembagaanPendidikanMasyarakatController::class, 'create'])->name('create');
+        Route::post('/store', [KelembagaanPendidikanMasyarakatController::class, 'store'])->name('store');
+        Route::get('/show/{id}', [KelembagaanPendidikanMasyarakatController::class, 'show'])->name('show');
+        Route::get('/edit/{id}', [KelembagaanPendidikanMasyarakatController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [KelembagaanPendidikanMasyarakatController::class, 'update'])->name('update');
+        Route::delete('/destroy/{id}', [KelembagaanPendidikanMasyarakatController::class, 'destroy'])->name('destroy');
+    });
+
+  // Aset Tanah
+Route::middleware(['auth'])
+    ->prefix('perkembangan/asetekonomi/aset_tanah')
+    ->name('perkembangan.asetekonomi.aset_tanah.')
+    ->group(function () {
+        Route::get('/', [App\Http\Controllers\AsetTanahController::class, 'index'])->name('index');
+        Route::get('/create', [App\Http\Controllers\AsetTanahController::class, 'create'])->name('create');
+        Route::post('/store', [App\Http\Controllers\AsetTanahController::class, 'store'])->name('store');
+        Route::get('/show/{id}', [App\Http\Controllers\AsetTanahController::class, 'show'])->name('show');
+        Route::get('/edit/{id}', [App\Http\Controllers\AsetTanahController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [App\Http\Controllers\AsetTanahController::class, 'update'])->name('update');
+        Route::delete('/destroy/{id}', [App\Http\Controllers\AsetTanahController::class, 'destroy'])->name('destroy');
+    });  
+
+// Sarana Produksi
+Route::middleware(['auth'])
+    ->prefix('perkembangan/asetekonomi/sarana_produksi')
+    ->name('perkembangan.asetekonomi.sarana_produksi.')
+    ->group(function () {
+        Route::get('/', [App\Http\Controllers\SaranaProduksiController::class, 'index'])->name('index');
+        Route::get('/create', [App\Http\Controllers\SaranaProduksiController::class, 'create'])->name('create');
+        Route::post('/store', [App\Http\Controllers\SaranaProduksiController::class, 'store'])->name('store');
+        Route::get('/show/{id}', [App\Http\Controllers\SaranaProduksiController::class, 'show'])->name('show');
+        Route::get('/edit/{id}', [App\Http\Controllers\SaranaProduksiController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [App\Http\Controllers\SaranaProduksiController::class, 'update'])->name('update');
+        Route::delete('/destroy/{id}', [App\Http\Controllers\SaranaProduksiController::class, 'destroy'])->name('destroy');
+    });
+
+    // Sarana Transportasi Umum
+  Route::name('perkembangan.asetekonomi.sarana_transportasi_umum.')
+    ->prefix('perkembangan/asetekonomi/sarana_transportasi_umum')
+    ->group(function () {
+        Route::get('/', [App\Http\Controllers\SaranaTransportasiUmumController::class, 'index'])->name('index');
+        Route::get('/create', [App\Http\Controllers\SaranaTransportasiUmumController::class, 'create'])->name('create');
+        Route::post('/store', [App\Http\Controllers\SaranaTransportasiUmumController::class, 'store'])->name('store');
+        Route::get('/show/{id}', [App\Http\Controllers\SaranaTransportasiUmumController::class, 'show'])->name('show');
+        Route::get('/edit/{id}', [App\Http\Controllers\SaranaTransportasiUmumController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [App\Http\Controllers\SaranaTransportasiUmumController::class, 'update'])->name('update');
+        Route::delete('/destroy/{id}', [App\Http\Controllers\SaranaTransportasiUmumController::class, 'destroy'])->name('destroy');
+    });
+
+// Rumah Menurut Dinding
+Route::name('perkembangan.asetekonomi.rumah_menurut_dinding.')
+    ->prefix('perkembangan/asetekonomi/rumah_menurut_dinding')
+    ->group(function () {
+        Route::get('/', [App\Http\Controllers\RumahMenurutDindingController::class, 'index'])->name('index');
+        Route::get('/create', [App\Http\Controllers\RumahMenurutDindingController::class, 'create'])->name('create');
+        Route::post('/store', [App\Http\Controllers\RumahMenurutDindingController::class, 'store'])->name('store');
+        Route::get('/show/{id}', [App\Http\Controllers\RumahMenurutDindingController::class, 'show'])->name('show');
+        Route::get('/edit/{id}', [App\Http\Controllers\RumahMenurutDindingController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [App\Http\Controllers\RumahMenurutDindingController::class, 'update'])->name('update');
+        Route::delete('/destroy/{id}', [App\Http\Controllers\RumahMenurutDindingController::class, 'destroy'])->name('destroy');
+    });
+
+// Rumah Menurut Lantai
+Route::name('perkembangan.asetekonomi.rumah_menurut_lantai.')
+    ->prefix('perkembangan/asetekonomi/rumah_menurut_lantai')
+    ->group(function () {
+        Route::get('/', [App\Http\Controllers\RumahMenurutLantaiController::class, 'index'])->name('index');
+        Route::get('/create', [App\Http\Controllers\RumahMenurutLantaiController::class, 'create'])->name('create');
+        Route::post('/store', [App\Http\Controllers\RumahMenurutLantaiController::class, 'store'])->name('store');
+        Route::get('/show/{rumahMenurutLantai}', [App\Http\Controllers\RumahMenurutLantaiController::class, 'show'])->name('show');
+        Route::get('/edit/{rumahMenurutLantai}', [App\Http\Controllers\RumahMenurutLantaiController::class, 'edit'])->name('edit');
+        Route::put('/update/{rumahMenurutLantai}', [App\Http\Controllers\RumahMenurutLantaiController::class, 'update'])->name('update');
+        Route::delete('/destroy/{rumahMenurutLantai}', [App\Http\Controllers\RumahMenurutLantaiController::class, 'destroy'])->name('destroy');
+    });
+
+// Rumah Menurut Atap
+Route::name('perkembangan.asetekonomi.rumah_menurut_atap.')
+    ->prefix('perkembangan/asetekonomi/rumah_menurut_atap')
+    ->group(function () {
+        Route::get('/', [App\Http\Controllers\RumahMenurutAtapController::class, 'index'])->name('index');
+        Route::get('/create', [App\Http\Controllers\RumahMenurutAtapController::class, 'create'])->name('create');
+        Route::post('/store', [App\Http\Controllers\RumahMenurutAtapController::class, 'store'])->name('store');
+        Route::get('/show/{rumahMenurutAtap}', [App\Http\Controllers\RumahMenurutAtapController::class, 'show'])->name('show');
+        Route::get('/edit/{rumahMenurutAtap}', [App\Http\Controllers\RumahMenurutAtapController::class, 'edit'])->name('edit');
+        Route::put('/update/{rumahMenurutAtap}', [App\Http\Controllers\RumahMenurutAtapController::class, 'update'])->name('update');
+        Route::delete('/destroy/{rumahMenurutAtap}', [App\Http\Controllers\RumahMenurutAtapController::class, 'destroy'])->name('destroy');
+    });
+
+    // Pemilik Aset Ekonomi Lainnya
+Route::name('perkembangan.asetekonomi.pemilik_aset_ekonomi_lainnya.')
+    ->prefix('perkembangan/asetekonomi/pemilik_aset_ekonomi_lainnya')
+    ->group(function () {
+        Route::get('/', [App\Http\Controllers\PemilikAsetEkonomiLainnyaController::class, 'index'])->name('index');
+        Route::get('/create', [App\Http\Controllers\PemilikAsetEkonomiLainnyaController::class, 'create'])->name('create');
+        Route::post('/store', [App\Http\Controllers\PemilikAsetEkonomiLainnyaController::class, 'store'])->name('store');
+        Route::get('/show/{pemilikAsetEkonomiLainnya}', [App\Http\Controllers\PemilikAsetEkonomiLainnyaController::class, 'show'])->name('show');
+        Route::get('/edit/{pemilikAsetEkonomiLainnya}', [App\Http\Controllers\PemilikAsetEkonomiLainnyaController::class, 'edit'])->name('edit');
+        Route::put('/update/{pemilikAsetEkonomiLainnya}', [App\Http\Controllers\PemilikAsetEkonomiLainnyaController::class, 'update'])->name('update');
+        Route::delete('/destroy/{pemilikAsetEkonomiLainnya}', [App\Http\Controllers\PemilikAsetEkonomiLainnyaController::class, 'destroy'])->name('destroy');
+    });
 
 
 // pertanggungjawaban Routes
@@ -815,6 +995,17 @@ Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.pencuria
     Route::get('/{id}/edit', [PencurianController::class, 'edit'])->name('edit');
     Route::put('/{id}', [PencurianController::class, 'update'])->name('update');
     Route::delete('/{id}', [PencurianController::class, 'destroy'])->name('destroy');
+});
+
+//Penjarahan routes
+Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.penjarahan')->name('perkembangan.keamanandanketertiban.penjarahan.')->group(function(){
+    Route::get('/', [PenjarahanController::class, 'index'])->name('index');
+    Route::get('/create', [PenjarahanController::class, 'create'])->name('create');
+    Route::post('/', [PenjarahanController::class, 'store'])->name('store');
+    Route::get('/{id}', [PenjarahanController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [PenjarahanController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [PenjarahanController::class, 'update'])->name('update');
+    Route::delete('/{id}', [PenjarahanController::class, 'destroy'])->name('destroy');
 });
 
 
@@ -1041,9 +1232,15 @@ Route::prefix('perkembangan/produk-domestik')->name('perkembangan.produk-domesti
 
     // Subsektor Kerajinan routes
 
-    Route::resource('subsektor-kerajinan', SubsektorKerajinanController::class);
+ Route::resource('subsektor-kerajinan', SubsektorKerajinanController::class);
+
+ // sektor industri pengolahan routes
+
+    Route::resource('sektor-industri-pengolahan', SektorIndustriPengolahanController::class);
 });
 
+
+    Route::resource('subsektor-kerajinan', SubsektorKerajinanController::class);
 
 // ==== PERMOHONAN SURAT ====
 
