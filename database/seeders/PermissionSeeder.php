@@ -370,6 +370,13 @@ class PermissionSeeder extends Seeder
             'energiPenerangan.update',
             'energiPenerangan.delete',
 
+            // umum batas wilayah
+            'batas_wilayah.view',
+            'batas_wilayah.create',
+            'batas_wilayah.store',
+            'batas_wilayah.update',
+            'batas_wilayah.delete',
+
             // apb
             'apb.view',
             'apb.create',

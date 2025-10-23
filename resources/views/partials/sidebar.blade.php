@@ -384,6 +384,27 @@
                             <div class="dropdown-menu-columns">
                                 <div class="dropdown-menu-column">
 
+                                    {{-- Potensi Umum --}}
+                                    <div class="dropend">
+                                        <a class="dropdown-item dropdown-toggle {{ request()->is('potensi/umum*') ? 'active' : '' }}"
+                                            href="#sidebar-potensi-prasarana" data-bs-toggle="dropdown"
+                                            data-bs-auto-close="false" role="button" aria-expanded="false">
+                                            Potensi Umum
+                                        </a>
+
+                                        <div
+                                            class="dropdown-menu {{ request()->is('potensi/umum*') ? 'show' : '' }}">
+
+                                            @can('batas_wilayah.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/umum/batas-wilayah*') ? 'active' : '' }}"
+                                                    href="{{ route('batas-wilayah.index') }}">
+                                                    Batas Wilayah
+                                                </a>
+                                            @endcan
+
+                                        </div>
+                                    </div>
+
                                     {{-- Potensi Sumber Daya Manusia --}}
                                     <div class="dropend">
                                         <a class="dropdown-item dropdown-toggle {{ request()->is('potensi/potensi-sdm*') ? 'active' : '' }}"
