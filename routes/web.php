@@ -44,6 +44,7 @@ use App\Http\Controllers\PerjudianController;
 use App\Http\Controllers\MirasController;
 use App\Http\Controllers\ProstitusiController;
 use App\Http\Controllers\PembunuhanController;
+use App\Http\Controllers\PenculikanController;
 // use App\Http\Controllers\IrigasiController;
 // use App\Http\Controllers\NotificationController;
 // use App\Http\Controllers\PerangkatDesaController;
@@ -850,6 +851,17 @@ Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.pembunuh
     Route::get('/{id}/edit', [PembunuhanController::class, 'edit'])->name('edit');
     Route::put('/{id}', [PembunuhanController::class, 'update'])->name('update');
     Route::delete('/{id}', [PembunuhanController::class, 'destroy'])->name('destroy');
+});
+
+//penculikan routes
+Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.penculikan')->name('perkembangan.keamanandanketertiban.penculikan.')->group(function(){
+    Route::get('/', [PenculikanController::class, 'index'])->name('index');
+    Route::get('/create', [PenculikanController::class, 'create'])->name('create');
+    Route::post('/', [PenculikanController::class, 'store'])->name('store');
+    Route::get('/{id}', [PenculikanController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [PenculikanController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [PenculikanController::class, 'update'])->name('update');
+    Route::delete('/{id}', [PenculikanController::class, 'destroy'])->name('destroy');
 });
 
 // Pengangkutan

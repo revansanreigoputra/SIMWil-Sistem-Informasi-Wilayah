@@ -888,6 +888,12 @@
                                                     Pembunuhan
                                                 </a>
                                             @endcan
+                                            @can(abilities: 'penculikan.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/keamanandanketertiban/penculikan*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.keamanandanketertiban.penculikan.index') }}">
+                                                    Penculikan
+                                                </a>
+                                            @endcan
                                             
                                         </div>
                                     </div>

@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pembunuhans', function (Blueprint $table) {
+        Schema::create('penculikans', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_desa');
-            $table->date('tanggal'); 
-            $table->integer('jumlah_kasus_tahun_ini')->nullable();
+            $table->date('tanggal');
+            $table->integer('jumlah_kasus_penculikan')->nullable();
             $table->integer('jumlah_kasus_korban_penduduk')->nullable();
             $table->integer('jumlah_kasus_pelaku_penduduk')->nullable();
-            $table->integer('jumlah_kasus_bunuh_diri')->nullable();
             $table->integer('jumlah_kasus_diproses_hukum')->nullable();
             $table->timestamps();
         });
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pembunuhans');
+        Schema::dropIfExists('penculikans');
     }
 };
