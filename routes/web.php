@@ -155,6 +155,7 @@ use App\Models\LayananSurat\KopTemplate;
 // kelembagaan
 use App\Http\Controllers\LembagaAdatController;
 use App\Http\Controllers\SaranaTransportasiController;
+use App\Http\Controllers\BatasWilayahController;
 use App\Http\Controllers\JenisTransportasiController;
 use App\Http\Controllers\KomunikasiInformasiController;
 use App\Http\Controllers\PrasaranaPeribadatanController;
@@ -392,6 +393,17 @@ Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/prasar
     Route::get('/{dusun}/edit', [DusunController::class, 'edit'])->name('edit');
     Route::put('/{dusun}', [DusunController::class, 'update'])->name('update');
     Route::delete('/{dusun}', [DusunController::class, 'destroy'])->name('destroy');
+});
+
+// potensi umum batas wilayah
+Route::middleware(['auth'])->prefix('batas-wilayah')->name('batas-wilayah.')->group(function () {
+    Route::get('/', [BatasWilayahController::class, 'index'])->name('index');
+    Route::get('/create', [BatasWilayahController::class, 'create'])->name('create');
+    Route::post('/', [BatasWilayahController::class, 'store'])->name('store');
+    Route::get('/{batas_wilayah}', [BatasWilayahController::class, 'show'])->name('show');
+    Route::get('/{batas_wilayah}/edit', [BatasWilayahController::class, 'edit'])->name('edit');
+    Route::put('/{batas_wilayah}', [BatasWilayahController::class, 'update'])->name('update');
+    Route::delete('/{batas_wilayah}', [BatasWilayahController::class, 'destroy'])->name('destroy');
 });
 
 // Prasarana Air Bersih routes
