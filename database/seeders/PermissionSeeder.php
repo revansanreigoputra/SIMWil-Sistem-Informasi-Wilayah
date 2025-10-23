@@ -625,6 +625,14 @@ class PermissionSeeder extends Seeder
             'seksual.update',
             'seksual.delete',
 
+            //sosial
+            'sosial.view',
+            'sosial.create',
+            'sosial.store',
+            'sosial.edit',
+            'sosial.update',
+            'sosial.delete',
+
 
             // potensi permissions
             'potensi.laporan.view',

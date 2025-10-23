@@ -900,6 +900,12 @@
                                                     Kejahatan Seksual
                                                 </a>
                                             @endcan
+                                            @can(abilities: 'sosial.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/keamanandanketertiban/sosial*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.keamanandanketertiban.sosial.index') }}">
+                                                    Kesejahteraan Sosial
+                                                </a>
+                                            @endcan
                                             
                                         </div>
                                     </div>

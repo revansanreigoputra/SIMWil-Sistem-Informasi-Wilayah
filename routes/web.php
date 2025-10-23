@@ -46,6 +46,7 @@ use App\Http\Controllers\ProstitusiController;
 use App\Http\Controllers\PembunuhanController;
 use App\Http\Controllers\PenculikanController;
 use App\Http\Controllers\SeksualController;
+use App\Http\Controllers\SosialController;
 // use App\Http\Controllers\IrigasiController;
 // use App\Http\Controllers\NotificationController;
 // use App\Http\Controllers\PerangkatDesaController;
@@ -874,6 +875,17 @@ Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.seksual'
     Route::get('/{id}/edit', [SeksualController::class, 'edit'])->name('edit');
     Route::put('/{id}', [SeksualController::class, 'update'])->name('update');
     Route::delete('/{id}', [SeksualController::class, 'destroy'])->name('destroy');
+});
+
+//sosial routes
+Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.sosial')->name('perkembangan.keamanandanketertiban.sosial.')->group(function(){
+    Route::get('/', [SosialController::class, 'index'])->name('index');
+    Route::get('/create', [SosialController::class, 'create'])->name('create');
+    Route::post('/', [SosialController::class, 'store'])->name('store');
+    Route::get('/{id}', [SosialController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [SosialController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [SosialController::class, 'update'])->name('update');
+    Route::delete('/{id}', [SosialController::class, 'destroy'])->name('destroy');
 });
 
 // Pengangkutan
