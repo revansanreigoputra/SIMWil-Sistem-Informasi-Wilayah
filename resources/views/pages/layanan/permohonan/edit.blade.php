@@ -175,7 +175,7 @@
                             @foreach ($kopTemplates as $kop)
                                 <option value="{{ $kop->id }}"
                                     {{ old('id_kop_templates', $permohonan->id_kop_templates) == $kop->id ? 'selected' : '' }}>
-                                    {{ $kop->nama }}
+                                    {{ $kop->jenis_kop }} - {{ $kop->nama }}
                                 </option>
                             @endforeach
                         </select>
