@@ -10,8 +10,7 @@ return new class extends Migration
     {
         Schema::create('penganggurans', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_kecamatan');
-            $table->unsignedBigInteger('id_desa');
+            $table->unsignedBigInteger('id_desa'); // hanya desa
             $table->date('tanggal');
             $table->integer('angkatan_kerja');
             $table->integer('masih_sekolah');
@@ -21,6 +20,8 @@ return new class extends Migration
             $table->integer('tidak_bekerja');
             $table->integer('bekerja');
             $table->timestamps();
+
+            $table->foreign('id_desa')->references('id')->on('desas')->onDelete('cascade');
         });
     }
 

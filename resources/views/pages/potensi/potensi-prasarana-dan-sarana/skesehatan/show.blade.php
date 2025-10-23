@@ -45,7 +45,7 @@
                                         <div class="flex-grow-1 ms-3">
                                             <label class="text-muted small mb-1 d-block">Jenis Sarana Kesehatan</label>
                                             <h6 class="mb-0 fw-bold text-dark">
-                                                {{ $saranakesehatan->jskesehatan?->nama ?? '-' }}</h6>
+                                                {{ $saranakesehatan->jenisSaranaKesehatan?->nama ?? '-' }}</h6>
                                         </div>
                                     </div>
                                 </div>

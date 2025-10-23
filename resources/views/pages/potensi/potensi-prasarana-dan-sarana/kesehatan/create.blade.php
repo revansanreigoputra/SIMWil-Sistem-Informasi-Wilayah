@@ -43,8 +43,8 @@
                                 <i class="fas fa-calendar me-1"></i>
                                 Tanggal <span class="text-danger">*</span>
                             </label>
-                            <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
-                                id="tanggal" name="tanggal" value="{{ old('tanggal', date('Y-m-d')) }}" required>
+                            <input type="date" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal"
+                                name="tanggal" value="{{ old('tanggal', date('Y-m-d')) }}" required>
                             @error('tanggal')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -60,17 +60,17 @@
                                 <i class="fas fa-hospital me-1"></i>
                                 Jenis Prasarana Kesehatan <span class="text-danger">*</span>
                             </label>
-                            <select class="form-select @error('jpkesehatan_id') is-invalid @enderror"
-                                id="jpkesehatan_id" name="jpkesehatan_id" required>
+                            <select class="form-select @error('jenis_prasarana_kesehatan_id') is-invalid @enderror"
+                                id="jenis_prasarana_kesehatan_id" name="jenis_prasarana_kesehatan_id" required>
                                 <option value="">Pilih Jenis Prasarana Kesehatan</option>
-                                @foreach ($jpkesehatans as $jenis)
+                                @foreach ($jenisPrasaranaKesehatans as $jenis)
                                     <option value="{{ $jenis->id }}"
-                                        {{ old('jpkesehatan_id') == $jenis->id ? 'selected' : '' }}>
+                                        {{ old('jenis_prasarana_kesehatan_id') == $jenis->id ? 'selected' : '' }}>
                                         {{ $jenis->nama }}
                                     </option>
                                 @endforeach
                             </select>
-                            @error('jpkesehatan_id')
+                            @error('jenis_prasarana_kesehatan_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -81,8 +81,8 @@
                                 <i class="fas fa-hashtag me-1"></i>
                                 Jumlah <span class="text-danger">*</span>
                             </label>
-                            <input type="number" class="form-control @error('jumlah') is-invalid @enderror"
-                                id="jumlah" name="jumlah" value="{{ old('jumlah', 0) }}" min="0" required>
+                            <input type="number" class="form-control @error('jumlah') is-invalid @enderror" id="jumlah"
+                                name="jumlah" value="{{ old('jumlah', 0) }}" min="0" required>
                             @error('jumlah')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

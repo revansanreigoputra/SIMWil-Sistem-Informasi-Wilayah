@@ -16,20 +16,14 @@
                     <input type="date" name="tanggal" class="form-control" value="{{ old('tanggal') }}" required>
                 </div>
                 <div class="col-md-6 mb-2">
-                    <label>Kecamatan</label>
-                    <select name="id_kecamatan" id="id_kecamatan" class="form-control" required>
-                        <option value="">-- Pilih Kecamatan --</option>
-                        @foreach($kecamatans as $kec)
-                            <option value="{{ $kec->id }}" {{ old('id_kecamatan') == $kec->id ? 'selected' : '' }}>
-                                {{ $kec->nama_kecamatan }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-6 mb-2">
                     <label>Desa</label>
                     <select name="id_desa" id="id_desa" class="form-control" required>
                         <option value="">-- Pilih Desa --</option>
+                        @foreach($desas as $desa)
+                            <option value="{{ $desa->id }}" {{ old('id_desa') == $desa->id ? 'selected' : '' }}>
+                                {{ $desa->nama_desa }}
+                            </option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -73,21 +67,3 @@
     </div>
 </div>
 @endsection
-
-@push('addon-script')
-<script>
-$(document).ready(function() {
-    $('#id_kecamatan').on('change', function() {
-        var kecamatanId = $(this).val();
-        $('#id_desa').html('<option value="">-- Pilih Desa --</option>');
-        if (kecamatanId) {
-            $.get("{{ route('getDesaByKecamatan') }}", { id_kecamatan: kecamatanId }, function(data) {
-                $.each(data, function(i, desa) {
-                    $('#id_desa').append('<option value="'+desa.id+'">'+desa.nama_desa+'</option>');
-                });
-            });
-        }
-    });
-});
-</script>
-@endpush
