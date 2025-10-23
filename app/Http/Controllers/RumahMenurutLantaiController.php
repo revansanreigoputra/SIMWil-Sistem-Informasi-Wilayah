@@ -3,74 +3,126 @@
 namespace App\Http\Controllers;
 
 use App\Models\RumahMenurutLantai;
-use App\Models\Desa;
 use App\Models\JenisLantai;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class RumahMenurutLantaiController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        $items = RumahMenurutLantai::with(['desa', 'jenisLantai'])->get();
+        $desaId = session('desa_id');
+
+        $items = RumahMenurutLantai::with(['desa', 'jenisLantai'])
+            ->where('desa_id', $desaId)
+            ->orderBy('tanggal', 'desc')
+            ->paginate(10);
+
         return view('pages.perkembangan.asetekonomi.rumah_menurut_lantai.index', compact('items'));
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        $desas = Desa::all();
         $jenisLantais = JenisLantai::all();
-        return view('pages.perkembangan.asetekonomi.rumah_menurut_lantai.create', compact('desas', 'jenisLantais'));
+        return view('pages.perkembangan.asetekonomi.rumah_menurut_lantai.create', compact('jenisLantais'));
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        $request->validate([
-            'desa_id' => 'required|exists:desas,id',
+        $validator = Validator::make($request->all(), [
             'jenis_lantai_id' => 'required|exists:jenis_lantais,id',
             'tanggal' => 'required|date',
             'jumlah' => 'required|integer|min:0',
         ]);
 
-        RumahMenurutLantai::create($request->all());
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $data = $request->only(['jenis_lantai_id', 'tanggal', 'jumlah']);
+        $data['desa_id'] = session('desa_id');
+
+        RumahMenurutLantai::create($data);
 
         return redirect()->route('perkembangan.asetekonomi.rumah_menurut_lantai.index')
-                         ->with('success', 'Data berhasil ditambahkan.');
+            ->with('success', 'Data Rumah Menurut Lantai berhasil ditambahkan.');
     }
 
-    public function show(RumahMenurutLantai $rumahMenurutLantai)
+    /**
+     * Display the specified resource.
+     */
+    public function show($id)
     {
-        return view('pages.perkembangan.asetekonomi.rumah_menurut_lantai.show', [
-            'item' => $rumahMenurutLantai
-        ]);
+        $desaId = session('desa_id');
+        $item = RumahMenurutLantai::with(['desa', 'jenisLantai'])
+            ->where('desa_id', $desaId)
+            ->findOrFail($id);
+
+        return view('pages.perkembangan.asetekonomi.rumah_menurut_lantai.show', compact('item'));
     }
 
-    public function edit(RumahMenurutLantai $rumahMenurutLantai)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit($id)
     {
-        $desas = Desa::all();
+        $desaId = session('desa_id');
+        $item = RumahMenurutLantai::where('desa_id', $desaId)->findOrFail($id);
         $jenisLantais = JenisLantai::all();
-        return view('pages.perkembangan.asetekonomi.rumah_menurut_lantai.edit', compact('rumahMenurutLantai', 'desas', 'jenisLantais'));
+
+        return view('pages.perkembangan.asetekonomi.rumah_menurut_lantai.edit', compact('item', 'jenisLantais'));
     }
 
-    public function update(Request $request, RumahMenurutLantai $rumahMenurutLantai)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
     {
-        $request->validate([
-            'desa_id' => 'required|exists:desas,id',
+        $validator = Validator::make($request->all(), [
             'jenis_lantai_id' => 'required|exists:jenis_lantais,id',
             'tanggal' => 'required|date',
             'jumlah' => 'required|integer|min:0',
         ]);
 
-        $rumahMenurutLantai->update($request->all());
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $desaId = session('desa_id');
+        $item = RumahMenurutLantai::where('desa_id', $desaId)->findOrFail($id);
+
+        $data = $request->only(['jenis_lantai_id', 'tanggal', 'jumlah']);
+        $data['desa_id'] = $desaId;
+
+        $item->update($data);
 
         return redirect()->route('perkembangan.asetekonomi.rumah_menurut_lantai.index')
-                         ->with('success', 'Data berhasil diupdate.');
+            ->with('success', 'Data Rumah Menurut Lantai berhasil diperbarui.');
     }
 
-    public function destroy(RumahMenurutLantai $rumahMenurutLantai)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy($id)
     {
-        $rumahMenurutLantai->delete();
+        $desaId = session('desa_id');
+        $item = RumahMenurutLantai::where('desa_id', $desaId)->findOrFail($id);
+        $item->delete();
 
         return redirect()->route('perkembangan.asetekonomi.rumah_menurut_lantai.index')
-                         ->with('success', 'Data berhasil dihapus.');
+            ->with('success', 'Data Rumah Menurut Lantai berhasil dihapus.');
     }
 }
