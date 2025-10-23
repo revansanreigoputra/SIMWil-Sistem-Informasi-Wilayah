@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AirBersih;
+use App\Models\Desa;
 use Illuminate\Http\Request;
 
 class AirBersihController extends Controller
@@ -12,7 +13,8 @@ class AirBersihController extends Controller
      */
     public function index()
     {
-        $airBersihs = AirBersih::orderBy('tanggal', 'desc')->paginate(10);
+        $desaId = session('desa_id');
+        $airBersihs = AirBersih::with('desa')->where('desa_id', $desaId)->orderBy('tanggal', 'desc')->paginate(10);
         return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-air-bersih.index', compact('airBersihs'));
     }
 
@@ -41,7 +43,10 @@ class AirBersihController extends Controller
             'bangunan_pengolahan_air' => 'required|integer|min:0',
         ]);
 
-        AirBersih::create($validated);
+        $data = $validated;
+        $data['desa_id'] = session('desa_id');
+
+        AirBersih::create($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.prasarana-air-bersih.index')->with('success', 'Data prasarana air bersih berhasil ditambahkan.');
     }
@@ -79,7 +84,10 @@ class AirBersihController extends Controller
             'bangunan_pengolahan_air' => 'required|integer|min:0',
         ]);
 
-        $airBersih->update($validated);
+        $data = $validated;
+        $data['desa_id'] = session('desa_id');
+
+        $airBersih->update($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.prasarana-air-bersih.index')->with('success', 'Data prasarana air bersih berhasil diperbarui.');
     }

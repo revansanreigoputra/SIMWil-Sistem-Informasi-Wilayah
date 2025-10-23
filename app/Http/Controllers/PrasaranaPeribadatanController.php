@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Desa;
 use App\Models\PrasaranaPeribadatan;
 use App\Models\TempatIbadah;
 use Illuminate\Http\Request;
@@ -12,7 +13,8 @@ class PrasaranaPeribadatanController extends Controller
     public function index()
     {
         Gate::authorize('peribadatan.view');
-        $prasaranaPeribadatans = PrasaranaPeribadatan::with('tempatIbadah')->latest()->get();
+        $desaId = session('desa_id');
+        $prasaranaPeribadatans = PrasaranaPeribadatan::with('tempatIbadah', 'desa')->where('desa_id', $desaId)->latest()->get();
         return view('pages.potensi.potensi-prasarana-dan-sarana.peribadatan.index', compact('prasaranaPeribadatans'));
     }
 
@@ -32,7 +34,10 @@ class PrasaranaPeribadatanController extends Controller
             'jumlah' => 'required|integer|min:0',
         ]);
 
-        PrasaranaPeribadatan::create($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        PrasaranaPeribadatan::create($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.peribadatan.index')
             ->with('success', 'Data prasarana peribadatan berhasil ditambahkan.');
@@ -60,7 +65,10 @@ class PrasaranaPeribadatanController extends Controller
             'jumlah' => 'required|integer|min:0',
         ]);
 
-        $prasaranaPeribadatan->update($request->all());
+        $data = $request->all();
+        $data['desa_id'] = $prasaranaPeribadatan->desa_id;
+
+        $prasaranaPeribadatan->update($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.peribadatan.index')
             ->with('success', 'Data prasarana peribadatan berhasil diupdate.');

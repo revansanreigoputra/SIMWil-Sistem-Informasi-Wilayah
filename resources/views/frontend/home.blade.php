@@ -54,9 +54,14 @@
                         </div>
                         <nav id="navigation" class="style_one">
                             <ul id="responsive">
-                                <li><a class="current" href="#">Home</a></li>
-                                <li><a href="#">Berita</a></li>
-                                <li><a href="#">Galeri</a></li>
+                                {{-- Ganti link Home yang lama dengan ini --}}
+                                <li><a class="{{ request()->routeIs('home') ? 'current' : '' }}"
+                                        href="{{ route('home') }}">Home</a></li>
+                                {{-- Link ke Halaman Berita Publik --}}
+                                <li><a class="{{ request()->routeIs('public.berita.*') ? 'current' : '' }}"
+                                        href="{{ route('public.berita.index') }}">Berita</a></li>
+                                <li><a class="{{ request()->routeIs('public.galeri.*') ? 'current' : '' }}"
+                                        href="{{ route('public.galeri.index') }}">Galeri</a></li>
                                 <li><a href="#">Agenda</a></li>
                                 <li><a href="#">Kontak</a></li>
                             </ul>
@@ -219,8 +224,11 @@
                                 data-transform_out="opacity:0;s:300;" data-start="600" data-splitin="none"
                                 data-splitout="none" data-basealign="slide" data-responsive_offset="off"
                                 data-responsive="off"
-                                style="z-index:6;color:#fff;letter-spacing:0px;font-weight:600;">Cek & Monitoring Status Pengajuan</div>
-                            <div class="utf_rev_description_text">SiKAB Sleman - Aplikasi yang akan memberikan kemudahan bagi anda dalam mengurus segala bentuk urusan yang berkaitan dengan pemerintahan daerah secara online.
+                                style="z-index:6;color:#fff;letter-spacing:0px;font-weight:600;">Cek & Monitoring
+                                Status Pengajuan</div>
+                            <div class="utf_rev_description_text">SiKAB Sleman - Aplikasi yang akan memberikan
+                                kemudahan bagi anda dalam mengurus segala bentuk urusan yang berkaitan dengan
+                                pemerintahan daerah secara online.
                             </div>
                             {{-- <a href="#" class="button medium">Selengkapnya</a> --}}
                         </div>
@@ -278,8 +286,11 @@
                                 data-transform_out="opacity:0;s:300;" data-start="600" data-splitin="none"
                                 data-splitout="none" data-basealign="slide" data-responsive_offset="off"
                                 data-responsive="off"
-                                style="z-index:6;color:#fff;letter-spacing:0px;font-weight:600;">Cari & Jelajahi Tempat Hits</div>
-                            <div class="utf_rev_description_text">SiKAB Sleman - Aplikasi yang akan memberikan kemudahan bagi anda dalam mengurus segala bentuk urusan yang berkaitan dengan pemerintahan daerah secara online.
+                                style="z-index:6;color:#fff;letter-spacing:0px;font-weight:600;">Cari & Jelajahi Tempat
+                                Hits</div>
+                            <div class="utf_rev_description_text">SiKAB Sleman - Aplikasi yang akan memberikan
+                                kemudahan bagi anda dalam mengurus segala bentuk urusan yang berkaitan dengan
+                                pemerintahan daerah secara online.
                             </div>
                             {{-- <a href="#" class="button medium">Selengkapnya</a> --}}
                         </div>
@@ -337,8 +348,11 @@
                                 data-transform_out="opacity:0;s:300;" data-start="600" data-splitin="none"
                                 data-splitout="none" data-basealign="slide" data-responsive_offset="off"
                                 data-responsive="off"
-                                style="z-index:6;color:#fff;letter-spacing:0px;font-weight:600;">Cari & Jelajahi Informasi Terupdate</div>
-                            <div class="utf_rev_description_text">SiKAB Sleman - Aplikasi yang akan memberikan kemudahan bagi anda dalam mengurus segala bentuk urusan yang berkaitan dengan pemerintahan daerah secara online.
+                                style="z-index:6;color:#fff;letter-spacing:0px;font-weight:600;">Cari & Jelajahi
+                                Informasi Terupdate</div>
+                            <div class="utf_rev_description_text">SiKAB Sleman - Aplikasi yang akan memberikan
+                                kemudahan bagi anda dalam mengurus segala bentuk urusan yang berkaitan dengan
+                                pemerintahan daerah secara online.
                             </div>
                             {{-- <a href="#" class="button medium">Selengkapnya</a> --}}
                         </div>
@@ -434,68 +448,40 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h3 class="headline_part centered margin-bottom-50">
-                            BERITA TERBARU<span>Berita seputar Kabupaten Sleman</span>
+                            BERITA TERBARU
+                            <span>Berita seputar Kabupaten Sleman</span>
                         </h3>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3 col-sm-6 col-xs-12"> <a href="#"
-                            class="blog_compact_part-container">
-                            <div class="blog_compact_part"> <img src="{{ asset('frontend/images/blog-compact-post-01.jpg') }}"
-                                    alt="">
-                                <div class="blog_compact_part_content">
-                                    <h3>Tempat-tempat Populer untuk Gen Z</h3>
-                                    <ul class="blog_post_tag_part">
-                                        <li>22 Agustus 2025</li>
-                                    </ul>
+
+                    @forelse ($beritas as $item)
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <a href="{{ route('public.berita.show', $item->slug) }}"
+                                class="blog_compact_part-container">
+                                <div class="blog_compact_part">
+                                    <img src="{{ asset('storage/foto_berita/' . $item->gambar) }}"
+                                        alt="{{ $item->judul }}">
+                                    <div class="blog_compact_part_content">
+                                        <h3>{{ $item->judul }}</h3>
+                                        <ul class="blog_post_tag_part">
+                                            <li>{{ $item->created_at->isoFormat('D MMMM YYYY') }}</li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
+                        </div>
+                    @empty
+                        <div class="col-md-12">
+                            <p class="text-center">Belum ada berita terbaru yang tersedia saat ini.</p>
+                        </div>
+                    @endforelse
+                    <div class="col-md-12 centered_content">
+                        <a href="{{ route('public.berita.index') }}" class="button border margin-top-20">
+                            Berita Selengkapnya
                         </a>
                     </div>
 
-                    <div class="col-md-3 col-sm-6 col-xs-12"> <a href="#"
-                            class="blog_compact_part-container">
-                            <div class="blog_compact_part"> <img src="{{ asset('frontend/images/blog-compact-post-02.jpg') }}"
-                                    alt="">
-                                <div class="blog_compact_part_content">
-                                    <h3>List Tempat Wisata yang Layak dikunjungi di Sleman</h3>
-                                    <ul class="blog_post_tag_part">
-                                        <li>18 Agustus 2025</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="col-md-3 col-sm-6 col-xs-12"> <a href="#"
-                            class="blog_compact_part-container">
-                            <div class="blog_compact_part"> <img src="{{ asset('frontend/images/blog-compact-post-03.jpg') }}"
-                                    alt="">
-                                <div class="blog_compact_part_content">
-                                    <h3>Langkah Mudah Memperoleh Tubuh Ideal</h3>
-                                    <ul class="blog_post_tag_part">
-                                        <li>10 Agustus 2025</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="col-md-3 col-sm-6 col-xs-12"> <a href="#"
-                            class="blog_compact_part-container">
-                            <div class="blog_compact_part"> <img src="{{ asset('frontend/images/blog-compact-post-04.jpg') }}"
-                                    alt="">
-                                <div class="blog_compact_part_content">
-                                    <h3>10 Tempat Slothing Shops yang Layak dikunjungi di Sleman</h3>
-                                    <ul class="blog_post_tag_part">
-                                        <li>18 Agustus 2025</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-12 centered_content"> <a href="#"
-                            class="button border margin-top-20">Berita Selengkapnya</a> </div>
                 </div>
             </div>
         </section>

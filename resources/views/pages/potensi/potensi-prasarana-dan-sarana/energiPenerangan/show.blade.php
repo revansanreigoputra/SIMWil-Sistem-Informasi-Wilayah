@@ -35,6 +35,12 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
+                                    <label class="form-label fw-semibold">Desa</label>
+                                    <p class="form-control-plaintext">{{ $energiPenerangan->desa->nama_desa }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
                                     <label class="form-label fw-semibold">Tanggal</label>
                                     <p class="form-control-plaintext">{{ $energiPenerangan->tanggal->format('d-m-Y') }}</p>
                                 </div>

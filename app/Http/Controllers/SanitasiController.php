@@ -13,7 +13,8 @@ class SanitasiController extends Controller
      */
     public function index()
     {
-        $sanitasies = Sanitasi::with('desa')->orderBy('tanggal', 'desc')->paginate(10);
+        $desaId = session('desa_id');
+        $sanitasies = Sanitasi::with('desa')->where('desa_id', $desaId)->orderBy('tanggal', 'desc')->paginate(10);
         return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-sanitasi.index', compact('sanitasies'));
     }
 
@@ -22,10 +23,9 @@ class SanitasiController extends Controller
      */
     public function create()
     {
-        $desas = Desa::all();
         $saluranDrainaseOptions = Sanitasi::getSaluranDrainaseOptions();
         $kondisiSaluranOptions = Sanitasi::getKondisiSaluranOptions();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-sanitasi.create', compact('desas', 'saluranDrainaseOptions', 'kondisiSaluranOptions'));
+        return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-sanitasi.create', compact('saluranDrainaseOptions', 'kondisiSaluranOptions'));
     }
 
     /**
@@ -34,7 +34,6 @@ class SanitasiController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'sumur_resapan_air' => 'required|integer|min:0',
             'mck_umum' => 'required|integer|min:0',
@@ -43,7 +42,10 @@ class SanitasiController extends Controller
             'kondisi_saluran' => 'required|in:rusak,mampet,kurang memadai,baik',
         ]);
 
-        Sanitasi::create($validated);
+        $data = $validated;
+        $data['desa_id'] = session('desa_id');
+
+        Sanitasi::create($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.prasarana-sanitasi.index')->with('success', 'Data prasarana sanitasi berhasil ditambahkan.');
     }
@@ -61,10 +63,9 @@ class SanitasiController extends Controller
      */
     public function edit(Sanitasi $sanitasi)
     {
-        $desas = Desa::all();
         $saluranDrainaseOptions = Sanitasi::getSaluranDrainaseOptions();
         $kondisiSaluranOptions = Sanitasi::getKondisiSaluranOptions();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-sanitasi.edit', compact('sanitasi', 'desas', 'saluranDrainaseOptions', 'kondisiSaluranOptions'));
+        return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-sanitasi.edit', compact('sanitasi', 'saluranDrainaseOptions', 'kondisiSaluranOptions'));
     }
 
     /**
@@ -73,7 +74,6 @@ class SanitasiController extends Controller
     public function update(Request $request, Sanitasi $sanitasi)
     {
         $validated = $request->validate([
-            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'sumur_resapan_air' => 'required|integer|min:0',
             'mck_umum' => 'required|integer|min:0',
@@ -82,7 +82,10 @@ class SanitasiController extends Controller
             'kondisi_saluran' => 'required|in:rusak,mampet,kurang memadai,baik',
         ]);
 
-        $sanitasi->update($validated);
+        $data = $validated;
+        $data['desa_id'] = session('desa_id');
+
+        $sanitasi->update($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.prasarana-sanitasi.index')->with('success', 'Data prasarana sanitasi berhasil diperbarui.');
     }

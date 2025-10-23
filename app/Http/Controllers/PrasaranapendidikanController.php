@@ -13,7 +13,8 @@ class PrasaranapendidikanController extends Controller
      */
     public function index()
     {
-        $prasaranapendidikans = Prasaranapendidikan::with('jpgedung')->latest()->get();
+        $desaId = session('desa_id');
+        $prasaranapendidikans = Prasaranapendidikan::with(['jpgedung', 'desa'])->where('desa_id', $desaId)->latest()->get();
         return view('pages.potensi.potensi-prasarana-dan-sarana.ppendidikan.index', compact('prasaranapendidikans'));
     }
 
@@ -38,7 +39,10 @@ class PrasaranapendidikanController extends Controller
             'jumlah_milik_sendiri' => 'required|integer|min:0',
         ]);
 
-        Prasaranapendidikan::create($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        Prasaranapendidikan::create($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.ppendidikan.index')->with('success', 'Data prasarana pendidikan berhasil ditambahkan.');
     }

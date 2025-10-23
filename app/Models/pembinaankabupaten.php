@@ -10,6 +10,7 @@ class Pembinaankabupaten extends Model
     use HasFactory;
 
     protected $fillable = [
+    'id_desa',
     'tanggal',
     'pelimpahan_tugas',
     'pengaturan_kewenangan',
@@ -31,4 +32,8 @@ class Pembinaankabupaten extends Model
     'pemberian_sanksi',
     'pengawasan_keuangan',
 ];
+    public function desa()
+     {
+            return $this->belongsTo(Desa::class, 'id_desa');
+        }
 }

@@ -13,5 +13,6 @@ class Jumlah extends Model
         'jumlah_total',
         'jumlah_kk',
         'jumlah_penduduk',
+        'desa_id',
     ];
 }

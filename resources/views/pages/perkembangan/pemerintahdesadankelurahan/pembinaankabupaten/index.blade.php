@@ -19,35 +19,37 @@
             <table id="pembinaan-kabupaten-table" class="table table-striped text-center align-middle">
                 <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Tanggal</th>
-                        <th>Pelimpahan Tugas</th>
-                        <th>Pengaturan Kewenangan</th>
-                        <th>Pedoman Pelaksanaan Tugas</th>
-                        <th>Pedoman Penyusunan Peraturan</th>
-                        <th>Pedoman Penyusunan Perencanaan</th>
-                        <th>Kegiatan Fasilitasi Keberadaan</th>
-                        <th>Penetapan Pembiayaan</th>
-                        <th>Fasilitasi Pelaksanaan Pedoman</th>
-                        <th>Jumlah Kegiatan Pendidikan</th>
-                        <th>Kegiatan Penanggulangan Kemiskinan</th>
-                        <th>Kegiatan Penanganan Bencana</th>
-                        <th>Kegiatan Peningkatan Pendapatan</th>
-                        <th>Fasilitasi Penetapan Pedoman</th>
-                        <th>Kegiatan Fasilitasi Lanjutan</th>
-                        <th>Pedoman Pendataan</th>
-                        <th>Program Pemeliharaan Motivasi</th>
-                        <th>Pemberian Penghargaan</th>
-                        <th>Pemberian Sanksi</th>
-                        <th>Pengawasan Keuangan</th>
-                        <th>Aksi</th>
+                        <th class="text-center">No</th>
+                        <th class="text-center">Tanggal</th>
+                        <th class="text-center">Desa</th>
+                        <th class="text-center">Pelimpahan Tugas</th>
+                        <th class="text-center">Pengaturan Kewenangan</th>
+                        <th class="text-center">Pedoman Pelaksanaan Tugas</th>
+                        <th class="text-center">Pedoman Penyusunan Peraturan</th>
+                        <th class="text-center">Pedoman Penyusunan Perencanaan</th>
+                        <th class="text-center">Kegiatan Fasilitasi Keberadaan</th>
+                        <th class="text-center">Penetapan Pembiayaan</th>
+                        <th class="text-center">Fasilitasi Pelaksanaan Pedoman</th>
+                        <th class="text-center">Jumlah Kegiatan Pendidikan</th>
+                        <th class="text-center">Kegiatan Penanggulangan Kemiskinan</th>
+                        <th class="text-center">Kegiatan Penanganan Bencana</th>
+                        <th class="text-center">Kegiatan Peningkatan Pendapatan</th>
+                        <th class="text-center">Fasilitasi Penetapan Pedoman</th>
+                        <th class="text-center">Kegiatan Fasilitasi Lanjutan</th>
+                        <th class="text-center">Pedoman Pendataan</th>
+                        <th class="text-center">Program Pemeliharaan Motivasi</th>
+                        <th class="text-center">Pemberian Penghargaan</th>
+                        <th class="text-center">Pemberian Sanksi</th>
+                        <th class="text-center">Pengawasan Keuangan</th>
+                        <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($data as $item)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
+                            <td class="text-center">{{ $loop->iteration }}</td>
+                            <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
+                            <td class="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
 
                             {{-- Badge Hijau jika "Ada", Abu-abu jika "Tidak Ada"/null --}}
                             <td><span class="badge bg-{{ $item->pelimpahan_tugas === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pelimpahan_tugas ?? '-' }}</span></td>
@@ -76,14 +78,41 @@
 
                             <td>
                                 <div class="d-flex gap-1 justify-content-center">
-                                    <a href="{{ route('perkembangan.pemerintahdesadankelurahan.pembinaankabupaten.edit', $item->id) }}" class="btn btn-sm btn-warning">
-                                        <i class="fas fa-edit"></i> Edit
-                                    </a>
+                                    <!-- Tombol Detail -->
+                                            <a href="{{ route('perkembangan.pemerintahdesadankelurahan.pembinaankabupaten.show', $item->id) }}" class="btn btn-sm btn-info">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                                    <circle cx="12" cy="12" r="3" />
+                                                </svg>
+                                                Detail
+                                        <!-- Tombol Edit -->
+                                        <a href="{{ route('perkembangan.pemerintahdesadankelurahan.pembinaankabupaten.edit', $item->id) }}" class="btn btn-sm btn-warning">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                                                <path
+                                                    d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                                                <path d="M16 5l3 3" />
+                                            </svg>
+                                            Edit
+                                        </a>
 
                                     <!-- Tombol Hapus dengan Modal -->
                                     <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
                                         data-bs-target="#delete-pembinaankabupaten-{{ $item->id }}">
-                                        <i class="fas fa-trash"></i> Hapus
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M4 7l16 0" />
+                                                <path d="M10 11l0 6" />
+                                                <path d="M14 11l0 6" />
+                                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                            </svg>
+                                            Hapus
                                     </button>
 
                                     <!-- Modal Delete -->

@@ -127,7 +127,7 @@ class PermissionSeeder extends Seeder
             'permohonan.update',
             'permohonan.delete',
             'permohonan.cetak',
-            
+
             // template permissions
             'kop_template.view',
             'kop_template.create',
@@ -156,7 +156,7 @@ class PermissionSeeder extends Seeder
             'agenda.create',
             'agenda.update',
             'agenda.delete',
-            
+
             // Glosarium permissions
             'glosarium.view',
             'glosarium.create',
@@ -219,6 +219,27 @@ class PermissionSeeder extends Seeder
             'p_cacat.store',
             'p_cacat.update',
             'p_cacat.delete',
+
+            // Potensi Etnis Suku permissions
+            'p_etnis_suku.view',
+            'p_etnis_suku.create',
+            'p_etnis_suku.store',
+            'p_etnis_suku.update',
+            'p_etnis_suku.delete',
+
+            // Potensi Tenaga Kerja permissions
+            'p_tenaga_kerja.view',
+            'p_tenaga_kerja.create',
+            'p_tenaga_kerja.store',
+            'p_tenaga_kerja.update',
+            'p_tenaga_kerja.delete',
+
+            // Potensi Kualitas Angkatan Kerja permissions
+            'p_kualitas_angkatan_kerja.view',
+            'p_kualitas_angkatan_kerja.create',
+            'p_kualitas_angkatan_kerja.store',
+            'p_kualitas_angkatan_kerja.update',
+            'p_kualitas_angkatan_kerja.delete',
 
             // Irigasi
             'irigasi.view',
@@ -467,6 +488,87 @@ class PermissionSeeder extends Seeder
             'musrenbangdesa.edit',      
             'musrenbangdesa.update',
             'musrenbangdesa.delete',
+
+            //hasil Pembangunan
+            'hasilpembangunan.view',
+            'hasilpembangunan.create',
+            'hasilpembangunan.store',
+            'hasilpembangunan.edit',
+            'hasilpembangunan.update',
+            'hasilpembangunan.delete',
+
+            // gotong royong
+            'gotongroyong.view',
+            'gotongroyong.create',
+            'gotongroyong.store',
+            'gotongroyong.edit',
+            'gotongroyong.update',
+            'gotongroyong.delete',
+
+            // adat istiadat
+            'adatistiadat.view',
+            'adatistiadat.create',
+            'adatistiadat.store',
+            'adatistiadat.edit',
+            'adatistiadat.update',
+            'adatistiadat.delete',
+
+            //sikap dan mental
+            'sikapdanmental.view',
+            'sikapdanmental.create',
+            'sikapdanmental.store',
+            'sikapdanmental.edit',
+            'sikapdanmental.update',
+            'sikapdanmental.delete',
+
+            //berbangsa
+            'berbangsa.view',
+            'berbangsa.create',
+            'berbangsa.store',
+            'berbangsa.edit',
+            'berbangsa.update',
+            'berbangsa.delete',
+
+            //pajak
+            'pajak.view',
+            'pajak.create',
+            'pajak.store',
+            'pajak.edit',
+            'pajak.update',
+            'pajak.delete',
+
+            //politik
+            'politik.view',
+            'politik.create',
+            'politik.store',
+            'politik.edit',
+            'politik.update',
+            'politik.delete',
+
+            //Konflik Sara
+            'konfliksara.view',
+            'konfliksara.create',
+            'konfliksara.store',
+            'konfliksara.edit',
+            'konfliksara.update',
+            'konfliksara.delete',
+
+            //Perkelahian
+            'perkelahian.view',
+            'perkelahian.create',
+            'perkelahian.store',
+            'perkelahian.edit',
+            'perkelahian.update',
+            'perkelahian.delete',
+
+            //pencurian
+            'pencurian.view',
+            'pencurian.create',
+            'pencurian.store',
+            'pencurian.edit',
+            'pencurian.update',
+            'pencurian.delete',
+
 
             // potensi permissions
             'potensi.laporan.view',

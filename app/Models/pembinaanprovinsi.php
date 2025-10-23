@@ -12,6 +12,7 @@ class pembinaanprovinsi extends Model
     protected $table = 'pembinaanprovinsis';
 
     protected $fillable = [
+        'id_desa',
         'tanggal',
         'pedoman_pelaksanaan_tugas',
         'pedoman_bantuan_keuangan',
@@ -29,6 +30,7 @@ class pembinaanprovinsi extends Model
     ];
 
     protected $casts = [
+        'id_desa',
         'tanggal' => 'date',
         'jumlah_kegiatan_pendidikan' => 'integer',
         'kegiatan_penanggulangan_kemiskinan' => 'integer',
@@ -40,4 +42,8 @@ class pembinaanprovinsi extends Model
         'pedoman_pendataan' => 'integer',
         'pemberian_sanksi' => 'integer',
     ];
+     public function desa()
+    {
+        return $this->belongsTo(Desa::class, 'id_desa');
+    }
 }

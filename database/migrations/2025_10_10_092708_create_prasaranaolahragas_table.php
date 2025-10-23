@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('prasaranaolahragas', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('desa_id')->constrained('desas')->onDelete('cascade');
             $table->date('tanggal');
             $table->foreignId('jpolahraga_id')->constrained('jpolahragas')->onDelete('cascade');
             $table->integer('jumlah')->default(0);

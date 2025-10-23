@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\musrenbangdesa;
+use App\Models\Desa;
 use Illuminate\Http\Request;
 
 class MusrenbangdesaController extends Controller
@@ -12,7 +13,7 @@ class MusrenbangdesaController extends Controller
      */
     public function index()
     {
-        $data = musrenbangdesa::orderBy('tanggal', 'desc')->get(); 
+        $data = musrenbangdesa::with(['desa'])->orderBy('tanggal', 'desc')->get(); 
         return view('pages.perkembangan.peransertamasyarakat.musrenbangdesa.index', compact('data'));
     }
 
@@ -21,7 +22,8 @@ class MusrenbangdesaController extends Controller
      */
     public function create()
     {
-        return view('pages.perkembangan.peransertamasyarakat.musrenbangdesa.create');
+        $desas = Desa::orderBy('nama_desa')->get();
+        return view('pages.perkembangan.peransertamasyarakat.musrenbangdesa.create', compact('desas'));
     }
 
     /**
@@ -31,6 +33,7 @@ class MusrenbangdesaController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
+            'id_desa' => 'required|exists:desas,id',
             'jumlah_musrenbang_desa_kelurahan' => 'nullable|integer',
             'jumlah_kehadiran_masyarakat' => 'nullable|integer',
             'jumlah_peserta_laki' => 'nullable|integer',
@@ -59,7 +62,9 @@ class MusrenbangdesaController extends Controller
      */
     public function show($id)
     {
-        //
+        $musrenbangdesa = musrenbangdesa::findOrFail($id);
+        $musrenbangdesa->load(['desa']); // Memuat relasi desa
+        return view('pages.perkembangan.peransertamasyarakat.musrenbangdesa.show', compact('musrenbangdesa'));
     }
 
     /**
@@ -68,7 +73,8 @@ class MusrenbangdesaController extends Controller
     public function edit($id)
     {
         $musrenbangdesa = musrenbangdesa::findOrFail($id);
-        return view('pages.perkembangan.peransertamasyarakat.musrenbangdesa.edit', compact('musrenbangdesa'));
+        $desas = Desa::orderBy('nama_desa')->get();
+        return view('pages.perkembangan.peransertamasyarakat.musrenbangdesa.edit', compact('musrenbangdesa', 'desas'));
     }
 
     /**
@@ -78,6 +84,7 @@ class MusrenbangdesaController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
+            'id_desa' => 'required|exists:desas,id',
             'jumlah_musrenbang_desa_kelurahan' => 'nullable|integer',
             'jumlah_kehadiran_masyarakat' => 'nullable|integer',
             'jumlah_peserta_laki' => 'nullable|integer',
@@ -109,5 +116,10 @@ class MusrenbangdesaController extends Controller
         $musrenbangdesa = musrenbangdesa::findOrFail($id);  
         $musrenbangdesa->delete();
         return redirect()->route('perkembangan.peransertamasyarakat.musrenbangdesa.index')->with('success', 'Data Musrenbang Desa berhasil dihapus.');    
+    }
+    public function getDesasByKecamatan($id_kecamatan)
+    {
+        $desas = Desa::where('id_kecamatan', $id_kecamatan)->get();
+        return response()->json($desas);
     }
 }

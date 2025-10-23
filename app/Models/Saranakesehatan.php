@@ -11,6 +11,7 @@ class Saranakesehatan extends Model
 
     protected $table = 'saranakesehatans';
     protected $fillable = [
+        'desa_id',
         'tanggal',
         'jskesehatan_id',
         'jumlah',
@@ -26,5 +27,13 @@ class Saranakesehatan extends Model
     public function jskesehatan()
     {
         return $this->belongsTo(Jskesehatan::class, 'jskesehatan_id');
+    }
+
+    /**
+     * Relasi ke Desa
+     */
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class, 'desa_id');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Desa;
 use App\Models\Jpkesehatan;
 use App\Models\Prasaranakesehatan;
 use Illuminate\Http\Request;
@@ -15,7 +16,8 @@ class PrasaranakesehatanController extends Controller
     public function index()
     {
         Gate::authorize('kesehatan.view');
-        $prasaranakesehatans = Prasaranakesehatan::with('jpkesehatan')->latest()->get();
+        $desaId = session('desa_id');
+        $prasaranakesehatans = Prasaranakesehatan::with('jpkesehatan', 'desa')->where('desa_id', $desaId)->latest()->get();
         return view('pages.potensi.potensi-prasarana-dan-sarana.kesehatan.index', compact('prasaranakesehatans'));
     }
 
@@ -35,13 +37,17 @@ class PrasaranakesehatanController extends Controller
     public function store(Request $request)
     {
         Gate::authorize('kesehatan.create');
-        $request->validate([
+        $validated = $request->validate([
             'tanggal' => 'required|date',
             'jpkesehatan_id' => 'required|exists:jpkesehatans,id',
             'jumlah' => 'required|integer|min:0',
         ]);
 
-        Prasaranakesehatan::create($request->all());
+        $data = $validated;
+        $data['desa_id'] = session('desa_id');
+
+
+        Prasaranakesehatan::create($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.kesehatan.index')
             ->with('success', 'Data Prasarana Kesehatan berhasil ditambahkan.');
@@ -67,7 +73,7 @@ class PrasaranakesehatanController extends Controller
         $jpkesehatans = Jpkesehatan::all();
         return view('pages.potensi.potensi-prasarana-dan-sarana.kesehatan.edit', [
             'prasaranaKesehatan' => $prasarana_kesehatan,
-            'jpkesehatans' => $jpkesehatans
+            'jpkesehatans' => $jpkesehatans,
         ]);
     }
 
@@ -77,13 +83,16 @@ class PrasaranakesehatanController extends Controller
     public function update(Request $request, Prasaranakesehatan $prasarana_kesehatan)
     {
         Gate::authorize('kesehatan.update');
-        $request->validate([
+        $validated = $request->validate([
             'tanggal' => 'required|date',
             'jpkesehatan_id' => 'required|exists:jpkesehatans,id',
             'jumlah' => 'required|integer|min:0',
         ]);
 
-        $prasarana_kesehatan->update($request->all());
+        $data = $validated;
+        $data['desa_id'] = session('desa_id');
+
+        $prasarana_kesehatan->update($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.kesehatan.index')
             ->with('success', 'Data Prasarana Kesehatan berhasil diupdate.');

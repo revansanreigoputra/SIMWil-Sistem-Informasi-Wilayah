@@ -23,6 +23,7 @@
                     <thead>
                         <tr>
                             <th class="text-center">No</th>
+                            <th class="text-center">Desa</th>
                             <th class="text-center">Tanggal</th>
                             <th class="text-center">Jenis Sarana Kesehatan</th>
                             <th class="text-center">Jumlah</th>
@@ -33,6 +34,7 @@
                         @foreach ($saranakesehatans as $item)
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
+                                <td class="text-center">{{ $item->desa->nama_desa }}</td>
                                 <td class="text-center">{{ $item->tanggal->format('d-m-Y') }}</td>
                                 <td class="text-center">{{ $item->jskesehatan->nama }}</td>
                                 <td class="text-center">{{ number_format($item->jumlah) }}</td>

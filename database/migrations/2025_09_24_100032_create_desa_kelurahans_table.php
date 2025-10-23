@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('desa_kelurahans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('desa_id')->constrained('desas')->cascadeOnDelete();
             $table->date('tanggal');
 
             // Bagian Gedung Kantor

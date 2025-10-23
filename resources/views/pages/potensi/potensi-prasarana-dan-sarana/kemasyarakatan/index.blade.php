@@ -25,6 +25,7 @@
                     <thead class="table-light">
                         <tr>
                             <th width="50">No</th>
+                            <th>Desa</th>
                             <th>Tanggal</th>
                             <th>PKK</th>
                             <th>Karang Taruna</th>
@@ -37,6 +38,7 @@
                         @foreach($kemasyarakatans as $item)
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
+                                <td>{{ $item->desa->nama_desa }}</td>
                                 <td class="text-center">{{ $item->tanggal->format('d-m-Y') }}</td>
                                 <td class="text-center">
                                     @if ($item->pkk == 'Ada')

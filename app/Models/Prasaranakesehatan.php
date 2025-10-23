@@ -14,6 +14,7 @@ class Prasaranakesehatan extends Model
         'tanggal',
         'jpkesehatan_id',
         'jumlah',
+        'desa_id',
     ];
 
     protected $casts = [
@@ -26,5 +27,14 @@ class Prasaranakesehatan extends Model
     public function jpkesehatan()
     {
         return $this->belongsTo(Jpkesehatan::class, 'jpkesehatan_id');
+    }
+
+    /**
+     * Relasi ke desa
+     * Setiap prasarana kesehatan dimiliki oleh satu desa
+     */
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class, 'desa_id');
     }
 }
