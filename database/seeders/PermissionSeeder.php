@@ -558,6 +558,15 @@ class PermissionSeeder extends Seeder
                 'perilaku-hidup-bersih-dan-sehat.show',
                 'perilaku-hidup-bersih-dan-sehat.update',
                 'perilaku-hidup-bersih-dan-sehat.delete',
+
+                // sektor perdagangan
+
+                'sektor-perdagangan.view',
+                'sektor-perdagangan.create',
+                'sektor-perdagangan.show',
+                'sektor-perdagangan.update',
+                'sektor-perdagangan.delete',
+
                                 
 
 

@@ -139,6 +139,7 @@ use App\Http\Controllers\PerkembanganSaranaPrasaranaController;
 use App\Http\Controllers\PerkembanganPasanganUsiaSuburKbController;
 use App\Http\Controllers\CakupanAirBersihController;
 use App\Http\Controllers\PerilakuHidupBersihDanSehatController;
+use App\Http\Controllers\SektorPerdaganganHotelRestoranController;
 
 use App\Http\Controllers\PerkembanganPendudukController;
 // use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -1150,6 +1151,23 @@ Route::prefix('perkembangan/produk-domestik')
         // Perilaku hidup sehat
         Route::prefix('perkembangan/kesehatan-masyarakat')->name('perkembangan.kesehatan-masyarakat.')->group(function () {
     Route::resource('perilaku-hidup-bersih-dan-sehat', PerilakuHidupBersihDanSehatController::class);
+});
+
+
+    // sektor perdagangan hotel dan restoran 
+
+    Route::prefix('perkembangan')->group(function () {
+
+    Route::prefix('produk-domestik')->group(function () {
+
+        // --- Sektor Perdagangan, Hotel, dan Restoran ---
+        Route::resource(
+            'sektor-perdagangan',
+            SektorPerdaganganHotelRestoranController::class,
+            ['as' => 'perkembangan.produk-domestik']
+        )->middleware(['auth']);
+        
+    });
 });
 
 // ==== PERMOHONAN SURAT ====

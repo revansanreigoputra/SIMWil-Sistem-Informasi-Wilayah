@@ -978,6 +978,13 @@
                                                 </a>
                                             @endcan
 
+                                             @can('sektor-perdagangan.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/sektor-perdagangan*') ? 'active' : '' }}"
+                                                href="{{ route('perkembangan.produk-domestik.sektor-perdagangan.index') }}">
+                                                    Sektor Perdagangan <br>Hotel  Restoran
+                                                </a>
+                                            @endcan
+
                                         </div>
                                         </div>
                                     @endcanany
