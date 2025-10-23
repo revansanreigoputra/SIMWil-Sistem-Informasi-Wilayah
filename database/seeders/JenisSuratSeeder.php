@@ -14,6 +14,13 @@ class JenisSuratSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;'); // Disable checks
+        // If you are using Eloquent's truncate:
+        \App\Models\LayananSurat\JenisSurat::truncate();
+        // OR if you are using the DB facade:
+        DB::table('jenis_surats')->truncate();
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;'); // Re-enable checks
         // 1. Retrieve the required KopTemplate IDs
         $kopSuratId = DB::table('kop_templates')
             ->where('jenis_kop', 'kop surat')
@@ -47,6 +54,7 @@ class JenisSuratSeeder extends Seeder
             "key" => "alamat_lengkap_detail",
             "label" => "Alamat Lengkap",
             "type" => "composite",
+
             "keys" => ["alamat", "rt", "rw", "desa", "kecamatan"],
             "format" => "{0} RT {1}/RW {2}, {3}, {4}", // Format: [Alamat] RT [RT]/RW [RW], [Desa], [Kecamatan]
             "source" => "penduduk_data"
@@ -58,39 +66,68 @@ class JenisSuratSeeder extends Seeder
 
         // 4. DEFINE VARIABLES PER JENIS SURAT
         //A. SKK STARTS HERE
-        // --- SKK (Surat Keterangan Kelahiran) Variables ---
-        // This surat needs ALMOST ALL citizen data + a lot of custom data
-        $skkCustomVariables = [
-            ["key" => "nama_bayi", "label" => "Nama Bayi", "type" => "text"],
-            ["key" => "nik_bayi", "label" => "NIK Bayi (16 Digit/Opsional)", "type" => "text", "required" => false],
-            ["key" => "tempat_lahir_bayi", "label" => "Tempat Lahir", "type" => "text"],
-            ["key" => "tanggal_lahir_bayi", "label" => "Tanggal Lahir", "type" => "date"],
-            ["key" => "jenis_kelamin_bayi", "label" => "Jenis Kelamin", "type" => "select", "options" => ["LAKI-LAKI", "PEREMPUAN"]],
-            ["key" => "hubungan_keluarga_id", "label" => "Hubungan Keluarga (Cth: Anak)", "type" => "select_db", "model" => "HubunganKeluarga"],
-            ["key" => "no_akta_kelahiran", "label" => "Nomor Akta Kelahiran", "type" => "text", "required" => false],
-            ["key" => "tanggal_pencatatan", "label" => "Tanggal Pencatatan", "type" => "date"],
-            ["key" => "agama_id_bayi", "label" => "Agama", "type" => "select_db", "model" => "Agama"],
-            ["key" => "golongan_darah_id_bayi", "label" => "Golongan Darah", "type" => "select_db", "model" => "GolonganDarah"],
-            ["key" => "kewarganegaraan_id_bayi", "label" => "Kewarganegaraan", "type" => "select_db", "model" => "Kewarganegaraan"],
-            ["key" => "etnis_bayi", "label" => "Etnis/Suku", "type" => "text", "required" => false],
-            ["key" => "pendidikan_id_ibu", "label" => "Pendidikan Terakhir Ibu", "type" => "select_db", "model" => "Pendidikan"],
-            ["key" => "mata_pencaharian_id_ayah", "label" => "Mata Pencaharian Ayah", "type" => "select_db", "model" => "MataPencaharian"],
-            ["key" => "status_perkawinan_orangtua", "label" => "Status Perkawinan Orang Tua", "type" => "select", "options" => ["KAWIN"]],
-        ];
-        $kelahiranVariables = json_encode(array_merge($fullSystemVariables, $skkCustomVariables));
+        // --- SKK (Surat Keterangan Kelahiran) Variables --- 
 
+
+        // --- SKK (Surat Keterangan Kelahiran) Variables --- 
+        // ----------------------------------------------------
+
+        // 1. SYSTEM FIELDS (Base Data of the Mother/Father, required for the table)
+        $skkBaseSystemKeys = [
+            'nama',           // Name of the AnggotaKeluarga (Mother/Father)
+            'nik',            // NIK of the AnggotaKeluarga
+            'alamat',         // Address of the AnggotaKeluarga's KK
+            'kepala_keluarga' // Special field to get the KK's name
+        ];
+        $skkBaseSystemVars = $this->filterSystemVariables($fullSystemVariables, $skkBaseSystemKeys);
+
+        // Ensure Kepala Keluarga is visible
+        foreach ($skkBaseSystemVars as &$var) {
+            if ($var['key'] === 'kepala_keluarga') {
+                $var['display'] = true;
+                $var['label'] = 'Nama Kepala Keluarga';
+            }
+        }
+        // 2. BABY/BIRTH CUSTOM INPUT FIELDS (All fields the user must fill out)
+        $skkCustomInputFields = [
+            // --- DISPLAYED FIELDS (Baby's Details) ---
+             ["key" => "kepala_keluarga", "label" => "Nama Kepala Keluarga", "type" => "system", "source" => "anggota_keluarga", "display" => true],
+            ["key" => "nama_bayi", "label" => "Nama Bayi", "type" => "text", "display" => true],
+            ["key" => "nik_bayi", "label" => "NIK Bayi (16 Digit/Opsional)", "type" => "text", "required" => false, "display" => true],
+            ["key" => "tempat_lahir_bayi", "label" => "Tempat Lahir Bayi", "type" => "text", "display" => true],
+            ["key" => "tanggal_lahir_bayi", "label" => "Tanggal Lahir Bayi", "type" => "date", "display" => true],
+            ["key" => "jenis_kelamin_bayi", "label" => "Jenis Kelamin Bayi", "type" => "select", "options" => ["LAKI-LAKI", "PEREMPUAN"], "display" => true],
+
+            // --- AUXILIARY/DATABASE FIELDS (Needed for record keeping, NOT display) ---
+            ["key" => "hubungan_keluarga_id", "label" => "Hubungan Keluarga (Cth: Anak)", "type" => "select_db", "model" => "HubunganKeluarga", "display" => false],
+            ["key" => "no_akta_kelahiran", "label" => "Nomor Akta Kelahiran", "type" => "text", "required" => false, "display" => false],
+            ["key" => "tanggal_pencatatan", "label" => "Tanggal Pencatatan", "type" => "date", "display" => false],
+            ["key" => "agama_id_bayi", "label" => "Agama", "type" => "select_db", "model" => "Agama", "display" => false],
+            ["key" => "golongan_darah_id_bayi", "label" => "Golongan Darah", "type" => "select_db", "model" => "GolonganDarah", "display" => false],
+            ["key" => "kewarganegaraan_id_bayi", "label" => "Kewarganegaraan", "type" => "select_db", "model" => "Kewarganegaraan", "display" => false],
+            ["key" => "etnis_bayi", "label" => "Etnis/Suku", "type" => "text", "required" => false, "display" => false],
+            ["key" => "pendidikan_id_bayi", "label" => "Pendidikan Terakhir", "type" => "select_db", "model" => "Pendidikan", "display" => false],
+            ["key" => "mata_pencaharian_id_bayi", "label" => "Mata Pencaharian", "type" => "select_db", "model" => "MataPencaharian", "display" => false],
+            ["key" => "status_perkawinan", "label" => "Status Perkawinan", "type" => "select", "options" => ["BELUM MENIKAH"], "display" => false],
+        ];
+
+        // 3. COMBINE and JSON ENCODE
+        $kelahiranVariables = json_encode(array_merge(
+            $this->filterSystemVariables($fullSystemVariables, ['nama', 'nik', 'alamat', 'kepala_keluarga']), // Use a single filter call
+            $skkCustomInputFields
+        ));
+        // SKK ENDS HERE
 
         // B. SKD (Surat Keterangan Domisili)
         $skdCustomVariables = [
-            ["key" => "keperluan", "label" => "Keperluan Mengurus Surat", "type" => "text"],
-            ["key" => "masa_berlaku", "label" => "Masa Berlaku (hari)", "type" => "number"],
+            ["key" => "keperluan", "label" => "Keperluan Mengurus Surat", "type" => "text", "display" => true],
+            ["key" => "masa_berlaku", "label" => "Masa Berlaku (hari)", "type" => "number", "display" => true],
         ];
         $skdRequiredKeys = ['nama', 'nik', 'jenis_kelamin']; // Base system fields
         $skdSystemVariables = $this->filterSystemVariables($fullSystemVariables, $skdRequiredKeys);
 
         $skdDependenciesKeys = [ // Dependencies for both composites
-            'tempat_lahir',
-            'tanggal_lahir',
+
             'alamat',
             'rt',
             'rw',
@@ -98,12 +135,12 @@ class JenisSuratSeeder extends Seeder
             'kecamatan'
         ];
         $skdDependencies = $this->filterSystemVariables($fullSystemVariables, $skdDependenciesKeys);
-   
-        $domisiliVariables = json_encode(array_merge(
-            $skdSystemVariables,
+
+        $domisiliVariables = json_encode(array_merge( 
             $skdDependencies,
             $allComposites, // Include BOTH composites
-            $skdCustomVariables
+            $skdCustomVariables,
+            $skkBaseSystemVars,
         ));
 
 
@@ -112,8 +149,7 @@ class JenisSuratSeeder extends Seeder
         $skuSystemVariables = $this->filterSystemVariables($fullSystemVariables, $skuRequiredKeys);
 
         $skuDependenciesKeys = [ // Dependencies for both composites
-            'tempat_lahir',
-            'tanggal_lahir',
+
             'alamat',
             'rt',
             'rw',
@@ -131,8 +167,8 @@ class JenisSuratSeeder extends Seeder
 
         // D. SRRT (Surat Rekomendasi RT)
         $srrtCustomVariables = [
-            ["key" => "keperluan", "label" => "Keperluan Mengurus Surat", "type" => "text"],
-            ["key" => "masa_berlaku", "label" => "Masa Berlaku (hari)", "type" => "number"],
+            ["key" => "keperluan", "label" => "Keperluan Mengurus Surat", "type" => "text", "display" => true],
+            ["key" => "masa_berlaku", "label" => "Masa Berlaku (hari)", "type" => "number", "display" => true],
         ];
         $srrtRequiredKeys = ['nama', 'nik', 'jenis_kelamin', 'rt']; // Notice 'rt' is needed directly and as a component
         $srrtSystemVariables = $this->filterSystemVariables($fullSystemVariables, $srrtRequiredKeys);
@@ -156,16 +192,15 @@ class JenisSuratSeeder extends Seeder
 
         // E. SKTM (Surat Keterangan Tidak Mampu)
         $sktmCustomVariables = [
-            ["key" => "keperluan", "label" => "Keperluan Mengurus Surat", "type" => "text"],
-            ["key" => "masa_berlaku", "label" => "Masa Berlaku (hari)", "type" => "number"],
-            ["key" => "penghasilan_bulanan", "label" => "Penghasilan Bulanan", "type" => "number"],
+            ["key" => "keperluan", "label" => "Keperluan Mengurus Surat", "type" => "text", "display" => true],
+            ["key" => "masa_berlaku", "label" => "Masa Berlaku (hari)", "type" => "number", "display" => true],
+            ["key" => "penghasilan_bulanan", "label" => "Penghasilan Bulanan", "type" => "number", "display" => true],
         ];
         $sktmRequiredKeys = ['nama', 'nik', 'jenis_kelamin', 'status_perkawinan', 'Mata_pencaharian'];
         $sktmSystemVariables = $this->filterSystemVariables($fullSystemVariables, $sktmRequiredKeys);
 
         $sktmDependenciesKeys = [ // Dependencies for both composites
-            'tempat_lahir',
-            'tanggal_lahir',
+
             'alamat',
             'rt',
             'rw',
@@ -183,14 +218,13 @@ class JenisSuratSeeder extends Seeder
 
         // F. SURAT BERKELAKUAN BAIK (SBB) 
         $sbbCustomVariables = [
-            ["key" => "keperluan", "label" => "Keperluan Mengurus Surat", "type" => "text"],
-            ["key" => "masa_berlaku", "label" => "Masa Berlaku (hari)", "type" => "number"],
+            ["key" => "keperluan", "label" => "Keperluan Mengurus Surat", "type" => "text", "display" => true],
+            ["key" => "masa_berlaku", "label" => "Masa Berlaku (hari)", "type" => "number", "display" => true],
         ];
         $sbbRequiredKeys = ['nama', 'nik'];
-        $sbbSystemVariables= $this->filterSystemVariables($fullSystemVariables, $sbbRequiredKeys);
+        $sbbSystemVariables = $this->filterSystemVariables($fullSystemVariables, $sbbRequiredKeys);
         $sbbDependenciesKeys = [ // Dependencies for both composites
-            'tempat_lahir',
-            'tanggal_lahir',
+
             'alamat',
             'rt',
             'rw',
@@ -201,22 +235,22 @@ class JenisSuratSeeder extends Seeder
         $sbbVariables = json_encode(array_merge(
             $sbbSystemVariables,
             $sbbDependenciesKeys,
-            $allComposites,  
+            $allComposites,
             $sbbCustomVariables
         ));
         // SBB END HERE
 
         // G. SURAT KETERANGAN KEMATIAN (SKM)
         $skmCustomVariables = [
-             ["key" => "tanggal_kematian", "label" => "Tanggal Kematian", "type" => "date"],
-            ["key" => "sebab_kematian", "label" => "Sebab Kematian", "type" => "text"],
+            ["key" => "tanggal_kematian", "label" => "Tanggal Kematian", "type" => "date", "display" => true],
+            ["key" => "sebab_kematian", "label" => "Sebab Kematian", "type" => "text", "display" => true],
+            ["key" => "tempat_kematian", "label" => "Tempat Kematian", "type" => "text", "display" => true],
         ];
 
         $skmRequiredKeys = ['nama', 'nik', 'jenis_kelamin'];
         $skmSystemVariables = $this->filterSystemVariables($fullSystemVariables, $skmRequiredKeys);
         $skmDependeciesKeys = [ // Dependencies for both composites
-            'tempat_lahir',
-            'tanggal_lahir',
+
             'alamat',
             'rt',
             'rw',
@@ -234,13 +268,13 @@ class JenisSuratSeeder extends Seeder
 
         // H. SURAT KETERANGAN USAHA
         $skuhCustomVariables = [
-            ["key" => "nama_usaha", "label" => "Nama Usaha", "type" => "text"],
-            ["key" => "jenis_usaha", "label" => "Jenis Usaha", "type" => "text"],
-            ["key" => "alamat_usaha", "label" => "Alamat Usaha", "type" => "text"],
-            ["key" => "lama_usaha", "label" => "Lama Usaha (dalam tahun)", "type" => "number"],
+            ["key" => "nama_usaha", "label" => "Nama Usaha", "type" => "text", "display" => true],
+            ["key" => "jenis_usaha", "label" => "Jenis Usaha", "type" => "text", "display" => true],
+            ["key" => "alamat_usaha", "label" => "Alamat Usaha", "type" => "text", "display" => true],
+            ["key" => "lama_usaha", "label" => "Lama Usaha (dalam tahun)", "type" => "number", "display" => true],
         ];
         $skuhRequiredKeys = ['nama', 'nik'];
-        $skuhSystemVariables = $this->filterSystemVariables($fullSystemVariables, $skuhRequiredKeys);   
+        $skuhSystemVariables = $this->filterSystemVariables($fullSystemVariables, $skuhRequiredKeys);
         $skuhVariables = json_encode(array_merge(
             $skuhSystemVariables,
             $skuhCustomVariables,
@@ -251,23 +285,22 @@ class JenisSuratSeeder extends Seeder
 
         // I. SURAT KETERANGAN KEHILANGAN
         $skkhCustomVariables = [
-            ["key" => "nama_barang_hilang", "label" => "Nama Barang yang Hilang", "type" => "text"],
-            ["key" => "tanggal_kehilangan", "label" => "Tanggal Kehilangan", "type" => "date"],
-            ["key" => "tempat_kehilangan", "label" => "Tempat Kehilangan", "type" => "text"],
-            ["key" => "keterangan_tambahan", "label" => "Keterangan Tambahan", "type" => "textarea", "required" => false],
-        ];  
+            ["key" => "nama_barang_hilang", "label" => "Nama Barang yang Hilang", "type" => "text", "display" => true],
+            ["key" => "tanggal_kehilangan", "label" => "Tanggal Kehilangan", "type" => "date", "display" => true],
+            ["key" => "tempat_kehilangan", "label" => "Tempat Kehilangan", "type" => "text", "display" => true],
+            ["key" => "keterangan_tambahan", "label" => "Keterangan Tambahan", "type" => "textarea", "required" => false, "display" => true],
+        ];
         $skkhRequiredKeys = ['nama', 'nik'];
-        $skkhSystemVariables = $this->filterSystemVariables($fullSystemVariables, $skkhRequiredKeys);   
+        $skkhSystemVariables = $this->filterSystemVariables($fullSystemVariables, $skkhRequiredKeys);
         $SkkhDependenciesKeys = [ // Dependencies for both composites
-            'tempat_lahir',
-            'tanggal_lahir',
+
             'alamat',
             'rt',
             'rw',
             'desa',
             'kecamatan'
         ];
-        $skkhDependencies = $this->filterSystemVariables($fullSystemVariables, $SkkhDependenciesKeys);  
+        $skkhDependencies = $this->filterSystemVariables($fullSystemVariables, $SkkhDependenciesKeys);
         $skkhVariables = json_encode(array_merge(
             $skkhSystemVariables,
             $skkhCustomVariables,
@@ -277,22 +310,21 @@ class JenisSuratSeeder extends Seeder
 
         // J. SURAT PENGANTAR PINDAH DOMISILI (SPPD)
         $sppdCustomVariables = [
-            ["key" => "tujuan_domisili", "label" => "Tujuan Domisili", "type" => "text"],
-            ["key" => "tanggal_pindah", "label" => "Tanggal Pindah", "type" => "date"],
-            ["key" => "alasan_pindah", "label" => "Alasan Pindah", "type" => "text"],
-        ];  
+            ["key" => "tujuan_domisili", "label" => "Tujuan Domisili", "type" => "text", "display" => true],
+            ["key" => "tanggal_pindah", "label" => "Tanggal Pindah", "type" => "date", "display" => true],
+            ["key" => "alasan_pindah", "label" => "Alasan Pindah", "type" => "text", "display" => true],
+        ];
         $sppdRequiredKeys = ['nama', 'nik'];
-        $sppdSystemVariables = $this->filterSystemVariables($fullSystemVariables, $sppdRequiredKeys);   
+        $sppdSystemVariables = $this->filterSystemVariables($fullSystemVariables, $sppdRequiredKeys);
         $sppdDependenciesKeys = [ // Dependencies for both composites
-            'tempat_lahir',
-            'tanggal_lahir',        
+
             'alamat',
             'rt',
             'rw',
             'desa',
             'kecamatan'
         ];
-        $sppdDependencies = $this->filterSystemVariables($fullSystemVariables, $sppdDependenciesKeys);  
+        $sppdDependencies = $this->filterSystemVariables($fullSystemVariables, $sppdDependenciesKeys);
         $sppdVariables = json_encode(array_merge(
             $sppdSystemVariables,
             $sppdCustomVariables,
@@ -302,15 +334,15 @@ class JenisSuratSeeder extends Seeder
 
         // K. SURAT REKOMENDASI IMB
         $srimbVariables = [
-            ["key" => "nama_perusahaan", "label" => "Nama Perusahaan", "type" => "text"],
-            ["key" => "nama_pemilik", "label" => "Nama Pemilik", "type" => "text"],
-            ["key" => "nik_pemilik", "label" => "NIK Pemilik", "type" => "text"],
-            ["key" => "jabatan", "label" => "Jabatan Dalam Perusahaan", "type" => "text"],
-            ["key" => "jenis_bangunan", "label" => "Jenis Bangunan", "type" => "text"],
-            ["key" => "alamat_bangunan", "label" => "Alamat Bangunan", "type" => "text"],
-            ["key" => "luas_bangunan", "label" => "Luas Bangunan (m2)", "type" => "number"],
-            ["key" => "keperluan", "label" => "Keperluan Mengurus IMB", "type" => "text"],
-            ["key" => "alamat", "label" => "Alamat Perusahaan", "type" => "text"],
+            ["key" => "nama_perusahaan", "label" => "Nama Perusahaan", "type" => "text", "display" => true],
+            ["key" => "nama_pemilik", "label" => "Nama Pemilik", "type" => "text", "display" => true],
+            ["key" => "nik_pemilik", "label" => "NIK Pemilik", "type" => "text", "display" => true],
+            ["key" => "jabatan", "label" => "Jabatan Dalam Perusahaan", "type" => "text", "display" => true],
+            ["key" => "jenis_bangunan", "label" => "Jenis Bangunan", "type" => "text", "display" => true],
+            ["key" => "alamat_bangunan", "label" => "Alamat Bangunan", "type" => "text", "display" => true],
+            ["key" => "luas_bangunan", "label" => "Luas Bangunan (m2)", "type" => "number", "display" => true],
+            ["key" => "keperluan", "label" => "Keperluan Mengurus IMB", "type" => "text", "display" => true],
+            ["key" => "alamat", "label" => "Alamat Perusahaan", "type" => "text", "display" => true],
         ];   // 4. Define all JenisSurat data
         $jenisSuratData = [
             // SURAT KETERANGAN KELAHIRAN (SKK)
