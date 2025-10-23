@@ -882,6 +882,12 @@
                                                     Prostitusi
                                                 </a>
                                             @endcan
+                                            @can(abilities: 'pembunuhan.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/keamanandanketertiban/pembunuhan*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.keamanandanketertiban.pembunuhan.index') }}">
+                                                    Pembunuhan
+                                                </a>
+                                            @endcan
                                             
                                         </div>
                                     </div>

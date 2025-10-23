@@ -601,6 +601,14 @@ class PermissionSeeder extends Seeder
             'prostitusi.update',
             'prostitusi.delete',
 
+            //pembunuhan
+            'pembunuhan.view',
+            'pembunuhan.create',
+            'pembunuhan.store',
+            'pembunuhan.edit',
+            'pembunuhan.update',
+            'pembunuhan.delete',
+
 
             // potensi permissions
             'potensi.laporan.view',
