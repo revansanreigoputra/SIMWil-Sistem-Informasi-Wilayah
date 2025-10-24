@@ -12,6 +12,7 @@ class PembinaanPusat extends Model
     protected $table = 'pembinaanpusats';
 
     protected $fillable = [
+        'id_desa',
         'tanggal',
         'pedoman_pelaksanaan_urusan',
         'pedoman_bantuan_pembiayaan',
@@ -28,6 +29,22 @@ class PembinaanPusat extends Model
 
     // Jika ingin cast otomatis ke date
     protected $casts = [
+        'id_desa',
         'tanggal' => 'date',
+        'pedoman_pelaksanaan_urusan',
+        'pedoman_bantuan_pembiayaan',
+        'pedoman_administrasi',
+        'pedoman_tanda_jabatan',
+        'pedoman_pendidikan_pelatihan',
+        'jumlah_bimbingan',
+        'jumlah_kegiatan_pendidikan',
+        'jumlah_penelitian_pengkajian',
+        'jumlah_kegiatan_terkait_apbn',
+        'jumlah_penghargaan',
+        'jumlah_sanksi',
     ];
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class, 'id_desa');
+    }
 }

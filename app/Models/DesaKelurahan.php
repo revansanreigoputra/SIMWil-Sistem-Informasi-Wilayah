@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class DesaKelurahan extends Model
 {
     protected $fillable = [
+        'desa_id',
         'tanggal',
 
         // Bagian Gedung Kantor
@@ -75,4 +76,9 @@ class DesaKelurahan extends Model
         'jumlah_pos_kamling' => 'integer',
         'tahun_pembangunan' => 'integer',
     ];
+
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class);
+    }
 }

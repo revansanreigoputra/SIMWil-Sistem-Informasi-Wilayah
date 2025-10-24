@@ -13,7 +13,7 @@
                 <div class="d-flex align-items-center">
                     <div>
                         <h3 class="mb-0 fw-bold text-dark">
-                            {{ $prasaranaKesehatan->tanggal?->format('d F Y') ?? '-' }}
+                            {{ $prasaranaKesehatan->desa->nama_desa }} - {{ $prasaranaKesehatan->tanggal?->format('d F Y') ?? '-' }}
                         </h3>
                     </div>
                 </div>

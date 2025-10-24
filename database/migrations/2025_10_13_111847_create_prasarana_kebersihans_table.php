@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('prasarana_kebersihans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('desa_id')->constrained('desas')->onDelete('cascade');
             $table->date('tanggal');
             $table->string('tps_lokasi')->nullable(); // Tempat Pembuangan Sementara
             $table->string('tpa_lokasi')->nullable(); // Tempat Pembuangan Akhir

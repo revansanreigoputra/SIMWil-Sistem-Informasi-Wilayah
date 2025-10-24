@@ -16,14 +16,35 @@
                 @csrf
 
                 <div class="row">
-                    <div class="col-md-12">
+                    {{-- <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="desa_id" class="form-label fw-semibold">
+                                <i class="fas fa-map-marker-alt me-1"></i>
+                                Desa <span class="text-danger">*</span>
+                            </label>
+                            <select class="form-select @error('desa_id') is-invalid @enderror" id="desa_id"
+                                name="desa_id" required>
+                                <option value="">Pilih Desa</option>
+                                @foreach ($desas as $desa)
+                                    <option value="{{ $desa->id }}"
+                                        {{ old('desa_id') == $desa->id ? 'selected' : '' }}>
+                                        {{ $desa->nama_desa }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('desa_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div> --}}
+                    <div class="col-md-6">
                         <div class="mb-3">
                             <label for="tanggal" class="form-label fw-semibold">
                                 <i class="fas fa-calendar me-1"></i>
                                 Tanggal <span class="text-danger">*</span>
                             </label>
-                            <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
-                                id="tanggal" name="tanggal" value="{{ old('tanggal', date('Y-m-d')) }}" required>
+                            <input type="date" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal"
+                                name="tanggal" value="{{ old('tanggal', date('Y-m-d')) }}" required>
                             @error('tanggal')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -39,8 +60,8 @@
                                 <i class="fas fa-futbol me-1"></i>
                                 Jenis Prasarana Olahraga <span class="text-danger">*</span>
                             </label>
-                            <select class="form-select @error('jpolahraga_id') is-invalid @enderror"
-                                id="jpolahraga_id" name="jpolahraga_id" required>
+                            <select class="form-select @error('jpolahraga_id') is-invalid @enderror" id="jpolahraga_id"
+                                name="jpolahraga_id" required>
                                 <option value="">Pilih Jenis Prasarana Olahraga</option>
                                 @foreach ($jpolahragas as $jenis)
                                     <option value="{{ $jenis->id }}"
@@ -60,8 +81,8 @@
                                 <i class="fas fa-hashtag me-1"></i>
                                 Jumlah <span class="text-danger">*</span>
                             </label>
-                            <input type="number" class="form-control @error('jumlah') is-invalid @enderror"
-                                id="jumlah" name="jumlah" value="{{ old('jumlah', 0) }}" min="0" required>
+                            <input type="number" class="form-control @error('jumlah') is-invalid @enderror" id="jumlah"
+                                name="jumlah" value="{{ old('jumlah', 0) }}" min="0" required>
                             @error('jumlah')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

@@ -10,6 +10,7 @@ class PrasaranaKebersihan extends Model
     use HasFactory;
 
     protected $fillable = [
+        'desa_id',
         'tanggal',
         'tps_lokasi',
         'tpa_lokasi',
@@ -28,4 +29,9 @@ class PrasaranaKebersihan extends Model
     protected $casts = [
         'tanggal' => 'date',
     ];
+
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class);
+    }
 }

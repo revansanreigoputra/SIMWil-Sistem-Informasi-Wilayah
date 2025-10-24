@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('bpd', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('desa_id')->constrained('desas')->cascadeOnDelete();
             
             // Gedung kantor
             $table->date('tanggal');

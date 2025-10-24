@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\JpHiburan;
 use App\Models\LayananSurat\JenisSurat;
+use App\Models\LayananSurat\KopTemplate;
 use App\Models\User;
 
 use Illuminate\Database\Seeder;
@@ -142,6 +143,7 @@ class DatabaseSeeder extends Seeder
             JenisSaranaKesehatanSeeder::class,
             JenisPrasaranaOlahRagaSeeder::class,
             TempatIbadahSeeder::class,
+            KopTemplateSeeder::class,
             JenisSuratSeeder::class,
         ]);
     }

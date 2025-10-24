@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class EnergiPenerangan extends Model
 {
+    protected $table = 'energi_penerangans';
     protected $fillable = [
+        'desa_id',
         'tanggal',
         'listrik_pln',
         'diesel_umum',
@@ -20,5 +22,12 @@ class EnergiPenerangan extends Model
     protected $casts = [
         'tanggal' => 'date',
     ];
-    
+
+    /**
+     * Relasi ke Desa
+     */
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class, 'desa_id');
+    }
 }

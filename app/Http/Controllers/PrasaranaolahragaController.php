@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Desa;
 use App\Models\Jpolahraga;
 use App\Models\Prasaranaolahraga;
 use Illuminate\Http\Request;
@@ -13,7 +14,8 @@ class PrasaranaolahragaController extends Controller
      */
     public function index()
     {
-        $prasaranaolahragas = Prasaranaolahraga::with('jpolahraga')->latest()->get();
+        $desaId = session('desa_id');
+        $prasaranaolahragas = Prasaranaolahraga::with('jpolahraga', 'desa')->where('desa_id', $desaId)->latest()->get();
         return view('pages.potensi.potensi-prasarana-dan-sarana.olahraga.index', compact('prasaranaolahragas'));
     }
 
@@ -31,13 +33,16 @@ class PrasaranaolahragaController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'tanggal' => 'required|date',
             'jpolahraga_id' => 'required|exists:jpolahragas,id',
             'jumlah' => 'required|integer|min:0',
         ]);
 
-        Prasaranaolahraga::create($request->all());
+        $data = $validated;
+        $data['desa_id'] = session('desa_id');
+
+        Prasaranaolahraga::create($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.olahraga.index')->with('success', 'Data prasarana olahraga berhasil ditambahkan.');
     }
@@ -64,13 +69,16 @@ class PrasaranaolahragaController extends Controller
      */
     public function update(Request $request, Prasaranaolahraga $prasarana_olahraga)
     {
-        $request->validate([
+        $validated = $request->validate([
             'tanggal' => 'required|date',
             'jpolahraga_id' => 'required|exists:jpolahragas,id',
             'jumlah' => 'required|integer|min:0',
         ]);
 
-        $prasarana_olahraga->update($request->all());
+        $data = $validated;
+        $data['desa_id'] = session('desa_id');
+
+        $prasarana_olahraga->update($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.olahraga.index')->with('success', 'Data prasarana olahraga berhasil diupdate.');
     }

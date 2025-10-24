@@ -11,10 +11,8 @@ class pertanggungjawaban extends Model
 
     protected $table = 'pertanggungjawabans';
 
-    /**
-     * Kolom yang boleh diisi mass assignment
-     */
     protected $fillable = [
+        'id_desa',
         'tanggal',
         'penyampaian_laporan',
         'jumlah_informasi',
@@ -25,14 +23,20 @@ class pertanggungjawaban extends Model
         'jumlah_pengaduan_selesai',
     ];
 
-    /**
-     * Casting tipe data agar otomatis jadi tipe yang sesuai
-     */
     protected $casts = [
+        'id_desa',
         'tanggal' => 'date',
+        'penyampaian_laporan',
+        'status_laporan',
+        'laporan_kinerja',
         'jumlah_informasi' => 'integer',
         'jumlah_media_informasi' => 'integer',
         'jumlah_pengaduan_diterima' => 'integer',
         'jumlah_pengaduan_selesai' => 'integer',
     ];
+    //Relasi ke Desa
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class, 'id_desa');
+    }
 }

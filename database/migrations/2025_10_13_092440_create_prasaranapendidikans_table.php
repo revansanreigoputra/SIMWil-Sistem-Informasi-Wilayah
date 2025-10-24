@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('prasaranapendidikans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('desa_id')->constrained('desas')->onDelete('cascade');
             $table->date('tanggal');
             $table->foreignId('jpgedung_id')->constrained('jpgedungs')->onDelete('cascade');
             $table->integer('jumlah_sewa')->default(0);      // Jumlah sewa gedung

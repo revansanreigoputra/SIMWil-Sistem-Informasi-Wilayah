@@ -19,33 +19,35 @@
             <table id="musrenbangdesa-table" class="table table-striped text-center align-middle">
                 <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Tanggal</th>
-                        <th>Penggunaan Profil Desa</th>
-                        <th>Penggunaan Data BPS</th>
-                        <th>Pelibatan Masyarakat</th>
-                        <th>Dokumen RKPDes</th>
-                        <th>Dokumen RPJMDes</th>
-                        <th>Dokumen Hasil Musrenbang</th>
-                        <th>Jumlah Musrenbang Desa/Kelurahan</th>
-                        <th>Jumlah Kehadiran Masyarakat</th>
-                        <th>Peserta Laki-laki</th>
-                        <th>Peserta Perempuan</th>
-                        <th>Musrenbang Antar Desa</th>
-                        <th>Usulan Masyarakat Disetujui</th>
-                        <th>Usulan Pemdes Disetujui</th>
-                        <th>Usulan Rencana Kerja Pemkab</th>
-                        <th>Usulan Rencana Kerja Ditolak</th>
-                        <th>Kegiatan Terdanai</th>
-                        <th>Kegiatan Tidak Sesuai</th>
-                        <th>Aksi</th>
+                        <th class="text-center">No</th>
+                        <th class="text-center">Tanggal</th>
+                        <th class="text-center">Desa</th>
+                        <th class="text-center">Penggunaan Profil Desa</th>
+                        <th class="text-center">Penggunaan Data BPS</th>
+                        <th class="text-center">Pelibatan Masyarakat</th>
+                        <th class="text-center">Dokumen RKPDes</th>
+                        <th class="text-center">Dokumen RPJMDes</th>
+                        <th class="text-center">Dokumen Hasil Musrenbang</th>
+                        <th class="text-center">Jumlah Musrenbang Desa/Kelurahan</th>
+                        <th class="text-center">Jumlah Kehadiran Masyarakat</th>
+                        <th class="text-center">Peserta Laki-laki</th>
+                        <th class="text-center">Peserta Perempuan</th>
+                        <th class="text-center">Musrenbang Antar Desa</th>
+                        <th class="text-center">Usulan Masyarakat Disetujui</th>
+                        <th class="text-center">Usulan Pemdes Disetujui</th>
+                        <th class="text-center">Usulan Rencana Kerja Pemkab</th>
+                        <th class="text-center">Usulan Rencana Kerja Ditolak</th>
+                        <th class="text-center">Kegiatan Terdanai</th>
+                        <th class="text-center">Kegiatan Tidak Sesuai</th>
+                        <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($data as $item)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
+                            <td class="text-center">{{ $loop->iteration }}</td>
+                            <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
+                            <td class="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
 
                             {{-- Badge Hijau jika "Ada", Abu-abu jika "Tidak Ada"/null --}}
                             <td><span class="badge bg-{{ $item->penggunaan_profil_desa === 'Ada' ? 'success' : 'secondary' }}">{{ $item->penggunaan_profil_desa ?? '-' }}</span></td>
@@ -70,14 +72,41 @@
 
                             <td>
                                 <div class="d-flex gap-1 justify-content-center">
-                                    <a href="{{ route('perkembangan.peransertamasyarakat.musrenbangdesa.edit', $item->id) }}" class="btn btn-sm btn-warning">
-                                        <i class="fas fa-edit"></i> Edit
-                                    </a>
+                                    <!-- Tombol Detail -->
+                                            <a href="{{ route('perkembangan.peransertamasyarakat.musrenbangdesa.show', $item->id) }}" class="btn btn-sm btn-info">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                                    <circle cx="12" cy="12" r="3" />
+                                                </svg>
+                                                Detail
+                                        <!-- Tombol Edit -->
+                                        <a href="{{ route('perkembangan.peransertamasyarakat.musrenbangdesa.edit', $item->id) }}" class="btn btn-sm btn-warning">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                                                <path
+                                                    d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                                                <path d="M16 5l3 3" />
+                                            </svg>
+                                            Edit
+                                        </a>
 
                                     <!-- Tombol Hapus dengan Modal -->
                                     <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
                                         data-bs-target="#delete-musrenbangdesa-{{ $item->id }}">
-                                        <i class="fas fa-trash"></i> Hapus
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M4 7l16 0" />
+                                                <path d="M10 11l0 6" />
+                                                <path d="M14 11l0 6" />
+                                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                            </svg>
+                                            Hapus
                                     </button>
 
                                     <!-- Modal Delete -->
