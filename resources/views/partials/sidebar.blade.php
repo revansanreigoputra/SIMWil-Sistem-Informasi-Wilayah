@@ -918,6 +918,12 @@
                                                     Teror dan Intimidasi
                                                 </a>
                                             @endcan
+                                            @can(abilities: 'sistemkeamanan.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/keamanandanketertiban/sistemkeamanan*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.keamanandanketertiban.sistemkeamanan.index') }}">
+                                                    Perlembagaan Sistem<br> Keamanan
+                                                </a>
+                                            @endcan
                                             
                                         </div>
                                     </div>

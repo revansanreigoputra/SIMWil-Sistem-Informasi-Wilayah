@@ -649,6 +649,14 @@ class PermissionSeeder extends Seeder
             'teror.update',
             'teror.delete',
 
+            //sistem keamanan
+            'sistemkeamanan.view',
+            'sistemkeamanan.create',
+            'sistemkeamanan.store',
+            'sistemkeamanan.edit',
+            'sistemkeamanan.update',
+            'sistemkeamanan.delete',
+
 
             // potensi permissions
             'potensi.laporan.view',

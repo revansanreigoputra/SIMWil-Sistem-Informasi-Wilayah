@@ -49,6 +49,7 @@ use App\Http\Controllers\SeksualController;
 use App\Http\Controllers\SosialController;
 use App\Http\Controllers\KdrtController;
 use App\Http\Controllers\TerorController;
+use App\Http\Controllers\SistemkeamananController;
 // use App\Http\Controllers\IrigasiController;
 // use App\Http\Controllers\NotificationController;
 // use App\Http\Controllers\PerangkatDesaController;
@@ -910,6 +911,18 @@ route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.teror')-
     Route::get('/{id}/edit', [TerorController::class, 'edit'])->name('edit');
     Route::put('/{id}', [TerorController::class, 'update'])->name('update');
     Route::delete('/{id}', [TerorController::class, 'destroy'])->name('destroy');
+});
+
+
+//sistem Keamanan route
+Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.sistemkeamanan')->name('perkembangan.keamanandanketertiban.sistemkeamanan.')->group(function(){
+    Route::get('/', [SistemKeamananController::class, 'index'])->name('index');
+    Route::get('/create', [SistemKeamananController::class, 'create'])->name('create');
+    Route::post('/', [SistemKeamananController::class, 'store'])->name('store');
+    Route::get('/{id}', [SistemKeamananController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [SistemKeamananController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [SistemKeamananController::class, 'update'])->name('update');
+    Route::delete('/{id}', [SistemKeamananController::class, 'destroy'])->name('destroy');
 });
 
 // Pengangkutan
