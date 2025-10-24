@@ -81,25 +81,54 @@
 
 {{-- Tambahkan script JS agar dropdown auto-select pas tombol edit diklik --}}
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const editModal = document.getElementById('edit-modal');
-        editModal.addEventListener('show.bs.modal', event => {
-            const button = event.relatedTarget;
-            const id = button.getAttribute('data-id');
-            const nama = button.getAttribute('data-nama');
-            const kategoriId = button.getAttribute('data-kategori-id');
+document.addEventListener('DOMContentLoaded', () => {
+    const editModal = document.getElementById('edit-modal');
+    const form = document.getElementById('edit-form');
+    const namaInput = document.getElementById('edit-nama');
+    const activeTab = "{{ $activeTab }}";
 
-            document.getElementById('edit-nama').value = nama;
+    editModal.addEventListener('show.bs.modal', async event => {
+        const button = event.relatedTarget;
+        const id = button.getAttribute('data-id');
 
-            // Isi kategori jika ada
-            if (kategoriId) {
-                const select = editModal.querySelector('select');
-                if (select) select.value = kategoriId;
+        // Reset form dulu biar bersih
+        form.reset();
+
+        // Set action form sesuai ID
+        form.action = `/master-potensi/${id}`;
+
+        // Tampilkan loading singkat di input
+        namaInput.value = 'Memuat...';
+
+        try {
+            // Panggil endpoint edit di controller (kirim ?tab=activeTab)
+            const response = await fetch(`/master-potensi/edit/${id}?tab=${activeTab}`);
+
+            if (!response.ok) throw new Error('Gagal memuat data');
+
+            const data = await response.json();
+
+            // Isi input nama
+            namaInput.value = data.nama ?? '';
+
+            // Isi dropdown kategori (kalau ada)
+            const select = editModal.querySelector('select');
+            if (select) {
+                const keys = Object.keys(data);
+                // Cari kolom yang mengandung "_id"
+                const relKey = keys.find(k => k.endsWith('_id'));
+                if (relKey) select.value = data[relKey];
             }
 
-            // Atur form action
-            const form = document.getElementById('edit-form');
-            form.action = `/master-potensi/${id}`;
-        });
+        } catch (error) {
+            namaInput.value = '';
+            alert('Gagal memuat data. Periksa Controller/Route.');
+            console.error(error);
+        }
     });
+
+    // Reset modal saat ditutup
+    editModal.addEventListener('hidden.bs.modal', () => form.reset());
+});
 </script>
+

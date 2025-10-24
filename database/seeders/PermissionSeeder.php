@@ -509,6 +509,16 @@ class PermissionSeeder extends Seeder
             'agenda.update',
             'agenda.delete',
 
+            //LembagaKemasyarakatan permissions
+            'lembaga-kemasyarakatan.view',
+            'lembaga-kemasyarakatan.create',
+            'lembaga-kemasyarakatan.store',
+            'lembaga-kemasyarakatan.show',
+            'lembaga-kemasyarakatan.edit',
+            'lembaga-kemasyarakatan.update',
+            'lembaga-kemasyarakatan.destroy',
+            'lembaga-kemasyarakatan.print',
+
 
         ];
 
