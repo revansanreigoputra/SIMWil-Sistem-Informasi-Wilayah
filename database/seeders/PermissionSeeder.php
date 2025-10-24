@@ -641,6 +641,14 @@ class PermissionSeeder extends Seeder
             'kdrt.update',
             'kdrt.delete',
 
+            //teror
+            'teror.view',
+            'teror.create',
+            'teror.store',
+            'teror.edit',
+            'teror.update',
+            'teror.delete',
+
 
             // potensi permissions
             'potensi.laporan.view',

@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_desa'); 
             $table->date('tanggal');
-            $table->integer('jumlah_kasus_suami_terhadap_istri')->default(0);
-            $table->integer('jumlah_kasus_istri_terhadap_suami')->default(0);
-            $table->integer('jumlah_kasus_orangtua_terhadap_anak')->default(0);
-            $table->integer('jumlah_kasus_anak_terhadap_orangtua')->default(0);
-            $table->integer('jumlah_kasus_kepala_keluarga_terhadap_anggota_lainnya')->default(0);
+            $table->integer('jumlah_kasus_suami_terhadap_istri')->nullable();
+            $table->integer('jumlah_kasus_istri_terhadap_suami')->nullable();
+            $table->integer('jumlah_kasus_orangtua_terhadap_anak')->nullable();
+            $table->integer('jumlah_kasus_anak_terhadap_orangtua')->nullable();
+            $table->integer('jumlah_kasus_kepala_keluarga_terhadap_anggota_lainnya')->nullable();
             $table->timestamps();
         });
     }

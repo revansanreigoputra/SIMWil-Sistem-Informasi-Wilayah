@@ -912,6 +912,12 @@
                                                     Kekerasan Dalam<br> Rumah Tangga
                                                 </a>
                                             @endcan
+                                            @can(abilities: 'teror.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/keamanandanketertiban/teror*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.keamanandanketertiban.teror.index') }}">
+                                                    Teror dan Intimidasi
+                                                </a>
+                                            @endcan
                                             
                                         </div>
                                     </div>

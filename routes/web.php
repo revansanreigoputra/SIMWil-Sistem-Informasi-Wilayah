@@ -48,6 +48,7 @@ use App\Http\Controllers\PenculikanController;
 use App\Http\Controllers\SeksualController;
 use App\Http\Controllers\SosialController;
 use App\Http\Controllers\KdrtController;
+use App\Http\Controllers\TerorController;
 // use App\Http\Controllers\IrigasiController;
 // use App\Http\Controllers\NotificationController;
 // use App\Http\Controllers\PerangkatDesaController;
@@ -898,6 +899,17 @@ Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.kdrt')->
     Route::get('/{id}/edit', [KdrtController::class, 'edit'])->name('edit');
     Route::put('/{id}', [KdrtController::class, 'update'])->name('update');
     Route::delete('/{id}', [KdrtController::class, 'destroy'])->name('destroy');
+});
+
+//teror route
+route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.teror')->name('perkembangan.keamanandanketertiban.teror.')->group(function(){
+    Route::get('/', [TerorController::class, 'index'])->name('index');
+    Route::get('/create', [TerorController::class, 'create'])->name('create');
+    Route::post('/', [TerorController::class, 'store'])->name('store');
+    Route::get('/{id}', [TerorController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [TerorController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [TerorController::class, 'update'])->name('update');
+    Route::delete('/{id}', [TerorController::class, 'destroy'])->name('destroy');
 });
 
 // Pengangkutan

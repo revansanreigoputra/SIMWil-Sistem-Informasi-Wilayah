@@ -11,6 +11,7 @@ class Kdrt extends Model
     /**
      * Kolom yang boleh diisi (mass assignable)
      */
+    protected $table = 'kdrts';
     protected $fillable = [
         'id_desa',
         'tanggal',
