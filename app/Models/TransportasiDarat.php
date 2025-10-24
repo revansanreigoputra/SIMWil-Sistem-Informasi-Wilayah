@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\MasterPotensi\JenisPrasaranaTransportasiDarat;
+use App\Models\MasterPotensi\KategoriPrasaranaTransportasiDarat;
 use Illuminate\Database\Eloquent\Model;
 
 class TransportasiDarat extends Model
@@ -9,8 +11,8 @@ class TransportasiDarat extends Model
     protected $fillable = [
         'desa_id',
         'tanggal',
-        'kategori',
-        'jenis_sarana_prasarana',
+        'kategori_prasarana_transportasi_darat_id',
+        'jenis_prasarana_transportasi_darat_id',
         'kondisi_baik',
         'kondisi_rusak',
         'jumlah',
@@ -18,31 +20,23 @@ class TransportasiDarat extends Model
 
     protected $casts = [
         'tanggal' => 'date',
-        'kategori' => 'string',
-        'jenis_sarana_prasarana' => 'string',
         'kondisi_baik' => 'integer',
         'kondisi_rusak' => 'integer',
         'jumlah' => 'integer',
     ];
 
-    public static function getKategoriOptions()
-    {
-        return [
-            'jalan_desa' => 'Jalan Desa',
-            'jalan_kabupaten' => 'Jalan Kabupaten',
-        ];
-    }
-
-    public static function getJenisSaranaPrasaranaOptions()
-    {
-        return [
-            'panjang_jalan_tanah' => 'Panjang Jalan Tanah',
-            'panjang_jalan_aspal' => 'Panjang Jalan Aspal',
-        ];
-    }
-
     public function desa()
     {
         return $this->belongsTo(Desa::class);
+    }
+
+    public function kategori()
+    {
+        return $this->belongsTo(KategoriPrasaranaTransportasiDarat::class, 'kategori_prasarana_transportasi_darat_id');
+    }
+
+    public function jenis()
+    {
+        return $this->belongsTo(JenisPrasaranaTransportasiDarat::class, 'jenis_prasarana_transportasi_darat_id');
     }
 }
