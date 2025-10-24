@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('desa_id')->constrained('desas')->onDelete('cascade');
             $table->date('tanggal');
-            $table->foreignId('jpgedung_id')->constrained('jpgedungs')->onDelete('cascade');
+            $table->foreignId('jenis_gedung_id')->constrained('jenis_gedung')->onDelete('cascade');
             $table->integer('jumlah_sewa')->default(0);      // Jumlah sewa gedung
             $table->integer('jumlah_milik_sendiri')->default(0); // Jumlah gedung milik sendiri
             $table->timestamps();

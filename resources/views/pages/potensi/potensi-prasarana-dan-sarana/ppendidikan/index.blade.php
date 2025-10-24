@@ -37,7 +37,7 @@
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td class="text-center">{{ $item->desa->nama_desa }}</td>
                                 <td class="text-center">{{ $item->tanggal->format('d-m-Y') }}</td>
-                                <td class="text-center">{{ $item->jpgedung->nama }}</td>
+                                <td class="text-center">{{ $item->jenisGedung->nama }}</td>
                                 <td class="text-center">{{ number_format($item->jumlah_sewa) }}</td>
                                 <td class="text-center">{{ number_format($item->jumlah_milik_sendiri) }}</td>
                                 <td>

@@ -46,7 +46,6 @@ class DatabaseSeeder extends Seeder
             JenisKomunikasiSeeder::class,
             KomunikasiInformasiSeeder::class,
             TempatIbadahSeeder::class,
-            JpgedungSeeder::class,
             JpHiburanSeeder::class,
             AsetAtapSeeder::class,
             AsetDindingSeeder::class,

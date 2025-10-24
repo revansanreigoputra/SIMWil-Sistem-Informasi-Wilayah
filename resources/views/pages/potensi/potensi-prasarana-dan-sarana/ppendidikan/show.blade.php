@@ -45,7 +45,7 @@
                                         <div class="flex-grow-1 ms-3">
                                             <label class="text-muted small mb-1 d-block">Jenis Prasarana Pendidikan</label>
                                             <h6 class="mb-0 fw-bold text-dark">
-                                                {{ $prasaranapendidikan->jpgedung?->nama ?? '-' }}</h6>
+                                                {{ $prasaranapendidikan->jenisGedung?->nama ?? '-' }}</h6>
                                         </div>
                                     </div>
                                 </div>
