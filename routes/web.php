@@ -170,7 +170,7 @@ use App\Http\Controllers\PotensiKelembagaan\JasaPengangkutanController;
 use App\Http\Controllers\LandingPage\HomeController;
 use App\Http\Controllers\LandingPage\PublicBeritaController;
 use App\Http\Controllers\LandingPage\PublicGaleriController;
-
+use App\Http\Controllers\LandingPage\PublicAgendaController;
 use App\Models\PotensiKelembagaan\PotensiKelembagaan;
 
 // Route Home
@@ -186,6 +186,9 @@ Route::get('/berita/{slug}', [PublicBeritaController::class, 'show'])->name('pub
 // Route Galeri Public
 Route::get('/galeri', [PublicGaleriController::class, 'index'])->name('public.galeri.index');
 Route::get('/galeri/{galeri}', [PublicGaleriController::class, 'show'])->name('public.galeri.show');
+
+// Route Agenda Public
+Route::get('/agenda', [PublicAgendaController::class, 'index'])->name('public.agenda.index');
 
 // Route::get('/', function () {
 //     return Auth::check()
