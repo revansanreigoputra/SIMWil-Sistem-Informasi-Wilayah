@@ -234,13 +234,14 @@
         {{-- TTD SECTION --}}
         <div class="ttd">
             <div class="isi">
-                <p>{{ $tanggal_surat_lokasi ?? 'N/A' }}, {{ $tanggal_surat ?? 'N/A'}}</p>
+                <p>{{ $city_village ?? 'N/A' }}, {{ $tanggal_surat ?? 'N/A'}}</p>
                 <p>{{ $ttd_jabatan ?? 'N/A' }}</p>
                 
                 {{-- Placeholder for TTD image, use if needed --}}
                 <div style="height: 60pt; margin: 5pt 0;"></div> 
                 
                 <p><strong><u>{{ $ttd_nama ?? 'N/A' }}</u></strong></p>
+                <p> {{ $nip ?? 'N/A' }} </p>
             </div>
         </div>
         <div style="clear: both;"></div>

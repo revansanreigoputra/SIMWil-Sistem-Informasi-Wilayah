@@ -30,6 +30,7 @@ class Permohonan extends Model
     ];
     protected $casts = [
         'custom_variables' => 'array',
+        
     ];
     public function kopTemplate()
     {

@@ -1046,6 +1046,9 @@ Route::middleware(['auth'])->prefix('data-keluarga')->name('data_keluarga.')->gr
     Route::put('/{dataKeluarga}', [DataKeluargaController::class, 'update'])->middleware('permission:data_keluarga.update')->name('update');
     Route::delete('/{dataKeluarga}', [DataKeluargaController::class, 'destroy'])->middleware('permission:data_keluarga.delete')->name('delete');
     Route::delete('/{dataKeluarga}', [DataKeluargaController::class, 'destroy'])->middleware('permission:data_keluarga.destroy')->name('destroy');
+    Route::post('import', [DataKeluargaController::class, 'import'])->name('import');
+    Route::get('export', [DataKeluargaController::class, 'export'])->name('export');
+    Route::get('template', [DataKeluargaController::class, 'template'])->name('template');
 });
 // data anggota keluarga routes
 Route::middleware(['auth'])->prefix('anggota-keluarga')->name('anggota_keluarga.')->group(function () {
