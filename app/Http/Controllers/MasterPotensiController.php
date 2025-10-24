@@ -115,6 +115,9 @@ class MasterPotensiController extends Controller
             case 'tempat_ibadah':
                 $rules['nama_tempat'] = 'required|string|max:255';
                 break;
+            case 'jenis_prasarana_transportasi_darat':
+                $rules['kategori_prasarana_transportasi_darat_id'] = 'required|integer';
+                break;
             default:
                 // tab lain tidak perlu kolom nama_tempat
                 break;
@@ -131,6 +134,10 @@ class MasterPotensiController extends Controller
 
         if (isset($validated['nama_tempat'])) {
             $data['nama_tempat'] = $validated['nama_tempat'];
+        }
+
+        if (isset($validated['kategori_prasarana_transportasi_darat_id'])) {
+            $data['kategori_prasarana_transportasi_darat_id'] = $validated['kategori_prasarana_transportasi_darat_id'];
         }
 
         $model::create($data);
