@@ -47,6 +47,7 @@ use App\Http\Controllers\PembunuhanController;
 use App\Http\Controllers\PenculikanController;
 use App\Http\Controllers\SeksualController;
 use App\Http\Controllers\SosialController;
+use App\Http\Controllers\KdrtController;
 // use App\Http\Controllers\IrigasiController;
 // use App\Http\Controllers\NotificationController;
 // use App\Http\Controllers\PerangkatDesaController;
@@ -877,7 +878,7 @@ Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.seksual'
     Route::delete('/{id}', [SeksualController::class, 'destroy'])->name('destroy');
 });
 
-//sosial routes
+//sosial route
 Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.sosial')->name('perkembangan.keamanandanketertiban.sosial.')->group(function(){
     Route::get('/', [SosialController::class, 'index'])->name('index');
     Route::get('/create', [SosialController::class, 'create'])->name('create');
@@ -886,6 +887,17 @@ Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.sosial')
     Route::get('/{id}/edit', [SosialController::class, 'edit'])->name('edit');
     Route::put('/{id}', [SosialController::class, 'update'])->name('update');
     Route::delete('/{id}', [SosialController::class, 'destroy'])->name('destroy');
+});
+
+//kdrt route
+Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.kdrt')->name('perkembangan.keamanandanketertiban.kdrt.')->group(function(){
+    Route::get('/', [KdrtController::class, 'index'])->name('index');
+    Route::get('/create', [KdrtController::class, 'create'])->name('create');
+    Route::post('/', [KdrtController::class, 'store'])->name('store');
+    Route::get('/{id}', [KdrtController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [KdrtController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [KdrtController::class, 'update'])->name('update');
+    Route::delete('/{id}', [KdrtController::class, 'destroy'])->name('destroy');
 });
 
 // Pengangkutan

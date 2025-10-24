@@ -906,6 +906,12 @@
                                                     Kesejahteraan Sosial
                                                 </a>
                                             @endcan
+                                            @can(abilities: 'kdrt.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/keamanandanketertiban/kdrt*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.keamanandanketertiban.kdrt.index') }}">
+                                                    Kekerasan Dalam<br> Rumah Tangga
+                                                </a>
+                                            @endcan
                                             
                                         </div>
                                     </div>

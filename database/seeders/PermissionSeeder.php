@@ -633,6 +633,14 @@ class PermissionSeeder extends Seeder
             'sosial.update',
             'sosial.delete',
 
+            //kdrt
+            'kdrt.view',
+            'kdrt.create',
+            'kdrt.store',
+            'kdrt.edit',
+            'kdrt.update',
+            'kdrt.delete',
+
 
             // potensi permissions
             'potensi.laporan.view',
