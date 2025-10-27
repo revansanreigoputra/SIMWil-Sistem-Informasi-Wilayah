@@ -57,7 +57,7 @@
                                         <td class="text-center">:</td>
                                         <td>
                                             <span class="badge bg-success">
-                                                {{ $saranaTransportasi->kategori->nama_kategori ?? 'N/A' }}
+                                                {{ $saranaTransportasi->kategori->nama ?? 'N/A' }}
                                             </span>
                                         </td>
                                     </tr>
@@ -68,7 +68,7 @@
                                         <td class="text-center">:</td>
                                         <td>
                                             <span class="badge bg-warning text-white">
-                                                {{ $saranaTransportasi->jenis->nama_jenis ?? 'N/A' }}
+                                                {{ $saranaTransportasi->jenis->nama ?? 'N/A' }}
                                             </span>
                                         </td>
                                     </tr>

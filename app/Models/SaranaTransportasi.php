@@ -9,8 +9,8 @@ class SaranaTransportasi extends Model
     protected $fillable = [
         'desa_id',
         'tanggal',
-        'kategori_id',
-        'jenis_id',
+        'kategori_prasarana_transportasi_lainnya_id',
+        'jenis_prasarana_transportasi_lainnya_id',
         'jumlah',
     ];
 
@@ -20,12 +20,12 @@ class SaranaTransportasi extends Model
 
     public function kategori()
     {
-        return $this->belongsTo(KategoriTransportasi::class, 'kategori_id');
+        return $this->belongsTo(\App\Models\MasterPotensi\KategoriPrasaranaTransportasiLainnya::class, 'kategori_prasarana_transportasi_lainnya_id');
     }
 
     public function jenis()
     {
-        return $this->belongsTo(JenisTransportasi::class, 'jenis_id');
+        return $this->belongsTo(\App\Models\MasterPotensi\JenisPrasaranaTransportasiLainnya::class, 'jenis_prasarana_transportasi_lainnya_id');
     }
 
     public function desa()

@@ -40,8 +40,6 @@ class DatabaseSeeder extends Seeder
             JenisDindingSeeder::class,
             JenisLantaiSeeder::class,
             JenisAtapSeeder::class,
-            KategoriTransportasiSeeder::class,
-            JenisTransportasiSeeder::class,
             KategoriKomunikasiSeeder::class,
             JenisKomunikasiSeeder::class,
             KomunikasiInformasiSeeder::class,
