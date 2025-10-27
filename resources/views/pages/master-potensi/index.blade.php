@@ -117,8 +117,12 @@
                                     <th>Kategori Lembaga Ekonomi</th>
                                 @elseif ($activeTab === 'jenis_prasarana_transportasi_darat')
                                     <th>Kategori Prasarana Transportasi Darat</th>
+                                @elseif ($activeTab === 'jenis_prasarana_transportasi_lainnya')
+                                    <th>Kategori Prasarana Transportasi Lainnya</th>
                                 @elseif ($activeTab === 'jenis_prasarana_komunikasi_informasi')
                                     <th>Kategori Prasarana Komunikasi Informasi</th>
+                                @elseif ($activeTab === 'jenis_sekolah_tingkatan')
+                                    <th>Kategori Sekolah</th>
                                 @endif
 
                                 {{-- Perbaikan: Judul kolom dinamis --}}
@@ -141,10 +145,13 @@
                                         <td>{{ $item->kategoriLembagaEkonomi->nama ?? '-' }}</td>
                                     @elseif ($activeTab === 'jenis_prasarana_transportasi_darat')
                                         <td>{{ $item->kategoriPrasaranaTransportasiDarat->nama ?? '-' }}</td>
+                                    @elseif ($activeTab === 'jenis_prasarana_transportasi_lainnya')
+                                        <td>{{ $item->kategoriPrasaranaTransportasiLainnya->nama ?? '-' }}</td>
                                     @elseif ($activeTab === 'jenis_prasarana_komunikasi_informasi')
                                         <td>{{ $item->kategoriPrasaranaKomunikasiInformasi->nama ?? '-' }}</td>
+                                    @elseif ($activeTab === 'jenis_sekolah_tingkatan')
+                                        <td>{{ $item->KategoriSekolah->nama ?? '-' }}</td>
                                     @endif
-
                                     {{-- Perbaikan Kritis: Tampilkan 'nama_tempat' untuk tempat_ibadah --}}
                                     @php
                                         // Tentukan nilai yang akan ditampilkan (nama atau nama_tempat)

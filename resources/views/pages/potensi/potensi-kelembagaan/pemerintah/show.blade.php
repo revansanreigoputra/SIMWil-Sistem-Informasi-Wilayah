@@ -97,10 +97,6 @@
                 <a href="{{ route('potensi.potensi-kelembagaan.pemerintah.index') }}" class="btn btn-outline-primary">
                     <i class="bi bi-arrow-left"></i> Kembali
                 </a>
-                {{-- Optional: Add Print Button here if the route is defined --}}
-                <a href="{{ route('potensi.potensi-kelembagaan.pemerintah.print', $potensi->id) }}" target="_blank" class="btn btn-primary ms-2">
-                    <i class="bi bi-printer"> Cetak</i> 
-                </a>
             </div>
         </div>
     </div>
