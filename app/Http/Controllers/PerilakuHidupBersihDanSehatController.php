@@ -36,17 +36,17 @@ class PerilakuHidupBersihDanSehatController extends Controller
             'keluarga_wc_tidak_standar' => 'nullable|integer|min:0',
             'keluarga_buang_air_sungai' => 'nullable|integer|min:0',
             'keluarga_mck_umum' => 'nullable|integer|min:0',
-            'makan_1x' => 'nullable|integer|min:0',
-            'makan_2x' => 'nullable|integer|min:0',
-            'makan_3x' => 'nullable|integer|min:0',
-            'makan_lebih_3x' => 'nullable|integer|min:0',
-            'belum_tentu_makan' => 'nullable|integer|min:0',
-            'dukun_terlatih' => 'nullable|integer|min:0',
-            'tenaga_kesehatan' => 'nullable|integer|min:0',
-            'obat_tradisional_dukun' => 'nullable|integer|min:0',
-            'paranormal' => 'nullable|integer|min:0',
-            'obat_keluarga_sendiri' => 'nullable|integer|min:0',
-            'tidak_diobati' => 'nullable|integer|min:0',
+            'makan_1x' => 'nullable|string',
+            'makan_2x' => 'nullable|string',
+            'makan_3x' => 'nullable|string',
+            'makan_lebih_3x' => 'nullable|string',
+            'belum_tentu_makan' => 'nullable|string',
+            'dukun_terlatih' => 'nullable|string',
+            'tenaga_kesehatan' => 'nullable|string',
+            'obat_tradisional_dukun' => 'nullable|string',
+            'paranormal' => 'nullable|string',
+            'obat_keluarga_sendiri' => 'nullable|string',
+            'tidak_diobati' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
@@ -66,11 +66,12 @@ class PerilakuHidupBersihDanSehatController extends Controller
             ->with('success', 'Data berhasil ditambahkan.');
     }
 
-    public function show($id)
-    {
-        $data = PerilakuHidupBersihDanSehat::with('desa')->findOrFail($id);
-        return view('pages.perkembangan.kesehatan-masyarakat.perilaku-hidup-bersih-dan-sehat.show', compact('data'));
-    }
+  public function show($id)
+{
+    $perilaku = PerilakuHidupBersihDanSehat::with('desa')->findOrFail($id);
+    return view('pages.perkembangan.kesehatan-masyarakat.perilaku-hidup-bersih-dan-sehat.show', compact('perilaku'));
+}
+
 
     public function edit($id)
     {
@@ -86,17 +87,17 @@ class PerilakuHidupBersihDanSehatController extends Controller
             'keluarga_wc_tidak_standar' => 'nullable|integer|min:0',
             'keluarga_buang_air_sungai' => 'nullable|integer|min:0',
             'keluarga_mck_umum' => 'nullable|integer|min:0',
-            'makan_1x' => 'nullable|integer|min:0',
-            'makan_2x' => 'nullable|integer|min:0',
-            'makan_3x' => 'nullable|integer|min:0',
-            'makan_lebih_3x' => 'nullable|integer|min:0',
-            'belum_tentu_makan' => 'nullable|integer|min:0',
-            'dukun_terlatih' => 'nullable|integer|min:0',
-            'tenaga_kesehatan' => 'nullable|integer|min:0',
-            'obat_tradisional_dukun' => 'nullable|integer|min:0',
-            'paranormal' => 'nullable|integer|min:0',
-            'obat_keluarga_sendiri' => 'nullable|integer|min:0',
-            'tidak_diobati' => 'nullable|integer|min:0',
+           'makan_1x' => 'nullable|string',
+            'makan_2x' => 'nullable|string',
+            'makan_3x' => 'nullable|string',
+            'makan_lebih_3x' => 'nullable|string',
+            'belum_tentu_makan' => 'nullable|string',
+            'dukun_terlatih' => 'nullable|string',
+            'tenaga_kesehatan' => 'nullable|string',
+            'obat_tradisional_dukun' => 'nullable|string',
+            'paranormal' => 'nullable|string',
+            'obat_keluarga_sendiri' => 'nullable|string',
+            'tidak_diobati' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
@@ -117,6 +118,7 @@ class PerilakuHidupBersihDanSehatController extends Controller
             ->with('success', 'Data berhasil diperbarui.');
     }
 
+    
     public function destroy($id)
     {
         $model = PerilakuHidupBersihDanSehat::findOrFail($id);
@@ -126,4 +128,6 @@ class PerilakuHidupBersihDanSehatController extends Controller
             ->route('perkembangan.kesehatan-masyarakat.perilaku-hidup-bersih-dan-sehat.index')
             ->with('success', 'Data berhasil dihapus.');
     }
+
+    
 }

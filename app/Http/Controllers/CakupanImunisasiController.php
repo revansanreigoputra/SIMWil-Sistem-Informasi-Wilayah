@@ -14,7 +14,7 @@ class CakupanImunisasiController extends Controller
         $desaId = session('desa_id');
         $cakupan = CakupanImunisasi::with('desa')
                     ->where('desa_id', $desaId)
-                    ->latest()
+                    ->latest() 
                     ->paginate(10);
 
         return view('pages.perkembangan.kesehatan-masyarakat.cakupan-imunisasi.index', compact('cakupan'));
@@ -61,7 +61,7 @@ class CakupanImunisasiController extends Controller
   public function show($id)
 {
     $data = CakupanAirBersih::with('desa')->findOrFail($id);
-    return view('perkembangan.kesehatan_masyarakat.cakupan_air_bersih.show', compact('data'));
+    return view('perkembangan.kesehatan_masyarakat.cakupan-imunisasi.show', compact('data'));
 }
 
     public function edit(CakupanImunisasi $cakupanImunisasi)

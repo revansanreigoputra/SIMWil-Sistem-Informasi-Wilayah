@@ -980,7 +980,35 @@
                                                 </a>
                                             @endcan
 
+                                             @can('sektor-jasa-jasa.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/sektor-jasa-jasa*') ? 'active' : '' }}"
+                                                href="{{ route('perkembangan.produk-domestik.sektor-jasa-jasa.index') }}">
+                                                    Sektor Jasa Jasa
+                                                </a>
+                                            @endcan
+                                            
+                                             @can('sektor-keuangan-jasa-perusahaan.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/sektor-keuangan-jasa-perusahaan*') ? 'active' : '' }}"
+                                                href="{{ route('perkembangan.produk-domestik.sektor-keuangan-jasa-perusahaan.index') }}">
+                                                    Sektor keungan <br> jasa perusahaan
+                                                </a>
+                                            @endcan
+
+                                              @can('sektor-angkutan.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/sektor-angkutan') ? 'active' : '' }}"
+                                                href="{{ route('perkembangan.produk-domestik.sektor-angkutan.index') }}">
+                                                    Sektor Angkutan <br> Dan Komunikasi 
+                                                </a>
+                                            @endcan
+
+                                             @can('sektor-listrik-gas-air-minum.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/sektor-listrik-gas-air-minum') ? 'active' : '' }}"
+                                                href="{{ route('perkembangan.produk-domestik.sektor-listrik-gas-air-minum.index') }}">
+                                                    Sektor listrik, Gas <br> dan minum
+                                                </a>
+                                            @endcan
                                         </div>
+
                                         </div>
                                     @endcanany
 

@@ -558,9 +558,40 @@ class PermissionSeeder extends Seeder
                 'perilaku-hidup-bersih-dan-sehat.show',
                 'perilaku-hidup-bersih-dan-sehat.update',
                 'perilaku-hidup-bersih-dan-sehat.delete',
+
+                // sektor jasa jasa
+
+                    'sektor-jasa-jasa.view',
+                   'sektor-jasa-jasa.create',
+                    'sektor-jasa-jasa.show',
+                    'sektor-jasa-jasa.edit',
+                    'sektor-jasa-jasa.destroy',
+
+                    // sektor keungan jasa perusahaan 
+         'sektor-keuangan-jasa-perusahaan.view',          
+        'sektor-keuangan-jasa-perusahaan.create',
+        'sektor-keuangan-jasa-perusahaan.show',
+         'sektor-keuangan-jasa-perusahaan.edit',
+        'sektor-keuangan-jasa-perusahaan.destroy',
                                 
+            // sektor angkutan dan komunikasi 
 
+            'sektor-angkutan.view',
+            'sektor-angkutan.create',
+            'sektor-angkutan.update',
+            'sektor-angkutan.delete',
+             'sektor-angkutan.edit',
+              'sektor-angkutan.show',
+              'sektor-angkutan.destroy',
 
+              //Sektor air minum dan gas 
+                'sektor-listrik-gas-air-minum.view',
+                'sektor-listrik-gas-air-minum.create',
+                'sektor-listrik-gas-air-minum.show',
+                'sektor-listrik-gas-air-minum.edit',
+                'sektor-listrik-gas-air-minum.destroy',
+
+              
 
             // Pertanggungjawaban
             'pertanggungjawaban.view', 
