@@ -16,10 +16,10 @@ return new class extends Migration
             $table->foreignId('desa_id')->constrained('desas')->onDelete('cascade');
             $table->date('tanggal');
             $table->foreignId('kategori_id')
-                ->constrained('kategori_komunikasis')
+                ->constrained('kategori_prasarana_komunikasi_informasi')
                 ->onDelete('cascade');
             $table->foreignId('jenis_id')
-                ->constrained('jenis_komunikasis')
+                ->constrained('jenis_prasarana_komunikasi_informasi')
                 ->onDelete('cascade');
             $table->integer('jumlah')->default(0);
             $table->string('satuan')->nullable(); // contoh: Sinyal, Km, Unit
