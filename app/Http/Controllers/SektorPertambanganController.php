@@ -95,6 +95,6 @@ class SektorPertambanganController extends Controller
     public function show($id)
 {
     $pertambangan = SektorPertambangan::with('desa')->findOrFail($id);
-    return view('perkembangan.produk_domestik.sektor_pertambangan.show', compact('pertambangan'));
+    return view('pages.perkembangan.produk-domestik.sektor-pertambangan.show', compact('pertambangan'));
 }
 }

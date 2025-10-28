@@ -972,7 +972,6 @@
                                                 Subsektor <br> Kehutanan
                                             </a>
                                         @endcan
-
                                          @can('sektor-bangunan.view')
                                                 <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/sektor-bangunan*') ? 'active' : '' }}"
                                                 href="{{ route('perkembangan.produk-domestik.sektor-bangunan.index') }}">
@@ -1059,42 +1058,36 @@
                                                 Cakupan imunisasi
                                             </a>
                                     @endcan
-
                                      @can('wabah-penyakit.view')
                                         <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/wabah-penyakit*') ? 'show' : '' }}"
                                                 href="{{ route('perkembangan.kesehatan-masyarakat.wabah-penyakit.index') }}">
                                                 Wabah penyakit
                                             </a>
                                     @endcan
-
                                       @can('gizi-balita.view')
                                         <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/gizi-balita*') ? 'show' : '' }}"
                                                 href="{{ route('perkembangan.kesehatan-masyarakat.gizi-balita.index') }}">
                                              Status Gizi Balita
                                             </a>
                                     @endcan
-
                                       @can('subsektor-harapan.view')
                                         <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/subsektor-harapan*') ? 'show' : '' }}"
                                                 href="{{ route('perkembangan.kesehatan-masyarakat.subsektor-harapan.index') }}">
                                               Angka Harapan <br> Hidup
                                             </a>
                                     @endcan
-
                                       @can('penderita-sakit.view')
                                         <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/penderita-sakit*') ? 'show' : '' }}"
                                                 href="{{ route('perkembangan.kesehatan-masyarakat.penderita-sakit.index') }}">
                                               Penderita Sakit
                                             </a>
                                     @endcan
-
                                      @can('sarana-prasarana.view')
                                         <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/sarana-prasarana*') ? 'show' : '' }}"
                                                 href="{{ route('perkembangan.kesehatan-masyarakat.sarana-prasarana.index') }}">
                                               Perkembangan sarana <br> dan prasarana 
                                             </a>
                                     @endcan
-
                                      @can('pasangan-usia-subur.view')
                                         <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/pasangan-usia-subur*') ? 'show' : '' }}"
                                                 href="{{ route('perkembangan.kesehatan-masyarakat.pasangan-usia-subur.index') }}">
@@ -1176,7 +1169,7 @@
                         </div>
                     </div>
                 </li>
-                {{-- <li class="nav-item {{ request()->is('pengaturan*') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->is('pengaturan*') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('settings.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -1190,7 +1183,8 @@
                         </span>
                         <span class="nav-link-title"> Pengaturan </span>
                     </a>
-                </li> --}}
+                </li> 
+
                 {{-- Menu Utama --}}
                 <li class="nav-item dropdown {{ request()->is('utama/*') ? 'active' : '' }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-utama" data-bs-toggle="dropdown"
