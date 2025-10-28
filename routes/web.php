@@ -168,6 +168,7 @@ use App\Models\LayananSurat\KopTemplate;
 
 // POTENSI SDA
 use App\Http\Controllers\TopografiController;
+use App\Http\Controllers\JlahanController;
 
 
 // kelembagaan
@@ -599,6 +600,17 @@ Route::middleware(['auth'])->prefix('potensi/sda/topografi')->name('topografi.')
     Route::get('/{topografi}/edit', [TopografiController::class, 'edit'])->name('edit');
     Route::put('/{topografi}', [TopografiController::class, 'update'])->name('update');
     Route::delete('/{topografi}', [TopografiController::class, 'destroy'])->name('destroy');
+});
+
+// Jlahan routes
+Route::middleware(['auth'])->prefix('potensi/sda/jlahan')->name('jlahan.')->group(function () {
+    Route::get('/', [JlahanController::class, 'index'])->name('index');
+    Route::get('/create', [JlahanController::class, 'create'])->name('create');
+    Route::post('/', [JlahanController::class, 'store'])->name('store');
+    Route::get('/{jlahan}', [JlahanController::class, 'show'])->name('show');
+    Route::get('/{jlahan}/edit', [JlahanController::class, 'edit'])->name('edit');
+    Route::put('/{jlahan}', [JlahanController::class, 'update'])->name('update');
+    Route::delete('/{jlahan}', [JlahanController::class, 'destroy'])->name('destroy');
 });
 
 //APB Desa Routes

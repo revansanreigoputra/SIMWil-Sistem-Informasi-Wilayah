@@ -394,6 +394,14 @@ class PermissionSeeder extends Seeder
             'topografi.update',
             'topografi.delete',
 
+            // jlahan
+            'jlahan.view',
+            'jlahan.create',
+            'jlahan.store',
+            'jlahan.edit',
+            'jlahan.update',
+            'jlahan.delete',
+
             // pengangguran
             'pengangguran.view',
             'pengangguran.create',

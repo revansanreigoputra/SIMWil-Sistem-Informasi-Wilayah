@@ -416,10 +416,17 @@
                                         <div
                                             class="dropdown-menu {{ request()->is('potensi/sda*') ? 'show' : '' }}">
 
-                                            @can('batas_wilayah.view')
+                                            @can('topografi.view')
                                                 <a class="dropdown-item {{ request()->is('potensi/sda/topografi*') ? 'active' : '' }}"
                                                     href="{{ route('topografi.index') }}">
                                                     Topografi
+                                                </a>
+                                            @endcan
+                                            
+                                            @can('jlahan.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/jlahan*') ? 'active' : '' }}"
+                                                    href="{{ route('jlahan.index') }}">
+                                                    Jenis Lahan
                                                 </a>
                                             @endcan
 
