@@ -24,16 +24,6 @@
 
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="id_desa" class="form-label">Desa</label>
-                    <select name="id_desa" id="id_desa" class="form-select" required>
-                        <option value="">-- Pilih Desa --</option>
-                        @foreach($desas as $desa)
-                            <option value="{{ $desa->id }}">{{ $desa->nama_desa }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="col-md-6 mb-3">
                     <label for="id_aset_dinding" class="form-label">Jenis Dinding</label>
                     <select name="id_aset_dinding" id="id_aset_dinding" class="form-select" required>
                         <option value="">-- Pilih Jenis Dinding --</option>
@@ -42,14 +32,14 @@
                         @endforeach
                     </select>
                 </div>
-            </div>
 
-            <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="tanggal" class="form-label">Tanggal</label>
                     <input type="date" name="tanggal" id="tanggal" class="form-control" required>
                 </div>
+            </div>
 
+            <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="jumlah" class="form-label">Jumlah</label>
                     <input type="number" name="jumlah" id="jumlah" class="form-control" min="0" value="0" required>

@@ -724,11 +724,12 @@ Route::middleware(['auth'])
         Route::get('/', [App\Http\Controllers\AsetTanahController::class, 'index'])->name('index');
         Route::get('/create', [App\Http\Controllers\AsetTanahController::class, 'create'])->name('create');
         Route::post('/store', [App\Http\Controllers\AsetTanahController::class, 'store'])->name('store');
-        Route::get('/show/{id}', [App\Http\Controllers\AsetTanahController::class, 'show'])->name('show');
-        Route::get('/edit/{id}', [App\Http\Controllers\AsetTanahController::class, 'edit'])->name('edit');
-        Route::put('/update/{id}', [App\Http\Controllers\AsetTanahController::class, 'update'])->name('update');
-        Route::delete('/destroy/{id}', [App\Http\Controllers\AsetTanahController::class, 'destroy'])->name('destroy');
-    });  
+        Route::get('/show/{asetTanah}', [App\Http\Controllers\AsetTanahController::class, 'show'])->name('show');
+        Route::get('/edit/{asetTanah}', [App\Http\Controllers\AsetTanahController::class, 'edit'])->name('edit');
+        Route::put('/update/{asetTanah}', [App\Http\Controllers\AsetTanahController::class, 'update'])->name('update');
+        Route::delete('/destroy/{asetTanah}', [App\Http\Controllers\AsetTanahController::class, 'destroy'])->name('destroy');
+    });
+
 
 // Sarana Produksi
 Route::middleware(['auth'])
@@ -738,36 +739,39 @@ Route::middleware(['auth'])
         Route::get('/', [App\Http\Controllers\SaranaProduksiController::class, 'index'])->name('index');
         Route::get('/create', [App\Http\Controllers\SaranaProduksiController::class, 'create'])->name('create');
         Route::post('/store', [App\Http\Controllers\SaranaProduksiController::class, 'store'])->name('store');
-        Route::get('/show/{id}', [App\Http\Controllers\SaranaProduksiController::class, 'show'])->name('show');
-        Route::get('/edit/{id}', [App\Http\Controllers\SaranaProduksiController::class, 'edit'])->name('edit');
-        Route::put('/update/{id}', [App\Http\Controllers\SaranaProduksiController::class, 'update'])->name('update');
-        Route::delete('/destroy/{id}', [App\Http\Controllers\SaranaProduksiController::class, 'destroy'])->name('destroy');
+        Route::get('/show/{saranaProduksi}', [App\Http\Controllers\SaranaProduksiController::class, 'show'])->name('show');
+        Route::get('/edit/{saranaProduksi}', [App\Http\Controllers\SaranaProduksiController::class, 'edit'])->name('edit');
+        Route::put('/update/{saranaProduksi}', [App\Http\Controllers\SaranaProduksiController::class, 'update'])->name('update');
+        Route::delete('/destroy/{saranaProduksi}', [App\Http\Controllers\SaranaProduksiController::class, 'destroy'])->name('destroy');
     });
 
+
+
     // Sarana Transportasi Umum
-  Route::name('perkembangan.asetekonomi.sarana_transportasi_umum.')
-    ->prefix('perkembangan/asetekonomi/sarana_transportasi_umum')
+Route::prefix('perkembangan/asetekonomi/sarana_transportasi_umum')
+    ->name('perkembangan.asetekonomi.sarana_transportasi_umum.')
     ->group(function () {
-        Route::get('/', [App\Http\Controllers\SaranaTransportasiUmumController::class, 'index'])->name('index');
-        Route::get('/create', [App\Http\Controllers\SaranaTransportasiUmumController::class, 'create'])->name('create');
-        Route::post('/store', [App\Http\Controllers\SaranaTransportasiUmumController::class, 'store'])->name('store');
-        Route::get('/show/{id}', [App\Http\Controllers\SaranaTransportasiUmumController::class, 'show'])->name('show');
-        Route::get('/edit/{id}', [App\Http\Controllers\SaranaTransportasiUmumController::class, 'edit'])->name('edit');
-        Route::put('/update/{id}', [App\Http\Controllers\SaranaTransportasiUmumController::class, 'update'])->name('update');
-        Route::delete('/destroy/{id}', [App\Http\Controllers\SaranaTransportasiUmumController::class, 'destroy'])->name('destroy');
+        Route::get('/', [SaranaTransportasiUmumController::class, 'index'])->name('index');
+        Route::get('/create', [SaranaTransportasiUmumController::class, 'create'])->name('create');
+        Route::post('/store', [SaranaTransportasiUmumController::class, 'store'])->name('store');
+        Route::get('/{item}', [SaranaTransportasiUmumController::class, 'show'])->name('show'); // <-- show
+        Route::get('/{item}/edit', [SaranaTransportasiUmumController::class, 'edit'])->name('edit');
+        Route::put('/{item}', [SaranaTransportasiUmumController::class, 'update'])->name('update');
+        Route::delete('/{item}', [SaranaTransportasiUmumController::class, 'destroy'])->name('destroy');
     });
+
 
 // Rumah Menurut Dinding
 Route::name('perkembangan.asetekonomi.rumah_menurut_dinding.')
     ->prefix('perkembangan/asetekonomi/rumah_menurut_dinding')
     ->group(function () {
-        Route::get('/', [App\Http\Controllers\RumahMenurutDindingController::class, 'index'])->name('index');
-        Route::get('/create', [App\Http\Controllers\RumahMenurutDindingController::class, 'create'])->name('create');
-        Route::post('/store', [App\Http\Controllers\RumahMenurutDindingController::class, 'store'])->name('store');
-        Route::get('/show/{id}', [App\Http\Controllers\RumahMenurutDindingController::class, 'show'])->name('show');
-        Route::get('/edit/{id}', [App\Http\Controllers\RumahMenurutDindingController::class, 'edit'])->name('edit');
-        Route::put('/update/{id}', [App\Http\Controllers\RumahMenurutDindingController::class, 'update'])->name('update');
-        Route::delete('/destroy/{id}', [App\Http\Controllers\RumahMenurutDindingController::class, 'destroy'])->name('destroy');
+        Route::get('/', [RumahMenurutDindingController::class, 'index'])->name('index');
+        Route::get('/create', [RumahMenurutDindingController::class, 'create'])->name('create');
+        Route::post('/store', [RumahMenurutDindingController::class, 'store'])->name('store');
+        Route::get('/show/{rumahMenurutDinding}', [RumahMenurutDindingController::class, 'show'])->name('show');
+        Route::get('/edit/{rumahMenurutDinding}', [RumahMenurutDindingController::class, 'edit'])->name('edit');
+        Route::put('/update/{rumahMenurutDinding}', [RumahMenurutDindingController::class, 'update'])->name('update');
+        Route::delete('/destroy/{rumahMenurutDinding}', [RumahMenurutDindingController::class, 'destroy'])->name('destroy');
     });
 
 // Rumah Menurut Lantai
