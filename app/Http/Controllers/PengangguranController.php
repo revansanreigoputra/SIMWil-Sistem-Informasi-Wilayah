@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pengangguran;
-use App\Models\Kecamatan;
 use App\Models\Desa;
 use Illuminate\Http\Request;
 
@@ -11,22 +10,22 @@ class PengangguranController extends Controller
 {
     public function index()
     {
-        $penganggurans = Pengangguran::with(['kecamatan','desa'])->orderBy('tanggal', 'desc')->paginate(10);
+        // Hanya load relasi desa
+        $penganggurans = Pengangguran::with('desa')->orderBy('tanggal', 'desc')->paginate(10);
         return view('pages.perkembangan.ekonomimasyarakat.pengangguran.index', compact('penganggurans'));
     }
 
     public function create()
     {
-        $kecamatans = Kecamatan::all(); // ambil semua kecamatan
-        $desas = Desa::all();           // ambil semua desa
-        return view('pages.perkembangan.ekonomimasyarakat.pengangguran.create', compact('kecamatans','desas'));
+        // Ambil semua desa
+        $desas = Desa::all();
+        return view('pages.perkembangan.ekonomimasyarakat.pengangguran.create', compact('desas'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'tanggal' => 'required|date',
-            'id_kecamatan' => 'required|integer|exists:kecamatans,id',
             'id_desa' => 'required|integer|exists:desas,id',
             'angkatan_kerja' => 'required|integer|min:0',
             'masih_sekolah' => 'required|integer|min:0',
@@ -45,22 +44,20 @@ class PengangguranController extends Controller
 
     public function show(Pengangguran $pengangguran)
     {
-        $pengangguran->load(['kecamatan','desa']); // pastikan relasi terload
+        $pengangguran->load('desa'); // load relasi desa
         return view('pages.perkembangan.ekonomimasyarakat.pengangguran.show', compact('pengangguran'));
     }
 
     public function edit(Pengangguran $pengangguran)
     {
-        $kecamatans = Kecamatan::all();
         $desas = Desa::all();
-        return view('pages.perkembangan.ekonomimasyarakat.pengangguran.edit', compact('pengangguran','kecamatans','desas'));
+        return view('pages.perkembangan.ekonomimasyarakat.pengangguran.edit', compact('pengangguran','desas'));
     }
 
     public function update(Request $request, Pengangguran $pengangguran)
     {
         $request->validate([
             'tanggal' => 'required|date',
-            'id_kecamatan' => 'required|integer|exists:kecamatans,id',
             'id_desa' => 'required|integer|exists:desas,id',
             'angkatan_kerja' => 'required|integer|min:0',
             'masih_sekolah' => 'required|integer|min:0',
@@ -82,12 +79,5 @@ class PengangguranController extends Controller
         $pengangguran->delete();
         return redirect()->route('perkembangan.ekonomimasyarakat.pengangguran.index')
             ->with('success', 'Data pengangguran berhasil dihapus.');
-    }
-    // Endpoint AJAX: Ambil desa berdasarkan kecamatan
-    public function getDesaByKecamatan(Request $request)
-    {
-        $id_kecamatan = $request->input('id_kecamatan');
-        $desas = Desa::where('kecamatan_id', $id_kecamatan)->get();
-        return response()->json($desas);
     }
 }

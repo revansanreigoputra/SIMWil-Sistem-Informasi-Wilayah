@@ -16,7 +16,7 @@
                 @csrf
 
                 <div class="row">
-                    <div class="col-md-6">
+                    {{-- <div class="col-md-6">
                         <div class="mb-3">
                             <label for="desa_id" class="form-label fw-semibold">
                                 <i class="fas fa-building me-1"></i>
@@ -36,7 +36,7 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="tanggal" class="form-label fw-semibold">

@@ -13,7 +13,8 @@ class AirBersihController extends Controller
      */
     public function index()
     {
-        $airBersihs = AirBersih::with('desa')->orderBy('tanggal', 'desc')->paginate(10);
+        $desaId = session('desa_id');
+        $airBersihs = AirBersih::with('desa')->where('desa_id', $desaId)->orderBy('tanggal', 'desc')->paginate(10);
         return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-air-bersih.index', compact('airBersihs'));
     }
 
@@ -22,8 +23,7 @@ class AirBersihController extends Controller
      */
     public function create()
     {
-        $desas = Desa::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-air-bersih.create', compact('desas'));
+        return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-air-bersih.create');
     }
 
     /**
@@ -32,7 +32,6 @@ class AirBersihController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'sumur_pompa' => 'required|integer|min:0',
             'sumur_gali' => 'required|integer|min:0',
@@ -44,7 +43,10 @@ class AirBersihController extends Controller
             'bangunan_pengolahan_air' => 'required|integer|min:0',
         ]);
 
-        AirBersih::create($validated);
+        $data = $validated;
+        $data['desa_id'] = session('desa_id');
+
+        AirBersih::create($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.prasarana-air-bersih.index')->with('success', 'Data prasarana air bersih berhasil ditambahkan.');
     }
@@ -62,8 +64,7 @@ class AirBersihController extends Controller
      */
     public function edit(AirBersih $airBersih)
     {
-        $desas = Desa::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-air-bersih.edit', compact('airBersih', 'desas'));
+        return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-air-bersih.edit', compact('airBersih'));
     }
 
     /**
@@ -72,7 +73,6 @@ class AirBersihController extends Controller
     public function update(Request $request, AirBersih $airBersih)
     {
         $validated = $request->validate([
-            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'sumur_pompa' => 'required|integer|min:0',
             'sumur_gali' => 'required|integer|min:0',
@@ -84,7 +84,10 @@ class AirBersihController extends Controller
             'bangunan_pengolahan_air' => 'required|integer|min:0',
         ]);
 
-        $airBersih->update($validated);
+        $data = $validated;
+        $data['desa_id'] = session('desa_id');
+
+        $airBersih->update($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.prasarana-air-bersih.index')->with('success', 'Data prasarana air bersih berhasil diperbarui.');
     }

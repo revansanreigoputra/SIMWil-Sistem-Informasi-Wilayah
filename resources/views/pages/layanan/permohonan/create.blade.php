@@ -9,8 +9,8 @@
         </div>
 
         <div class="card-body">
- 
-            <form method="POST" action="{{ route('layanan.permohonan.store') }}">
+
+            <form method="POST" action="{{ route('permohonan.store') }}">
                 @csrf
 
                 {{-- Hidden JSON Data Map for JavaScript (CRUCIAL: Ensure mutasi_type is included in $jenisSurats) --}}
@@ -18,6 +18,10 @@
                 <div id="data-storage-container" data-old-custom-data="{{ json_encode(old('custom_data', [])) }}"
                     style="display: none;"></div>
 
+                {{-- NEW: Hidden Input for Pre-selected Jenis Surat (Required if the select is disabled) --}}
+                @if ($preselected_jenis_surat_id ?? null)
+                    <input type="hidden" name="jenis_surat_id" value="{{ $preselected_jenis_surat_id }}">
+                @endif
                 {{-- container form kelahiran --}}
                 {{-- ... di bawah div#data-storage-container ... --}}
 
@@ -34,18 +38,20 @@
                 <div class="mb-4">
                     <label for="jenis_surat_id" class="form-label fw-semibold">Jenis Surat</label>
                     <select name="jenis_surat_id" id="jenis_surat_id"
-                        class="form-select @error('jenis_surat_id') is-invalid @enderror" required>
+                        class="form-select @error('jenis_surat_id') is-invalid @enderror" required {{-- ADDITIONALLY DISABLE the select if pre-selected, to prevent modal popup --}}
+                        {{ $preselected_jenis_surat_id ?? null ? 'disabled' : '' }}>
                         <option value="">-- Pilih Jenis Surat --</option>
                         @foreach ($jenisSurats as $js)
-                            <option value="{{ $js->id }}">{{ $js->nama }} ({{ $js->mutasi_type }})</option>
+                            <option value="{{ $js->id }}" {{-- Use pre-selected variable from controller --}}
+                                {{ ($preselected_jenis_surat_id ?? null) == $js->id ? 'selected' : '' }}>
+                                {{ $js->nama }} ({{ $js->mutasi_type }})
+                            </option>
                         @endforeach
-
                     </select>
                     @error('jenis_surat_id')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-                <div id="jenis-surat-map" data-map='@json($jenisSurats)' style="display: none;"></div>
 
                 {{-- Bagian II: Data Pemohon (DIBUAT DINAMIS) --}}
                 <h5 class="mt-3 mb-3 pb-2 border-bottom" id="pemohon-title">Data Pemohon</h5>
@@ -172,7 +178,7 @@
                             @foreach ($kopTemplates as $kop)
                                 <option value="{{ $kop->id }}"
                                     {{ old('id_kop_templates') == $kop->id ? 'selected' : '' }}>
-                                    {{ $kop->nama }}
+                                   {{ $kop->jenis_kop }} - {{ $kop->nama }}
                                 </option>
                             @endforeach
                         </select>
@@ -211,10 +217,48 @@
                     </div>
                 </div>
 
+
                 <button type="submit" class="btn btn-primary mt-4 w-100">
                     <i class="fas fa-paper-plane me-2"></i> Ajukan & Buat Permohonan Surat
                 </button>
+
+
             </form>
+
+            {{-- modal form if jenis surats has mutasi_type mutasi masuk kk --}}
+            <div class="modal fade" id="kkMasukModal" tabindex="-1" aria-labelledby="kkMasukModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header  text-dark">
+                            <h5 class="modal-title" id="kkMasukModalLabel"><i
+                                    class="fas fa-exclamation-triangle me-2"></i> Pilihan Data Masuk Domisili</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-center p-4">
+                            <p class="lead">Pilih proses administrasi untuk warga baru:</p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <a href="{{ route('permohonan.masuk_kk.create') }}"
+                                        class="btn btn-outline-secondary btn-sm w-full px-3 py-2 shadow-md  ">
+                                        <span class="text-small text-dark">Buat KK Baru</span>
+                                    </a>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="{{ route('permohonan.masuk_kk.create_existing_kk') }}"
+                                        class="btn btn-outline-secondary btn-sm  w-full px-3 py-2 shadow-md">
+                                        <span class="text-small text-dark">Masuk KK yang ada</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" id="batalMasukKK">Batal</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
@@ -232,10 +276,15 @@
             pendidikan: [],
             pekerjaan: []
         };
+ 
 
-        // CAPTURE PHP DEFAULTS
+        // CAPTURE PHP DEFAULTS AND PRE-SELECTION DATA
         const initialPembuka = '{{ old('paragraf_pembuka', optional($defaultJenisSurat)->paragraf_pembuka) }}'.trim();
         const initialPenutup = '{{ old('paragraf_penutup', optional($defaultJenisSurat)->paragraf_penutup) }}'.trim();
+
+        // CRITICAL: Capture the two new variables from the controller
+        const preselectedJenisSuratId = '{{ $preselected_jenis_surat_id ?? null }}';
+        const preselectedPemohonId = '{{ $preselected_pemohon_id ?? null }}'; // This is the ID of the new resident
 
         // --- Utility Functions ---
         function initializeDataMap() {
@@ -385,6 +434,7 @@
 
         // --- Core Logic ---
         $(document).ready(function() {
+            // Memastikan fungsi initializeDataMap() sudah didefinisikan dan dipanggil
             initializeDataMap();
 
             const jenisSuratSelect = $('#jenis_surat_id');
@@ -395,19 +445,59 @@
             const pemohonTitle = $('#pemohon-title');
             const anggotaSelect = $('#id_anggota_keluargas');
             const kkSelectContainer = $('#data-keluarga-select-container');
-            const kkSelect = $('#id_data_keluargas');
+            const kkSelect = $('#selected_id');
             const mainForm = $('form');
 
-            handleStatusChange();
-            statusSelect.on('change', handleStatusChange);
+            // Menggunakan referensi jQuery untuk modal
+            let kkMasukModal = $('#kkMasukModal');
 
-            jenisSuratSelect.on('change', function() {
-                const selectedId = $(this).val();
+            // Flag untuk melacak apakah pre-selection sudah dilakukan
+            let initialChangeDone = false;
 
-                // Reset hidden fields
-                mainForm.find('input[name="custom_data[status_kk_record]"]').remove();
-                mainForm.find('input[name="custom_data[tanggal_inaktif]"]').remove();
 
+            // ------------------------------------------------------------------------
+            // **LOGIKA PEMROSESAN UTAMA DI DALAM on('change')**
+            // Fungsi ini akan dipanggil oleh trigger() maupun oleh event user
+            // ------------------------------------------------------------------------
+            const handleJenisSuratChange = function(skipModalCheck = false) {
+                const selectedId = jenisSuratSelect.val();
+
+                // PENTING: Hapus semua hidden fields mutasi yang mungkin tersisa dari pemilihan sebelumnya
+                mainForm.find('input[name^="custom_data[status_kk_record]"]').remove();
+                mainForm.find('input[name^="custom_data[tanggal_inaktif]"]').remove();
+
+                const templateData = jenisSuratDataMap[selectedId] || {};
+                const mutasiType = templateData.mutasi_type || 'none';
+                const newCode = templateData.kode || 'XXXX';
+                const newPembuka = templateData.paragraf_pembuka || '';
+                const newPenutup = templateData.paragraf_penutup || '';
+                const isMutasiMasukKK = mutasiType === 'mutasi_masuk_kk';
+                const isKelahiran = mutasiType === 'pencatatan_kelahiran';
+
+                // ---------------------------------------------------------------------------------
+                // 1. PENGHALANG MODAL & LOGIKA MUTASI KK MASUK 
+                // ---------------------------------------------------------------------------------
+
+                // Jika form tidak disabled (dipilih manual OLEH USER) DAN jenisnya KK Masuk
+                if (!jenisSuratSelect.is(':disabled') && isMutasiMasukKK && kkMasukModal.length && !
+                    skipModalCheck) {
+                    console.log("Memicu Modal PermohonanMasukKK...");
+                    kkMasukModal.modal('show');
+
+                    // Atur ulang nilai select agar form utama tidak bisa disubmit
+                    jenisSuratSelect.val('');
+
+                    // Sembunyikan semua kontainer yang tidak relevan
+                    pemohonSelectContainer.hide();
+                    kkSelectContainer.hide();
+                    anggotaSelect.removeAttr('required');
+                    kkSelect.removeAttr('required');
+                    pemohonTitle.show();
+                    renderCustomFields(null);
+                    return; // Hentikan proses lebih lanjut
+                }
+
+                // Jika tidak ada surat terpilih (setelah reset modal atau di awal)
                 if (!selectedId) {
                     pemohonSelectContainer.show();
                     kkSelectContainer.hide();
@@ -418,39 +508,19 @@
                     return;
                 }
 
-                const templateData = jenisSuratDataMap[selectedId] || {};
-                const mutasiType = templateData.mutasi_type || 'none';
-                const newCode = templateData.kode || 'XXXX';
-                const newPembuka = templateData.paragraf_pembuka || '';
-                const newPenutup = templateData.paragraf_penutup || '';
-                const isMutasiMasukKK = mutasiType === 'mutasi_masuk_kk';
-                const isKelahiran = mutasiType === 'pencatatan_kelahiran';
+                // ---------------------------------------------------------------------------------
+                // 2. LOGIKA UPDATE TAMPILAN (Berjalan saat pre-select atau pilih manual)
+                // ---------------------------------------------------------------------------------
 
-                if (isMutasiMasukKK) {
-                    pemohonSelectContainer.hide();
-                    kkSelectContainer.hide();
-                    anggotaSelect.removeAttr('required');
-                    kkSelect.removeAttr('required');
-                    pemohonTitle.show();
-
-                    $('<input>').attr({
-                        type: 'hidden',
-                        name: 'custom_data[status_kk_record]',
-                        value: 'active'
-                    }).appendTo(mainForm);
-
-                    $('<input>').attr({
-                        type: 'hidden',
-                        name: 'custom_data[tanggal_inaktif]',
-                        value: null
-                    }).appendTo(mainForm);
-                } else if (isKelahiran) {
+                // --- Logika Penentuan Pemohon/KK Tujuan (Kelahiran vs Lainnya) ---
+                if (isKelahiran) {
                     pemohonSelectContainer.hide();
                     kkSelectContainer.show();
                     pemohonTitle.show();
                     anggotaSelect.removeAttr('required');
                     kkSelect.attr('required', true);
                 } else {
+                    // Logic for all other types (termasuk Masuk Domisili yang sudah di-preselect)
                     pemohonSelectContainer.show();
                     kkSelectContainer.hide();
                     pemohonTitle.show();
@@ -458,19 +528,65 @@
                     kkSelect.removeAttr('required');
                 }
 
+                // --- Update fields yang umum untuk semua surat ---
                 $('#jenis_surat_kode').val(newCode).attr('placeholder', newCode);
 
-                if (pembukaField.val().trim() === initialPembuka || pembukaField.val().trim() === '') {
+                // Update paragraf pembuka/penutup
+                if (pembukaField.val().trim() === initialPembuka || pembukaField.val().trim() === '' ||
+                    jenisSuratSelect.is(':disabled')) {
                     pembukaField.val(newPembuka);
                 }
-                if (penutupField.val().trim() === initialPenutup || penutupField.val().trim() === '') {
+                if (penutupField.val().trim() === initialPenutup || penutupField.val().trim() === '' ||
+                    jenisSuratSelect.is(':disabled')) {
                     penutupField.val(newPenutup);
                 }
 
                 renderCustomFields(selectedId);
+            };
+
+            // ------------------------------------------------------------------------
+            // **FLOW INITIALIZATION**
+            // ------------------------------------------------------------------------
+
+            // --- 1. HANDLE PRA-PILIH DARI CONTROLLER ---
+            if (preselectedJenisSuratId && preselectedPemohonId) {
+                // Set nilai pada select box
+                jenisSuratSelect.val(preselectedJenisSuratId);
+                anggotaSelect.val(preselectedPemohonId);
+
+                // **Blokir perubahan jenis surat untuk mencegah modal muncul**
+                jenisSuratSelect.attr('disabled', 'disabled');
+
+                // Panggil fungsi perubahan TANPA mengecek modal (skipModalCheck = true)
+                handleJenisSuratChange(true);
+                initialChangeDone = true; // Tandai bahwa perubahan awal sudah dilakukan
+            }
+
+            // --- 2. SETUP EVENT LISTENERS ---
+
+            handleStatusChange();
+            statusSelect.on('change', handleStatusChange);
+
+            // Pasang handler ke event 'change' SELECT BOX
+            jenisSuratSelect.on('change', function() {
+                handleJenisSuratChange(false); // Selalu cek modal ketika user mengubah manual
             });
 
-            jenisSuratSelect.trigger('change');
+            // --- 3. EVENT LISTENER UNTUK TOMBOL BATAL DI MODAL ---
+            $('#batalMasukKK').on('click', function() {
+                if (kkMasukModal.length) {
+                    kkMasukModal.modal('hide');
+                }
+                jenisSuratSelect.val('');
+                // Panggil change untuk mereset tampilan form ke kondisi default
+                handleJenisSuratChange(true);
+            });
+
+            // --- 4. FINAL TRIGGER ---
+            // Jika tidak ada preselection (initialChangeDone = false), panggil change untuk inisialisasi default
+            if (!initialChangeDone) {
+                handleJenisSuratChange(true);
+            }
         });
     </script>
 @endpush

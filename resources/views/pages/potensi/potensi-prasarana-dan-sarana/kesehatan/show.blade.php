@@ -13,6 +13,7 @@
                 <div class="d-flex align-items-center">
                     <div>
                         <h3 class="mb-0 fw-bold text-dark">
+                            {{ $prasaranaKesehatan->desa->nama_desa }} -
                             {{ $prasaranaKesehatan->tanggal?->format('d F Y') ?? '-' }}
                         </h3>
                     </div>
@@ -42,7 +43,7 @@
                                         <div class="flex-grow-1 ms-3">
                                             <label class="text-muted small mb-1 d-block">Jenis Prasarana Kesehatan</label>
                                             <h6 class="mb-0 fw-bold text-dark">
-                                                {{ $prasaranaKesehatan->jpkesehatan?->nama ?? '-' }}</h6>
+                                                {{ $prasaranaKesehatan->jenisPrasaranaKesehatan?->nama ?? '-' }}</h6>
                                         </div>
                                     </div>
                                 </div>

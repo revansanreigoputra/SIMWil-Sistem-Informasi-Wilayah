@@ -13,7 +13,8 @@ class EnergiPeneranganController extends Controller
      */
     public function index()
     {
-        $energiPenerangans = EnergiPenerangan::orderBy('tanggal', 'desc')->paginate(10);
+        $desaId = session('desa_id');
+        $energiPenerangans = EnergiPenerangan::with('desa')->where('desa_id', $desaId)->orderBy('tanggal', 'desc')->paginate(10);
         return view('pages.potensi.potensi-prasarana-dan-sarana.energiPenerangan.index', compact('energiPenerangans'));
     }
 
@@ -47,7 +48,10 @@ class EnergiPeneranganController extends Controller
                 ->withInput();
         }
 
-        EnergiPenerangan::create($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        EnergiPenerangan::create($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.energiPenerangan.index')
             ->with('success', 'Data Energi Penerangan berhasil ditambahkan.');

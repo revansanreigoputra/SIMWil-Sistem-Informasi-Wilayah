@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\MasterPotensi\JenisSaranaKesehatan;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,11 +12,12 @@ class Saranakesehatan extends Model
 
     protected $table = 'saranakesehatans';
     protected $fillable = [
+        'desa_id',
         'tanggal',
-        'jskesehatan_id',
+        'jenis_sarana_kesehatan_id',
         'jumlah',
     ];
-    
+
     protected $casts = [
         'tanggal' => 'date',
     ];
@@ -23,8 +25,16 @@ class Saranakesehatan extends Model
     /**
      * Relasi ke Jenis Sarana Kesehatan
      */
-    public function jskesehatan()
+    public function jenisSaranaKesehatan()
     {
-        return $this->belongsTo(Jskesehatan::class, 'jskesehatan_id');
+        return $this->belongsTo(JenisSaranaKesehatan::class, 'jenis_sarana_kesehatan_id');
+    }
+
+    /**
+     * Relasi ke Desa
+     */
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class, 'desa_id');
     }
 }

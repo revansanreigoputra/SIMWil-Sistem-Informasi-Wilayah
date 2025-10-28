@@ -18,22 +18,11 @@
                     <input type="date" name="tanggal" class="form-control" value="{{ old('tanggal', $pengangguran->tanggal) }}" required>
                 </div>
                 <div class="col-md-6 mb-2">
-                    <label>Kecamatan</label>
-                    <select name="id_kecamatan" id="id_kecamatan" class="form-control" required>
-                        <option value="">-- Pilih Kecamatan --</option>
-                        @foreach($kecamatans as $kec)
-                            <option value="{{ $kec->id }}" {{ old('id_kecamatan', $pengangguran->id_kec) == $kec->id ? 'selected' : '' }}>
-                                {{ $kec->nama_kecamatan }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-6 mb-2">
                     <label>Desa</label>
                     <select name="id_desa" id="id_desa" class="form-control" required>
                         <option value="">-- Pilih Desa --</option>
                         @foreach($desas as $desa)
-                            <option value="{{ $desa->id }}" data-kec="{{ $desa->id_kec }}" {{ old('id_desa', $pengangguran->id_desa) == $desa->id ? 'selected' : '' }}>
+                            <option value="{{ $desa->id }}" {{ old('id_desa', $pengangguran->id_desa) == $desa->id ? 'selected' : '' }}>
                                 {{ $desa->nama_desa }}
                             </option>
                         @endforeach
@@ -80,27 +69,3 @@
     </div>
 </div>
 @endsection
-
-@push('addon-script')
-<script>
-$(document).ready(function() {
-    function filterDesa() {
-        var kecId = $('#id_kecamatan').val();
-        $('#id_desa option').each(function() {
-            var desaKec = $(this).data('kec');
-            if(!desaKec || kecId == desaKec) {
-                $(this).show();
-            } else {
-                $(this).hide();
-            }
-        });
-        if($('#id_desa option:selected').is(':hidden')) {
-            $('#id_desa').val('');
-        }
-    }
-
-    $('#id_kecamatan').change(filterDesa);
-    filterDesa(); // filter saat load halaman
-});
-</script>
-@endpush

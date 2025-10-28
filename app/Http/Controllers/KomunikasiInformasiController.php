@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Desa;
 use App\Models\KomunikasiInformasi;
-use App\Models\KategoriKomunikasi;
-use App\Models\JenisKomunikasi;
+use App\Models\MasterPotensi\KategoriPrasaranaKomunikasiInformasi as KategoriKomunikasi;
+use App\Models\MasterPotensi\JenisPrasaranaKomunikasiInformasi as JenisKomunikasi;
 use Illuminate\Http\Request;
 
 class KomunikasiInformasiController extends Controller
@@ -15,7 +15,8 @@ class KomunikasiInformasiController extends Controller
      */
     public function index()
     {
-        $komunikasiInformasis = KomunikasiInformasi::with(['desa', 'kategori', 'jenis'])->orderBy('tanggal', 'desc')->paginate(10);
+        $desaId = session('desa_id');
+        $komunikasiInformasis = KomunikasiInformasi::where('desa_id', $desaId)->with(['desa', 'kategori', 'jenis'])->orderBy('tanggal', 'desc')->paginate(10);
         return view('pages.potensi.potensi-prasarana-dan-sarana.komunikasiinformasi.index', compact('komunikasiInformasis'));
     }
 
@@ -24,9 +25,8 @@ class KomunikasiInformasiController extends Controller
      */
     public function create()
     {
-        $desas = Desa::all();
         $kategoris = KategoriKomunikasi::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.komunikasiinformasi.create', compact('desas', 'kategoris'));
+        return view('pages.potensi.potensi-prasarana-dan-sarana.komunikasiinformasi.create', compact('kategoris'));
     }
 
     /**
@@ -35,13 +35,14 @@ class KomunikasiInformasiController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
-            'kategori_id' => 'required|exists:kategori_komunikasis,id',
-            'jenis_id' => 'required|exists:jenis_komunikasis,id',
+            'kategori_id' => 'required|exists:kategori_prasarana_komunikasi_informasi,id',
+            'jenis_id' => 'required|exists:jenis_prasarana_komunikasi_informasi,id',
             'jumlah' => 'required|integer|min:0',
             'satuan' => 'required|string|max:255',
         ]);
+
+        $validated['desa_id'] = session('desa_id');
 
         KomunikasiInformasi::create($validated);
 
@@ -63,10 +64,9 @@ class KomunikasiInformasiController extends Controller
     public function edit(KomunikasiInformasi $komunikasiInformasi)
     {
         $komunikasiInformasi->load(['desa', 'kategori', 'jenis']);
-        $desas = Desa::all();
         $kategoris = KategoriKomunikasi::all();
-        $jenises = JenisKomunikasi::where('kategori_id', $komunikasiInformasi->kategori_id)->get();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.komunikasiinformasi.edit', compact('komunikasiInformasi', 'desas', 'kategoris', 'jenises'));
+        $jenises = JenisKomunikasi::where('kategori_prasarana_komunikasi_informasi_id', $komunikasiInformasi->kategori_id)->get();
+        return view('pages.potensi.potensi-prasarana-dan-sarana.komunikasiinformasi.edit', compact('komunikasiInformasi', 'kategoris', 'jenises'));
     }
 
     /**
@@ -75,10 +75,9 @@ class KomunikasiInformasiController extends Controller
     public function update(Request $request, KomunikasiInformasi $komunikasiInformasi)
     {
         $validated = $request->validate([
-            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
-            'kategori_id' => 'required|exists:kategori_komunikasis,id',
-            'jenis_id' => 'required|exists:jenis_komunikasis,id',
+            'kategori_id' => 'required|exists:kategori_prasarana_komunikasi_informasi,id',
+            'jenis_id' => 'required|exists:jenis_prasarana_komunikasi_informasi,id',
             'jumlah' => 'required|integer|min:0',
             'satuan' => 'required|string|max:255',
         ]);
@@ -103,7 +102,7 @@ class KomunikasiInformasiController extends Controller
      */
     public function getJenisByKategori($kategori_id)
     {
-        $jenises = JenisKomunikasi::where('kategori_id', $kategori_id)->get();
+        $jenises = JenisKomunikasi::where('kategori_prasarana_komunikasi_informasi_id', $kategori_id)->get();
         return response()->json($jenises);
     }
 }

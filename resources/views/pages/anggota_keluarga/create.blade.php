@@ -30,6 +30,9 @@
                         <div class="col-md-4">
                             <label class="form-label">No Urut dalam KK</label>
                             <input type="number" name="no_urut" class="form-control" value="{{ old('no_urut') }}">
+                            @error('no_urut')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="col-md-8">
                             <label class="form-label">NIK <span class="text-danger">*</span></label>

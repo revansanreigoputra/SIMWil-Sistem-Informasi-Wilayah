@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\MasterPotensi\JenisPrasaranaKesehatan;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,8 +13,9 @@ class Prasaranakesehatan extends Model
     protected $table = 'prasaranakesehatans';
     protected $fillable = [
         'tanggal',
-        'jpkesehatan_id',
+        'jenis_prasarana_kesehatan_id',
         'jumlah',
+        'desa_id',
     ];
 
     protected $casts = [
@@ -21,10 +23,20 @@ class Prasaranakesehatan extends Model
     ];
 
     /**
-     * Relasi ke Jpkesehatan (many to one)
+     * Relasi ke jenis prasarana kesehatan
+     * Setiap prasarana kesehatan dimiliki oleh satu jenis prasarana
      */
-    public function jpkesehatan()
+    public function jenisPrasaranaKesehatan()
     {
-        return $this->belongsTo(Jpkesehatan::class, 'jpkesehatan_id');
+        return $this->belongsTo(JenisPrasaranaKesehatan::class, 'jenis_prasarana_kesehatan_id');
+    }
+
+    /**
+     * Relasi ke desa
+     * Setiap prasarana kesehatan dimiliki oleh satu desa
+     */
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class, 'desa_id');
     }
 }

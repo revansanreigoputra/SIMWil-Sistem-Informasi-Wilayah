@@ -10,20 +10,19 @@ class IrigasiController extends Controller
 {
     public function index()
     {
-        $irigasis = Irigasi::with('desa')->get();
+        $desaId = session('desa_id');
+        $irigasis = Irigasi::with('desa')->where('desa_id', $desaId)->get();
         return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-dan-irigasi.index', compact('irigasis'));
     }
 
     public function create()
     {
-        $desas = Desa::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-dan-irigasi.create', compact('desas'));
+        return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-dan-irigasi.create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'saluran_primer' => 'required|numeric|min:0',
             'saluran_primer_rusak' => 'required|numeric|min:0|lte:saluran_primer',
@@ -37,7 +36,10 @@ class IrigasiController extends Controller
             'pintu_pembagi_air_rusak' => 'required|integer|min:0|lte:pintu_pembagi_air',
         ]);
 
-        Irigasi::create($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        Irigasi::create($data);
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.irigasi.index')->with('success', 'Irigasi created successfully.');
     }
 
@@ -48,14 +50,12 @@ class IrigasiController extends Controller
 
     public function edit(Irigasi $irigasi)
     {
-        $desas = Desa::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-dan-irigasi.edit', compact('irigasi', 'desas'));
+        return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-dan-irigasi.edit', compact('irigasi'));
     }
 
     public function update(Request $request, Irigasi $irigasi)
     {
         $request->validate([
-            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             'saluran_primer' => 'required|numeric|min:0',
             'saluran_primer_rusak' => 'required|numeric|min:0|lte:saluran_primer',
@@ -69,7 +69,10 @@ class IrigasiController extends Controller
             'pintu_pembagi_air_rusak' => 'required|integer|min:0|lte:pintu_pembagi_air',
         ]);
 
-        $irigasi->update($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        $irigasi->update($data);
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.irigasi.index')->with('success', 'Irigasi updated successfully.');
     }
 

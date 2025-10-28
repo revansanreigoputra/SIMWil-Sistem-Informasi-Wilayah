@@ -14,7 +14,8 @@ class KemasyarakatanController extends Controller
      */
     public function index()
     {
-        $kemasyarakatans = Kemasyarakatan::with('desa')->orderBy('tanggal', 'desc')->paginate(10);
+        $desaId = session('desa_id');
+        $kemasyarakatans = Kemasyarakatan::with('desa')->where('desa_id', $desaId)->orderBy('tanggal', 'desc')->paginate(10);
         return view('pages.potensi.potensi-prasarana-dan-sarana.kemasyarakatan.index', compact('kemasyarakatans'));
     }
 
@@ -23,8 +24,7 @@ class KemasyarakatanController extends Controller
      */
     public function create()
     {
-        $desas = Desa::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.kemasyarakatan.create', compact('desas'));
+        return view('pages.potensi.potensi-prasarana-dan-sarana.kemasyarakatan.create');
     }
 
     /**
@@ -33,7 +33,6 @@ class KemasyarakatanController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             // GEDUNG KANTOR LKD/LKK
             'gedung_lembaga_kemasyarakatan' => 'nullable|in:Ada,Tidak Ada',
@@ -109,8 +108,11 @@ class KemasyarakatanController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
+        
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
 
-        Kemasyarakatan::create($request->all());
+        Kemasyarakatan::create($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.kemasyarakatan.index')
             ->with('success', 'Data Kemasyarakatan berhasil ditambahkan.');
@@ -129,8 +131,7 @@ class KemasyarakatanController extends Controller
      */
     public function edit(Kemasyarakatan $kemasyarakatan)
     {
-        $desas = Desa::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.kemasyarakatan.edit', compact('kemasyarakatan', 'desas'));
+        return view('pages.potensi.potensi-prasarana-dan-sarana.kemasyarakatan.edit', compact('kemasyarakatan'));
     }
 
     /**
@@ -139,7 +140,6 @@ class KemasyarakatanController extends Controller
     public function update(Request $request, Kemasyarakatan $kemasyarakatan)
     {
         $validator = Validator::make($request->all(), [
-            'desa_id' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
             // GEDUNG KANTOR LKD/LKK
             'gedung_lembaga_kemasyarakatan' => 'nullable|in:Ada,Tidak Ada',
