@@ -405,6 +405,28 @@
                                         </div>
                                     </div>
 
+                                    {{-- Potensi Sumber Daya Alam --}}
+                                    <div class="dropend">
+                                        <a class="dropdown-item dropdown-toggle {{ request()->is('potensi/sda*') ? 'active' : '' }}"
+                                            href="#sidebar-potensi-prasarana" data-bs-toggle="dropdown"
+                                            data-bs-auto-close="false" role="button" aria-expanded="false">
+                                            Potensi Sumber <br> Daya Alam
+                                        </a>
+
+                                        <div
+                                            class="dropdown-menu {{ request()->is('potensi/sda*') ? 'show' : '' }}">
+
+                                            @can('batas_wilayah.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/topografi*') ? 'active' : '' }}"
+                                                    href="{{ route('topografi.index') }}">
+                                                    Topografi
+                                                </a>
+                                            @endcan
+
+                                        </div>
+                                    </div>
+
+
                                     {{-- Potensi Sumber Daya Manusia --}}
                                     <div class="dropend">
                                         <a class="dropdown-item dropdown-toggle {{ request()->is('potensi/potensi-sdm*') ? 'active' : '' }}"

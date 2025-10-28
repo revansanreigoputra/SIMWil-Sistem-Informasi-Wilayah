@@ -166,6 +166,10 @@ use app\Http\Controllers\PemilikAsetEkonomiLainnyaController;
 use App\Models\LayananSurat\JenisSurat;
 use App\Models\LayananSurat\KopTemplate;
 
+// POTENSI SDA
+use App\Http\Controllers\TopografiController;
+
+
 // kelembagaan
 use App\Http\Controllers\LembagaAdatController;
 use App\Http\Controllers\SaranaTransportasiController;
@@ -584,6 +588,17 @@ Route::middleware(['auth'])->prefix('potensi/potensi-prasarana-dan-sarana/irigas
     Route::get('/{irigasi}/edit', [IrigasiController::class, 'edit'])->name('edit');
     Route::put('/{irigasi}', [IrigasiController::class, 'update'])->name('update');
     Route::delete('/{irigasi}', [IrigasiController::class, 'destroy'])->name('destroy');
+});
+
+// Topografi routes
+Route::middleware(['auth'])->prefix('potensi/sda/topografi')->name('topografi.')->group(function () {
+    Route::get('/', [TopografiController::class, 'index'])->name('index');
+    Route::get('/create', [TopografiController::class, 'create'])->name('create');
+    Route::post('/', [TopografiController::class, 'store'])->name('store');
+    Route::get('/{topografi}', [TopografiController::class, 'show'])->name('show');
+    Route::get('/{topografi}/edit', [TopografiController::class, 'edit'])->name('edit');
+    Route::put('/{topografi}', [TopografiController::class, 'update'])->name('update');
+    Route::delete('/{topografi}', [TopografiController::class, 'destroy'])->name('destroy');
 });
 
 //APB Desa Routes
