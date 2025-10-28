@@ -591,7 +591,15 @@ class PermissionSeeder extends Seeder
                 'sektor-listrik-gas-air-minum.edit',
                 'sektor-listrik-gas-air-minum.destroy',
 
-              
+                // sektor perdagangan dan hotel]
+
+                'sektor-perdagangan-hotel-restoran.view',
+                'sektor-perdagangan-hotel-restoran.create',
+                'sektor-perdagangan-hotel-restoran.show',
+                'sektor-perdagangan-hotel-restoran.edit',
+                'sektor-perdagangan-hotel-restoran.destroy',
+
+                            
 
             // Pertanggungjawaban
             'pertanggungjawaban.view', 

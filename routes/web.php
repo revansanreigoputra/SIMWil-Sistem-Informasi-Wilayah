@@ -143,6 +143,7 @@ use App\Http\Controllers\SektorJasaJasaController;
 use App\Http\Controllers\SektorKeuanganJasaPerusahaanController;
 use App\Http\Controllers\SektorAngkutanKomunikasiController;
 use App\Http\Controllers\SektorListrikGasAirMinumController;
+use App\Http\Controllers\SektorPerdaganganHotelRestoranController;
 
 
 
@@ -1185,7 +1186,29 @@ Route::prefix('perkembangan/produk-domestik')->name('perkembangan.produk-domesti
     Route::resource('sektor-listrik-gas-air-minum', App\Http\Controllers\SektorListrikGasAirMinumController::class);
 });
 
+// Sektor perdagangan dan hotel
+
+// Sektor perdagangan dan hotel
+Route::prefix('perkembangan/produk-domestik')->group(function () {
+    Route::resource('sektor-perdagangan-hotel-restoran', SektorPerdaganganHotelRestoranController::class)
+        ->parameters(['sektor-perdagangan-hotel-restoran' => 'perdagangan'])
+        ->names([
+            'index'   => 'perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.index',
+            'create'  => 'perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.create',
+            'store'   => 'perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.store',
+            'show'    => 'perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.show',
+            'edit'    => 'perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.edit',
+            'update'  => 'perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.update',
+            'destroy' => 'perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.destroy',
+        ]);
+});
+Route::get('sektor-perdagangan-hotel-restoran', function () {
+    return redirect()->route('perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.index');
+})->name('sektor-perdagangan-hotel-restoran.index');
+
+
 // ==== PERMOHONAN SURAT ====
+
 
 // new
 Route::get('/permohonan', [PermohonanSuratController::class, 'index'])->name('layanan.permohonan.index');

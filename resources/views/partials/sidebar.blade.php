@@ -1007,6 +1007,16 @@
                                                     Sektor listrik, Gas <br> dan minum
                                                 </a>
                                             @endcan
+
+                                                @can('sektor-perdagangan-hotel-restoran.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/sektor-perdagangan-hotel-restoran') ? 'active' : '' }}"
+                                                href="{{ route('perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.index') }}">
+                                                    Sektor perdagangan <br> hotel dan restoran 
+                                                </a>
+                                            @endcan
+
+
+                                           
                                         </div>
 
                                         </div>
