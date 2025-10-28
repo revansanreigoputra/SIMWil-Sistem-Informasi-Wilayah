@@ -401,6 +401,14 @@ class PermissionSeeder extends Seeder
             'jlahan.edit',
             'jlahan.update',
             'jlahan.delete',
+            
+            // iklim
+            'iklim.view',
+            'iklim.create',
+            'iklim.store',
+            'iklim.edit',
+            'iklim.update',
+            'iklim.delete',
 
             // pengangguran
             'pengangguran.view',

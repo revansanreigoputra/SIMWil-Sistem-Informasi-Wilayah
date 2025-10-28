@@ -175,6 +175,7 @@ use App\Http\Controllers\JlahanController;
 use App\Http\Controllers\LembagaAdatController;
 use App\Http\Controllers\SaranaTransportasiController;
 use App\Http\Controllers\BatasWilayahController;
+use App\Http\Controllers\IklimTanahErosiController;
 use App\Http\Controllers\JenisTransportasiController;
 use App\Http\Controllers\KomunikasiInformasiController;
 use App\Http\Controllers\PrasaranaPeribadatanController;
@@ -600,6 +601,17 @@ Route::middleware(['auth'])->prefix('potensi/sda/topografi')->name('topografi.')
     Route::get('/{topografi}/edit', [TopografiController::class, 'edit'])->name('edit');
     Route::put('/{topografi}', [TopografiController::class, 'update'])->name('update');
     Route::delete('/{topografi}', [TopografiController::class, 'destroy'])->name('destroy');
+});
+
+// Iklim routes
+Route::middleware(['auth'])->prefix('potensi/sda/iklim')->name('iklim.')->group(function () {
+    Route::get('/', [IklimTanahErosiController::class, 'index'])->name('index');
+    Route::get('/create', [IklimTanahErosiController::class, 'create'])->name('create');
+    Route::post('/', [IklimTanahErosiController::class, 'store'])->name('store');
+    Route::get('/{iklim}', [IklimTanahErosiController::class, 'show'])->name('show');
+    Route::get('/{iklim}/edit', [IklimTanahErosiController::class, 'edit'])->name('edit');
+    Route::put('/{iklim}', [IklimTanahErosiController::class, 'update'])->name('update');
+    Route::delete('/{iklim}', [IklimTanahErosiController::class, 'destroy'])->name('destroy');
 });
 
 // Jlahan routes
