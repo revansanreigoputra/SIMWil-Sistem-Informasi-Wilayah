@@ -92,8 +92,9 @@ class SektorPertambanganController extends Controller
                          ->with('success', 'Data pertambangan berhasil dihapus.');
     }
 
-    public function show(SektorPertambangan $sektor_pertambangan)
-    {
-        return view('pages.perkembangan.produk-domestik.sektor-pertambangan.show', compact('sektor_pertambangan'));
-    }
+    public function show($id)
+{
+    $pertambangan = SektorPertambangan::with('desa')->findOrFail($id);
+    return view('perkembangan.produk_domestik.sektor_pertambangan.show', compact('pertambangan'));
+}
 }

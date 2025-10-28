@@ -28,13 +28,13 @@
                 <tbody>
                     @foreach($data as $row)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $row->desa->nama_desa ?? '-' }}</td>
-                        <td>{{ $row->tanggal }}</td>
-                        <td>{{ $row->total_jenis_perdagangan_besar ?? 0 }}</td>
-                        <td>{{ $row->total_jenis_perdagangan_kecil ?? 0 }}</td>
-                        <td>{{ $row->total_penginapan ?? 0 }}</td>
-                        <td>{{ $row->total_tempat_konsumsi ?? 0 }}</td>
+                        <td class="text-center">{{ $loop->iteration }}</td>
+                        <td class="text-center">{{ $row->desa->nama_desa ?? '-' }}</td>
+                        <td class="text-center">{{ $row->tanggal }}</td>
+                        <td class="text-center">{{ $row->total_jenis_perdagangan_besar ?? 0 }}</td>
+                        <td class="text-center">{{ $row->total_jenis_perdagangan_kecil ?? 0 }}</td>
+                        <td class="text-center">{{ $row->total_penginapan ?? 0 }}</td>
+                        <td class="text-center">{{ $row->total_tempat_konsumsi ?? 0 }}</td>
                         <td>
                             <a href="{{ route('perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.show', $row->id) }}" class="btn btn-info btn-sm">Detail</a>
                         <a href="{{ route('perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.edit', $row->id) }}" class="btn btn-warning btn-sm">Edit</a>

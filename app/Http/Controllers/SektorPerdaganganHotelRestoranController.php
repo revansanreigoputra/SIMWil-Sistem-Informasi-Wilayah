@@ -51,9 +51,10 @@ class SektorPerdaganganHotelRestoranController extends Controller
 
 public function show($id)
 {
-    $perdagangan = SektorPerdaganganHotelRestoran::with('desa')->findOrFail($id);
-    return view('pages.perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.show', compact('perdagangan'));
+    $data = SektorPerdaganganHotelRestoran::with('desa')->findOrFail($id);
+    return view('pages.perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.show', compact('data'));
 }
+
 
     public function update(Request $request, $id)
     {
