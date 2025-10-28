@@ -3,17 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\TingkatPendidikanMasyarakat;
-use App\Models\Desa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class TingkatPendidikanMasyarakatController extends Controller
 {
     /**
-     * Tampilkan semua data.
+     * Tampilkan semua data sesuai desa dari session.
      */
     public function index()
     {
-        $items = TingkatPendidikanMasyarakat::with('desa')->latest()->paginate(10);
+        $desaId = session('desa_id');
+
+        $items = TingkatPendidikanMasyarakat::with('desa')
+            ->where('desa_id', $desaId)
+            ->latest()
+            ->paginate(10);
+
         return view('pages.perkembangan.pendidikanmasyarakat.tingkat_pendidikan_masyarakat.index', compact('items'));
     }
 
@@ -22,8 +28,8 @@ class TingkatPendidikanMasyarakatController extends Controller
      */
     public function create()
     {
-        $desas = Desa::all();
-        return view('pages.perkembangan.pendidikanmasyarakat.tingkat_pendidikan_masyarakat.create', compact('desas'));
+        // Tidak perlu ambil desa lagi karena pakai session
+        return view('pages.perkembangan.pendidikanmasyarakat.tingkat_pendidikan_masyarakat.create');
     }
 
     /**
@@ -31,24 +37,30 @@ class TingkatPendidikanMasyarakatController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'desa_id' => 'required|exists:desas,id',
+        $validator = Validator::make($request->all(), [
             'tanggal' => 'required|date',
-            'tidak_tamat_sd' => 'nullable|integer',
-            'sd' => 'nullable|integer',
-            'sltp' => 'nullable|integer',
-            'slta' => 'nullable|integer',
-            'diploma' => 'nullable|integer',
-            'sarjana' => 'nullable|integer',
-            'p_buta' => 'nullable|numeric',
-            'p_tamat' => 'nullable|numeric',
-            'p_cacat' => 'nullable|numeric',
+            'tidak_tamat_sd' => 'nullable|integer|min:0',
+            'sd' => 'nullable|integer|min:0',
+            'sltp' => 'nullable|integer|min:0',
+            'slta' => 'nullable|integer|min:0',
+            'diploma' => 'nullable|integer|min:0',
+            'sarjana' => 'nullable|integer|min:0',
+            'p_buta' => 'nullable|numeric|min:0',
+            'p_tamat' => 'nullable|numeric|min:0',
+            'p_cacat' => 'nullable|numeric|min:0',
         ]);
 
-        TingkatPendidikanMasyarakat::create($validated);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        TingkatPendidikanMasyarakat::create($data);
 
         return redirect()->route('perkembangan.pendidikanmasyarakat.tingkat_pendidikan_masyarakat.index')
-                         ->with('success', 'Data berhasil ditambahkan!');
+            ->with('success', 'Data berhasil ditambahkan!');
     }
 
     /**
@@ -66,8 +78,7 @@ class TingkatPendidikanMasyarakatController extends Controller
     public function edit($id)
     {
         $item = TingkatPendidikanMasyarakat::findOrFail($id);
-        $desas = Desa::all();
-        return view('pages.perkembangan.pendidikanmasyarakat.tingkat_pendidikan_masyarakat.edit', compact('item', 'desas'));
+        return view('pages.perkembangan.pendidikanmasyarakat.tingkat_pendidikan_masyarakat.edit', compact('item'));
     }
 
     /**
@@ -75,25 +86,31 @@ class TingkatPendidikanMasyarakatController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'desa_id' => 'required|exists:desas,id',
+        $validator = Validator::make($request->all(), [
             'tanggal' => 'required|date',
-            'tidak_tamat_sd' => 'nullable|integer',
-            'sd' => 'nullable|integer',
-            'sltp' => 'nullable|integer',
-            'slta' => 'nullable|integer',
-            'diploma' => 'nullable|integer',
-            'sarjana' => 'nullable|integer',
-            'p_buta' => 'nullable|numeric',
-            'p_tamat' => 'nullable|numeric',
-            'p_cacat' => 'nullable|numeric',
+            'tidak_tamat_sd' => 'nullable|integer|min:0',
+            'sd' => 'nullable|integer|min:0',
+            'sltp' => 'nullable|integer|min:0',
+            'slta' => 'nullable|integer|min:0',
+            'diploma' => 'nullable|integer|min:0',
+            'sarjana' => 'nullable|integer|min:0',
+            'p_buta' => 'nullable|numeric|min:0',
+            'p_tamat' => 'nullable|numeric|min:0',
+            'p_cacat' => 'nullable|numeric|min:0',
         ]);
 
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $item = TingkatPendidikanMasyarakat::findOrFail($id);
-        $item->update($validated);
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        $item->update($data);
 
         return redirect()->route('perkembangan.pendidikanmasyarakat.tingkat_pendidikan_masyarakat.index')
-                         ->with('success', 'Data berhasil diperbarui!');
+            ->with('success', 'Data berhasil diperbarui!');
     }
 
     /**
@@ -105,6 +122,6 @@ class TingkatPendidikanMasyarakatController extends Controller
         $item->delete();
 
         return redirect()->route('perkembangan.pendidikanmasyarakat.tingkat_pendidikan_masyarakat.index')
-                         ->with('success', 'Data berhasil dihapus!');
+            ->with('success', 'Data berhasil dihapus!');
     }
 }

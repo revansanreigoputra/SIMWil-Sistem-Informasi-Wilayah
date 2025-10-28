@@ -1,105 +1,95 @@
 @extends('layouts.master')
 
-@section('title', 'Tambah Data Rasio Guru & Murid')
+@section('title', 'Tambah Data Rasio Guru dan Murid')
 
 @section('content')
 <div class="card">
     <div class="card-header">
-        <h5 class="card-title">🧾 Form Tambah Data Rasio Guru & Murid</h5>
+        <h5 class="card-title">🧾 Form Tambah Data Rasio Guru dan Murid</h5>
     </div>
 
     <div class="card-body">
         <form action="{{ route('perkembangan.pendidikanmasyarakat.rasio_guru_dan_murid.store') }}" method="POST">
             @csrf
 
-            {{-- Baris 1: Desa & Tanggal --}}
+            {{-- Tanggal --}}
             <div class="row">
                 <div class="col-md-6 mb-2">
-                    <label>Desa</label>
-                    <select name="id_desa" class="form-control" required>
-                        <option value="">-- Pilih Desa --</option>
-                        @foreach($desas as $desa)
-                            <option value="{{ $desa->id }}">{{ $desa->nama_desa }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="col-md-6 mb-2">
-                    <label>Tanggal</label>
-                    <input type="date" name="tanggal" class="form-control" required>
+                    <label for="tanggal">Tanggal</label>
+                    <input type="date" id="tanggal" name="tanggal" class="form-control" value="{{ old('tanggal') }}" required>
                 </div>
             </div>
 
-            {{-- Baris 2: TK --}}
+            {{-- TK --}}
             <div class="row mt-2">
                 <div class="col-md-6 mb-2">
-                    <label>Jumlah Guru TK/KB (Orang)</label>
-                    <input type="number" name="guru_tk" id="guru_tk" class="form-control" value="0" required>
+                    <label for="guru_tk">Jumlah Guru TK/KB (Orang)</label>
+                    <input type="number" id="guru_tk" name="guru_tk" class="form-control" value="{{ old('guru_tk') }}" required>
                 </div>
+
                 <div class="col-md-6 mb-2">
-                    <label>Jumlah Siswa TK/KB (Orang)</label>
-                    <input type="number" name="siswa_tk" id="siswa_tk" class="form-control" value="0" required>
+                    <label for="siswa_tk">Jumlah Siswa TK/KB (Orang)</label>
+                    <input type="number" id="siswa_tk" name="siswa_tk" class="form-control" value="{{ old('siswa_tk') }}" required>
                 </div>
             </div>
 
-            {{-- Baris 3: SD --}}
+            {{-- SD --}}
             <div class="row mt-2">
                 <div class="col-md-6 mb-2">
-                    <label>Jumlah Guru SD (Orang)</label>
-                    <input type="number" name="guru_sd" id="guru_sd" class="form-control" value="0" required>
+                    <label for="guru_sd">Jumlah Guru SD (Orang)</label>
+                    <input type="number" id="guru_sd" name="guru_sd" class="form-control" value="{{ old('guru_sd') }}" required>
                 </div>
+
                 <div class="col-md-6 mb-2">
-                    <label>Jumlah Siswa SD (Orang)</label>
-                    <input type="number" name="siswa_sd" id="siswa_sd" class="form-control" value="0" required>
+                    <label for="siswa_sd">Jumlah Siswa SD (Orang)</label>
+                    <input type="number" id="siswa_sd" name="siswa_sd" class="form-control" value="{{ old('siswa_sd') }}" required>
                 </div>
             </div>
 
-            {{-- Baris 4: SLTP --}}
+            {{-- SLTP --}}
             <div class="row mt-2">
                 <div class="col-md-6 mb-2">
-                    <label>Jumlah Guru SLTP (Orang)</label>
-                    <input type="number" name="guru_sltp" id="guru_sltp" class="form-control" value="0" required>
+                    <label for="guru_sltp">Jumlah Guru SLTP (Orang)</label>
+                    <input type="number" id="guru_sltp" name="guru_sltp" class="form-control" value="{{ old('guru_sltp') }}" required>
                 </div>
+
                 <div class="col-md-6 mb-2">
-                    <label>Jumlah Siswa SLTP (Orang)</label>
-                    <input type="number" name="siswa_sltp" id="siswa_sltp" class="form-control" value="0" required>
+                    <label for="siswa_sltp">Jumlah Siswa SLTP (Orang)</label>
+                    <input type="number" id="siswa_sltp" name="siswa_sltp" class="form-control" value="{{ old('siswa_sltp') }}" required>
                 </div>
             </div>
 
-            {{-- Baris 5: SLTA --}}
+            {{-- SLTA --}}
             <div class="row mt-2">
                 <div class="col-md-6 mb-2">
-                    <label>Jumlah Guru SLTA (Orang)</label>
-                    <input type="number" name="guru_slta" id="guru_slta" class="form-control" value="0" required>
+                    <label for="guru_slta">Jumlah Guru SLTA (Orang)</label>
+                    <input type="number" id="guru_slta" name="guru_slta" class="form-control" value="{{ old('guru_slta') }}" required>
                 </div>
+
                 <div class="col-md-6 mb-2">
-                    <label>Jumlah Siswa SLTA (Orang)</label>
-                    <input type="number" name="siswa_slta" id="siswa_slta" class="form-control" value="0" required>
+                    <label for="siswa_slta">Jumlah Siswa SLTA (Orang)</label>
+                    <input type="number" id="siswa_slta" name="siswa_slta" class="form-control" value="{{ old('siswa_slta') }}" required>
                 </div>
             </div>
 
-            {{-- Baris 6: SLB --}}
+            {{-- SLB --}}
             <div class="row mt-2">
                 <div class="col-md-6 mb-2">
-                    <label>Jumlah Guru SLB (Orang)</label>
-                    <input type="number" name="guru_slb" id="guru_slb" class="form-control" value="0" required>
+                    <label for="guru_slb">Jumlah Guru SLB (Orang)</label>
+                    <input type="number" id="guru_slb" name="guru_slb" class="form-control" value="{{ old('guru_slb') }}" required>
                 </div>
+
                 <div class="col-md-6 mb-2">
-                    <label>Jumlah Siswa SLB (Orang)</label>
-                    <input type="number" name="siswa_slb" id="siswa_slb" class="form-control" value="0" required>
+                    <label for="siswa_slb">Jumlah Siswa SLB (Orang)</label>
+                    <input type="number" id="siswa_slb" name="siswa_slb" class="form-control" value="{{ old('siswa_slb') }}" required>
                 </div>
             </div>
 
-            {{-- Tombol Aksi --}}
+            {{-- Tombol --}}
             <div class="d-flex justify-content-between mt-3">
-                <a href="{{ route('perkembangan.pendidikanmasyarakat.rasio_guru_dan_murid.index') }}" class="btn btn-secondary">
-                    Kembali
-                </a>
-                <button type="submit" class="btn btn-primary">
-                    Simpan
-                </button>
+                <a href="{{ route('perkembangan.pendidikanmasyarakat.rasio_guru_dan_murid.index') }}" class="btn btn-secondary">Kembali</a>
+                <button type="submit" class="btn btn-success">Simpan</button>
             </div>
-
         </form>
     </div>
 </div>

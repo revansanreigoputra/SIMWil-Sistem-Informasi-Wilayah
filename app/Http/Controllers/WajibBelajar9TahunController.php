@@ -3,34 +3,56 @@
 namespace App\Http\Controllers;
 
 use App\Models\WajibBelajar9Tahun;
-use App\Models\Desa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class WajibBelajar9TahunController extends Controller
 {
     public function index()
     {
-        $items = WajibBelajar9Tahun::with('desa')->paginate(10);
+        $desaId = session('desa_id');
+        $items = WajibBelajar9Tahun::with('desa')
+            ->where('desa_id', $desaId)
+            ->orderBy('tanggal', 'desc')
+            ->paginate(10);
+
         return view('pages.perkembangan.pendidikanmasyarakat.wajib_belajar_9_tahun.index', compact('items'));
     }
 
     public function create()
     {
-        $desas = Desa::all();
-        return view('pages.perkembangan.pendidikanmasyarakat.wajib_belajar_9_tahun.create', compact('desas'));
+        return view('pages.perkembangan.pendidikanmasyarakat.wajib_belajar_9_tahun.create');
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'desa_id' => 'required|exists:desas,id',
+        $validator = Validator::make($request->all(), [
             'tanggal' => 'required|date',
-            'penduduk' => 'required|integer',
-            'masih_sekolah' => 'required|integer',
-            'tidak_sekolah' => 'required|integer',
+            'penduduk' => 'required|integer|min:0',
+            'masih_sekolah' => 'required|integer|min:0',
+            'tidak_sekolah' => 'required|integer|min:0',
         ]);
 
-        WajibBelajar9Tahun::create($request->all());
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $penduduk = $request->penduduk;
+        $masihSekolah = $request->masih_sekolah;
+        $tidakSekolah = $request->tidak_sekolah;
+
+        $persentaseMasih = $penduduk > 0 ? ($masihSekolah / $penduduk) * 100 : 0;
+        $persentaseTidak = $penduduk > 0 ? ($tidakSekolah / $penduduk) * 100 : 0;
+
+        WajibBelajar9Tahun::create([
+            'desa_id' => session('desa_id'),
+            'tanggal' => $request->tanggal,
+            'penduduk' => $penduduk,
+            'masih_sekolah' => $masihSekolah,
+            'tidak_sekolah' => $tidakSekolah,
+            'persentase_masih_sekolah' => $persentaseMasih,
+            'persentase_tidak_sekolah' => $persentaseTidak,
+        ]);
 
         return redirect()->route('perkembangan.pendidikanmasyarakat.wajib_belajar_9_tahun.index')
             ->with('success', 'Data Wajib Belajar 9 Tahun berhasil ditambahkan.');
@@ -45,22 +67,40 @@ class WajibBelajar9TahunController extends Controller
     public function edit($id)
     {
         $item = WajibBelajar9Tahun::findOrFail($id);
-        $desas = Desa::all();
-        return view('pages.perkembangan.pendidikanmasyarakat.wajib_belajar_9_tahun.edit', compact('item', 'desas'));
+        return view('pages.perkembangan.pendidikanmasyarakat.wajib_belajar_9_tahun.edit', compact('item'));
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'desa_id' => 'required|exists:desas,id',
+        $validator = Validator::make($request->all(), [
             'tanggal' => 'required|date',
-            'penduduk' => 'required|integer',
-            'masih_sekolah' => 'required|integer',
-            'tidak_sekolah' => 'required|integer',
+            'penduduk' => 'required|integer|min:0',
+            'masih_sekolah' => 'required|integer|min:0',
+            'tidak_sekolah' => 'required|integer|min:0',
         ]);
 
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $item = WajibBelajar9Tahun::findOrFail($id);
-        $item->update($request->all());
+
+        $penduduk = $request->penduduk;
+        $masihSekolah = $request->masih_sekolah;
+        $tidakSekolah = $request->tidak_sekolah;
+
+        $persentaseMasih = $penduduk > 0 ? ($masihSekolah / $penduduk) * 100 : 0;
+        $persentaseTidak = $penduduk > 0 ? ($tidakSekolah / $penduduk) * 100 : 0;
+
+        $item->update([
+            'desa_id' => session('desa_id'),
+            'tanggal' => $request->tanggal,
+            'penduduk' => $penduduk,
+            'masih_sekolah' => $masihSekolah,
+            'tidak_sekolah' => $tidakSekolah,
+            'persentase_masih_sekolah' => $persentaseMasih,
+            'persentase_tidak_sekolah' => $persentaseTidak,
+        ]);
 
         return redirect()->route('perkembangan.pendidikanmasyarakat.wajib_belajar_9_tahun.index')
             ->with('success', 'Data Wajib Belajar 9 Tahun berhasil diperbarui.');

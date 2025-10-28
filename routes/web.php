@@ -646,10 +646,10 @@ Route::middleware(['auth'])
         Route::get('/', [\App\Http\Controllers\PendapatanRillKeluargaController::class, 'index'])->name('index');
         Route::get('/create', [\App\Http\Controllers\PendapatanRillKeluargaController::class, 'create'])->name('create');
         Route::post('/store', [\App\Http\Controllers\PendapatanRillKeluargaController::class, 'store'])->name('store');
-        Route::get('/show/{id}', [\App\Http\Controllers\PendapatanRillKeluargaController::class, 'show'])->name('show'); // 👈 tambahkan ini
-        Route::get('/edit/{id}', [\App\Http\Controllers\PendapatanRillKeluargaController::class, 'edit'])->name('edit');
-        Route::put('/update/{id}', [\App\Http\Controllers\PendapatanRillKeluargaController::class, 'update'])->name('update');
-        Route::delete('/destroy/{id}', [\App\Http\Controllers\PendapatanRillKeluargaController::class, 'destroy'])->name('destroy');
+        Route::get('/show/{pendapatan_rill_keluarga}', [\App\Http\Controllers\PendapatanRillKeluargaController::class, 'show'])->name('show');
+        Route::get('/edit/{pendapatan_rill_keluarga}', [\App\Http\Controllers\PendapatanRillKeluargaController::class, 'edit'])->name('edit');
+        Route::put('/update/{pendapatan_rill_keluarga}', [\App\Http\Controllers\PendapatanRillKeluargaController::class, 'update'])->name('update');
+        Route::delete('/destroy/{pendapatan_rill_keluarga}', [\App\Http\Controllers\PendapatanRillKeluargaController::class, 'destroy'])->name('destroy');
     });
 
 // AJAX: Ambil desa berdasarkan kecamatan

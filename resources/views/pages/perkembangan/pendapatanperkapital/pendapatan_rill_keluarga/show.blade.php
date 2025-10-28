@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+@section('title', 'Detail Data Pendapatan Riil Keluarga')
+
 @section('content')
 <div class="container">
     <h4>Detail Data Pendapatan Riil Keluarga</h4>
@@ -7,8 +9,8 @@
         <div class="card-body">
             <table class="table table-borderless">
                 <tr>
-                    <th width="25%">Desa</th>
-                    <td>{{ $item->desa->nama_desa ?? '-' }}</td>
+                    <th width="30%">Desa</th>
+                    <td>{{ $item->desa->nama_desa ?? 'Tidak tersedia' }}</td>
                 </tr>
                 <tr>
                     <th>Tanggal</th>
@@ -40,9 +42,11 @@
                 </tr>
             </table>
 
-            <div class="mt-3">
-                <a href="{{ route('perkembangan.pendapatanperkapital.pendapatan_rill_keluarga.index') }}" class="btn btn-secondary">Kembali</a>
-                <a href="{{ route('perkembangan.pendapatanperkapital.pendapatan_rill_keluarga.edit', $item->id) }}" class="btn btn-warning">Edit</a>
+            <div class="mt-3 d-flex gap-2">
+                <a href="{{ route('perkembangan.pendapatanperkapital.pendapatan_rill_keluarga.index') }}" 
+                   class="btn btn-secondary">Kembali</a>
+                <a href="{{ route('perkembangan.pendapatanperkapital.pendapatan_rill_keluarga.edit', $item->id) }}" 
+                   class="btn btn-warning">Edit</a>
             </div>
         </div>
     </div>
