@@ -5,7 +5,6 @@
 @section('action')
     @can('lahan.create')
         <a href="{{ route('lahan.create') }}" class="btn btn-primary mb-3">
-            <i class="fas fa-plus-circle me-2"></i>
             Tambah Data Kepemilikan Lahan
         </a>
     @endcan

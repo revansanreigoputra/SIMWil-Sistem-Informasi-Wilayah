@@ -5,7 +5,6 @@
 @section('action')
     @can('hasil.create')
         <a href="{{ route('hasil.create') }}" class="btn btn-primary mb-3">
-            <i class="fas fa-plus-circle me-2"></i>
             Tambah Data Hasil Produksi
         </a>
     @endcan

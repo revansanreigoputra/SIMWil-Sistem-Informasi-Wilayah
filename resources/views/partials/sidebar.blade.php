@@ -443,7 +443,7 @@
                                             @can('lahan.view')
                                                 <a class="dropdown-item {{ request()->is('potensi/sda/lahan*') ? 'active' : '' }}"
                                                     href="{{ route('lahan.index') }}">
-                                                    Kepemilikan Lahan
+                                                    Kep. Lahan Tanaman
                                                 </a>
                                             @endcan
                                             
@@ -459,7 +459,7 @@
                                             @can('kepemilikan.view')
                                                 <a class="dropdown-item {{ request()->is('potensi/sda/kepemilikan*') ? 'active' : '' }}"
                                                     href="{{ route('kepemilikan.index') }}">
-                                                    Lepemilikan Lahan
+                                                    Kep. Lahan Buah 
                                                 </a>
                                             @endcan
 

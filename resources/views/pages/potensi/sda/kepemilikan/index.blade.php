@@ -5,7 +5,6 @@
 @section('action')
     @can('kepemilikan.create')
         <a href="{{ route('kepemilikan.create') }}" class="btn btn-primary mb-3">
-
             Tambah Data
         </a>
     @endcan
