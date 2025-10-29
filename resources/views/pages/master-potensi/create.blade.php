@@ -43,6 +43,19 @@
                                 @endforeach
                             </select>
                         </div>
+                    @elseif ($activeTab === 'jenis_prasarana_transportasi_lainnya')
+                        @php
+                            $categories = \App\Models\MasterPotensi\KategoriPrasaranaTransportasiLainnya::all();
+                        @endphp
+                        <div class="mb-3">
+                            <label class="form-label">Kategori Prasarana Transportasi Lainnya</label>
+                            <select name="kategori_prasarana_transportasi_lainnya_id" class="form-select" required>
+                                <option value="">-- Pilih Kategori --</option>
+                                @foreach ($categories as $kategori)
+                                    <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     @elseif ($activeTab === 'jenis_prasarana_komunikasi_informasi')
                         @php
                             $categories = \App\Models\MasterPotensi\KategoriPrasaranaKomunikasiInformasi::all();
@@ -56,12 +69,25 @@
                                 @endforeach
                             </select>
                         </div>
+                    @elseif ($activeTab === 'jenis_sekolah_tingkatan')
+                        <div class="mb-3">
+                            <label for="kategori_sekolah_id" class="form-label">Kategori Sekolah</label>
+                            <select name="kategori_sekolah_id" id="kategori_sekolah_id" class="form-select" required>
+                                <option value="">-- Pilih Kategori Sekolah --</option>
+                                @foreach (\App\Models\MasterPotensi\KategoriSekolah::all() as $kategori)
+                                    <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
+                                @endforeach
+                            </select>
+                            @error('kategori_sekolah_id')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
                     @endif
-
                     {{-- Input nama jenis --}}
                     <div class="mb-3">
                         <label class="form-label">Nama {{ Str::headline($activeTab) }}</label>
-                        <input type="text" name="nama" class="form-control" placeholder="Masukkan nama..." required>
+                        <input type="text" name="nama" class="form-control" placeholder="Masukkan nama..."
+                            required>
                     </div>
                 </div>
 

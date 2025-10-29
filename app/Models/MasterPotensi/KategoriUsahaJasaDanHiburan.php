@@ -12,4 +12,10 @@ class KategoriUsahaJasaDanHiburan extends Model
     protected $table = 'kategori_usaha_jasa_dan_hiburan';
 
     protected $fillable = ['nama',];
+
+
+    public function JenisUsahaHiburan()
+    {
+        return $this->hasMany(JenisUsahaHiburan::class, 'kategori_id');
+    }
 }
