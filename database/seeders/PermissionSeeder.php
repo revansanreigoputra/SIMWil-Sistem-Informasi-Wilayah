@@ -117,7 +117,51 @@ class PermissionSeeder extends Seeder
             'potensi.kelembagaan.pemerintah.delete',
             'potensi.kelembagaan.pemerintah.destroy',
             'potensi.kelembagaan.pemerintah.print',
-             
+            // politik permissions
+            'lembaga-politik.view',
+            'lembaga-politik.create',
+            'lembaga-politik.edit',
+            'lembaga-politik.delete',
+            'lembaga-politik.print',
+            'lembaga-politik.download',
+            // ekonomi permissions
+            'lembaga-ekonomi.view',
+            'lembaga-ekonomi.create',
+            'lembaga-ekonomi.edit',
+            'lembaga-ekonomi.delete',
+            'lembaga-ekonomi.print',
+            'lembaga-ekonomi.download',
+            // pengangkutan permissions
+            'view-pengangkutan',
+            'create-pengangkutan',
+            'edit-pengangkutan',
+            'delete-pengangkutan',
+            'print-pengangkutan',
+            'download-pengangkutan',
+            //  permissions hiburan
+            'hiburan.index',
+            'hiburan.create',
+            'hiburan.edit',
+            'hiburan.show',
+            'hiburan.delete',
+            'hiburan.print',
+            'hiburan.download',
+            //  permissions pendidikan
+            'pendidikan.index',
+            'pendidikan.create',
+            'pendidikan.edit',
+            'pendidikan.show',
+            'pendidikan.delete',
+            'pendidikan.print',
+            'pendidikan.download',
+            //  permissions keamanan
+            'keamanan.index',
+            'keamanan.create',
+            'keamanan.edit',
+            'keamanan.show',
+            'keamanan.delete',
+            'keamanan.print',
+            'keamanan.download',
 
             // layanan surat permissions
             'permohonan.view',
@@ -306,6 +350,8 @@ class PermissionSeeder extends Seeder
             'adat.store',
             'adat.update',
             'adat.delete',
+            'adat.print',
+            'adat.download',
             
             // kemasyarakatan
             'kemasyarakatan.view',

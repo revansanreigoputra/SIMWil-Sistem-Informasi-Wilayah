@@ -3,6 +3,8 @@
 @section('title', 'Detail Data Lembaga Ekonomi')
 
 @section('content')
+{{-- Mengganti permission ke 'show' agar lebih spesifik --}}
+@can('lembaga-ekonomi.view')
 <div class="card">
     <div class="card-header bg-primary text-white">
         <h5 class="mb-0 fw-bold">
@@ -48,4 +50,11 @@
         </div>
     </div>
 </div>
+{{-- Menambahkan @else dan @endcan --}}
+@else
+<div class="alert alert-danger mt-3">
+    <i class="bi bi-exclamation-triangle me-2"></i>
+    Kamu tidak memiliki izin untuk melihat detail data Lembaga Ekonomi.
+</div>
+@endcan
 @endsection

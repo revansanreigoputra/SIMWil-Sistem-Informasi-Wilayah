@@ -1103,44 +1103,44 @@ Route::prefix('potensi/potensi-kelembagaan')->name('potensi.potensi-kelembagaan.
     });
 // ==== POTENSI LEMBAGA POLITIK ==== //
 Route::prefix('potensi/potensi-kelembagaan/politik')->name('potensi.potensi-kelembagaan.politik.')->group(function () {
-    Route::get('/', [PotensiPolitikController::class, 'index'])->name('index');
-    Route::get('/create', [PotensiPolitikController::class, 'create'])->name('create');
-    Route::post('/store', [PotensiPolitikController::class, 'store'])->name('store');
-    Route::get('/edit/{id}', [PotensiPolitikController::class, 'edit'])->name('edit');
-    Route::put('/update/{id}', [PotensiPolitikController::class, 'update'])->name('update');
-    Route::delete('/delete/{id}', [PotensiPolitikController::class, 'destroy'])->name('destroy');
-    Route::get('/show/{id}', [PotensiPolitikController::class, 'show'])->name('show');
-    Route::get('/{id}/print', [PotensiPolitikController::class, 'print'])->name('print');
-    Route::get('/{id}/download', [PotensiPolitikController::class, 'download'])->name('download');
-    });
+    Route::get('/', [PotensiPolitikController::class, 'index'])->name('index')->middleware('can:lembaga-politik.view');
+    Route::get('/create', [PotensiPolitikController::class, 'create'])->name('create')->middleware('can:lembaga-politik.create');
+    Route::post('/store', [PotensiPolitikController::class, 'store'])->name('store')->middleware('can:lembaga-politik.create');
+    Route::get('/edit/{id}', [PotensiPolitikController::class, 'edit'])->name('edit')->middleware('can:lembaga-politik.edit');
+    Route::put('/update/{id}', [PotensiPolitikController::class, 'update'])->name('update')->middleware('can:lembaga-politik.edit');
+    Route::delete('/delete/{id}', [PotensiPolitikController::class, 'destroy'])->name('destroy')->middleware('can:lembaga-politik.delete');
+    Route::get('/show/{id}', [PotensiPolitikController::class, 'show'])->name('show')->middleware('can:lembaga-politik.view');
+    Route::get('/{id}/print', [PotensiPolitikController::class, 'print'])->name('print')->middleware('can:lembaga-politik.print');
+    Route::get('/{id}/download', [PotensiPolitikController::class, 'download'])->name('download')->middleware('can:lembaga-politik.download');
+});
+
 
  // ==== POTENSI LEMBAGA EKONOMI ==== //
- Route::prefix('potensi/potensi-kelembagaan')->name('potensi.potensi-kelembagaan.')->middleware(['auth'])->group(function () {
-    Route::get('ekonomi', [EkonomiController::class, 'index'])->name('ekonomi.index'); // tampil data
-    Route::get('ekonomi/create', [EkonomiController::class, 'create'])->name('ekonomi.create'); // form tambah
-    Route::post('ekonomi', [EkonomiController::class, 'store'])->name('ekonomi.store'); // simpan data baru
-    Route::get('ekonomi/{id}', [EkonomiController::class, 'show'])->name('ekonomi.show'); // detail data
-    Route::get('ekonomi/{id}/edit', [EkonomiController::class, 'edit'])->name('ekonomi.edit'); // form edit
-    Route::put('ekonomi/{id}', [EkonomiController::class, 'update'])->name('ekonomi.update'); // update data
-    Route::delete('ekonomi/{id}', [EkonomiController::class, 'destroy'])->name('ekonomi.destroy'); // hapus data
-    Route::get('ekonomi/{id}/print', [EkonomiController::class, 'print'])->name('print');
-    Route::get('ekonomi/{id}/download', [EkonomiController::class, 'download'])->name('download');
-    Route::get('ekonomi/jenis/{kategoriId}', [EkonomiController::class, 'getJenis'])
-            ->name('ekonomi.getJenis');
+Route::prefix('potensi/potensi-kelembagaan')->name('potensi.potensi-kelembagaan.')->middleware(['auth'])->group(function () {
+    Route::get('ekonomi', [EkonomiController::class, 'index'])->name('ekonomi.index')->middleware('permission:lembaga-ekonomi.view'); 
+    Route::get('ekonomi/create', [EkonomiController::class, 'create'])->name('ekonomi.create')->middleware('permission:lembaga-ekonomi.create'); 
+    Route::post('ekonomi', [EkonomiController::class, 'store'])->name('ekonomi.store')->middleware('permission:lembaga-ekonomi.create'); 
+    Route::get('ekonomi/{id}', [EkonomiController::class, 'show'])->name('ekonomi.show')->middleware('permission:lembaga-ekonomi.view'); 
+    Route::get('ekonomi/{id}/edit', [EkonomiController::class, 'edit'])->name('ekonomi.edit')->middleware('permission:lembaga-ekonomi.edit'); 
+    Route::put('ekonomi/{id}', [EkonomiController::class, 'update'])->name('ekonomi.update')->middleware('permission:lembaga-ekonomi.edit'); 
+    Route::delete('ekonomi/{id}', [EkonomiController::class, 'destroy'])->name('ekonomi.destroy')->middleware('permission:lembaga-ekonomi.delete'); 
+    Route::get('ekonomi/{id}/print', [EkonomiController::class, 'print'])->name('print')->middleware('permission:lembaga-ekonomi.print'); 
+    Route::get('ekonomi/{id}/download', [EkonomiController::class, 'download'])->name('download')->middleware('permission:lembaga-ekonomi.download'); 
+    Route::get('ekonomi/jenis/{kategoriId}', [EkonomiController::class, 'getJenis'])->name('ekonomi.getJenis')->middleware('permission:lembaga-ekonomi.view');
 });
 
  // ==== POTENSI LEMBAGA HIBURAN ==== //
 Route::prefix('potensi/potensi-kelembagaan/hiburan')->name('potensi.potensi-kelembagaan.hiburan.')->group(function () {
-    Route::get('/', [HiburanController::class, 'index'])->name('index');
-    Route::get('/create', [HiburanController::class, 'create'])->name('create');
-    Route::post('/', [HiburanController::class, 'store'])->name('store');
-    Route::get('/{id}', [HiburanController::class, 'show'])->name('show');
-    Route::get('/{id}/edit', [HiburanController::class, 'edit'])->name('edit');
-    Route::put('/{id}', [HiburanController::class, 'update'])->name('update');
-    Route::delete('/{id}', [HiburanController::class, 'destroy'])->name('destroy');
-    Route::get('/{id}/print', [HiburanController::class, 'print'])->name('print');
-    Route::get('/{id}/download', [HiburanController::class, 'download'])->name('download');
-    Route::get('/getJenis/{kategoriId}', [HiburanController::class, 'getJenis'])->name('getJenis');
+    Route::get('/', [HiburanController::class, 'index'])->name('index')->middleware('permission:hiburan.index');
+    Route::get('/create', [HiburanController::class, 'create'])->name('create')->middleware('permission:hiburan.create');
+    Route::post('/', [HiburanController::class, 'store'])->name('store')->middleware('permission:hiburan.create');
+    Route::get('/{id}', [HiburanController::class, 'show'])->name('show')->middleware('permission:hiburan.show');
+    Route::get('/{id}/edit', [HiburanController::class, 'edit'])->name('edit')->middleware('permission:hiburan.edit');
+    Route::put('/{id}', [HiburanController::class, 'update'])->name('update')->middleware('permission:hiburan.edit');
+    Route::delete('/{id}', [HiburanController::class, 'destroy'])->name('destroy')->middleware('permission:hiburan.delete');
+    Route::get('/{id}/print', [HiburanController::class, 'print'])->name('print')->middleware('permission:hiburan.print');
+    Route::get('/{id}/download', [HiburanController::class, 'download'])->name('download')->middleware('permission:hiburan.download');
+    Route::get('/getJenis/{kategoriId}', [HiburanController::class, 'getJenis'])->name('getJenis')->middleware('permission:hiburan.create|hiburan.edit');
 });
  // ==== POTENSI LEMBAGA ADAT ==== //
 Route::middleware(['auth'])->prefix('potensi/potensi-kelembagaan/lembagaAdat')->name('potensi.potensi-kelembagaan.lembagaAdat.')->group(function () {
@@ -1151,10 +1151,9 @@ Route::middleware(['auth'])->prefix('potensi/potensi-kelembagaan/lembagaAdat')->
     Route::get('/{adat}/edit', [LembagaAdatController::class, 'edit'])->middleware('permission:adat.update')->name('edit');
     Route::put('/{adat}', [LembagaAdatController::class, 'update'])->middleware('permission:adat.update')->name('update');
     Route::delete('/{adat}', [LembagaAdatController::class, 'destroy'])->middleware('permission:adat.delete')->name('destroy');
-    Route::get('/{id}/print', [LembagaAdatController::class, 'print'])->name('print');
-    Route::get('/{id}/download', [LembagaAdatController::class, 'download'])->name('download');
+    Route::get('/{id}/print', [LembagaAdatController::class, 'print'])->middleware('permission:adat.print')->name('print');
+    Route::get('/{id}/download', [LembagaAdatController::class, 'download'])->middleware('permission:adat.download')->name('download');
 });
-
  // ==== POTENSI LEMBAGA KEMASYARAKATAN ==== //
 Route::middleware(['auth'])->prefix('potensi/potensi-kelembagaan/lembaga-kemasyarakatan')->name('potensi.potensi-kelembagaan.lembaga-kemasyarakatan.')->group(function () {
     Route::get('/', [LembagaKemasyarakatanController::class, 'index'])->middleware('permission:lembaga-kemasyarakatan.view')->name('index');
@@ -1169,42 +1168,41 @@ Route::middleware(['auth'])->prefix('potensi/potensi-kelembagaan/lembaga-kemasya
 });
  // ==== POTENSI LEMBAGA PENDIDIKAN ==== //
 Route::prefix('potensi/potensi-kelembagaan/pendidikan')->name('potensi.potensi-kelembagaan.pendidikan.')->group(function () {
-    Route::get('/', [PendidikanController::class, 'index'])->name('index');
-    Route::get('/create', [PendidikanController::class, 'create'])->name('create');
-    Route::post('/', [PendidikanController::class, 'store'])->name('store');
-    Route::get('/{id}', [PendidikanController::class, 'show'])->name('show');
-    Route::get('/{id}/edit', [PendidikanController::class, 'edit'])->name('edit');
-    Route::put('/{id}', [PendidikanController::class, 'update'])->name('update');
-    Route::delete('/{id}', [PendidikanController::class, 'destroy'])->name('destroy');
-    Route::get('/getJenis/{kategoriId}', [PendidikanController::class, 'getJenis'])->name('getJenis');
-    Route::get('/{id}/print', [PendidikanController::class, 'print'])->name('print');
-    Route::get('/{id}/download', [PendidikanController::class, 'download'])->name('download');
+    Route::get('/', [PendidikanController::class, 'index'])->name('index')->middleware('permission:pendidikan.index');
+    Route::get('/create', [PendidikanController::class, 'create'])->name('create')->middleware('permission:pendidikan.create');
+    Route::post('/', [PendidikanController::class, 'store'])->name('store')->middleware('permission:pendidikan.create');
+    Route::get('/{id}', [PendidikanController::class, 'show'])->name('show')->middleware('permission:pendidikan.show');
+    Route::get('/{id}/edit', [PendidikanController::class, 'edit'])->name('edit')->middleware('permission:pendidikan.edit');
+    Route::put('/{id}', [PendidikanController::class, 'update'])->name('update')->middleware('permission:pendidikan.edit');
+    Route::delete('/{id}', [PendidikanController::class, 'destroy'])->name('destroy')->middleware('permission:pendidikan.delete');
+    Route::get('/getJenis/{kategoriId}', [PendidikanController::class, 'getJenis'])->name('getJenis')->middleware('permission:pendidikan.create|pendidikan.edit');
+    Route::get('/{id}/print', [PendidikanController::class, 'print'])->name('print')->middleware('permission:pendidikan.print');
+    Route::get('/{id}/download', [PendidikanController::class, 'download'])->name('download')->middleware('permission:pendidikan.download');
 });
 // ==== POTENSI LEMBAGA KEAMANAN ==== //
 Route::prefix('potensi/potensi-kelembagaan/keamanan')->name('potensi.potensi-kelembagaan.keamanan.')->group(function () {
-    Route::get('/', [LembagaKeamananController::class, 'index'])->name('index');
-    Route::get('/create', [LembagaKeamananController::class, 'create'])->name('create');
-    Route::post('/', [LembagaKeamananController::class, 'store'])->name('store');
-    Route::get('/{id}', [LembagaKeamananController::class, 'show'])->name('show');
-    Route::get('/{id}/edit', [LembagaKeamananController::class, 'edit'])->name('edit');
-    Route::put('/{id}', [LembagaKeamananController::class, 'update'])->name('update');
-    Route::delete('/{id}', [LembagaKeamananController::class, 'destroy'])->name('destroy');
-    Route::get('/{id}/print', [LembagaKeamananController::class, 'print'])->name('print');
-    Route::get('/{id}/download', [LembagaKeamananController::class, 'download'])->name('download');
+    Route::get('/', [LembagaKeamananController::class, 'index'])->name('index')->middleware('can:keamanan.index');
+    Route::get('/create', [LembagaKeamananController::class, 'create'])->name('create')->middleware('can:keamanan.create');
+    Route::post('/', [LembagaKeamananController::class, 'store'])->name('store')->middleware('can:keamanan.create');
+    Route::get('/{id}', [LembagaKeamananController::class, 'show'])->name('show')->middleware('can:keamanan.show');
+    Route::get('/{id}/edit', [LembagaKeamananController::class, 'edit'])->name('edit')->middleware('can:keamanan.edit');
+    Route::put('/{id}', [LembagaKeamananController::class, 'update'])->name('update')->middleware('can:keamanan.edit');
+    Route::delete('/{id}', [LembagaKeamananController::class, 'destroy'])->name('destroy')->middleware('can:keamanan.delete');
+    Route::get('/{id}/print', [LembagaKeamananController::class, 'print'])->name('print')->middleware('can:keamanan.print');
+    Route::get('/{id}/download', [LembagaKeamananController::class, 'download'])->name('download')->middleware('can:keamanan.download');
 });
 // ==== POTENSI LEMBAGA PENGANGKUTAN ==== //
-Route::prefix('potensi/potensi-kelembagaan/pengangkutan')->name('potensi.potensi-kelembagaan.pengangkutan.')->group(function () {
-    Route::get('/', [JasaPengangkutanController::class, 'index'])->name('index');
-    Route::get('/create', [JasaPengangkutanController::class, 'create'])->name('create');
-    Route::post('/store', [JasaPengangkutanController::class, 'store'])->name('store');
-    Route::get('/{id}/detail', [JasaPengangkutanController::class, 'show'])->name('show');
-    Route::get('/{id}/edit', [JasaPengangkutanController::class, 'edit'])->name('edit');
-    Route::put('/{id}/update', [JasaPengangkutanController::class, 'update'])->name('update');
-    Route::delete('/{id}/delete', [JasaPengangkutanController::class, 'destroy'])->name('destroy');
-    Route::get('/{id}/print', [JasaPengangkutanController::class, 'print'])->name('print');
-    Route::get('/{id}/print', [JasaPengangkutanController::class, 'print'])->name('print');
-    Route::get('/{id}/download', [JasaPengangkutanController::class, 'download'])->name('download');
-});
+Route::prefix('potensi/potensi-kelembagaan/pengangkutan')->name('potensi.potensi-kelembagaan.pengangkutan.')->middleware(['auth'])->group(function () {
+        Route::get('/', [JasaPengangkutanController::class, 'index'])->name('index')->middleware('permission:view-pengangkutan');
+        Route::get('/{id}/detail', [JasaPengangkutanController::class, 'show'])->name('show')->middleware('permission:view-pengangkutan');
+        Route::get('/create', [JasaPengangkutanController::class, 'create'])->name('create')->middleware('permission:create-pengangkutan');
+        Route::post('/store', [JasaPengangkutanController::class, 'store'])->name('store')->middleware('permission:create-pengangkutan');
+        Route::get('/{id}/edit', [JasaPengangkutanController::class, 'edit'])->name('edit')->middleware('permission:edit-pengangkutan');
+        Route::put('/{id}/update', [JasaPengangkutanController::class, 'update'])->name('update')->middleware('permission:edit-pengangkutan');
+        Route::delete('/{id}/delete', [JasaPengangkutanController::class, 'destroy'])->name('destroy')->middleware('permission:delete-pengangkutan');
+        Route::get('/{id}/print', [JasaPengangkutanController::class, 'print'])->name('print')->middleware('permission:print-pengangkutan');
+        Route::get('/{id}/download', [JasaPengangkutanController::class, 'download'])->name('download')->middleware('permission:download-pengangkutan');
+    });
 
 // ==== Route jenis Surat ====
 Route::prefix('layanan/permohonan')->group(function () {

@@ -3,12 +3,15 @@
 @section('title', 'Data Partisipasi Politik')
 
 @section('action')
-    <a href="{{ route('potensi.potensi-kelembagaan.politik.create') }}" class="btn btn-primary mb-3">
-    Tambah Data
-    </a>
+    @can('lembaga-politik.create')
+        <a href="{{ route('potensi.potensi-kelembagaan.politik.create') }}" class="btn btn-primary mb-3">
+           <i class="bi bi-plus-circle"></i>Tambah Data
+        </a>
+    @endcan
 @endsection
 
 @section('content')
+@can('lembaga-politik.view')
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
@@ -33,53 +36,68 @@
                                 <td>{{ $item->jumlah_pria_hak_pilih }}</td>
                                 <td>
                                     <div class="d-flex justify-content-center gap-1">
-                                        <a href="{{ route('potensi.potensi-kelembagaan.politik.show', $item->id) }}"
-                                            class="btn btn-sm btn-info">
-                                            <i class="bi bi-eye"></i> Detail
-                                        </a>
-                                        <a href="{{ route('potensi.potensi-kelembagaan.politik.edit', $item->id) }}"
-                                            class="btn btn-sm btn-warning">
-                                            <i class="bi bi-pencil-square"></i> Edit
-                                        </a>
-                                        <button class="btn btn-sm btn-success"
-                                            onclick="downloadAndOpen({{ $item->id }})">
-                                            <i class="bi bi-printer"></i> Print
-                                        </button>
-                                        <!-- Tombol hapus -->
-                                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                            data-bs-target="#deleteModal{{ $item->id }}">
-                                            <i class="bi bi-trash"></i> Hapus
-                                        </button>
-                                    </div>
 
-                                    <!-- Modal Hapus -->
-                                    <div class="modal fade" id="deleteModal{{ $item->id }}" tabindex="-1"
-                                        aria-labelledby="deleteModalLabel{{ $item->id }}" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <form
-                                                action="{{ route('potensi.potensi-kelembagaan.politik.destroy', $item->id) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title"
-                                                            id="deleteModalLabel{{ $item->id }}">Hapus Data</h5>
-                                                        <button type="button" class="btn-close"
-                                                            data-bs-dismiss="modal"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        Apakah Anda yakin ingin menghapus data tanggal
-                                                        <strong>{{ $item->tanggal }}</strong> ?
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Batal</button>
-                                                        <button type="submit" class="btn btn-danger">Hapus</button>
-                                                    </div>
+                                        {{-- Detail --}}
+                                        @can('lembaga-politik.view')
+                                            <a href="{{ route('potensi.potensi-kelembagaan.politik.show', $item->id) }}"
+                                                class="btn btn-sm btn-info">
+                                                <i class="bi bi-eye"></i> Detail
+                                            </a>
+                                        @endcan
+
+                                        {{-- Edit --}}
+                                        @can('lembaga-politik.edit')
+                                            <a href="{{ route('potensi.potensi-kelembagaan.politik.edit', $item->id) }}"
+                                                class="btn btn-sm btn-warning">
+                                                <i class="bi bi-pencil-square"></i> Edit
+                                            </a>
+                                        @endcan
+
+                                        {{-- Print --}}
+                                        @can('lembaga-politik.print')
+                                            <button class="btn btn-sm btn-success"
+                                                onclick="downloadAndOpen({{ $item->id }})">
+                                                <i class="bi bi-printer"></i> Print
+                                            </button>
+                                        @endcan
+
+                                        {{-- Hapus --}}
+                                        @can('lembaga-politik.delete')
+                                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#deleteModal{{ $item->id }}">
+                                                <i class="bi bi-trash"></i> Hapus
+                                            </button>
+
+                                            <!-- Modal Hapus -->
+                                            <div class="modal fade" id="deleteModal{{ $item->id }}" tabindex="-1"
+                                                aria-labelledby="deleteModalLabel{{ $item->id }}" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <form
+                                                        action="{{ route('potensi.potensi-kelembagaan.politik.destroy', $item->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title"
+                                                                    id="deleteModalLabel{{ $item->id }}">Hapus Data</h5>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Apakah Anda yakin ingin menghapus data tanggal
+                                                                <strong>{{ $item->tanggal }}</strong> ?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Batal</button>
+                                                                <button type="submit" class="btn btn-danger">Hapus</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
                                                 </div>
-                                            </form>
-                                        </div>
+                                            </div>
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>
@@ -93,6 +111,12 @@
             </div>
         </div>
     </div>
+@else
+    <div class="alert alert-danger mt-3">
+        <i class="bi bi-shield-lock-fill me-2"></i>
+        Anda tidak memiliki izin untuk melihat data partisipasi politik.
+    </div>
+@endcan
 @endsection
 
 @push('addon-script')
@@ -110,6 +134,7 @@
                 }
             });
         });
+
         function downloadAndOpen(id) {
             const downloadUrl = `/potensi/potensi-kelembagaan/politik/${id}/download`;
             const previewUrl = `/potensi/potensi-kelembagaan/politik/${id}/print`;

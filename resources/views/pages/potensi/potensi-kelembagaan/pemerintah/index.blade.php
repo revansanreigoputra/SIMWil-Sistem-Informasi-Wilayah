@@ -29,7 +29,7 @@
 
 @section('action')
     <a href="{{ route('potensi.potensi-kelembagaan.pemerintah.create') }}" class="btn btn-primary mb-3">
-     Tambah Data
+     <i class="bi bi-plus-circle"></i>Tambah Data
     </a>
 @endsection
 
@@ -41,14 +41,10 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            {{-- Reordered and Renamed Headers to match the image --}}
                             <th>Tanggal</th>
                             <th>Dasar Hukum Pembentukan</th>
                             <th>Dasar Hukum Pembentukan BPD</th>
                             <th>Jumlah Aparat Pemerintah</th>
-                            {{-- <th>Jumlah Perangkat Desa</th>
-                            <th>Kepala Desa</th>
-                            <th>Sekertaris Desa</th> --}}
                             <th class="text-center">Aksi</th>
                         </tr>
                     </thead>

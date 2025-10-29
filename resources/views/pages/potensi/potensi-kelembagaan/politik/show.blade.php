@@ -3,6 +3,7 @@
 @section('title', 'Detail Data Partisipasi Politik')
 
 @section('content')
+@can('lembaga-politik.view')
 <div class="card">
     <div class="card-header bg-primary text-white">
         <h5 class="mb-0 fw-bold"><i class="bi bi-info-circle me-2"></i> Detail Partisipasi Politik</h5>
@@ -68,4 +69,9 @@
         </div>
     </div>
 </div>
+@else
+<div class="alert alert-danger mt-3">
+    <i class="bi bi-exclamation-triangle me-2"></i> Anda tidak memiliki izin untuk melihat detail data ini.
+</div>
+@endcan
 @endsection

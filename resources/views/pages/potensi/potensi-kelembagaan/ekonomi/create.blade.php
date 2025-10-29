@@ -3,71 +3,112 @@
 @section('title', 'Tambah Data Lembaga Ekonomi')
 
 @section('content')
-<div class="card">
-    <div class="card-header">
-        <h5 class="mb-0 fw-bold">Form Tambah Data Lembaga Ekonomi</h5>
+@can('lembaga-ekonomi.create')
+<div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">
+            <i class="bi bi-building-fill-gear me-2"></i>Form Tambah Data Lembaga Ekonomi
+        </h5>
     </div>
-    <div class="card-body">
-        <form id="form-lembaga-ekonomi" action="{{ route('potensi.potensi-kelembagaan.ekonomi.store') }}" method="POST">
-            <div class="card mb-3 p-3 bg-light">
-                <h6>Data Umum</h6>
+
+    <div class="card-body p-4">
+        <form action="{{ route('potensi.potensi-kelembagaan.ekonomi.store') }}" method="POST">
+            @csrf
+
+            {{-- ===================== SECTION 1: Data Umum ===================== --}}
+            <div class="mb-3 border rounded-3 p-4 bg-light">
+                <h6 class="fw-bold mb-3 text-primary">
+                    <i class="bi bi-info-circle me-1"></i> Data Umum Lembaga Ekonomi
+                </h6>
+
                 <div class="row g-3">
                     <div class="col-md-6">
-                        <label class="form-label">Tanggal *</label>
-                        <input type="date" name="tanggal" class="form-control" value="{{ old('tanggal', date('Y-m-d')) }}" required>
+                        <label class="form-label fw-semibold">Tanggal <span class="text-danger">*</span></label>
+                        <input type="date" name="tanggal" class="form-control" 
+                            value="{{ old('tanggal', date('Y-m-d')) }}" required>
                     </div>
 
                     <div class="col-md-6">
-                        <label class="form-label">Kategori Lembaga *</label>
-                        <select name="kategori_lembaga_ekonomi_id" id="kategori_lembaga" class="form-control" required>
-                            <option value="">-- Pilih --</option>
+                        <label class="form-label fw-semibold">Kategori Lembaga <span class="text-danger">*</span></label>
+                        <select name="kategori_lembaga_ekonomi_id" id="kategori_lembaga" class="form-select" required>
+                            <option value="">-- Pilih Kategori --</option>
                             @foreach($kategori as $item)
                                 <option value="{{ $item->id }}" {{ old('kategori_lembaga_ekonomi_id') == $item->id ? 'selected' : '' }}>
                                     {{ $item->nama }}
                                 </option>
                             @endforeach
                         </select>
+                        @error('kategori_lembaga_ekonomi_id')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
 
                     <div class="col-md-6">
-                        <label class="form-label">Jenis Lembaga *</label>
-                        <select name="jenis_lembaga_ekonomi_id" id="jenis_lembaga" class="form-control" required>
+                        <label class="form-label fw-semibold">Jenis Lembaga <span class="text-danger">*</span></label>
+                        <select name="jenis_lembaga_ekonomi_id" id="jenis_lembaga" class="form-select" required>
                             <option value="">-- Pilih Kategori Dulu --</option>
                         </select>
+                        @error('jenis_lembaga_ekonomi_id')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
 
                     <div class="col-md-6">
-                        <label class="form-label">Jumlah</label>
-                        <input type="number" name="jumlah" class="form-control" value="{{ old('jumlah', 0) }}">
-                    </div>
-                </div>
-            </div>
-            <div class="card mb-3 p-3 bg-light">
-                <h6>Data Kegiatan</h6>
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label class="form-label">Jumlah Pengurus (Orang)</label>
-                        <input type="number" name="jumlah_pengurus" class="form-control" value="{{ old('jumlah_pengurus', 0) }}">
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label">Jumlah Jenis Kegiatan</label>
-                        <input type="number" name="jumlah_kegiatan" class="form-control" value="{{ old('jumlah_kegiatan', 0) }}">
+                        <label class="form-label fw-semibold">Jumlah Lembaga</label>
+                        <div class="input-group">
+                            <input type="number" name="jumlah" class="form-control text-end"
+                                value="{{ old('jumlah', 0) }}" min="0">
+                            <span class="input-group-text">Unit</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="mt-4">
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save me-1"></i> Simpan Data
-                </button>
+            {{-- ===================== SECTION 2: Data Kegiatan ===================== --}}
+            <div class="mb-3 border rounded-3 p-4 bg-light">
+                <h6 class="fw-bold mb-3 text-primary">
+                    <i class="bi bi-bar-chart-line me-1"></i> Data Kegiatan Lembaga
+                </h6>
+
+                <div class="row g-3 align-items-center">
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Jumlah Pengurus</label>
+                        <div class="input-group">
+                            <input type="number" name="jumlah_pengurus" class="form-control text-end"
+                                value="{{ old('jumlah_pengurus', 0) }}" min="0">
+                            <span class="input-group-text">Orang</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Jumlah Jenis Kegiatan</label>
+                        <div class="input-group">
+                            <input type="number" name="jumlah_kegiatan" class="form-control text-end"
+                                value="{{ old('jumlah_kegiatan', 0) }}" min="0">
+                            <span class="input-group-text">Jenis</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- ===================== BUTTON ===================== --}}
+            <div class="d-flex justify-content-end gap-2 mt-4">
                 <a href="{{ route('potensi.potensi-kelembagaan.ekonomi.index') }}" class="btn btn-outline-secondary">
                     <i class="bi bi-arrow-left"></i> Kembali
                 </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save me-1"></i> Simpan Data
+                </button>
             </div>
         </form>
     </div>
 </div>
+@else
+<div class="alert alert-danger mt-3">
+    <i class="bi bi-exclamation-triangle me-2"></i>
+    Kamu tidak memiliki izin untuk menambahkan data Lembaga Ekonomi.
+</div>
+@endcan
 @endsection
 
 @push('addon-script')
@@ -109,6 +150,7 @@ $(document).ready(function() {
         }
     });
 
+    // Otomatis isi dropdown jika user refresh halaman
     if ($('#kategori_lembaga').val()) {
         $('#kategori_lembaga').trigger('change');
         setTimeout(function() {
@@ -116,9 +158,8 @@ $(document).ready(function() {
             if(oldJenisId) {
                 $('#jenis_lembaga').val(oldJenisId);
             }
-        }, 200); 
+        }, 300); 
     }
-
 });
 </script>
 @endpush

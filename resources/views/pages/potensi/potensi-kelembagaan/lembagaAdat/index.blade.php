@@ -4,7 +4,7 @@
 
 @section('action')
     <a href="{{ route('potensi.potensi-kelembagaan.lembagaAdat.create') }}" class="btn btn-primary mb-3">
-        <i class="fas fa-plus-circle me-2"></i>
+        <i class="bi bi-plus-circle"></i>
         Tambah Data
     </a>
 @endsection
@@ -35,18 +35,6 @@
                                         <th>Rumah Adat</th>
                                         <th>Barang Pusaka</th>
                                         <th>Naskah Naskah</th>
-                                        {{-- <th>Lainnya</th>
-                                        <th>Musyawarah Adat</th>
-                                        <th>Sanksi Adat</th>
-                                        <th>Upacara Adat Perkawinan</th>
-                                        <th>Upacara Adat Kematian</th>
-                                        <th>Upacara Adat Kelahiran</th>
-                                        <th>Upacara Adat Bercocok Tanam</th>
-                                        <th>Upacara Adat Perikanan Laut</th>
-                                        <th>Upacara Adat Bidang Kehutanan</th>
-                                        <th>Upacara Adat Pengelolaan SDA</th>
-                                        <th>Upacara Adat Pembangunan Rumah</th>
-                                        <th>Upacara Adat Penyelesaian Masalah</th> --}}
                                         <th width="200" class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
@@ -60,18 +48,6 @@
                                             <td class="text-center">{{ $item->rumah_adat ? 'Ya' : 'Tidak' }}</td>
                                             <td class="text-center">{{ $item->barang_pusaka ? 'Ya' : 'Tidak' }}</td>
                                             <td class="text-center">{{ $item->naskah_naskah ? 'Ya' : 'Tidak' }}</td>
-                                            {{-- <td class="text-center">{{ $item->lainnya ? 'Ya' : 'Tidak' }}</td>
-                                            <td class="text-center">{{ $item->musyawarah_adat ? 'Ya' : 'Tidak' }}</td>
-                                            <td class="text-center">{{ $item->sanksi_adat ? 'Ya' : 'Tidak' }}</td>
-                                            <td class="text-center">{{ $item->upacara_adat_perkawinan ? 'Ya' : 'Tidak' }}</td>
-                                            <td class="text-center">{{ $item->upacara_adat_kematian ? 'Ya' : 'Tidak' }}</td>
-                                            <td class="text-center">{{ $item->upacara_adat_kelahiran ? 'Ya' : 'Tidak' }}</td>
-                                            <td class="text-center">{{ $item->upacara_adat_bercocok_tanam ? 'Ya' : 'Tidak' }}</td>
-                                            <td class="text-center">{{ $item->upacara_adat_perikanan_laut ? 'Ya' : 'Tidak' }}</td>
-                                            <td class="text-center">{{ $item->upacara_adat_bidang_kehutanan ? 'Ya' : 'Tidak' }}</td>
-                                            <td class="text-center">{{ $item->upacara_adat_pengelolaan_sda ? 'Ya' : 'Tidak' }}</td>
-                                            <td class="text-center">{{ $item->upacara_adat_pembangunan_rumah ? 'Ya' : 'Tidak' }}</td>
-                                            <td class="text-center">{{ $item->upacara_adat_penyelesaian_masalah ? 'Ya' : 'Tidak' }}</td> --}}
                                             <td class="text-center">
                                                 @canany(['adat.view', 'adat.update', 'adat.delete'])
                                                     <div class="d-flex gap-2 justify-content-center">

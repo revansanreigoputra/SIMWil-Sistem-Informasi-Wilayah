@@ -3,12 +3,16 @@
 @section('title', 'Data Lembaga Ekonomi')
 
 @section('action')
-    <a href="{{ route('potensi.potensi-kelembagaan.ekonomi.create') }}" class="btn btn-primary mb-3">
-        Tambah Data
-    </a>
+    {{-- Menambahkan permission 'create' --}}
+    @can('lembaga-ekonomi.create')
+        <a href="{{ route('potensi.potensi-kelembagaan.ekonomi.create') }}" class="btn btn-primary mb-3">
+            <i class="bi bi-plus-circle"></i>Tambah Data
+        </a>
+    @endcan
 @endsection
 
 @section('content')
+@can('lembaga-ekonomi.view')
     <div class="card border-0 shadow-lg rounded-4">
         <div class="card-body p-4">
 
@@ -23,7 +27,7 @@
                             <th>Jumlah</th>
                             <th>Jumlah Kegiatan</th>
                             <th>Jumlah Pengurus</th>
-                            <th>Aksi</th>
+                            <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,22 +42,37 @@
                                 <td>{{ $item->jumlah_pengurus }}</td>
                                 <td>
                                     <div class="d-flex gap-1 justify-content-center">
-                                        <a href="{{ route('potensi.potensi-kelembagaan.ekonomi.show', $item->id) }}"
-                                            class="btn btn-sm btn-info">
-                                            <i class="bi bi-eye"></i> Detail
-                                        </a>
-                                        <a href="{{ route('potensi.potensi-kelembagaan.ekonomi.edit', $item->id) }}"
-                                            class="btn btn-sm btn-warning">
-                                            <i class="bi bi-pencil-square"></i> Edit
-                                        </a>
-                                       <button class="btn btn-sm btn-success"
-                                            onclick="downloadAndOpen({{ $item->id }})">
-                                            <i class="bi bi-printer"></i> Print
-                                        </button>
-                                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                            data-bs-target="#deleteModal{{ $item->id }}">
-                                            <i class="bi bi-trash"></i> Hapus
-                                        </button>
+                                        {{-- Menambahkan permission 'show' --}}
+                                        @can('lembaga-ekonomi.view')
+                                            <a href="{{ route('potensi.potensi-kelembagaan.ekonomi.show', $item->id) }}"
+                                                class="btn btn-sm btn-info">
+                                                <i class="bi bi-eye"></i> Detail
+                                            </a>
+                                        @endcan
+                                        
+                                        {{-- Menambahkan permission 'edit' --}}
+                                        @can('lembaga-ekonomi.edit')
+                                            <a href="{{ route('potensi.potensi-kelembagaan.ekonomi.edit', $item->id) }}"
+                                                class="btn btn-sm btn-warning">
+                                                <i class="bi bi-pencil-square"></i> Edit
+                                            </a>
+                                        @endcan
+
+                                        {{-- Menambahkan permission 'print' (asumsi nama permission) --}}
+                                        @can('lembaga-ekonomi.print')
+                                            <button class="btn btn-sm btn-success"
+                                                onclick="downloadAndOpen({{ $item->id }})">
+                                                <i class="bi bi-printer"></i> Print
+                                            </button>
+                                        @endcan
+                                        
+                                        {{-- Menambahkan permission 'delete' --}}
+                                        @can('lembaga-ekonomi.delete')
+                                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#deleteModal{{ $item->id }}">
+                                                <i class="bi bi-trash"></i> Hapus
+                                            </button>
+                                        @endcan
                                     </div>
 
                                     <div class="modal fade" id="deleteModal{{ $item->id }}" tabindex="-1" aria-hidden="true">
@@ -88,12 +107,18 @@
                             <tr>
                                 <td colspan="8" class="text-center text-muted">Belum ada data lembaga ekonomi.</td>
                             </tr>
-                        @endforelse
+                        @endforelse {{-- Typo 'G' sudah dihapus dari sini --}}
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+@else
+<div class="alert alert-danger mt-3">
+    <i class="bi bi-exclamation-triangle me-2"></i>
+    Kamu tidak memiliki izin untuk melihat data Lembaga Ekonomi.
+</div>
+@endcan
 @endsection
 
 @push('addon-script')
@@ -101,6 +126,7 @@
         $(document).ready(function() {
             $('#ekonomi-table').DataTable();
         });
+
         function downloadAndOpen(id) {
             const downloadUrl = `/potensi/potensi-kelembagaan/ekonomi/${id}/download`;
             const previewUrl = `/potensi/potensi-kelembagaan/ekonomi/${id}/print`;
