@@ -169,13 +169,15 @@ use App\Models\LayananSurat\KopTemplate;
 // POTENSI SDA
 use App\Http\Controllers\TopografiController;
 use App\Http\Controllers\JlahanController;
+use App\Http\Controllers\KlahanController;
+use App\Http\Controllers\IklimTanahErosiController;
+
 
 
 // kelembagaan
 use App\Http\Controllers\LembagaAdatController;
 use App\Http\Controllers\SaranaTransportasiController;
 use App\Http\Controllers\BatasWilayahController;
-use App\Http\Controllers\IklimTanahErosiController;
 use App\Http\Controllers\JenisTransportasiController;
 use App\Http\Controllers\KomunikasiInformasiController;
 use App\Http\Controllers\PrasaranaPeribadatanController;
@@ -623,6 +625,17 @@ Route::middleware(['auth'])->prefix('potensi/sda/jlahan')->name('jlahan.')->grou
     Route::get('/{jlahan}/edit', [JlahanController::class, 'edit'])->name('edit');
     Route::put('/{jlahan}', [JlahanController::class, 'update'])->name('update');
     Route::delete('/{jlahan}', [JlahanController::class, 'destroy'])->name('destroy');
+});
+
+// lahan routes
+Route::middleware(['auth'])->prefix('potensi/sda/lahan')->name('lahan.')->group(function () {
+    Route::get('/', [KlahanController::class, 'index'])->name('index');
+    Route::get('/create', [KlahanController::class, 'create'])->name('create');
+    Route::post('/', [KlahanController::class, 'store'])->name('store');
+    Route::get('/{lahan}', [KlahanController::class, 'show'])->name('show');
+    Route::get('/{lahan}/edit', [KlahanController::class, 'edit'])->name('edit');
+    Route::put('/{lahan}', [KlahanController::class, 'update'])->name('update');
+    Route::delete('/{lahan}', [KlahanController::class, 'destroy'])->name('destroy');
 });
 
 //APB Desa Routes

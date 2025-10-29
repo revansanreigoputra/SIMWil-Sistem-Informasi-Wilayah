@@ -438,6 +438,15 @@
                                                 </a>
                                             @endcan
 
+                                            <br>
+
+                                            @can('lahan.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/lahan*') ? 'active' : '' }}"
+                                                    href="{{ route('lahan.index') }}">
+                                                    Kepemilikan Lahan
+                                                </a>
+                                            @endcan
+
                                         </div>
                                     </div>
 
