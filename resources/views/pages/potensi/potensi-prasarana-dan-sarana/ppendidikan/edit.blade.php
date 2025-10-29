@@ -39,21 +39,21 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="mb-3">
-                            <label for="jpgedung_id" class="form-label fw-semibold">
+                            <label for="jenis_gedung_id" class="form-label fw-semibold">
                                 <i class="fas fa-building me-1"></i>
                                 Jenis Prasarana Pendidikan <span class="text-danger">*</span>
                             </label>
-                            <select class="form-select @error('jpgedung_id') is-invalid @enderror"
-                                id="jpgedung_id" name="jpgedung_id" required>
+                            <select class="form-select @error('jenis_gedung_id') is-invalid @enderror"
+                                id="jenis_gedung_id" name="jenis_gedung_id" required>
                                 <option value="">Pilih Jenis Prasarana Pendidikan</option>
-                                @foreach ($jpgedungs as $jenis)
+                                @foreach ($jenisGedungs as $jenis)
                                     <option value="{{ $jenis->id }}"
-                                        {{ old('jpgedung_id', $prasaranapendidikan->jpgedung_id) == $jenis->id ? 'selected' : '' }}>
+                                        {{ old('jenis_gedung_id', $prasaranapendidikan->jenis_gedung_id) == $jenis->id ? 'selected' : '' }}>
                                         {{ $jenis->nama }}
                                     </option>
                                 @endforeach
                             </select>
-                            @error('jpgedung_id')
+                            @error('jenis_gedung_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

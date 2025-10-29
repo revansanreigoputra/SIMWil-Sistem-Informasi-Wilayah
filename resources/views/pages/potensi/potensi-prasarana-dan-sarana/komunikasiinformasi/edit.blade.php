@@ -13,7 +13,7 @@
 
         <div class="card-body">
             <form
-                action="{{ route('potensi.potensi-prasarana-dan-sarana.komunikasiinformasi.update', ['komunikasi_informasi' => $komunikasiInformasi->id]) }}"
+                action="{{ route('potensi.potensi-prasarana-dan-sarana.komunikasiinformasi.update', ['komunikasiinformasi' => $komunikasiInformasi->id]) }}"
                 method="POST">
                 @csrf
                 @method('PUT')

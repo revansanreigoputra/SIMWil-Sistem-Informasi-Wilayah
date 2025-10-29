@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Jpgedung;
+use App\Models\MasterPotensi\JenisGedung;
 use App\Models\Prasaranapendidikan;
 use Illuminate\Http\Request;
 
@@ -14,7 +14,7 @@ class PrasaranapendidikanController extends Controller
     public function index()
     {
         $desaId = session('desa_id');
-        $prasaranapendidikans = Prasaranapendidikan::with(['jpgedung', 'desa'])->where('desa_id', $desaId)->latest()->get();
+        $prasaranapendidikans = Prasaranapendidikan::with(['jenisGedung', 'desa'])->where('desa_id', $desaId)->latest()->get();
         return view('pages.potensi.potensi-prasarana-dan-sarana.ppendidikan.index', compact('prasaranapendidikans'));
     }
 
@@ -23,8 +23,8 @@ class PrasaranapendidikanController extends Controller
      */
     public function create()
     {
-        $jpgedungs = Jpgedung::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.ppendidikan.create', compact('jpgedungs'));
+        $jenisGedungs = JenisGedung::all();
+        return view('pages.potensi.potensi-prasarana-dan-sarana.ppendidikan.create', compact('jenisGedungs'));
     }
 
     /**
@@ -34,7 +34,7 @@ class PrasaranapendidikanController extends Controller
     {
         $request->validate([
             'tanggal' => 'required|date',
-            'jpgedung_id' => 'required|exists:jpgedungs,id',
+            'jenis_gedung_id' => 'required|exists:jenis_gedung,id',
             'jumlah_sewa' => 'required|integer|min:0',
             'jumlah_milik_sendiri' => 'required|integer|min:0',
         ]);
@@ -61,8 +61,8 @@ class PrasaranapendidikanController extends Controller
      */
     public function edit(Prasaranapendidikan $prasaranapendidikan)
     {
-        $jpgedungs = Jpgedung::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.ppendidikan.edit', compact('prasaranapendidikan', 'jpgedungs'));
+        $jenisGedungs = JenisGedung::all();
+        return view('pages.potensi.potensi-prasarana-dan-sarana.ppendidikan.edit', compact('prasaranapendidikan', 'jenisGedungs'));
     }
 
     /**
@@ -72,7 +72,7 @@ class PrasaranapendidikanController extends Controller
     {
         $request->validate([
             'tanggal' => 'required|date',
-            'jpgedung_id' => 'required|exists:jpgedungs,id',
+            'jenis_gedung_id' => 'required|exists:jenis_gedung,id',
             'jumlah_sewa' => 'required|integer|min:0',
             'jumlah_milik_sendiri' => 'required|integer|min:0',
         ]);

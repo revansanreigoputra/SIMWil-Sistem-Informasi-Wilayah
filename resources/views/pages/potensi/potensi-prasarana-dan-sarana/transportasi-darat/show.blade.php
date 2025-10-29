@@ -29,12 +29,12 @@
                     <tr>
                         <td><strong>Kategori</strong></td>
                         <td>:</td>
-                        <td>{{ $transportasiDarat->getKategoriOptions()[$transportasiDarat->kategori] ?? $transportasiDarat->kategori }}</td>
+                        <td>{{ $transportasiDarat->kategori->nama }}</td>
                     </tr>
                     <tr>
                         <td><strong>Jenis Sarana Prasarana</strong></td>
                         <td>:</td>
-                        <td>{{ $transportasiDarat->getJenisSaranaPrasaranaOptions()[$transportasiDarat->jenis_sarana_prasarana] ?? $transportasiDarat->jenis_sarana_prasarana }}</td>
+                        <td>{{ $transportasiDarat->jenis->nama }}</td>
                     </tr>
                 </table>
             </div>

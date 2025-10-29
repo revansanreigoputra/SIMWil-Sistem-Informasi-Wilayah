@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Desa;
 use App\Models\KomunikasiInformasi;
-use App\Models\KategoriKomunikasi;
-use App\Models\JenisKomunikasi;
+use App\Models\MasterPotensi\KategoriPrasaranaKomunikasiInformasi as KategoriKomunikasi;
+use App\Models\MasterPotensi\JenisPrasaranaKomunikasiInformasi as JenisKomunikasi;
 use Illuminate\Http\Request;
 
 class KomunikasiInformasiController extends Controller
@@ -36,8 +36,8 @@ class KomunikasiInformasiController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'kategori_id' => 'required|exists:kategori_komunikasis,id',
-            'jenis_id' => 'required|exists:jenis_komunikasis,id',
+            'kategori_id' => 'required|exists:kategori_prasarana_komunikasi_informasi,id',
+            'jenis_id' => 'required|exists:jenis_prasarana_komunikasi_informasi,id',
             'jumlah' => 'required|integer|min:0',
             'satuan' => 'required|string|max:255',
         ]);
@@ -65,7 +65,7 @@ class KomunikasiInformasiController extends Controller
     {
         $komunikasiInformasi->load(['desa', 'kategori', 'jenis']);
         $kategoris = KategoriKomunikasi::all();
-        $jenises = JenisKomunikasi::where('kategori_id', $komunikasiInformasi->kategori_id)->get();
+        $jenises = JenisKomunikasi::where('kategori_prasarana_komunikasi_informasi_id', $komunikasiInformasi->kategori_id)->get();
         return view('pages.potensi.potensi-prasarana-dan-sarana.komunikasiinformasi.edit', compact('komunikasiInformasi', 'kategoris', 'jenises'));
     }
 
@@ -76,8 +76,8 @@ class KomunikasiInformasiController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'kategori_id' => 'required|exists:kategori_komunikasis,id',
-            'jenis_id' => 'required|exists:jenis_komunikasis,id',
+            'kategori_id' => 'required|exists:kategori_prasarana_komunikasi_informasi,id',
+            'jenis_id' => 'required|exists:jenis_prasarana_komunikasi_informasi,id',
             'jumlah' => 'required|integer|min:0',
             'satuan' => 'required|string|max:255',
         ]);
@@ -102,7 +102,7 @@ class KomunikasiInformasiController extends Controller
      */
     public function getJenisByKategori($kategori_id)
     {
-        $jenises = JenisKomunikasi::where('kategori_id', $kategori_id)->get();
+        $jenises = JenisKomunikasi::where('kategori_prasarana_komunikasi_informasi_id', $kategori_id)->get();
         return response()->json($jenises);
     }
 }

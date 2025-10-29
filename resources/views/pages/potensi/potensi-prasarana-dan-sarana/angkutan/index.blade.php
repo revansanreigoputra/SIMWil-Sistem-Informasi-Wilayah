@@ -34,8 +34,8 @@
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td class="text-center">{{ $sarana->desa->nama_desa ?? 'N/A' }}</td>
                                 <td class="text-center">{{ $sarana->tanggal->format('Y-m-d') }}</td>
-                                <td class="text-center">{{ $sarana->kategori->nama_kategori ?? 'N/A' }}</td>
-                                <td class="text-center">{{ $sarana->jenis->nama_jenis ?? 'N/A' }}</td>
+                                <td class="text-center">{{ $sarana->kategori->nama ?? 'N/A' }}</td>
+                                <td class="text-center">{{ $sarana->jenis->nama ?? 'N/A' }}</td>
                                 <td class="text-center">{{ $sarana->jumlah }}</td>
                                 <td class="text-center">
                                     <div class="d-flex gap-1 justify-content-center">

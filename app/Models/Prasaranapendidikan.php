@@ -13,7 +13,7 @@ class Prasaranapendidikan extends Model
     protected $fillable = [
         'desa_id',
         'tanggal',
-        'jpgedung_id',
+        'jenis_gedung_id',
         'jumlah_sewa',
         'jumlah_milik_sendiri',
     ];
@@ -25,9 +25,9 @@ class Prasaranapendidikan extends Model
     /**
      * Relasi ke jenis gedung
      */
-    public function jpgedung()
+    public function jenisGedung()
     {
-        return $this->belongsTo(Jpgedung::class, 'jpgedung_id');
+        return $this->belongsTo(MasterPotensi\JenisGedung::class, 'jenis_gedung_id');
     }
 
     /**

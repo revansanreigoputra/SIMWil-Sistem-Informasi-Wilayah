@@ -18,11 +18,11 @@ return new class extends Migration
 
             $table->date('tanggal');
 
-            // Enum kategori
-            $table->enum('kategori', ['jalan_desa', 'jalan_kabupaten']);
-
-            // Enum jenis sarana prasarana
-            $table->enum('jenis_sarana_prasarana', ['panjang_jalan_tanah', 'panjang_jalan_aspal']);
+            $table->foreignId('kategori_prasarana_transportasi_darat_id');
+            $table->foreign('kategori_prasarana_transportasi_darat_id', 'td_kategori_id_foreign')->references('id')->on('kategori_prasarana_transportasi_darat')->onUpdate('cascade')->onDelete('cascade');
+            
+            $table->foreignId('jenis_prasarana_transportasi_darat_id');
+            $table->foreign('jenis_prasarana_transportasi_darat_id', 'td_jenis_id_foreign')->references('id')->on('jenis_prasarana_transportasi_darat')->onUpdate('cascade')->onDelete('cascade');
 
             $table->integer('kondisi_baik')->default(0);
             $table->integer('kondisi_rusak')->default(0);

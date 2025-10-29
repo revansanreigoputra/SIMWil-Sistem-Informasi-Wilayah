@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('sektor_industri_pengolahans', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('desa_id'); // ✅ Tambahan desa_id
             $table->date('tanggal');
             $table->string('jenis_industri');
             $table->bigInteger('nilai_produksi')->default(0);
@@ -18,6 +19,9 @@ return new class extends Migration
             $table->bigInteger('biaya_antara')->default(0);
             $table->bigInteger('jumlah_jenis_industri')->default(0);
             $table->timestamps();
+
+            // ✅ Relasi ke tabel desas
+            $table->foreign('desa_id')->references('id')->on('desas')->onDelete('cascade');
         });
     }
 

@@ -15,6 +15,7 @@ class KategoriPrasaranaKomunikasiInformasiSeeder extends Seeder
         $data = [
             ['nama' => 'Telepon'],
             ['nama' => 'Radio/TV'],
+            ['nama' => 'Internet'],
         ];
 
         KategoriPrasaranaKomunikasiInformasi::insert($data);

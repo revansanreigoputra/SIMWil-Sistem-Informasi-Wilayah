@@ -28,7 +28,7 @@ class KomunikasiInformasi extends Model
      */
     public function kategori()
     {
-        return $this->belongsTo(KategoriKomunikasi::class, 'kategori_id');
+        return $this->belongsTo(\App\Models\MasterPotensi\KategoriPrasaranaKomunikasiInformasi::class, 'kategori_id');
     }
 
     /**
@@ -36,7 +36,7 @@ class KomunikasiInformasi extends Model
      */
     public function jenis()
     {
-        return $this->belongsTo(JenisKomunikasi::class, 'jenis_id');
+        return $this->belongsTo(\App\Models\MasterPotensi\JenisPrasaranaKomunikasiInformasi::class, 'jenis_id');
     }
 
     /**

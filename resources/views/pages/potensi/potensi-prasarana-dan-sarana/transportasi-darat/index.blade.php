@@ -36,8 +36,8 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->desa->nama_desa }}</td>
                                 <td>{{ $item->tanggal->format('Y-m-d') }}</td>
-                                <td>{{ $item->getKategoriOptions()[$item->kategori] ?? $item->kategori }}</td>
-                                <td>{{ $item->getJenisSaranaPrasaranaOptions()[$item->jenis_sarana_prasarana] ?? $item->jenis_sarana_prasarana }}</td>
+                                <td>{{ $item->kategori->nama }}</td>
+                                <td>{{ $item->jenis->nama }}</td>
                                 <td>{{ $item->kondisi_baik }}</td>
                                 <td>{{ $item->kondisi_rusak }}</td>
                                 <td>{{ $item->jumlah }}</td>
