@@ -1,10 +1,11 @@
 @extends('layouts.master')
 
-@section('title', 'Data Iklim, Tanah, dan Erosi')
+@section('title', 'Data Kepemilikan Lahan Buah')
 
 @section('action')
-    @can('iklim.create')
-        <a href="{{ route('iklim.create') }}" class="btn btn-primary mb-3">
+    @can('kepemilikan.create')
+        <a href="{{ route('kepemilikan.create') }}" class="btn btn-primary mb-3">
+
             Tambah Data
         </a>
     @endcan
@@ -18,27 +19,34 @@
             @endif
 
             <div class="table-responsive">
-                <table id="iklim-table" class="table table-striped">
+                <table id="kepemilikan-table" class="table table-striped">
                     <thead>
                         <tr>
                             <th>No</th>
                             <th>Desa</th>
                             <th>Tanggal</th>
+                            <th>Jumlah Memiliki Tanah</th>
+                            <th>Jumlah Tidak Memiliki Tanah</th>
+                            <th>Jumlah Petani Buah</th>
                             <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($iklims as $iklim)
+                        @foreach ($kepemilikanLahanBuahs as $kepemilikan)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $iklim->desa->nama_desa }}</td>
-                                <td>{{ $iklim->tanggal->format('d-m-Y') }}</td>
+                                <td>{{ $kepemilikan->desa->nama_desa }}</td>
+                                <td>{{ $kepemilikan->tanggal->format('d-m-Y') }}</td>
+                                <td>{{ number_format($kepemilikan->jumlah_keluarga_memiliki_tanah, 0, ',', '.') }}</td>
+                                <td>{{ number_format($kepemilikan->jumlah_keluarga_tidak_memiliki_tanah, 0, ',', '.') }}
+                                </td>
+                                <td>{{ number_format($kepemilikan->jumlah_keluarga_petani_buah, 0, ',', '.') }}</td>
                                 <td>
-                                    @canany(['iklim.view', 'iklim.update', 'iklim.delete'])
+                                    @canany(['kepemilikan.view', 'kepemilikan.update', 'kepemilikan.delete'])
                                         <div class="d-flex gap-1 justify-content-center">
-                                            @can('iklim.view')
-                                                <a href="{{ route('iklim.show', $iklim->id) }}" class="btn btn-sm btn-info"
-                                                    title="Detail">
+                                            @can('kepemilikan.view')
+                                                <a href="{{ route('kepemilikan.show', $kepemilikan->id) }}"
+                                                    class="btn btn-sm btn-info" title="Detail">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                         stroke-linecap="round" stroke-linejoin="round">
@@ -49,9 +57,9 @@
                                                 </a>
                                             @endcan
 
-                                            @can('iklim.update')
-                                                <a href="{{ route('iklim.edit', $iklim->id) }}" class="btn btn-sm btn-warning"
-                                                    title="Edit">
+                                            @can('kepemilikan.update')
+                                                <a href="{{ route('kepemilikan.edit', $kepemilikan->id) }}"
+                                                    class="btn btn-sm btn-warning" title="Edit">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                         stroke-linecap="round" stroke-linejoin="round">
@@ -64,9 +72,9 @@
                                                 </a>
                                             @endcan
 
-                                            @can('iklim.delete')
+                                            @can('kepemilikan.delete')
                                                 <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                                    data-bs-target="#delete-iklim-{{ $iklim->id }}" title="Hapus">
+                                                    data-bs-target="#delete-kepemilikan-{{ $kepemilikan->id }}" title="Hapus">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                         stroke-linecap="round" stroke-linejoin="round">
@@ -82,21 +90,21 @@
                                         </div>
 
                                         <!-- Modal Delete -->
-                                        <div class="modal fade" id="delete-iklim-{{ $iklim->id }}" tabindex="-1"
-                                            aria-labelledby="deleteModalLabel-{{ $iklim->id }}" aria-hidden="true">
+                                        <div class="modal fade" id="delete-kepemilikan-{{ $kepemilikan->id }}" tabindex="-1"
+                                            aria-labelledby="deleteModalLabel-{{ $kepemilikan->id }}" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="deleteModalLabel-{{ $iklim->id }}">
-                                                            Hapus Data Iklim, Tanah, dan Erosi
+                                                        <h5 class="modal-title" id="deleteModalLabel-{{ $kepemilikan->id }}">
+                                                            Hapus Data Kepemilikan Lahan Buah
                                                         </h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close">
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <p>Data tanggal
-                                                            <strong>{{ $iklim->tanggal->format('d-m-Y') }}</strong>
+                                                        <p>Data kepemilikan lahan buah tanggal
+                                                            <strong>{{ $kepemilikan->tanggal->format('d-m-Y') }}</strong>
                                                             akan dihapus dan tidak bisa dikembalikan.
                                                         </p>
                                                         <p>Yakin ingin menghapus data ini?</p>
@@ -106,8 +114,8 @@
                                                             data-bs-dismiss="modal">
                                                             Batal
                                                         </button>
-                                                        <form action="{{ route('iklim.destroy', $iklim->id) }}" method="POST"
-                                                            class="d-inline">
+                                                        <form action="{{ route('kepemilikan.destroy', $kepemilikan->id) }}"
+                                                            method="POST" class="d-inline">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="btn btn-danger">
@@ -134,7 +142,7 @@
 @push('addon-script')
     <script>
         $(document).ready(function() {
-            $('#iklim-table').DataTable();
+            $('#kepemilikan-table').DataTable();
         });
     </script>
 @endpush

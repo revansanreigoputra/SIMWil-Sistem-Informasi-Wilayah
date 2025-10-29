@@ -454,6 +454,15 @@
                                                 </a>
                                             @endcan
 
+                                            <br>
+
+                                            @can('kepemilikan.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/kepemilikan*') ? 'active' : '' }}"
+                                                    href="{{ route('kepemilikan.index') }}">
+                                                    Lepemilikan Lahan
+                                                </a>
+                                            @endcan
+
                                         </div>
                                     </div>
 

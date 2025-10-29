@@ -172,6 +172,7 @@ use App\Http\Controllers\JlahanController;
 use App\Http\Controllers\KlahanController;
 use App\Http\Controllers\IklimTanahErosiController;
 use App\Http\Controllers\HasilProduksiController;
+use App\Http\Controllers\KepemilikanLahanBuahController;
 
 
 
@@ -648,6 +649,17 @@ Route::middleware(['auth'])->prefix('potensi/sda/hasil')->name('hasil.')->group(
     Route::get('/{hasil}/edit', [HasilProduksiController::class, 'edit'])->name('edit');
     Route::put('/{hasil}', [HasilProduksiController::class, 'update'])->name('update');
     Route::delete('/{hasil}', [HasilProduksiController::class, 'destroy'])->name('destroy');
+});
+
+// kepemilikan routes
+Route::middleware(['auth'])->prefix('potensi/sda/kepemilikan')->name('kepemilikan.')->group(function () {
+    Route::get('/', [KepemilikanLahanBuahController::class, 'index'])->name('index');
+    Route::get('/create', [KepemilikanLahanBuahController::class, 'create'])->name('create');
+    Route::post('/', [KepemilikanLahanBuahController::class, 'store'])->name('store');
+    Route::get('/{kepemilikan}', [KepemilikanLahanBuahController::class, 'show'])->name('show');
+    Route::get('/{kepemilikan}/edit', [KepemilikanLahanBuahController::class, 'edit'])->name('edit');
+    Route::put('/{kepemilikan}', [KepemilikanLahanBuahController::class, 'update'])->name('update');
+    Route::delete('/{kepemilikan}', [KepemilikanLahanBuahController::class, 'destroy'])->name('destroy');
 });
 
 //APB Desa Routes
