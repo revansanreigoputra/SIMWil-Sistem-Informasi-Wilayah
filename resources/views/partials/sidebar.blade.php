@@ -446,6 +446,13 @@
                                                     Kepemilikan Lahan
                                                 </a>
                                             @endcan
+                                            
+                                            @can('hasil.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/hasil*') ? 'active' : '' }}"
+                                                    href="{{ route('hasil.index') }}">
+                                                    Hasil & Luas Produksi
+                                                </a>
+                                            @endcan
 
                                         </div>
                                     </div>

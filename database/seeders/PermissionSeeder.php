@@ -417,6 +417,14 @@ class PermissionSeeder extends Seeder
             'lahan.edit',
             'lahan.update',
             'lahan.delete',
+            
+            // hasil
+            'hasil.view',
+            'hasil.create',
+            'hasil.store',
+            'hasil.edit',
+            'hasil.update',
+            'hasil.delete',
 
             // pengangguran
             'pengangguran.view',

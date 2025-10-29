@@ -171,6 +171,7 @@ use App\Http\Controllers\TopografiController;
 use App\Http\Controllers\JlahanController;
 use App\Http\Controllers\KlahanController;
 use App\Http\Controllers\IklimTanahErosiController;
+use App\Http\Controllers\HasilProduksiController;
 
 
 
@@ -636,6 +637,17 @@ Route::middleware(['auth'])->prefix('potensi/sda/lahan')->name('lahan.')->group(
     Route::get('/{lahan}/edit', [KlahanController::class, 'edit'])->name('edit');
     Route::put('/{lahan}', [KlahanController::class, 'update'])->name('update');
     Route::delete('/{lahan}', [KlahanController::class, 'destroy'])->name('destroy');
+});
+
+// hasil routes
+Route::middleware(['auth'])->prefix('potensi/sda/hasil')->name('hasil.')->group(function () {
+    Route::get('/', [HasilProduksiController::class, 'index'])->name('index');
+    Route::get('/create', [HasilProduksiController::class, 'create'])->name('create');
+    Route::post('/', [HasilProduksiController::class, 'store'])->name('store');
+    Route::get('/{hasil}', [HasilProduksiController::class, 'show'])->name('show');
+    Route::get('/{hasil}/edit', [HasilProduksiController::class, 'edit'])->name('edit');
+    Route::put('/{hasil}', [HasilProduksiController::class, 'update'])->name('update');
+    Route::delete('/{hasil}', [HasilProduksiController::class, 'destroy'])->name('destroy');
 });
 
 //APB Desa Routes
