@@ -89,10 +89,11 @@
 <!-- FFor id generator -->
 
 @section('action')
+    @can('permohonan.create')
     <a id="create-permohonan-btn" href="{{ route('permohonan.create') }}" class="btn btn-primary">
         Buat Dokumen Baru
     </a>
-
+    @endcan
 
 @endsection
 

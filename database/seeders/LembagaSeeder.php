@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Seeders;
+
 use Illuminate\support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -12,71 +13,36 @@ class LembagaSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
+        DB::table('lembagas')->truncate();
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
         $data = [
-            // Data untuk jenis_lembaga 'Pemerintahan'
+           // PEMERINTAHAN (Total 5 Entri)
             ['jenis_lembaga' => 'Pemerintahan', 'nama_lembaga' => 'Kementerian'],
             ['jenis_lembaga' => 'Pemerintahan', 'nama_lembaga' => 'DPRD'],
-            ['jenis_lembaga' => 'Pemerintahan', 'nama_lembaga' => 'Pemerintah Provinsi'],
-            ['jenis_lembaga' => 'Pemerintahan', 'nama_lembaga' => 'Pemerintah Kabupaten/Kota'],
-            ['jenis_lembaga' => 'Pemerintahan', 'nama_lembaga' => 'Kantor Desa/Kelurahan'],
+            ['jenis_lembaga' => 'Pemerintahan', 'nama_lembaga' => 'Pemda Provinsi'],
+            ['jenis_lembaga' => 'Pemerintahan', 'nama_lembaga' => 'Pemda Kab/Kota'],
+            ['jenis_lembaga' => 'Pemerintahan', 'nama_lembaga' => 'Kantor Desa'],
 
-            // Data untuk jenis_lembaga 'Kemasyarakatan'
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Anggota Karang Taruna'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Anggota Lembaga Gotong royong'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Anggota LKMD/K/LPM'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Anggota Organisasi Bapak-bapak'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Anggota Organisasi keagamaan'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Anggota Organisasi Kelompok Tani/Nelayan'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Anggota organisasi pemirsa/pendengar'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Anggota organisasi pencinta alam'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Anggota organisasi pengembangan ilmu pengetaahuan'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Anggota organisasi pensiunan'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Anggota Organisasi Perempuan'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Anggota Organisasi Profesi guru'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Anggota Organisasi profesi wartawan'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Anggota Organisasi profesi/tenaga medis'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Anggota Pengurus RT'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Anggota Pengurus RW'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Anggota PKK'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Anggota Satgas Kebakaran'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Anggota Satgas Kebersihan'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Anggota Tim Penanggulangan Bencana'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Anggota yayasan'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pemilik yayasan'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pengurus Hansip/Linmas'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pengurus Karang Taruna'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pengurus Lembaga Adat'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pengurus Lembaga Gotong royong'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pengurus lembaga pencinta alam'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pengurus LKMD/K/LPM'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pengurus Organisasi Bapak-bapak'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pengurus Organisasi keagamaan'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pengurus Organisasi Kelompok Tani/Nelayan'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pengurus organisasi pemirsa/pendengar'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pengurus organisasi pengembangan ilmu pengetahuan'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pengurus organisasi pensiunan'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pengurus Organisasi Perempuan'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pengurus Organisasi profesi dokter/tenaga medis'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pengurus Organisasi Profesi guru'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pengurus Organisasi profesi wartawan'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pengurus PKK'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pengurus Poskamling'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pengurus Posko Penanggulangan Bencana'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pengurus Posyandu'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pengurus Posyantekdes'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pengurus RT'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pengurus RW'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pengurus Satgas Kebakaran'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pengurus Satgas Kebersihan'],
-            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pengurus yayasan'],
+            // KEMASYARAKATAN (Hanya konsep inti, hilangkan "Anggota" atau "Pengurus")
+            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Karang Taruna'], 
+            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'LPM/LKMD'],
+            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Organisasi Keagamaan'],
+            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Organisasi Profesi'],
+            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Org. Tani/Nelayan'],
+            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'PKK'],
+            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Pengurus RT/RW'],
+            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Posyandu/Poskamling'],
+            ['jenis_lembaga' => 'Kemasyarakatan', 'nama_lembaga' => 'Yayasan'],
 
-            // Data untuk jenis_lembaga 'Ekonomi'
+            // EKONOMI
             ['jenis_lembaga' => 'Ekonomi', 'nama_lembaga' => 'Koperasi'],
-            ['jenis_lembaga' => 'Ekonomi', 'nama_lembaga' => 'Perusahaan Swasta'],
             ['jenis_lembaga' => 'Ekonomi', 'nama_lembaga' => 'BUMN/BUMD'],
             ['jenis_lembaga' => 'Ekonomi', 'nama_lembaga' => 'UMKM'],
-            ['jenis_lembaga' => 'Ekonomi', 'nama_lembaga' => 'Asosiasi Bisnis'],
-        ];
+        ]; 
 
         DB::table('lembagas')->insert($data);
     }

@@ -5,24 +5,23 @@
 @section('action')
     <div class="card-header d-flex justify-content-between align-items-center">
 
-        <button type="button" class="btn  btn-outline-info mb-3 me-2" data-bs-toggle="modal" data-bs-target="#importModal">
-            <i class="fas fa-file-import"></i> Impor Data
+        <button type="button" class="btn  btn-outline-primary mb-3 me-2" data-bs-toggle="modal" data-bs-target="#importModal">
+            <i class="bi bi-file-arrow-down me-2"></i> Impor Data
         </button>
-        <a href="{{ route('data_keluarga.export') }}" class="btn  btn-outline-success mb-3 me-2">
-            <i class="fas fa-file-export"></i> Ekspor Data
+        <a href="{{ route('data_keluarga.export') }}" class="btn  btn-outline-primary mb-3 me-2">
+            <i class="bi bi-file-arrow-up me-2"></i> Ekspor Data
         </a>
 
         @can('data_keluarga.create')
-            <a href="{{ route('data_keluarga.create') }}" class="btn btn-primary mb-3">Tambah KK</a>
+            <a href="{{ route('data_keluarga.create') }}" class="btn btn-primary mb-3 ">
+                <i class="bi bi-plus-circle me-2"></i>Tambah KK</a>
         @endcan
     @endsection
 
     @section('content')
         <div class="card">
             <div class="card-body">
-                @if (session('success'))
-                    <div class="alert alert-success">{{ session('success') }}</div>
-                @endif
+              
                 @if (session('import_error'))
                     <div class="alert alert-danger">{{ session('import_error') }}</div>
                 @endif
@@ -77,7 +76,7 @@
         <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header bg-info text-white">
+                    <div class="modal-header bg-primary text-white">
                         <h5 class="modal-title" id="importModalLabel">Impor Data Keluarga</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -85,8 +84,8 @@
                         @csrf
                         <div class="modal-body">
                             <p>Unduh template impor untuk memastikan format data Anda benar.</p>
-                            <a href="{{ route('data_keluarga.template') }}" class="btn btn-warning mb-3">
-                                <i class="fas fa-download"></i> Unduh Template Excel
+                            <a href="{{ route('data_keluarga.template') }}" class="btn btn-outline-primary mb-3">
+                                <i class="bi bi-download me-2"></i> Unduh Template Excel
                             </a>
 
                             <div class="mb-3">
@@ -94,12 +93,11 @@
                                 <input class="form-control" type="file" id="file" name="file" required>
                             </div>
                             <div class="alert alert-warning" role="alert">
-                                Pastikan kolom foreign key (e.g., DESA_ID, AGAMA_ID) diisi dengan **ID** yang sesuai dari
-                                tabel referensi.
+                                Pastikan kolom yang terdapat tanda * wajib diisi. 
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Batal</button>
                             <button type="submit" class="btn btn-primary">Mulai Impor</button>
                         </div>
                     </form>
