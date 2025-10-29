@@ -13,7 +13,8 @@ class PTenagaKerjaController extends Controller
      */
     public function index()
     {
-        $pTenagaKerjas = PTenagaKerja::latest()->paginate(10);
+        $desaId = session('desa_id');
+        $pTenagaKerjas = PTenagaKerja::where('desa_id', $desaId)->latest()->paginate(10);
         return view('pages.potensi.potensi-sdm.tenaga-kerja.index', compact('pTenagaKerjas'));
     }
 
@@ -44,6 +45,7 @@ class PTenagaKerjaController extends Controller
         $data = $request->all();
         $data['jumlah_total'] = $data['jumlah_laki_laki'] + $data['jumlah_perempuan'];
 
+        $data['desa_id'] = session('desa_id');
         PTenagaKerja::create($data);
 
         return redirect()->route('potensi.potensi-sdm.tenaga-kerja.index')->with('success', 'Data potensi tenaga kerja berhasil ditambahkan.');
@@ -84,6 +86,7 @@ class PTenagaKerjaController extends Controller
         $data = $request->all();
         $data['jumlah_total'] = $data['jumlah_laki_laki'] + $data['jumlah_perempuan'];
 
+        $data['desa_id'] = session('desa_id'); // Ensure desa_id is updated if needed, or kept consistent
         $pTenagaKerja->update($data);
 
         return redirect()->route('potensi.potensi-sdm.tenaga-kerja.index')->with('success', 'Data potensi tenaga kerja berhasil diperbarui.');
