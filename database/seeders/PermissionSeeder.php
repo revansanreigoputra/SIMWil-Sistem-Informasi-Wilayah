@@ -725,6 +725,13 @@ class PermissionSeeder extends Seeder
                 'sektor-perdagangan-hotel-restoran.edit',
                 'sektor-perdagangan-hotel-restoran.destroy',
 
+                // sektor pertanian
+                 'sektor-pertanian.view',
+                'sektor-pertanian.create',
+                'sektor-pertanian.show',
+                'sektor-pertanian.edit',
+                'sektor-pertanian.destroy', 
+
             // Pertanggungjawaban
             'pertanggungjawaban.view', 
             'pertanggungjawaban.create',

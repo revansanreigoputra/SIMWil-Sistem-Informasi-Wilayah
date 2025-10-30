@@ -86,6 +86,12 @@ class SubsektorKehutananController extends Controller
             ->with('success', 'Data subsektor kehutanan berhasil diperbarui.');
     }
 
+    public function show($id)
+{
+    $kehutanan = \App\Models\SubsektorKehutanan::with('desa')->findOrFail($id);
+    return view('pages.perkembangan.produk-domestik.subsektor-kehutanan.show', compact('kehutanan'));
+}
+
     public function destroy(SubsektorKehutanan $subsektorKehutanan)
     {
         $subsektorKehutanan->delete();

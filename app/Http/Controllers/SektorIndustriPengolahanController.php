@@ -55,11 +55,12 @@ class SektorIndustriPengolahanController extends Controller
             ->route('perkembangan.produk-domestik.sektor-industri-pengolahan.index')
             ->with('success', 'Data berhasil ditambahkan.');
     }
-
-    public function edit(SektorIndustriPengolahan $sektor)
-    {
-        return view('pages.perkembangan.produk-domestik.sektor-industri-pengolahan.edit', compact('sektor'));
-    }
+    
+public function edit($id)
+{
+    $sektorIndustriPengolahan = SektorIndustriPengolahan::findOrFail($id);
+    return view('pages.perkembangan.produk-domestik.sektor-industri-pengolahan.edit', compact('sektorIndustriPengolahan'));
+}
 
     public function update(Request $request, SektorIndustriPengolahan $sektor)
     {
@@ -89,6 +90,13 @@ class SektorIndustriPengolahanController extends Controller
             ->route('perkembangan.produk-domestik.sektor-industri-pengolahan.index')
             ->with('success', 'Data berhasil diperbarui.');
     }
+
+    public function show($id)
+{
+    $sektor = \App\Models\SektorIndustriPengolahan::with('desa')->findOrFail($id);
+    return view('pages.perkembangan.produk-domestik.sektor-industri-pengolahan.show', compact('sektor'));
+}
+
 
     public function destroy(SektorIndustriPengolahan $sektor)
     {

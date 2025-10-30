@@ -1197,6 +1197,26 @@
                                         </div>
                                     @endcanany
 
+                               {{-- Struktur Mata Pencaharian Menurut Sektor --}}
+                    @canany(['sektor-pertanian.view', 'sektor-pertanian.create', 'sektor-pertanian.show', 'sektor-pertanian.edit', 'sektor-pertanian.destroy'])
+                        <div class="dropend">
+                            <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/struktur-mata-pencaharian*') ? 'active' : '' }}"
+                                 href="#sidebar-strukturmatapencaharian" data-bs-toggle="dropdown"
+                                 data-bs-auto-close="false" role="button" aria-expanded="false">
+                                Struktur Mata <br> Pencaharian <br> Menurut Sektor
+                            </a>
+
+                            <div class="dropdown-menu {{ request()->is('perkembangan/struktur-mata-pencaharian*') ? 'show' : '' }}">
+                                @can('sektor-pertanian.view')
+                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-pertanian*') ? 'active' : '' }}"
+                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-pertanian.index') }}">
+                                        Sektor Pertanian
+                                    </a>
+                                @endcan
+                            </div>
+                        </div>
+                    @endcanany
+
                                      {{-- Kesehatan Masyarakat --}}
                                     @canany(['kualitas-ibu-hamil.view', 'kualitas-bayi.view'])
                                         <div class="dropend">
@@ -1285,9 +1305,7 @@
                                             </div>
                                         </div>
                                     @endcanany
-
-                                    
-
+                                 
                                 </div>
                             </div>
                         </div>
