@@ -469,6 +469,13 @@
                                                     Hasil & Produksi Buah 
                                                 </a>
                                             @endcan
+                                            
+                                            @can('apotikhidup.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/apotikhidup*') ? 'active' : '' }}"
+                                                    href="{{ route('apotikhidup.index') }}">
+                                                    Apotik Hidup 
+                                                </a>
+                                            @endcan
 
                                         </div>
                                     </div>

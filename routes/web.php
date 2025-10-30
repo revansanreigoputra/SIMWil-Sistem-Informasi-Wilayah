@@ -174,7 +174,7 @@ use App\Http\Controllers\IklimTanahErosiController;
 use App\Http\Controllers\HasilProduksiController;
 use App\Http\Controllers\KepemilikanLahanBuahController;
 use App\Http\Controllers\HasilProduksiBuahController;
-
+use App\Http\Controllers\ApotikHidupController;
 
 
 // kelembagaan
@@ -672,6 +672,17 @@ Route::middleware(['auth'])->prefix('potensi/sda/hasilbuah')->name('hasilbuah.')
     Route::get('/{hasilbuah}/edit', [HasilProduksiBuahController::class, 'edit'])->name('edit');
     Route::put('/{hasilbuah}', [HasilProduksiBuahController::class, 'update'])->name('update');
     Route::delete('/{hasilbuah}', [HasilProduksiBuahController::class, 'destroy'])->name('destroy');
+});
+
+// apotikhidup routes
+Route::middleware(['auth'])->prefix('potensi/sda/apotikhidup')->name('apotikhidup.')->group(function () {
+    Route::get('/', [ApotikHidupController::class, 'index'])->name('index');
+    Route::get('/create', [ApotikHidupController::class, 'create'])->name('create');
+    Route::post('/', [ApotikHidupController::class, 'store'])->name('store');
+    Route::get('/{apotikhidup}', [ApotikHidupController::class, 'show'])->name('show');
+    Route::get('/{apotikhidup}/edit', [ApotikHidupController::class, 'edit'])->name('edit');
+    Route::put('/{apotikhidup}', [ApotikHidupController::class, 'update'])->name('update');
+    Route::delete('/{apotikhidup}', [ApotikHidupController::class, 'destroy'])->name('destroy');
 });
 
 //APB Desa Routes

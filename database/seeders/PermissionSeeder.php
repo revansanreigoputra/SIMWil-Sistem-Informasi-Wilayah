@@ -446,6 +446,14 @@ class PermissionSeeder extends Seeder
             'hasilbuah.update',
             'hasilbuah.delete',
 
+            // apotikhidup
+            'apotikhidup.view',
+            'apotikhidup.create',
+            'apotikhidup.store',
+            'apotikhidup.edit',
+            'apotikhidup.update',
+            'apotikhidup.delete',
+
             // pengangguran
             'pengangguran.view',
             'pengangguran.create',
