@@ -27,7 +27,7 @@ use App\Models\MasterDDK\{
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Exports\DataKeluargaExport;
 use App\Http\Controllers\Imports\DataKeluargaImport;
-use App\Http\Controllers\Exports\DataKeluargaTemplateExport;
+use App\Http\Controllers\Exports\DataKeluargaTemplateImport;
 use Maatwebsite\Excel\Concerns\{FromCollection, WithHeadings};
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -334,7 +334,7 @@ class DataKeluargaController extends Controller
     public function template()
     {
         // Gunakan kelas Export baru yang dikhususkan untuk template
-        return Excel::download(new DataKeluargaTemplateExport(), 'template_data_keluarga.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+        return Excel::download(new DataKeluargaTemplateImport(), 'template_data_keluarga.xlsx', \Maatwebsite\Excel\Excel::XLSX);
     }
     /**
      * Import data from Excel.

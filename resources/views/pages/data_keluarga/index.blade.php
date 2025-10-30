@@ -3,15 +3,33 @@
 @section('title', 'Data Kepala Keluarga')
 
 @section('action')
+<<<<<<< HEAD
     @can('data_keluarga.create')
         <a href="{{ route('data_keluarga.create') }}" class="btn btn-primary mb-3">
             <i class="bi bi-plus-circle"></i> Tambah KK
+=======
+    <div class="card-header d-flex justify-content-between align-items-center">
+
+        <button type="button" class="btn  btn-outline-primary mb-3 me-2" data-bs-toggle="modal" data-bs-target="#importModal">
+            <i class="bi bi-file-arrow-down me-2"></i> Impor Data
+        </button>
+        <a href="{{ route('data_keluarga.export') }}" class="btn  btn-outline-primary mb-3 me-2">
+            <i class="bi bi-file-arrow-up me-2"></i> Ekspor Data
+>>>>>>> 9b083ddb19f2b3af4310b3bd0b4f9c33dd402c37
         </a>
     @endcan
 
+<<<<<<< HEAD
     <button type="button" class="btn btn-outline-info mb-3 me-2" data-bs-toggle="modal" data-bs-target="#importModal">
         <i class="bi bi-file-earmark-arrow-up"></i> Impor Data
     </button>
+=======
+        @can('data_keluarga.create')
+            <a href="{{ route('data_keluarga.create') }}" class="btn btn-primary mb-3 ">
+                <i class="bi bi-plus-circle me-2"></i>Tambah KK</a>
+        @endcan
+    @endsection
+>>>>>>> 9b083ddb19f2b3af4310b3bd0b4f9c33dd402c37
 
     <a href="{{ route('data_keluarga.export') }}" class="btn btn-outline-success mb-3 me-2">
         <i class="bi bi-file-earmark-arrow-down"></i> Ekspor Data
@@ -22,6 +40,7 @@
     @can('data_keluarga.view')
         <div class="card shadow-sm">
             <div class="card-body">
+<<<<<<< HEAD
                 {{-- Alert Sukses --}}
                 @if (session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -32,6 +51,9 @@
                 @endif
 
                 {{-- Alert Error Import --}}
+=======
+              
+>>>>>>> 9b083ddb19f2b3af4310b3bd0b4f9c33dd402c37
                 @if (session('import_error'))
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <i class="bi bi-exclamation-triangle-fill me-2"></i>
@@ -108,7 +130,7 @@
         <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header bg-info text-white">
+                    <div class="modal-header bg-primary text-white">
                         <h5 class="modal-title" id="importModalLabel">Impor Data Keluarga</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -116,21 +138,31 @@
                         @csrf
                         <div class="modal-body">
                             <p>Unduh template impor untuk memastikan format data Anda benar.</p>
+<<<<<<< HEAD
                             <a href="{{ route('data_keluarga.template') }}" class="btn btn-warning mb-3">
                                 <i class="bi bi-download"></i> Unduh Template Excel
+=======
+                            <a href="{{ route('data_keluarga.template') }}" class="btn btn-outline-primary mb-3">
+                                <i class="bi bi-download me-2"></i> Unduh Template Excel
+>>>>>>> 9b083ddb19f2b3af4310b3bd0b4f9c33dd402c37
                             </a>
 
                             <div class="mb-3">
                                 <label for="file" class="form-label">Pilih File Excel (.xlsx, .xls, .csv)</label>
                                 <input type="file" class="form-control" id="file" name="file" required>
                             </div>
+<<<<<<< HEAD
 
                             <div class="alert alert-warning">
                                 Pastikan kolom foreign key (misal: DESA_ID, AGAMA_ID) berisi **ID** yang sesuai dari tabel referensi.
+=======
+                            <div class="alert alert-warning" role="alert">
+                                Pastikan kolom yang terdapat tanda * wajib diisi. 
+>>>>>>> 9b083ddb19f2b3af4310b3bd0b4f9c33dd402c37
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Batal</button>
                             <button type="submit" class="btn btn-primary">Mulai Impor</button>
                         </div>
                     </form>
