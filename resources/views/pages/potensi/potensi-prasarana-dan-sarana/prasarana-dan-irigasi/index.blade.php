@@ -11,7 +11,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            @if(session('success'))
+            @if (session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
 
@@ -20,6 +20,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Desa</th>
                             <th>Tanggal</th>
                             <th>Saluran Primer</th>
                             <th>Saluran Sekunder</th>
@@ -33,6 +34,7 @@
                         @foreach ($irigasis as $irigasi)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
+                                <td>{{ $irigasi->desa->nama_desa }}</td>
                                 <td>{{ $irigasi->tanggal->format('d-m-Y') }}</td>
                                 <td>
                                     <small class="text-muted">Baik: {{ $irigasi->saluran_primer }} m</small><br>
@@ -105,14 +107,17 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <p>Data prasarana dan irigasi tanggal
-                                                        <strong>{{ $irigasi->tanggal->format('d-m-Y') }}</strong> akan dihapus
-                                                        dan tidak bisa dikembalikan.</p>
+                                                        <strong>{{ $irigasi->tanggal->format('d-m-Y') }}</strong> akan
+                                                        dihapus
+                                                        dan tidak bisa dikembalikan.
+                                                    </p>
                                                     <p>Yakin ingin menghapus data ini?</p>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">Batal</button>
-                                                    <form action="{{ route('potensi.potensi-prasarana-dan-sarana.irigasi.destroy', $irigasi->id) }}"
+                                                    <form
+                                                        action="{{ route('potensi.potensi-prasarana-dan-sarana.irigasi.destroy', $irigasi->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('a_p_b_desas', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('id_desa');
             $table->date('tanggal');
             $table->bigInteger('apbd_kabupaten')->default(0);
             $table->bigInteger('bantuan_pemerintah_kabupaten')->default(0);

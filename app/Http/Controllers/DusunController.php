@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Desa;
 use App\Models\Dusun;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -13,7 +14,8 @@ class DusunController extends Controller
      */
     public function index()
     {
-        $dusuns = Dusun::orderBy('tanggal', 'desc')->paginate(10);
+        $desaId = session('desa_id');
+        $dusuns = Dusun::with('desa')->where('desa_id', $desaId)->orderBy('tanggal', 'desc')->paginate(10);
         return view('pages.potensi.potensi-prasarana-dan-sarana.dusun.index', compact('dusuns'));
     }
 
@@ -47,7 +49,10 @@ class DusunController extends Controller
                 ->withInput();
         }
 
-        Dusun::create($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        Dusun::create($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.prasarana-dusun.index')
             ->with('success', 'Data Dusun berhasil ditambahkan.');
@@ -91,7 +96,10 @@ class DusunController extends Controller
                 ->withInput();
         }
 
-        $dusun->update($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        $dusun->update($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.prasarana-dusun.index')
             ->with('success', 'Data Dusun berhasil diperbarui.');

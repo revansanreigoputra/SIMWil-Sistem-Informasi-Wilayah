@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class TransportasiDarat extends Model
 {
     protected $fillable = [
+        'desa_id',
         'tanggal',
         'kategori',
         'jenis_sarana_prasarana',
@@ -38,5 +39,10 @@ class TransportasiDarat extends Model
             'panjang_jalan_tanah' => 'Panjang Jalan Tanah',
             'panjang_jalan_aspal' => 'Panjang Jalan Aspal',
         ];
+    }
+
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class);
     }
 }

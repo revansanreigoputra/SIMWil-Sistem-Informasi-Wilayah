@@ -68,12 +68,13 @@ class JenisSuratController extends Controller
             'paragraf_pembuka' => 'nullable|string',
             'paragraf_penutup' => 'nullable|string',
             'kop_template_id' => 'nullable|exists:kop_templates,id',
-
+            // mutation type
+            'mutasi_type' => ['required', Rule::in(['none', 'meninggal', 'pindah_keluar', 'mutasi_masuk_kk', 'pencatatan_kelahiran'])],
             // Validation for dynamic variables array
             'variables' => 'nullable|array',
             'variables.*.key' => 'required_with:variables|string|max:50|regex:/^[a-z0-9_]+$/i',
             'variables.*.label' => 'required_with:variables|string|max:255',
-            'variables.*.type' => 'required_with:variables|in:text,date,number,textarea,system',  
+            'variables.*.type' => 'required_with:variables|in:text,date,number,textarea,system',
         ], [
             'kode.required' => 'Kode Jenis Surat wajib diisi.',
             'nama.required' => 'Nama Jenis Surat wajib diisi.',
@@ -97,7 +98,8 @@ class JenisSuratController extends Controller
                     $variablesToSave[] = [
                         'key' => $variable['key'],
                         'label' => $variable['label'],
-                        'type' => $variable['type'] ?? 'text'
+                        'type' => $variable['type'] ?? 'text',
+                        'display' => true,
                     ];
                 }
             } else {
@@ -121,7 +123,8 @@ class JenisSuratController extends Controller
             'nama',
             'paragraf_pembuka',
             'paragraf_penutup',
-            'kop_template_id'
+            'kop_template_id',
+            'mutasi_type',
         ]);
 
         // 4. Attach Processed Variables and Save
@@ -156,6 +159,8 @@ class JenisSuratController extends Controller
             'paragraf_pembuka' => 'nullable|string',
             'paragraf_penutup' => 'nullable|string',
             'kop_template_id' => 'nullable|exists:kop_templates,id',
+            // mutation type
+            'mutasi_type' => ['required', Rule::in(['none', 'meninggal', 'pindah_keluar', 'mutasi_masuk_kk', 'pencatatan_kelahiran'])],
             'variables' => 'nullable|array',
             'variables.*.key' => 'required_with:variables|string|max:50|regex:/^[a-z0-9_]+$/i',
             'variables.*.label' => 'required_with:variables|string|max:255',
@@ -170,7 +175,8 @@ class JenisSuratController extends Controller
             'nama',
             'paragraf_pembuka',
             'paragraf_penutup',
-            'kop_template_id'
+            'kop_template_id',
+            'mutasi_type',
         ]);
 
         // 2. Process Dynamic Variables (Same logic as store to correctly tag 'system' types)
@@ -205,7 +211,7 @@ class JenisSuratController extends Controller
             }
         }
 
-      
+
 
         // Attach Processed Variables
         $data['required_variables'] = $variablesToSave;

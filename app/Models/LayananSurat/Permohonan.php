@@ -23,10 +23,14 @@ class Permohonan extends Model
         'tanggal_permohonan',
         'nomor_urut',
         'tahun',
+        'status',
+        'catatan_penolakan',
+        
 
     ];
     protected $casts = [
-        'custom_variables' => 'array',  
+        'custom_variables' => 'array',
+        
     ];
     public function kopTemplate()
     {

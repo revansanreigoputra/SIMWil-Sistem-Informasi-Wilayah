@@ -3,28 +3,47 @@
 @section('title', 'Edit Data APB Desa')
 
 @section('content')
-<div class="card">
+<div class="card-header text-dark">
+        <h5 class="card-title mb-0">
+            <i class="fas fa-edit me-2"></i>
+            Edit Data APB Desa
+        </h5>
+    </div>
+
     <div class="card-body">
-        <h4 class="mb-4">Edit Data APB Desa</h4>
-
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <strong>Terjadi Kesalahan!</strong>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
         <form action="{{ route('perkembangan.pemerintahdesadankelurahan.apbdesa.update', $apb->id) }}" method="POST">
             @csrf
             @method('PUT')
 
-            <div class="mb-3">
-                <label for="tanggal" class="form-label">Tanggal</label>
-                <input type="date" class="form-control" id="tanggal" name="tanggal" value="{{ old('tanggal', $apb->tanggal->format('Y-m-d')) }}" required>
+            <div class="row">
+            <!-- Kolom Tanggal -->
+            <div class="col-md-6 mb-3">
+                <label for="tanggal" class="form-label fw-semibold">
+                    <i class="fas fa-calendar me-1"></i>
+                    Tanggal <span class="text-danger">*</span>
+                </label>
+                <input type="date" class="form-control @error('tanggal') is-invalid @enderror" 
+                    id="tanggal" name="tanggal"
+                    value="{{ old('tanggal', \Carbon\Carbon::parse($apb->tanggal)->format('Y-m-d')) }}" required>
+                @error('tanggal')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <!-- Kolom Desa -->
+            <div class="col-md-6 mb-3">
+                <label for="id_desa" class="form-label fw-semibold">
+                    <i class="fas fa-map-marker-alt me-1"></i>
+                    Desa <span class="text-danger">*</span>
+                </label>
+                <select name="id_desa" id="id_desa" class="form-control" required>
+                    <option value="">-- Pilih Desa --</option>
+                    @foreach ($desas as $item)
+                        <option value="{{ $item->id }}" {{ old('id_desa', $apb->id_desa) == $item->id ? 'selected' : '' }}>
+                            {{ $item->nama_desa }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="row">
@@ -85,10 +104,22 @@
                     <input type="number" class="form-control" id="saldo_anggaran" name="saldo_anggaran" value="{{ old('saldo_anggaran', $apb->saldo_anggaran) }}">
                 </div>
             </div>
+            
+            <hr class="my-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">
+                    Field dengan tanda <span class="text-danger">*</span> wajib diisi
+                </small>
 
-            <div class="mt-3">
-                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                <a href="{{ route('perkembangan.pemerintahdesadankelurahan.apbdesa.index') }}" class="btn btn-secondary">Batal</a>
+                <div class="btn-group gap-2">
+                    <a href="{{ route('perkembangan.pemerintahdesadankelurahan.pertanggungjawaban.index') }}"
+                        class="btn btn-outline-secondary rounded">
+                        Kembali
+                    </a>
+                    <button type="submit" class="btn btn-primary rounded">
+                        Perbarui Data
+                    </button>
+                </div>
             </div>
         </form>
     </div>

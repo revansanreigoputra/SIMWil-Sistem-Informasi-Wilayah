@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class AirBersih extends Model
 {
     protected $fillable = [
+        'desa_id',
         'tanggal',
         'sumur_pompa',
         'sumur_gali',
@@ -35,5 +36,10 @@ class AirBersih extends Model
         return $this->sumur_pompa + $this->sumur_gali + $this->hidran_umum +
                $this->penampung_air_hujan + $this->tangki_air_bersih +
                $this->embung + $this->mata_air + $this->bangunan_pengolahan_air;
+    }
+
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class);
     }
 }

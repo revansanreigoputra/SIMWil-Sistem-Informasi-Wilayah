@@ -16,16 +16,16 @@
             padding: 1rem;
         }
 
-        /* Gaya untuk Navigasi 'Bagian' (Tingkat 1) */
+        /* NAV TABS (BAGIAN) */
         .nav-tabs {
             border-bottom: 1px solid #dee2e6;
         }
 
         .nav-tabs .nav-link {
             border: 1px solid transparent;
-            border-top-left-radius: .25rem;
-            border-top-right-radius: .25rem;
+            border-radius: .25rem .25rem 0 0;
             color: #6c757d;
+            font-weight: 500;
         }
 
         .nav-tabs .nav-link.active {
@@ -35,12 +35,7 @@
             font-weight: 600;
         }
 
-        .nav-tabs .nav-link:hover:not(.active) {
-            border-color: #e9ecef #e9ecef #dee2e6;
-            isolation: isolate;
-        }
-
-        /* Gaya untuk Navigasi Sub-menu (Tingkat 2) */
+        /* NAV PILLS (SUB MENU) */
         .nav-pills .nav-link {
             padding: 8px 12px;
             background-color: #f0f2f5;
@@ -56,8 +51,8 @@
 
         .nav-pills .nav-link.active {
             background-color: #007bff !important;
-            color: white !important;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+            color: #fff !important;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             transform: translateY(-1px);
         }
 
@@ -69,8 +64,8 @@
 
 @section('action')
     @if ($activeTab)
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambah-modal">
-            <i class="fas fa-plus-circle me-2"></i>Tambah Data Baru
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambah-modal">
+            <i class="fas fa-plus me-1"></i> Tambah Data Baru
         </button>
     @endif
 @endsection
@@ -80,195 +75,134 @@
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="card-title mb-0">Data Master Potensi Desa</h5>
         </div>
+
         <div class="card-body">
 
-            {{-- NAVIGASI TINGKAT 1: BAGIAN (Menggunakan NAV-TABS) --}}
+            {{-- NAV BAGIAN --}}
             <ul class="nav nav-tabs mb-3" role="tablist">
-                @foreach (array_keys($menu) as $bagian_num)
-                    @if (!empty($menu[$bagian_num]))
+                @foreach (array_keys($menu) as $bagian)
+                    @if (!empty($menu[$bagian]))
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link {{ $activeBagian == $bagian_num ? 'active' : '' }}"
-                                href="{{ route('master.potensi.index', ['bagian' => $bagian_num]) }}">
-                                {{-- Mengubah 'Bagian X' menjadi label yang lebih deskriptif jika ada --}}
-                                @if (Str::contains($bagian_num, 'Potensi'))
-                                    {{ $bagian_num }}
-                                @else
-                                    Bagian {{ $bagian_num }}
-                                @endif
+                            <a class="nav-link {{ $activeBagian == $bagian ? 'active' : '' }}"
+                                href="{{ route('master-potensi.index', ['bagian' => $bagian]) }}">
+                                Bagian {{ $bagian }}
                             </a>
                         </li>
                     @endif
                 @endforeach
             </ul>
 
-            {{-- NAVIGASI TINGKAT 2: SUB-MENU (TETAP NAV-PILLS) --}}
-            @if ($activeTab)
-                <ul class="nav nav-pills mb-4" role="tablist">
-                    @foreach ($menu[$activeBagian] as $tab)
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link {{ $activeTab == $tab ? 'active' : '' }}"
-                                href="{{ route('master.potensi.index', ['bagian' => $activeBagian, 'tab' => $tab]) }}">
-                                {{ Str::headline($tab) }}
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-            @endif
+            {{-- NAV SUB MENU --}}
+            <ul class="nav nav-pills mb-4" role="tablist">
+                @foreach ($menu[$activeBagian] as $tab)
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link {{ $activeTab == $tab ? 'active' : '' }}"
+                            href="{{ route('master-potensi.index', ['bagian' => $activeBagian, 'tab' => $tab]) }}">
+                            {{ Str::headline($tab) }}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
 
             {{-- TABEL DATA --}}
             <div class="table-responsive">
                 @if ($activeTab)
-                    <table class="table table-bordered table-hover">
+                    <table class="table table-bordered table-hover align-middle">
                         <thead class="table-light">
                             <tr>
-                                <th style="width: 5%;">No</th>
-                                <th>Nama {{ Str::headline($activeTab) }}</th>
-                                <th style="width: 20%;" class="text-center">Aksi</th>
+                                <th style="width:5%">No</th>
+
+                                {{-- Kolom relasi khusus --}}
+                                @if ($activeTab === 'jenis_lembaga_ekonomi')
+                                    <th>Kategori Lembaga Ekonomi</th>
+                                @elseif ($activeTab === 'jenis_prasarana_transportasi_darat')
+                                    <th>Kategori Prasarana Transportasi Darat</th>
+                                @elseif ($activeTab === 'jenis_prasarana_transportasi_lainnya')
+                                    <th>Kategori Prasarana Transportasi Lainnya</th>
+                                @elseif ($activeTab === 'jenis_prasarana_komunikasi_informasi')
+                                    <th>Kategori Prasarana Komunikasi Informasi</th>
+                                @elseif ($activeTab === 'jenis_sekolah_tingkatan')
+                                    <th>Kategori Sekolah</th>
+                                @endif
+
+                                {{-- Perbaikan: Judul kolom dinamis --}}
+                                @if ($activeTab === 'tempat_ibadah')
+                                    <th>Nama Tempat Ibadah</th>
+                                @else
+                                    <th>Nama {{ Str::headline($activeTab) }}</th>
+                                @endif
+
+                                <th style="width:20%" class="text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($data as $item)
+                            @forelse ($data as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item->nama }}</td>
+
+                                    {{-- Relasi dinamis --}}
+                                    @if ($activeTab === 'jenis_lembaga_ekonomi')
+                                        <td>{{ $item->kategoriLembagaEkonomi->nama ?? '-' }}</td>
+                                    @elseif ($activeTab === 'jenis_prasarana_transportasi_darat')
+                                        <td>{{ $item->kategoriPrasaranaTransportasiDarat->nama ?? '-' }}</td>
+                                    @elseif ($activeTab === 'jenis_prasarana_transportasi_lainnya')
+                                        <td>{{ $item->kategoriPrasaranaTransportasiLainnya->nama ?? '-' }}</td>
+                                    @elseif ($activeTab === 'jenis_prasarana_komunikasi_informasi')
+                                        <td>{{ $item->kategoriPrasaranaKomunikasiInformasi->nama ?? '-' }}</td>
+                                    @elseif ($activeTab === 'jenis_sekolah_tingkatan')
+                                        <td>{{ $item->KategoriSekolah->nama ?? '-' }}</td>
+                                    @endif
+                                    {{-- Perbaikan Kritis: Tampilkan 'nama_tempat' untuk tempat_ibadah --}}
+                                    @php
+                                        // Tentukan nilai yang akan ditampilkan (nama atau nama_tempat)
+                                        $displayValue =
+                                            $activeTab === 'tempat_ibadah'
+                                                ? $item->nama_tempat ?? ''
+                                                : $item->nama ?? '';
+                                    @endphp
+
+                                    <td>{{ $displayValue }}</td>
+
                                     <td class="text-center">
-                                        <button type="button" class="btn btn-sm btn-warning edit-btn"
-                                            data-bs-toggle="modal" data-bs-target="#edit-modal"
-                                            data-id="{{ $item->id }}" data-nama="{{ $item->nama }}">
+                                        {{-- Data untuk tombol edit --}}
+                                        <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                                            data-bs-target="#edit-modal" data-id="{{ $item->id }}">
                                             <i class="fas fa-edit"></i> Edit
                                         </button>
-                                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                            data-bs-target="#delete-modal-{{ $item->id }}">
-                                            <i class="fas fa-trash"></i> Hapus
-                                        </button>
+
+
+                                        <form action="{{ route('master-potensi.destroy', $item->id) }}" method="POST"
+                                            class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <input type="hidden" name="tab" value="{{ $activeTab }}">
+                                            <button type="submit" class="btn btn-sm btn-danger"
+                                                onclick="return confirm('Yakin ingin menghapus data ini?')">
+                                                <i class="fas fa-trash"></i> Hapus
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
-                                <div class="modal fade" id="delete-modal-{{ $item->id }}" tabindex="-1">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Konfirmasi Hapus</h5><button type="button"
-                                                    class="btn-close" data-bs-dismiss="modal"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>Apakah Anda yakin ingin menghapus data:
-                                                    <strong>{{ $item->nama }}</strong>?
-                                                </p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Batal</button>
-                                                <form action="#" method="POST" class="d-inline"> @csrf
-                                                    @method('DELETE') <button type="submit" class="btn btn-danger">Ya,
-                                                        Hapus</button></form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             @empty
                                 <tr>
-                                    <td colspan="3" class="text-center text-muted py-4">Data tidak ditemukan.</td>
+                                    <td colspan="{{ in_array($activeTab, ['jenis_lembaga_ekonomi', 'jenis_prasarana_transportasi_darat', 'jenis_prasarana_komunikasi_informasi']) ? 4 : 3 }}"
+                                        class="text-center text-muted py-4">
+                                        Data tidak ditemukan.
+                                    </td>
                                 </tr>
                             @endforelse
                         </tbody>
                     </table>
                 @else
-                    <div class="alert alert-info">Pilih bagian untuk melanjutkan.</div>
+                    <div class="alert alert-info">Pilih bagian dan sub-menu untuk menampilkan data.</div>
                 @endif
             </div>
         </div>
     </div>
 
-    {{-- ================================================= --}}
-    {{-- MODAL TAMBAH & EDIT (TAMPILAN BARU) --}}
-    {{-- ================================================= --}}
+    {{-- Modal Tambah & Edit --}}
     @if ($activeTab)
-        {{-- MODAL UNTUK TAMBAH DATA --}}
-        <div class="modal fade" id="tambah-modal" tabindex="-1" aria-labelledby="tambahModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="tambahModalLabel">
-                            <i class="fas fa-plus-circle me-2 text-primary"></i>
-                            Form Tambah {{ Str::headline($activeTab) }}
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="#" method="POST">
-                            @csrf
-                            <div class="mb-3">
-                                <label for="add_nama" class="form-label">Nama {{ Str::headline($activeTab) }}</label>
-                                <input type="text" name="nama" id="add_nama" class="form-control"
-                                    placeholder="Masukkan data baru..." required>
-                            </div>
-
-                            <div class="mt-4 d-flex justify-content-end">
-                                <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">
-                                    <i class="fas fa-times me-2"></i>Batal
-                                </button>
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save me-2"></i>Simpan
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {{-- MODAL UNTUK EDIT DATA --}}
-        <div class="modal fade" id="edit-modal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="edit-modal-title">
-                            <i class="fas fa-pencil-alt me-2 text-warning"></i>
-                            Form Edit
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="#" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <input type="hidden" name="id" id="edit-id">
-
-                            <div class="mb-3">
-                                <label for="edit-nama" class="form-label" id="edit-label">Nama</label>
-                                <input type="text" name="nama" class="form-control" id="edit-nama" required>
-                            </div>
-
-                            <div class="mt-4 d-flex justify-content-end">
-                                <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">
-                                    <i class="fas fa-times me-2"></i>Batal
-                                </button>
-                                <button type="submit" class="btn btn-success">
-                                    <i class="fas fa-check me-2"></i>Update
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @include('pages.master-potensi.create')
+        @include('pages.master-potensi.edit')
     @endif
 @endsection
-
-@push('addon-script')
-    @if ($activeTab)
-        <script>
-            $('#edit-modal').on('show.bs.modal', function(event) {
-                var button = $(event.relatedTarget);
-                var id = button.data('id');
-                var nama = button.data('nama');
-                var activeTab = "{{ Str::headline($activeTab) }}";
-                var modal = $(this);
-                modal.find('#edit-modal-title').text('Form Edit ' + activeTab);
-                modal.find('#edit-label').text('Nama ' + activeTab);
-                modal.find('#edit-id').val(id);
-                modal.find('#edit-nama').val(nama);
-            });
-        </script>
-    @endif
-@endpush

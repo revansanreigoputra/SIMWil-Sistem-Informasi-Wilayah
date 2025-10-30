@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Desa;
 use App\Models\Irigasi;
 use Illuminate\Http\Request;
 
@@ -9,7 +10,8 @@ class IrigasiController extends Controller
 {
     public function index()
     {
-        $irigasis = Irigasi::all();
+        $desaId = session('desa_id');
+        $irigasis = Irigasi::with('desa')->where('desa_id', $desaId)->get();
         return view('pages.potensi.potensi-prasarana-dan-sarana.prasarana-dan-irigasi.index', compact('irigasis'));
     }
 
@@ -34,7 +36,10 @@ class IrigasiController extends Controller
             'pintu_pembagi_air_rusak' => 'required|integer|min:0|lte:pintu_pembagi_air',
         ]);
 
-        Irigasi::create($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        Irigasi::create($data);
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.irigasi.index')->with('success', 'Irigasi created successfully.');
     }
 
@@ -64,7 +69,10 @@ class IrigasiController extends Controller
             'pintu_pembagi_air_rusak' => 'required|integer|min:0|lte:pintu_pembagi_air',
         ]);
 
-        $irigasi->update($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        $irigasi->update($data);
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.irigasi.index')->with('success', 'Irigasi updated successfully.');
     }
 

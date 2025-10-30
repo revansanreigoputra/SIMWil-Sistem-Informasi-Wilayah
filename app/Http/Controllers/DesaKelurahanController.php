@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Desa;
 use App\Models\DesaKelurahan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -13,7 +14,8 @@ class DesaKelurahanController extends Controller
      */
     public function index()
     {
-        $desaKelurahans = DesaKelurahan::orderBy('tanggal', 'desc')->paginate(10);
+        $desaId = session('desa_id');
+        $desaKelurahans = DesaKelurahan::with('desa')->where('desa_id', $desaId)->orderBy('tanggal', 'desc')->paginate(10);
         return view('pages.potensi.potensi-prasarana-dan-sarana.dkelurahan.index', compact('desaKelurahans'));
     }
 
@@ -92,7 +94,10 @@ class DesaKelurahanController extends Controller
                 ->withInput();
         }
 
-        DesaKelurahan::create($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        DesaKelurahan::create($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.prasarana-dkelurahan.index')
             ->with('success', 'Data Desa/Kelurahan berhasil ditambahkan.');
@@ -180,7 +185,10 @@ class DesaKelurahanController extends Controller
                 ->withInput();
         }
 
-        $desaKelurahan->update($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        $desaKelurahan->update($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.prasarana-dkelurahan.index')
             ->with('success', 'Data Desa/Kelurahan berhasil diperbarui.');
