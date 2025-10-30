@@ -51,30 +51,30 @@ class HasilProduksiController extends Controller
 
         HasilProduksi::create($data);
 
-        return redirect()->route('hasil.index')->with('success', 'Data hasil produksi berhasil ditambahkan.');
+        return redirect()->route('hasiltanaman.index')->with('success', 'Data hasil produksi berhasil ditambahkan.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(HasilProduksi $hasil)
+    public function show(HasilProduksi $hasiltanaman)
     {
-        return view('pages.potensi.sda.hasil.show', compact('hasil'));
+        return view('pages.potensi.sda.hasil.show', compact('hasiltanaman'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(HasilProduksi $hasil)
+    public function edit(HasilProduksi $hasiltanaman)
     {
         $komoditasPangans = KomoditasPangan::all();
-        return view('pages.potensi.sda.hasil.edit', compact('hasil', 'komoditasPangans'));
+        return view('pages.potensi.sda.hasil.edit', compact('hasiltanaman', 'komoditasPangans'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, HasilProduksi $hasil)
+    public function update(Request $request, HasilProduksi $hasiltanaman)
     {
         $request->validate([
             'tanggal' => 'required|date',
@@ -90,17 +90,17 @@ class HasilProduksiController extends Controller
             'saldo_produksi' => 'required|numeric|min:0',
         ]);
 
-        $hasil->update($request->all());
+        $hasiltanaman->update($request->all());
 
-        return redirect()->route('hasil.index')->with('success', 'Data hasil produksi berhasil diubah.');
+        return redirect()->route('hasiltanaman.index')->with('success', 'Data hasil produksi berhasil diubah.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(HasilProduksi $hasil)
+    public function destroy(HasilProduksi $hasiltanaman)
     {
-        $hasil->delete();
-        return redirect()->route('hasil.index')->with('success', 'Data hasil produksi berhasil dihapus.');
+        $hasiltanaman->delete();
+        return redirect()->route('hasiltanaman.index')->with('success', 'Data hasil produksi berhasil dihapus.');
     }
 }

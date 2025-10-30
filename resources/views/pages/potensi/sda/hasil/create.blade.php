@@ -12,7 +12,7 @@
         </div>
 
         <div class="card-body">
-            <form action="{{ route('hasil.store') }}" method="POST">
+            <form action="{{ route('hasiltanaman.store') }}" method="POST">
                 @csrf
 
                 <div class="row">
@@ -124,7 +124,7 @@
                             </small>
 
                             <div class="btn-group gap-2">
-                                <a href="{{ route('hasil.index') }}"
+                                <a href="{{ route('hasiltanaman.index') }}"
                                     class="btn btn-outline-secondary rounded">
                                     Kembali
                                 </a>

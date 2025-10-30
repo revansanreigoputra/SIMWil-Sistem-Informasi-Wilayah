@@ -12,7 +12,7 @@
         </div>
 
         <div class="card-body">
-            <form action="{{ route('hasil.update', $hasil->id) }}" method="POST">
+            <form action="{{ route('hasiltanaman.update', $hasiltanaman->id) }}" method="POST">
                 @csrf
                 @method('PUT')
 
@@ -24,7 +24,7 @@
                                 Tanggal <span class="text-danger">*</span>
                             </label>
                             <input type="date" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal"
-                                name="tanggal" value="{{ old('tanggal', $hasil->tanggal->format('Y-m-d')) }}" required>
+                                name="tanggal" value="{{ old('tanggal', $hasiltanaman->tanggal->format('Y-m-d')) }}" required>
                             @error('tanggal')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -39,7 +39,7 @@
                             <select class="form-select @error('komoditas_pangan_id') is-invalid @enderror" id="komoditas_pangan_id" name="komoditas_pangan_id" required>
                                 <option value="" disabled>Pilih Komoditas</option>
                                 @foreach($komoditasPangans as $komoditas)
-                                    <option value="{{ $komoditas->id }}" {{ old('komoditas_pangan_id', $hasil->komoditas_pangan_id) == $komoditas->id ? 'selected' : '' }}>{{ $komoditas->nama }}</option>
+                                    <option value="{{ $komoditas->id }}" {{ old('komoditas_pangan_id', $hasiltanaman->komoditas_pangan_id) == $komoditas->id ? 'selected' : '' }}>{{ $komoditas->nama }}</option>
                                 @endforeach
                             </select>
                             @error('komoditas_pangan_id')
@@ -54,19 +54,19 @@
                     <div class="col-md-4">
                         <div class="mb-3">
                             <label for="luas_produksi" class="form-label">Luas Produksi (Ha)</label>
-                            <input type="number" step="0.01" class="form-control" id="luas_produksi" name="luas_produksi" value="{{ old('luas_produksi', $hasil->luas_produksi) }}">
+                            <input type="number" step="0.01" class="form-control" id="luas_produksi" name="luas_produksi" value="{{ old('luas_produksi', $hasiltanaman->luas_produksi) }}">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
                             <label for="hasil_produksi" class="form-label">Hasil Produksi (Ton)</label>
-                            <input type="number" step="0.01" class="form-control" id="hasil_produksi" name="hasil_produksi" value="{{ old('hasil_produksi', $hasil->hasil_produksi) }}">
+                            <input type="number" step="0.01" class="form-control" id="hasil_produksi" name="hasil_produksi" value="{{ old('hasil_produksi', $hasiltanaman->hasil_produksi) }}">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
                             <label for="harga_lokal" class="form-label">Harga Lokal (Rp)</label>
-                            <input type="number" class="form-control" id="harga_lokal" name="harga_lokal" value="{{ old('harga_lokal', $hasil->harga_lokal) }}">
+                            <input type="number" class="form-control" id="harga_lokal" name="harga_lokal" value="{{ old('harga_lokal', $hasiltanaman->harga_lokal) }}">
                         </div>
                     </div>
                 </div>
@@ -76,25 +76,25 @@
                     <div class="col-md-3">
                         <div class="mb-3">
                             <label for="biaya_pemupukan" class="form-label">Biaya Pemupukan (Rp)</label>
-                            <input type="number" class="form-control" id="biaya_pemupukan" name="biaya_pemupukan" value="{{ old('biaya_pemupukan', $hasil->biaya_pemupukan) }}">
+                            <input type="number" class="form-control" id="biaya_pemupukan" name="biaya_pemupukan" value="{{ old('biaya_pemupukan', $hasiltanaman->biaya_pemupukan) }}">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="mb-3">
                             <label for="biaya_bibit" class="form-label">Biaya Bibit (Rp)</label>
-                            <input type="number" class="form-control" id="biaya_bibit" name="biaya_bibit" value="{{ old('biaya_bibit', $hasil->biaya_bibit) }}">
+                            <input type="number" class="form-control" id="biaya_bibit" name="biaya_bibit" value="{{ old('biaya_bibit', $hasiltanaman->biaya_bibit) }}">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="mb-3">
                             <label for="biaya_obat" class="form-label">Biaya Obat (Rp)</label>
-                            <input type="number" class="form-control" id="biaya_obat" name="biaya_obat" value="{{ old('biaya_obat', $hasil->biaya_obat) }}">
+                            <input type="number" class="form-control" id="biaya_obat" name="biaya_obat" value="{{ old('biaya_obat', $hasiltanaman->biaya_obat) }}">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="mb-3">
                             <label for="biaya_lainnya" class="form-label">Biaya Lainnya (Rp)</label>
-                            <input type="number" class="form-control" id="biaya_lainnya" name="biaya_lainnya" value="{{ old('biaya_lainnya', $hasil->biaya_lainnya) }}">
+                            <input type="number" class="form-control" id="biaya_lainnya" name="biaya_lainnya" value="{{ old('biaya_lainnya', $hasiltanaman->biaya_lainnya) }}">
                         </div>
                     </div>
                 </div>
@@ -104,13 +104,13 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="nilai_produksi_tahun_ini" class="form-label">Nilai Produksi Tahun Ini (Rp)</label>
-                            <input type="number" class="form-control" id="nilai_produksi_tahun_ini" name="nilai_produksi_tahun_ini" value="{{ old('nilai_produksi_tahun_ini', $hasil->nilai_produksi_tahun_ini) }}">
+                            <input type="number" class="form-control" id="nilai_produksi_tahun_ini" name="nilai_produksi_tahun_ini" value="{{ old('nilai_produksi_tahun_ini', $hasiltanaman->nilai_produksi_tahun_ini) }}">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="saldo_produksi" class="form-label">Saldo Produksi (Rp)</label>
-                            <input type="number" class="form-control" id="saldo_produksi" name="saldo_produksi" value="{{ old('saldo_produksi', $hasil->saldo_produksi) }}">
+                            <input type="number" class="form-control" id="saldo_produksi" name="saldo_produksi" value="{{ old('saldo_produksi', $hasiltanaman->saldo_produksi) }}">
                         </div>
                     </div>
                 </div>
@@ -125,7 +125,7 @@
                             </small>
 
                             <div class="btn-group gap-2">
-                                <a href="{{ route('hasil.index') }}"
+                                <a href="{{ route('hasiltanaman.index') }}"
                                     class="btn btn-outline-secondary rounded">
                                     Kembali
                                 </a>

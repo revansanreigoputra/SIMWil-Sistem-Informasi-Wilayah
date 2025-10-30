@@ -173,6 +173,7 @@ use App\Http\Controllers\KlahanController;
 use App\Http\Controllers\IklimTanahErosiController;
 use App\Http\Controllers\HasilProduksiController;
 use App\Http\Controllers\KepemilikanLahanBuahController;
+use App\Http\Controllers\HasilProduksiBuahController;
 
 
 
@@ -641,14 +642,14 @@ Route::middleware(['auth'])->prefix('potensi/sda/lahan')->name('lahan.')->group(
 });
 
 // hasil routes
-Route::middleware(['auth'])->prefix('potensi/sda/hasil')->name('hasil.')->group(function () {
+Route::middleware(['auth'])->prefix('potensi/sda/hasil')->name('hasiltanaman.')->group(function () {
     Route::get('/', [HasilProduksiController::class, 'index'])->name('index');
     Route::get('/create', [HasilProduksiController::class, 'create'])->name('create');
     Route::post('/', [HasilProduksiController::class, 'store'])->name('store');
-    Route::get('/{hasil}', [HasilProduksiController::class, 'show'])->name('show');
-    Route::get('/{hasil}/edit', [HasilProduksiController::class, 'edit'])->name('edit');
-    Route::put('/{hasil}', [HasilProduksiController::class, 'update'])->name('update');
-    Route::delete('/{hasil}', [HasilProduksiController::class, 'destroy'])->name('destroy');
+    Route::get('/{hasiltanaman}', [HasilProduksiController::class, 'show'])->name('show');
+    Route::get('/{hasiltanaman}/edit', [HasilProduksiController::class, 'edit'])->name('edit');
+    Route::put('/{hasiltanaman}', [HasilProduksiController::class, 'update'])->name('update');
+    Route::delete('/{hasiltanaman}', [HasilProduksiController::class, 'destroy'])->name('destroy');
 });
 
 // kepemilikan routes
@@ -660,6 +661,17 @@ Route::middleware(['auth'])->prefix('potensi/sda/kepemilikan')->name('kepemilika
     Route::get('/{kepemilikan}/edit', [KepemilikanLahanBuahController::class, 'edit'])->name('edit');
     Route::put('/{kepemilikan}', [KepemilikanLahanBuahController::class, 'update'])->name('update');
     Route::delete('/{kepemilikan}', [KepemilikanLahanBuahController::class, 'destroy'])->name('destroy');
+});
+
+// hasilbuah routes
+Route::middleware(['auth'])->prefix('potensi/sda/hasilbuah')->name('hasilbuah.')->group(function () {
+    Route::get('/', [HasilProduksiBuahController::class, 'index'])->name('index');
+    Route::get('/create', [HasilProduksiBuahController::class, 'create'])->name('create');
+    Route::post('/', [HasilProduksiBuahController::class, 'store'])->name('store');
+    Route::get('/{hasilbuah}', [HasilProduksiBuahController::class, 'show'])->name('show');
+    Route::get('/{hasilbuah}/edit', [HasilProduksiBuahController::class, 'edit'])->name('edit');
+    Route::put('/{hasilbuah}', [HasilProduksiBuahController::class, 'update'])->name('update');
+    Route::delete('/{hasilbuah}', [HasilProduksiBuahController::class, 'destroy'])->name('destroy');
 });
 
 //APB Desa Routes

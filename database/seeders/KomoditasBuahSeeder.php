@@ -12,6 +12,7 @@ class KomoditasBuahSeeder extends Seeder
         $data = [
             ['nama' => 'Jeruk'],
             ['nama' => 'Alpukat'],
+            ['nama' => 'Mangga  '],
         ];
 
         KomoditasBuah::insert($data);

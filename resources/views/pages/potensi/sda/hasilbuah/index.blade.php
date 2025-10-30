@@ -1,10 +1,11 @@
 @extends('layouts.master')
 
-@section('title', 'Data Hasil Produksi')
+@section('title', 'Data Hasil Produksi Buah')
 
 @section('action')
-    @can('hasiltanaman.create')
-        <a href="{{ route('hasiltanaman.create') }}" class="btn btn-primary mb-3">
+    @can('hasilbuah.create')
+        <a href="{{ route('hasilbuah.create') }}" class="btn btn-primary mb-3">
+            <i class="fas fa-plus-circle me-2"></i>
             Tambah Data
         </a>
     @endcan
@@ -18,32 +19,30 @@
             @endif
 
             <div class="table-responsive">
-                <table id="hasil-table" class="table table-striped">
+                <table id="hasilbuah-table" class="table table-striped">
                     <thead>
                         <tr>
                             <th>No</th>
                             <th>Desa</th>
                             <th>Tanggal</th>
-                            <th>Komoditas</th>
-                            <th>Luas Produksi (Ha)</th>
+                            <th>Nama Komoditas</th>
                             <th>Hasil Produksi (Ton)</th>
                             <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($hasilProduksis as $hasil)
+                        @foreach ($hasilProduksiBuahs as $hasilbuah)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $hasil->desa->nama_desa }}</td>
-                                <td>{{ $hasil->tanggal->format('d-m-Y') }}</td>
-                                <td>{{ $hasil->komoditas->nama }}</td>
-                                <td>{{ number_format($hasil->luas_produksi, 2, ',', '.') }}</td>
-                                <td>{{ number_format($hasil->hasil_produksi, 2, ',', '.') }}</td>
+                                <td>{{ $hasilbuah->desa->nama_desa }}</td>
+                                <td>{{ $hasilbuah->tanggal->format('d-m-Y') }}</td>
+                                <td>{{ $hasilbuah->komoditas->nama }}</td>
+                                <td>{{ number_format($hasilbuah->hasil_produksi, 2, ',', '.') }}</td>
                                 <td>
-                                    @canany(['hasiltanaman.view', 'hasiltanaman.update', 'hasiltanaman.delete'])
+                                    @canany(['hasilbuah.view', 'hasilbuah.update', 'hasilbuah.delete'])
                                         <div class="d-flex gap-1 justify-content-center">
-                                            @can('hasiltanaman.view')
-                                                <a href="{{ route('hasiltanaman.show', $hasil->id) }}"
+                                            @can('hasilbuah.view')
+                                                <a href="{{ route('hasilbuah.show', $hasilbuah->id) }}"
                                                     class="btn btn-sm btn-info" title="Detail">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -55,8 +54,8 @@
                                                 </a>
                                             @endcan
 
-                                            @can('hasiltanaman.update')
-                                                <a href="{{ route('hasiltanaman.edit', $hasil->id) }}"
+                                            @can('hasilbuah.update')
+                                                <a href="{{ route('hasilbuah.edit', $hasilbuah->id) }}"
                                                     class="btn btn-sm btn-warning" title="Edit">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -70,9 +69,9 @@
                                                 </a>
                                             @endcan
 
-                                            @can('hasiltanaman.delete')
+                                            @can('hasilbuah.delete')
                                                 <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                                    data-bs-target="#delete-hasil-{{ $hasil->id }}" title="Hapus">
+                                                    data-bs-target="#delete-hasilbuah-{{ $hasilbuah->id }}" title="Hapus">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                         stroke-linecap="round" stroke-linejoin="round">
@@ -88,21 +87,23 @@
                                         </div>
 
                                         <!-- Modal Delete -->
-                                        <div class="modal fade" id="delete-hasil-{{ $hasil->id }}" tabindex="-1"
-                                            aria-labelledby="deleteModalLabel-{{ $hasil->id }}" aria-hidden="true">
+                                        <div class="modal fade" id="delete-hasilbuah-{{ $hasilbuah->id }}" tabindex="-1"
+                                            aria-labelledby="deleteModalLabel-{{ $hasilbuah->id }}" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="deleteModalLabel-{{ $hasil->id }}">
-                                                            Hapus Data Hasil Produksi
+                                                        <h5 class="modal-title" id="deleteModalLabel-{{ $hasilbuah->id }}">
+                                                            Hapus Data Hasil Produksi Buah
                                                         </h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close">
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <p>Data hasil produksi komoditas <strong>{{ $hasil->komoditas->nama }}</strong> tanggal
-                                                            <strong>{{ $hasil->tanggal->format('d-m-Y') }}</strong>
+                                                        <p>Data komoditas
+                                                            <strong>{{ $hasilbuah->komoditas->nama }}</strong>
+                                                            tanggal
+                                                            <strong>{{ $hasilbuah->tanggal->format('d-m-Y') }}</strong>
                                                             akan dihapus dan tidak bisa dikembalikan.
                                                         </p>
                                                         <p>Yakin ingin menghapus data ini?</p>
@@ -112,7 +113,7 @@
                                                             data-bs-dismiss="modal">
                                                             Batal
                                                         </button>
-                                                        <form action="{{ route('hasiltanaman.destroy', $hasil->id) }}"
+                                                        <form action="{{ route('hasilbuah.destroy', $hasilbuah->id) }}"
                                                             method="POST" class="d-inline">
                                                             @csrf
                                                             @method('DELETE')
@@ -140,7 +141,7 @@
 @push('addon-script')
     <script>
         $(document).ready(function() {
-            $('#hasil-table').DataTable();
+            $('#hasilbuah-table').DataTable();
         });
     </script>
 @endpush

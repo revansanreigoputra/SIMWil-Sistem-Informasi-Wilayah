@@ -447,10 +447,10 @@
                                                 </a>
                                             @endcan
                                             
-                                            @can('hasil.view')
-                                                <a class="dropdown-item {{ request()->is('potensi/sda/hasil*') ? 'active' : '' }}"
-                                                    href="{{ route('hasil.index') }}">
-                                                    Hasil & Luas Produksi
+                                            @can('hasiltanaman.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/hasiltanaman*') ? 'active' : '' }}"
+                                                    href="{{ route('hasiltanaman.index') }}">
+                                                    Hasil & Produksi Tanaman
                                                 </a>
                                             @endcan
 
@@ -460,6 +460,13 @@
                                                 <a class="dropdown-item {{ request()->is('potensi/sda/kepemilikan*') ? 'active' : '' }}"
                                                     href="{{ route('kepemilikan.index') }}">
                                                     Kep. Lahan Buah 
+                                                </a>
+                                            @endcan
+                                            
+                                            @can('hasilbuah.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/hasilbuah*') ? 'active' : '' }}"
+                                                    href="{{ route('hasilbuah.index') }}">
+                                                    Hasil & Produksi Buah 
                                                 </a>
                                             @endcan
 

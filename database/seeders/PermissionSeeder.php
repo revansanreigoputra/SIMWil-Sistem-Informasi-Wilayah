@@ -419,12 +419,12 @@ class PermissionSeeder extends Seeder
             'lahan.delete',
             
             // hasil
-            'hasil.view',
-            'hasil.create',
-            'hasil.store',
-            'hasil.edit',
-            'hasil.update',
-            'hasil.delete',
+            'hasiltanaman.view',
+            'hasiltanaman.create',
+            'hasiltanaman.store',
+            'hasiltanaman.edit',
+            'hasiltanaman.update',
+            'hasiltanaman.delete',
             
             // kepemilikan
             'kepemilikan.view',
@@ -433,6 +433,18 @@ class PermissionSeeder extends Seeder
             'kepemilikan.edit',
             'kepemilikan.update',
             'kepemilikan.delete',
+
+            // hasilbuah
+            'hasilbuah.view',
+            'hasilbuah.create',
+            'hasilbuah.store',
+            'hasilbuah.edit',
+            'hasilbuah.update',
+            'hasilbuah.delete',
+            'hasilbuah.store',
+            'hasilbuah.edit',
+            'hasilbuah.update',
+            'hasilbuah.delete',
 
             // pengangguran
             'pengangguran.view',
