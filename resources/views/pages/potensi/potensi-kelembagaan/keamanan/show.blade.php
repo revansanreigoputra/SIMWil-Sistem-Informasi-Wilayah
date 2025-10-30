@@ -102,11 +102,6 @@
                 <i class="bi bi-arrow-left"></i> Kembali
             </a>
             @endcan
-            @can('keamanan.edit')
-            <a href="{{ route('potensi.potensi-kelembagaan.keamanan.edit', $data->id) }}" class="btn btn-warning">
-                <i class="bi bi-pencil-square"></i> Edit
-            </a>
-            @endcan
         </div>
     </div>
 </div>
