@@ -477,6 +477,15 @@
                                                 </a>
                                             @endcan
 
+                                            <br>
+
+                                            @can('kebun.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/kebun*') ? 'active' : '' }}"
+                                                    href="{{ route('kebun.index') }}">
+                                                    Kep. Lahan Kebun 
+                                                </a>
+                                            @endcan
+
                                         </div>
                                     </div>
 

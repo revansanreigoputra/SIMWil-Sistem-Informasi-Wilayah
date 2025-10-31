@@ -453,6 +453,14 @@ class PermissionSeeder extends Seeder
             'apotikhidup.edit',
             'apotikhidup.update',
             'apotikhidup.delete',
+            
+            // kebun
+            'kebun.view',
+            'kebun.create',
+            'kebun.store',
+            'kebun.edit',
+            'kebun.update',
+            'kebun.delete',
 
             // pengangguran
             'pengangguran.view',
