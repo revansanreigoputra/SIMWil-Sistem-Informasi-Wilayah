@@ -325,7 +325,7 @@
                                     </a>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
                     </li>
                 @endcan
                 {{-- Mutasi --}}
@@ -526,7 +526,7 @@
                                             Potensi Prasarana<br>dan Sarana
                                         </a>
 
-                                        <div 
+                                        <div
                                             class="dropdown-menu {{ request()->is('potensi/potensi-prasarana-dan-sarana*') ? 'show' : '' }}">
                                             @can('transportasi_darat.view')
                                                 <a class="dropdown-item {{ request()->is('potensi/potensi-prasarana-dan-sarana/transportasi-darat*') ? 'active' : '' }}"
@@ -657,12 +657,12 @@
                                                     Prasarana Kebersihan
                                                 </a>
                                             @endcan
-                                            
-                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     </li>
                 @endcanany
 

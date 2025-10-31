@@ -356,5 +356,5 @@ class AnggotaKeluargaController extends Controller
                 'message' => 'Data anggota keluarga tidak ditemukan.'
             ], 404);
         }
-    }
+    } 
 }

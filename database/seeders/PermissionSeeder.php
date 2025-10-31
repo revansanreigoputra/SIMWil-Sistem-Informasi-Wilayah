@@ -66,7 +66,10 @@ class PermissionSeeder extends Seeder
             'data_keluarga.edit',
             'data_keluarga.update',
             'data_keluarga.delete',
-            'data_keluarga.destroy',
+            'data_keluarga.destroy', 
+            'data_keluarga.export',
+            'data_keluarga.import',
+            
             // Anggota Keluarga Permissions
             'anggota_keluarga.view',
             'anggota_keluarga.create',
