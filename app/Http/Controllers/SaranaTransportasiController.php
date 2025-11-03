@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Desa;
 use App\Models\SaranaTransportasi;
-use App\Models\KategoriTransportasi;
-use App\Models\JenisTransportasi;
+use App\Models\MasterPotensi\KategoriPrasaranaTransportasiLainnya;
+use App\Models\MasterPotensi\JenisPrasaranaTransportasiLainnya;
 use Illuminate\Http\Request;
 
 class SaranaTransportasiController extends Controller
@@ -19,8 +19,8 @@ class SaranaTransportasiController extends Controller
 
     public function create()
     {
-        $kategoriTransportasis = KategoriTransportasi::all();
-        $jenisTransportasis = JenisTransportasi::all();
+        $kategoriTransportasis = KategoriPrasaranaTransportasiLainnya::all();
+        $jenisTransportasis = JenisPrasaranaTransportasiLainnya::all();
         return view('pages.potensi.potensi-prasarana-dan-sarana.angkutan.create', compact('kategoriTransportasis', 'jenisTransportasis'));
     }
 
@@ -28,8 +28,8 @@ class SaranaTransportasiController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'kategori_id' => 'required|exists:kategori_transportasis,id',
-            'jenis_id' => 'required|exists:jenis_transportasis,id',
+            'kategori_prasarana_transportasi_lainnya_id' => 'required|exists:kategori_prasarana_transportasi_lainnya,id',
+            'jenis_prasarana_transportasi_lainnya_id' => 'required|exists:jenis_prasarana_transportasi_lainnya,id',
             'jumlah' => 'required|integer|min:0',
         ]);
 
@@ -48,8 +48,8 @@ class SaranaTransportasiController extends Controller
 
     public function edit(SaranaTransportasi $saranaTransportasi)
     {
-        $kategoriTransportasis = KategoriTransportasi::all();
-        $jenisTransportasis = JenisTransportasi::all();
+        $kategoriTransportasis = KategoriPrasaranaTransportasiLainnya::all();
+        $jenisTransportasis = JenisPrasaranaTransportasiLainnya::all();
         return view('pages.potensi.potensi-prasarana-dan-sarana.angkutan.edit', compact('saranaTransportasi', 'kategoriTransportasis', 'jenisTransportasis'));
     }
 
@@ -57,8 +57,8 @@ class SaranaTransportasiController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'kategori_id' => 'required|exists:kategori_transportasis,id',
-            'jenis_id' => 'required|exists:jenis_transportasis,id',
+            'kategori_prasarana_transportasi_lainnya_id' => 'required|exists:kategori_prasarana_transportasi_lainnya,id',
+            'jenis_prasarana_transportasi_lainnya_id' => 'required|exists:jenis_prasarana_transportasi_lainnya,id',
             'jumlah' => 'required|integer|min:0',
         ]);
 
@@ -71,5 +71,11 @@ class SaranaTransportasiController extends Controller
     {
         $saranaTransportasi->delete();
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.angkutan.index')->with('success', 'Data sarana transportasi berhasil dihapus.');
+    }
+
+    public function getJenisByKategori($kategoriId)
+    {
+        $jenis = JenisPrasaranaTransportasiLainnya::where('kategori_prasarana_transportasi_lainnya_id', $kategoriId)->get();
+        return response()->json($jenis);
     }
 }

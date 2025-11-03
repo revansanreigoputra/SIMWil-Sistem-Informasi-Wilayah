@@ -123,7 +123,7 @@ class PermohonanSuratController extends Controller
         }
         return $returnValue;
     }
- 
+
     // handle mutasi update data
     protected function handleMutasiUpdateKK(AnggotaKeluarga $anggota, Permohonan $permohonan, string $mutasiType)
     {
@@ -205,7 +205,7 @@ class PermohonanSuratController extends Controller
         $customData = $permohonan->custom_variables;
 
         // --- Data Mapping (Kept for integrity) ---
-        $jenisKelaminInput = $customData['jenis_kelamin'] ?? null;
+        $jenisKelaminInput = $customData['jenis_kelamin_bayi'] ?? null;
         $jenisKelaminFixed = $jenisKelaminInput ? ucwords(strtolower($jenisKelaminInput)) : null;
 
         $statusPerkawinanInput = $customData['status_perkawinan'] ?? null;
@@ -245,9 +245,9 @@ class PermohonanSuratController extends Controller
                     'no_urut' => $nextNoUrut,
 
                     // DATA FIELDS
-                    'nama' => $customData['nama'] ?? null,
+                    'nama' => $customData['nama_bayi'] ?? null,
                     'hubungan_keluarga_id' => $customData['hubungan_keluarga_id'] ?? null,
-                    'nik' => $customData['nik'] ?? null,
+                    'nik' => $customData['nik_bayi'] ?? null,
                     'no_akta_kelahiran' => $customData['no_akta_kelahiran'] ?? null,
 
                     // FIXED REQUIRED FIELDS
@@ -256,15 +256,15 @@ class PermohonanSuratController extends Controller
                     'nama_orang_tua' => $namaOrangTua, // <--- FIXED: Using KK's name
 
                     // OTHER FIELDS
-                    'tempat_lahir' => $customData['tempat_lahir'] ?? null,
-                    'tanggal_lahir' => $customData['tanggal_lahir'] ?? null,
+                    'tempat_lahir' => $customData['tempat_lahir_bayi'] ?? null,
+                    'tanggal_lahir' => $customData['tanggal_lahir_bayi'] ?? null,
                     'tanggal_pencatatan' => $customData['tanggal_pencatatan'] ?? null,
-                    'agama_id' => $customData['agama_id'] ?? null,
-                    'golongan_darah_id' => $customData['golongan_darah_id'] ?? null,
-                    'kewarganegaraan_id' => $customData['kewarganegaraan_id'] ?? null,
-                    'etnis' => $customData['etnis'] ?? null,
-                    'pendidikan_id' => $customData['pendidikan_id'] ?? null,
-                    'mata_pencaharian_id' => $customData['mata_pencaharian_id'] ?? null,
+                    'agama_id' => $customData['agama_id_bayi'] ?? null,
+                    'golongan_darah_id' => $customData['golongan_darah_id_bayi'] ?? null,
+                    'kewarganegaraan_id' => $customData['kewarganegaraan_id_bayi'] ?? null,
+                    'etnis' => $customData['etnis_bayi'] ?? null,
+                    'pendidikan_id' => $customData['pendidikan_id_bayi'] ?? null,
+                    'mata_pencaharian_id' => $customData['mata_pencaharian_id_bayi'] ?? null,
                     'status_kehidupan' => 'hidup',
                 ];
 
@@ -374,9 +374,26 @@ class PermohonanSuratController extends Controller
 
     public function store(Request $request)
     {
-        // 1. Fetch JenisSurat dan Mutasi Type
+        // 1. Fetch JenisSurat dan Mutasi Type 
+        // $templateVariables = $jenisSurat->required_variables ?? [];
         $jenisSurat = JenisSurat::findOrFail($request->input('jenis_surat_id'));
-        $templateVariables = $jenisSurat->required_variables ?? [];
+        // --- START FIX ---
+        $templateVariables = $jenisSurat->required_variables;
+
+        // Check if it's a string (meaning casting failed or was bypassed)
+        if (is_string($templateVariables)) {
+            // Attempt to decode the JSON string. Use 'true' for associative array.
+            $decoded = json_decode($templateVariables, true);
+
+            // Set to decoded array if successful, otherwise default to an empty array.
+            $templateVariables = is_array($decoded) ? $decoded : [];
+        } else {
+            // If it's already an array/object (due to successful casting) or null, 
+            // use null coalescing for safety.
+            $templateVariables = $templateVariables ?? [];
+        }
+        // --- END FIX ---
+
 
         $mutasiType = $jenisSurat->mutasi_type ?? 'none';
         $isMutasiMasukKK = $mutasiType === 'mutasi_masuk_kk';
@@ -520,7 +537,6 @@ class PermohonanSuratController extends Controller
                     // Assign the IDs of the already-created entities
                     $data['id_anggota_keluargas'] = $anggota->id;
                     $data['id_data_keluargas'] = $anggota->data_keluarga_id;
-
                 } elseif ($isKelahiran) {
                     $permohonanTemp = new Permohonan($data);
 
@@ -584,6 +600,7 @@ class PermohonanSuratController extends Controller
     {
         try {
             $permohonan = Permohonan::findOrFail($id);
+            $jenisSurat = $permohonan->jenisSurat;
             $kopTemplates = KopTemplate::all();
             $allJenisSurats = JenisSurat::all();
             $ttds = Ttd::all();
@@ -601,9 +618,15 @@ class PermohonanSuratController extends Controller
 
             $combinedAnggota = $anggotaKeluargas->concat($preparedDataKeluargas);
 
-            $requiredVariables = $permohonan->jenisSurat->required_variables ?? [];
+            // --- FIX START: Force requiredVariables to be an array ---
+            $requiredVariables = $permohonan->jenisSurat->required_variables;
 
-
+            if (is_string($requiredVariables)) {
+                $decoded = json_decode($requiredVariables, true);
+                $requiredVariables = is_array($decoded) ? $decoded : [];
+            } else {
+                $requiredVariables = $requiredVariables ?? [];
+            }
             $customFields = collect($requiredVariables)->filter(function ($variable) {
                 return ($variable['type'] ?? 'text') !== 'system';
             });
@@ -620,6 +643,7 @@ class PermohonanSuratController extends Controller
                 'ttds' => $ttds,
                 'customFields' => $customFields,
                 'storedCustomData' => $storedCustomData,
+                'mutasiType' => $jenisSurat->mutasi_type,
             ]);
         } catch (ModelNotFoundException $e) {
             return redirect()->route('permohonan.index')->with('error', 'Permohonan Surat tidak ditemukan.');
@@ -629,12 +653,19 @@ class PermohonanSuratController extends Controller
         }
     }
 
+    // PERMOHONAN CONTROLLER
+
+    // ... (Use statements)
+
+    // PERMOHONAN CONTROLLER
+
     public function update(Request $request, $id)
     {
         try {
             $permohonan = Permohonan::findOrFail($id);
+            $jenisSurat = $permohonan->jenisSurat;
 
-            // Validate incoming request
+            // 1. Validasi
             $rules = [
                 'jenis_surat_id' => 'required|exists:jenis_surats,id',
                 'id_kop_templates' => 'required|exists:kop_templates,id',
@@ -645,38 +676,92 @@ class PermohonanSuratController extends Controller
                 'id_anggota_keluargas' => 'required',
                 'status' => 'required|in:belum_diverifikasi,diverifikasi,ditolak,sudah_diambil',
                 'catatan_penolakan' => 'nullable|string|max:1000',
+                'nomor_surat' => 'required|string',
+                'custom_data' => 'nullable|array', // Pastikan input array ini diterima
             ];
 
+            // Catatan: Jika ada validasi spesifik yang gagal pada custom_data, Anda akan diarahkan kembali
+            // dengan old() input, tetapi proses update di bawah harusnya berhasil menyimpan data.
             $validatedData = $request->validate($rules);
 
-            // Update permohonan data
-            $data = $request->except(['_token', '_method']);
+            // 2. Persiapan Data Update
+            // Gunakan except() untuk mengecualikan token dan method, tapi JANGAN exclude custom_data
+            // jika Anda ingin memprosesnya secara terpisah.
+            $data = $request->except(['_token', '_method', 'custom_data']);
             $selectedId = $request->input('id_anggota_keluargas');
 
             $data['id_anggota_keluargas'] = null;
             $data['id_data_keluargas'] = null;
+
             if (str_starts_with($selectedId, 'kk_')) {
                 $data['id_data_keluargas'] = (int) substr($selectedId, 3);
             } else {
                 $data['id_anggota_keluargas'] = (int) $selectedId;
             }
 
-            // Update dynamic custom variables if provided
+            // --- PERBAIKAN PENTING: MENYIMPAN CUSTOM DATA ---
             if ($request->has('custom_data')) {
+                // Simpan array custom_data langsung ke kolom custom_variables
+                // Asumsi Model Permohonan memiliki $casts = ['custom_variables' => 'array']
                 $data['custom_variables'] = $request->input('custom_data', []);
+            } else {
+                // Jika custom data tidak dikirim (walaupun seharusnya selalu dikirim jika ada field), 
+                // set sebagai array kosong atau biarkan data lama.
+                // Kita biarkan data lama jika array tidak dikirim untuk mencegah overwrite yang tidak disengaja.
+                $data['custom_variables'] = $permohonan->custom_variables;
             }
 
+            // 3. Update Permohonan Surat
             $permohonan->update($data);
+
+            // 4. LOGIKA MUTASI PENDUDUK (Tidak berubah)
+
+            $targetAnggota = null;
+            $mutasiType = $jenisSurat->mutasi_type;
+
+            // Target Anggota untuk Mutasi
+            if ($permohonan->id_anggota_keluargas) {
+                $targetAnggota = AnggotaKeluarga::find($permohonan->id_anggota_keluargas);
+            } elseif ($mutasiType === 'pencatatan_kelahiran') {
+                $newAnggotaId = $permohonan->custom_variables['id_anggota_keluarga_baru'] ?? null;
+                if ($newAnggotaId) {
+                    $targetAnggota = AnggotaKeluarga::find($newAnggotaId);
+                }
+            }
+
+            if ($targetAnggota) {
+                switch ($mutasiType) {
+                    case 'meninggal':
+                        if ($targetAnggota->status_kependudukan !== 'Meninggal') {
+                            $targetAnggota->update(['status_kependudukan' => 'Meninggal']);
+                        }
+                        break;
+
+                    case 'pindah_keluar':
+                        if ($targetAnggota->status_kependudukan !== 'Pindah') {
+                            $targetAnggota->update(['status_kependudukan' => 'Pindah']);
+                        }
+                        break;
+
+                    case 'pencatatan_kelahiran':
+                    case 'mutasi_masuk_kk':
+                    case 'none':
+                    default:
+                        break;
+                }
+            }
 
             return redirect()->route('permohonan.index')->with('success', 'Permohonan Surat berhasil diperbarui.');
         } catch (ModelNotFoundException $e) {
             return redirect()->route('permohonan.index')->with('error', 'Permohonan Surat tidak ditemukan.');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Jika validasi gagal, kembalikan dengan error dan input lama
+            return redirect()->back()->withErrors($e->errors())->withInput();
         } catch (Exception $e) {
             Log::error('Error updating Permohonan ID ' . $id . ': ' . $e->getMessage());
-            return redirect()->route('permohonan.index')->with('error', 'Terjadi kesalahan saat memperbarui Permohonan Surat.');
+            return redirect()->route('permohonan.index')->with('error', 'Terjadi kesalahan saat memperbarui Permohonan Surat: ' . $e->getMessage());
         }
     }
-
     public function destroy($id)
     {
         try {
@@ -734,14 +819,19 @@ class PermohonanSuratController extends Controller
 
     public function cetak($permohonanId)
     {
-        // Mengambil Permohonan dengan semua relasi yang diperlukan
+        // 1. Fetch Permohonan with ALL required relationships
         $permohonan = Permohonan::with([
+            // Subject Relationships
             'anggotaKeluarga.dataKeluarga.desas',
             'anggotaKeluarga.dataKeluarga.kecamatans',
             'anggotaKeluarga.agama',
             'anggotaKeluarga.mataPencaharian',
+            'anggotaKeluarga.kewarganegaraan',
+            'anggotaKeluarga.pendidikan',
+            'anggotaKeluarga.golonganDarah',
+            'anggotaKeluarga.hubunganKeluarga',
             'dataKeluarga.desas',
-            'dataKeluarga.kecamatans',
+            'dataKeluarga.kecamatans', 
             'jenisSurat.kopTemplate',
             'ttd',
         ])->findOrFail($permohonanId);
@@ -749,96 +839,158 @@ class PermohonanSuratController extends Controller
         // --- Subject and Template Identification ---
         $subject = $permohonan->anggotaKeluarga ?? $permohonan->dataKeluarga;
         $isAnggota = $permohonan->anggotaKeluarga !== null;
-        $kopTemplate = $permohonan->jenisSurat->kopTemplate ?? $permohonan->kopTemplate;
+        $kopTemplate = optional($permohonan->jenisSurat)->kopTemplate;
         $ttdModel = $permohonan->ttd;
         $locationSource = $isAnggota ? optional($subject->dataKeluarga) : $subject;
 
-        // Variabel yang dibutuhkan (Definisi dari template JenisSurat)
-        $requiredVars = $permohonan->jenisSurat->required_variables ?? [];
+        // --- START FIX: Ensure requiredVars is an array ---
+        $requiredVars = optional($permohonan->jenisSurat)->required_variables;
 
-        // Data variabel custom yang tersimpan di permohonan (Nilai input user)
+        // Check if it's a string (meaning casting failed or was bypassed)
+        if (is_string($requiredVars)) {
+            // Attempt to decode the JSON string. Use 'true' for associative array.
+            $decoded = json_decode($requiredVars, true);
+
+            // Set to decoded array if successful, otherwise default to an empty array.
+            $requiredVars = is_array($decoded) ? $decoded : [];
+        } else {
+            // If it's already an array (due to successful casting) or null, 
+            // use null coalescing for safety.
+            $requiredVars = $requiredVars ?? [];
+        }
+        // end fix
         $customVars = $permohonan->custom_variables ?? [];
+        // --- 2. Build Core Letter Data (Kop, TTD, Paragraf) ---
 
-        // --- 1. Populate Fixed Data ($data) ---
+        // Logo/Kop Data (pulled from TTD/KopTemplate)
+        $data['logo_url'] = optional($kopTemplate)->logo ? Storage::disk('public')->path(optional($kopTemplate)->logo) : null;
+        $data['instansi_kabupaten'] = optional($kopTemplate)->nama_kabupaten ?? 'PEMERINTAH KABUPATEN CONTOH';
+        $data['instansi_kecamatan'] = optional($kopTemplate)->nama_kecamatan ?? optional($locationSource->kecamatans)->nama_kecamatan ?? 'N/A';
+        $data['instansi_desa'] = optional($kopTemplate)->nama_desa ?? optional($locationSource->desas)->nama_desa ?? 'N/A';
+        $data['instansi_alamat'] = optional($kopTemplate)->alamat_instansi ?? 'N/A';
 
-        $data = [
-            // Kop Data
-            // 'logo_url' => optional($kopTemplate)->logo ? Storage::url(optional($kopTemplate)->logo) : null,
-            'logo_url' => optional($kopTemplate)->logo
-                ? Storage::disk('public')->path(optional($kopTemplate)->logo) // <-- USE ABSOLUTE PATH
-                : null,
-            'instansi_kabupaten' => optional($kopTemplate)->nama ?? 'N/A',
-            'instansi_kecamatan' => optional($locationSource->kecamatans)->nama_kecamatan ?? 'N/A',
-            'instansi_desa' => optional($locationSource->desas)->nama_desa ?? 'N/A',
+        // Letter Metadata
+        $data['nomor'] = $permohonan->nomor_surat;
+        $data['paragraf_pembuka'] = $permohonan->paragraf_pembuka ?? optional($permohonan->jenisSurat)->paragraf_pembuka;
+        $data['paragraf_penutup'] = $permohonan->paragraf_penutup ?? optional($permohonan->jenisSurat)->paragraf_penutup;
+        $data['surat_judul'] = optional($permohonan->jenisSurat)->nama ?? 'SURAT KETERANGAN';
 
-            // Letter Details
-            'nomor' => $permohonan->nomor_surat,
-            // Menggunakan paragraf yang tersimpan di permohonan (hasil edit/default)
-            'paragraf_pembuka' => $permohonan->paragraf_pembuka ?? optional($permohonan->jenisSurat)->paragraf_pembuka,
-            'paragraf_penutup' => $permohonan->paragraf_penutup ?? optional($permohonan->jenisSurat)->paragraf_penutup,
-            'surat_judul' => optional($permohonan->jenisSurat)->nama ?? 'SURAT KETERANGAN',
-            'tanggal_surat_lokasi' => optional($locationSource->desas)->nama_desa ?? 'N/A',
-            'tanggal_surat' => Carbon::parse($permohonan->tanggal_permohonan)->translatedFormat('d F Y'),
+        // TTD Data
+        $data['nip'] = optional($ttdModel)->nip ?? 'N/A';
+        $data['ttd_nama'] = optional($ttdModel)->nama ?? 'N/A';
+        $data['ttd_jabatan'] = optional($ttdModel)->jabatan ?? 'N/A';
+        $data['city_village'] = optional($locationSource->desas)->nama_desa ?? 'N/A';
+        $data['tanggal_surat'] = Carbon::parse($permohonan->tanggal_permohonan)->translatedFormat('d F Y');
+        // Determine Kepala Keluarga Name
+        $namaKepalaKeluarga = 'N/A';
+        if ($isAnggota && $subject->dataKeluarga) {
+            // If the subject is an Anggota, pull the KK Name from their DataKeluarga relation
+            $namaKepalaKeluarga = $subject->dataKeluarga->kepala_keluarga ?? 'N/A';
+        } elseif (!$isAnggota) {
+            // If the subject IS the DataKeluarga, the name is kepala_keluarga
+            $namaKepalaKeluarga = $subject->kepala_keluarga ?? 'N/A';
+        }
+        // Ambil Kepala Keluarga berdasarkan relasi hubungan keluarga
+        // --- Determine Kepala Keluarga Name ---
+        // --- Determine Kepala Keluarga Name ---
+        $dataKeluargaId = $isAnggota
+            ? $subject->data_keluarga_id
+            : $subject->id;
 
-            // TTD Data
-            'ttd_nama' => optional($ttdModel)->nama ?? 'N/A',
-            'ttd_jabatan' => optional($ttdModel)->jabatan ?? 'N/A',
-        ];
+        // Find Kepala Keluarga based on relationship name
+        $kepalaKeluarga = \App\Models\AnggotaKeluarga::where('data_keluarga_id', $dataKeluargaId)
+            ->whereHas('hubunganKeluarga', function ($q) {
+                $q->whereRaw('LOWER(nama) = ?', ['kepala keluarga']);
+            })
+            ->first();
 
-        // --- 2. Process ALL Variables (System & Custom) for Content Table ---
+        $namaKepalaKeluarga = $kepalaKeluarga?->nama
+            ?? optional($subject->dataKeluarga)->kepala_keluarga
+            ?? optional($subject)->kepala_keluarga
+            ?? 'N/A';
+
+        $isSKK = optional($permohonan->jenisSurat)->mutasi_type === 'pencatatan_kelahiran'; 
+
+        // --- 3. Process ALL Variables for Content Table ---
         $contentTableData = [];
 
         foreach ($requiredVars as $variable) {
             $key = $variable['key'];
             $label = $variable['label'];
             $type = $variable['type'] ?? 'text';
-            $value = 'N/A'; // Default value
-
-            if ($type === 'system') {
-                // Logic untuk mengambil data Variabel SISTEM (dari Anggota/KK)
-                if ($isAnggota) {
-                    $value = match ($key) {
-                        'nama' => $subject->nama ?? optional($subject->dataKeluarga)->kepala_keluarga ?? 'N/A',
-                        'nik' => $subject->nik ?? 'N/A',
-                        'jenis_kelamin' => $subject->jenis_kelamin ?? 'N/A',
-                        'agama' => optional($subject->agama)->agama ?? 'N/A',
-                        'status_perkawinan' => $subject->status_perkawinan ?? 'N/A',
-                        'mata_pencaharian' => optional($subject->mataPencaharian)->mata_pencaharian ?? 'N/A',
-                        'ttl' => "{$subject->tempat_lahir}, " . (optional($subject->tanggal_lahir)->translatedFormat('d F Y') ?? '-'),
-                        default => $subject->$key ?? optional($subject->dataKeluarga)->$key ?? 'N/A',
-                    };
-                } else { // Logic for DataKeluarga (KK) subject
-                    $value = match ($key) {
-                        'nama' => $subject->kepala_keluarga ?? 'N/A',
-                        'nik' => $subject->no_kk ?? 'N/A',
-                        default => $subject->$key ?? 'N/A',
-                    };
+            $isDisplayed = ($type === 'system') || (isset($variable['display']) && $variable['display'] === true);
+            $value = 'N/A';
+            // --- LOGIKA PENTING: FILTER REDUNDANSI UNTUK SKK ---
+            if ($isSKK && $type === 'system') {
+                if (in_array($key, ['nama', 'nik', 'alamat'])) {
+                    // SKIPPED: Jangan cetak Nama Lengkap, NIK, dan Alamat karena 
+                    // Nama Kepala Keluarga dan Alamat Lengkap sudah akan dicetak
+                    continue;
                 }
-            } else {
-                // Logic untuk Variabel CUSTOM (Ambil dari custom_variables yang tersimpan)
-                // Ini menjamin variabel custom akan tampil sesuai urutan template
-                $value = $customVars[$key] ?? 'N/A';
             }
+            // Only process fields that are explicitly set for display in the PDF
+            if ($isDisplayed) {
 
-            $contentTableData[] = [
-                'label' => $label,
-                'value' => $value,
-                'key' => $key
-            ];
+                if ($type === 'system') {
+                    // SYSTEM VARIABLE: Pull from loaded subject models
+                    if ($isAnggota) {
+                        $value = match ($key) {
+                            'nama' => $subject->nama ?? optional($subject->dataKeluarga)->kepala_keluarga ?? 'N/A',
+                            'nik' => $subject->nik ?? 'N/A',
+                            'jenis_kelamin' => $subject->jenis_kelamin ?? 'N/A',
+                            'agama' => optional($subject->agama)->agama ?? 'N/A',
+                            'status_perkawinan' => $subject->status_perkawinan ?? 'N/A',
+                            'pendidikan' => optional($subject->pendidikan)->pendidikan ?? 'N/A',
+                            'mata_pencaharian' => optional($subject->mataPencaharian)->mata_pencaharian ?? 'N/A',
+                            'golongan_darah' => optional($subject->golonganDarah)->golongan_darah ?? 'N/A',
+                            'hubungan_keluarga' => optional($subject->hubunganKeluarga)->nama ?? 'N/A',
+                            'ttl' => optional($subject)->tempat_lahir . ', ' . (optional($subject->tanggal_lahir)->translatedFormat('d F Y') ?? '-'),
+                            'alamat' => optional($subject->dataKeluarga)->alamat ?? 'N/A',
+                            'rt' => optional($subject->dataKeluarga)->rt ?? 'N/A',
+                            'rw' => optional($subject->dataKeluarga)->rw ?? 'N/A',
+                            'desa' => optional(optional($subject->dataKeluarga)->desas)->nama_desa ?? 'N/A',
+                            'kecamatan' => optional(optional($subject->dataKeluarga)->kecamatans)->nama_kecamatan ?? 'N/A',
+                            'kepala_keluarga' => $namaKepalaKeluarga,
+
+
+                            default => $subject->$key ?? 'N/A',
+                        };
+                    } else {
+                        // Logic for DataKeluarga (KK) subject
+                        $value = match ($key) {
+                            'nama' => $subject->kepala_keluarga ?? 'N/A',
+                            'nik' => $subject->no_kk ?? 'N/A',
+                            'alamat' => $subject->alamat ?? 'N/A',
+                            default => 'N/A',
+                        };
+                    }
+                } else {
+                    // CUSTOM VARIABLE: Retrieve from saved custom_variables JSON
+                    $value = $customVars[$key] ?? 'N/A';
+                }
+
+                // Store the clean data for the table loop
+                $contentTableData[] = [
+                    'label' => $label,
+                    'value' => $value,
+                    'key' => $key
+                ];
+            }
         }
 
         // Attach the combined content table data to the $data array
         $data['contentTableData'] = $contentTableData;
 
-        // --- 3. Generate PDF ---
+        // --- 4. Generate PDF ---
         $jenisSuratKode = optional($permohonan->jenisSurat)->kode ?? 'UNKNOWN';
-        $safe_kode = Str::slug($jenisSuratKode, '_'); // Menggunakan Str::slug agar lebih aman
+        $safe_kode = Str::slug($jenisSuratKode, '_');
         $safe_nomor = Str::slug($permohonan->nomor_surat, '_');
         $filename = "Surat_{$safe_kode}_{$safe_nomor}.pdf";
 
         $pdf = PDF::loadView('pages.layanan.permohonan.cetak.cetak_surat', $data);
         return $pdf->download($filename);
     }
+
     //view ttd page
     public function showTtdPage()
     {

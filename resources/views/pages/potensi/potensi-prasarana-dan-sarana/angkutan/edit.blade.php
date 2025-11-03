@@ -62,20 +62,20 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group mb-3">
-                                        <label for="kategori_id" class="form-label fw-semibold">
+                                        <label for="kategori_prasarana_transportasi_lainnya_id" class="form-label fw-semibold">
                                             Kategori <span class="text-danger">*</span>
                                         </label>
-                                        <select class="form-select @error('kategori_id') is-invalid @enderror"
-                                            id="kategori_id" name="kategori_id" required>
+                                        <select class="form-select @error('kategori_prasarana_transportasi_lainnya_id') is-invalid @enderror"
+                                            id="kategori_prasarana_transportasi_lainnya_id" name="kategori_prasarana_transportasi_lainnya_id" required>
                                             <option value="">-- Pilih Kategori --</option>
                                             @foreach ($kategoriTransportasis as $kategori)
                                                 <option value="{{ $kategori->id }}"
-                                                    {{ old('kategori_id', $saranaTransportasi->kategori_id) == $kategori->id ? 'selected' : '' }}>
-                                                    {{ $kategori->nama_kategori }}
+                                                    {{ old('kategori_prasarana_transportasi_lainnya_id', $saranaTransportasi->kategori_prasarana_transportasi_lainnya_id) == $kategori->id ? 'selected' : '' }}>
+                                                    {{ $kategori->nama }}
                                                 </option>
                                             @endforeach
                                         </select>
-                                        @error('kategori_id')
+                                        @error('kategori_prasarana_transportasi_lainnya_id')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -83,20 +83,20 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group mb-3">
-                                        <label for="jenis_id" class="form-label fw-semibold">
+                                        <label for="jenis_prasarana_transportasi_lainnya_id" class="form-label fw-semibold">
                                             Jenis <span class="text-danger">*</span>
                                         </label>
-                                        <select class="form-select @error('jenis_id') is-invalid @enderror" id="jenis_id"
-                                            name="jenis_id" required>
+                                        <select class="form-select @error('jenis_prasarana_transportasi_lainnya_id') is-invalid @enderror" id="jenis_prasarana_transportasi_lainnya_id"
+                                            name="jenis_prasarana_transportasi_lainnya_id" required>
                                             <option value="">-- Pilih Jenis --</option>
                                             @foreach ($jenisTransportasis as $jenis)
                                                 <option value="{{ $jenis->id }}"
-                                                    {{ old('jenis_id', $saranaTransportasi->jenis_id) == $jenis->id ? 'selected' : '' }}>
-                                                    {{ $jenis->nama_jenis }}
+                                                    {{ old('jenis_prasarana_transportasi_lainnya_id', $saranaTransportasi->jenis_prasarana_transportasi_lainnya_id) == $jenis->id ? 'selected' : '' }}>
+                                                    {{ $jenis->nama }}
                                                 </option>
                                             @endforeach
                                         </select>
-                                        @error('jenis_id')
+                                        @error('jenis_prasarana_transportasi_lainnya_id')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -223,29 +223,29 @@
     <script>
         $(document).ready(function() {
             // Load jenis saat kategori berubah
-            $('#kategori_id').on('change', function() {
+            $('#kategori_prasarana_transportasi_lainnya_id').on('change', function() {
                 var kategoriId = $(this).val();
-                $('#jenis_id').html('<option value="">-- Pilih Jenis --</option>');
+                $('#jenis_prasarana_transportasi_lainnya_id').html('<option value="">-- Pilih Jenis --</option>');
                 if (kategoriId) {
                     $.get('/get-jenis-by-kategori/' + kategoriId, function(data) {
                         $.each(data, function(i, jenis) {
-                            $('#jenis_id').append('<option value="' + jenis.id + '">' +
-                                jenis.nama_jenis + '</option>');
+                            $('#jenis_prasarana_transportasi_lainnya_id').append('<option value="' + jenis.id + '">' +
+                                jenis.nama + '</option>');
                         });
                     });
                 }
             });
 
             // Saat halaman edit dibuka, isi jenis sesuai kategori yang sudah dipilih
-            var initialKategori = $('#kategori_id').val();
-            var selectedJenis = "{{ old('jenis_id', $saranaTransportasi->jenis_id) }}";
+            var initialKategori = $('#kategori_prasarana_transportasi_lainnya_id').val();
+            var selectedJenis = "{{ old('jenis_prasarana_transportasi_lainnya_id', $saranaTransportasi->jenis_prasarana_transportasi_lainnya_id) }}";
             if (initialKategori) {
                 $.get('/get-jenis-by-kategori/' + initialKategori, function(data) {
-                    $('#jenis_id').html('<option value="">-- Pilih Jenis --</option>');
+                    $('#jenis_prasarana_transportasi_lainnya_id').html('<option value="">-- Pilih Jenis --</option>');
                     $.each(data, function(i, jenis) {
                         var selected = (jenis.id == selectedJenis) ? 'selected' : '';
-                        $('#jenis_id').append('<option value="' + jenis.id + '" ' + selected + '>' +
-                            jenis.nama_jenis + '</option>');
+                        $('#jenis_prasarana_transportasi_lainnya_id').append('<option value="' + jenis.id + '" ' + selected + '>' +
+                            jenis.nama + '</option>');
                     });
                 });
             }

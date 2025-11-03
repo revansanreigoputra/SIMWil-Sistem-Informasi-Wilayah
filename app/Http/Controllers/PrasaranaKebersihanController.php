@@ -9,7 +9,8 @@ class PrasaranaKebersihanController extends Controller
 {
     public function index()
     {
-        $prasaranakebersihan = PrasaranaKebersihan::all();
+        $desaId = session('desa_id');
+        $prasaranakebersihan = PrasaranaKebersihan::with('desa')->where('desa_id', $desaId)->orderBy('tanggal', 'desc')->paginate(10);
         return view('pages.potensi.potensi-prasarana-dan-sarana.kebersihan.index', compact('prasaranakebersihan'));
     }
 
@@ -36,7 +37,10 @@ class PrasaranaKebersihanController extends Controller
             'pengelolaan_sampah_lainnya' => 'nullable|string|max:255',
         ]);
 
-        PrasaranaKebersihan::create($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        PrasaranaKebersihan::create($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.kebersihan.index')->with('success', 'Data Prasarana Kebersihan berhasil ditambahkan.');
     }
@@ -69,7 +73,10 @@ class PrasaranaKebersihanController extends Controller
             'pengelolaan_sampah_lainnya' => 'nullable|string|max:255',
         ]);
 
-        $prasaranakebersihan->update($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        $prasaranakebersihan->update($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.kebersihan.index')->with('success', 'Data Prasarana Kebersihan berhasil diubah.');
     }

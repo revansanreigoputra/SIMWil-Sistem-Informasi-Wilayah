@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Desa;
 use App\Models\TransportasiDarat;
+use App\Models\MasterPotensi\KategoriPrasaranaTransportasiDarat;
+use App\Models\MasterPotensi\JenisPrasaranaTransportasiDarat;
 use Illuminate\Http\Request;
 
 class TransportasiDaratController extends Controller
@@ -14,7 +15,10 @@ class TransportasiDaratController extends Controller
     public function index()
     {
         $desaId = session('desa_id');
-        $transportasiDarats = TransportasiDarat::where('desa_id', $desaId)->with('desa')->orderBy('tanggal', 'desc')->paginate(10);
+        $transportasiDarats = TransportasiDarat::where('desa_id', $desaId)
+            ->with(['desa', 'kategori', 'jenis'])
+            ->orderBy('tanggal', 'desc')
+            ->paginate(10);
         return view('pages.potensi.potensi-prasarana-dan-sarana.transportasi-darat.index', compact('transportasiDarats'));
     }
 
@@ -23,9 +27,9 @@ class TransportasiDaratController extends Controller
      */
     public function create()
     {
-        $kategoriOptions = TransportasiDarat::getKategoriOptions();
-        $jenisSaranaPrasaranaOptions = TransportasiDarat::getJenisSaranaPrasaranaOptions();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.transportasi-darat.create', compact('kategoriOptions', 'jenisSaranaPrasaranaOptions'));
+        $kategoris = KategoriPrasaranaTransportasiDarat::all();
+        $jenises = JenisPrasaranaTransportasiDarat::all();
+        return view('pages.potensi.potensi-prasarana-dan-sarana.transportasi-darat.create', compact('kategoris', 'jenises'));
     }
 
     /**
@@ -35,8 +39,8 @@ class TransportasiDaratController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'kategori' => 'required|in:jalan_desa,jalan_kabupaten',
-            'jenis_sarana_prasarana' => 'required|in:panjang_jalan_tanah,panjang_jalan_aspal',
+            'kategori_prasarana_transportasi_darat_id' => 'required|exists:kategori_prasarana_transportasi_darat,id',
+            'jenis_prasarana_transportasi_darat_id' => 'required|exists:jenis_prasarana_transportasi_darat,id',
             'kondisi_baik' => 'required|integer|min:0',
             'kondisi_rusak' => 'required|integer|min:0',
             'jumlah' => 'required|integer|min:0',
@@ -54,6 +58,7 @@ class TransportasiDaratController extends Controller
      */
     public function show(TransportasiDarat $transportasiDarat)
     {
+        $transportasiDarat->load(['desa', 'kategori', 'jenis']);
         return view('pages.potensi.potensi-prasarana-dan-sarana.transportasi-darat.show', compact('transportasiDarat'));
     }
 
@@ -62,9 +67,9 @@ class TransportasiDaratController extends Controller
      */
     public function edit(TransportasiDarat $transportasiDarat)
     {
-        $kategoriOptions = TransportasiDarat::getKategoriOptions();
-        $jenisSaranaPrasaranaOptions = TransportasiDarat::getJenisSaranaPrasaranaOptions();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.transportasi-darat.edit', compact('transportasiDarat', 'kategoriOptions', 'jenisSaranaPrasaranaOptions'));
+        $kategoris = KategoriPrasaranaTransportasiDarat::all();
+        $jenises = JenisPrasaranaTransportasiDarat::all();
+        return view('pages.potensi.potensi-prasarana-dan-sarana.transportasi-darat.edit', compact('transportasiDarat', 'kategoris', 'jenises'));
     }
 
     /**
@@ -74,8 +79,8 @@ class TransportasiDaratController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'kategori' => 'required|in:jalan_desa,jalan_kabupaten',
-            'jenis_sarana_prasarana' => 'required|in:panjang_jalan_tanah,panjang_jalan_aspal',
+            'kategori_prasarana_transportasi_darat_id' => 'required|exists:kategori_prasarana_transportasi_darat,id',
+            'jenis_prasarana_transportasi_darat_id' => 'required|exists:jenis_prasarana_transportasi_darat,id',
             'kondisi_baik' => 'required|integer|min:0',
             'kondisi_rusak' => 'required|integer|min:0',
             'jumlah' => 'required|integer|min:0',

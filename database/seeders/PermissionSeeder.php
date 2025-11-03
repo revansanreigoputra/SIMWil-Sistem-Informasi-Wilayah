@@ -117,7 +117,7 @@ class PermissionSeeder extends Seeder
             'potensi.kelembagaan.pemerintah.delete',
             'potensi.kelembagaan.pemerintah.destroy',
             'potensi.kelembagaan.pemerintah.print',
-             
+
 
             // layanan surat permissions
             'permohonan.view',
@@ -248,7 +248,7 @@ class PermissionSeeder extends Seeder
             'irigasi.edit',
             'irigasi.update',
             'irigasi.delete',
-            
+
             // Sarana Transportasi
             'angkutan.view',
             'angkutan.create',
@@ -292,7 +292,7 @@ class PermissionSeeder extends Seeder
             'dusun.store',
             'dusun.update',
             'dusun.delete',
-            
+
             // komunikasiinformasi
             'komunikasiinformasi.view',
             'komunikasiinformasi.create',
@@ -306,56 +306,56 @@ class PermissionSeeder extends Seeder
             'adat.store',
             'adat.update',
             'adat.delete',
-            
+
             // kemasyarakatan
             'kemasyarakatan.view',
             'kemasyarakatan.create',
             'kemasyarakatan.store',
             'kemasyarakatan.update',
             'kemasyarakatan.delete',
-            
+
             // peribadatan
             'peribadatan.view',
             'peribadatan.create',
             'peribadatan.store',
             'peribadatan.update',
             'peribadatan.delete',
-            
+
             // olahraga
             'olahraga.view',
             'olahraga.create',
             'olahraga.store',
             'olahraga.update',
             'olahraga.delete',
-            
+
             // kesehatan
             'kesehatan.view',
             'kesehatan.create',
             'kesehatan.store',
             'kesehatan.update',
             'kesehatan.delete',
-            
+
             // ppendidikan
             'ppendidikan.view',
             'ppendidikan.create',
             'ppendidikan.store',
             'ppendidikan.update',
             'ppendidikan.delete',
-            
+
             // hiburan
             'hiburan.view',
             'hiburan.create',
             'hiburan.store',
             'hiburan.update',
             'hiburan.delete',
-            
+
             // kebersihan
             'kebersihan.view',
             'kebersihan.create',
             'kebersihan.store',
             'kebersihan.update',
             'kebersihan.delete',
-            
+
             // Sarana kesehatan
             'skesehatan.view',
             'skesehatan.create',
@@ -370,6 +370,13 @@ class PermissionSeeder extends Seeder
             'energiPenerangan.update',
             'energiPenerangan.delete',
 
+            // umum batas wilayah
+            'batas_wilayah.view',
+            'batas_wilayah.create',
+            'batas_wilayah.store',
+            'batas_wilayah.update',
+            'batas_wilayah.delete',
+
             // apb
             'apb.view',
             'apb.create',
@@ -378,6 +385,82 @@ class PermissionSeeder extends Seeder
             'apb.update',
             'apb.delete',
 
+            // potensi sda
+            // topografi 
+            'topografi.view',
+            'topografi.create',
+            'topografi.store',
+            'topografi.edit',
+            'topografi.update',
+            'topografi.delete',
+
+            // jlahan
+            'jlahan.view',
+            'jlahan.create',
+            'jlahan.store',
+            'jlahan.edit',
+            'jlahan.update',
+            'jlahan.delete',
+            
+            // iklim
+            'iklim.view',
+            'iklim.create',
+            'iklim.store',
+            'iklim.edit',
+            'iklim.update',
+            'iklim.delete',
+            
+            // lahan
+            'lahan.view',
+            'lahan.create',
+            'lahan.store',
+            'lahan.edit',
+            'lahan.update',
+            'lahan.delete',
+            
+            // hasil
+            'hasiltanaman.view',
+            'hasiltanaman.create',
+            'hasiltanaman.store',
+            'hasiltanaman.edit',
+            'hasiltanaman.update',
+            'hasiltanaman.delete',
+            
+            // kepemilikan
+            'kepemilikan.view',
+            'kepemilikan.create',
+            'kepemilikan.store',
+            'kepemilikan.edit',
+            'kepemilikan.update',
+            'kepemilikan.delete',
+
+            // hasilbuah
+            'hasilbuah.view',
+            'hasilbuah.create',
+            'hasilbuah.store',
+            'hasilbuah.edit',
+            'hasilbuah.update',
+            'hasilbuah.delete',
+            'hasilbuah.store',
+            'hasilbuah.edit',
+            'hasilbuah.update',
+            'hasilbuah.delete',
+
+            // apotikhidup
+            'apotikhidup.view',
+            'apotikhidup.create',
+            'apotikhidup.store',
+            'apotikhidup.edit',
+            'apotikhidup.update',
+            'apotikhidup.delete',
+            
+            // kebun
+            'kebun.view',
+            'kebun.create',
+            'kebun.store',
+            'kebun.edit',
+            'kebun.update',
+            'kebun.delete',
 
             // pengangguran
             'pengangguran.view',
@@ -403,6 +486,101 @@ class PermissionSeeder extends Seeder
             'menurut_sektor_usaha.update',
             'menurut_sektor_usaha.delete',
 
+            // Pendapatan Riil Keluarga
+            'pendapatan_rill_keluarga.view',
+            'pendapatan_rill_keluarga.create',
+            'pendapatan_rill_keluarga.store',
+            'pendapatan_rill_keluarga.edit',
+            'pendapatan_rill_keluarga.update',
+            'pendapatan_rill_keluarga.delete',
+
+            // Tingkat Pendidikan Masyarakat
+            'tingkat_pendidikan_masyarakat.view',
+            'tingkat_pendidikan_masyarakat.create',
+            'tingkat_pendidikan_masyarakat.store',
+            'tingkat_pendidikan_masyarakat.edit',
+            'tingkat_pendidikan_masyarakat.update',
+            'tingkat_pendidikan_masyarakat.delete',
+
+            // Wajib Belajar 9 Tahun
+            'wajib_belajar_9_tahun.view',
+            'wajib_belajar_9_tahun.create',
+            'wajib_belajar_9_tahun.store',
+            'wajib_belajar_9_tahun.edit',
+            'wajib_belajar_9_tahun.update',
+            'wajib_belajar_9_tahun.delete',
+
+            // Rasio Guru & Murid
+            'rasio_guru_dan_murid.view',
+            'rasio_guru_dan_murid.create',
+            'rasio_guru_dan_murid.store',
+            'rasio_guru_dan_murid.edit',
+            'rasio_guru_dan_murid.update',
+            'rasio_guru_dan_murid.delete',
+
+            // Kelembagaan Pendidikan Masyarakat
+            'kelembagaan.view',
+            'kelembagaan.create',
+            'kelembagaan.store',
+            'kelembagaan.edit',
+            'kelembagaan.update',
+            'kelembagaan.delete',
+
+            // Aset Tanah
+            'aset_tanah.view',
+            'aset_tanah.create',
+            'aset_tanah.store',
+            'aset_tanah.edit',
+            'aset_tanah.update',
+            'aset_tanah.delete',
+
+            // Sarana Transportasi Umum
+            'sarana_transportasi_umum.view',
+            'sarana_transportasi_umum.create',
+            'sarana_transportasi_umum.store',
+            'sarana_transportasi_umum.edit',
+            'sarana_transportasi_umum.update',
+            'sarana_transportasi_umum.delete',
+
+            // Rumah Menurut Dinding
+            'rumah_menurut_dinding.view',
+            'rumah_menurut_dinding.create',
+            'rumah_menurut_dinding.store',
+            'rumah_menurut_dinding.edit',
+            'rumah_menurut_dinding.update',
+            'rumah_menurut_dinding.delete',
+
+            // Rumah Menurut Lantai
+            'rumah_menurut_lantai.view',
+            'rumah_menurut_lantai.create',
+            'rumah_menurut_lantai.store',
+            'rumah_menurut_lantai.edit',
+            'rumah_menurut_lantai.update',
+            'rumah_menurut_lantai.delete',
+
+            // Rumah Menurut Atap
+            'rumah_menurut_atap.view',
+            'rumah_menurut_atap.create',
+            'rumah_menurut_atap.store',
+            'rumah_menurut_atap.edit',
+            'rumah_menurut_atap.update',
+            'rumah_menurut_atap.delete',
+
+            // Pemilik Aset Ekonomi Lainnya
+            'pemilik_aset_ekonomi_lainnya.view',
+            'pemilik_aset_ekonomi_lainnya.create',
+            'pemilik_aset_ekonomi_lainnya.store',
+            'pemilik_aset_ekonomi_lainnya.edit',
+            'pemilik_aset_ekonomi_lainnya.update',
+            'pemilik_aset_ekonomi_lainnya.delete',
+
+            // Sarana Produksi
+            'sarana_produksi.view',
+            'sarana_produksi.create',
+            'sarana_produksi.store',
+            'sarana_produksi.edit',
+            'sarana_produksi.update',
+            'sarana_produksi.delete',
 
             // perkembangan penduduk
             'perkembangan-penduduk.view',
@@ -430,6 +608,15 @@ class PermissionSeeder extends Seeder
             'subsektor-kerajinan.update',
             'subsektor-kerajinan.delete',
             'subsektor-kerajinan.destroy',
+
+            // sektor industri pengolahan permissions
+            'sektor-industri-pengolahan.view',
+            'sektor-industri-pengolahan.create',
+            'sektor-industri-pengolahan.store',
+            'sektor-industri-pengolahan.edit',
+            'sektor-industri-pengolahan.update',
+            'sektor-industri-pengolahan.delete',
+            'sektor-industri-pengolahan.destroy',
 
 
 
@@ -461,7 +648,7 @@ class PermissionSeeder extends Seeder
             'pembinaankabupaten.view',
             'pembinaankabupaten.create',
             'pembinaankabupaten.store',
-            'pembinaankabupaten.edit',      
+            'pembinaankabupaten.edit',
             'pembinaankabupaten.update',
             'pembinaankabupaten.delete',
 
@@ -469,7 +656,7 @@ class PermissionSeeder extends Seeder
             'pembinaankecamatan.view',
             'pembinaankecamatan.create',
             'pembinaankecamatan.store',
-            'pembinaankecamatan.edit',      
+            'pembinaankecamatan.edit',
             'pembinaankecamatan.update',
             'pembinaankecamatan.delete',
 
@@ -477,7 +664,7 @@ class PermissionSeeder extends Seeder
             'organisasi.view',
             'organisasi.create',
             'organisasi.store',
-            'organisasi.edit',      
+            'organisasi.edit',
             'organisasi.update',
             'organisasi.delete',
 
@@ -485,7 +672,7 @@ class PermissionSeeder extends Seeder
             'musrenbangdesa.view',
             'musrenbangdesa.create',
             'musrenbangdesa.store',
-            'musrenbangdesa.edit',      
+            'musrenbangdesa.edit',
             'musrenbangdesa.update',
             'musrenbangdesa.delete',
 

@@ -98,7 +98,8 @@ class JenisSuratController extends Controller
                     $variablesToSave[] = [
                         'key' => $variable['key'],
                         'label' => $variable['label'],
-                        'type' => $variable['type'] ?? 'text'
+                        'type' => $variable['type'] ?? 'text',
+                        'display' => true,
                     ];
                 }
             } else {

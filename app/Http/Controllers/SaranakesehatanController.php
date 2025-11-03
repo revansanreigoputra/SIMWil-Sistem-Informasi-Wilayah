@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Jskesehatan;
+use App\Models\MasterPotensi\JenisSaranaKesehatan;
 use App\Models\Saranakesehatan;
 use Illuminate\Http\Request;
 
@@ -13,7 +13,8 @@ class SaranakesehatanController extends Controller
      */
     public function index()
     {
-        $saranakesehatans = Saranakesehatan::with('jskesehatan')->latest()->get();
+        $desaId = session('desa_id');
+        $saranakesehatans = Saranakesehatan::with(['jenisSaranaKesehatan', 'desa'])->where('desa_id', $desaId)->latest()->get();
         return view('pages.potensi.potensi-prasarana-dan-sarana.skesehatan.index', compact('saranakesehatans'));
     }
 
@@ -22,8 +23,8 @@ class SaranakesehatanController extends Controller
      */
     public function create()
     {
-        $jskesehatans = Jskesehatan::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.skesehatan.create', compact('jskesehatans'));
+        $jenisSaranaKesehatans = JenisSaranaKesehatan::all();
+        return view('pages.potensi.potensi-prasarana-dan-sarana.skesehatan.create', compact('jenisSaranaKesehatans'));
     }
 
     /**
@@ -33,11 +34,14 @@ class SaranakesehatanController extends Controller
     {
         $request->validate([
             'tanggal' => 'required|date',
-            'jskesehatan_id' => 'required|exists:jskesehatans,id',
+            'jenis_sarana_kesehatan_id' => 'required|exists:jenis_sarana_kesehatan,id',
             'jumlah' => 'required|integer|min:0',
         ]);
 
-        Saranakesehatan::create($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        Saranakesehatan::create($data);
 
         return redirect()->route('potensi.potensi-prasarana-dan-sarana.skesehatan.index')->with('success', 'Data Sarana Kesehatan berhasil ditambahkan.');
     }
@@ -55,8 +59,8 @@ class SaranakesehatanController extends Controller
      */
     public function edit(Saranakesehatan $saranakesehatan)
     {
-        $jskesehatans = Jskesehatan::all();
-        return view('pages.potensi.potensi-prasarana-dan-sarana.skesehatan.edit', compact('saranakesehatan', 'jskesehatans'));
+        $jenisSaranaKesehatans = JenisSaranaKesehatan::all();
+        return view('pages.potensi.potensi-prasarana-dan-sarana.skesehatan.edit', compact('saranakesehatan', 'jenisSaranaKesehatans'));
     }
 
     /**
@@ -66,7 +70,7 @@ class SaranakesehatanController extends Controller
     {
         $request->validate([
             'tanggal' => 'required|date',
-            'jskesehatan_id' => 'required|exists:jskesehatans,id',
+            'jenis_sarana_kesehatan_id' => 'required|exists:jenis_sarana_kesehatan,id',
             'jumlah' => 'required|integer|min:0',
         ]);
 

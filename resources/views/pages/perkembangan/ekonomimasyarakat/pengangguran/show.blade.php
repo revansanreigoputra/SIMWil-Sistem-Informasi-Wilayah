@@ -10,7 +10,6 @@
     <div class="card-body">
         <table class="table table-striped">
             <tr><th>Tanggal</th><td>{{ $pengangguran->tanggal }}</td></tr>
-            <tr><th>Kecamatan</th><td>{{ $pengangguran->kecamatan->nama_kec ?? '-' }}</td></tr>
             <tr><th>Desa</th><td>{{ $pengangguran->desa->nama_desa ?? '-' }}</td></tr>
             <tr><th>Angkatan Kerja</th><td>{{ $pengangguran->angkatan_kerja }}</td></tr>
             <tr><th>Masih Sekolah</th><td>{{ $pengangguran->masih_sekolah }}</td></tr>

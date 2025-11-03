@@ -13,7 +13,8 @@
                 <div class="d-flex align-items-center">
                     <div>
                         <h3 class="mb-0 fw-bold text-dark">
-                            {{ $prasaranaOlahraga->desa->nama_desa }} - {{ $prasaranaOlahraga->tanggal?->format('d F Y') ?? '-' }}
+                            {{ $prasaranaOlahraga->desa->nama_desa }} -
+                            {{ $prasaranaOlahraga->tanggal?->format('d F Y') ?? '-' }}
                         </h3>
                     </div>
                 </div>
@@ -42,7 +43,7 @@
                                         <div class="flex-grow-1 ms-3">
                                             <label class="text-muted small mb-1 d-block">Jenis Prasarana Olahraga</label>
                                             <h6 class="mb-0 fw-bold text-dark">
-                                                {{ $prasaranaOlahraga->jpolahraga?->nama ?? '-' }}</h6>
+                                                {{ $prasaranaOlahraga->jenisPrasaranaOlahRaga?->nama ?? '-' }}</h6>
                                         </div>
                                     </div>
                                 </div>

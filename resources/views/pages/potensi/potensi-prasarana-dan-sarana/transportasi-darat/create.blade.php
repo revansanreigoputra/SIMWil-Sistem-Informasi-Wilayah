@@ -32,20 +32,20 @@
 
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="kategori" class="form-label fw-semibold">
+                            <label for="kategori_prasarana_transportasi_darat_id" class="form-label fw-semibold">
                                 <i class="fas fa-tags me-1"></i>
                                 Kategori <span class="text-danger">*</span>
                             </label>
-                            <select class="form-select @error('kategori') is-invalid @enderror" id="kategori"
-                                name="kategori" required>
+                            <select class="form-select @error('kategori_prasarana_transportasi_darat_id') is-invalid @enderror" id="kategori_prasarana_transportasi_darat_id"
+                                name="kategori_prasarana_transportasi_darat_id" required>
                                 <option value="">-- Pilih Kategori --</option>
-                                @foreach ($kategoriOptions as $key => $value)
-                                    <option value="{{ $key }}" {{ old('kategori') == $key ? 'selected' : '' }}>
-                                        {{ $value }}
+                                @foreach ($kategoris as $kategori)
+                                    <option value="{{ $kategori->id }}" {{ old('kategori_prasarana_transportasi_darat_id') == $kategori->id ? 'selected' : '' }}>
+                                        {{ $kategori->nama }}
                                     </option>
                                 @endforeach
                             </select>
-                            @error('kategori')
+                            @error('kategori_prasarana_transportasi_darat_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -55,21 +55,15 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="mb-3">
-                            <label for="jenis_sarana_prasarana" class="form-label fw-semibold">
+                            <label for="jenis_prasarana_transportasi_darat_id" class="form-label fw-semibold">
                                 <i class="fas fa-road me-1"></i>
                                 Jenis Sarana Prasarana <span class="text-danger">*</span>
                             </label>
-                            <select class="form-select @error('jenis_sarana_prasarana') is-invalid @enderror"
-                                id="jenis_sarana_prasarana" name="jenis_sarana_prasarana" required>
+                            <select class="form-select @error('jenis_prasarana_transportasi_darat_id') is-invalid @enderror"
+                                id="jenis_prasarana_transportasi_darat_id" name="jenis_prasarana_transportasi_darat_id" required>
                                 <option value="">-- Pilih Jenis Sarana Prasarana --</option>
-                                @foreach ($jenisSaranaPrasaranaOptions as $key => $value)
-                                    <option value="{{ $key }}"
-                                        {{ old('jenis_sarana_prasarana') == $key ? 'selected' : '' }}>
-                                        {{ $value }}
-                                    </option>
-                                @endforeach
                             </select>
-                            @error('jenis_sarana_prasarana')
+                            @error('jenis_prasarana_transportasi_darat_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -174,6 +168,28 @@
 
             kondisiBaikInput.addEventListener('input', hitungJumlah);
             kondisiRusakInput.addEventListener('input', hitungJumlah);
+
+            const kategoriSelect = document.getElementById('kategori_prasarana_transportasi_darat_id');
+            const jenisSelect = document.getElementById('jenis_prasarana_transportasi_darat_id');
+            const jenises = @json($jenises);
+
+            kategoriSelect.addEventListener('change', function() {
+                const selectedKategoriId = this.value;
+                jenisSelect.innerHTML = '<option value="">-- Pilih Jenis Sarana Prasarana --</option>';
+
+                if (selectedKategoriId) {
+                    const filteredJenises = jenises.filter(function(jenis) {
+                        return jenis.kategori_prasarana_transportasi_darat_id == selectedKategoriId;
+                    });
+
+                    filteredJenises.forEach(function(jenis) {
+                        const option = document.createElement('option');
+                        option.value = jenis.id;
+                        option.textContent = jenis.nama;
+                        jenisSelect.appendChild(option);
+                    });
+                }
+            });
         });
     </script>
 @endpush

@@ -23,13 +23,18 @@ use App\Models\MasterDDK\{
     Lembaga,
     HubunganKeluarga
 };
+use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\Exports\DataKeluargaExport;
+use App\Http\Controllers\Imports\DataKeluargaImport;
+use App\Http\Controllers\Exports\DataKeluargaTemplateExport;
+use Maatwebsite\Excel\Concerns\{FromCollection, WithHeadings};
 
 class DataKeluargaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    
+
     public function index()
     {
         $kepalaKeluargaRelasi = HubunganKeluarga::where('nama', 'Kepala Keluarga')->first();
@@ -40,15 +45,15 @@ class DataKeluargaController extends Controller
                 $query->where('status_kehidupan', 'hidup')
                     ->where('hubungan_keluarga_id', $idKepalaKeluarga);
             })
-            ->with([
-                'desas',
-                'kecamatans',
-                'perangkatDesas',
-                'anggotaKeluarga' => function ($query) { 
-                    $query->where('status_kehidupan', 'hidup');
-                }
-            ])
-            ->get();
+                ->with([
+                    'desas',
+                    'kecamatans',
+                    'perangkatDesas',
+                    'anggotaKeluarga' => function ($query) {
+                        $query->where('status_kehidupan', 'hidup');
+                    }
+                ])
+                ->get();
         } else {
             // Fallback jika ID 'Kepala Keluarga' tidak ditemukan
             $dataKeluargas = collect();
@@ -303,5 +308,47 @@ class DataKeluargaController extends Controller
         $dataKeluarga->delete();
 
         return redirect()->route('data_keluarga.index')->with('success', 'Data Keluarga dan seluruh anggotanya berhasil dihapus.');
+    }
+    // EXPORT IMPORTS FUNCTION START
+    /**
+     * Export data to Excel.
+     */
+    public function export()
+    {
+        return Excel::download(new DataKeluargaExport, 'data_keluarga_' . now()->format('Ymd_His') . '.xlsx');
+    }
+
+    /**
+     * Download Import Template.
+     */
+    public function template()
+    {
+        // Gunakan kelas Export baru yang dikhususkan untuk template
+        return Excel::download(new DataKeluargaTemplateExport(), 'template_data_keluarga.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+    }
+    /**
+     * Import data from Excel.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:xls,xlsx,csv'
+        ]);
+
+        try {
+            Excel::import(new DataKeluargaImport, $request->file('file'));
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            // Handle validation failures (e.g., return with errors)
+            return redirect()->back()->with('import_error', 'Gagal impor. Terdapat kesalahan validasi pada data. Baris ' . $failures[0]->row() . ': ' . implode(', ', $failures[0]->errors()));
+        } catch (\Exception $e) {
+            // Handle other exceptions (database, file reading, etc.)
+            return redirect()->back()->with('import_error', 'Gagal impor data: ' . $e->getMessage());
+        }
+
+        return redirect()->route('data_keluarga.index')->with('success', 'Data Keluarga berhasil diimpor!');
     }
 }
