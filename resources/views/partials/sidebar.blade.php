@@ -1188,10 +1188,7 @@
                                                 href="{{ route('perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.index') }}">
                                                     Sektor perdagangan <br> hotel dan restoran 
                                                 </a>
-                                            @endcan
-
-
-                                           
+                                            @endcan                                           
                                         </div>
 
                                         </div>
@@ -1213,6 +1210,28 @@
                                         Sektor Pertanian
                                     </a>
                                 @endcan
+
+                                 @can('sektor-perkebunan.view')
+                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-perkebunan*') ? 'active' : '' }}"
+                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-perkebunan.index') }}">
+                                        Sektor Perkebunan
+                                    </a>
+                                @endcan
+                                     
+                                 @can('sektor-peternakan.view')
+                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-peternakan*') ? 'active' : '' }}"
+                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-peternakan.index') }}">
+                                        Sektor Perternakan 
+                                    </a>
+                                @endcan
+
+                                 @can('sektor-perikanan.view')
+                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-perikanan*') ? 'active' : '' }}"
+                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-perikanan.index') }}">
+                                        Sektor Perikanan
+                                    </a>
+                                @endcan
+
                             </div>
                         </div>
                     @endcanany

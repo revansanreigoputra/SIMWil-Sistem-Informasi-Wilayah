@@ -2,41 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Desa;
 use App\Models\KualitasPersalinan;
+use App\Models\Desa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class KualitasPersalinanController extends Controller
 {
     /**
-     * Menampilkan daftar data kualitas persalinan per desa.
+     * Menampilkan daftar data kualitas persalinan.
      */
     public function index()
     {
-        $user = auth()->user();
-        $desaId = session('desa_id') ?? $user?->desa_id ?? null;
+        $desaId = session('desa_id');
 
-        // Jika bukan admin kabupaten dan belum ada desa aktif
-        if (!$desaId && (!$user || $user->role != 'admin_kabupaten')) {
-            return redirect()->back()->with('error', 'Silakan pilih desa terlebih dahulu.');
-        }
-
-        // Filter data berdasarkan desa aktif (kecuali admin kabupaten)
         $kualitas = KualitasPersalinan::with('desa')
-            ->when($desaId, fn($q) => $q->where('desa_id', $desaId))
+            ->where('desa_id', $desaId)
             ->latest()
-            ->get();
+            ->paginate(10);
 
         return view('pages.perkembangan.kesehatan-masyarakat.kualitas-persalinan.index', compact('kualitas'));
     }
 
     /**
-     * Form tambah data kualitas persalinan.
+     * Form tambah data.
      */
     public function create()
     {
-        $desas = Desa::all();
-        return view('pages.perkembangan.kesehatan-masyarakat.kualitas-persalinan.create', compact('desas'));
+        // Tidak perlu kirim $desas karena dropdown tidak ditampilkan
+        return view('pages.perkembangan.kesehatan-masyarakat.kualitas-persalinan.create');
     }
 
     /**
@@ -44,7 +38,7 @@ class KualitasPersalinanController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'tanggal' => 'required|date',
             'persalinan_rumah_sakit_umum' => 'nullable|integer|min:0',
             'persalinan_puskesmas' => 'nullable|integer|min:0',
@@ -63,57 +57,46 @@ class KualitasPersalinanController extends Controller
             'ditolong_keluarga' => 'nullable|integer|min:0',
         ]);
 
-        $user = auth()->user();
-        $desaId = session('desa_id') ?? $user?->desa_id;
-
-        if (is_null($desaId)) {
-            return redirect()->back()->with('error', 'Akses ditolak: tidak ada desa aktif.');
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Gagal menambahkan data kualitas persalinan.');
         }
 
-        KualitasPersalinan::create(array_merge($request->all(), [
-            'desa_id' => $desaId,
-        ]));
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
 
-        return redirect()->route('perkembangan.kesehatan-masyarakat.kualitas-persalinan.index')
+        KualitasPersalinan::create($data);
+
+        return redirect()
+            ->route('perkembangan.kesehatan-masyarakat.kualitas-persalinan.index')
             ->with('success', 'Data kualitas persalinan berhasil ditambahkan.');
     }
 
     /**
-     * Menampilkan detail data kualitas persalinan.
+     * Menampilkan detail data.
      */
     public function show($id)
     {
-        $user = auth()->user();
-        $desaId = session('desa_id') ?? $user?->desa_id;
-
-        $data = KualitasPersalinan::with('desa')
-            ->when($desaId, fn($q) => $q->where('desa_id', $desaId))
-            ->findOrFail($id);
-
+        $data = KualitasPersalinan::with('desa')->findOrFail($id);
         return view('pages.perkembangan.kesehatan-masyarakat.kualitas-persalinan.show', compact('data'));
     }
 
     /**
      * Form edit data.
      */
-    public function edit($id)
+    public function edit(KualitasPersalinan $kualitasPersalinan)
     {
-        $user = auth()->user();
-        $desaId = session('desa_id') ?? $user?->desa_id;
-
-        $data = KualitasPersalinan::where('id', $id)
-            ->when($desaId, fn($q) => $q->where('desa_id', $desaId))
-            ->firstOrFail();
-
-        return view('pages.perkembangan.kesehatan-masyarakat.kualitas-persalinan.edit', compact('data'));
+        return view('pages.perkembangan.kesehatan-masyarakat.kualitas-persalinan.edit', compact('kualitasPersalinan'));
     }
 
     /**
-     * Update data kualitas persalinan.
+     * Update data.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, KualitasPersalinan $kualitasPersalinan)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'tanggal' => 'required|date',
             'persalinan_rumah_sakit_umum' => 'nullable|integer|min:0',
             'persalinan_puskesmas' => 'nullable|integer|min:0',
@@ -132,36 +115,32 @@ class KualitasPersalinanController extends Controller
             'ditolong_keluarga' => 'nullable|integer|min:0',
         ]);
 
-        $user = auth()->user();
-        $desaId = session('desa_id') ?? $user?->desa_id;
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Gagal memperbarui data kualitas persalinan.');
+        }
 
-        $data = KualitasPersalinan::where('id', $id)
-            ->when($desaId, fn($q) => $q->where('desa_id', $desaId))
-            ->firstOrFail();
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
 
-        $data->update(array_merge($request->all(), [
-            'desa_id' => $desaId,
-        ]));
+        $kualitasPersalinan->update($data);
 
-        return redirect()->route('perkembangan.kesehatan-masyarakat.kualitas-persalinan.index')
+        return redirect()
+            ->route('perkembangan.kesehatan-masyarakat.kualitas-persalinan.index')
             ->with('success', 'Data kualitas persalinan berhasil diperbarui.');
     }
 
     /**
-     * Hapus data kualitas persalinan.
+     * Hapus data.
      */
-    public function destroy($id)
+    public function destroy(KualitasPersalinan $kualitasPersalinan)
     {
-        $user = auth()->user();
-        $desaId = session('desa_id') ?? $user?->desa_id;
+        $kualitasPersalinan->delete();
 
-        $data = KualitasPersalinan::where('id', $id)
-            ->when($desaId, fn($q) => $q->where('desa_id', $desaId))
-            ->firstOrFail();
-
-        $data->delete();
-
-        return redirect()->route('perkembangan.kesehatan-masyarakat.kualitas-persalinan.index')
+        return redirect()
+            ->route('perkembangan.kesehatan-masyarakat.kualitas-persalinan.index')
             ->with('success', 'Data kualitas persalinan berhasil dihapus.');
     }
 }

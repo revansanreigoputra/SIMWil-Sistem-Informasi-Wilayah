@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PerkembanganPasanganUsiaSuburKb;
+use App\Models\Desa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -53,10 +54,15 @@ public function show($id)
     return view('pages.perkembangan.kesehatan-masyarakat.pasangan-usia-subur.show', compact('pasanganUsiaSuburKb'));
 }
 
-    public function edit(PerkembanganPasanganUsiaSuburKb $pasanganUsiaSuburKb)
-    {
-        return view('pages.perkembangan.kesehatan-masyarakat.pasangan-usia-subur.edit', compact('pasanganUsiaSuburKb'));
-    }
+ public function edit(PerkembanganPasanganUsiaSuburKb $pasangan_usia_subur)
+{
+    $desa = Desa::all();
+    return view('pages.perkembangan.kesehatan-masyarakat.pasangan-usia-subur.edit', [
+        'data' => $pasangan_usia_subur,
+        'desa' => $desa
+    ]);
+}
+
 
     public function update(Request $request, PerkembanganPasanganUsiaSuburKb $pasanganUsiaSuburKb)
     {

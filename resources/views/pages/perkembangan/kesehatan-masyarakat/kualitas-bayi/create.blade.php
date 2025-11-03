@@ -11,16 +11,6 @@
         <form action="{{ route('perkembangan.kesehatan-masyarakat.kualitas-bayi.store') }}" method="POST">
             @csrf
 
-             <div class="col-md-6 mb-3">
-            <label for="desa_id">Desa</label>
-            <select name="desa_id" class="form-control" required>
-                <option value="">-- Pilih Desa --</option>
-                @foreach ($desas as $desa)
-                    <option value="{{ $desa->id }}">{{ $desa->nama_desa }}</option>
-                @endforeach
-            </select>
-        </div>
-        
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="tanggal" class="form-label">Tanggal</label>

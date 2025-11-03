@@ -18,7 +18,7 @@
                         <th>No</th>
                         <th>Desa</th>
                         <th>Tanggal</th>
-                        <th>Jumlah bangunan tahun ini (Unit)</th>
+                        <th>Jumlah bangunan (Unit)</th>
                         <th>Biaya pemeliharaan (Rp)</th>
                         <th>Total nilai bangunan (Rp)</th>
                         <th>Biaya antara lainnya (Rp)</th>
@@ -29,32 +29,26 @@
                     @foreach ($bangunans as $bangunan)
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
-                            <td class="text-center">{{ $bangunan->desa->nama_desa ?? '-' }}</td>
-                            <td class="text-center">{{ $bangunan->tanggal }}</td>
-                            <td class="text-center">{{ $bangunan->jumlah_bangunan_tahun_ini }}</td>
-                            <td class="text-center">{{ number_format($bangunan->biaya_pemeliharaan, 0, ',', '.') }}</td>
-                            <td class="text-center">{{ number_format($bangunan->total_nilai_bangunan, 0, ',', '.') }}</td>
-                            <td class="text-center">{{ number_format($bangunan->biaya_antara_lainnya, 0, ',', '.') }}</td>
+                            <td>{{ $bangunan->desa->nama_desa ?? '-' }}</td>
+                            <td>{{ $bangunan->tanggal }}</td>
+                            <td>{{ $bangunan->jumlah_bangunan_tahun_ini }}</td>
+                            <td>{{ number_format($bangunan->biaya_pemeliharaan,0,',','.') }}</td>
+                            <td>{{ number_format($bangunan->total_nilai_bangunan,0,',','.') }}</td>
+                            <td>{{ number_format($bangunan->biaya_antara_lainnya,0,',','.') }}</td>
                             <td>
-                                @canany(['sektor-bangunan.update','sektor-bangunan.delete'])
-                                    <div class="d-flex gap-1">
-                                        {{-- Edit --}}
-                                        @can('sektor-bangunan.update')
-                                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal-{{ $bangunan->id }}">
-                                                Edit
-                                            </button>
-                                        @endcan
-
-                                        {{-- Delete --}}
-                                        @can('sektor-bangunan.delete')
-                                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $bangunan->id }}">
-                                                Hapus
-                                            </button>
-                                        @endcan
-                                    </div>
-                                @else
-                                    <span class="text-muted">Tidak ada aksi</span>
-                                @endcanany
+                                <div class="d-flex gap-1">
+                                    @can('sektor-bangunan.update')
+                                        <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal-{{ $bangunan->id }}">
+                                            Edit
+                                        </button>
+                                    @endcan
+                                    @can('sektor-bangunan.delete')
+                                        <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $bangunan->id }}">
+                                            Hapus
+                                        </button>
+                                    @endcan
+                                    <a href="{{ route('perkembangan.produk-domestik.sektor-bangunan.show', $bangunan->id) }}" class="btn btn-info btn-sm">Detail</a>
+                                </div>
                             </td>
                         </tr>
 
@@ -70,24 +64,34 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="mb-3">
+                                            <label>Desa</label>
+                                            <select name="desa_id" class="form-control" required>
+                                                @foreach(App\Models\Desa::all() as $desa)
+                                                    <option value="{{ $desa->id }}" {{ $desa->id == $bangunan->desa_id ? 'selected' : '' }}>
+                                                        {{ $desa->nama_desa }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
                                             <label>Tanggal</label>
                                             <input type="date" name="tanggal" value="{{ $bangunan->tanggal }}" class="form-control" required>
                                         </div>
                                         <div class="mb-3">
                                             <label>Jumlah Bangunan</label>
-                                            <input type="number" name="jumlah_bangunan_tahun_ini" value="{{ $bangunan->jumlah_bangunan_tahun_ini }}" class="form-control" required>
+                                            <input type="number" name="jumlah_bangunan_tahun_ini" value="{{ $bangunan->jumlah_bangunan_tahun_ini }}" class="form-control">
                                         </div>
                                         <div class="mb-3">
                                             <label>Biaya Pemeliharaan</label>
-                                            <input type="number" name="biaya_pemeliharaan" value="{{ $bangunan->biaya_pemeliharaan }}" class="form-control" required>
+                                            <input type="number" name="biaya_pemeliharaan" value="{{ $bangunan->biaya_pemeliharaan }}" class="form-control">
                                         </div>
                                         <div class="mb-3">
                                             <label>Total Nilai Bangunan</label>
-                                            <input type="number" name="total_nilai_bangunan" value="{{ $bangunan->total_nilai_bangunan }}" class="form-control" required>
+                                            <input type="number" name="total_nilai_bangunan" value="{{ $bangunan->total_nilai_bangunan }}" class="form-control">
                                         </div>
                                         <div class="mb-3">
                                             <label>Biaya Antara Lainnya</label>
-                                            <input type="number" name="biaya_antara_lainnya" value="{{ $bangunan->biaya_antara_lainnya }}" class="form-control" required>
+                                            <input type="number" name="biaya_antara_lainnya" value="{{ $bangunan->biaya_antara_lainnya }}" class="form-control">
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -121,6 +125,7 @@
                                 </div>
                             </div>
                         </div>
+
                     @endforeach
                 </tbody>
             </table>
@@ -144,19 +149,19 @@
                 </div>
                 <div class="mb-3">
                     <label>Jumlah Bangunan</label>
-                    <input type="number" name="jumlah_bangunan_tahun_ini" class="form-control" required>
+                    <input type="number" name="jumlah_bangunan_tahun_ini" class="form-control">
                 </div>
                 <div class="mb-3">
                     <label>Biaya Pemeliharaan</label>
-                    <input type="number" name="biaya_pemeliharaan" class="form-control" required>
+                    <input type="number" name="biaya_pemeliharaan" class="form-control">
                 </div>
                 <div class="mb-3">
                     <label>Total Nilai Bangunan</label>
-                    <input type="number" name="total_nilai_bangunan" class="form-control" required>
+                    <input type="number" name="total_nilai_bangunan" class="form-control">
                 </div>
                 <div class="mb-3">
                     <label>Biaya Antara Lainnya</label>
-                    <input type="number" name="biaya_antara_lainnya" class="form-control" required>
+                    <input type="number" name="biaya_antara_lainnya" class="form-control">
                 </div>
             </div>
             <div class="modal-footer">
@@ -166,6 +171,7 @@
         </form>
     </div>
 </div>
+
 @endsection
 
 @push('addon-script')

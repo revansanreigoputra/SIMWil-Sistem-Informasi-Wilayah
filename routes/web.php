@@ -146,6 +146,10 @@ use App\Http\Controllers\SektorAngkutanKomunikasiController;
 use App\Http\Controllers\SektorListrikGasAirMinumController;
 use App\Http\Controllers\SektorPerdaganganHotelRestoranController;
 use App\Http\Controllers\MataPencaharianSektorPertanianController;
+use App\Http\Controllers\MataPencaharianPerkebunanController;
+use App\Http\Controllers\SektorPeternakanController;
+use App\Http\Controllers\SektorPerikananController;
+
 
 
 
@@ -1257,6 +1261,17 @@ Route::middleware('auth')->prefix('layanan-surat')->group(function () {
     Route::get('laporan/surat/{id}', [LaporanSuratController::class, 'show'])->name('laporan-surat.show');
 });
 
+// sektor perikanan 
+
+Route::prefix('perkembangan/struktur-mata-pencaharian/sektor-perikanan')->name('perkembangan.struktur-mata-pencaharian.sektor-perikanan.')->group(function () {
+    Route::get('/', [SektorPerikananController::class, 'index'])->name('index');
+    Route::get('/create', [SektorPerikananController::class, 'create'])->name('create');
+    Route::post('/', [SektorPerikananController::class, 'store'])->name('store');
+    Route::get('/{id}', [SektorPerikananController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [SektorPerikananController::class, 'edit'])->name('edit');
+    Route::put('/{sektorPerikanan}', [SektorPerikananController::class, 'update'])->name('update');
+    Route::delete('/{sektorPerikanan}', [SektorPerikananController::class, 'destroy'])->name('destroy');
+});
 
 // ==== PERMOHONAN SURAT ====
 
@@ -1492,6 +1507,24 @@ Route::prefix('perkembangan/struktur-mata-pencaharian/sektor-pertanian')
         Route::get('/{mataPencaharianSektorPertanian}/edit', [MataPencaharianSektorPertanianController::class, 'edit'])->name('edit');
         Route::put('/{mataPencaharianSektorPertanian}', [MataPencaharianSektorPertanianController::class, 'update'])->name('update');
         Route::delete('/{mataPencaharianSektorPertanian}', [MataPencaharianSektorPertanianController::class, 'destroy'])->name('destroy');
+    });
+    
+            // Sektor Perkebunan 
+            Route::prefix('perkembangan/struktur-mata-pencaharian/sektor-perkebunan')->name('perkembangan.struktur-mata-pencaharian.sektor-perkebunan.')->group(function () {
+    Route::get('/', [MataPencaharianPerkebunanController::class, 'index'])->name('index');
+    Route::get('/create', [MataPencaharianPerkebunanController::class, 'create'])->name('create');
+    Route::post('/', [MataPencaharianPerkebunanController::class, 'store'])->name('store');
+    Route::get('/{id}', [MataPencaharianPerkebunanController::class, 'show'])->name('show');
+    Route::get('/{sektorPerkebunan}/edit', [MataPencaharianPerkebunanController::class, 'edit'])->name('edit');
+    Route::put('/{sektorPerkebunan}', [MataPencaharianPerkebunanController::class, 'update'])->name('update');
+    Route::delete('/{sektorPerkebunan}', [MataPencaharianPerkebunanController::class, 'destroy'])->name('destroy');
+});
+
+ // sektor peternakan 
+Route::prefix('perkembangan/struktur-mata-pencaharian')
+    ->name('perkembangan.struktur-mata-pencaharian.')
+    ->group(function () {
+        Route::resource('sektor-peternakan', SektorPeternakanController::class);
     });
 
 // ==== PERMOHONAN SURAT ====

@@ -62,62 +62,67 @@
                                         </div>
                                         </div>
 
-                                        {{-- MODAL EDIT --}}
-                                        <div class="modal fade" id="editModal-{{ $item->id }}" tabindex="-1">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <form action="{{ route('perkembangan.kesehatan-masyarakat.penderita-sakit.update', $item->id) }}" method="POST">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title">Edit Data Penderita Sakit</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                            </div>
+                                      {{-- MODAL EDIT --}}
+<div class="modal fade" id="editModal-{{ $item->id }}" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{{ route('perkembangan.kesehatan-masyarakat.penderita-sakit.update', $item->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Edit Data Penderita Sakit</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
 
-                                                        <div class="modal-body">
-                                                            <div class="mb-3">
-                                                                <label>Tanggal *</label>
-                                                                <input type="date" name="tanggal" class="form-control" 
-                                                                  value="{{ \Carbon\Carbon::parse($item->tanggal)->format('Y-m-d') }}">
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label>Jenis Penyakit *</label>
-                                                                <select name="jenis_penyakit_id" class="form-control" required>
-                                                                    <option value="">Pilih Jenis Penyakit</option>
-                                                                    @foreach ($jenisPenyakit as $jp)
-                                                                        <option value="{{ $jp->id }}" 
-                                                                            {{ $item->jenis_penyakit_id == $jp->id ? 'selected' : '' }}>
-                                                                            {{ $jp->nama }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label>Jumlah Penderita (Orang)</label>
-                                                                <input type="number" name="jumlah_penderita" 
-                                                                    class="form-control" value="{{ $item->jumlah_penderita }}" required>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label>Tempat Perawatan *</label>
-                                                                <select name="tempat_perawatan_id" class="form-control" required>
-                                                                    <option value="">Pilih Tempat Perawatan</option>
-                                                                    @foreach ($tempatPerawatan as $tp)
-                                                                        <option value="{{ $tp->id }}" 
-                                                                            {{ $item->tempat_perawatan_id == $tp->id ? 'selected' : '' }}>
-                                                                            {{ $tp->nama }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                                            <button type="submit" class="btn btn-primary">Simpan</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label>Tanggal *</label>
+                        <input type="date" name="tanggal" class="form-control"
+                            value="{{ \Carbon\Carbon::parse($item->tanggal)->format('Y-m-d') }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Jenis Penyakit *</label>
+                        <select name="jenis_penyakit_id" class="form-control" required>
+                            <option value="">Pilih Jenis Penyakit</option>
+                            @foreach ($jenisPenyakit as $jp)
+                                <option value="{{ $jp->id }}"
+                                    {{ $jp->id == $item->jenis_penyakit_id ? 'selected' : '' }}>
+                                    {{ $jp->nama }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Jumlah Penderita (Orang)</label>
+                        <input type="number" name="jumlah_penderita" class="form-control"
+                            value="{{ $item->jumlah_penderita }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Tempat Perawatan *</label>
+                        <select name="tempat_perawatan_id" class="form-control" required>
+                            <option value="">Pilih Tempat Perawatan</option>
+                            @foreach ($tempatPerawatan as $tp)
+                                <option value="{{ $tp->id }}"
+                                    {{ $tp->id == $item->tempat_perawatan_id ? 'selected' : '' }}>
+                                    {{ $tp->nama }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
                                         {{-- MODAL DELETE --}}
                                         <div class="modal fade" id="delete-penderita-sakit-{{ $item->id }}" tabindex="-1">

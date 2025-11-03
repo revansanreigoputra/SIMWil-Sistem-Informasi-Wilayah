@@ -10,19 +10,6 @@
             @method('PUT')
             <div class="row">
                 {{-- 1. Informasi dasar --}}
-
-                
-             <div class="col-md-6 mb-3">
-                <label for="desa_id" class="form-label">Desa</label>
-                <select name="desa_id" class="form-control" required>
-                    @foreach ($desas as $desa)
-                        <option value="{{ $desa->id }}" {{ $data->desa_id == $desa->id ? 'selected' : '' }}>
-                            {{ $desa->nama_desa }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-            
                 <div class="col-md-6 mb-3">
                     <input type="date" name="tanggal" class="form-control" 
                   value="{{ \Carbon\Carbon::parse($data->tanggal)->format('Y-m-d') }}" required>

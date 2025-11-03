@@ -12,17 +12,6 @@
             @csrf
             @method('PUT')
 
-             <div class="col-md-6 mb-3">
-                <label for="desa_id" class="form-label">Desa</label>
-                <select name="desa_id" class="form-control" required>
-                    @foreach ($desas as $desa)
-                        <option value="{{ $desa->id }}" {{ $data->desa_id == $desa->id ? 'selected' : '' }}>
-                            {{ $desa->nama_desa }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Tanggal</label>

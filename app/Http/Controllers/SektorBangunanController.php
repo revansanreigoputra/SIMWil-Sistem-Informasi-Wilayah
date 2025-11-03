@@ -48,10 +48,11 @@ class SektorBangunanController extends Controller
             ->with('success', 'Data sektor bangunan berhasil ditambahkan.');
     }
 
-    public function show(SektorBangunan $sektorBangunan)
-    {
-        return view('pages.perkembangan.produk-domestik.sektor-bangunan.show', compact('sektorBangunan'));
-    }
+    public function show($id)
+{
+    $bangunan = SektorBangunan::with('desa')->findOrFail($id);
+    return view('pages.perkembangan.produk-domestik.sektor-bangunan.show', compact('bangunan'));
+}
 
     public function edit(SektorBangunan $sektorBangunan)
     {

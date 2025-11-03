@@ -116,8 +116,10 @@ class SubsektorHarapanController extends Controller
     /**
      * Detail data
      */
-    public function show(SubsektorHarapan $subsektorHarapan)
+  public function show($id)
     {
-        return view('pages.perkembangan.kesehatan-masyarakat.subsektor-harapan.show', compact('subsektorHarapan'));
+        $data = SubsektorHarapan::findOrFail($id);
+
+        return view('pages.perkembangan.kesehatan-masyarakat.subsektor-harapan.show', compact('data'));
     }
 }

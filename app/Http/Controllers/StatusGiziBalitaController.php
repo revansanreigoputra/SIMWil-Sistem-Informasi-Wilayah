@@ -46,9 +46,7 @@ class StatusGiziBalitaController extends Controller
         $jumlah_balita = $request->bergizi_buruk + $request->bergizi_baik + $request->bergizi_kurang + $request->bergizi_lebih;
 
         $data = $request->all();
-        $data['jumlah_balita'] = $jumlah_balita;
-        $data['desa_id'] = session('desa_id'); // Otomatis isi dari session
-
+        $data['desa_id'] = session('desa_id');   
         StatusGiziBalita::create($data);
 
         return redirect()
@@ -64,36 +62,34 @@ class StatusGiziBalitaController extends Controller
         ]);
     }
 
-    public function update(Request $request, StatusGiziBalita $statusGiziBalitum)
-    {
-        $validator = Validator::make($request->all(), [
-            'tanggal' => 'required|date',
-            'bergizi_buruk' => 'required|numeric|min:0',
-            'bergizi_baik' => 'required|numeric|min:0',
-            'bergizi_kurang' => 'required|numeric|min:0',
-            'bergizi_lebih' => 'required|numeric|min:0',
-        ]);
+ public function update(Request $request, $id)
+{
+    $validator = Validator::make($request->all(), [
+        'tanggal' => 'required|date',
+        'bergizi_buruk' => 'required|numeric|min:0',
+        'bergizi_baik' => 'required|numeric|min:0',
+        'bergizi_kurang' => 'required|numeric|min:0',
+        'bergizi_lebih' => 'required|numeric|min:0',
+        'jumlah_balita' => 'required|numeric|min:0',
+    ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput()
-                ->with('error', 'Gagal memperbarui data status gizi balita.');
-        }
-
-        $jumlah_balita = $request->bergizi_buruk + $request->bergizi_baik + $request->bergizi_kurang + $request->bergizi_lebih;
-
-        $data = $request->all();
-        $data['jumlah_balita'] = $jumlah_balita;
-        $data['desa_id'] = session('desa_id'); // Otomatis isi ulang
-
-        $statusGiziBalitum->update($data);
-
-        return redirect()
-            ->route('perkembangan.kesehatan-masyarakat.gizi-balita.index')
-            ->with('success', 'Data status gizi balita berhasil diperbarui.');
+    if ($validator->fails()) {
+        return redirect()->back()
+            ->withErrors($validator)
+            ->withInput()
+            ->with('error', 'Gagal memperbarui data status gizi balita.');
     }
 
+    $data = $request->all();
+    $data['desa_id'] = session('desa_id'); 
+
+    $statusGiziBalita = StatusGiziBalita::findOrFail($id);
+    $statusGiziBalita->update($data);
+
+    return redirect()
+        ->route('perkembangan.kesehatan-masyarakat.gizi-balita.index')
+        ->with('success', 'Data status gizi balita berhasil diperbarui.');
+}
   public function destroy($id)
 {
     $data = StatusGiziBalita::findOrFail($id);
@@ -104,8 +100,13 @@ class StatusGiziBalitaController extends Controller
         ->with('success', 'Data status gizi balita berhasil dihapus.');
 }
 
-    public function show(StatusGiziBalita $statusGiziBalitum)
-    {
-        return view('pages.perkembangan.kesehatan-masyarakat.gizi-balita.show', compact('statusGiziBalitum'));
-    }
+ public function show($id)
+{
+    // Ambil data berdasarkan id dari model StatusGiziBalita
+    $data = StatusGiziBalita::findOrFail($id);
+
+    // Kirim ke view
+    return view('pages.perkembangan.kesehatan-masyarakat.gizi-balita.show', compact('data'));
+}
+
 }
