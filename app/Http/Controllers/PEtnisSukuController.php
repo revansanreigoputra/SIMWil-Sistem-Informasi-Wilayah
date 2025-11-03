@@ -13,7 +13,8 @@ class PEtnisSukuController extends Controller
      */
     public function index()
     {
-        $pEtnisSukus = PEtnisSuku::latest()->get();
+        $desaId = session('desa_id');
+        $pEtnisSukus = PEtnisSuku::where('desa_id', $desaId)->latest()->get();
         return view('pages.potensi.potensi-sdm.etnis-suku.index', compact('pEtnisSukus'));
     }
 
@@ -39,6 +40,7 @@ class PEtnisSukuController extends Controller
             ]);
 
             $validatedData['jumlah_total'] = $validatedData['jumlah_laki_laki'] + $validatedData['jumlah_perempuan'];
+            $validatedData['desa_id'] = session('desa_id');
 
             PEtnisSuku::create($validatedData);
 
@@ -80,6 +82,7 @@ class PEtnisSukuController extends Controller
             ]);
 
             $validatedData['jumlah_total'] = $validatedData['jumlah_laki_laki'] + $validatedData['jumlah_perempuan'];
+            $validatedData['desa_id'] = session('desa_id'); // Ensure desa_id is updated if needed, or kept consistent
 
             $pEtnisSuku->update($validatedData);
 

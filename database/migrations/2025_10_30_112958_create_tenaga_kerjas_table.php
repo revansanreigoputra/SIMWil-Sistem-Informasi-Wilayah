@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('p_etnis_sukus', function (Blueprint $table) {
+        Schema::create('tenaga_kerjas', function (Blueprint $table) {
             $table->id();
-            $table->date('tanggal');
-            $table->string('etnis_suku');
-            $table->integer('jumlah_laki_laki');
-            $table->integer('jumlah_perempuan');
-            $table->integer('jumlah_total');
-            $table->foreignId('desa_id')->constrained('desas')->onDelete('cascade');
+            $table->string('tenaga_kerja');
             $table->timestamps();
         });
     }
@@ -28,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('p_etnis_sukus');
+        Schema::dropIfExists('tenaga_kerjas');
     }
 };

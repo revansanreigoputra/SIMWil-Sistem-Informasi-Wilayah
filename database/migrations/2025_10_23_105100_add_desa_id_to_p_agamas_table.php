@@ -11,15 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('p_kualitas_angkatan_kerjas', function (Blueprint $table) {
-            $table->id();
-            $table->date('tanggal');
-            $table->string('angkatan_kerja');
-            $table->integer('jumlah_laki_laki');
-            $table->integer('jumlah_perempuan');
-            $table->integer('jumlah_total');
+        Schema::table('p_agamas', function (Blueprint $table) {
             $table->foreignId('desa_id')->constrained('desas')->onDelete('cascade');
-            $table->timestamps();
         });
     }
 
@@ -28,6 +21,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('p_kualitas_angkatan_kerjas');
+        Schema::table('p_agamas', function (Blueprint $table) {
+            $table->dropForeign(['desa_id']);
+            $table->dropColumn('desa_id');
+        });
     }
 };

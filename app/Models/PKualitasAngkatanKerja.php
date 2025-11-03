@@ -15,5 +15,6 @@ class PKualitasAngkatanKerja extends Model
         'jumlah_laki_laki',
         'jumlah_perempuan',
         'jumlah_total',
+        'desa_id',
     ];
 }

@@ -24,6 +24,10 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
+                                <label class="form-label text-muted">Desa ID</label>
+                                <p class="fw-semibold">{{ $p_pendidikan->desa_id }}</p>
+                            </div>
+                            <div class="mb-3">
                                 <label class="form-label text-muted">Tanggal</label>
                                 <p class="fw-semibold">{{ $p_pendidikan->tanggal }}</p>
                             </div>
