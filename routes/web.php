@@ -176,6 +176,7 @@ use App\Http\Controllers\KepemilikanLahanBuahController;
 use App\Http\Controllers\HasilProduksiBuahController;
 use App\Http\Controllers\ApotikHidupController;
 use App\Http\Controllers\KepemilikanLahanKebunController;
+use App\Http\Controllers\HasilProduksiKebunController;
 
 
 // kelembagaan
@@ -695,6 +696,17 @@ Route::middleware(['auth'])->prefix('potensi/sda/kebun')->name('kebun.')->group(
     Route::get('/{kebun}/edit', [KepemilikanLahanKebunController::class, 'edit'])->name('edit');
     Route::put('/{kebun}', [KepemilikanLahanKebunController::class, 'update'])->name('update');
     Route::delete('/{kebun}', [KepemilikanLahanKebunController::class, 'destroy'])->name('destroy');
+});
+
+// hasilkebun routes
+Route::middleware(['auth'])->prefix('potensi/sda/hasilkebun')->name('hasilkebun.')->group(function () {
+    Route::get('/', [HasilProduksiKebunController::class, 'index'])->name('index');
+    Route::get('/create', [HasilProduksiKebunController::class, 'create'])->name('create');
+    Route::post('/', [HasilProduksiKebunController::class, 'store'])->name('store');
+    Route::get('/{hasilkebun}', [HasilProduksiKebunController::class, 'show'])->name('show');
+    Route::get('/{hasilkebun}/edit', [HasilProduksiKebunController::class, 'edit'])->name('edit');
+    Route::put('/{hasilkebun}', [HasilProduksiKebunController::class, 'update'])->name('update');
+    Route::delete('/{hasilkebun}', [HasilProduksiKebunController::class, 'destroy'])->name('destroy');
 });
 
 //APB Desa Routes

@@ -486,6 +486,13 @@
                                                 </a>
                                             @endcan
 
+                                            @can('hasilkebun.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/hasilkebun*') ? 'active' : '' }}"
+                                                    href="{{ route('hasilkebun.index') }}">
+                                                    Hasil & Produksi Kebun
+                                                </a>
+                                            @endcan
+
                                         </div>
                                     </div>
 
