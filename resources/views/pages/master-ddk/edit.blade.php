@@ -49,6 +49,12 @@
                         <input type="text" class="form-control" id="nama_cacat" name="nama_cacat" required
                             value="{{ $item->nama_cacat }}" required>
                     </div>
+                @elseif ($activeTable == 'tenagakerja')
+                    <div class="mb-3">
+                        <label for="tenaga_kerja" class="form-label">Nama Tenaga Kerja</label>
+                        <input type="text" class="form-control" id="tenaga_kerja" name="tenaga_kerja"
+                            value="{{ $item->tenaga_kerja }}" required>
+                    </div>
                 @else
                     {{-- Default form untuk tabel lain dengan kolom 'nama' --}}
                     @php

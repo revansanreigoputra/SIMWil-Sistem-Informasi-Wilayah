@@ -141,6 +141,7 @@
                     'lembaga',
                     'matapencaharian',
                     'pendidikan',
+                    'tenagakerja', // Add tenaga kerja
                 ];
             @endphp
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -171,6 +172,8 @@
                             @elseif ($activeTable == 'cacat')
                                 <th>Tipe</th>
                                 <th>Nama Cacat</th>
+                            @elseif ($activeTable == 'tenagakerja')
+                                <th>Tenaga Kerja</th>
                             @else
                                 <th>Nama</th>
                             @endif
@@ -204,6 +207,8 @@
                                     <td>{{ $item->mata_pencaharian }}</td>
                                 @elseif ($activeTable == 'pendidikan')
                                     <td>{{ $item->pendidikan }}</td>
+                                @elseif ($activeTable == 'tenagakerja')
+                                    <td>{{ $item->tenaga_kerja }}</td>
                                 @else
                                     {{-- Kondisi cadangan jika ada tabel yang tidak masuk dalam daftar di atas --}}
                                     <td>{{ $item->nama }}</td>

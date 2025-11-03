@@ -32,6 +32,11 @@
                         <input type="text" class="form-control" id="nama_cacat" name="nama_cacat" required
                             placeholder="Contoh: Tuna Rungu">
                     </div>
+                @elseif ($activeTable == 'tenagakerja')
+                    <div class="mb-3">
+                        <label for="tenaga_kerja" class="form-label">Nama Tenaga Kerja</label>
+                        <input type="text" class="form-control" id="tenaga_kerja" name="tenaga_kerja" required>
+                    </div>
                 @elseif ($activeTable == 'agama' || $activeTable == 'pendidikan')
                     <div class="mb-3">
                         <label for="{{ $activeTable }}" class="form-label">Nama {{ Str::headline($activeTable) }}</label>
