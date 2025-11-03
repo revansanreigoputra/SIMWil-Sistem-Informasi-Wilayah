@@ -55,6 +55,12 @@
                         <input type="text" class="form-control" id="tenaga_kerja" name="tenaga_kerja"
                             value="{{ $item->tenaga_kerja }}" required>
                     </div>
+                @elseif ($activeTable == 'kualitasangkatankerja')
+                    <div class="mb-3">
+                        <label for="kualitas_angkatan_kerja" class="form-label">Kualitas Angkatan Kerja</label>
+                        <input type="text" class="form-control" id="kualitas_angkatan_kerja" name="kualitas_angkatan_kerja"
+                            value="{{ $item->kualitas_angkatan_kerja }}" required>
+                    </div>
                 @else
                     {{-- Default form untuk tabel lain dengan kolom 'nama' --}}
                     @php

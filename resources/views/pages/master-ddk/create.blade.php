@@ -37,6 +37,11 @@
                         <label for="tenaga_kerja" class="form-label">Nama Tenaga Kerja</label>
                         <input type="text" class="form-control" id="tenaga_kerja" name="tenaga_kerja" required>
                     </div>
+                @elseif ($activeTable == 'kualitasangkatankerja')
+                    <div class="mb-3">
+                        <label for="kualitas_angkatan_kerja" class="form-label">Kualitas Angkatan Kerja</label>
+                        <input type="text" class="form-control" id="kualitas_angkatan_kerja" name="kualitas_angkatan_kerja" required>
+                    </div>
                 @elseif ($activeTable == 'agama' || $activeTable == 'pendidikan')
                     <div class="mb-3">
                         <label for="{{ $activeTable }}" class="form-label">Nama {{ Str::headline($activeTable) }}</label>

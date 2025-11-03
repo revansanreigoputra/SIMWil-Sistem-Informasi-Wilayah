@@ -31,7 +31,8 @@ class DatabaseSeeder extends Seeder
             LembagaSeeder::class,
             MataPencaharianSeeder::class,
             PendidikanSeeder::class,
-            TenagaKerjaSeeder::class, // Add TenagaKerjaSeeder
+            TenagaKerjaSeeder::class,
+            KualitasAngkatanKerjaSeeder::class,
         ]);
     }
 }
