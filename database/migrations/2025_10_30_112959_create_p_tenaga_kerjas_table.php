@@ -14,10 +14,14 @@ return new class extends Migration
         Schema::create('p_tenaga_kerjas', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal');
-            $table->string('tenaga_kerja');
+            $table->unsignedBigInteger('tenaga_kerja_id');
             $table->integer('jumlah_laki_laki');
             $table->integer('jumlah_perempuan');
             $table->integer('jumlah_total');
+            $table->unsignedBigInteger('desa_id');
+
+            $table->foreign('tenaga_kerja_id')->references('id')->on('tenaga_kerjas')->onDelete('cascade');
+            $table->foreign('desa_id')->references('id')->on('desas')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -29,7 +29,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $pTenagaKerja->tanggal }}</td>
-                                <td>{{ $pTenagaKerja->tenaga_kerja }}</td>
+                                <td>{{ $pTenagaKerja->tenagaKerja->tenaga_kerja }}</td>
                                 <td>{{ $pTenagaKerja->jumlah_laki_laki }}</td>
                                 <td>{{ $pTenagaKerja->jumlah_perempuan }}</td>
                                 <td>{{ $pTenagaKerja->jumlah_total }}</td>
@@ -90,7 +90,7 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <p>Data potensi tenaga kerja
-                                                            <strong>{{ $pTenagaKerja->tenaga_kerja }}</strong> yang dihapus
+                                                            <strong>{{ $pTenagaKerja->tenagaKerja->tenaga_kerja }}</strong> yang dihapus
                                                             tidak bisa dikembalikan.
                                                         </p>
                                                         <p>Yakin ingin menghapus data ini?</p>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PTenagaKerja;
+use App\Models\MasterDDK\TenagaKerja as MasterTenagaKerja; // Alias to avoid conflict
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -14,7 +15,7 @@ class PTenagaKerjaController extends Controller
     public function index()
     {
         $desaId = session('desa_id');
-        $pTenagaKerjas = PTenagaKerja::where('desa_id', $desaId)->latest()->paginate(10);
+        $pTenagaKerjas = PTenagaKerja::with('tenagaKerja')->where('desa_id', $desaId)->latest()->paginate(10);
         return view('pages.potensi.potensi-sdm.tenaga-kerja.index', compact('pTenagaKerjas'));
     }
 
@@ -23,7 +24,8 @@ class PTenagaKerjaController extends Controller
      */
     public function create()
     {
-        return view('pages.potensi.potensi-sdm.tenaga-kerja.create');
+        $masterTenagaKerjas = MasterTenagaKerja::all();
+        return view('pages.potensi.potensi-sdm.tenaga-kerja.create', compact('masterTenagaKerjas'));
     }
 
     /**
@@ -33,7 +35,7 @@ class PTenagaKerjaController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'tanggal' => 'required|date',
-            'tenaga_kerja' => 'required|string|max:255',
+            'tenaga_kerja_id' => 'required|exists:tenaga_kerjas,id',
             'jumlah_laki_laki' => 'required|integer|min:0',
             'jumlah_perempuan' => 'required|integer|min:0',
         ]);
@@ -44,7 +46,6 @@ class PTenagaKerjaController extends Controller
 
         $data = $request->all();
         $data['jumlah_total'] = $data['jumlah_laki_laki'] + $data['jumlah_perempuan'];
-
         $data['desa_id'] = session('desa_id');
         PTenagaKerja::create($data);
 
@@ -56,6 +57,7 @@ class PTenagaKerjaController extends Controller
      */
     public function show(PTenagaKerja $pTenagaKerja)
     {
+        $pTenagaKerja->load('tenagaKerja');
         return view('pages.potensi.potensi-sdm.tenaga-kerja.show', compact('pTenagaKerja'));
     }
 
@@ -64,7 +66,8 @@ class PTenagaKerjaController extends Controller
      */
     public function edit(PTenagaKerja $pTenagaKerja)
     {
-        return view('pages.potensi.potensi-sdm.tenaga-kerja.edit', compact('pTenagaKerja'));
+        $masterTenagaKerjas = MasterTenagaKerja::all();
+        return view('pages.potensi.potensi-sdm.tenaga-kerja.edit', compact('pTenagaKerja', 'masterTenagaKerjas'));
     }
 
     /**
@@ -74,7 +77,7 @@ class PTenagaKerjaController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'tanggal' => 'required|date',
-            'tenaga_kerja' => 'required|string|max:255',
+            'tenaga_kerja_id' => 'required|exists:tenaga_kerjas,id',
             'jumlah_laki_laki' => 'required|integer|min:0',
             'jumlah_perempuan' => 'required|integer|min:0',
         ]);
@@ -86,7 +89,7 @@ class PTenagaKerjaController extends Controller
         $data = $request->all();
         $data['jumlah_total'] = $data['jumlah_laki_laki'] + $data['jumlah_perempuan'];
 
-        $data['desa_id'] = session('desa_id'); // Ensure desa_id is updated if needed, or kept consistent
+        $data['desa_id'] = session('desa_id');
         $pTenagaKerja->update($data);
 
         return redirect()->route('potensi.potensi-sdm.tenaga-kerja.index')->with('success', 'Data potensi tenaga kerja berhasil diperbarui.');
