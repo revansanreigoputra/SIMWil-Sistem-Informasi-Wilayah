@@ -469,6 +469,14 @@ class PermissionSeeder extends Seeder
             'hasilkebun.edit',
             'hasilkebun.update',
             'hasilkebun.delete',
+            
+            // hutan
+            'hutan.view',
+            'hutan.create',
+            'hutan.store',
+            'hutan.edit',
+            'hutan.update',
+            'hutan.delete',
 
             // pengangguran
             'pengangguran.view',

@@ -493,6 +493,16 @@
                                                 </a>
                                             @endcan
 
+                                            <br>
+                                            
+                                            @can('hutan.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/hutan*') ? 'active' : '' }}"
+                                                    href="{{ route('hutan.index') }}">
+                                                    Kep. Lahan Hutan
+                                                </a>
+                                            @endcan
+
+
                                         </div>
                                     </div>
 
