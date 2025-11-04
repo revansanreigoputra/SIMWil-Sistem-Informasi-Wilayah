@@ -110,6 +110,7 @@ class DatabaseSeeder extends Seeder
             AlatProduksiIkanLautSeeder::class,
             AlatProduksiIkanTawarSeeder::class,
             SatuanProduksiTernakSeeder::class,
+            SatuanProduksiKehutananSeeder::class,
             NamaIkanSeeder::class,
             JenisPotensiAirSeeder::class,
             PengelolaanPotensiAirSeeder::class,
