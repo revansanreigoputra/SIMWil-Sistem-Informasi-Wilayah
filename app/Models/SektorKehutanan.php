@@ -5,20 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SektorIndustriPengolahan extends Model
+class SektorKehutanan extends Model
 {
     use HasFactory;
 
+    protected $table = 'sektor_kehutanan';
+
     protected $fillable = [
-    'desa_id',
-    'tanggal',
-    'jenis_industri',
-    'nilai_produksi',
-    'nilai_bahan_baku',
-    'nilai_bahan_penolong',
-    'biaya_antara',
-    'jumlah_jenis_industri',
-];
+        'desa_id',
+        'tanggal',
+        'pengumpul_hasil_hutan',
+        'pemilik_usaha_hasil_hutan',
+        'buruh_usaha_hasil_hutan',
+        'jumlah',
+    ];
 
     public function desa()
     {

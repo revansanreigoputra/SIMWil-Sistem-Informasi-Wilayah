@@ -54,15 +54,37 @@
                                     <a href="{{ route('perkembangan.kesehatan-masyarakat.cakupan-imunisasi.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
                                     @endcan
                                     @can('cakupan-imunisasi.delete')
-                                    <form action="{{ route('perkembangan.kesehatan-masyarakat.cakupan-imunisasi.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin hapus data ini?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-sm btn-danger">Hapus</button>
-                                    </form>
+                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete-cakupan-imunisasi-{{ $item->id }}">Hapus</button>
                                     @endcan
                                 </div>
                             </td>
                         </tr>
+
+                        <!-- MODAL HAPUS -->
+                        <div class="modal fade" id="delete-cakupan-imunisasi-{{ $item->id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-danger text-white">
+                                        <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus Data</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Data cakupan imunisasi tanggal 
+                                            <strong>{{ $item->tanggal }}</strong> 
+                                            akan dihapus dan tidak bisa dikembalikan.</p>
+                                        <p>Yakin ingin menghapus data ini?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                        <form action="{{ route('perkembangan.kesehatan-masyarakat.cakupan-imunisasi.destroy', $item->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Hapus</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     @endforeach
                 </tbody>
             </table>

@@ -1232,6 +1232,27 @@
                                     </a>
                                 @endcan
 
+                                @can('sektor-kehutanan.view')
+                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-kehutanan*') ? 'active' : '' }}"
+                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-kehutanan.index') }}">
+                                        Sektor Kehutanan 
+                                    </a>
+                                @endcan
+
+                                  @can('sektor-tambang.view')
+                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-tambang*') ? 'active' : '' }}"
+                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-tambang.index') }}">
+                                        Sektor Pertambangan
+                                    </a>
+                                @endcan
+                                      
+                                 @can('sektor-perdagangan.view')
+                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-perdagangan*') ? 'active' : '' }}"
+                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-perdagangan.index') }}">
+                                        Sektor Perdagangan 
+                                    </a>
+                                @endcan
+
                             </div>
                         </div>
                     @endcanany

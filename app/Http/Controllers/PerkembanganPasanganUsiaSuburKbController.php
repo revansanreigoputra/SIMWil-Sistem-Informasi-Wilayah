@@ -64,28 +64,29 @@ public function show($id)
 }
 
 
-    public function update(Request $request, PerkembanganPasanganUsiaSuburKb $pasanganUsiaSuburKb)
-    {
-        $validator = Validator::make($request->all(), [
-            'tanggal' => 'required|date',
-        ]);
+    public function update(Request $request, $id)
+{
+    $validator = Validator::make($request->all(), [
+        'tanggal' => 'required|date',
+    ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput()
-                ->with('error', 'Gagal memperbarui data.');
-        }
-
-        $data = $request->all();
-        $data['desa_id'] = session('desa_id');
-
-        $pasanganUsiaSuburKb->update($data);
-
-        return redirect()
-            ->route('perkembangan.kesehatan-masyarakat.pasangan-usia-subur.index')
-            ->with('success', 'Data berhasil diperbarui.');
+    if ($validator->fails()) {
+        return redirect()->back()
+            ->withErrors($validator)
+            ->withInput()
+            ->with('error', 'Gagal memperbarui data.');
     }
+
+    $data = $request->all();
+    $data['desa_id'] = session('desa_id');
+
+    $pasanganUsiaSuburKb = PerkembanganPasanganUsiaSuburKb::findOrFail($id);
+    $pasanganUsiaSuburKb->update($data);
+
+    return redirect()
+        ->route('perkembangan.kesehatan-masyarakat.pasangan-usia-subur.index')
+        ->with('success', 'Data berhasil diperbarui.');
+}
 
    public function destroy($id)
 {

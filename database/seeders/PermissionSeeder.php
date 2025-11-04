@@ -756,6 +756,24 @@ class PermissionSeeder extends Seeder
             'sektor-perikanan.store',
             
         
+            // sektor kehutanan 
+            'sektor-kehutanan.view',
+            'sektor-kehutanan.store',
+            'sektor-kehutanan.update',
+            'sektor-kehutanan.destroy',
+
+            //sektor tambang
+            'sektor-tambang.view',
+            'sektor-tambang.store',
+            'sektor-tambang.update',
+            'sektor-tambang.destroy',
+
+            // sektor pertambangan 
+            'sektor-perdagangan.view',
+            'sektor-perdagangan.create',
+            'sektor-perdagangan.show',
+            'sektor-perdagangan.edit',
+            'sektor-perdagangan.destroy',
 
             // Pertanggungjawaban
             'pertanggungjawaban.view', 

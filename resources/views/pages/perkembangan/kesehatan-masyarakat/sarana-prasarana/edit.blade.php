@@ -5,7 +5,7 @@
 @section('content')
 <div class="card">
     <div class="card-body">
-        <form action="{{ route('perkembangan.kesehatan-masyarakat.pasangan-usia-subur.update', $data->id) }}" method="POST">
+        <form action="{{ route('perkembangan.kesehatan-masyarakat.sarana-prasarana.update', $data->id) }}" method="POST">
             @csrf
             @method('PUT')
 
