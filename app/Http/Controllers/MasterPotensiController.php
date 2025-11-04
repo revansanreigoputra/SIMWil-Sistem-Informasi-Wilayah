@@ -21,6 +21,7 @@ class MasterPotensiController extends Controller
                 'jenis_ternak',
                 'jenis_usaha_pengolahan_hasil_ternak',
                 'satuan_produksi_ternak',
+                'satuan_produksi_kehutanan',
                 'alat_produksi_ikan_laut',
                 'alat_produksi_ikan_tawar',
                 'nama_ikan',
