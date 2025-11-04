@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('p_etnis_sukus', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal');
-            $table->string('etnis_suku');
+            $table->foreignId('etnis_id')->constrained('etnis')->onDelete('cascade');
             $table->integer('jumlah_laki_laki');
             $table->integer('jumlah_perempuan');
             $table->integer('jumlah_total');
@@ -28,6 +28,11 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('p_etnis_sukus', function (Blueprint $table) {
+            $table->dropForeign(['etnis_id']);
+            $table->dropColumn('etnis_id');
+            $table->string('etnis_suku'); // Re-add if needed for rollback, though typically not done this way
+        });
         Schema::dropIfExists('p_etnis_sukus');
     }
 };

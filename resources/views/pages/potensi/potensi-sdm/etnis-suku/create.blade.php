@@ -39,13 +39,20 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="etnis_suku" class="form-label required">
+                            <label for="etnis_id" class="form-label required">
                                 <i class="fas fa-users"></i> Etnis/Suku
                             </label>
-                            <input type="text" name="etnis_suku" id="etnis_suku"
-                                class="form-control @error('etnis_suku') is-invalid @enderror" value="{{ old('etnis_suku') }}"
-                                placeholder="Masukkan nama etnis/suku" required>
-                            @error('etnis_suku')
+                            <select name="etnis_id" id="etnis_id"
+                                class="form-control @error('etnis_id') is-invalid @enderror" required>
+                                <option value="">Pilih Etnis/Suku</option>
+                                @foreach ($etnis as $item)
+                                    <option value="{{ $item->id }}"
+                                        {{ old('etnis_id') == $item->id ? 'selected' : '' }}>
+                                        {{ $item->nama }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('etnis_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

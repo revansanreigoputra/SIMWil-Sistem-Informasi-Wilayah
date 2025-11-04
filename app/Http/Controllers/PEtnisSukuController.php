@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PEtnisSuku;
+use App\Models\MasterPerkembangan\Etnis;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -14,7 +15,7 @@ class PEtnisSukuController extends Controller
     public function index()
     {
         $desaId = session('desa_id');
-        $pEtnisSukus = PEtnisSuku::where('desa_id', $desaId)->latest()->get();
+        $pEtnisSukus = PEtnisSuku::with('etnis')->where('desa_id', $desaId)->latest()->get();
         return view('pages.potensi.potensi-sdm.etnis-suku.index', compact('pEtnisSukus'));
     }
 
@@ -23,7 +24,8 @@ class PEtnisSukuController extends Controller
      */
     public function create()
     {
-        return view('pages.potensi.potensi-sdm.etnis-suku.create');
+        $etnis = Etnis::all();
+        return view('pages.potensi.potensi-sdm.etnis-suku.create', compact('etnis'));
     }
 
     /**
@@ -34,7 +36,7 @@ class PEtnisSukuController extends Controller
         try {
             $validatedData = $request->validate([
                 'tanggal' => 'required|date',
-                'etnis_suku' => 'required|string|max:255',
+                'etnis_id' => 'required|exists:etnis,id',
                 'jumlah_laki_laki' => 'required|integer|min:0',
                 'jumlah_perempuan' => 'required|integer|min:0',
             ]);
@@ -57,6 +59,7 @@ class PEtnisSukuController extends Controller
      */
     public function show(PEtnisSuku $pEtnisSuku)
     {
+        $pEtnisSuku->load('etnis');
         return view('pages.potensi.potensi-sdm.etnis-suku.show', compact('pEtnisSuku'));
     }
 
@@ -65,7 +68,8 @@ class PEtnisSukuController extends Controller
      */
     public function edit(PEtnisSuku $pEtnisSuku)
     {
-        return view('pages.potensi.potensi-sdm.etnis-suku.edit', compact('pEtnisSuku'));
+        $etnis = Etnis::all();
+        return view('pages.potensi.potensi-sdm.etnis-suku.edit', compact('pEtnisSuku', 'etnis'));
     }
 
     /**
@@ -76,7 +80,7 @@ class PEtnisSukuController extends Controller
         try {
             $validatedData = $request->validate([
                 'tanggal' => 'required|date',
-                'etnis_suku' => 'required|string|max:255',
+                'etnis_id' => 'required|exists:etnis,id',
                 'jumlah_laki_laki' => 'required|integer|min:0',
                 'jumlah_perempuan' => 'required|integer|min:0',
             ]);
