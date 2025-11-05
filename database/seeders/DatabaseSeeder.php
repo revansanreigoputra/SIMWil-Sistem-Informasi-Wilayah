@@ -142,6 +142,8 @@ class DatabaseSeeder extends Seeder
             KopTemplateSeeder::class,
             JenisSuratSeeder::class,
             JenisAsetLainnyaSeeder::class,
+            TenagaKerjaSeeder::class,
+            KualitasAngkatanKerjaSeeder::class,
         ]);
     }
 }

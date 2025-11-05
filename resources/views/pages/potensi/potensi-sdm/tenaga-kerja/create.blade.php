@@ -39,13 +39,20 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="tenaga_kerja" class="form-label required">
+                            <label for="tenaga_kerja_id" class="form-label required">
                                 <i class="fas fa-briefcase"></i> Tenaga Kerja
                             </label>
-                            <input type="text" name="tenaga_kerja" id="tenaga_kerja"
-                                class="form-control @error('tenaga_kerja') is-invalid @enderror" value="{{ old('tenaga_kerja') }}"
-                                placeholder="Masukkan jenis tenaga kerja" required>
-                            @error('tenaga_kerja')
+                            <select name="tenaga_kerja_id" id="tenaga_kerja_id"
+                                class="form-control @error('tenaga_kerja_id') is-invalid @enderror" required>
+                                <option value="">Pilih Jenis Tenaga Kerja</option>
+                                @foreach ($masterTenagaKerjas as $tenagaKerja)
+                                    <option value="{{ $tenagaKerja->id }}"
+                                        {{ old('tenaga_kerja_id') == $tenagaKerja->id ? 'selected' : '' }}>
+                                        {{ $tenagaKerja->tenaga_kerja }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('tenaga_kerja_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

@@ -73,7 +73,7 @@
                             </label>
                             <input type="number" name="jumlah_total" id="jumlah_total"
                                 class="form-control @error('jumlah_total') is-invalid @enderror" value="{{ old('jumlah_total') }}"
-                                placeholder="Masukkan jumlah total" required min="0">
+                                placeholder="Total akan terisi otomatis" required min="0" readonly>
                             @error('jumlah_total')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -134,6 +134,18 @@
 @push('addon-script')
     <script>
         $(document).ready(function() {
+            // Calculate total automatically
+            function calculateTotal() {
+                let lakiLaki = parseInt($('#jumlah_laki').val()) || 0;
+                let perempuan = parseInt($('#jumlah_perempuan').val()) || 0;
+                $('#jumlah_total').val(lakiLaki + perempuan);
+            }
+
+            $('#jumlah_laki, #jumlah_perempuan').on('input', calculateTotal);
+
+            // Initial calculation in case of old values
+            calculateTotal();
+
             // Form validation
             $('#form-jumlah').on('submit', function(e) {
                 let isValid = true;

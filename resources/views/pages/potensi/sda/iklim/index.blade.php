@@ -5,7 +5,6 @@
 @section('action')
     @can('iklim.create')
         <a href="{{ route('iklim.create') }}" class="btn btn-primary mb-3">
-            <i class="fas fa-plus-circle me-2"></i>
             Tambah Data
         </a>
     @endcan
@@ -107,8 +106,8 @@
                                                             data-bs-dismiss="modal">
                                                             Batal
                                                         </button>
-                                                        <form action="{{ route('iklim.destroy', $iklim->id) }}"
-                                                            method="POST" class="d-inline">
+                                                        <form action="{{ route('iklim.destroy', $iklim->id) }}" method="POST"
+                                                            class="d-inline">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="btn btn-danger">

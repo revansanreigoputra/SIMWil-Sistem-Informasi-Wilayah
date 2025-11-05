@@ -14,6 +14,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Desa ID</th>
                             <th>Tanggal</th>
                             <th>Pendidikan</th>
                             <th>Laki-laki</th>
@@ -25,6 +26,7 @@
                         @foreach ($p_pendidikans as $p_pendidikan)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
+                                <td>{{ $p_pendidikan->desa_id }}</td>
                                 <td>{{ $p_pendidikan->tanggal }}</td>
                                 <td>{{ $p_pendidikan->pendidikan->pendidikan ?? 'N/A' }}</td>
                                 <td>{{ $p_pendidikan->laki }}</td>

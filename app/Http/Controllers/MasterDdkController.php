@@ -14,7 +14,9 @@ use App\Models\MasterDDK\{
     Kewarganegaraan,
     Lembaga,
     MataPencaharian,
-    Pendidikan
+    Pendidikan,
+    TenagaKerja,
+    KualitasAngkatanKerja
 };
 
 class MasterDdkController extends Controller
@@ -30,6 +32,8 @@ class MasterDdkController extends Controller
         'lembaga' => Lembaga::class,
         'matapencaharian' => MataPencaharian::class,
         'pendidikan' => Pendidikan::class,
+        'tenagakerja' => TenagaKerja::class,
+        'kualitasangkatankerja' => KualitasAngkatanKerja::class,
     ];
 
     public function index(Request $request, string $table = 'agama')
@@ -47,7 +51,7 @@ class MasterDdkController extends Controller
 
         // Prepare a user-friendly table name for the view title
         $tableName = Str::headline($table);
-        
+
         // Pass the active table name to the view
         $activeTable = $table;
 
@@ -70,7 +74,7 @@ class MasterDdkController extends Controller
         }
 
         $data = $this->prepareAndValidateData($request, $table);
-        
+
         $modelClass::create($data); // Menggunakan create yang lebih ringkas
 
         return redirect()->route('master.ddk.index', ['table' => $table])
@@ -100,7 +104,7 @@ class MasterDdkController extends Controller
         if (!$modelClass) {
             abort(404);
         }
-        
+
         $item = $modelClass::findOrFail($id);
         $data = $this->prepareAndValidateData($request, $table, $item);
 
@@ -153,6 +157,8 @@ class MasterDdkController extends Controller
             case 'kb':
             case 'golongandarah':
             case 'kewarganegaraan':
+            case 'tenagakerja':
+            case 'kualitasangkatankerja':
                 // Mengambil nama kolom dari model jika ada, jika tidak default ke nama tabel
                 $column = (new $this->models[$table])->getFillable()[0] ?? $table;
                 $rules = [$column => 'required|string|max:255'];

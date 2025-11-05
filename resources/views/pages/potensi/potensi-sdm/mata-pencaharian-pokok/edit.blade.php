@@ -6,12 +6,13 @@
     <div class="card">
         <div class="card-header">
             <h5 class="card-title">
-                 Edit Data Potensi Mata Pencaharian Pokok: {{ $mataPencaharianPokok->tanggal }}
+                Edit Data Potensi Mata Pencaharian Pokok: {{ $mataPencaharianPokok->tanggal }}
             </h5>
         </div>
 
         <div class="card-body">
-            <form action="{{ route('potensi.potensi-sdm.mata-pencaharian-pokok.update', $mataPencaharianPokok->id) }}" method="POST" id="form-edit-mata-pencaharian-pokok">
+            <form action="{{ route('potensi.potensi-sdm.mata-pencaharian-pokok.update', $mataPencaharianPokok->id) }}"
+                method="POST" id="form-edit-mata-pencaharian-pokok">
                 @csrf
                 @method('PUT')
 
@@ -68,7 +69,8 @@
                             </label>
                             <input type="number" name="laki_laki" id="laki_laki"
                                 class="form-control @error('laki_laki') is-invalid @enderror"
-                                value="{{ old('laki_laki', $mataPencaharianPokok->laki_laki) }}" placeholder="Masukkan jumlah laki-laki" required min="0">
+                                value="{{ old('laki_laki', $mataPencaharianPokok->laki_laki) }}"
+                                placeholder="Masukkan jumlah laki-laki" required min="0">
                             @error('laki_laki')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -81,7 +83,8 @@
                             </label>
                             <input type="number" name="perempuan" id="perempuan"
                                 class="form-control @error('perempuan') is-invalid @enderror"
-                                value="{{ old('perempuan', $mataPencaharianPokok->perempuan) }}" placeholder="Masukkan jumlah perempuan" required min="0">
+                                value="{{ old('perempuan', $mataPencaharianPokok->perempuan) }}"
+                                placeholder="Masukkan jumlah perempuan" required min="0">
                             @error('perempuan')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -94,7 +97,7 @@
                             </label>
                             <input type="number" name="total" id="total"
                                 class="form-control @error('total') is-invalid @enderror"
-                                value="{{ old('total', $mataPencaharianPokok->total) }}" placeholder="Masukkan total" required min="0">
+                                placeholder="Jumlah total akan terisi otomatis" required min="0" readonly>
                             @error('total')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -120,10 +123,12 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="form-group d-flex justify-content-end">
-                            <a href="{{ route('potensi.potensi-sdm.mata-pencaharian-pokok.index') }}" class="btn btn-outline-secondary">
+                            <a href="{{ route('potensi.potensi-sdm.mata-pencaharian-pokok.index') }}"
+                                class="btn btn-outline-secondary">
                                 <i class="fas fa-times"></i> Batal
                             </a>
-                            <a href="{{ route('potensi.potensi-sdm.mata-pencaharian-pokok.show', $mataPencaharianPokok->id) }}" class="btn btn-secondary">
+                            <a href="{{ route('potensi.potensi-sdm.mata-pencaharian-pokok.show', $mataPencaharianPokok->id) }}"
+                                class="btn btn-secondary">
                                 <i class="fas fa-eye"></i> Lihat Detail
                             </a>
                             <button type="button" class="btn btn-warning" onclick="resetToOriginal()">
@@ -159,6 +164,34 @@
                 total: "{{ $mataPencaharianPokok->total }}"
             };
 
+            // Calculate total based on laki_laki and perempuan inputs
+            function calculateTotal() {
+                const lakiLaki = parseInt($('#laki_laki').val()) || 0;
+                const perempuan = parseInt($('#perempuan').val()) || 0;
+                const total = lakiLaki + perempuan;
+                $('#total').val(total);
+            }
+
+            // Add event listeners for input changes
+            $('#laki_laki, #perempuan').on('input', function() {
+                calculateTotal();
+                checkFieldChanges($(this));
+            });
+
+            // Highlight changed fields
+            function checkFieldChanges(field) {
+                const fieldName = field.attr('name');
+                const currentValue = field.val();
+
+                if (originalValues[fieldName] != currentValue) {
+                    field.addClass('border-warning');
+                    field.closest('.form-group').find('label').addClass('text-warning font-weight-bold');
+                } else {
+                    field.removeClass('border-warning');
+                    field.closest('.form-group').find('label').removeClass('text-warning font-weight-bold');
+                }
+            }
+
             // Form validation
             $('#form-edit-mata-pencaharian-pokok').on('submit', function(e) {
                 let isValid = true;
@@ -179,47 +212,23 @@
                 }
             });
 
-            // Remove invalid class on input
-            $('input, select').on('input change', function() {
-                if ($(this).val()) {
-                    $(this).removeClass('is-invalid');
-                }
-            });
+            // Reset to original values function
+            window.resetToOriginal = function() {
+                Object.keys(originalValues).forEach(key => {
+                    if (key !== 'total') {
+                        $(`[name="${key}"]`).val(originalValues[key]).trigger('change');
+                    }
+                });
+                calculateTotal();
 
-            // Highlight changed fields
-            $('input, select').on('change', function() {
-                const fieldName = $(this).attr('name');
-                const currentValue = $(this).val();
+                // Remove all warning highlights
+                $('input, select').removeClass('border-warning');
+                $('.form-group label').removeClass('text-warning font-weight-bold');
+            }
 
-                if (originalValues[fieldName] != currentValue) {
-                    $(this).addClass('border-warning');
-                    $(this).closest('.form-group').find('label').addClass('text-warning font-weight-bold');
-                } else {
-                    $(this).removeClass('border-warning');
-                    $(this).closest('.form-group').find('label').removeClass(
-                        'text-warning font-weight-bold');
-                }
-            });
+            // Calculate initial total if values exist
+            calculateTotal();
         });
-
-        // Reset to original values function
-        function resetToOriginal() {
-            const originalValues = {
-                tanggal: "{{ $mataPencaharianPokok->tanggal }}",
-                mata_pencaharian_id: "{{ $mataPencaharianPokok->mata_pencaharian_id }}",
-                laki_laki: "{{ $mataPencaharianPokok->laki_laki }}",
-                perempuan: "{{ $mataPencaharianPokok->perempuan }}",
-                total: "{{ $mataPencaharianPokok->total }}"
-            };
-
-            Object.keys(originalValues).forEach(key => {
-                $(`[name="${key}"]`).val(originalValues[key]).trigger('change');
-            });
-
-            // Remove all warning highlights
-            $('input, select').removeClass('border-warning');
-            $('.form-group label').removeClass('text-warning font-weight-bold');
-        }
     </script>
 @endpush
 

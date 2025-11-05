@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('p_kualitas_angkatan_kerjas', function (Blueprint $table) {
+        Schema::create('kualitas_angkatan_kerjas', function (Blueprint $table) {
             $table->id();
-            $table->date('tanggal');
-            $table->string('angkatan_kerja');
-            $table->integer('jumlah_laki_laki');
-            $table->integer('jumlah_perempuan');
-            $table->integer('jumlah_total');
+            $table->string('kualitas_angkatan_kerja');
             $table->timestamps();
         });
     }
@@ -27,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('p_kualitas_angkatan_kerjas');
+        Schema::dropIfExists('kualitas_angkatan_kerjas');
     }
 };

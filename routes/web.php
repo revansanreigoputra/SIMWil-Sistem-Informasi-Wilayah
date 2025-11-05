@@ -201,13 +201,19 @@ use App\Models\LayananSurat\KopTemplate;
 // POTENSI SDA
 use App\Http\Controllers\TopografiController;
 use App\Http\Controllers\JlahanController;
+use App\Http\Controllers\KlahanController;
+use App\Http\Controllers\IklimTanahErosiController;
+use App\Http\Controllers\HasilProduksiController;
+use App\Http\Controllers\KepemilikanLahanBuahController;
+use App\Http\Controllers\HasilProduksiBuahController;
+use App\Http\Controllers\ApotikHidupController;
+use App\Http\Controllers\KepemilikanLahanKebunController;
 
 
 // kelembagaan
 use App\Http\Controllers\LembagaAdatController;
 use App\Http\Controllers\SaranaTransportasiController;
 use App\Http\Controllers\BatasWilayahController;
-use App\Http\Controllers\IklimTanahErosiController;
 use App\Http\Controllers\JenisTransportasiController;
 use App\Http\Controllers\KomunikasiInformasiController;
 use App\Http\Controllers\PrasaranaPeribadatanController;
@@ -658,6 +664,72 @@ Route::middleware(['auth'])->prefix('potensi/sda/jlahan')->name('jlahan.')->grou
     Route::get('/{jlahan}/edit', [JlahanController::class, 'edit'])->name('edit');
     Route::put('/{jlahan}', [JlahanController::class, 'update'])->name('update');
     Route::delete('/{jlahan}', [JlahanController::class, 'destroy'])->name('destroy');
+});
+
+// lahan routes
+Route::middleware(['auth'])->prefix('potensi/sda/lahan')->name('lahan.')->group(function () {
+    Route::get('/', [KlahanController::class, 'index'])->name('index');
+    Route::get('/create', [KlahanController::class, 'create'])->name('create');
+    Route::post('/', [KlahanController::class, 'store'])->name('store');
+    Route::get('/{lahan}', [KlahanController::class, 'show'])->name('show');
+    Route::get('/{lahan}/edit', [KlahanController::class, 'edit'])->name('edit');
+    Route::put('/{lahan}', [KlahanController::class, 'update'])->name('update');
+    Route::delete('/{lahan}', [KlahanController::class, 'destroy'])->name('destroy');
+});
+
+// hasil routes
+Route::middleware(['auth'])->prefix('potensi/sda/hasil')->name('hasiltanaman.')->group(function () {
+    Route::get('/', [HasilProduksiController::class, 'index'])->name('index');
+    Route::get('/create', [HasilProduksiController::class, 'create'])->name('create');
+    Route::post('/', [HasilProduksiController::class, 'store'])->name('store');
+    Route::get('/{hasiltanaman}', [HasilProduksiController::class, 'show'])->name('show');
+    Route::get('/{hasiltanaman}/edit', [HasilProduksiController::class, 'edit'])->name('edit');
+    Route::put('/{hasiltanaman}', [HasilProduksiController::class, 'update'])->name('update');
+    Route::delete('/{hasiltanaman}', [HasilProduksiController::class, 'destroy'])->name('destroy');
+});
+
+// kepemilikan routes
+Route::middleware(['auth'])->prefix('potensi/sda/kepemilikan')->name('kepemilikan.')->group(function () {
+    Route::get('/', [KepemilikanLahanBuahController::class, 'index'])->name('index');
+    Route::get('/create', [KepemilikanLahanBuahController::class, 'create'])->name('create');
+    Route::post('/', [KepemilikanLahanBuahController::class, 'store'])->name('store');
+    Route::get('/{kepemilikan}', [KepemilikanLahanBuahController::class, 'show'])->name('show');
+    Route::get('/{kepemilikan}/edit', [KepemilikanLahanBuahController::class, 'edit'])->name('edit');
+    Route::put('/{kepemilikan}', [KepemilikanLahanBuahController::class, 'update'])->name('update');
+    Route::delete('/{kepemilikan}', [KepemilikanLahanBuahController::class, 'destroy'])->name('destroy');
+});
+
+// hasilbuah routes
+Route::middleware(['auth'])->prefix('potensi/sda/hasilbuah')->name('hasilbuah.')->group(function () {
+    Route::get('/', [HasilProduksiBuahController::class, 'index'])->name('index');
+    Route::get('/create', [HasilProduksiBuahController::class, 'create'])->name('create');
+    Route::post('/', [HasilProduksiBuahController::class, 'store'])->name('store');
+    Route::get('/{hasilbuah}', [HasilProduksiBuahController::class, 'show'])->name('show');
+    Route::get('/{hasilbuah}/edit', [HasilProduksiBuahController::class, 'edit'])->name('edit');
+    Route::put('/{hasilbuah}', [HasilProduksiBuahController::class, 'update'])->name('update');
+    Route::delete('/{hasilbuah}', [HasilProduksiBuahController::class, 'destroy'])->name('destroy');
+});
+
+// apotikhidup routes
+Route::middleware(['auth'])->prefix('potensi/sda/apotikhidup')->name('apotikhidup.')->group(function () {
+    Route::get('/', [ApotikHidupController::class, 'index'])->name('index');
+    Route::get('/create', [ApotikHidupController::class, 'create'])->name('create');
+    Route::post('/', [ApotikHidupController::class, 'store'])->name('store');
+    Route::get('/{apotikhidup}', [ApotikHidupController::class, 'show'])->name('show');
+    Route::get('/{apotikhidup}/edit', [ApotikHidupController::class, 'edit'])->name('edit');
+    Route::put('/{apotikhidup}', [ApotikHidupController::class, 'update'])->name('update');
+    Route::delete('/{apotikhidup}', [ApotikHidupController::class, 'destroy'])->name('destroy');
+});
+
+// kebun routes
+Route::middleware(['auth'])->prefix('potensi/sda/kebun')->name('kebun.')->group(function () {
+    Route::get('/', [KepemilikanLahanKebunController::class, 'index'])->name('index');
+    Route::get('/create', [KepemilikanLahanKebunController::class, 'create'])->name('create');
+    Route::post('/', [KepemilikanLahanKebunController::class, 'store'])->name('store');
+    Route::get('/{kebun}', [KepemilikanLahanKebunController::class, 'show'])->name('show');
+    Route::get('/{kebun}/edit', [KepemilikanLahanKebunController::class, 'edit'])->name('edit');
+    Route::put('/{kebun}', [KepemilikanLahanKebunController::class, 'update'])->name('update');
+    Route::delete('/{kebun}', [KepemilikanLahanKebunController::class, 'destroy'])->name('destroy');
 });
 
 //APB Desa Routes

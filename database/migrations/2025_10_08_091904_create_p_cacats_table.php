@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('jumlah_laki_laki')->default(0);
             $table->integer('jumlah_perempuan')->default(0);
             $table->integer('jumlah_total')->default(0);
+            $table->foreignId('desa_id')->constrained('desas')->onDelete('cascade');
             $table->timestamps();
         });
     }

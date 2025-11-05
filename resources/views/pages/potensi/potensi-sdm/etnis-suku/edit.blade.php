@@ -6,7 +6,7 @@
     <div class="card">
         <div class="card-header">
             <h5 class="card-title">
-                 Edit Data Potensi Etnis/Suku: {{ $pEtnisSuku->etnis_suku }}
+                 Edit Data Potensi Etnis/Suku: {{ $pEtnisSuku->etnis->nama }}
             </h5>
         </div>
 
@@ -40,13 +40,20 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="etnis_suku" class="form-label required">
+                            <label for="etnis_id" class="form-label required">
                                 <i class="fas fa-users"></i> Etnis/Suku
                             </label>
-                            <input type="text" name="etnis_suku" id="etnis_suku"
-                                class="form-control @error('etnis_suku') is-invalid @enderror"
-                                value="{{ old('etnis_suku', $pEtnisSuku->etnis_suku) }}" placeholder="Masukkan nama etnis/suku" required>
-                            @error('etnis_suku')
+                            <select name="etnis_id" id="etnis_id"
+                                class="form-control @error('etnis_id') is-invalid @enderror" required>
+                                <option value="">Pilih Etnis/Suku</option>
+                                @foreach ($etnis as $item)
+                                    <option value="{{ $item->id }}"
+                                        {{ old('etnis_id', $pEtnisSuku->etnis_id) == $item->id ? 'selected' : '' }}>
+                                        {{ $item->nama }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('etnis_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -151,7 +158,7 @@
             // Store original values for reset function
             const originalValues = {
                 tanggal: "{{ $pEtnisSuku->tanggal }}",
-                etnis_suku: "{{ $pEtnisSuku->etnis_suku }}",
+                etnis_id: "{{ $pEtnisSuku->etnis_id }}",
                 jumlah_laki_laki: "{{ $pEtnisSuku->jumlah_laki_laki }}",
                 jumlah_perempuan: "{{ $pEtnisSuku->jumlah_perempuan }}",
                 jumlah_total: "{{ $pEtnisSuku->jumlah_total }}"
@@ -204,7 +211,7 @@
         function resetToOriginal() {
             const originalValues = {
                 tanggal: "{{ $pEtnisSuku->tanggal }}",
-                etnis_suku: "{{ $pEtnisSuku->etnis_suku }}",
+                etnis_id: "{{ $pEtnisSuku->etnis_id }}",
                 jumlah_laki_laki: "{{ $pEtnisSuku->jumlah_laki_laki }}",
                 jumlah_perempuan: "{{ $pEtnisSuku->jumlah_perempuan }}",
                 jumlah_total: "{{ $pEtnisSuku->jumlah_total }}"

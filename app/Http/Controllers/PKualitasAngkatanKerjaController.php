@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PKualitasAngkatanKerja;
 use Illuminate\Http\Request;
+use App\Models\MasterDDK\KualitasAngkatanKerja;
 use Illuminate\Support\Facades\Validator;
 
 class PKualitasAngkatanKerjaController extends Controller
@@ -13,7 +14,8 @@ class PKualitasAngkatanKerjaController extends Controller
      */
     public function index()
     {
-        $pKualitasAngkatanKerjas = PKualitasAngkatanKerja::latest()->paginate(10);
+        $desaId = session('desa_id');
+        $pKualitasAngkatanKerjas = PKualitasAngkatanKerja::with('kualitasAngkatanKerja')->where('desa_id', $desaId)->latest()->paginate(10);
         return view('pages.potensi.potensi-sdm.kualitas-angkatan-kerja.index', compact('pKualitasAngkatanKerjas'));
     }
 
@@ -22,7 +24,8 @@ class PKualitasAngkatanKerjaController extends Controller
      */
     public function create()
     {
-        return view('pages.potensi.potensi-sdm.kualitas-angkatan-kerja.create');
+        $kualitasAngkatanKerjas = KualitasAngkatanKerja::all();
+        return view('pages.potensi.potensi-sdm.kualitas-angkatan-kerja.create', compact('kualitasAngkatanKerjas'));
     }
 
     /**
@@ -32,7 +35,7 @@ class PKualitasAngkatanKerjaController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'tanggal' => 'required|date',
-            'angkatan_kerja' => 'required|string|max:255',
+            'kualitas_angkatan_kerja_id' => 'required|exists:kualitas_angkatan_kerjas,id',
             'jumlah_laki_laki' => 'required|integer|min:0',
             'jumlah_perempuan' => 'required|integer|min:0',
         ]);
@@ -43,6 +46,7 @@ class PKualitasAngkatanKerjaController extends Controller
 
         $data = $request->all();
         $data['jumlah_total'] = $data['jumlah_laki_laki'] + $data['jumlah_perempuan'];
+        $data['desa_id'] = session('desa_id');
 
         PKualitasAngkatanKerja::create($data);
 
@@ -62,7 +66,8 @@ class PKualitasAngkatanKerjaController extends Controller
      */
     public function edit(PKualitasAngkatanKerja $pKualitasAngkatanKerja)
     {
-        return view('pages.potensi.potensi-sdm.kualitas-angkatan-kerja.edit', compact('pKualitasAngkatanKerja'));
+        $kualitasAngkatanKerjas = KualitasAngkatanKerja::all();
+        return view('pages.potensi.potensi-sdm.kualitas-angkatan-kerja.edit', compact('pKualitasAngkatanKerja', 'kualitasAngkatanKerjas'));
     }
 
     /**
@@ -72,7 +77,7 @@ class PKualitasAngkatanKerjaController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'tanggal' => 'required|date',
-            'angkatan_kerja' => 'required|string|max:255',
+            'kualitas_angkatan_kerja_id' => 'required|exists:kualitas_angkatan_kerjas,id',
             'jumlah_laki_laki' => 'required|integer|min:0',
             'jumlah_perempuan' => 'required|integer|min:0',
         ]);
@@ -83,6 +88,7 @@ class PKualitasAngkatanKerjaController extends Controller
 
         $data = $request->all();
         $data['jumlah_total'] = $data['jumlah_laki_laki'] + $data['jumlah_perempuan'];
+        $data['desa_id'] = session('desa_id'); // Ensure desa_id is kept consistent
 
         $pKualitasAngkatanKerja->update($data);
 

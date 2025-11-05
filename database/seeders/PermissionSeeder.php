@@ -409,6 +409,58 @@ class PermissionSeeder extends Seeder
             'iklim.edit',
             'iklim.update',
             'iklim.delete',
+            
+            // lahan
+            'lahan.view',
+            'lahan.create',
+            'lahan.store',
+            'lahan.edit',
+            'lahan.update',
+            'lahan.delete',
+            
+            // hasil
+            'hasiltanaman.view',
+            'hasiltanaman.create',
+            'hasiltanaman.store',
+            'hasiltanaman.edit',
+            'hasiltanaman.update',
+            'hasiltanaman.delete',
+            
+            // kepemilikan
+            'kepemilikan.view',
+            'kepemilikan.create',
+            'kepemilikan.store',
+            'kepemilikan.edit',
+            'kepemilikan.update',
+            'kepemilikan.delete',
+
+            // hasilbuah
+            'hasilbuah.view',
+            'hasilbuah.create',
+            'hasilbuah.store',
+            'hasilbuah.edit',
+            'hasilbuah.update',
+            'hasilbuah.delete',
+            'hasilbuah.store',
+            'hasilbuah.edit',
+            'hasilbuah.update',
+            'hasilbuah.delete',
+
+            // apotikhidup
+            'apotikhidup.view',
+            'apotikhidup.create',
+            'apotikhidup.store',
+            'apotikhidup.edit',
+            'apotikhidup.update',
+            'apotikhidup.delete',
+            
+            // kebun
+            'kebun.view',
+            'kebun.create',
+            'kebun.store',
+            'kebun.edit',
+            'kebun.update',
+            'kebun.delete',
 
             // pengangguran
             'pengangguran.view',

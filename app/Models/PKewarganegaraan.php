@@ -13,10 +13,16 @@ class PKewarganegaraan extends Model
         'jumlah_laki_laki',
         'jumlah_perempuan',
         'jumlah_total',
+        'desa_id',
     ];
 
     public function kewarganegaraan()
     {
         return $this->belongsTo(Kewarganegaraan::class);
+    }
+
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class);
     }
 }

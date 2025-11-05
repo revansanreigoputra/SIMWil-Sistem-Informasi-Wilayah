@@ -51,7 +51,8 @@
             <div class="dropdown">
                 <a href="#" class="nav-link p-0 d-flex align-items-center" data-bs-toggle="dropdown"
                     aria-label="Open user menu">
-                    <span class="avatar avatar-sm me-2" style="background-image: url({{ asset('static/avatars/000m.jpg')}})"></span>
+                    <span class="avatar avatar-sm me-2"
+                        style="background-image: url({{ asset('static/avatars/000m.jpg') }})"></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <!-- Nama User -->
@@ -234,8 +235,9 @@
                                         Template Dokumen
                                     </a>
 
-                                    
-                                    <div class="dropdown-menu {{ request()->is('layanan-surat/template*') || request()->is('ttd*') || request()->is('layanan-surat/profil-desa*') ? 'show' : '' }}">
+
+                                    <div
+                                        class="dropdown-menu {{ request()->is('layanan-surat/template*') || request()->is('ttd*') || request()->is('layanan-surat/profil-desa*') ? 'show' : '' }}">
 
                                         {{-- Menu-menu anak (inner menus) --}}
 
@@ -392,8 +394,7 @@
                                             Potensi Umum
                                         </a>
 
-                                        <div
-                                            class="dropdown-menu {{ request()->is('potensi/umum*') ? 'show' : '' }}">
+                                        <div class="dropdown-menu {{ request()->is('potensi/umum*') ? 'show' : '' }}">
 
                                             @can('batas_wilayah.view')
                                                 <a class="dropdown-item {{ request()->is('potensi/umum/batas-wilayah*') ? 'active' : '' }}"
@@ -413,8 +414,7 @@
                                             Potensi Sumber <br> Daya Alam
                                         </a>
 
-                                        <div
-                                            class="dropdown-menu {{ request()->is('potensi/sda*') ? 'show' : '' }}">
+                                        <div class="dropdown-menu {{ request()->is('potensi/sda*') ? 'show' : '' }}">
 
 
                                             @can('jlahan.view')
@@ -430,11 +430,59 @@
                                                     Iklim
                                                 </a>
                                             @endcan
-                                            
+
                                             @can('topografi.view')
                                                 <a class="dropdown-item {{ request()->is('potensi/sda/topografi*') ? 'active' : '' }}"
                                                     href="{{ route('topografi.index') }}">
                                                     Topografi
+                                                </a>
+                                            @endcan
+
+                                            <br>
+
+                                            @can('lahan.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/lahan*') ? 'active' : '' }}"
+                                                    href="{{ route('lahan.index') }}">
+                                                    Kep. Lahan Tanaman
+                                                </a>
+                                            @endcan
+
+                                            @can('hasiltanaman.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/hasiltanaman*') ? 'active' : '' }}"
+                                                    href="{{ route('hasiltanaman.index') }}">
+                                                    Hasil & Produksi Tanaman
+                                                </a>
+                                            @endcan
+
+                                            <br>
+
+                                            @can('kepemilikan.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/kepemilikan*') ? 'active' : '' }}"
+                                                    href="{{ route('kepemilikan.index') }}">
+                                                    Kep. Lahan Buah
+                                                </a>
+                                            @endcan
+
+                                            @can('hasilbuah.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/hasilbuah*') ? 'active' : '' }}"
+                                                    href="{{ route('hasilbuah.index') }}">
+                                                    Hasil & Produksi Buah
+                                                </a>
+                                            @endcan
+
+                                            @can('apotikhidup.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/apotikhidup*') ? 'active' : '' }}"
+                                                    href="{{ route('apotikhidup.index') }}">
+                                                    Apotik Hidup
+                                                </a>
+                                            @endcan
+
+                                            <br>
+
+                                            @can('kebun.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/kebun*') ? 'active' : '' }}"
+                                                    href="{{ route('kebun.index') }}">
+                                                    Kep. Lahan Kebun
                                                 </a>
                                             @endcan
 
@@ -450,39 +498,69 @@
                                             aria-expanded="{{ request()->is('potensi/potensi-sdm*') ? 'true' : 'false' }}">
                                             Potensi Sumber <br> Daya Manusia
                                         </a>
-                                            <div
-                                                class="dropdown-menu {{ request()->is('potensi/potensi-sdm*') ? 'show' : '' }}">
-                                                @can('jumlah.view')
-                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/jumlah*') ? 'active' : '' }}"
-                                                        href="{{ route('potensi.potensi-sdm.jumlah.index') }}">
-                                                        Jumlah
-                                                    </a>
-                                                @endcan
-                                                @can('usia.view')
-                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/usia*') ? 'active' : '' }}"
-                                                        href="{{ route('potensi.potensi-sdm.usia.index') }}">
-                                                        Usia
-                                                    </a>
-                                                @endcan
-                                                @can('p_pendidikan.view')
-                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/pendidikan*') ? 'active' : '' }}"
-                                                        href="{{ route('potensi.potensi-sdm.pendidikan.index') }}">
-                                                        Pendidikan
-                                                    </a>
-                                                @endcan
-                                                @can('mata_pencaharian_pokok.view')
-                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/mata-pencaharian-pokok*') ? 'active' : '' }}"
-                                                        href="{{ route('potensi.potensi-sdm.mata-pencaharian-pokok.index') }}">
-                                                        Mata Pencaharian <br> Pokok
-                                                    </a>
-                                                @endcan
-                                                @can('p_agama.view')
-                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/agama*') ? 'active' : '' }}"
-                                                        href="{{ route('potensi.potensi-sdm.agama.index') }}">
-                                                        Agama
-                                                    </a>
-                                                @endcan
-                                            </div>
+                                        <div
+                                            class="dropdown-menu {{ request()->is('potensi/potensi-sdm*') ? 'show' : '' }}">
+                                            @can('jumlah.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/jumlah*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-sdm.jumlah.index') }}">
+                                                    Jumlah
+                                                </a>
+                                            @endcan
+                                            @can('usia.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/usia*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-sdm.usia.index') }}">
+                                                    Usia
+                                                </a>
+                                            @endcan
+                                            @can('p_pendidikan.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/pendidikan*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-sdm.pendidikan.index') }}">
+                                                    Pendidikan
+                                                </a>
+                                            @endcan
+                                            @can('mata_pencaharian_pokok.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/mata-pencaharian-pokok*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-sdm.mata-pencaharian-pokok.index') }}">
+                                                    Mata Pencaharian <br> Pokok
+                                                </a>
+                                            @endcan
+                                            @can('p_agama.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/agama*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-sdm.agama.index') }}">
+                                                    Agama
+                                                </a>
+                                            @endcan
+                                            @can('p_kewarganegaraan.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/kewarganegaraan*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-sdm.kewarganegaraan.index') }}">
+                                                    Kewarganegaraan
+                                                </a>
+                                            @endcan
+                                            @can('p_cacat.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/cacat*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-sdm.cacat.index') }}">
+                                                    Cacat
+                                                </a>
+                                            @endcan
+                                            @can('p_etnis_suku.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/etnis-suku*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-sdm.etnis-suku.index') }}">
+                                                    Etnis/Suku
+                                                </a>
+                                            @endcan
+                                            @can('p_tenaga_kerja.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/tenaga-kerja*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-sdm.tenaga-kerja.index') }}">
+                                                    Tenaga Kerja
+                                                </a>
+                                            @endcan
+                                            @can('p_kualitas_angkatan_kerja.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/kualitas-angkatan-kerja*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-sdm.kualitas-angkatan-kerja.index') }}">
+                                                    Kualitas Angkatan <br> Kerja
+                                                </a>
+                                            @endcan
+                                        </div>
                                     </div>
 
                                     {{-- Potensi Kelembagaan --}}
@@ -545,30 +623,30 @@
                                                 href="{{ route('potensi.kelembagaan.keamanan.index') }}">
                                                 Lembaga Keamanan
                                             </a>
-                                                @can('p_cacat.view')
-                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/cacat*') ? 'active' : '' }}"
-                                                        href="{{ route('potensi.potensi-sdm.cacat.index') }}">
-                                                        Cacat
-                                                    </a>
-                                                @endcan
-                                                @can('p_etnis_suku.view')
-                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/etnis-suku*') ? 'active' : '' }}"
-                                                        href="{{ route('potensi.potensi-sdm.etnis-suku.index') }}">
-                                                        Etnis/Suku
-                                                    </a>
-                                                @endcan
-                                                @can('p_tenaga_kerja.view')
-                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/tenaga-kerja*') ? 'active' : '' }}"
-                                                        href="{{ route('potensi.potensi-sdm.tenaga-kerja.index') }}">
-                                                        Tenaga Kerja
-                                                    </a>
-                                                @endcan
-                                                @can('p_kualitas_angkatan_kerja.view')
-                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/kualitas-angkatan-kerja*') ? 'active' : '' }}"
-                                                        href="{{ route('potensi.potensi-sdm.kualitas-angkatan-kerja.index') }}">
-                                                        Kualitas Angkatan <br> Kerja
-                                                    </a>
-                                                @endcan
+                                            @can('p_cacat.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/cacat*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-sdm.cacat.index') }}">
+                                                    Cacat
+                                                </a>
+                                            @endcan
+                                            @can('p_etnis_suku.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/etnis-suku*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-sdm.etnis-suku.index') }}">
+                                                    Etnis/Suku
+                                                </a>
+                                            @endcan
+                                            @can('p_tenaga_kerja.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/tenaga-kerja*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-sdm.tenaga-kerja.index') }}">
+                                                    Tenaga Kerja
+                                                </a>
+                                            @endcan
+                                            @can('p_kualitas_angkatan_kerja.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/kualitas-angkatan-kerja*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-sdm.kualitas-angkatan-kerja.index') }}">
+                                                    Kualitas Angkatan <br> Kerja
+                                                </a>
+                                            @endcan
                                         </div>
                                     </div>
 
@@ -868,7 +946,8 @@
                                             data-bs-auto-close="false" role="button" aria-expanded="false">
                                             Kedaulatan <br> Politik Masyarakat
                                         </a>
-                                        <div class="dropdown-menu {{ request()->is('perkembangan/Kedaulatanmasyarakat*') ? 'show' : '' }}">
+                                        <div
+                                            class="dropdown-menu {{ request()->is('perkembangan/Kedaulatanmasyarakat*') ? 'show' : '' }}">
                                             @can('berbangsa.view')
                                                 <a class="dropdown-item {{ request()->is('perkembangan/kedaulatanmasyarakat/berbangsa*') ? 'active' : '' }}"
                                                     href="{{ route('perkembangan.kedaulatanmasyarakat.berbangsa.index') }}">
@@ -895,9 +974,10 @@
                                         <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/keamanandanketertiban*') ? 'active' : '' }}"
                                             href="#sidebar-keamanandanketertiban" data-bs-toggle="dropdown"
                                             data-bs-auto-close="false" role="button" aria-expanded="false">
-                                            Keamanan dan <br> Ketertiban 
+                                            Keamanan dan <br> Ketertiban
                                         </a>
-                                        <div class="dropdown-menu {{ request()->is('perkembangan/keamanandanketertiban*') ? 'show' : '' }}">
+                                        <div
+                                            class="dropdown-menu {{ request()->is('perkembangan/keamanandanketertiban*') ? 'show' : '' }}">
                                             @can('konfliksara.view')
                                                 <a class="dropdown-item {{ request()->is('perkembangan/keamanandanketertiban/konfliksara*') ? 'active' : '' }}"
                                                     href="{{ route('perkembangan.keamanandanketertiban.konfliksara.index') }}">
@@ -922,7 +1002,7 @@
                                                     Penjarahan dan <br> Penyerobotan Tanah
                                                 </a>
                                             @endcan
-                                            
+
                                         </div>
                                     </div>
 
@@ -972,7 +1052,7 @@
                                             @can('pendapatan_rill_keluarga.view')
                                                 <a class="dropdown-item {{ request()->is('perkembangan/pendapatanperkapital/pendapatan_rill_keluarga*') ? 'active' : '' }}"
                                                     href="{{ route('perkembangan.pendapatanperkapital.pendapatan_rill_keluarga.index') }}">
-                                                    Pendapatan Riil 
+                                                    Pendapatan Riil
                                                 </a>
                                             @endcan
                                         </div>
@@ -999,41 +1079,42 @@
                                     {{-- Pendidikan Masyarakat --}}
                                     <div class="dropend">
                                         <a class="dropdown-item dropdown-toggle {{ request()->is('pendidikanmasyarakat*') ? 'active' : '' }}"
-                                            href="#sidebar-pendidikanmasyarakat" data-bs-toggle="dropdown" data-bs-auto-close="false"
-                                            role="button" aria-expanded="false">
+                                            href="#sidebar-pendidikanmasyarakat" data-bs-toggle="dropdown"
+                                            data-bs-auto-close="false" role="button" aria-expanded="false">
                                             Pendidikan Masyarakat
                                         </a>
-                                        <div class="dropdown-menu {{ request()->is('pendidikanmasyarakat*') ? 'show' : '' }}">
-                                            
+                                        <div
+                                            class="dropdown-menu {{ request()->is('pendidikanmasyarakat*') ? 'show' : '' }}">
+
                                             {{-- Tingkat Pendidikan Masyarakat --}}
                                             @can('tingkat_pendidikan_masyarakat.view')
                                                 <a class="dropdown-item {{ request()->is('pendidikanmasyarakat/tingkat_pendidikan_masyarakat*') ? 'active' : '' }}"
                                                     href="{{ route('perkembangan.pendidikanmasyarakat.tingkat_pendidikan_masyarakat.index') }}">
-                                                    Tingkat Pendidikan 
+                                                    Tingkat Pendidikan
                                                 </a>
                                             @endcan
 
-                                          {{-- Wajib Belajar 9 Tahun --}}
+                                            {{-- Wajib Belajar 9 Tahun --}}
                                             @can('wajib_belajar_9_tahun.view')
                                                 <a class="dropdown-item {{ request()->is('perkembangan/pendidikanmasyarakat/wajib_belajar_9_tahun*') ? 'active' : '' }}"
                                                     href="{{ route('perkembangan.pendidikanmasyarakat.wajib_belajar_9_tahun.index') }}">
-                                                    Wajib Belajar 
+                                                    Wajib Belajar
                                                 </a>
                                             @endcan
 
                                             {{-- Rasio Guru & Murid --}}
                                             @can('rasio_guru_dan_murid.view')
                                                 <a class="dropdown-item {{ request()->is('perkembangan/pendidikanmasyarakat/rasio_guru_dan_murid*') ? 'active' : '' }}"
-                                                href="{{ route('perkembangan.pendidikanmasyarakat.rasio_guru_dan_murid.index') }}">
+                                                    href="{{ route('perkembangan.pendidikanmasyarakat.rasio_guru_dan_murid.index') }}">
                                                     Rasio Guru & Murid
                                                 </a>
                                             @endcan
 
-                                          {{-- Kelembagaan Pendidikan Masyarakat --}}
+                                            {{-- Kelembagaan Pendidikan Masyarakat --}}
                                             @can('kelembagaan.view')
                                                 <a class="dropdown-item {{ request()->is('perkembangan/pendidikanmasyarakat/kelembagaan*') ? 'active' : '' }}"
-                                                href="{{ route('perkembangan.pendidikanmasyarakat.kelembagaan.index') }}">
-                                                    Kelembagaan 
+                                                    href="{{ route('perkembangan.pendidikanmasyarakat.kelembagaan.index') }}">
+                                                    Kelembagaan
                                                 </a>
                                             @endcan
 
@@ -1043,72 +1124,72 @@
                                     {{-- Penggunaan Aset Ekonomi Masyarakat --}}
                                     <div class="dropend">
                                         <a class="dropdown-item dropdown-toggle {{ request()->is('asetekonomi*') ? 'active' : '' }}"
-                                            href="#sidebar-asetekonomi" data-bs-toggle="dropdown" data-bs-auto-close="false"
-                                            role="button" aria-expanded="false">
-                                            Aset Ekonomi 
+                                            href="#sidebar-asetekonomi" data-bs-toggle="dropdown"
+                                            data-bs-auto-close="false" role="button" aria-expanded="false">
+                                            Aset Ekonomi
                                         </a>
                                         <div class="dropdown-menu {{ request()->is('asetekonomi*') ? 'show' : '' }}">
 
-                                               {{-- Aset Tanah --}}
-                                                @can('aset_tanah.view')
-                                                    <a class="dropdown-item {{ request()->is('perkembangan/asetekonomi/aset_tanah*') ? 'active' : '' }}"
-                                                        href="{{ route('perkembangan.asetekonomi.aset_tanah.index') }}">
-                                                        Aset Tanah
-                                                    </a>
-                                                @endcan
+                                            {{-- Aset Tanah --}}
+                                            @can('aset_tanah.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/asetekonomi/aset_tanah*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.asetekonomi.aset_tanah.index') }}">
+                                                    Aset Tanah
+                                                </a>
+                                            @endcan
 
-                                               {{-- Sarana Transportasi Umum --}}
-                                                @can('sarana_transportasi_umum.view')
-                                                    <a class="dropdown-item {{ request()->is('perkembangan/asetekonomi/sarana_transportasi_umum*') ? 'active' : '' }}"
-                                                        href="{{ route('perkembangan.asetekonomi.sarana_transportasi_umum.index') }}">
-                                                        Transportasi Umum
-                                                    </a>
-                                                @endcan
+                                            {{-- Sarana Transportasi Umum --}}
+                                            @can('sarana_transportasi_umum.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/asetekonomi/sarana_transportasi_umum*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.asetekonomi.sarana_transportasi_umum.index') }}">
+                                                    Transportasi Umum
+                                                </a>
+                                            @endcan
 
                                             {{-- Sarana Produksi --}}
-                                                @can('sarana_produksi.view')
-                                                    <a class="dropdown-item {{ request()->is('perkembangan/asetekonomi/sarana_produksi*') ? 'active' : '' }}"
-                                                        href="{{ route('perkembangan.asetekonomi.sarana_produksi.index') }}">
-                                                        Sarana Produksi
-                                                    </a>
-                                                @endcan
+                                            @can('sarana_produksi.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/asetekonomi/sarana_produksi*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.asetekonomi.sarana_produksi.index') }}">
+                                                    Sarana Produksi
+                                                </a>
+                                            @endcan
 
 
-                                               {{-- Rumah Menurut Dinding --}}
-                                                @can('rumah_menurut_dinding.view')
-                                                    <a class="dropdown-item {{ request()->is('perkembangan/asetekonomi/rumah_menurut_dinding*') ? 'active' : '' }}"
+                                            {{-- Rumah Menurut Dinding --}}
+                                            @can('rumah_menurut_dinding.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/asetekonomi/rumah_menurut_dinding*') ? 'active' : '' }}"
                                                     href="{{ route('perkembangan.asetekonomi.rumah_menurut_dinding.index') }}">
                                                     Rumah (Dinding)
-                                                    </a>
-                                                @endcan
+                                                </a>
+                                            @endcan
 
                                             {{-- Rumah Menurut Lantai --}}
-                                                @can('rumah_menurut_lantai.view')
-                                                    <a class="dropdown-item {{ request()->is('perkembangan/asetekonomi/rumah_menurut_lantai*') ? 'active' : '' }}"
+                                            @can('rumah_menurut_lantai.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/asetekonomi/rumah_menurut_lantai*') ? 'active' : '' }}"
                                                     href="{{ route('perkembangan.asetekonomi.rumah_menurut_lantai.index') }}">
                                                     Rumah (Lantai)
-                                                    </a>
-                                                @endcan
+                                                </a>
+                                            @endcan
 
-                                                {{-- Rumah Menurut Atap --}}
-                                                @can('rumah_menurut_atap.view')
-                                                    <a class="dropdown-item {{ request()->is('perkembangan/asetekonomi/rumah_menurut_atap*') ? 'active' : '' }}"
-                                                        href="{{ route('perkembangan.asetekonomi.rumah_menurut_atap.index') }}">
-                                                        Rumah (Atap)
-                                                    </a>
-                                                @endcan
+                                            {{-- Rumah Menurut Atap --}}
+                                            @can('rumah_menurut_atap.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/asetekonomi/rumah_menurut_atap*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.asetekonomi.rumah_menurut_atap.index') }}">
+                                                    Rumah (Atap)
+                                                </a>
+                                            @endcan
 
 
-                                               {{-- Pemilik Aset Ekonomi Lainnya --}}
-                                                @can('pemilik_aset_ekonomi_lainnya.view')
-                                                    <a class="dropdown-item {{ request()->is('perkembangan/asetekonomi/pemilik_aset_ekonomi_lainnya*') ? 'active' : '' }}"
-                                                        href="{{ route('perkembangan.asetekonomi.pemilik_aset_ekonomi_lainnya.index') }}">
-                                                        Aset Lainnya
-                                                    </a>
-                                                @endcan
+                                            {{-- Pemilik Aset Ekonomi Lainnya --}}
+                                            @can('pemilik_aset_ekonomi_lainnya.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/asetekonomi/pemilik_aset_ekonomi_lainnya*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.asetekonomi.pemilik_aset_ekonomi_lainnya.index') }}">
+                                                    Aset Lainnya
+                                                </a>
+                                            @endcan
 
-                                            </div>
                                         </div>
+                                    </div>
 
                                     {{-- Produk Domestik Desa/Kelurahan --}}
                                     @canany(['sektor-pertambangan.view', 'subsektor-kerajinan.view'])
@@ -1135,12 +1216,12 @@
                                                     </a>
                                                 @endcan
 
-                                               @can('sektor-industri-pengolahan.view')
+                                                @can('sektor-industri-pengolahan.view')
                                                     <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/sektor-industri-pengolahan*') ? 'active' : '' }}"
                                                         href="{{ route('perkembangan.produk-domestik.sektor-industri-pengolahan.index') }}">
-                                                     Sektor Industri <br> Pengolahan
+                                                        Sektor Industri <br> Pengolahan
                                                     </a>
-                                            @endcan 
+                                                @endcan
 
                                                @can('subsektor-kehutanan.view')
                                             <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/subsektor-kehutanan*') ? 'active' : '' }}"

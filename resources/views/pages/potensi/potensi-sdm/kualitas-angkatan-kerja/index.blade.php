@@ -29,7 +29,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $pKualitasAngkatanKerja->tanggal }}</td>
-                                <td>{{ $pKualitasAngkatanKerja->angkatan_kerja }}</td>
+                                <td>{{ $pKualitasAngkatanKerja->kualitasAngkatanKerja->kualitas_angkatan_kerja }}</td>
                                 <td>{{ $pKualitasAngkatanKerja->jumlah_laki_laki }}</td>
                                 <td>{{ $pKualitasAngkatanKerja->jumlah_perempuan }}</td>
                                 <td>{{ $pKualitasAngkatanKerja->jumlah_total }}</td>
@@ -90,7 +90,7 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <p>Data potensi kualitas angkatan kerja
-                                                            <strong>{{ $pKualitasAngkatanKerja->angkatan_kerja }}</strong> yang dihapus
+                                                            <strong>{{ $pKualitasAngkatanKerja->kualitasAngkatanKerja->kualitas_angkatan_kerja }}</strong> yang dihapus
                                                             tidak bisa dikembalikan.
                                                         </p>
                                                         <p>Yakin ingin menghapus data ini?</p>

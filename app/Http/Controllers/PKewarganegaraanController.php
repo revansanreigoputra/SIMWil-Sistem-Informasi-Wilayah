@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PKewarganegaraan;
 use App\Models\MasterDDK\Kewarganegaraan;
+use App\Models\Desa; // Import Desa model
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -14,7 +15,8 @@ class PKewarganegaraanController extends Controller
      */
     public function index()
     {
-        $pKewarganegaraans = PKewarganegaraan::with('kewarganegaraan')->latest()->get();
+        $desaId = session('desa_id');
+        $pKewarganegaraans = PKewarganegaraan::with('kewarganegaraan')->where('desa_id', $desaId)->latest()->get();
         return view('pages.potensi.potensi-sdm.kewarganegaraan.index', compact('pKewarganegaraans'));
     }
 
@@ -47,6 +49,7 @@ class PKewarganegaraanController extends Controller
             'jumlah_laki_laki' => $request->jumlah_laki_laki,
             'jumlah_perempuan' => $request->jumlah_perempuan,
             'jumlah_total' => $jumlah_total,
+            'desa_id' => session('desa_id'),
         ]);
 
         Session::flash('success', 'Data Potensi Kewarganegaraan berhasil ditambahkan!');
@@ -90,6 +93,7 @@ class PKewarganegaraanController extends Controller
             'jumlah_laki_laki' => $request->jumlah_laki_laki,
             'jumlah_perempuan' => $request->jumlah_perempuan,
             'jumlah_total' => $jumlah_total,
+            'desa_id' => session('desa_id'),
         ]);
 
         Session::flash('success', 'Data Potensi Kewarganegaraan berhasil diperbarui!');

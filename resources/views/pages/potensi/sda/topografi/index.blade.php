@@ -5,7 +5,6 @@
 @section('action')
     @can('topografi.create')
         <a href="{{ route('topografi.create') }}" class="btn btn-primary mb-3">
-            <i class="fas fa-plus-circle me-2"></i>
             Tambah Data Topografi
         </a>
     @endcan

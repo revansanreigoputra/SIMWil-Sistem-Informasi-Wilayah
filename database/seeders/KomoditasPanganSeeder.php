@@ -15,6 +15,7 @@ class KomoditasPanganSeeder extends Seeder
          $data = [
             ['nama' => 'Bawang Putih'],
             ['nama' => 'Bawang Merah'],
+            ['nama' => 'Ubi'],
         ];
          KomoditasPangan::insert($data);
     }

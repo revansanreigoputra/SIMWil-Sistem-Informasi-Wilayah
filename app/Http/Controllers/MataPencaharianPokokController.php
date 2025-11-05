@@ -14,7 +14,8 @@ class MataPencaharianPokokController extends Controller
      */
     public function index()
     {
-        $mataPencaharianPokoks = MataPencaharianPokok::with('mataPencaharian')->latest()->paginate(10);
+        $desaId = session('desa_id');
+        $mataPencaharianPokoks = MataPencaharianPokok::with('mataPencaharian')->where('desa_id', $desaId)->latest()->paginate(10);
         return view('pages.potensi.potensi-sdm.mata-pencaharian-pokok.index', compact('mataPencaharianPokoks'));
     }
 
@@ -37,14 +38,17 @@ class MataPencaharianPokokController extends Controller
             'mata_pencaharian_id' => 'required|exists:mata_pencaharians,id',
             'laki_laki' => 'required|integer|min:0',
             'perempuan' => 'required|integer|min:0',
-            'total' => 'required|integer|min:0',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput()->with('error', 'Gagal menambahkan data potensi mata pencaharian pokok.');
         }
 
-        MataPencaharianPokok::create($request->all());
+        $data = $request->all();
+        $data['total'] = $request->input('laki_laki') + $request->input('perempuan');
+        $data['desa_id'] = session('desa_id');
+
+        MataPencaharianPokok::create($data);
 
         return redirect()->route('potensi.potensi-sdm.mata-pencaharian-pokok.index')->with('success', 'Data potensi mata pencaharian pokok berhasil ditambahkan.');
     }
@@ -76,14 +80,17 @@ class MataPencaharianPokokController extends Controller
             'mata_pencaharian_id' => 'required|exists:mata_pencaharians,id',
             'laki_laki' => 'required|integer|min:0',
             'perempuan' => 'required|integer|min:0',
-            'total' => 'required|integer|min:0',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput()->with('error', 'Gagal memperbarui data potensi mata pencaharian pokok.');
         }
 
-        $mataPencaharianPokok->update($request->all());
+        $data = $request->all();
+        $data['total'] = $request->input('laki_laki') + $request->input('perempuan');
+        $data['desa_id'] = session('desa_id'); // Ensure desa_id is updated if needed, or kept consistent
+
+        $mataPencaharianPokok->update($data);
 
         return redirect()->route('potensi.potensi-sdm.mata-pencaharian-pokok.index')->with('success', 'Data potensi mata pencaharian pokok berhasil diperbarui.');
     }
