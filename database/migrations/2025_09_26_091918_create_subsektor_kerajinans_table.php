@@ -13,13 +13,16 @@ return new class extends Migration
     {
         Schema::create('subsektor_kerajinans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('desa_id')->constrained('desas')->onDelete('cascade');
             $table->date('tanggal');
-            $table->bigInteger('total_nilai_produksi_tahun_ini')->nullable(); // Total nilai produksi tahun ini (Rp)
-            $table->bigInteger('total_nilai_bahan_baku_digunakan')->nullable(); // Total nilai bahan baku yang digunakan (Rp)
-            $table->bigInteger('total_nilai_bahan_penolong_digunakan')->nullable(); // Total nilai bahan penolong yang digunakan (Rp)
-            $table->bigInteger('total_biaya_antara_dihabiskan')->nullable(); // Total biaya antara yang dihabiskan (Rp)
-            $table->integer('total_jenis_kerajinan_rumah_tangga')->nullable(); // Total jenis kerajinan rumah tangga (Jenis)
+            $table->bigInteger('total_nilai_produksi_tahun_ini')->nullable();
+            $table->bigInteger('total_nilai_bahan_baku_digunakan')->nullable();
+            $table->bigInteger('total_nilai_bahan_penolong_digunakan')->nullable();
+            $table->bigInteger('total_biaya_antara_dihabiskan')->nullable();
+            $table->integer('total_jenis_kerajinan_rumah_tangga')->nullable();
             $table->timestamps();
+
+            $table->unique(['desa_id', 'tanggal']); // Satu desa hanya boleh punya satu data per tanggal
         });
     }
 

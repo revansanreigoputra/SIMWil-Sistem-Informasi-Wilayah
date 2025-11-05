@@ -6,28 +6,28 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
-    {
-        Schema::create('sektor_pertambangan', function (Blueprint $table) {
-            $table->id();
-            $table->date('tanggal');
-            $table->integer('total_nilai_produksi_tahun_ini');
-            $table->integer('total_nilai_bahan_baku_digunakan');
-            $table->integer('total_nilai_bahan_penolong_digunakan');
-            $table->integer('total_biaya_antara_dihabiskan');
-            $table->integer('jumlah_total_jenis_bahan_tambang_dan_galian');
-            $table->timestamps();
-        });
-    }
+{
+    Schema::create('sektor_pertambangan', function (Blueprint $table) {
+        $table->id();
+        $table->unsignedBigInteger('desa_id'); // 🔹 Tambahkan di sini
+        $table->date('tanggal');
+        $table->integer('total_nilai_produksi_tahun_ini');
+        $table->integer('total_nilai_bahan_baku_digunakan');
+        $table->integer('total_nilai_bahan_penolong_digunakan');
+        $table->integer('total_biaya_antara_dihabiskan');
+        $table->integer('jumlah_total_jenis_bahan_tambang_dan_galian');
+        $table->timestamps();
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+        $table->foreign('desa_id')->references('id')->on('desas')->onDelete('cascade');
+    });
+}
+
+   public function down(): void
     {
-        Schema::dropIfExists('sektor_pertambangan');
+        Schema::table('sektor_pertambangan', function (Blueprint $table) {
+            $table->dropForeign(['desa_id']);
+            $table->dropColumn('desa_id');
+        });
     }
 };

@@ -6,7 +6,7 @@
     <div class="card">
         <div class="card-header">
             <h5 class="card-title">
-                 Edit Data Potensi Cacat: {{ $pCacat->tanggal }}
+                Edit Data Potensi Cacat: {{ $pCacat->tanggal }}
             </h5>
         </div>
 
@@ -68,7 +68,8 @@
                             </label>
                             <input type="number" name="jumlah_laki_laki" id="jumlah_laki_laki"
                                 class="form-control @error('jumlah_laki_laki') is-invalid @enderror"
-                                value="{{ old('jumlah_laki_laki', $pCacat->jumlah_laki_laki) }}" placeholder="Masukkan jumlah laki-laki" required min="0">
+                                value="{{ old('jumlah_laki_laki', $pCacat->jumlah_laki_laki) }}"
+                                placeholder="Masukkan jumlah laki-laki" required min="0">
                             @error('jumlah_laki_laki')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -81,7 +82,8 @@
                             </label>
                             <input type="number" name="jumlah_perempuan" id="jumlah_perempuan"
                                 class="form-control @error('jumlah_perempuan') is-invalid @enderror"
-                                value="{{ old('jumlah_perempuan', $pCacat->jumlah_perempuan) }}" placeholder="Masukkan jumlah perempuan" required min="0">
+                                value="{{ old('jumlah_perempuan', $pCacat->jumlah_perempuan) }}"
+                                placeholder="Masukkan jumlah perempuan" required min="0">
                             @error('jumlah_perempuan')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -94,7 +96,7 @@
                             </label>
                             <input type="number" name="jumlah_total" id="jumlah_total"
                                 class="form-control @error('jumlah_total') is-invalid @enderror"
-                                value="{{ old('jumlah_total', $pCacat->jumlah_total) }}" placeholder="Total akan terisi otomatis" required min="0" readonly>
+                                placeholder="jumlah Total akan terisi otomatis" required min="0" readonly>
                             @error('jumlah_total')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

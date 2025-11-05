@@ -39,13 +39,20 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="angkatan_kerja" class="form-label required">
+                            <label for="kualitas_angkatan_kerja_id" class="form-label required">
                                 <i class="fas fa-briefcase"></i> Angkatan Kerja
                             </label>
-                            <input type="text" name="angkatan_kerja" id="angkatan_kerja"
-                                class="form-control @error('angkatan_kerja') is-invalid @enderror" value="{{ old('angkatan_kerja') }}"
-                                placeholder="Masukkan jenis angkatan kerja" required>
-                            @error('angkatan_kerja')
+                            <select name="kualitas_angkatan_kerja_id" id="kualitas_angkatan_kerja_id"
+                                class="form-control @error('kualitas_angkatan_kerja_id') is-invalid @enderror" required>
+                                <option value="">Pilih Angkatan Kerja</option>
+                                @foreach ($kualitasAngkatanKerjas as $item)
+                                    <option value="{{ $item->id }}"
+                                        {{ old('kualitas_angkatan_kerja_id') == $item->id ? 'selected' : '' }}>
+                                        {{ $item->kualitas_angkatan_kerja }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('kualitas_angkatan_kerja_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

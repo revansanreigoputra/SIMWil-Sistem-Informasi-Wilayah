@@ -29,7 +29,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label text-muted">Etnis/Suku</label>
-                                <p class="fw-semibold">{{ $pEtnisSuku->etnis_suku }}</p>
+                                <p class="fw-semibold">{{ $pEtnisSuku->etnis->nama }}</p>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label text-muted">Jumlah Laki-laki</label>
@@ -71,7 +71,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p>Data potensi etnis/suku <strong>{{ $pEtnisSuku->etnis_suku }}</strong> yang dihapus tidak bisa dikembalikan.</p>
+                        <p>Data potensi etnis/suku <strong>{{ $pEtnisSuku->etnis->nama }}</strong> yang dihapus tidak bisa dikembalikan.</p>
                         <p>Yakin ingin menghapus data ini?</p>
                     </div>
                     <div class="modal-footer">

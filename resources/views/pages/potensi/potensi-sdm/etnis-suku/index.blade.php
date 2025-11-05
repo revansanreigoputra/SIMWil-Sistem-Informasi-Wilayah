@@ -27,7 +27,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $pEtnisSuku->tanggal }}</td>
-                                <td>{{ $pEtnisSuku->etnis_suku }}</td>
+                                <td>{{ $pEtnisSuku->etnis->nama }}</td>
                                 <td>{{ $pEtnisSuku->jumlah_laki_laki }}</td>
                                 <td>{{ $pEtnisSuku->jumlah_perempuan }}</td>
                                 <td>{{ $pEtnisSuku->jumlah_total }}</td>
@@ -88,7 +88,7 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <p>Data potensi etnis/suku
-                                                            <strong>{{ $pEtnisSuku->etnis_suku }}</strong> yang dihapus
+                                                            <strong>{{ $pEtnisSuku->etnis->nama }}</strong> yang dihapus
                                                             tidak bisa dikembalikan.
                                                         </p>
                                                         <p>Yakin ingin menghapus data ini?</p>

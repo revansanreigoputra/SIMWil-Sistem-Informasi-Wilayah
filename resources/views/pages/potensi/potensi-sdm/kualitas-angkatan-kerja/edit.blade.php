@@ -6,7 +6,7 @@
     <div class="card">
         <div class="card-header">
             <h5 class="card-title">
-                 Edit Data Potensi Kualitas Angkatan Kerja: {{ $pKualitasAngkatanKerja->angkatan_kerja }}
+                 Edit Data Potensi Kualitas Angkatan Kerja: {{ $pKualitasAngkatanKerja->kualitasAngkatanKerja->kualitas_angkatan_kerja }}
             </h5>
         </div>
 
@@ -40,13 +40,20 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="angkatan_kerja" class="form-label required">
+                            <label for="kualitas_angkatan_kerja_id" class="form-label required">
                                 <i class="fas fa-briefcase"></i> Angkatan Kerja
                             </label>
-                            <input type="text" name="angkatan_kerja" id="angkatan_kerja"
-                                class="form-control @error('angkatan_kerja') is-invalid @enderror"
-                                value="{{ old('angkatan_kerja', $pKualitasAngkatanKerja->angkatan_kerja) }}" placeholder="Masukkan jenis angkatan kerja" required>
-                            @error('angkatan_kerja')
+                            <select name="kualitas_angkatan_kerja_id" id="kualitas_angkatan_kerja_id"
+                                class="form-control @error('kualitas_angkatan_kerja_id') is-invalid @enderror" required>
+                                <option value="">Pilih Angkatan Kerja</option>
+                                @foreach ($kualitasAngkatanKerjas as $item)
+                                    <option value="{{ $item->id }}"
+                                        {{ old('kualitas_angkatan_kerja_id', $pKualitasAngkatanKerja->kualitas_angkatan_kerja_id) == $item->id ? 'selected' : '' }}>
+                                        {{ $item->kualitas_angkatan_kerja }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('kualitas_angkatan_kerja_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -151,7 +158,7 @@
             // Store original values for reset function
             const originalValues = {
                 tanggal: "{{ $pKualitasAngkatanKerja->tanggal }}",
-                angkatan_kerja: "{{ $pKualitasAngkatanKerja->angkatan_kerja }}",
+                kualitas_angkatan_kerja_id: "{{ $pKualitasAngkatanKerja->kualitas_angkatan_kerja_id }}",
                 jumlah_laki_laki: "{{ $pKualitasAngkatanKerja->jumlah_laki_laki }}",
                 jumlah_perempuan: "{{ $pKualitasAngkatanKerja->jumlah_perempuan }}",
                 total: "{{ $pKualitasAngkatanKerja->jumlah_total }}"
@@ -204,7 +211,7 @@
         function resetToOriginal() {
             const originalValues = {
                 tanggal: "{{ $pKualitasAngkatanKerja->tanggal }}",
-                angkatan_kerja: "{{ $pKualitasAngkatanKerja->angkatan_kerja }}",
+                kualitas_angkatan_kerja_id: "{{ $pKualitasAngkatanKerja->kualitas_angkatan_kerja_id }}",
                 jumlah_laki_laki: "{{ $pKualitasAngkatanKerja->jumlah_laki_laki }}",
                 jumlah_perempuan: "{{ $pKualitasAngkatanKerja->jumlah_perempuan }}",
                 total: "{{ $pKualitasAngkatanKerja->jumlah_total }}"

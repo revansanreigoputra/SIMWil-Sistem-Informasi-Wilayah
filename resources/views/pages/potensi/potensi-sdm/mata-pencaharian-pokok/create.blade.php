@@ -6,12 +6,13 @@
     <div class="card">
         <div class="card-header">
             <h5 class="card-title">
-                 Tambah Data Potensi Mata Pencaharian Pokok
+                Tambah Data Potensi Mata Pencaharian Pokok
             </h5>
         </div>
 
         <div class="card-body">
-            <form action="{{ route('potensi.potensi-sdm.mata-pencaharian-pokok.store') }}" method="POST" id="form-mata-pencaharian-pokok">
+            <form action="{{ route('potensi.potensi-sdm.mata-pencaharian-pokok.store') }}" method="POST"
+                id="form-mata-pencaharian-pokok">
                 @csrf
 
                 {{-- Section: Informasi Potensi Mata Pencaharian Pokok --}}
@@ -92,8 +93,8 @@
                                 <i class="fas fa-users"></i> Total
                             </label>
                             <input type="number" name="total" id="total"
-                                class="form-control @error('total') is-invalid @enderror" value="{{ old('total') }}"
-                                placeholder="Masukkan total" required min="0">
+                                class="form-control @error('total') is-invalid @enderror"
+                                placeholder="Jumlah akan terisi otomatis" required min="0" readonly>
                             @error('total')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -105,7 +106,8 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="form-group d-flex justify-content-end">
-                            <a href="{{ route('potensi.potensi-sdm.mata-pencaharian-pokok.index') }}" class="btn btn-secondary">
+                            <a href="{{ route('potensi.potensi-sdm.mata-pencaharian-pokok.index') }}"
+                                class="btn btn-secondary">
                                 <i class="fas fa-times"></i> Batal
                             </a>
                             <button type="reset" class="btn btn-warning">
@@ -130,6 +132,19 @@
                 theme: 'bootstrap4',
                 placeholder: 'Pilih Mata Pencaharian',
                 allowClear: true
+            });
+
+            // Calculate total based on laki_laki and perempuan inputs
+            function calculateTotal() {
+                const lakiLaki = parseInt($('#laki_laki').val()) || 0;
+                const perempuan = parseInt($('#perempuan').val()) || 0;
+                const total = lakiLaki + perempuan;
+                $('#total').val(total);
+            }
+
+            // Add event listeners for input changes
+            $('#laki_laki, #perempuan').on('input', function() {
+                calculateTotal();
             });
 
             // Form validation
@@ -163,6 +178,9 @@
                     $(this).removeClass('is-invalid');
                 }
             });
+
+            // Calculate initial total if values exist
+            calculateTotal();
         });
     </script>
 @endpush

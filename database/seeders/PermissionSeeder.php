@@ -641,11 +641,225 @@ class PermissionSeeder extends Seeder
             'sektor-industri-pengolahan.update',
             'sektor-industri-pengolahan.delete',
             'sektor-industri-pengolahan.destroy',
+            
+            // subsektor kehutanan permissions
+                'subsektor-kehutanan.view',
+                'subsektor-kehutanan.create',
+                'subsektor-kehutanan.store',
+                'subsektor-kehutanan.edit',
+                'subsektor-kehutanan.update',
+                'subsektor-kehutanan.delete',
+                'subsektor-kehutanan.destroy',
+
+             //sektor bangunan permissions
+             'sektor-bangunan.view',
+             'sektor-bangunan.create',
+             'sektor-bangunan.store',
+             'sektor-bangunan.edit',
+             'sektor-bangunan.update',
+             'sektor-bangunan.delete',
+             'sektor-bangunan.destroy',
+
+             // kualitas ibu hamil permissions
+            'kualitas-ibu-hamil.view',
+            'kualitas-ibu-hamil.create',
+            'kualitas-ibu-hamil.store',
+            'kualitas-ibu-hamil.edit',
+            'kualitas-ibu-hamil.update',
+            'kualitas-ibu-hamil.delete',
+            'kualitas-ibu-hamil.destroy',
+             'kualitas-ibu-hamil.show',
+
+            // kualitas bayi permession
+                'kualitas-bayi.view',
+                'kualitas-bayi.create',
+                'kualitas-bayi.store',
+                'kualitas-bayi.edit',
+                'kualitas-bayi.update',
+                'kualitas-bayi.delete',
+                'kualitas-bayi.destroy',
+                 'kualitas-bayi.show',
+
+                // kualitas persalinan permission
+                'kualitas-persalinan.view',
+                'kualitas-persalinan.create',
+                'kualitas-persalinan.store',
+                'kualitas-persalinan.edit',
+                'kualitas-persalinan.update',
+                'kualitas-persalinan.delete',
+                'kualitas-persalinan.destroy',
+                'kualitas-persalinan.show',
+                                    
+                // cakupan imunisasi permission
+                'cakupan-imunisasi.view',
+                'cakupan-imunisasi.create',
+                'cakupan-imunisasi.edit',
+                'cakupan-imunisasi.delete',
+                'cakupan-imunisasi.update',
+                'cakupan-imunisasi.show',   
+
+                
+                // wabah penyakit
+               'wabah-penyakit.view',
+                'wabah-penyakit.create',
+                'wabah-penyakit.edit',
+                'wabah-penyakit.delete',
+                'wabah-penyakit.show',
+
+                // status gizi balita
+                'gizi-balita.view',
+                'gizi-balita.create',
+                'gizi-balita.edit',
+                 'gizi-balita.delete',
+                  'gizi-balita.show',
+
+                  // subsektor harapan
+                'subsektor-harapan.view',
+                'subsektor-harapan.create',
+                'subsektor-harapan.show',
+                'subsektor-harapan.edit',
+                'subsektor-harapan.delete',
+
+                // penderita-sakit permession
+
+                'penderita-sakit.view',
+                'penderita-sakit.create',
+                'penderita-sakit.show',
+                'penderita-sakit.edit',
+                'penderita-sakit.delete',
+
+                // sarana dan prasana 
+
+                // sarana dan prasana 
+                'sarana-prasarana.view',
+                'sarana-prasarana.create',
+                 'sarana-prasarana.update',
+                'sarana-prasarana.delete',
+                'sarana-prasarana.show',
+
+                // perkembangan pasangan subur dini hari
+
+                
+                'pasangan-usia-subur.view',
+                'pasangan-usia-subur.create',
+                'pasangan-usia-subur.update',
+                'pasangan-usia-subur.delete',
+                'pasangan-usia-subur.show',
+
+                // cakupan air bersih 
+                
+                'cakupan-air-bersih.view',
+                'cakupan-air-bersih.create',
+                'cakupan-air-bersih.show',
+                'cakupan-air-bersih.update',
+                'cakupan-air-bersih.delete',
+
+                //perilaku hidup bersih
+                'perilaku-hidup-bersih-dan-sehat.view',
+                'perilaku-hidup-bersih-dan-sehat.create',
+                'perilaku-hidup-bersih-dan-sehat.show',
+                'perilaku-hidup-bersih-dan-sehat.update',
+                'perilaku-hidup-bersih-dan-sehat.delete',
+
+                // sektor jasa jasa
+
+                    'sektor-jasa-jasa.view',
+                   'sektor-jasa-jasa.create',
+                    'sektor-jasa-jasa.show',
+                    'sektor-jasa-jasa.edit',
+                    'sektor-jasa-jasa.destroy',
+
+                    // sektor keungan jasa perusahaan 
+         'sektor-keuangan-jasa-perusahaan.view',          
+        'sektor-keuangan-jasa-perusahaan.create',
+        'sektor-keuangan-jasa-perusahaan.show',
+         'sektor-keuangan-jasa-perusahaan.edit',
+        'sektor-keuangan-jasa-perusahaan.destroy',
+                                
+            // sektor angkutan dan komunikasi 
+
+            'sektor-angkutan.view',
+            'sektor-angkutan.create',
+            'sektor-angkutan.update',
+            'sektor-angkutan.delete',
+             'sektor-angkutan.edit',
+              'sektor-angkutan.show',
+              'sektor-angkutan.destroy',
+
+              //Sektor air minum dan gas 
+                'sektor-listrik-gas-air-minum.view',
+                'sektor-listrik-gas-air-minum.create',
+                'sektor-listrik-gas-air-minum.show',
+                'sektor-listrik-gas-air-minum.edit',
+                'sektor-listrik-gas-air-minum.destroy',
+
+                // sektor perdagangan dan hotel]
+
+                'sektor-perdagangan-hotel-restoran.view',
+                'sektor-perdagangan-hotel-restoran.create',
+                'sektor-perdagangan-hotel-restoran.show',
+                'sektor-perdagangan-hotel-restoran.edit',
+                'sektor-perdagangan-hotel-restoran.destroy',
+
+                // sektor pertanian
+                 'sektor-pertanian.view',
+                'sektor-pertanian.create',
+                'sektor-pertanian.show',
+                'sektor-pertanian.edit',
+                'sektor-pertanian.destroy', 
 
 
+                // sektor pertanian 
+            'sektor-perkebunan.view',
+            'sektor-perkebunan.create',
+            'sektor-perkebunan.show',
+            'sektor-perkebunan.edit',
+            'sektor-perkebunan.destroy',
+
+            // sektor peternakan
+
+            'sektor-peternakan.view',
+            'sektor-peternakan.create',
+            'sektor-peternakan.show',
+            'sektor-peternakan.edit',
+
+            // sektor perikanan 
+
+            'sektor-perikanan.view',
+            'sektor-perikanan.show',
+            'sektor-perikanan.update',
+            'sektor-perikanan.destroy',
+            'sektor-perikanan.store',
+            
+        
+            // sektor kehutanan 
+            'sektor-kehutanan.view',
+            'sektor-kehutanan.store',
+            'sektor-kehutanan.update',
+            'sektor-kehutanan.destroy',
+
+            //sektor tambang
+            'sektor-tambang.view',
+            'sektor-tambang.store',
+            'sektor-tambang.update',
+            'sektor-tambang.destroy',
+
+            // sektor pertambangan 
+            'sektor-perdagangan.view',
+            'sektor-perdagangan.create',
+            'sektor-perdagangan.show',
+            'sektor-perdagangan.edit',
+            'sektor-perdagangan.destroy',
+
+            // sektor industri kecil
+
+            'sektor-industri-kecil.view',
+            'sektor-industri-kecil.create',
+            'sektor-industri-kecil.destroy',
+            'sektor-industri-kecil.show',
 
             // Pertanggungjawaban
-            'pertanggungjawaban.view',
+            'pertanggungjawaban.view', 
             'pertanggungjawaban.create',
             'pertanggungjawaban.store',
             'pertanggungjawaban.edit',

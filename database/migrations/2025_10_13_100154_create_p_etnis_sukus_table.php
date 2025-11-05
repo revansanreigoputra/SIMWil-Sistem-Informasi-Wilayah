@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('p_tenaga_kerjas', function (Blueprint $table) {
+        Schema::create('p_etnis_sukus', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal');
-            $table->string('tenaga_kerja');
+            $table->foreignId('etnis_id')->constrained('etnis')->onDelete('cascade');
             $table->integer('jumlah_laki_laki');
             $table->integer('jumlah_perempuan');
             $table->integer('jumlah_total');
+            $table->foreignId('desa_id')->constrained('desas')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -27,6 +28,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('p_tenaga_kerjas');
+        Schema::table('p_etnis_sukus', function (Blueprint $table) {
+            $table->dropForeign(['etnis_id']);
+            $table->dropColumn('etnis_id');
+            $table->string('etnis_suku'); // Re-add if needed for rollback, though typically not done this way
+        });
+        Schema::dropIfExists('p_etnis_sukus');
     }
 };

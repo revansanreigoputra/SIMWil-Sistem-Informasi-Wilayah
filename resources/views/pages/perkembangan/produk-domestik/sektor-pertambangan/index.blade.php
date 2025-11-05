@@ -16,12 +16,13 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Desa</th>
                             <th>Tanggal</th>
-                            <th>Total Nilai Produksi Tahun Ini (Rp)</th>
-                            <th>Total Nilai Bahan Baku yang Digunakan (Rp)</th>
-                            <th>Total Nilai Bahan Penolong yang Digunakan (Rp)</th>
-                            <th>Total Biaya Antara yang Dihabiskan (Rp)</th>
-                            <th>Jumlah Total Jenis Bahan Tambang dan Galian (Buah)</th>
+                            <th>Total Nilai Produksi <br>Tahun Ini (Rp)</th>
+                            <th>Total Nilai Bahan Baku <br> yang Digunakan (Rp)</th>
+                            <th>Total Nilai Bahan Penolong <br> yang Digunakan (Rp)</th>
+                            <th>Total Biaya Antara <br> yang Dihabiskan (Rp)</th>
+                            <th>Jumlah Total Jenis Bahan <br>Tambang dan Galian (Buah)</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -29,6 +30,7 @@
                         @foreach ($data_pertambangan as $pertambangan)
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
+                                <td class="text-center">{{ $pertambangan->desa->nama_desa ?? '-' }}</td>
                                 <td class="text-center">{{ $pertambangan->tanggal }}</td>
                                 <td class="text-center">{{ $pertambangan->total_nilai_produksi_tahun_ini }}</td>
                                 <td class="text-center">{{ $pertambangan->total_nilai_bahan_baku_digunakan }}</td>
@@ -38,6 +40,17 @@
                                 <td>
 
 
+                                <!--tombol detail-->
+    <a href="{{ route('perkembangan.produk-domestik.sektor-pertambangan.show', $pertambangan->id) }}" 
+   class="btn btn-sm btn-info text-white">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3" />
+        <path d="M2.05 12a9.94 9.94 0 0 1 19.9 0a9.94 9.94 0 0 1 -19.9 0" />
+    </svg>
+    Lihat
+</a>
                                 
                                    <!-- Tombol Edit -->
 <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#edit-pertambangan-{{ $pertambangan->id }}">
@@ -47,9 +60,10 @@
         <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
         <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
         <path d="M16 5l3 3" />
-    </svg>
+    </svg>s
     Edit
 </button>
+
 
 @can('sektor-pertambangan.update')
 <div class="modal fade" id="edit-pertambangan-{{ $pertambangan->id }}" tabindex="-1" aria-labelledby="editModalLabel{{ $pertambangan->id }}" aria-hidden="true">
