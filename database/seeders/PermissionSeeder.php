@@ -401,7 +401,7 @@ class PermissionSeeder extends Seeder
             'jlahan.edit',
             'jlahan.update',
             'jlahan.delete',
-            
+
             // iklim
             'iklim.view',
             'iklim.create',
@@ -409,7 +409,7 @@ class PermissionSeeder extends Seeder
             'iklim.edit',
             'iklim.update',
             'iklim.delete',
-            
+
             // lahan
             'lahan.view',
             'lahan.create',
@@ -417,7 +417,7 @@ class PermissionSeeder extends Seeder
             'lahan.edit',
             'lahan.update',
             'lahan.delete',
-            
+
             // hasil
             'hasiltanaman.view',
             'hasiltanaman.create',
@@ -425,7 +425,7 @@ class PermissionSeeder extends Seeder
             'hasiltanaman.edit',
             'hasiltanaman.update',
             'hasiltanaman.delete',
-            
+
             // kepemilikan
             'kepemilikan.view',
             'kepemilikan.create',
@@ -453,7 +453,7 @@ class PermissionSeeder extends Seeder
             'apotikhidup.edit',
             'apotikhidup.update',
             'apotikhidup.delete',
-            
+
             // kebun
             'kebun.view',
             'kebun.create',
@@ -469,7 +469,7 @@ class PermissionSeeder extends Seeder
             'hasilkebun.edit',
             'hasilkebun.update',
             'hasilkebun.delete',
-            
+
             // hutan
             'hutan.view',
             'hutan.create',
@@ -477,6 +477,14 @@ class PermissionSeeder extends Seeder
             'hutan.edit',
             'hutan.update',
             'hutan.delete',
+
+            // hasilhutan
+            'hasilhutan.view',
+            'hasilhutan.create',
+            'hasilhutan.store',
+            'hasilhutan.edit',
+            'hasilhutan.update',
+            'hasilhutan.delete',
 
             // pengangguran
             'pengangguran.view',
