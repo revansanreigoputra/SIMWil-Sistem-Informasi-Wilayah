@@ -2,44 +2,35 @@
 
 @section('title', 'Detail Kecamatan')
 
-@section('action')
-    @can('kecamatan.update')
-        <a href="{{ route('kecamatan.edit', $kecamatan->id) }}" class="btn btn-warning">Edit</a>
-    @endcan
-    @can('kecamatan.delete')
-        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-kecamatan-{{ $kecamatan->id }}">
-            Hapus
-        </button>
-    @endcan
-@endsection
-
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title">Informasi Kecamatan</h5>
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 fw-bold">
+                        <i class="bi bi-geo-alt-fill me-2"></i> Informasi Kecamatan
+                    </h5>
                 </div>
                 <div class="card-body">
-                    <div class="row">
+                    <div class="row g-4">
                         <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label text-muted">Nama Kecamatan</label>
-                                <p class="fw-semibold">{{ $kecamatan->nama_kecamatan }}</p>
+                            <div class="p-3 rounded border bg-light">
+                                <small class="text-muted d-block">Nama Kecamatan</small>
+                                <h4 class="fw-semibold mt-1 mb-0 text-dark">{{ $kecamatan->nama_kecamatan }}</h4>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label text-muted">Jumlah Desa</label>
-                                <p class="fw-semibold">{{ $kecamatan->desas->count() }}</p>
+                            <div class="p-3 rounded border bg-light">
+                                <small class="text-muted d-block">Jumlah Desa</small>
+                                <h4 class="fw-semibold mt-1 mb-0 text-dark">{{ $kecamatan->desas->count() }}</h4>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label text-muted">Dibuat Pada</label>
-                                <p class="fw-semibold">{{ $kecamatan->created_at->format('d F Y H:i') }}</p>
+                            <div class="p-3 rounded border bg-light">
+                                <small class="text-muted d-block">Dibuat Pada</small>
+                                <h4 class="fw-semibold mt-1 mb-0 text-dark">
+                                    {{ $kecamatan->created_at->format('d F Y H:i') }}
+                                </h4>
                             </div>
                         </div>
                     </div>
@@ -49,18 +40,20 @@
     </div>
 
     @if ($kecamatan->desas->count() > 0)
-        <div class="row mt-3">
+        <div class="row mt-4">
             <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title">Daftar Desa</h5>
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-secondary text-white">
+                        <h5 class="mb-0 fw-bold">
+                            <i class="bi bi-building-fill me-2"></i> Daftar Desa
+                        </h5>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body p-0">
                         <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
+                            <table class="table table-hover mb-0 align-middle">
+                                <thead class="table-light">
                                     <tr>
-                                        <th>No</th>
+                                        <th style="width: 80px;">No</th>
                                         <th>Nama Desa</th>
                                     </tr>
                                 </thead>
@@ -68,7 +61,7 @@
                                     @foreach ($kecamatan->desas as $desa)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $desa->nama_desa }}</td>
+                                            <td class="fw-medium">{{ $desa->nama_desa }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -79,34 +72,9 @@
             </div>
         </div>
     @endif
-
-
-
-    <!-- Delete Modal -->
-    @can('kecamatan.delete')
-        <div class="modal fade" id="delete-kecamatan-{{ $kecamatan->id }}" tabindex="-1" aria-labelledby="deleteModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="deleteModalLabel">Hapus Kecamatan?</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Data kecamatan <strong>{{ $kecamatan->nama_kecamatan }}</strong> yang dihapus tidak bisa
-                            dikembalikan.</p>
-                        <p>Yakin ingin menghapus data ini?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <form action="{{ route('kecamatan.destroy', $kecamatan->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Hapus</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endcan
+   <div class="mt-4 d-flex justify-content-end gap-2">
+        <a href="{{ route('kecamatan.index') }}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left-circle me-1"></i> Kembali
+        </a>
+    </div>
 @endsection
