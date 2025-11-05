@@ -38,7 +38,6 @@ class MataPencaharianPokokController extends Controller
             'mata_pencaharian_id' => 'required|exists:mata_pencaharians,id',
             'laki_laki' => 'required|integer|min:0',
             'perempuan' => 'required|integer|min:0',
-            'total' => 'required|integer|min:0',
         ]);
 
         if ($validator->fails()) {
@@ -46,6 +45,7 @@ class MataPencaharianPokokController extends Controller
         }
 
         $data = $request->all();
+        $data['total'] = $request->input('laki_laki') + $request->input('perempuan');
         $data['desa_id'] = session('desa_id');
 
         MataPencaharianPokok::create($data);
@@ -80,7 +80,6 @@ class MataPencaharianPokokController extends Controller
             'mata_pencaharian_id' => 'required|exists:mata_pencaharians,id',
             'laki_laki' => 'required|integer|min:0',
             'perempuan' => 'required|integer|min:0',
-            'total' => 'required|integer|min:0',
         ]);
 
         if ($validator->fails()) {
@@ -88,6 +87,7 @@ class MataPencaharianPokokController extends Controller
         }
 
         $data = $request->all();
+        $data['total'] = $request->input('laki_laki') + $request->input('perempuan');
         $data['desa_id'] = session('desa_id'); // Ensure desa_id is updated if needed, or kept consistent
 
         $mataPencaharianPokok->update($data);

@@ -92,8 +92,8 @@
                                 <i class="fas fa-users"></i> Total
                             </label>
                             <input type="number" name="total" id="total"
-                                class="form-control @error('total') is-invalid @enderror" value="{{ old('total') }}"
-                                placeholder="Masukkan total" required min="0">
+                                class="form-control @error('total') is-invalid @enderror"
+                                placeholder="Jumlah akan terisi otomatis" required min="0" readonly>
                             @error('total')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -132,6 +132,19 @@
                 allowClear: true
             });
 
+            // Calculate total based on laki_laki and perempuan inputs
+            function calculateTotal() {
+                const lakiLaki = parseInt($('#laki_laki').val()) || 0;
+                const perempuan = parseInt($('#perempuan').val()) || 0;
+                const total = lakiLaki + perempuan;
+                $('#total').val(total);
+            }
+
+            // Add event listeners for input changes
+            $('#laki_laki, #perempuan').on('input', function() {
+                calculateTotal();
+            });
+
             // Form validation
             $('#form-mata-pencaharian-pokok').on('submit', function(e) {
                 let isValid = true;
@@ -163,6 +176,9 @@
                     $(this).removeClass('is-invalid');
                 }
             });
+
+            // Calculate initial total if values exist
+            calculateTotal();
         });
     </script>
 @endpush

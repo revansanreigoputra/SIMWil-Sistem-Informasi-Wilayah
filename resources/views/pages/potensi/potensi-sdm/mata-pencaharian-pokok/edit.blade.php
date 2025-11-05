@@ -94,7 +94,7 @@
                             </label>
                             <input type="number" name="total" id="total"
                                 class="form-control @error('total') is-invalid @enderror"
-                                value="{{ old('total', $mataPencaharianPokok->total) }}" placeholder="Masukkan total" required min="0">
+                                placeholder="Jumlah total akan terisi otomatis" required min="0" readonly>
                             @error('total')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -159,6 +159,34 @@
                 total: "{{ $mataPencaharianPokok->total }}"
             };
 
+            // Calculate total based on laki_laki and perempuan inputs
+            function calculateTotal() {
+                const lakiLaki = parseInt($('#laki_laki').val()) || 0;
+                const perempuan = parseInt($('#perempuan').val()) || 0;
+                const total = lakiLaki + perempuan;
+                $('#total').val(total);
+            }
+
+            // Add event listeners for input changes
+            $('#laki_laki, #perempuan').on('input', function() {
+                calculateTotal();
+                checkFieldChanges($(this));
+            });
+
+            // Highlight changed fields
+            function checkFieldChanges(field) {
+                const fieldName = field.attr('name');
+                const currentValue = field.val();
+
+                if (originalValues[fieldName] != currentValue) {
+                    field.addClass('border-warning');
+                    field.closest('.form-group').find('label').addClass('text-warning font-weight-bold');
+                } else {
+                    field.removeClass('border-warning');
+                    field.closest('.form-group').find('label').removeClass('text-warning font-weight-bold');
+                }
+            }
+
             // Form validation
             $('#form-edit-mata-pencaharian-pokok').on('submit', function(e) {
                 let isValid = true;
@@ -179,47 +207,23 @@
                 }
             });
 
-            // Remove invalid class on input
-            $('input, select').on('input change', function() {
-                if ($(this).val()) {
-                    $(this).removeClass('is-invalid');
-                }
-            });
+            // Reset to original values function
+            window.resetToOriginal = function() {
+                Object.keys(originalValues).forEach(key => {
+                    if (key !== 'total') {
+                        $(`[name="${key}"]`).val(originalValues[key]).trigger('change');
+                    }
+                });
+                calculateTotal();
 
-            // Highlight changed fields
-            $('input, select').on('change', function() {
-                const fieldName = $(this).attr('name');
-                const currentValue = $(this).val();
+                // Remove all warning highlights
+                $('input, select').removeClass('border-warning');
+                $('.form-group label').removeClass('text-warning font-weight-bold');
+            }
 
-                if (originalValues[fieldName] != currentValue) {
-                    $(this).addClass('border-warning');
-                    $(this).closest('.form-group').find('label').addClass('text-warning font-weight-bold');
-                } else {
-                    $(this).removeClass('border-warning');
-                    $(this).closest('.form-group').find('label').removeClass(
-                        'text-warning font-weight-bold');
-                }
-            });
+            // Calculate initial total if values exist
+            calculateTotal();
         });
-
-        // Reset to original values function
-        function resetToOriginal() {
-            const originalValues = {
-                tanggal: "{{ $mataPencaharianPokok->tanggal }}",
-                mata_pencaharian_id: "{{ $mataPencaharianPokok->mata_pencaharian_id }}",
-                laki_laki: "{{ $mataPencaharianPokok->laki_laki }}",
-                perempuan: "{{ $mataPencaharianPokok->perempuan }}",
-                total: "{{ $mataPencaharianPokok->total }}"
-            };
-
-            Object.keys(originalValues).forEach(key => {
-                $(`[name="${key}"]`).val(originalValues[key]).trigger('change');
-            });
-
-            // Remove all warning highlights
-            $('input, select').removeClass('border-warning');
-            $('.form-group label').removeClass('text-warning font-weight-bold');
-        }
     </script>
 @endpush
 

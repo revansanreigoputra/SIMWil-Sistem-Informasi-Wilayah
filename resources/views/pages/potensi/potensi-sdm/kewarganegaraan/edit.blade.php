@@ -94,7 +94,7 @@
                             </label>
                             <input type="number" name="jumlah_total" id="jumlah_total"
                                 class="form-control @error('jumlah_total') is-invalid @enderror"
-                                value="{{ old('jumlah_total', $pKewarganegaraan->jumlah_total) }}" placeholder="Total akan terisi otomatis" required min="0" readonly>
+                                placeholder="jumlah Total akan terisi otomatis" required min="0" readonly>
                             @error('jumlah_total')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
