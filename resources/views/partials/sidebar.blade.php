@@ -1341,6 +1341,21 @@
                                     </a>
                                 @endcan
 
+                                 @can('sektor-industri-menengah-besar.view')
+                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-industri-menengah-besar*') ? 'active' : '' }}"
+                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-industri-menengah-besar.index') }}">
+                                        Sektor industri besar <br> Menengah 
+                                    </a>
+                                @endcan
+
+                                
+                                 @can('sektor-jasa-usaha.view')
+                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-jasa-usahar*') ? 'active' : '' }}"
+                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-jasa-usaha.index') }}">
+                                        Sektor Jasa 
+                                    </a>
+                                @endcan
+
                             </div>
                         </div>
                     @endcanany

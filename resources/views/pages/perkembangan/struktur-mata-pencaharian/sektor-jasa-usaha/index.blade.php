@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Daftar - SEKTOR INDUSTRI KECIL / KERAJINAN RUMAH TANGGA')
+@section('title', 'Daftar - SEKTOR JASA USAHA')
 
 @section('action')
     <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createModal">
@@ -12,7 +12,7 @@
 <div class="card">
     <div class="card-body">
         <div class="table-responsive">
-            <table id="table-industri-kecil" class="table table-striped">
+            <table id="table-sektor-jasa-usaha" class="table table-striped">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -24,18 +24,21 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {{-- Menggunakan $data dari controller --}}
                     @foreach ($data as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->desa->nama_desa ?? '-' }}</td>
+                            <td>{{ $item->desa->nama_desa ?? '-' }}</td> 
                             <td>{{ $item->tanggal }}</td>
-                            <td>{{ $item->mataPencaharian->mata_pencaharian ?? '-' }}</td>
+                            {{-- Relasi ke MataPencaharian disamakan --}}
+                            <td>{{ $item->mataPencaharian->mata_pencaharian ?? '-' }}</td> 
                             <td>{{ $item->jumlah }}</td>
                             <td class="text-center">
                                 <div class="d-flex justify-content-center gap-1">
-                                    <a href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-industri-kecil.show', $item->id) }}" 
-                                       class="btn btn-sm btn-info">
-                                       Detail
+                                    {{-- Mengubah nama route ke sektor-jasa-usaha --}}
+                                    <a href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-jasa-usaha.show', $item->id) }}" 
+                                        class="btn btn-sm btn-info">
+                                        Detail
                                     </a>
                                     <button type="button"
                                         class="btn btn-sm btn-warning"
@@ -51,11 +54,12 @@
                                     </button>
                                 </div>
 
-                                <!-- Modal Edit -->
+                                {{-- Modal Edit --}}
                                 <div class="modal fade" id="editModal{{ $item->id }}" tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
-                                            <form action="{{ route('perkembangan.struktur-mata-pencaharian.sektor-industri-kecil.update', $item->id) }}" method="POST">
+                                            {{-- Mengubah route update --}}
+                                            <form action="{{ route('perkembangan.struktur-mata-pencaharian.sektor-jasa-usaha.update', $item->id) }}" method="POST">
                                                 @csrf
                                                 @method('PUT')
                                                 <div class="modal-header">
@@ -72,7 +76,8 @@
                                                         <label for="mata_pencaharian_id" class="form-label">Mata Pencaharian</label>
                                                         <select name="mata_pencaharian_id" class="form-control" required>
                                                             <option value="">Pilih Mata Pencaharian</option>
-                                                            @foreach ($mataPencaharians as $mp)
+                                                            {{-- $mataPencaharians dari controller --}}
+                                                            @foreach ($mataPencaharians as $mp) 
                                                                 <option value="{{ $mp->id }}" {{ $item->mata_pencaharian_id == $mp->id ? 'selected' : '' }}>
                                                                     {{ $mp->mata_pencaharian }}
                                                                 </option>
@@ -94,7 +99,7 @@
                                     </div>
                                 </div>
 
-                                <!-- Modal Hapus -->
+                                {{-- Modal Hapus --}}
                                 <div class="modal fade" id="deleteModal{{ $item->id }}" tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -107,7 +112,8 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                                <form action="{{ route('perkembangan.struktur-mata-pencaharian.sektor-industri-kecil.destroy', $item->id) }}" method="POST">
+                                                {{-- Mengubah route destroy --}}
+                                                <form action="{{ route('perkembangan.struktur-mata-pencaharian.sektor-jasa-usaha.destroy', $item->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn btn-danger" type="submit">Hapus</button>
@@ -121,15 +127,17 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $data->links() }} {{-- Tambahkan pagination links --}}
         </div>
     </div>
 </div>
 
-<!-- Modal Tambah Data -->
+{{-- Modal Tambah Data --}}
 <div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ route('perkembangan.struktur-mata-pencaharian.sektor-industri-kecil.store') }}" method="POST">
+            {{-- Mengubah route store --}}
+            <form action="{{ route('perkembangan.struktur-mata-pencaharian.sektor-jasa-usaha.store') }}" method="POST">
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title">Tambah Data Baru</h5>
@@ -168,8 +176,9 @@
 
 @push('addon-script')
 <script>
+    // Asumsi menggunakan jQuery DataTables, disesuaikan dengan ID tabel baru
     $(document).ready(function() {
-        $('#table-industri-kecil').DataTable();
+        $('#table-sektor-jasa-usaha').DataTable();
     });
 </script>
 @endpush
