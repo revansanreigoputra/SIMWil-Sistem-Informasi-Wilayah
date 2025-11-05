@@ -1253,6 +1253,13 @@
                                     </a>
                                 @endcan
 
+                                 @can('sektor-industri-kecil.view')
+                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-industri-kecil*') ? 'active' : '' }}"
+                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-industri-kecil.index') }}">
+                                        Sektor industri kecil <br> dan Kerajinan RT
+                                    </a>
+                                @endcan
+
                             </div>
                         </div>
                     @endcanany

@@ -152,6 +152,7 @@ use App\Http\Controllers\SektorPerikananController;
 use App\Http\Controllers\SektorKehutananController;
 use  App\Http\Controllers\SektorTambangController;
 use App\Http\Controllers\SektorPerdaganganController;
+use App\Http\Controllers\SektorIndustriKecilController;
 
 
 
@@ -1546,6 +1547,13 @@ Route::prefix('perkembangan/struktur-mata-pencaharian')
         Route::resource('sektor-perdagangan', SektorPerdaganganController::class);
     });
 });
+
+// sektor industri kecil
+Route::resource(
+    'perkembangan/struktur-mata-pencaharian/sektor-industri-kecil',
+    \App\Http\Controllers\SektorIndustriKecilController::class
+)->names('perkembangan.struktur-mata-pencaharian.sektor-industri-kecil');
+
 // ==== PERMOHONAN SURAT ====
 
 

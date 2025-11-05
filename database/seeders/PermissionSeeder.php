@@ -775,6 +775,13 @@ class PermissionSeeder extends Seeder
             'sektor-perdagangan.edit',
             'sektor-perdagangan.destroy',
 
+            // sektor industri kecil
+
+            'sektor-industri-kecil.view',
+            'sektor-industri-kecil.create',
+            'sektor-industri-kecil.destroy',
+            'sektor-industri-kecil.show',
+
             // Pertanggungjawaban
             'pertanggungjawaban.view', 
             'pertanggungjawaban.create',
