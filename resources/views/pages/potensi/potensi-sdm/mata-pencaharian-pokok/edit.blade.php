@@ -6,12 +6,13 @@
     <div class="card">
         <div class="card-header">
             <h5 class="card-title">
-                 Edit Data Potensi Mata Pencaharian Pokok: {{ $mataPencaharianPokok->tanggal }}
+                Edit Data Potensi Mata Pencaharian Pokok: {{ $mataPencaharianPokok->tanggal }}
             </h5>
         </div>
 
         <div class="card-body">
-            <form action="{{ route('potensi.potensi-sdm.mata-pencaharian-pokok.update', $mataPencaharianPokok->id) }}" method="POST" id="form-edit-mata-pencaharian-pokok">
+            <form action="{{ route('potensi.potensi-sdm.mata-pencaharian-pokok.update', $mataPencaharianPokok->id) }}"
+                method="POST" id="form-edit-mata-pencaharian-pokok">
                 @csrf
                 @method('PUT')
 
@@ -68,7 +69,8 @@
                             </label>
                             <input type="number" name="laki_laki" id="laki_laki"
                                 class="form-control @error('laki_laki') is-invalid @enderror"
-                                value="{{ old('laki_laki', $mataPencaharianPokok->laki_laki) }}" placeholder="Masukkan jumlah laki-laki" required min="0">
+                                value="{{ old('laki_laki', $mataPencaharianPokok->laki_laki) }}"
+                                placeholder="Masukkan jumlah laki-laki" required min="0">
                             @error('laki_laki')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -81,7 +83,8 @@
                             </label>
                             <input type="number" name="perempuan" id="perempuan"
                                 class="form-control @error('perempuan') is-invalid @enderror"
-                                value="{{ old('perempuan', $mataPencaharianPokok->perempuan) }}" placeholder="Masukkan jumlah perempuan" required min="0">
+                                value="{{ old('perempuan', $mataPencaharianPokok->perempuan) }}"
+                                placeholder="Masukkan jumlah perempuan" required min="0">
                             @error('perempuan')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -120,10 +123,12 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="form-group d-flex justify-content-end">
-                            <a href="{{ route('potensi.potensi-sdm.mata-pencaharian-pokok.index') }}" class="btn btn-outline-secondary">
+                            <a href="{{ route('potensi.potensi-sdm.mata-pencaharian-pokok.index') }}"
+                                class="btn btn-outline-secondary">
                                 <i class="fas fa-times"></i> Batal
                             </a>
-                            <a href="{{ route('potensi.potensi-sdm.mata-pencaharian-pokok.show', $mataPencaharianPokok->id) }}" class="btn btn-secondary">
+                            <a href="{{ route('potensi.potensi-sdm.mata-pencaharian-pokok.show', $mataPencaharianPokok->id) }}"
+                                class="btn btn-secondary">
                                 <i class="fas fa-eye"></i> Lihat Detail
                             </a>
                             <button type="button" class="btn btn-warning" onclick="resetToOriginal()">

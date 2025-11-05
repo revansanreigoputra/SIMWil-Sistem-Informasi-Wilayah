@@ -6,12 +6,13 @@
     <div class="card">
         <div class="card-header">
             <h5 class="card-title">
-                 Tambah Data Potensi Mata Pencaharian Pokok
+                Tambah Data Potensi Mata Pencaharian Pokok
             </h5>
         </div>
 
         <div class="card-body">
-            <form action="{{ route('potensi.potensi-sdm.mata-pencaharian-pokok.store') }}" method="POST" id="form-mata-pencaharian-pokok">
+            <form action="{{ route('potensi.potensi-sdm.mata-pencaharian-pokok.store') }}" method="POST"
+                id="form-mata-pencaharian-pokok">
                 @csrf
 
                 {{-- Section: Informasi Potensi Mata Pencaharian Pokok --}}
@@ -105,7 +106,8 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="form-group d-flex justify-content-end">
-                            <a href="{{ route('potensi.potensi-sdm.mata-pencaharian-pokok.index') }}" class="btn btn-secondary">
+                            <a href="{{ route('potensi.potensi-sdm.mata-pencaharian-pokok.index') }}"
+                                class="btn btn-secondary">
                                 <i class="fas fa-times"></i> Batal
                             </a>
                             <button type="reset" class="btn btn-warning">
