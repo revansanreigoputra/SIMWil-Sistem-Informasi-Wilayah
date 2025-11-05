@@ -12,6 +12,7 @@ class PerkembanganPenduduk extends Model
     protected $table = 'perkembangan_penduduk';
 
     protected $fillable = [
+        'desa_id',
         'tanggal',
         'jumlah_laki_laki_tahun_ini',
         'jumlah_perempuan_tahun_ini',
@@ -22,4 +23,9 @@ class PerkembanganPenduduk extends Model
         'jumlah_kepala_keluarga_laki_laki_tahun_lalu',
         'jumlah_kepala_keluarga_perempuan_tahun_lalu',
     ];
+
+  public function desa()
+{
+    return $this->belongsTo(\App\Models\Desa::class, 'desa_id');
+}
 }

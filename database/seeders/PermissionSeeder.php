@@ -590,6 +590,7 @@ class PermissionSeeder extends Seeder
             'perkembangan-penduduk.update',
             'perkembangan-penduduk.delete',
             'perkembangan-penduduk.destroy',
+            'perkembangan-penduduk.show',
 
             // sektor pertambangan permissions
             'sektor-pertambangan.view',
