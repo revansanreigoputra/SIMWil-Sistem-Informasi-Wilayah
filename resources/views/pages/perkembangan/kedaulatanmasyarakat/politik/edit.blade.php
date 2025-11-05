@@ -23,26 +23,15 @@
                         <i class="fas fa-calendar me-1"></i> Tanggal <span class="text-danger">*</span>
                     </label>
                     <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
-                           id="tanggal" name="tanggal" value="{{ old('tanggal', $politik->tanggal) }}" required>
+                        id="tanggal" name="tanggal"
+                        value="{{ old('tanggal', $politik->tanggal ? \Carbon\Carbon::parse($politik->tanggal)->format('Y-m-d') : '') }}"
+                        required>
                     @error('tanggal')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <div class="col-md-6 mb-3">
-                    <label for="id_desa" class="form-label fw-semibold">
-                        <i class="fas fa-map-marker-alt me-1"></i> Desa <span class="text-danger">*</span>
-                    </label>
-                    <select name="id_desa" id="id_desa" class="form-control" required>
-                        <option value="">-- Pilih Desa --</option>
-                        @foreach ($desas as $desa)
-                            <option value="{{ $desa->id }}" {{ old('id_desa', $politik->id_desa) == $desa->id ? 'selected' : '' }}>
-                                {{ $desa->nama_desa }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
+
 
             {{-- 1. Partai Politik dan Pemilihan Umum --}}
             <hr class="my-4">
@@ -95,32 +84,79 @@
             <hr class="my-4">
             <h5 class="text-primary mb-3">3. Penentuan Kepala Desa / Sekdes / Perangkat / Lurah</h5>
             <div class="row g-3">
-                @php
-                    $radioGroups = [
-                        'penentuan_jabatan_kepala_desa' => ['dipilih_rakyat_langsung','ditunjuk_bupati_walikota','turun_temurun'],
-                        'penentuan_sekretaris_desa' => ['diangkat_kepala_desa','diangkat_bupati_walikota','diangkat_kepala_desa_disahkan_bupati'],
-                        'penentuan_perangkat_desa' => ['diangkat_kepala_desa_ditetapkan_camat','diangkat_dan_ditetapkan_kepala_desa'],
-                        'penentuan_jabatan_lurah' => ['diangkat_bupati_walikota','dipilih_rakyat_langsung']
-                    ];
-                @endphp
-
-                @foreach ($radioGroups as $name => $options)
                     <div class="col-md-6">
                         <div class="card border-0 shadow-sm h-100">
                             <div class="card-body">
-                                <label class="form-label fw-bold text-capitalize">{{ str_replace('_', ' ', $name) }}</label>
-                                @foreach ($options as $option)
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="radio"
-                                               name="{{ $name }}" value="{{ $option }}"
-                                               {{ old($name, $politik->$name) == $option ? 'checked' : '' }}>
-                                        <label class="form-check-label">{{ ucwords(str_replace('_',' ', $option)) }}</label>
-                                    </div>
-                                @endforeach
+                                <label for="penentuan_kepala_desa_id" class="form-label">
+                                    Penentuan Jabatan Kepala Desa <span class="text-danger">*</span>
+                                </label>
+                                <select name="penentuan_kepala_desa_id" id="penentuan_kepala_desa_id" class="form-select" required>
+                                    <option value="">-- Pilih --</option>
+                                    @foreach ($penentuankepaladesa as $item)
+                                        <option value="{{ $item->id }}" {{ old('penentuan_kepala_desa_id', $politik->penentuan_kepala_desa_id) == $item->id ? 'selected' : '' }}>
+                                            {{ $item->nama }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
-                @endforeach
+
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body">
+                                <label for="penentuan_sekretaris_desa_id" class="form-label">
+                                    Penentuan Sekretaris Desa <span class="text-danger">*</span>
+                                </label>
+                                <select name="penentuan_sekretaris_desa_id" id="penentuan_sekretaris_desa_id" class="form-select" required>
+                                    <option value="">-- Pilih --</option>
+                                    @foreach ($penentuansekretarisdesa as $item)
+                                        <option value="{{ $item->id }}" {{ old('penentuan_sekretaris_desa_id', $politik->penentuan_sekretaris_desa_id) == $item->id ? 'selected' : '' }}>
+                                            {{ $item->nama }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body">
+                                <label for="penentuan_perangkat_desa_id" class="form-label">
+                                    Penentuan Perangkat Desa <span class="text-danger">*</span>
+                                </label>
+                                <select name="penentuan_perangkat_desa_id" id="penentuan_perangkat_desa_id" class="form-select" required>
+                                    <option value="">-- Pilih --</option>
+                                    @foreach ($penentuanperangkatdesa as $item)
+                                        <option value="{{ $item->id }}" {{ old('penentuan_perangkat_desa_id', $politik->penentuan_perangkat_desa_id) == $item->id ? 'selected' : '' }}>
+                                            {{ $item->nama }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body">
+                                <label for="penentuan_lurah_id" class="form-label">
+                                    Penentuan Lurah <span class="text-danger">*</span>
+                                </label>
+                                <select name="penentuan_lurah_id" id="penentuan_lurah_id" class="form-select" required>
+                                    <option value="">-- Pilih --</option>
+                                    @foreach ($penentuanlurah as $item)
+                                        <option value="{{ $item->id }}" {{ old('penentuan_lurah_id', $politik->penentuan_lurah_id) == $item->id ? 'selected' : '' }}>
+                                            {{ $item->nama }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
                 <div class="col-md-6">
                     <label class="form-label fw-bold">Masa Jabatan Kepala Desa (Tahun)</label>
@@ -147,26 +183,74 @@
                 </div>
 
                 {{-- Radio BPD --}}
-                @php
-                    $bpdRadios = [
-                        'penentuan_anggota_bpd' => ['dipilih_rakyat_langsung','dipilih_musyawarah_masyarakat','diangkat_kepala_desa','diangkat_camat'],
-                        'pimpinan_bpd' => ['dipilih_anggota_bpd','ditunjuk_kepala_desa','ditunjuk_camat','dipilih_rakyat_langsung'],
-                        'kantor_bpd' => ['Ada','Tidak Ada'],
-                        'anggaran_bpd' => ['Ada','Tidak Ada']
-                    ];
-                @endphp
-                @foreach ($bpdRadios as $name => $options)
-                    <div class="col-md-6">
-                        <label class="form-label fw-bold text-capitalize">{{ str_replace('_',' ', $name) }}</label>
-                        @foreach ($options as $option)
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="radio" name="{{ $name }}" value="{{ $option }}"
-                                       {{ old($name, $politik->$name) == $option ? 'checked' : '' }}>
-                                <label class="form-check-label">{{ ucwords(str_replace('_',' ', $option)) }}</label>
-                            </div>
-                        @endforeach
+                <div class="row g-3">
+                {{-- Penentuan Anggota BPD --}}
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <label for="penentuan_anggota_bpd_id" class="form-label">Penentuan Anggota BPD <span class="text-danger">*</span></label>
+                            <select name="penentuan_anggota_bpd_id" id="penentuan_anggota_bpd_id" class="form-select" required>
+                                <option value="">-- Pilih --</option>
+                                @foreach ($penentuananggotabpd as $item)
+                                    <option value="{{ $item->id }}" {{ old('penentuan_anggota_bpd_id', $politik->penentuan_anggota_bpd_id) == $item->id ? 'selected' : '' }}>
+                                        {{ $item->nama }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                @endforeach
+                </div>
+
+                    {{-- Penentuan Ketua BPD --}}
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body">
+                                <label for="penentuan_ketua_bpd_id" class="form-label">Penentuan Ketua BPD <span class="text-danger">*</span></label>
+                                <select name="penentuan_ketua_bpd_id" id="penentuan_ketua_bpd_id" class="form-select" required>
+                                    <option value="">-- Pilih --</option>
+                                    @foreach ($penentuanketuabpd as $item)
+                                        <option value="{{ $item->id }}" {{ old('penentuan_ketua_bpd_id', $politik->penentuan_ketua_bpd_id) == $item->id ? 'selected' : '' }}>
+                                            {{ $item->nama }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Kantor BPD --}}
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body">
+                                <label class="form-label fw-bold">Kantor BPD <span class="text-danger">*</span></label>
+                                @foreach (['Ada','Tidak Ada'] as $option)
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="radio" name="kantor_bpd" value="{{ $option }}"
+                                            {{ old('kantor_bpd', $politik->kantor_bpd) == $option ? 'checked' : '' }} required>
+                                        <label class="form-check-label">{{ $option }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Anggaran BPD --}}
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body">
+                                <label class="form-label fw-bold">Anggaran BPD <span class="text-danger">*</span></label>
+                                @foreach (['Ada','Tidak Ada'] as $option)
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="radio" name="anggaran_bpd" value="{{ $option }}"
+                                            {{ old('anggaran_bpd', $politik->anggaran_bpd) == $option ? 'checked' : '' }} required>
+                                        <label class="form-check-label">{{ $option }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
                 {{-- Input Angka Lainnya --}}
                 @php
@@ -189,54 +273,92 @@
             <hr class="my-4">
             <h5 class="text-primary mb-3">5. Lembaga Kemasyarakatan Desa / Lurah (LKD/LKK)</h5>
             <div class="row g-3">
+                {{-- Dropdown Pengurus LKD --}}
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <label for="pengurus_lkd_id" class="form-label">Pengurus LKD <span class="text-danger">*</span></label>
+                            <select name="pengurus_lkd_id" id="pengurus_lkd_id" class="form-select" required>
+                                <option value="">-- Pilih --</option>
+                                @foreach ($penguruslkd as $item)
+                                    <option value="{{ $item->id }}" {{ old('pengurus_lkd_id', $politik->pengurus_lkd_id) == $item->id ? 'selected' : '' }}>
+                                        {{ $item->nama }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Dropdown Pengurus LKK --}}
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <label for="pengurus_lkk_id" class="form-label">Pengurus LKK <span class="text-danger">*</span></label>
+                            <select name="pengurus_lkk_id" id="pengurus_lkk_id" class="form-select" required>
+                                <option value="">-- Pilih --</option>
+                                @foreach ($penguruslkk as $item)
+                                    <option value="{{ $item->id }}" {{ old('pengurus_lkk_id', $politik->pengurus_lkk_id) == $item->id ? 'selected' : '' }}>
+                                        {{ $item->nama }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Sisa Radio LKD --}}
                 @php
                     $lkdRadios = [
-                        'keberadaan_organisasi_lkd' => ['Ada','Tidak Ada'],
-                        'status_lkd' => ['Aktif','Pasif'],
-                        'dasar_hukum_organisasi_lkd' => ['peraturan_desa','keputusan_kepala_desa','keputusan_camat','belum_diatur'],
-                        'pemilihan_pengurus_organisasi_lkd' => ['dipilih_rakyat_langsung','diangkat_ketua_lkd_lkk','diangkat_kepala_desa','diangkat_camat'],
-                        'dasar_hukum_pembentukan_lkd_kelurahan' => ['keputusan_lurah','keputusan_camat','belum_diatur'],
-                        'pemilihan_pengurus_lkd' => ['dipilih_rakyat_langsung','diangkat_kepala_desa','diangkat_camat'],
                         'fungsi_tugas_lkd' => ['Aktif','Pasif'],
                         'alokasi_anggaran_lkd' => ['Ada','Tidak Ada'],
                         'alokasi_anggaran_organisasi' => ['Ada','Tidak Ada'],
                         'kantor_lkd' => ['Ada','Tidak Ada'],
                         'dukungan_pembiayaan' => ['Memadai','Kurang Memadai'],
                         'keberadaan_alat_kelengkapan' => ['Ada','Tidak Ada'],
-                        'kegiatan_administrasi' => ['Berfungsi','Tidak Berfungsi']
+                        'kegiatan_administrasi' => ['Berfungsi','Tidak Berfungsi'],
                     ];
                 @endphp
+
                 @foreach ($lkdRadios as $name => $options)
                     <div class="col-md-6">
-                        <label class="form-label fw-bold text-capitalize">{{ str_replace('_',' ', $name) }}</label>
-                        @foreach ($options as $option)
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="radio" name="{{ $name }}" value="{{ $option }}"
-                                       {{ old($name, $politik->$name) == $option ? 'checked' : '' }}>
-                                <label class="form-check-label">{{ ucwords(str_replace('_',' ', $option)) }}</label>
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body">
+                                <label class="form-label fw-bold text-capitalize">{{ str_replace('_',' ', $name) }} <span class="text-danger">*</span></label>
+                                @foreach ($options as $option)
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="radio" name="{{ $name }}" value="{{ $option }}"
+                                            {{ old($name, $politik->$name) == $option ? 'checked' : '' }} required>
+                                        <label class="form-check-label">{{ ucwords(str_replace('_',' ', $option)) }}</label>
+                                    </div>
+                                @endforeach
                             </div>
-                        @endforeach
+                        </div>
                     </div>
                 @endforeach
-
+            </div>
+            {{-- Input Angka --}}
+            <div class="row">
                 @php
                     $lkdInputs = [
                         'jumlah_organisasi_lkd_desa' => 'Jumlah Organisasi LKD di Desa',
                         'jumlah_organisasi_lkd_kelurahan' => 'Jumlah Organisasi LKD di Kelurahan',
                         'jumlah_kegiatan_lkd' => 'Jumlah Kegiatan LKD',
                         'jumlah_kegiatan_organisasi_lkd' => 'Jumlah Kegiatan Organisasi LKD',
-                        'realisasi_program_kerja' => 'Realisasi Program Kerja'
+                        'realisasi_program_kerja' => 'Realisasi Program Kerja',
                     ];
                 @endphp
+
                 @foreach ($lkdInputs as $name => $label)
-                    <div class="col-md-6">
-                        <label class="form-label">{{ $label }}</label>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">{{ $label }} <span class="text-danger">*</span></label>
                         <input type="number" class="form-control" name="{{ $name }}"
-                               value="{{ old($name, $politik->$name) }}"
-                               placeholder="Masukkan {{ strtolower($label) }}">
+                            value="{{ old($name, $politik->$name) }}"
+                            placeholder="Masukkan {{ strtolower($label) }}" required>
                     </div>
                 @endforeach
             </div>
+
 
             {{-- Tombol Aksi --}}
             <div class="d-flex justify-content-between align-items-center mt-4">

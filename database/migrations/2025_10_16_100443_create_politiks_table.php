@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('politiks', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_desa');
+            $table->foreignId('desa_id')->constrained('desas')->onDelete('cascade');
             $table->date('tanggal');
 
             // Partai Politik dan Pemilihan Umum
@@ -32,46 +32,19 @@ return new class extends Migration
             $table->integer('jumlah_pengguna_hak_pilih_gubernur')->nullable();
 
             // Penentuan Kepala Desa/Lurah dan Perangkat
-            $table->enum('penentuan_jabatan_kepala_desa', [
-                'dipilih_rakyat_langsung',
-                'ditunjuk_bupati_walikota',
-                'turun_temurun'
-            ])->nullable();
-
-            $table->enum('penentuan_sekretaris_desa', [
-                'diangkat_kepala_desa',
-                'diangkat_bupati_walikota',
-                'diangkat_kepala_desa_disahkan_bupati'
-            ])->nullable();
-
-            $table->enum('penentuan_perangkat_desa', [
-                'diangkat_kepala_desa_ditetapkan_camat',
-                'diangkat_dan_ditetapkan_kepala_desa'
-            ])->nullable();
+            $table->foreignId('penentuan_kepala_desa_id')->constrained('penentuan_kepala_desa')->onDelete('cascade');
+            $table->foreignId('penentuan_sekretaris_desa_id')->constrained('penentuan_sekretaris_desa')->onDelete('cascade');
+            $table->foreignId('penentuan_perangkat_desa_id')->constrained('penentuan_perangkat_desa')->onDelete('cascade');
 
             $table->integer('masa_jabatan_kepala_desa')->nullable();
+            $table->foreignId('penentuan_lurah_id')->constrained('penentuan_lurah')->onDelete('cascade');
 
-            $table->enum('penentuan_jabatan_lurah', [
-                'diangkat_bupati_walikota',
-                'dipilih_rakyat_langsung'
-            ])->nullable();
 
             // BPD
             $table->integer('jumlah_anggota_bpd')->nullable();
 
-            $table->enum('penentuan_anggota_bpd', [
-                'dipilih_rakyat_langsung',
-                'dipilih_musyawarah_masyarakat',
-                'diangkat_kepala_desa',
-                'diangkat_camat'
-            ])->nullable();
-
-            $table->enum('pimpinan_bpd', [
-                'dipilih_anggota_bpd',
-                'ditunjuk_kepala_desa',
-                'ditunjuk_camat',
-                'dipilih_rakyat_langsung'
-            ])->nullable();
+            $table->foreignId('penentuan_anggota_bpd_id')->constrained('penentuan_anggota_bpd')->onDelete('cascade');
+            $table->foreignId('penentuan_ketua_bpd_id')->constrained('penentuan_ketua_bpd')->onDelete('cascade');
 
             $table->enum('kantor_bpd', ['Ada', 'Tidak Ada'])->nullable();
             $table->enum('anggaran_bpd', ['Ada', 'Tidak Ada'])->nullable();
@@ -100,20 +73,11 @@ return new class extends Migration
             ])->nullable();
             $table->integer('jumlah_organisasi_lkd_kelurahan')->nullable();
 
-            // dari gambar: Pemilihan pengurus LKD/LKK
-            $table->enum('pemilihan_pengurus_lkd', [
-                'dipilih_rakyat_langsung',
-                'diangkat_kepala_desa',
-                'diangkat_camat'
-            ])->nullable();
+            // dari gambar: Pemilihan pengurus LKD
+            $table->foreignId('pengurus_lkd_id')->constrained('pengurus_lkd')->onDelete('cascade');
 
-            // dari gambar: Pemilihan pengurus organisasi anggota LKD/LKK
-            $table->enum('pemilihan_pengurus_organisasi_lkd', [
-                'dipilih_rakyat_langsung',
-                'diangkat_ketua_lkd_lkk',
-                'diangkat_kepala_desa',
-                'diangkat_camat'
-            ])->nullable();
+            // dari gambar: Pemilihan pengurus LKK
+            $table->foreignId('pengurus_lkk_id')->constrained('pengurus_lkk')->onDelete('cascade');
 
             // dari gambar: Implementasi tugas, fungsi, dan kewajiban LKD/LKK
             $table->enum('status_lkd', ['Aktif', 'Pasif'])->nullable();
