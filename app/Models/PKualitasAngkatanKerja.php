@@ -11,10 +11,15 @@ class PKualitasAngkatanKerja extends Model
 
     protected $fillable = [
         'tanggal',
-        'angkatan_kerja',
+        'kualitas_angkatan_kerja_id',
         'jumlah_laki_laki',
         'jumlah_perempuan',
         'jumlah_total',
         'desa_id',
     ];
+
+    public function kualitasAngkatanKerja()
+    {
+        return $this->belongsTo(\App\Models\MasterDDK\KualitasAngkatanKerja::class);
+    }
 }

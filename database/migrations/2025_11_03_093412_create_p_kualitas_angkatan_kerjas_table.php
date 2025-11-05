@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('p_kualitas_angkatan_kerjas', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal');
-            $table->string('angkatan_kerja');
+            $table->foreignId('kualitas_angkatan_kerja_id')->constrained('kualitas_angkatan_kerjas')->onDelete('cascade');
             $table->integer('jumlah_laki_laki');
             $table->integer('jumlah_perempuan');
             $table->integer('jumlah_total');
