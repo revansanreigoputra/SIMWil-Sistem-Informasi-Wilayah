@@ -25,22 +25,6 @@
                         <th class="text-center">Pelimpahan Tugas</th>
                         <th class="text-center">Pengaturan Kewenangan</th>
                         <th class="text-center">Pedoman Pelaksanaan Tugas</th>
-                        <th class="text-center">Pedoman Penyusunan Peraturan</th>
-                        <th class="text-center">Pedoman Penyusunan Perencanaan</th>
-                        <th class="text-center">Kegiatan Fasilitasi Keberadaan</th>
-                        <th class="text-center">Penetapan Pembiayaan</th>
-                        <th class="text-center">Fasilitasi Pelaksanaan Pedoman</th>
-                        <th class="text-center">Jumlah Kegiatan Pendidikan</th>
-                        <th class="text-center">Kegiatan Penanggulangan Kemiskinan</th>
-                        <th class="text-center">Kegiatan Penanganan Bencana</th>
-                        <th class="text-center">Kegiatan Peningkatan Pendapatan</th>
-                        <th class="text-center">Fasilitasi Penetapan Pedoman</th>
-                        <th class="text-center">Kegiatan Fasilitasi Lanjutan</th>
-                        <th class="text-center">Pedoman Pendataan</th>
-                        <th class="text-center">Program Pemeliharaan Motivasi</th>
-                        <th class="text-center">Pemberian Penghargaan</th>
-                        <th class="text-center">Pemberian Sanksi</th>
-                        <th class="text-center">Pengawasan Keuangan</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -55,26 +39,6 @@
                             <td><span class="badge bg-{{ $item->pelimpahan_tugas === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pelimpahan_tugas ?? '-' }}</span></td>
                             <td><span class="badge bg-{{ $item->pengaturan_kewenangan === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pengaturan_kewenangan ?? '-' }}</span></td>
                             <td><span class="badge bg-{{ $item->pedoman_pelaksanaan_tugas === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pedoman_pelaksanaan_tugas ?? '-' }}</span></td>
-                            <td><span class="badge bg-{{ $item->pedoman_penyusunan_peraturan === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pedoman_penyusunan_peraturan ?? '-' }}</span></td>
-                            <td><span class="badge bg-{{ $item->pedoman_penyusunan_perencanaan === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pedoman_penyusunan_perencanaan ?? '-' }}</span></td>
-                            <td><span class="badge bg-{{ $item->kegiatan_fasilitasi_keberadaan === 'Ada' ? 'success' : 'secondary' }}">{{ $item->kegiatan_fasilitasi_keberadaan ?? '-' }}</span></td>
-                            <td><span class="badge bg-{{ $item->penetapan_pembiayaan === 'Ada' ? 'success' : 'secondary' }}">{{ $item->penetapan_pembiayaan ?? '-' }}</span></td>
-                            <td><span class="badge bg-{{ $item->fasilitasi_pelaksanaan_pedoman === 'Ada' ? 'success' : 'secondary' }}">{{ $item->fasilitasi_pelaksanaan_pedoman ?? '-' }}</span></td>
-
-                            {{-- Kolom numeric --}}
-                            <td class="text-center">{{ $item->jumlah_kegiatan_pendidikan ?? '-' }}</td>
-                            <td class="text-center">{{ $item->kegiatan_penanggulangan_kemiskinan ?? '-' }}</td>
-                            <td class="text-center">{{ $item->kegiatan_penanganan_bencana ?? '-' }}</td>
-                            <td class="text-center">{{ $item->kegiatan_peningkatan_pendapatan ?? '-' }}</td>
-
-                            {{-- Lanjutan kolom status --}}
-                            <td><span class="badge bg-{{ $item->fasilitasi_penetapan_pedoman === 'Ada' ? 'success' : 'secondary' }}">{{ $item->fasilitasi_penetapan_pedoman ?? '-' }}</span></td>
-                            <td><span class="badge bg-{{ $item->kegiatan_fasilitasi_lanjutan === 'Ada' ? 'success' : 'secondary' }}">{{ $item->kegiatan_fasilitasi_lanjutan ?? '-' }}</span></td>
-                            <td><span class="badge bg-{{ $item->pedoman_pendataan === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pedoman_pendataan ?? '-' }}</span></td>
-                            <td><span class="badge bg-{{ $item->program_pemeliharaan_motivasi === 'Ada' ? 'success' : 'secondary' }}">{{ $item->program_pemeliharaan_motivasi ?? '-' }}</span></td>
-                            <td><span class="badge bg-{{ $item->pemberian_penghargaan === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pemberian_penghargaan ?? '-' }}</span></td>
-                            <td><span class="badge bg-{{ $item->pemberian_sanksi === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pemberian_sanksi ?? '-' }}</span></td>
-                            <td><span class="badge bg-{{ $item->pengawasan_keuangan === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pengawasan_keuangan ?? '-' }}</span></td>
 
                             <td>
                                 <div class="d-flex gap-1 justify-content-center">
