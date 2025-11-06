@@ -26,13 +26,6 @@
                         <th class="text-center">Pedoman Pembiayaan</th>
                         <th class="text-center">Pedoman Administrasi</th>
                         <th class="text-center">Pedoman Tanda Jabatan</th>
-                        <th class="text-center">Pedoman Diklat</th>
-                        <th class="text-center">Jumlah Bimbingan</th>
-                        <th class="text-center">Jumlah Kegiatan Pendidikan</th>
-                        <th class="text-center">Jumlah Penelitian</th>
-                        <th class="text-center">Jumlah Kegiatan APBN</th>
-                        <th class="text-center">Jumlah Penghargaan</th>
-                        <th class="text-center">Jumlah Sanksi</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -46,13 +39,6 @@
                             <td><span class="badge bg-{{ $item->pedoman_bantuan_pembiayaan === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pedoman_bantuan_pembiayaan ?? '-' }}</span></td>
                             <td><span class="badge bg-{{ $item->pedoman_administrasi === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pedoman_administrasi ?? '-' }}</span></td>
                             <td><span class="badge bg-{{ $item->pedoman_tanda_jabatan === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pedoman_tanda_jabatan ?? '-' }}</span></td>
-                            <td><span class="badge bg-{{ $item->pedoman_pendidikan_pelatihan === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pedoman_pendidikan_pelatihan ?? '-' }}</span></td>
-                            <td class="text-center">{{ $item->jumlah_bimbingan ?? '-' }}</td>
-                            <td class="text-center">{{ $item->jumlah_kegiatan_pendidikan ?? '-' }}</td>
-                            <td class="text-center">{{ $item->jumlah_penelitian_pengkajian ?? '-' }}</td>
-                            <td class="text-center">{{ $item->jumlah_kegiatan_terkait_apbn ?? '-' }}</td>
-                            <td class="text-center">{{ $item->jumlah_penghargaan ?? '-' }}</td>
-                            <td class="text-center">{{ $item->jumlah_sanksi ?? '-' }}</td>
                             <td>
                                 <div class="d-flex gap-1 justify-content-center">
                                     <!-- Tombol Detail -->
