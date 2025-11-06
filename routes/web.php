@@ -211,6 +211,7 @@ use App\Http\Controllers\KepemilikanLahanKebunController;
 use App\Http\Controllers\HasilProduksiKebunController;
 use App\Http\Controllers\KepemilikanLahanHutanController;
 use App\Http\Controllers\HasilProduksiHutanController;
+use App\Http\Controllers\KondisiHutanController;
 
 
 // kelembagaan
@@ -766,6 +767,17 @@ Route::middleware(['auth'])->prefix('potensi/sda/hasilhutan')->name('hasilhutan.
     Route::get('/{hasilhutan}/edit', [HasilProduksiHutanController::class, 'edit'])->name('edit');
     Route::put('/{hasilhutan}', [HasilProduksiHutanController::class, 'update'])->name('update');
     Route::delete('/{hasilhutan}', [HasilProduksiHutanController::class, 'destroy'])->name('destroy');
+});
+
+// kondisihutan routes
+Route::middleware(['auth'])->prefix('potensi/sda/kondisihutan')->name('kondisihutan.')->group(function () {
+    Route::get('/', [KondisiHutanController::class, 'index'])->name('index');
+    Route::get('/create', [KondisiHutanController::class, 'create'])->name('create');
+    Route::post('/', [KondisiHutanController::class, 'store'])->name('store');
+    Route::get('/{kondisihutan}', [KondisiHutanController::class, 'show'])->name('show');
+    Route::get('/{kondisihutan}/edit', [KondisiHutanController::class, 'edit'])->name('edit');
+    Route::put('/{kondisihutan}', [KondisiHutanController::class, 'update'])->name('update');
+    Route::delete('/{kondisihutan}', [KondisiHutanController::class, 'destroy'])->name('destroy');
 });
 
 //APB Desa Routes

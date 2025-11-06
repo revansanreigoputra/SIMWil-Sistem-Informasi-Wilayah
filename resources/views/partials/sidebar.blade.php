@@ -508,6 +508,13 @@
                                                     Hasil & Produksi Hutan
                                                 </a>
                                             @endcan
+                                            
+                                            @can('kondisihutan.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/kondisihutan*') ? 'active' : '' }}"
+                                                    href="{{ route('kondisihutan.index') }}">
+                                                    Kondisi Hutan
+                                                </a>
+                                            @endcan
 
                                         </div>
                                     </div>
