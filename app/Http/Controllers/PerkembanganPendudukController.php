@@ -3,96 +3,130 @@
 namespace App\Http\Controllers;
 
 use App\Models\PerkembanganPenduduk;
+use App\Models\Desa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PerkembanganPendudukController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Tampilkan daftar data perkembangan penduduk per desa.
      */
- public function index()
+    public function index()
 {
-    $perkembangan_penduduks = PerkembanganPenduduk::orderBy('tanggal', 'desc')->get();
+    $desaId = session('desa_id');
+
+    $perkembangan_penduduks = PerkembanganPenduduk::with('desa')
+        ->where('desa_id', $desaId)
+        ->latest('tanggal')
+        ->paginate(10);
+
     return view('pages.perkembangan.perkembanganpenduduk.daftarpenduduk.index', compact('perkembangan_penduduks'));
-    
 }
 
-
-
+    /**
+     * Form tambah data (kalau dibutuhkan langsung di modal, bisa kosongkan return view ini).
+     */
+    public function create()
+    {
+        return view('pages.perkembangan.perkembanganpenduduk.daftarpenduduk.create');
+    }
 
     /**
-     * Store a newly created resource in storage.
+     * Simpan data baru.
      */
     public function store(Request $request)
-{
-    $request->validate([
-        'tanggal' => 'required|date',
-        'jumlah_laki_laki_tahun_ini' => 'required|integer',
-        'jumlah_perempuan_tahun_ini' => 'required|integer',
-        'jumlah_laki_laki_tahun_lalu' => 'required|integer',
-        'jumlah_perempuan_tahun_lalu' => 'required|integer',
-        'jumlah_kepala_keluarga_laki_laki_tahun_ini' => 'required|integer',
-        'jumlah_kepala_keluarga_perempuan_tahun_ini' => 'required|integer',
-        'jumlah_kepala_keluarga_laki_laki_tahun_lalu' => 'required|integer',
-        'jumlah_kepala_keluarga_perempuan_tahun_lalu' => 'required|integer',
-    ]);
+    {
+        $validator = Validator::make($request->all(), [
+            'tanggal' => 'required|date',
+            'jumlah_laki_laki_tahun_ini' => 'required|integer|min:0',
+            'jumlah_perempuan_tahun_ini' => 'required|integer|min:0',
+            'jumlah_laki_laki_tahun_lalu' => 'required|integer|min:0',
+            'jumlah_perempuan_tahun_lalu' => 'required|integer|min:0',
+            'jumlah_kepala_keluarga_laki_laki_tahun_ini' => 'required|integer|min:0',
+            'jumlah_kepala_keluarga_perempuan_tahun_ini' => 'required|integer|min:0',
+            'jumlah_kepala_keluarga_laki_laki_tahun_lalu' => 'required|integer|min:0',
+            'jumlah_kepala_keluarga_perempuan_tahun_lalu' => 'required|integer|min:0',
+        ]);
 
-    PerkembanganPenduduk::create($request->all());
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Gagal menambahkan data perkembangan penduduk.');
+        }
 
-    return redirect()->route('perkembangan-penduduk.index')
-                     ->with('success', 'Data berhasil ditambahkan.');
-}
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
 
+        PerkembanganPenduduk::create($data);
+
+        return redirect()
+            ->route('perkembangan-penduduk.index')
+            ->with('success', 'Data perkembangan penduduk berhasil ditambahkan.');
+    }
 
     /**
-     * Show the form for editing the specified resource.
+     * Tampilkan detail data.
      */
+  public function show(\App\Models\PerkembanganPenduduk $perkembanganPenduduk)
+{
+    $perkembanganPenduduk->load('desa'); // lazy eager-load relasi desa
+    return view('pages.perkembangan.perkembanganpenduduk.daftarpenduduk.show', compact('perkembanganPenduduk'));
+}
 
+    /**
+     * Form edit data.
+     */
     public function edit($id)
-{
-    $data = PerkembanganPenduduk::findOrFail($id);
-    return view('pages.perkembangan.perkembanganpenduduk.daftarpenduduk.edit', compact('data'));
-}
-    public function create()
-{
-    // arahkan ke view form create
-    return view('pages.perkembangan.perkembanganpenduduk.daftarpenduduk.create_edit_modal');
-}
+    {
+        $data = PerkembanganPenduduk::findOrFail($id);
+        return view('pages.perkembangan.perkembanganpenduduk.daftarpenduduk.edit', compact('data'));
+    }
+
     /**
-     * Update the specified resource in storage.
+     * Update data.
      */
-   public function update(Request $request, $id)
-{
-    $request->validate([
-        'tanggal' => 'required|date',
-        'jumlah_laki_laki_tahun_ini' => 'required|integer',
-        'jumlah_perempuan_tahun_ini' => 'required|integer',
-        'jumlah_laki_laki_tahun_lalu' => 'required|integer',
-        'jumlah_perempuan_tahun_lalu' => 'required|integer',
-        'jumlah_kepala_keluarga_laki_laki_tahun_ini' => 'required|integer',
-        'jumlah_kepala_keluarga_perempuan_tahun_ini' => 'required|integer',
-        'jumlah_kepala_keluarga_laki_laki_tahun_lalu' => 'required|integer',
-        'jumlah_kepala_keluarga_perempuan_tahun_lalu' => 'required|integer',
-    ]);
+    public function update(Request $request, PerkembanganPenduduk $perkembangan_penduduk)
+    {
+        $validator = Validator::make($request->all(), [
+            'tanggal' => 'required|date',
+            'jumlah_laki_laki_tahun_ini' => 'required|integer|min:0',
+            'jumlah_perempuan_tahun_ini' => 'required|integer|min:0',
+            'jumlah_laki_laki_tahun_lalu' => 'required|integer|min:0',
+            'jumlah_perempuan_tahun_lalu' => 'required|integer|min:0',
+            'jumlah_kepala_keluarga_laki_laki_tahun_ini' => 'required|integer|min:0',
+            'jumlah_kepala_keluarga_perempuan_tahun_ini' => 'required|integer|min:0',
+            'jumlah_kepala_keluarga_laki_laki_tahun_lalu' => 'required|integer|min:0',
+            'jumlah_kepala_keluarga_perempuan_tahun_lalu' => 'required|integer|min:0',
+        ]);
 
-    $data = PerkembanganPenduduk::findOrFail($id);
-    $data->update($request->all());
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Gagal memperbarui data perkembangan penduduk.');
+        }
 
-    return redirect()->route('perkembangan-penduduk.index')
-                     ->with('success', 'Data berhasil diperbarui');
-}
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
 
+        $perkembangan_penduduk->update($data);
+
+        return redirect()
+            ->route('perkembangan-penduduk.index')
+            ->with('success', 'Data perkembangan penduduk berhasil diperbarui.');
+    }
 
     /**
-     * Remove the specified resource from storage.
+     * Hapus data.
      */
     public function destroy(PerkembanganPenduduk $perkembangan_penduduk)
-{
-    $perkembangan_penduduk->delete();
+    {
+        $perkembangan_penduduk->delete();
 
-    return redirect()->route('perkembangan-penduduk.index')
-                     ->with('success', 'Data berhasil dihapus');
-}
-
-    
+        return redirect()
+            ->route('perkembangan-penduduk.index')
+            ->with('success', 'Data perkembangan penduduk berhasil dihapus.');
+    }
 }

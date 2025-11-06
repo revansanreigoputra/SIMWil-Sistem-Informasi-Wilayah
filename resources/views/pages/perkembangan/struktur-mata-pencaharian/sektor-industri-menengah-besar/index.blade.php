@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Daftar - SEKTOR INDUSTRI KECIL / KERAJINAN RUMAH TANGGA')
+@section('title', 'Daftar - SEKTOR INDUSTRI MENENGAH / BESAR')
 
 @section('action')
     <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createModal">
@@ -12,7 +12,7 @@
 <div class="card">
     <div class="card-body">
         <div class="table-responsive">
-            <table id="table-industri-kecil" class="table table-striped">
+            <table id="table-industri-besar" class="table table-striped">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -33,7 +33,7 @@
                             <td>{{ $item->jumlah }}</td>
                             <td class="text-center">
                                 <div class="d-flex justify-content-center gap-1">
-                                    <a href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-industri-kecil.show', $item->id) }}" 
+                                    <a href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-industri-menengah-besar.show', $item->id) }}" 
                                        class="btn btn-sm btn-info">
                                        Detail
                                     </a>
@@ -55,7 +55,7 @@
                                 <div class="modal fade" id="editModal{{ $item->id }}" tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
-                                            <form action="{{ route('perkembangan.struktur-mata-pencaharian.sektor-industri-kecil.update', $item->id) }}" method="POST">
+                                            <form action="{{ route('perkembangan.struktur-mata-pencaharian.sektor-industri-menengah-besar.update', $item->id) }}" method="POST">
                                                 @csrf
                                                 @method('PUT')
                                                 <div class="modal-header">
@@ -107,7 +107,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                                <form action="{{ route('perkembangan.struktur-mata-pencaharian.sektor-industri-kecil.destroy', $item->id) }}" method="POST">
+                                                <form action="{{ route('perkembangan.struktur-mata-pencaharian.sektor-industri-menengah-besar.destroy', $item->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn btn-danger" type="submit">Hapus</button>
@@ -129,7 +129,7 @@
 <div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ route('perkembangan.struktur-mata-pencaharian.sektor-industri-kecil.store') }}" method="POST">
+            <form action="{{ route('perkembangan.struktur-mata-pencaharian.sektor-industri-menengah-besar.store') }}" method="POST">
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title">Tambah Data Baru</h5>
@@ -169,7 +169,7 @@
 @push('addon-script')
 <script>
     $(document).ready(function() {
-        $('#table-industri-kecil').DataTable();
+        $('#table-industri-besar').DataTable();
     });
 </script>
 @endpush

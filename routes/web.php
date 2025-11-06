@@ -153,6 +153,8 @@ use App\Http\Controllers\SektorKehutananController;
 use  App\Http\Controllers\SektorTambangController;
 use App\Http\Controllers\SektorPerdaganganController;
 use App\Http\Controllers\SektorIndustriKecilController;
+use App\Http\Controllers\SektorIndustriMenengahBesarController;
+use App\Http\Controllers\SektorJasaUsahaController;
 
 
 
@@ -1385,23 +1387,6 @@ Route::middleware('auth')->prefix('layanan-surat')->group(function () {
     Route::get('laporan/surat/{id}', [LaporanSuratController::class, 'show'])->name('laporan-surat.show');
 });
 
-// sektor perikanan 
-
-Route::prefix('perkembangan/struktur-mata-pencaharian/sektor-perikanan')->name('perkembangan.struktur-mata-pencaharian.sektor-perikanan.')->group(function () {
-    Route::get('/', [SektorPerikananController::class, 'index'])->name('index');
-    Route::get('/create', [SektorPerikananController::class, 'create'])->name('create');
-    Route::post('/', [SektorPerikananController::class, 'store'])->name('store');
-    Route::get('/{id}', [SektorPerikananController::class, 'show'])->name('show');
-    Route::get('/{id}/edit', [SektorPerikananController::class, 'edit'])->name('edit');
-    Route::put('/{sektorPerikanan}', [SektorPerikananController::class, 'update'])->name('update');
-    Route::delete('/{sektorPerikanan}', [SektorPerikananController::class, 'destroy'])->name('destroy');
-});
-
-// sektor kehutanan 
-Route::prefix('perkembangan/struktur-mata-pencaharian')->name('perkembangan.struktur-mata-pencaharian.')->group(function () {
-    Route::resource('sektor-kehutanan', SektorKehutananController::class);
-});
-
 
 // ==== PERMOHONAN SURAT ====
 
@@ -1602,6 +1587,12 @@ Route::prefix('perkembangan/produk-domestik')->name('perkembangan.produk-domesti
     Route::resource('sektor-listrik-gas-air-minum', App\Http\Controllers\SektorListrikGasAirMinumController::class);
 });
 
+// sektor jasa mata pencaharian 
+Route::group(['prefix' => 'perkembangan/struktur-mata-pencaharian', 'as' => 'perkembangan.struktur-mata-pencaharian.'], function () {
+    Route::resource('sektor-jasa-usaha', App\Http\Controllers\SektorJasaUsahaController::class)->except(['create', 'edit']); 
+    // Menggunakan 'except' karena create dan edit ditangani di modal index
+});
+
 // Sektor perdagangan dan hotel
 
 // Sektor perdagangan dan hotel
@@ -1673,6 +1664,30 @@ Route::resource(
     'perkembangan/struktur-mata-pencaharian/sektor-industri-kecil',
     \App\Http\Controllers\SektorIndustriKecilController::class
 )->names('perkembangan.struktur-mata-pencaharian.sektor-industri-kecil');
+
+// sektor perikanan 
+
+Route::prefix('perkembangan/struktur-mata-pencaharian/sektor-perikanan')->name('perkembangan.struktur-mata-pencaharian.sektor-perikanan.')->group(function () {
+    Route::get('/', [SektorPerikananController::class, 'index'])->name('index');
+    Route::get('/create', [SektorPerikananController::class, 'create'])->name('create');
+    Route::post('/', [SektorPerikananController::class, 'store'])->name('store');
+    Route::get('/{id}', [SektorPerikananController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [SektorPerikananController::class, 'edit'])->name('edit');
+    Route::put('/{sektorPerikanan}', [SektorPerikananController::class, 'update'])->name('update');
+    Route::delete('/{sektorPerikanan}', [SektorPerikananController::class, 'destroy'])->name('destroy');
+});
+
+// sektor kehutanan 
+Route::prefix('perkembangan/struktur-mata-pencaharian')->name('perkembangan.struktur-mata-pencaharian.')->group(function () {
+    Route::resource('sektor-kehutanan', SektorKehutananController::class);
+});
+
+//sektor industri besar 
+Route::resource(
+    'perkembangan/struktur-mata-pencaharian/sektor-industri-menengah-besar',
+    \App\Http\Controllers\SektorIndustriMenengahBesarController::class
+)->names('perkembangan.struktur-mata-pencaharian.sektor-industri-menengah-besar');
+
 
 // ==== PERMOHONAN SURAT ====
 

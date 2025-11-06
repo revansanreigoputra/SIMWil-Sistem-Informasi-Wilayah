@@ -622,6 +622,7 @@ class PermissionSeeder extends Seeder
             'perkembangan-penduduk.update',
             'perkembangan-penduduk.delete',
             'perkembangan-penduduk.destroy',
+            'perkembangan-penduduk.show',
 
             // sektor pertambangan permissions
             'sektor-pertambangan.view',
@@ -865,6 +866,20 @@ class PermissionSeeder extends Seeder
             'sektor-industri-kecil.create',
             'sektor-industri-kecil.destroy',
             'sektor-industri-kecil.show',
+
+            // sektor industri besar dan menengah
+
+            'sektor-industri-menengah-besar.view',
+            'sektor-industri-menengah-besar.destroy',
+            'sektor-industri-menengah-besar.show',
+            'sektor-industri-menengah-besar.create',
+
+            //sektor jasa usaha mata pencaharian 
+            'sektor-jasa-usaha.view',
+            'sektor-jasa-usaha.show',
+            'sektor-jasa-usaha.update',
+            'sektor-jasa-usaha.destroy',
+            'sektor-jasa-usaha.store',
 
             // Pertanggungjawaban
             'pertanggungjawaban.view', 
