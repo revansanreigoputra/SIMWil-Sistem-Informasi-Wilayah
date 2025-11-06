@@ -23,10 +23,6 @@
                             <th class="text-center">Tanggal</th>
                             <th class="text-center">Desa</th>
                             <th class="text-center">Penyampaian Laporan Kepala Desa ke BPD</th>
-                            <th class="text-center">Jumlah Informasi yang Disampakan</th>
-                            <th class="text-center">Status Laporan Pertanggungjawaban</th>
-                            <th class="text-center">Laporan Kinerja Kepala Desa/Lurah</th>
-                            <th class="text-center">Jumlah Media Informasi</th>
                             <th class="text-center">Pengaduan (Selesai/Diterima)</th>
                             <th class="text-center">Aksi</th>
                         </tr>
@@ -46,26 +42,6 @@
                                         <span class="badge bg-secondary">-</span>
                                     @endif
                                 </td>
-                                <td class="text-center">{{ $item->jumlah_informasi ?? '-' }}</td>
-                                <td>
-                                    @if($item->status_laporan === 'diterima')
-                                        <span class="badge bg-success">Diterima</span>
-                                    @elseif($item->status_laporan === 'ditolak')
-                                        <span class="badge bg-danger">Ditolak</span>
-                                    @else
-                                        <span class="badge bg-secondary">-</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if($item->laporan_kinerja === 'diterima')
-                                        <span class="badge bg-success">Diterima</span>
-                                    @elseif($item->laporan_kinerja === 'ditolak')
-                                        <span class="badge bg-danger">Ditolak</span>
-                                    @else
-                                        <span class="badge bg-secondary">-</span>
-                                    @endif
-                                </td>
-                                <td class="text-center">{{ $item->jumlah_media_informasi ?? '-' }}</td>
                                 <td class="text-center">{{ $item->jumlah_pengaduan_selesai ?? 0 }} / {{ $item->jumlah_pengaduan_diterima ?? 0 }}</td>
                                 <td>
                                     <div class="d-flex gap-1 justify-content-center">
