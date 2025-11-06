@@ -12,7 +12,7 @@ class berbangsa extends Model
     protected $table = 'berbangsas';
 
     protected $fillable = [
-        'id_desa',
+        'desa_id',
         'tanggal',
         'kegiatan_pemantapan_pancasila',
         'jumlah_kegiatan_pemantapan_pancasila',
@@ -35,33 +35,8 @@ class berbangsa extends Model
         'kasus_penangkapan',
         'kasus_nelayan_petani',
     ];
-
-    protected $casts = [
-        'id_desa',
-        'tanggal' => 'date',
-        'kegiatan_pemantapan_pancasila' => 'integer',
-        'jumlah_kegiatan_pemantapan_pancasila' => 'integer',
-        'jenis_kegiatan_bhineka_tunggal_ika' => 'integer',
-        'jumlah_kegiatan_bhineka_tunggal_ika' => 'integer',
-        'jenis_kegiatan_pemantapan_kesatuan_bangsa' => 'integer',
-        'kasus_desa_minta_suaka' => 'integer',
-        'warga_melintas_resmi' => 'integer',
-        'warga_melintas_tidak_resmi' => 'integer',
-        'kasus_pertempuran_antar_kelompok' => 'integer',
-        'serangan_terhadap_fasilitas' => 'integer',
-        'kasus_merongrong_nkri' => 'integer',
-        'korban_manusia' => 'integer',
-        'masalah_ketenagakerjaan' => 'integer',
-        'kasus_kejahatan_perbatasan' => 'integer',                      
-        'sengketa_perbatasan_desa' => 'integer',
-        'sengketa_perbatasan_antar_daerah' => 'integer',
-        'kasus_diplomatik' => 'integer',
-        'kasus_disintegrasi' => 'integer',
-        'kasus_penangkapan' => 'integer',
-        'kasus_nelayan_petani' => 'integer',
-    ];
     public function desa()
     {
-        return $this->belongsTo(Desa::class, 'id_desa');
+        return $this->belongsTo(Desa::class);
     }
 }

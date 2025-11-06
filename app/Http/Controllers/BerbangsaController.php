@@ -13,7 +13,8 @@ class BerbangsaController extends Controller
      */
     public function index()
     {
-        $data = berbangsa::with(['desa'])->orderBy('tanggal', 'desc')->get();
+        $desaId = session('desa_id');
+        $data = berbangsa::where('desa_id',$desaId)->with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.kedaulatanmasyarakat.berbangsa.index', compact('data'));
     }
 
@@ -32,7 +33,6 @@ class BerbangsaController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'id_desa' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
 
             // Semua kolom lainnya wajib diisi angka, minimal 0
@@ -58,7 +58,8 @@ class BerbangsaController extends Controller
             'kasus_nelayan_petani' => 'required|integer|min:0',
         ]);
 
-        Berbangsa::create($request->all());
+        $validated['desa_id'] = session('desa_id');
+        Berbangsa::create($validated);
 
         return redirect()->route('perkembangan.kedaulatanmasyarakat.berbangsa.index')
                          ->with('success', 'Data Berbangsa berhasil ditambahkan.');
@@ -69,7 +70,7 @@ class BerbangsaController extends Controller
      */
     public function show($id)
     {
-        $berbangsa = berbangsa::findOrFail($id);
+        $berbangsa = berbangsa::with(['desa'])->findOrFail($id);
         $berbangsa->load(['desa']); // pastikan relasi terload
         return view('pages.perkembangan.kedaulatanmasyarakat.berbangsa.show', compact('berbangsa'));
     }
@@ -90,7 +91,6 @@ class BerbangsaController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'id_desa' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
 
             // Semua kolom lainnya wajib diisi angka, minimal 0
@@ -130,10 +130,5 @@ class BerbangsaController extends Controller
         $berbangsa = berbangsa::findOrFail($id);
         $berbangsa->delete();
         return redirect()->route('perkembangan.kedaulatanmasyarakat.berbangsa.index')->with('success', 'Data Berbangsa berhasil dihapus.');
-    }
-    public function getDesasByKecamatan($id_kecamatan)
-    {
-        $desas = Desa::where('id_kecamatan', $id_kecamatan)->get();
-        return response()->json($desas);
     }
 }
