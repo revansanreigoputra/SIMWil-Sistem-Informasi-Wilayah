@@ -386,7 +386,7 @@ class PermissionSeeder extends Seeder
             'apb.delete',
 
             // potensi sda
-            // topografi 
+            // topografi
             'topografi.view',
             'topografi.create',
             'topografi.store',
@@ -401,7 +401,7 @@ class PermissionSeeder extends Seeder
             'jlahan.edit',
             'jlahan.update',
             'jlahan.delete',
-            
+
             // iklim
             'iklim.view',
             'iklim.create',
@@ -409,7 +409,7 @@ class PermissionSeeder extends Seeder
             'iklim.edit',
             'iklim.update',
             'iklim.delete',
-            
+
             // lahan
             'lahan.view',
             'lahan.create',
@@ -417,7 +417,7 @@ class PermissionSeeder extends Seeder
             'lahan.edit',
             'lahan.update',
             'lahan.delete',
-            
+
             // hasil
             'hasiltanaman.view',
             'hasiltanaman.create',
@@ -425,7 +425,7 @@ class PermissionSeeder extends Seeder
             'hasiltanaman.edit',
             'hasiltanaman.update',
             'hasiltanaman.delete',
-            
+
             // kepemilikan
             'kepemilikan.view',
             'kepemilikan.create',
@@ -441,10 +441,15 @@ class PermissionSeeder extends Seeder
             'hasilbuah.edit',
             'hasilbuah.update',
             'hasilbuah.delete',
-            'hasilbuah.store',
-            'hasilbuah.edit',
-            'hasilbuah.update',
-            'hasilbuah.delete',
+
+            // jenis populasi ternak permissions
+            'jenis-populasi-ternak.view',
+            'jenis-populasi-ternak.create',
+            'jenis-populasi-ternak.store',
+            'jenis-populasi-ternak.edit',
+            'jenis-populasi-ternak.update',
+            'jenis-populasi-ternak.delete',
+            'jenis-populasi-ternak.destroy',
 
             // apotikhidup
             'apotikhidup.view',
@@ -453,7 +458,7 @@ class PermissionSeeder extends Seeder
             'apotikhidup.edit',
             'apotikhidup.update',
             'apotikhidup.delete',
-            
+
             // kebun
             'kebun.view',
             'kebun.create',

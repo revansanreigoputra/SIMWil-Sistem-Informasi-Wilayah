@@ -697,6 +697,17 @@ Route::middleware(['auth'])->prefix('potensi/sda/kebun')->name('kebun.')->group(
     Route::delete('/{kebun}', [KepemilikanLahanKebunController::class, 'destroy'])->name('destroy');
 });
 
+// Jenis Populasi Ternak routes
+Route::middleware(['auth'])->prefix('potensi/sda/populasi-ternak')->name('jenis-populasi-ternak.')->group(function () {
+    Route::get('/', [\App\Http\Controllers\JenisPopulasiTernakController::class, 'index'])->name('index');
+    Route::get('/create', [\App\Http\Controllers\JenisPopulasiTernakController::class, 'create'])->name('create');
+    Route::post('/', [\App\Http\Controllers\JenisPopulasiTernakController::class, 'store'])->name('store');
+    Route::get('/{jenisPopulasiTernak}', [\App\Http\Controllers\JenisPopulasiTernakController::class, 'show'])->name('show');
+    Route::get('/{jenisPopulasiTernak}/edit', [\App\Http\Controllers\JenisPopulasiTernakController::class, 'edit'])->name('edit');
+    Route::put('/{jenisPopulasiTernak}', [\App\Http\Controllers\JenisPopulasiTernakController::class, 'update'])->name('update');
+    Route::delete('/{jenisPopulasiTernak}', [\App\Http\Controllers\JenisPopulasiTernakController::class, 'destroy'])->name('destroy');
+});
+
 //APB Desa Routes
 Route::middleware(['auth'])->prefix('perkembangan/pemerintahdesadankelurahan/apbdesa')->name('perkembangan.pemerintahdesadankelurahan.apbdesa.')->group(function () {
     Route::get('/', [APBDesaController::class, 'index'])->name('index');

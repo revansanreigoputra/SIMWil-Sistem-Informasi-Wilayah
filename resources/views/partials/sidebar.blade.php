@@ -450,7 +450,7 @@
                                             @can('hasiltanaman.view')
                                                 <a class="dropdown-item {{ request()->is('potensi/sda/hasiltanaman*') ? 'active' : '' }}"
                                                     href="{{ route('hasiltanaman.index') }}">
-                                                    Hasil & Produksi Tanaman
+                                                    Hasil & Produksi <br> Tanaman
                                                 </a>
                                             @endcan
 
@@ -483,6 +483,15 @@
                                                 <a class="dropdown-item {{ request()->is('potensi/sda/kebun*') ? 'active' : '' }}"
                                                     href="{{ route('kebun.index') }}">
                                                     Kep. Lahan Kebun
+                                                </a>
+                                            @endcan
+
+                                            <br>
+
+                                            @can('jenis-populasi-ternak.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/populasi-ternak*') ? 'active' : '' }}"
+                                                    href="{{ route('jenis-populasi-ternak.index') }}">
+                                                    Populasi Ternak
                                                 </a>
                                             @endcan
 
