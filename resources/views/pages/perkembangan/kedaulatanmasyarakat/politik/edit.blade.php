@@ -306,6 +306,38 @@
                         </div>
                     </div>
                 </div>
+                {{-- Dropdown Hukum LKD --}}
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <label for="hukum_lkds_id" class="form-label">Dasar Hukum LKD <span class="text-danger">*</span></label>
+                            <select name="hukum_lkds_id" id="hukum_lkds_id" class="form-select" required>
+                                <option value="">-- Pilih --</option>
+                                @foreach ($hukumlkd as $item)
+                                    <option value="{{ $item->id }}" {{ old('hukum_lkds_id', $politik->hukum_lkds_id) == $item->id ? 'selected' : '' }}>
+                                        {{ $item->nama }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                {{-- Dropdown Hukum LKK --}}
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <label for="hukum_lkks_id" class="form-label">Dasar Hukum LKK <span class="text-danger">*</span></label>
+                            <select name="hukum_lkks_id" id="hukum_lkks_id" class="form-select" required>
+                                <option value="">-- Pilih --</option>
+                                @foreach ($hukumlkk as $item)
+                                    <option value="{{ $item->id }}" {{ old('hukum_lkks_id', $politik->hukum_lkks_id) == $item->id ? 'selected' : '' }}>
+                                        {{ $item->nama }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
                 {{-- Sisa Radio LKD --}}
                 @php

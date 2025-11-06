@@ -59,18 +59,9 @@ return new class extends Migration
 
             // Lembaga Kemasyarakatan Desa/Kelurahan (LKD/LKK)
             $table->enum('keberadaan_organisasi_lkd', ['Ada', 'Tidak Ada'])->nullable();
-            $table->enum('dasar_hukum_organisasi_lkd',[
-                'peraturan_desa',
-                'keputusan_kepala_desa',
-                'keputusan_camat',
-                'belum_diatur'
-            ])->nullable();
+            $table->foreignId('hukum_lkds_id')->constrained('hukum_lkds')->onDelete('cascade');
             $table->integer('jumlah_organisasi_lkd_desa')->nullable();
-            $table->enum('dasar_hukum_pembentukan_lkd_kelurahan',[
-                'keputusan_lurah',
-                'keputusan_camat',
-                'belum_diatur'
-            ])->nullable();
+            $table->foreignId('hukum_lkks_id')->constrained('hukum_lkks')->onDelete('cascade');
             $table->integer('jumlah_organisasi_lkd_kelurahan')->nullable();
 
             // dari gambar: Pemilihan pengurus LKD

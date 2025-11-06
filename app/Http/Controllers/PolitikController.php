@@ -11,6 +11,8 @@ use App\Models\MasterPerkembangan\PenentuanAnggotaBpd;
 use App\Models\MasterPerkembangan\PenentuanKetuaBpd;
 use App\Models\MasterPerkembangan\PengurusLkd;
 use App\Models\MasterPerkembangan\PengurusLkk;
+use App\Models\MasterPerkembangan\HukumLkk;
+use App\Models\MasterPerkembangan\HukumLkd;
 use App\Models\Desa;
 use Illuminate\Http\Request;
 
@@ -31,7 +33,9 @@ class PolitikController extends Controller
             'penentuanAnggotaBpd',
             'penentuanKetuaBpd',
             'pengurusLkd',
-            'pengurusLkk'
+            'pengurusLkk',
+            'hukumLkk',
+            'HukumLkd'
         ])->where('desa_id', $desaId)->latest()->get();
 
         return view('pages.perkembangan.kedaulatanmasyarakat.politik.index', compact('data'));
@@ -50,7 +54,9 @@ class PolitikController extends Controller
         $penentuanketuabpd = PenentuanKetuaBpd::all();
         $penguruslkd = PengurusLkd::all();
         $penguruslkk = PengurusLkk::all();
-        return view('pages.perkembangan.kedaulatanmasyarakat.politik.create', compact('penentuankepaladesa', 'penentuansekretarisdesa', 'penentuanperangkatdesa', 'penentuanlurah', 'penentuananggotabpd', 'penentuanketuabpd', 'penguruslkd', 'penguruslkk'));
+        $hukumlkd = HukumLkd::all();
+        $hukumlkk = HukumLkk::all();
+        return view('pages.perkembangan.kedaulatanmasyarakat.politik.create', compact('penentuankepaladesa', 'penentuansekretarisdesa', 'penentuanperangkatdesa', 'penentuanlurah', 'penentuananggotabpd', 'penentuanketuabpd', 'penguruslkd', 'penguruslkk', 'hukumlkd', 'hukumlkk',));
     }
 
     /**
@@ -99,9 +105,9 @@ class PolitikController extends Controller
 
             // LKD/LKK
             'keberadaan_organisasi_lkd' => 'nullable|in:Ada,Tidak Ada',
-            'dasar_hukum_organisasi_lkd' => 'nullable|in:peraturan_desa,keputusan_kepala_desa,keputusan_camat,belum_diatur',
+            'hukum_lkds_id' => 'required|exists:hukum_lkds,id',
             'jumlah_organisasi_lkd_desa' => 'nullable|integer|min:0',
-            'dasar_hukum_pembentukan_lkd_kelurahan' => 'nullable|in:keputusan_lurah,keputusan_camat,belum_diatur',
+            'hukum_lkks_id' => 'required|exists:hukum_lkks,id',
             'jumlah_organisasi_lkd_kelurahan' => 'nullable|integer|min:0',
             'pengurus_lkd_id' => 'required|exists:pengurus_lkd,id',
             'pengurus_lkk_id' => 'required|exists:pengurus_lkk,id',
@@ -138,6 +144,8 @@ class PolitikController extends Controller
         'penentuanKetuaBpd',
         'pengurusLkd',
         'pengurusLkk',
+        'hukumLkk',
+        'HukumLkd',
         'desa'
     ])->findOrFail($id);
 
@@ -170,7 +178,9 @@ class PolitikController extends Controller
         $penentuanketuabpd = PenentuanKetuaBpd::all();
         $penguruslkd = PengurusLkd::all();
         $penguruslkk = PengurusLkk::all();
-        return view('pages.perkembangan.kedaulatanmasyarakat.politik.edit', compact('politik', 'penentuankepaladesa', 'penentuansekretarisdesa', 'penentuanperangkatdesa', 'penentuanlurah', 'penentuananggotabpd', 'penentuanketuabpd', 'penguruslkd', 'penguruslkk'));
+        $hukumlkd = HukumLkd::all();
+        $hukumlkk = HukumLkk::all();
+        return view('pages.perkembangan.kedaulatanmasyarakat.politik.edit', compact('politik', 'penentuankepaladesa', 'penentuansekretarisdesa', 'penentuanperangkatdesa', 'penentuanlurah', 'penentuananggotabpd', 'penentuanketuabpd', 'penguruslkd', 'penguruslkk', 'hukumlkk', 'hukumlkd',));
     }
 
     /**
@@ -219,9 +229,9 @@ class PolitikController extends Controller
 
             // LKD/LKK
             'keberadaan_organisasi_lkd' => 'nullable|in:Ada,Tidak Ada',
-            'dasar_hukum_organisasi_lkd' => 'nullable|in:peraturan_desa,keputusan_kepala_desa,keputusan_camat,belum_diatur',
+            'hukum_lkds_id' => 'required|exists:hukum_lkds,id',
             'jumlah_organisasi_lkd_desa' => 'nullable|integer|min:0',
-            'dasar_hukum_pembentukan_lkd_kelurahan' => 'nullable|in:keputusan_lurah,keputusan_camat,belum_diatur',
+            'hukum_lkks_id' => 'required|exists:hukum_lkks,id',
             'jumlah_organisasi_lkd_kelurahan' => 'nullable|integer|min:0',
             'pengurus_lkd_id' => 'required|exists:pengurus_lkd,id',
             'pengurus_lkk_id' => 'required|exists:pengurus_lkk,id',

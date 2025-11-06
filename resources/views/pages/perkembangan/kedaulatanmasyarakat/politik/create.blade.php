@@ -237,22 +237,22 @@
 
                 {{-- Baris 2 --}}
                 <div class="col-md-6">
-                    <label class="form-label fw-bold">Dasar Hukum Organisasi LKD <span class="text-danger">*</span></label>
-                    @foreach (['peraturan_desa','keputusan_kepala_desa','keputusan_camat','belum_diatur'] as $option)
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="radio" name="dasar_hukum_organisasi_lkd" value="{{ $option }}"required>
-                            <label class="form-check-label">{{ ucwords(str_replace('_',' ', $option)) }}</label>
-                        </div>
-                    @endforeach
+                    <label for="hukum_lkds_id" class="form-label">Dasar Hukum LKD <span class="text-danger">*</span></label>
+                    <select name="hukum_lkds_id" id="hukum_lkds_id" class="form-select" required>
+                        <option value="">--Pilih--</option>
+                        @foreach ($hukumlkd as $item)
+                            <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label fw-bold">Dasar Hukum Pembentukan LKK Kelurahan <span class="text-danger">*</span></label>
-                    @foreach (['keputusan_lurah','keputusan_camat','belum_diatur'] as $option)
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="radio" name="dasar_hukum_pembentukan_lkd_kelurahan" value="{{ $option }}"required>
-                            <label class="form-check-label">{{ ucwords(str_replace('_',' ', $option)) }}</label>
-                        </div>
-                    @endforeach
+                    <label for="hukum_lkks_id" class="form-label">Dasar Hukum LKK <span class="text-danger">*</span></label>
+                    <select name="hukum_lkks_id" id="hukum_lkks_id" class="form-select" required>
+                        <option value="">--Pilih--</option>
+                        @foreach ($hukumlkk as $item)
+                            <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 
 
@@ -319,7 +319,6 @@
                 @endforeach
             </div>
         </div>
-        <br>
             {{-- Tombol Aksi --}}
             <div class="d-flex justify-content-between align-items-center">
                 <small class="text-muted">

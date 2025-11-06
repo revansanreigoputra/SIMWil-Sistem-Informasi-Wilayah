@@ -120,11 +120,12 @@
                 </colgroup>
                 <tr><td>Pemilihan Pengurus LKD</td><td>:</td><td>{{ $politik->PengurusLkd?->nama ?? '-' }}</td>
                 <tr><td>Pemilihan Pengurus LKK</td><td>:</td><td>{{ $politik->PengurusLkk?->nama ?? '-' }}</td>
+                <tr><td>Dasar Hukum LKD</td><td>:</td><td>{{ $politik->HukumLkd?->nama ?? '-' }}</td>
+                <tr><td>Dasar Hukum LKK</td><td>:</td><td>{{ $politik->HukumLkk?->nama ?? '-' }}</td>
+                
                 @foreach ([
                     'keberadaan_organisasi_lkd' => 'Keberadaan Organisasi LKD',
-                    'dasar_hukum_organisasi_lkd' => 'Dasar Hukum Organisasi LKD',
                     'jumlah_organisasi_lkd_desa' => 'Jumlah Organisasi LKD Desa',
-                    'dasar_hukum_pembentukan_lkd_kelurahan' => 'Dasar Hukum Pembentukan LKD Kelurahan',
                     'jumlah_organisasi_lkd_kelurahan' => 'Jumlah Organisasi LKD Kelurahan',
                     'status_lkd' => 'Status LKD',
                     'jumlah_kegiatan_lkd' => 'Jumlah Kegiatan LKD',
