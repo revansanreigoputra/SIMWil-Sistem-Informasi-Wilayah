@@ -13,7 +13,8 @@ class PembinaankecamatanController extends Controller
      */
     public function index()
     {
-         $data = PembinaanKecamatan::with(['desa'])->orderBy('tanggal', 'desc')->get();
+        $desaId = session('desa_id');
+        $data = PembinaanKecamatan::where('desa_id',$desaId)->with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.pemerintahdesadankelurahan.pembinaankecamatan.index', compact('data'));
     }
 
@@ -33,7 +34,6 @@ class PembinaankecamatanController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'fasilitasi_penyusunan_perdes' => 'nullable|integer|min:0',
             'fasilitasi_administrasi_tata_pemerintahan' => 'nullable|integer|min:0',
             'fasilitasi_pengelolaan_keuangan' => 'nullable|integer|min:0',
@@ -51,6 +51,7 @@ class PembinaankecamatanController extends Controller
             'fasilitasi_bantuan_teknis' => 'nullable|integer|min:0',
             'fasilitasi_koordinasi_unit_kerja' => 'nullable|integer|min:0',
         ]);
+        $validated['desa_id'] = session('desa_id');
         PembinaanKecamatan::create($validated);
         return redirect()->route('perkembangan.pemerintahdesadankelurahan.pembinaankecamatan.index')->with('success', 'Data Pembinaan Kecamatan berhasil ditambahkan.');
     }
@@ -60,7 +61,7 @@ class PembinaankecamatanController extends Controller
      */
     public function show($id)
     {
-         $pembinaankecamatan = PembinaanKecamatan::findOrFail($id);
+         $pembinaankecamatan = PembinaanKecamatan::with(['desa'])->findOrFail($id);
          $pembinaankecamatan->load(['desa']);
         return view('pages.perkembangan.pemerintahdesadankelurahan.pembinaankecamatan.show', compact('pembinaankecamatan'));
     }
@@ -81,8 +82,7 @@ class PembinaankecamatanController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-           'tanggal' => 'required|date',
-           'id_desa' => 'required|exists:desas,id',
+            'tanggal' => 'required|date',
             'fasilitasi_penyusunan_perdes' => 'nullable|integer|min:0',
             'fasilitasi_administrasi_tata_pemerintahan' => 'nullable|integer|min:0',
             'fasilitasi_pengelolaan_keuangan' => 'nullable|integer|min:0',
@@ -114,10 +114,5 @@ class PembinaankecamatanController extends Controller
         $pembinaankecamatan->delete();
         return redirect()->route('perkembangan.pemerintahdesadankelurahan.pembinaankecamatan.index')
         ->with('success', 'Data Pembinaan Kecamatan berhasil dihapus.');    
-    }
-    public function getDesasByKecamatan($id_kecamatan)
-    {
-        $desas = Desa::where('id_kecamatan', $id_kecamatan)->get();
-        return response()->json($desas);
     }
 }
