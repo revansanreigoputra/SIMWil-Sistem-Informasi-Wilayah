@@ -13,7 +13,8 @@ class OrganisasiController extends Controller
      */
     public function index()
     {
-        $data = organisasi::with(['desa'])->orderBy('tanggal', 'desc')->get();
+        $desaId = session('desa_id');
+        $data = organisasi::where('desa_id',$desaId)->with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.lembagakemasyarakatan.organisasi.index', compact('data'));
     }
 
@@ -33,7 +34,6 @@ class OrganisasiController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jenis_organisasi' => 'required|string',
             'kepengurusan' => 'nullable|string',
             'buku_administrasi' => 'nullable|string',
@@ -41,6 +41,7 @@ class OrganisasiController extends Controller
             'dasar_hukum_pembentukan' => 'nullable|string',
         ]);
 
+        $validated['desa_id'] = session('desa_id');
         organisasi::create($validated);
 
         return redirect()->route('perkembangan.lembagakemasyarakatan.organisasi.index')->with('success', 'Data organisasi berhasil disimpan.');
@@ -51,7 +52,7 @@ class OrganisasiController extends Controller
      */
     public function show($id)
     {
-        $organisasi = organisasi::findOrFail($id);
+        $organisasi = organisasi::with(['desa'])->findOrFail($id);
         $organisasi->load(['desa']);
         return view('pages.perkembangan.lembagakemasyarakatan.organisasi.show', compact('organisasi'));
     }
@@ -74,7 +75,6 @@ class OrganisasiController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jenis_organisasi' => 'required|string',
             'kepengurusan' => 'nullable|string',
             'buku_administrasi' => 'nullable|string',
@@ -95,10 +95,5 @@ class OrganisasiController extends Controller
         $organisasi->delete();
         return redirect()->route('perkembangan.lembagakemasyarakatan.organisasi.index')
                          ->with('success', 'Data organisasi berhasil dihapus.');
-    }
-    public function getDesasByKecamatan($id_kecamatan)
-    {
-        $desas = Desa::where('id_kecamatan', $id_kecamatan)->get();
-        return response()->json($desas);
     }
 }
