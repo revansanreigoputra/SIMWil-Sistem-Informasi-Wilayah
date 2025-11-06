@@ -318,23 +318,23 @@
                     </div>
                 @endforeach
             </div>
-        </div>
+            <hr class="my-3">
             {{-- Tombol Aksi --}}
             <div class="d-flex justify-content-between align-items-center">
-                <small class="text-muted">
-                    <span class="text-danger">*</span> wajib diisi
-                </small>
-                <div class="btn-group gap-2">
-                    <a href="{{ route('perkembangan.kedaulatanmasyarakat.politik.index') }}"
-                        class="btn btn-outline-secondary rounded">
-                        <i class="fas fa-arrow-left me-1"></i> Kembali
-                    </a>
-                    <button type="submit" class="btn btn-primary">
+                    <small class="text-muted">
+                        <span class="text-danger">*</span> wajib diisi
+                    </small>
+                    <div class="btn-group gap-2">
+                        <a href="{{ route('perkembangan.kedaulatanmasyarakat.politik.index') }}"
+                            class="btn btn-outline-secondary rounded">
+                            <i class="fas fa-arrow-left me-1"></i> Kembali
+                        </a>
+                        <button type="submit" class="btn btn-primary">
                         <i class="fas fa-save me-1"></i> Simpan Data
-                    </button>
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 @endsection
