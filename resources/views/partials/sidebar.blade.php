@@ -515,6 +515,14 @@
                                                     Kondisi Hutan
                                                 </a>
                                             @endcan
+                                            
+                                            @can('dampakpengolahan.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/dampakpengolahan*') ? 'active' : '' }}"
+                                                    href="{{ route('dampakpengolahan.index') }}">
+                                                    Dampah Pengolahan <br>
+                                                    Hutan
+                                                </a>
+                                            @endcan
 
                                         </div>
                                     </div>

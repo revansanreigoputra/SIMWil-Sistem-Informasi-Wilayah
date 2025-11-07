@@ -493,6 +493,14 @@ class PermissionSeeder extends Seeder
             'kondisihutan.edit',
             'kondisihutan.update',
             'kondisihutan.delete',
+            
+            // dampakpengolahan
+            'dampakpengolahan.view',
+            'dampakpengolahan.create',
+            'dampakpengolahan.store',
+            'dampakpengolahan.edit',
+            'dampakpengolahan.update',
+            'dampakpengolahan.delete',
 
             // pengangguran
             'pengangguran.view',

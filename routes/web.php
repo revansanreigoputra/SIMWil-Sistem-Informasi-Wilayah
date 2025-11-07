@@ -214,6 +214,7 @@ use App\Http\Controllers\HasilProduksiKebunController;
 use App\Http\Controllers\KepemilikanLahanHutanController;
 use App\Http\Controllers\HasilProduksiHutanController;
 use App\Http\Controllers\KondisiHutanController;
+use App\Http\Controllers\DampakPengolahanHutanController;
 
 
 // kelembagaan
@@ -780,6 +781,17 @@ Route::middleware(['auth'])->prefix('potensi/sda/kondisihutan')->name('kondisihu
     Route::get('/{kondisihutan}/edit', [KondisiHutanController::class, 'edit'])->name('edit');
     Route::put('/{kondisihutan}', [KondisiHutanController::class, 'update'])->name('update');
     Route::delete('/{kondisihutan}', [KondisiHutanController::class, 'destroy'])->name('destroy');
+});
+
+// dampakpengolahan routes
+Route::middleware(['auth'])->prefix('potensi/sda/dampakpengolahan')->name('dampakpengolahan.')->group(function () {
+    Route::get('/', [DampakPengolahanHutanController::class, 'index'])->name('index');
+    Route::get('/create', [DampakPengolahanHutanController::class, 'create'])->name('create');
+    Route::post('/', [DampakPengolahanHutanController::class, 'store'])->name('store');
+    Route::get('/{dampakpengolahan}', [DampakPengolahanHutanController::class, 'show'])->name('show');
+    Route::get('/{dampakpengolahan}/edit', [DampakPengolahanHutanController::class, 'edit'])->name('edit');
+    Route::put('/{dampakpengolahan}', [DampakPengolahanHutanController::class, 'update'])->name('update');
+    Route::delete('/{dampakpengolahan}', [DampakPengolahanHutanController::class, 'destroy'])->name('destroy');
 });
 
 //APB Desa Routes
