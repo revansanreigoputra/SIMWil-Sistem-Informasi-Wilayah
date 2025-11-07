@@ -490,7 +490,7 @@ class PermissionSeeder extends Seeder
             'hasilhutan.edit',
             'hasilhutan.update',
             'hasilhutan.delete',
-            
+
             // kondisihutan
             'kondisihutan.view',
             'kondisihutan.create',
@@ -498,7 +498,7 @@ class PermissionSeeder extends Seeder
             'kondisihutan.edit',
             'kondisihutan.update',
             'kondisihutan.delete',
-            
+
             // dampakpengolahan
             'dampakpengolahan.view',
             'dampakpengolahan.create',
@@ -663,7 +663,7 @@ class PermissionSeeder extends Seeder
             'sektor-industri-pengolahan.update',
             'sektor-industri-pengolahan.delete',
             'sektor-industri-pengolahan.destroy',
-            
+
             // subsektor kehutanan permissions
                 'subsektor-kehutanan.view',
                 'subsektor-kehutanan.create',
@@ -711,16 +711,16 @@ class PermissionSeeder extends Seeder
                 'kualitas-persalinan.delete',
                 'kualitas-persalinan.destroy',
                 'kualitas-persalinan.show',
-                                    
+
                 // cakupan imunisasi permission
                 'cakupan-imunisasi.view',
                 'cakupan-imunisasi.create',
                 'cakupan-imunisasi.edit',
                 'cakupan-imunisasi.delete',
                 'cakupan-imunisasi.update',
-                'cakupan-imunisasi.show',   
+                'cakupan-imunisasi.show',
 
-                
+
                 // wabah penyakit
                'wabah-penyakit.view',
                 'wabah-penyakit.create',
@@ -750,9 +750,9 @@ class PermissionSeeder extends Seeder
                 'penderita-sakit.edit',
                 'penderita-sakit.delete',
 
-                // sarana dan prasana 
+                // sarana dan prasana
 
-                // sarana dan prasana 
+                // sarana dan prasana
                 'sarana-prasarana.view',
                 'sarana-prasarana.create',
                  'sarana-prasarana.update',
@@ -761,15 +761,15 @@ class PermissionSeeder extends Seeder
 
                 // perkembangan pasangan subur dini hari
 
-                
+
                 'pasangan-usia-subur.view',
                 'pasangan-usia-subur.create',
                 'pasangan-usia-subur.update',
                 'pasangan-usia-subur.delete',
                 'pasangan-usia-subur.show',
 
-                // cakupan air bersih 
-                
+                // cakupan air bersih
+
                 'cakupan-air-bersih.view',
                 'cakupan-air-bersih.create',
                 'cakupan-air-bersih.show',
@@ -791,14 +791,14 @@ class PermissionSeeder extends Seeder
                     'sektor-jasa-jasa.edit',
                     'sektor-jasa-jasa.destroy',
 
-                    // sektor keungan jasa perusahaan 
-         'sektor-keuangan-jasa-perusahaan.view',          
+                    // sektor keungan jasa perusahaan
+         'sektor-keuangan-jasa-perusahaan.view',
         'sektor-keuangan-jasa-perusahaan.create',
         'sektor-keuangan-jasa-perusahaan.show',
          'sektor-keuangan-jasa-perusahaan.edit',
         'sektor-keuangan-jasa-perusahaan.destroy',
-                                
-            // sektor angkutan dan komunikasi 
+
+            // sektor angkutan dan komunikasi
 
             'sektor-angkutan.view',
             'sektor-angkutan.create',
@@ -808,7 +808,7 @@ class PermissionSeeder extends Seeder
               'sektor-angkutan.show',
               'sektor-angkutan.destroy',
 
-              //Sektor air minum dan gas 
+              //Sektor air minum dan gas
                 'sektor-listrik-gas-air-minum.view',
                 'sektor-listrik-gas-air-minum.create',
                 'sektor-listrik-gas-air-minum.show',
@@ -828,10 +828,10 @@ class PermissionSeeder extends Seeder
                 'sektor-pertanian.create',
                 'sektor-pertanian.show',
                 'sektor-pertanian.edit',
-                'sektor-pertanian.destroy', 
+                'sektor-pertanian.destroy',
 
 
-                // sektor pertanian 
+                // sektor pertanian
             'sektor-perkebunan.view',
             'sektor-perkebunan.create',
             'sektor-perkebunan.show',
@@ -845,20 +845,28 @@ class PermissionSeeder extends Seeder
             'sektor-peternakan.show',
             'sektor-peternakan.edit',
 
-            // sektor perikanan 
+            // sektor perikanan
 
             'sektor-perikanan.view',
             'sektor-perikanan.show',
             'sektor-perikanan.update',
             'sektor-perikanan.destroy',
             'sektor-perikanan.store',
-            
-        
-            // sektor kehutanan 
+
+
+            // sektor kehutanan
             'sektor-kehutanan.view',
             'sektor-kehutanan.store',
             'sektor-kehutanan.update',
             'sektor-kehutanan.destroy',
+
+            // produksi ternak permissions
+            'produksi-ternak.view',
+            'produksi-ternak.create',
+            'produksi-ternak.store',
+            'produksi-ternak.edit',
+            'produksi-ternak.update',
+            'produksi-ternak.delete',
 
             //sektor tambang
             'sektor-tambang.view',
@@ -866,7 +874,7 @@ class PermissionSeeder extends Seeder
             'sektor-tambang.update',
             'sektor-tambang.destroy',
 
-            // sektor pertambangan 
+            // sektor pertambangan
             'sektor-perdagangan.view',
             'sektor-perdagangan.create',
             'sektor-perdagangan.show',
@@ -887,7 +895,7 @@ class PermissionSeeder extends Seeder
             'sektor-industri-menengah-besar.show',
             'sektor-industri-menengah-besar.create',
 
-            //sektor jasa usaha mata pencaharian 
+            //sektor jasa usaha mata pencaharian
             'sektor-jasa-usaha.view',
             'sektor-jasa-usaha.show',
             'sektor-jasa-usaha.update',
@@ -895,7 +903,7 @@ class PermissionSeeder extends Seeder
             'sektor-jasa-usaha.store',
 
             // Pertanggungjawaban
-            'pertanggungjawaban.view', 
+            'pertanggungjawaban.view',
             'pertanggungjawaban.create',
             'pertanggungjawaban.store',
             'pertanggungjawaban.edit',
