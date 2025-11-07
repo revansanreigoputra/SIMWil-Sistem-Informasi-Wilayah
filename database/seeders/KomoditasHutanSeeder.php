@@ -15,6 +15,7 @@ class KomoditasHutanSeeder extends Seeder
         $data = [
             ['nama' => 'Bambu'],
             ['nama' => 'Cemara'],
+            ['nama' => 'Jati'],
         ];
          KomoditasHutan::insert($data);
     }

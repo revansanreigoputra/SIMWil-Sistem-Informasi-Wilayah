@@ -14,6 +14,7 @@
                     <thead class="text-center">
                         <tr>
                             <th>No</th>
+                            <th>Desa</th>
                             <th>Tanggal</th>
                             <th>Jml Laki-laki Thn Ini</th>
                             <th>Jml Perempuan Thn Ini</th>
@@ -30,6 +31,7 @@
                         @foreach ($perkembangan_penduduks as $item)
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
+                               <td class="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
                                 <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
                                 <td class="text-center">{{ $item->jumlah_laki_laki_tahun_ini }}</td>
                                 <td class="text-center">{{ $item->jumlah_perempuan_tahun_ini }}</td>
@@ -39,22 +41,36 @@
                                 <td class="text-center">{{ $item->jumlah_kepala_keluarga_perempuan_tahun_ini }}</td>
                                 <td class="text-center">{{ $item->jumlah_kepala_keluarga_laki_laki_tahun_lalu }}</td>
                                 <td class="text-center">{{ $item->jumlah_kepala_keluarga_perempuan_tahun_lalu }}</td>
-                              <td class="text-center">
-    @canany(['perkembangan-penduduk.update', 'perkembangan-penduduk.delete'])
+                             <td class="text-center">
+    @canany(['perkembangan-penduduk.show', 'perkembangan-penduduk.update', 'perkembangan-penduduk.delete'])
         <div class="d-flex gap-1 justify-content-center">
+
+            {{-- Tombol Lihat (Show) --}}
+            @can('perkembangan-penduduk.show')
+                <a href="{{ route('perkembangan-penduduk.show', $item->id) }}" 
+                   class="btn btn-sm btn-info">
+                    <i class="fas fa-eye"></i> Detail
+                </a>
+            @endcan
+
+            {{-- Tombol Edit --}}
             @can('perkembangan-penduduk.update')
                 <a href="{{ route('perkembangan-penduduk.edit', $item->id) }}" 
                    class="btn btn-sm btn-warning">
                     <i class="fas fa-edit"></i> Edit
                 </a>
             @endcan
+
+            {{-- Tombol Hapus --}}
             @can('perkembangan-penduduk.delete')
                 <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
                     data-bs-target="#delete-perkembangan-{{ $item->id }}">
                     <i class="fas fa-trash"></i> Hapus
                 </button>
             @endcan
+
         </div>
+
 
         <!-- Modal Delete -->
         <div class="modal fade" id="delete-perkembangan-{{ $item->id }}" tabindex="-1"

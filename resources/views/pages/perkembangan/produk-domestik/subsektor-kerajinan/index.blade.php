@@ -1,10 +1,9 @@
 @extends('layouts.master')
 
-@section('title', 'Daftar - SUBSEKTOR KERAJINAN')
+@section('title', 'Data Subsektor Kerajinan')
 
 @section('action')
-    {{-- PASTIKAN NAMA ROUTE INI SESUAI DENGAN DEFNISI ANDA --}}
-    <a href="{{ route('perkembangan.produk-domestik.subsektor-kerajinan.create') }}" class="btn btn-primary mb-3">+Data Baru</a>
+   <a href="{{ route('perkembangan.produk-domestik.subsektor-kerajinan.create') }}" class="btn btn-primary mb-3">+ Data Baru</a>
 @endsection
 
 @section('content')
@@ -15,38 +14,41 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Desa</th>
                             <th>Tanggal</th>
-                            <th>Total nilai produksi tahun ini (Rp)</th>
-                            <th>Total nilai bahan baku yang digunakan (Rp)</th>
-                            <th>Total nilai bahan penolong yang digunakan (Rp)</th>
-                            <th>Total biaya antara yang dihabiskan (Rp)</th>
-                            <th>Total jenis kerajinan rumah tangga (Jenis)</th>
+                            <th>Total Nilai Produksi<br>(Rp)</th>
+                            <th>Total Nilai Bahan Baku<br>(Rp)</th>
+                            <th>Total Nilai Bahan Penolong<br>(Rp)</th>
+                            <th>Total Biaya Antara<br>(Rp)</th>
+                            <th>Total Jenis Kerajinan Rumah <br>Tangga (Jenis)</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- Menggunakan variabel $kerajinans yang dilempar dari controller --}}
                         @foreach ($kerajinans as $kerajinan)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
+                                <td class="text-center">{{ $kerajinan->desa->nama_desa ?? '-' }}</td>
                                 <td class="text-center">{{ $kerajinan->tanggal }}</td>
-                                {{-- Menampilkan data sesuai kolom Model Kerajinan --}}
-                                <td class="text-center">{{ number_format($kerajinan->total_nilai_produksi_tahun_ini, 0, ',', '.') }}</td>
-                                <td class="text-center">{{ number_format($kerajinan->total_nilai_bahan_baku_digunakan, 0, ',', '.') }}</td>
-                                <td class="text-center">{{ number_format($kerajinan->total_nilai_bahan_penolong_digunakan, 0, ',', '.') }}</td>
-                                <td class="text-center">{{ number_format($kerajinan->total_biaya_antara_dihabiskan, 0, ',', '.') }}</td>
-                                <td class="text-center">{{ $kerajinan->total_jenis_kerajinan_rumah_tangga }}</td>
+                                <td class="text-center">{{ number_format($kerajinan->total_nilai_produksi_tahun_ini ?? 0, 0, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($kerajinan->total_nilai_bahan_baku_digunakan ?? 0, 0, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($kerajinan->total_nilai_bahan_penolong_digunakan ?? 0, 0, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($kerajinan->total_biaya_antara_dihabiskan ?? 0, 0, ',', '.') }}</td>
+                                <td class="text-center">{{ number_format($kerajinan->total_jenis_kerajinan_rumah_tangga ?? 0, 0, ',', '.') }}</td>
                                 <td>
-                                    {{-- Sesuaikan Permission (Hak Akses) jika Anda menggunakan Spatie/Laravel Permission --}}
-                                   @canany(['subsektor-kerajinan.view', 'subsektor-kerajinan.update', 'subsektor-kerajinan.delete'])
-
+                                    @canany(['subsektor-kerajinan.update', 'subsektor-kerajinan.delete'])
                                         <div class="d-flex gap-1 justify-content-center">
-                                            
-                                            {{-- TOMBOL EDIT --}}
+
+                                            {{-- DETAIL --}}
+                                            <a href="{{ route('perkembangan.produk-domestik.subsektor-kerajinan.show', $kerajinan->id) }}" 
+                                                class="btn btn-sm btn-info text-white">
+                                                Detail
+                                            </a>
+
+                                            {{-- EDIT --}}
                                             @can('subsektor-kerajinan.update')
                                                 <a href="{{ route('perkembangan.produk-domestik.subsektor-kerajinan.edit', $kerajinan->id) }}"
                                                     class="btn btn-sm btn-warning">
-                                                    {{-- Icon Edit --}}
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                         stroke-linecap="round" stroke-linejoin="round">
@@ -58,12 +60,11 @@
                                                     Edit
                                                 </a>
                                             @endcan
-                                            
-                                            {{-- TOMBOL HAPUS --}}
+
+                                            {{-- HAPUS --}}
                                             @can('subsektor-kerajinan.delete')
                                                 <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
                                                     data-bs-target="#delete-kerajinan-{{ $kerajinan->id }}">
-                                                    {{-- Icon Hapus --}}
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                         stroke-linecap="round" stroke-linejoin="round">
@@ -78,6 +79,7 @@
                                             @endcan
                                         </div>
 
+                                        {{-- MODAL HAPUS --}}
                                         <div class="modal fade" id="delete-kerajinan-{{ $kerajinan->id }}" tabindex="-1"
                                             aria-labelledby="deleteModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
@@ -88,16 +90,14 @@
                                                             aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <p>Data kerajinan tanggal
-                                                            <strong>{{ $kerajinan->tanggal }}</strong> yang dihapus
-                                                            tidak bisa dikembalikan.
+                                                        <p>Data kerajinan pada tanggal 
+                                                            <strong>{{ $kerajinan->tanggal }}</strong> akan dihapus secara permanen.
                                                         </p>
-                                                        <p>Yakin ingin menghapus data ini?</p>
+                                                        <p>Yakin ingin melanjutkan penghapusan?</p>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
                                                             data-bs-dismiss="modal">Batal</button>
-                                                        {{-- FORM DELETE DENGAN NAMA ROUTE BARU --}}
                                                         <form action="{{ route('perkembangan.produk-domestik.subsektor-kerajinan.destroy', $kerajinan->id) }}"
                                                             method="POST">
                                                             @csrf

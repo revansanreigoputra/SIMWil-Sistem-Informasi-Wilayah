@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\MasterPerkembangan\TempatPerawatan;
 
+
 class TempatPerawatanSeeder extends Seeder
 {
     /**

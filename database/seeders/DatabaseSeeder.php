@@ -102,7 +102,9 @@ class DatabaseSeeder extends Seeder
             StatusKepemilikanSeeder::class,
             TempatPerawatanSeeder::class,
             TempatpersalinanSeeder::class,
-
+            
+            JenisWabahSeeder::class,
+            JenisPenyakitSeeder::class,
             JenisDampakSeeder::class,
             JenisHutanSeeder::class,
             JenisTernakSeeder::class,
@@ -110,6 +112,7 @@ class DatabaseSeeder extends Seeder
             AlatProduksiIkanLautSeeder::class,
             AlatProduksiIkanTawarSeeder::class,
             SatuanProduksiTernakSeeder::class,
+            SatuanProduksiKehutananSeeder::class,
             NamaIkanSeeder::class,
             JenisPotensiAirSeeder::class,
             PengelolaanPotensiAirSeeder::class,

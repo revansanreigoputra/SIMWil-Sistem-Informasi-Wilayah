@@ -15,6 +15,7 @@ class JenisHutanSeeder extends Seeder
         $data = [
             ['nama' => 'Hutan Produksi'],
             ['nama' => 'Hutan Bakau'],
+            ['nama' => 'Hutan Pinus'],
         ];
 
         JenisHutan::insert($data);

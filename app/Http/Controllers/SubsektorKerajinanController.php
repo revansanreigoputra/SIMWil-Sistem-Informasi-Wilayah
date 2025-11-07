@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SubsektorKerajinan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class SubsektorKerajinanController extends Controller
 {
@@ -12,22 +13,33 @@ class SubsektorKerajinanController extends Controller
      */
     public function index()
     {
-        // Ambil semua data SubsektorKerajinan, diurutkan berdasarkan tanggal terbaru
-        $kerajinans = SubsektorKerajinan::orderBy('tanggal', 'desc')->get();
+        $desaId = session('desa_id');
 
-        // Mengirim data ke view index.blade.php
+        // Ambil data berdasarkan desa_id dari session
+        $kerajinans = SubsektorKerajinan::with('desa')
+            ->where('desa_id', $desaId)
+            ->orderBy('tanggal', 'desc')
+            ->paginate(10);
+
         return view('pages.perkembangan.produk-domestik.subsektor-kerajinan.index', compact('kerajinans'));
     }
-        public function create()
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
+        // Tidak perlu kirim daftar desa, karena desa_id diambil dari session
         return view('pages.perkembangan.produk-domestik.subsektor-kerajinan.create');
     }
 
-public function store(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
-        // 1. Validasi Data
-        $request->validate([
-            'tanggal' => 'required|date|unique:subsektor_kerajinans,tanggal',
+        $validator = Validator::make($request->all(), [
+            'tanggal' => 'required|date|unique:subsektor_kerajinans,tanggal,NULL,id,desa_id,' . session('desa_id'),
             'total_nilai_produksi_tahun_ini' => 'required|numeric|min:0',
             'total_nilai_bahan_baku_digunakan' => 'required|numeric|min:0',
             'total_nilai_bahan_penolong_digunakan' => 'required|numeric|min:0',
@@ -35,26 +47,48 @@ public function store(Request $request)
             'total_jenis_kerajinan_rumah_tangga' => 'required|integer|min:0',
         ]);
 
-        // 2. Simpan ke database
-        SubsektorKerajinan::create($request->all());
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Gagal menambahkan data subsektor kerajinan.');
+        }
 
-        // 3. Redirect dengan pesan sukses
-        return redirect()->route('perkembangan.produk-domestik.subsektor-kerajinan.index')
-                         ->with('success', 'Data kerajinan berhasil ditambahkan.');
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        SubsektorKerajinan::create($data);
+
+        return redirect()
+            ->route('perkembangan.produk-domestik.subsektor-kerajinan.index')
+            ->with('success', 'Data subsektor kerajinan berhasil ditambahkan.');
     }
 
-     public function edit(SubsektorKerajinan $subsektor_kerajinan) // Menggunakan Route Model Binding
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(SubsektorKerajinan $subsektor_kerajinan)
     {
-        // Variabel di view harus menggunakan $kerajinan sesuai di edit.blade.php
-        return view('pages.perkembangan.produk-domestik.subsektor-kerajinan.edit', ['kerajinan' => $subsektor_kerajinan]);
+        return view('pages.perkembangan.produk-domestik.subsektor-kerajinan.edit', [
+            'kerajinan' => $subsektor_kerajinan
+        ]);
     }
 
-    public function update(Request $request, SubsektorKerajinan $subsektor_kerajinan) // Menggunakan Route Model Binding
+    public function show(SubsektorKerajinan $subsektor_kerajinan)
+{
+    return view('pages.perkembangan.produk-domestik.subsektor-kerajinan.show', [
+        'kerajinan' => $subsektor_kerajinan
+    ]);
+}
+
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, SubsektorKerajinan $subsektor_kerajinan)
     {
-        // 1. Validasi Data
-        $request->validate([
-            // 'unique' diabaikan untuk record yang sedang diedit
-            'tanggal' => 'required|date|unique:subsektor_kerajinans,tanggal,' . $subsektor_kerajinan->id,
+        $validator = Validator::make($request->all(), [
+            'tanggal' => 'required|date|unique:subsektor_kerajinans,tanggal,' . $subsektor_kerajinan->id . ',id,desa_id,' . session('desa_id'),
             'total_nilai_produksi_tahun_ini' => 'required|numeric|min:0',
             'total_nilai_bahan_baku_digunakan' => 'required|numeric|min:0',
             'total_nilai_bahan_penolong_digunakan' => 'required|numeric|min:0',
@@ -62,14 +96,32 @@ public function store(Request $request)
             'total_jenis_kerajinan_rumah_tangga' => 'required|integer|min:0',
         ]);
 
-        // 2. Update data
-        $subsektor_kerajinan->update($request->all());
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Gagal memperbarui data subsektor kerajinan.');
+        }
 
-        // 3. Redirect dengan pesan sukses
-        return redirect()->route('perkembangan.produk-domestik.subsektor-kerajinan.index')
-                         ->with('success', 'Data kerajinan berhasil diperbarui.');
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        $subsektor_kerajinan->update($data);
+
+        return redirect()
+            ->route('perkembangan.produk-domestik.subsektor-kerajinan.index')
+            ->with('success', 'Data subsektor kerajinan berhasil diperbarui.');
     }
 
-    // Metode resource lainnya (create, store, show, edit, update, destroy)
-    // ...
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(SubsektorKerajinan $subsektor_kerajinan)
+    {
+        $subsektor_kerajinan->delete();
+
+        return redirect()
+            ->route('perkembangan.produk-domestik.subsektor-kerajinan.index')
+            ->with('success', 'Data subsektor kerajinan berhasil dihapus.');
+    }
 }
