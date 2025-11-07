@@ -26,7 +26,8 @@ class MasterPotensiController extends Controller
                 'alat_produksi_ikan_tawar',
                 'nama_ikan',
                 'jenis_potensi_air',
-                'pengelolaan_potensi_air'
+                'pengelolaan_potensi_air',
+                'jenis_produksi_ternak'
             ],
             'II' => [
                 'sumber_air_bersih',
@@ -81,9 +82,17 @@ class MasterPotensiController extends Controller
         // Ubah ke huruf kecil semua untuk jaga-jaga
         $tabName = strtolower($tabName);
 
+        // Ubah ke huruf kecil semua untuk jaga-jaga
+        $tabName = strtolower($tabName);
+
         // === PERIKSA KHUSUS DULU ===
         if ($tabName === 'tempat_ibadah') {
-            $className = "App\\Models\\TempatIbadah";
+            $className = "App\\Models\\MasterPotensi\\TempatIbadah"; // Corrected namespace
+            if (class_exists($className)) {
+                return $className;
+            }
+        } elseif ($tabName === 'jenis_produksi_ternak') {
+            $className = "App\\Models\\JenisProduksiTernak"; // Direct model, not in MasterPotensi namespace
             if (class_exists($className)) {
                 return $className;
             }
@@ -119,6 +128,15 @@ class MasterPotensiController extends Controller
             case 'jenis_prasarana_transportasi_darat':
                 $rules['kategori_prasarana_transportasi_darat_id'] = 'required|integer';
                 break;
+            case 'jenis_lembaga_ekonomi':
+                $rules['kategori_lembaga_ekonomi_id'] = 'required|integer';
+                break;
+            case 'jenis_prasarana_komunikasi_informasi':
+                $rules['kategori_prasarana_komunikasi_informasi_id'] = 'required|integer';
+                break;
+            case 'jenis_produksi_ternak':
+                // No specific category for jenis_produksi_ternak
+                break;
             default:
                 // tab lain tidak perlu kolom nama_tempat
                 break;
@@ -140,6 +158,12 @@ class MasterPotensiController extends Controller
         if (isset($validated['kategori_prasarana_transportasi_darat_id'])) {
             $data['kategori_prasarana_transportasi_darat_id'] = $validated['kategori_prasarana_transportasi_darat_id'];
         }
+        if (isset($validated['kategori_lembaga_ekonomi_id'])) {
+            $data['kategori_lembaga_ekonomi_id'] = $validated['kategori_lembaga_ekonomi_id'];
+        }
+        if (isset($validated['kategori_prasarana_komunikasi_informasi_id'])) {
+            $data['kategori_prasarana_komunikasi_informasi_id'] = $validated['kategori_prasarana_komunikasi_informasi_id'];
+        }
 
         $model::create($data);
 
@@ -148,9 +172,10 @@ class MasterPotensiController extends Controller
     /**
      * Mengambil data untuk form edit
      */
-    public function edit($id)
+    public function edit(Request $request, $id) // Added Request $request
     {
-        $potensi = MasterPotensi::findOrFail($id);
+        $model = $this->getModelForTab($request->input('tab')); // Get model dynamically
+        $potensi = $model::findOrFail($id);
         return response()->json($potensi);
     }
 
@@ -159,14 +184,57 @@ class MasterPotensiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $rules = [
             'nama' => 'required|string|max:255',
             'tab'  => 'required|string'
-        ]);
+        ];
+
+        // Validasi tambahan untuk tab tertentu
+        switch ($request->tab) {
+            case 'tempat_ibadah':
+                $rules['nama_tempat'] = 'required|string|max:255';
+                break;
+            case 'jenis_prasarana_transportasi_darat':
+                $rules['kategori_prasarana_transportasi_darat_id'] = 'required|integer';
+                break;
+            case 'jenis_lembaga_ekonomi':
+                $rules['kategori_lembaga_ekonomi_id'] = 'required|integer';
+                break;
+            case 'jenis_prasarana_komunikasi_informasi':
+                $rules['kategori_prasarana_komunikasi_informasi_id'] = 'required|integer';
+                break;
+            case 'jenis_produksi_ternak':
+                // No specific category for jenis_produksi_ternak
+                break;
+            default:
+                // tab lain tidak perlu kolom nama_tempat
+                break;
+        }
+
+        $validated = $request->validate($rules);
 
         $model = $this->getModelForTab($request->input('tab'));
         $item = $model::findOrFail($id);
-        $item->update(['nama' => $request->nama]);
+
+        $data = [
+            'nama' => $validated['nama']
+        ];
+
+        if (isset($validated['nama_tempat'])) {
+            $data['nama_tempat'] = $validated['nama_tempat'];
+        }
+
+        if (isset($validated['kategori_prasarana_transportasi_darat_id'])) {
+            $data['kategori_prasarana_transportasi_darat_id'] = $validated['kategori_prasarana_transportasi_darat_id'];
+        }
+        if (isset($validated['kategori_lembaga_ekonomi_id'])) {
+            $data['kategori_lembaga_ekonomi_id'] = $validated['kategori_lembaga_ekonomi_id'];
+        }
+        if (isset($validated['kategori_prasarana_komunikasi_informasi_id'])) {
+            $data['kategori_prasarana_komunikasi_informasi_id'] = $validated['kategori_prasarana_komunikasi_informasi_id'];
+        }
+
+        $item->update($data);
 
         return back()->with('success', 'Data berhasil diperbarui!');
     }

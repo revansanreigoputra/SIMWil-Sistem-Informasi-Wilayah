@@ -1766,6 +1766,9 @@ Route::prefix('master-potensi')->name('master-potensi.')->group(function () {
     // Route::delete('/delete/{id}', [MasterPotensiController::class, 'destroy'])->name('destroy');
 });
 
+// Route for JenisProduksiTernak
+Route::resource('jenis-produksi-ternak', App\Http\Controllers\JenisProduksiTernakController::class);
+
 // ==== POTENSI KELEMBAGAAN ==== //
 Route::prefix('potensi/potensi-kelembagaan')->group(function () {
 

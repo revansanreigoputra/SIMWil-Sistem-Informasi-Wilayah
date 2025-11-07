@@ -102,7 +102,7 @@ class DatabaseSeeder extends Seeder
             StatusKepemilikanSeeder::class,
             TempatPerawatanSeeder::class,
             TempatpersalinanSeeder::class,
-            
+
             JenisWabahSeeder::class,
             JenisPenyakitSeeder::class,
             JenisDampakSeeder::class,
@@ -145,6 +145,7 @@ class DatabaseSeeder extends Seeder
             JenisAsetLainnyaSeeder::class,
             TenagaKerjaSeeder::class,
             KualitasAngkatanKerjaSeeder::class,
+            JenisProduksiTernakSeeder::class,
         ]);
     }
 }

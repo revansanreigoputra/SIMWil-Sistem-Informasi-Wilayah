@@ -56,6 +56,8 @@
                                 @endforeach
                             </select>
                         </div>
+                    @elseif ($activeTab === 'jenis_produksi_ternak')
+                        {{-- No specific category for jenis_produksi_ternak, just the name input --}}
                     @endif
 
                     {{-- Input nama jenis --}}
