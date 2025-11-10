@@ -1100,7 +1100,7 @@ Route::prefix('master-perkembangan')->name('master-perkembangan.')->group(functi
     Route::get('/', [MasterPerkembanganController::class, 'index'])->name('index');
     Route::post('/store', [MasterPerkembanganController::class, 'store'])->name('store');
     Route::get('/edit/{id}', [MasterPerkembanganController::class, 'edit'])->name('edit');
-    Route::put('/update/{id}', [MasterPerkembanganController::class, 'update'])->name('update');
+    Route::put('/{id}', [MasterPerkembanganController::class, 'update'])->name('update');
     Route::delete('/delete/{id}', [MasterPerkembanganController::class, 'destroy'])->name('destroy');
 });
 

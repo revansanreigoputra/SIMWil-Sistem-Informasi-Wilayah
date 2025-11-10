@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\View;
 use App\Models\MasterPerkembangan\KabupatenKota;
 use App\Models\MasterPerkembangan\Provinsi;
+use Illuminate\Support\Facades\Log; // Tambahkan ini untuk error logging
 
 class MasterPerkembanganController extends Controller
 {
@@ -15,7 +16,7 @@ class MasterPerkembanganController extends Controller
      */
     public function index(Request $request)
     {
-        // Daftar menu utama (bisa kamu ubah sesuai struktur desamu)
+        // ... (Fungsi index Anda sudah benar, tidak perlu diubah) ...
         $menu = [
             'I' => [
                 'aset_atap', 'aset_dinding', 'aset_lantai',
@@ -90,19 +91,39 @@ class MasterPerkembanganController extends Controller
     /**
      * Tambah data baru.
      */
-     public function store(Request $request)
+    public function store(Request $request)
     {
+        // Validasi data umum
+        $request->validate([
+            'tab' => 'required|string',
+            'nama' => 'required|string|max:255',
+        ]);
+
         $tab = $request->input('tab');
 
-        if ($tab === 'provinsi') {
-            Provinsi::create([
-                'nama' => $request->nama,
-            ]);
-        } elseif ($tab === 'kabupaten_kota') {
-            KabupatenKota::create([
-                'provinsi' => $request->provinsi, // simpan nama provinsi, bukan ID
-                'nama' => $request->nama,
-            ]);
+        try {
+            if ($tab === 'provinsi') {
+                Provinsi::create([
+                    'nama' => $request->nama,
+                ]);
+            } elseif ($tab === 'kabupaten_kota') {
+                // Validasi khusus untuk kabupaten/kota
+                $request->validate(['provinsi' => 'required|string']);
+                KabupatenKota::create([
+                    'provinsi' => $request->provinsi, // simpan nama provinsi, bukan ID
+                    'nama' => $request->nama,
+                ]);
+            } else {
+                // INI BAGIAN YANG HILANG (UNTUK SEMUA MODEL LAIN)
+                $model = $this->getModelForTab($tab);
+                $model::create([
+                    'nama' => $request->nama,
+                    // Tambahkan field lain jika ada model yang butuh lebih dari 'nama'
+                ]);
+            }
+        } catch (\Exception $e) {
+            Log::error('Error store MasterPerkembangan: ' . $e->getMessage());
+            return back()->with('error', 'Gagal menambahkan data. Terjadi kesalahan.');
         }
 
         return back()->with('success', 'Data berhasil ditambahkan!');
@@ -113,18 +134,38 @@ class MasterPerkembanganController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // Validasi data umum
+        $request->validate([
+            'tab' => 'required|string',
+            'nama' => 'required|string|max:255',
+        ]);
+        
         $tab = $request->input('tab');
 
-        if ($tab === 'provinsi') {
-            $item = Provinsi::findOrFail($id);
-            $item->update(['nama' => $request->nama]);
-        } elseif ($tab === 'kabupaten_kota') {
-            $item = KabupatenKota::findOrFail($id);
-            $item->update([
-                'provinsi' => $request->provinsi,
-                'nama' => $request->nama,
-            ]);
+        try {
+            if ($tab === 'provinsi') {
+                $item = Provinsi::findOrFail($id);
+                $item->update(['nama' => $request->nama]);
+            } elseif ($tab === 'kabupaten_kota') {
+                $request->validate(['provinsi' => 'required|string']);
+                $item = KabupatenKota::findOrFail($id);
+                $item->update([
+                    'provinsi' => $request->provinsi,
+                    'nama' => $request->nama,
+                ]);
+            } else {
+                // INI BAGIAN YANG HILANG (UNTUK SEMUA MODEL LAIN)
+                $model = $this->getModelForTab($tab);
+                $item = $model::findOrFail($id);
+                $item->update([
+                    'nama' => $request->nama,
+                ]);
+            }
+        } catch (\Exception $e) {
+            Log::error('Error update MasterPerkembangan: ' . $e->getMessage());
+            return back()->with('error', 'Gagal memperbarui data. Terjadi kesalahan.');
         }
+
 
         return back()->with('success', 'Data berhasil diperbarui!');
     }
@@ -134,17 +175,35 @@ class MasterPerkembanganController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $tab = $request->input('tab');
+        $tab = $request->input('tab'); // Ambil tab dari request, bisa dari body atau query string
 
-        if ($tab === 'provinsi') {
-            Provinsi::destroy($id);
-        } elseif ($tab === 'kabupaten_kota') {
-            KabupatenKota::destroy($id);
+        if (!$tab) {
+             return back()->with('error', 'Tab tidak ditemukan. Gagal menghapus data.');
         }
+
+        try {
+            if ($tab === 'provinsi') {
+                Provinsi::destroy($id);
+            } elseif ($tab === 'kabupaten_kota') {
+                KabupatenKota::destroy($id);
+            } else {
+                // INI BAGIAN YANG HILANG (UNTUK SEMUA MODEL LAIN)
+                $model = $this->getModelForTab($tab);
+                $model::destroy($id);
+            }
+        } catch (\Exception $e) {
+             Log::error('Error destroy MasterPerkembangan: ' . $e->getMessage());
+            return back()->with('error', 'Gagal menghapus data. Terjadi kesalahan.');
+        }
+
 
         return back()->with('success', 'Data berhasil dihapus!');
     }
 
+    /**
+     * Edit data (ambil data untuk modal).
+     * Fungsi ini sudah benar.
+     */
     public function edit(Request $request, $id)
     {
         $request->validate([
