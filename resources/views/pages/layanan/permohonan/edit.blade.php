@@ -111,15 +111,32 @@
                 {{-- Bagian IV: Isi dan Pengaturan Surat --}}
                 <h5 class="mt-4 mb-3 pb-2 border-bottom">Isi dan Pengaturan Surat</h5>
 
-                {{-- Nomor Surat (Editable) --}}
+                {{-- Nomor Surat  --}}
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Nomor Surat</label>
-                    <input type="text" name="nomor_surat" class="form-control"
-                        value="{{ old('nomor_surat', $permohonan->nomor_surat) }}" required>
-                    <small class="form-text text-muted">Nomor surat dapat diedit.</small>
-                    @error('nomor_surat')
-                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                    @enderror
+                    <div class="row g-2 align-items-center">
+                        <div class="col-3">
+                            <input type="number" name="nomor_urut_input" id="nomor_urut_input"
+                                class="form-control @error('nomor_urut_input') is-invalid @enderror"
+                                value="{{ old('nomor_urut_input', $currentNomorUrut) }}" required>
+                            @error('nomor_urut_input')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-3">
+                            {{--  apply code from controller --}}
+                            <input type="text" class="form-control" value="{{ $defaultCode }}" readonly>
+                        </div>
+                        <div class="col-6">
+                            {{-- Display the rest of the format (Roman month and Year) --}}
+                            <input type="text" class="form-control" value="/{{ $romanMonth }}/{{ $currentYear }}"
+                                readonly>
+                        </div>
+                    </div>
+                    <small class="form-text text-muted">Anda dapat mengubah nomor urut jika diperlukan.</small>
+
+                   
+                    <input type="hidden" name="original_nomor_surat" value="{{ $permohonan->nomor_surat }}">
                 </div>
 
                 {{-- Tanggal Permohonan --}}
@@ -198,6 +215,10 @@
                             <option value="ditolak"
                                 {{ old('status', $permohonan->status) == 'ditolak' ? 'selected' : '' }}>
                                 Ditolak
+                            </option>
+                            <option value="siap_diambil"
+                                {{ old('status', $permohonan->status) == 'siap_diambil' ? 'selected' : '' }}>
+                                Siap Diambil
                             </option>
                             <option value="sudah_diambil"
                                 {{ old('status', $permohonan->status) == 'sudah_diambil' ? 'selected' : '' }}>

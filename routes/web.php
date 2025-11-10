@@ -176,12 +176,16 @@ use App\Http\Controllers\PrasaranaKebersihanController;
 
 // use App\Models\LayananSurat\JenisSurat;
 // use App\Models\LayananSurat\KopTemplate;
-
+// LANDING PAGE CONTROLLERS
 use App\Http\Controllers\LandingPage\HomeController;
 use App\Http\Controllers\LandingPage\PublicBeritaController;
 use App\Http\Controllers\LandingPage\PublicGaleriController;
 use App\Http\Controllers\LandingPage\PublicAgendaController;
+use App\Http\Controllers\LandingPage\PermohonanSuratPublicController;
+
 use App\Models\PotensiKelembagaan\PotensiKelembagaan;
+
+use Illuminate\Support\Facades\Mail;
 
 // Route Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -199,6 +203,26 @@ Route::get('/galeri/{galeri}', [PublicGaleriController::class, 'show'])->name('p
 
 // Route Agenda Public
 Route::get('/agenda', [PublicAgendaController::class, 'index'])->name('public.agenda.index');
+
+// ROUTE Layanan Surat Public
+Route::get('/permohonanSurat', [PermohonanSuratPublicController::class, 'indexPublicSurat'])
+    ->name('public.permohonanSurat.index');
+
+Route::get('/permohonanSurat/verify-nik/{jenisSurat}', [PermohonanSuratPublicController::class, 'showNikVerification'])
+    ->name('public.permohonanSurat.verify_nik');
+
+Route::post('/permohonanSurat/verifikasi-nik', [PermohonanSuratPublicController::class, 'processNikVerification'])
+    ->name('public.permohonanSurat.process_nik');
+
+Route::get('/permohonanSurat/create', [PermohonanSuratPublicController::class, 'showPermohonanForm'])
+    ->name('public.permohonanSurat.create');
+
+Route::post('/permohonanSurat', [PermohonanSuratPublicController::class, 'storePublicPermohonan'])
+    ->name('public.permohonanSurat.store');
+
+Route::get('/permohonanSurat/tracking-result', [PermohonanSuratPublicController::class, 'trackPublic'])
+    ->name('public.permohonanSurat.tracking_result');
+
 
 // Route::get('/', function () {
 //     return Auth::check()
@@ -844,10 +868,10 @@ Route::middleware(['auth'])->prefix('data_keluarga')->name('data_keluarga.')->gr
     Route::get('/laporan/anggota-keluarga', [DataKeluargaController::class, 'membersReport'])->middleware('permission:data_keluarga.report')->name('report.members');
     Route::get('/{dataKeluarga}/edit', [DataKeluargaController::class, 'edit'])->middleware('permission:data_keluarga.edit')->name('edit');
     Route::put('/{dataKeluarga}', [DataKeluargaController::class, 'update'])->middleware('permission:data_keluarga.update')->name('update');
-    
+
     // Cleanup: Removed duplicated delete route and show route definition
     Route::delete('/{dataKeluarga}', [DataKeluargaController::class, 'destroy'])->middleware('permission:data_keluarga.destroy')->name('destroy');
-    
+
     Route::post('import', [DataKeluargaController::class, 'import'])->name('import');
     Route::get('/export', [DataKeluargaController::class, 'export'])->name('export'); // Adjusted URI
     Route::get('/template', [DataKeluargaController::class, 'template'])->name('template'); // Adjusted URI
@@ -972,6 +996,9 @@ Route::middleware('auth')->prefix('layanan-surat')->group(function () {
         Route::get('{id}/cetak', [PermohonanSuratController::class, 'cetak'])->name('permohonan.cetak');
         Route::get('permohonan/create/masuk-domisili/{anggotaKeluargaId}', [PermohonanSuratController::class, 'createMasukDomisili'])
             ->name('permohonan.create_masuk_domisili');
+        Route::get('/unverified', [PermohonanSuratController::class, 'unverified'])->name('permohonan.unverified');
+        Route::get('/permohonan/get-next-nomor/{jenisSuratId}', [PermohonanSuratController::class, 'getNextNomorUrut'])
+            ->name('permohonan.get_next_nomor');
     });
     // PERMOHONAN SURAT/MASUK kk
     Route::get('permohonan/masuk-kk', [PermohonanMasukController::class, 'createNewKKForm'])->name('permohonan.masuk_kk.create');

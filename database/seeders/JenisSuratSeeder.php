@@ -36,32 +36,10 @@ class JenisSuratSeeder extends Seeder
 
         // 2. Generate the FULL set of all possible system variables ONCE
         $fullSystemVariables = $this->generateSystemVariables();
-
-        // 3. Define STANDARD COMPOSITE variables ONCE
-
-        // COMPOSITE 1: Tempat & Tanggal Lahir (Birth Details)
-        $tempatTanggalLahirComposite = [
-            "key" => "tempat_tanggal_lahir",
-            "label" => "Tempat dan Tanggal Lahir",
-            "type" => "composite",
-            "keys" => ["tempat_lahir", "tanggal_lahir"],
-            "format" => "{0}, {1}", // Format: [Tempat Lahir], [Tanggal Lahir]
-            "source" => "penduduk_data"
-        ];
-
-        // COMPOSITE 2: Alamat Lengkap (Full Address)
-        $alamatLengkapComposite = [
-            "key" => "alamat_lengkap_detail",
-            "label" => "Alamat Lengkap",
-            "type" => "composite",
-
-            "keys" => ["alamat", "rt", "rw", "desa", "kecamatan"],
-            "format" => "{0} RT {1}/RW {2}, {3}, {4}", // Format: [Alamat] RT [RT]/RW [RW], [Desa], [Kecamatan]
-            "source" => "penduduk_data"
-        ];
+ 
 
         // List of all composite definitions for easy merging/reference
-        $allComposites = [$tempatTanggalLahirComposite, $alamatLengkapComposite];
+        $allComposites = [];
 
 
         // 4. DEFINE VARIABLES PER JENIS SURAT
@@ -138,7 +116,7 @@ class JenisSuratSeeder extends Seeder
 
         $domisiliVariables = json_encode(array_merge( 
             $skdDependencies,
-            $allComposites, // Include BOTH composites
+            
             $skdCustomVariables,
             $skkBaseSystemVars,
         ));
@@ -161,7 +139,7 @@ class JenisSuratSeeder extends Seeder
         $umumVariables = json_encode(array_merge(
             $skuSystemVariables,
             $skuDependencies,
-            $allComposites // Include BOTH composites
+             
         ));
 
 
@@ -173,7 +151,7 @@ class JenisSuratSeeder extends Seeder
         $srrtRequiredKeys = ['nama', 'nik', 'jenis_kelamin', 'rt']; // Notice 'rt' is needed directly and as a component
         $srrtSystemVariables = $this->filterSystemVariables($fullSystemVariables, $srrtRequiredKeys);
 
-        $srrtDependenciesKeys = [ // Only address dependencies needed
+        $srrtDependenciesKeys = [  
             'alamat',
             'rt',
             'rw',
@@ -185,7 +163,7 @@ class JenisSuratSeeder extends Seeder
         $srrtVariables = json_encode(array_merge(
             $srrtSystemVariables,
             $srrtDependencies,
-            [$alamatLengkapComposite], // ONLY Address composite
+           
             $srrtCustomVariables
         ));
 
@@ -212,7 +190,7 @@ class JenisSuratSeeder extends Seeder
         $sktmVariables = json_encode(array_merge(
             $sktmSystemVariables,
             $sktmDependencies,
-            $allComposites, // Include BOTH composites
+            
             $sktmCustomVariables
         ));
 
@@ -235,7 +213,7 @@ class JenisSuratSeeder extends Seeder
         $sbbVariables = json_encode(array_merge(
             $sbbSystemVariables,
             $sbbDependenciesKeys,
-            $allComposites,
+            
             $sbbCustomVariables
         ));
         // SBB END HERE
@@ -261,7 +239,7 @@ class JenisSuratSeeder extends Seeder
         $skmVariables = json_encode(array_merge(
             $skmSystemVariables,
             $skmDependencies,
-            $allComposites, // Include BOTH composites
+           
             $skmCustomVariables
         ));
         // SKM END HERE
@@ -278,7 +256,7 @@ class JenisSuratSeeder extends Seeder
         $skuhVariables = json_encode(array_merge(
             $skuhSystemVariables,
             $skuhCustomVariables,
-            $allComposites
+           
 
         ));
         // SKUH END HERE
@@ -304,7 +282,7 @@ class JenisSuratSeeder extends Seeder
         $skkhVariables = json_encode(array_merge(
             $skkhSystemVariables,
             $skkhCustomVariables,
-            $allComposites,
+           
             $skkhDependencies
         ));
 
@@ -329,7 +307,7 @@ class JenisSuratSeeder extends Seeder
             $sppdSystemVariables,
             $sppdCustomVariables,
             $sppdDependencies,
-            $allComposites
+           
         ));
 
         // K. SURAT REKOMENDASI IMB

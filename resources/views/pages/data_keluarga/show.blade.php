@@ -192,6 +192,10 @@
                         const anggota = response.data;
                         let content = `
                             <div class="row">
+                                 <div class="col-md-6 mb-3">
+                                    <strong>NIK:</strong>
+                                    <p>${anggota.email}</p>
+                                </div>
                                 <div class="col-md-6 mb-3"><strong>NIK:</strong><p>${anggota.nik || 'N/A'}</p></div>
                                 <div class="col-md-6 mb-3"><strong>Nama Lengkap:</strong><p>${anggota.nama || 'N/A'}</p></div>
                                 <div class="col-md-6 mb-3"><strong>Jenis Kelamin:</strong><p>${anggota.jenis_kelamin || 'N/A'}</p></div>

@@ -42,7 +42,7 @@
                     <div class="utf_left_side">
                         <div id="logo">
                             <a href="{{ url('/') }}">
-                                <img src="{{ asset('frontend/images/logo-dark.png') }}" alt="">
+                                <img src="{{ asset('frontend/images/logo_simwil_blue.png') }}" alt="">
                             </a>
                         </div>
                         <div class="mmenu-trigger">
@@ -62,6 +62,8 @@
                                         href="{{ route('public.galeri.index') }}">Galeri</a></li>
                                 <li><a class="{{ request()->routeIs('public.agenda.index') ? 'current' : '' }}"
                                         href="{{ route('public.agenda.index') }}">Agenda</a></li>
+                                <li><a class="{{request()->routeis('public.permohonanSurat.*') ? 'current' : ''}}"
+                                    href="{{route('public.permohonanSurat.index')}}">Persuratan</a></li>
                                 <li><a href="#">Kontak</a></li>
                             </ul>
                         </nav>
@@ -70,7 +72,7 @@
                     <div class="utf_right_side">
                         <div class="header_widget">
                             <a href="{{ route('login') }}" class="button border">
-                                <i class="fa fa-sign-in"></i> Sign In
+                                <i class="fa fa-sign-in"></i> Login
                             </a>
                         </div>
                     </div>
@@ -374,74 +376,57 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="container_categories_box margin-top-5 margin-bottom-30">
-                        <a href="#" class="utf_category_small_box_part">
-                            <i class="im im-icon-File-ClipboardFileText"></i>
-                            <h4 style="margin-bottom:0">SPBB</h4>
-                            <p style="margin-bottom:0">SP Berkelakuan Baik</p>
-                            <span>01</span>
-                        </a>
-                        <a href="#" class="utf_category_small_box_part">
-                            <i class="im im-icon-File-ClipboardFileText"></i>
-                            <h4 style="margin-bottom:0">SPT</h4>
-                            <p style="margin-bottom:0">Surat Penghibaan Tanah</p>
-                            <span>02</span>
-                        </a>
-                        <a href="#" class="utf_category_small_box_part">
-                            <i class="im im-icon-File-ClipboardFileText"></i>
-                            <h4 style="margin-bottom:0">SKU</h4>
-                            <p style="margin-bottom:0">Surat Keterangan Umum</p>
-                            <span>03</span>
-                        </a>
-                        <a href="#" class="utf_category_small_box_part">
-                            <i class="im im-icon-File-ClipboardFileText"></i>
-                            <h4 style="margin-bottom:0">SRRT</h4>
-                            <p style="margin-bottom:0">Surat Rekomendasi RT</p>
-                            <span>04</span>
-                        </a>
-                        <a href="#" class="utf_category_small_box_part">
-                            <i class="im im-icon-File-ClipboardFileText"></i>
-                            <h4 style="margin-bottom:0">STM</h4>
-                            <p style="margin-bottom:0">Surat Keterangan Tidak Mampu</p>
-                            <span>05</span>
-                        </a>
-                        <a href="#" class="utf_category_small_box_part">
-                            <i class="im im-icon-File-ClipboardFileText"></i>
-                            <h4 style="margin-bottom:0">SKBPN</h4>
-                            <p style="margin-bottom:0">Surat Keterangan Belum Pernah Nikah</p>
-                            <span>06</span>
-                        </a>
-                        <a href="#" class="utf_category_small_box_part">
-                            <i class="im im-icon-File-ClipboardFileText"></i>
-                            <h4 style="margin-bottom:0">SKD</h4>
-                            <p style="margin-bottom:0">Surat Keterangan Domisili</p>
-                            <span>07</span>
-                        </a>
-                        <a href="#" class="utf_category_small_box_part">
-                            <i class="im im-icon-File-ClipboardFileText"></i>
-                            <h4 style="margin-bottom:0">SKKTP</h4>
-                            <p style="margin-bottom:0">Surat Keterangan Kehilangan Kartu Tanda Penduduk (KTP)</p>
-                            <span>08</span>
-                        </a>
-                        <a href="#" class="utf_category_small_box_part">
-                            <i class="im im-icon-File-ClipboardFileText"></i>
-                            <h4 style="margin-bottom:0">SRIMB</h4>
-                            <p style="margin-bottom:0">Surat Rekomendasi Ijin Mendirikan Bangunan</p>
-                            <span>09</span>
-                        </a>
-                        <a href="#" class="utf_category_small_box_part">
-                            <i class="im im-icon-File-ClipboardFileText"></i>
-                            <h4 style="margin-bottom:0">SRIT</h4>
-                            <p style="margin-bottom:0">Surat Rekomendasi Ijin Tempat</p>
-                            <span>10</span>
-                        </a>
+                        @forelse ($jenis_surat_shortcuts as $index => $jenisSurat)
+                            {{-- Menggunakan event JavaScript untuk mencegat klik dan mengecek kode surat --}}
+                            <a href="javascript:void(0);" data-id="{{ $jenisSurat->id }}"
+                                data-kode="{{ $jenisSurat->kode }}"
+                                data-mutasi-type="{{ $jenisSurat->mutasi_type ?? '' }}"
+                                data-verify-url="{{ route('public.permohonanSurat.verify_nik', $jenisSurat->id) }}"
+                                class="utf_category_small_box_part surat-link">
+                                {{-- Ikon statis, Anda bisa membuatnya dinamis jika punya kolom ikon di DB --}}
+                                <i class="im im-icon-File-ClipboardFileText"></i>
+
+                                {{-- Kode surat (H4) --}}
+                                <h4 style="margin-bottom:0">{{ $jenisSurat->kode }}</h4>
+
+                                {{-- Nama surat (Paragraph) --}}
+                                <p style="margin-bottom:0">{{ $jenisSurat->nama }}</p>
+
+                                {{-- Nomor urut (Span) --}}
+                                <span>{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</span>
+                            </a>
+                        @empty
+                            <div class="col-12 text-center py-5">
+                                <p class="lead text-muted">Belum ada jenis surat yang diaktifkan untuk permohonan
+                                    publik.</p>
+                            </div>
+                        @endforelse
                     </div>
                     <div class="col-md-12 centered_content">
-                        <a href="#" class="button border margin-top-20">Selengkapnya</a>
+                        <a href="{{ route('public.permohonanSurat.index') }}"
+                            class="button border margin-top-20">Selengkapnya</a>
                     </div>
                 </div>
             </div>
         </div>
-
+        {{-- MODAL JENIS SURAT START  --}}
+        <div id="mutasi-warning-dialog" class="zoom-anim-dialog mfp-hide">
+            <div class="small_dialog_header">
+                <h3 class="text-danger">⚠️ Perhatian: Perubahan Data Penduduk</h3>
+            </div>
+            <div class="utf_signin_form style_one p-4">
+                <p class="lead text-center">
+                     Untuk mengajukan surat yang memicu perubahan data penduduk  (seperti Pindah, Meninggal, atau
+                    pencatatan baru), harap  datangi kantor desa secara langsung  untuk registrasi.
+                </p>
+                <div class="row mt-4">
+                    <div class="col-md-12 text-center">
+                        <button class="button popup-modal-dismiss">Mengerti</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- MODAL JENIS SURAT END --}}
         <section class="fullwidth_block padding-top-75 padding-bottom-75">
             <div class="container">
                 <div class="row">
@@ -658,6 +643,33 @@
                     }
                 });
             }
+            const warningTypes = ['meninggal', 'pindah_keluar', 'mutasi_masuk_kk', 'pencatatan_kelahiran'];
+            const message =
+                'Untuk mengajukan surat yang memicu perubahan data penduduk harap datangi kantor desa secara langsung untuk registrasi.';
+
+            // Use tpj (jQuery) to select the links and attach the click handler
+            tpj('.surat-link').on('click', function(event) {
+                event.preventDefault(); // Stop default navigation
+
+                // Use jQuery's .data() method to reliably read the attribute
+                const mutasiType = tpj(this).data('mutasi-type');
+
+                // Safety check and cleaning
+                const cleanMutasiType = mutasiType ? mutasiType.toLowerCase().trim() : '';
+                const verifyUrl = tpj(this).data('verify-url'); // Assuming you update this line too
+
+                // Debugging: Show the clean value read from the element
+                console.log('Clicked Mutasi Type (jQuery Cleaned):', cleanMutasiType);
+
+                if (warningTypes.includes(cleanMutasiType)) {
+                    // Show pop-up
+                    alert(message);
+                    return; // Stop processing and remain on the current page
+                } else {
+                    // Proceed to NIK verification page
+                    window.location.href = verifyUrl;
+                }
+            });
         });
     </script>
     <script src="{{ asset('frontend/scripts/extensions/themepunch.tools.min.js') }}"></script>

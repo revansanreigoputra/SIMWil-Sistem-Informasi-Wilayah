@@ -263,9 +263,14 @@
                                 </div>
 
                                 {{-- Permohonan Surat --}}
-                                <a class="dropdown-item {{ request()->is('layanan-surat/permohonan*') ? 'active' : '' }}"
+                                <a class="dropdown-item {{ request()->is('layanan-surat/permohonan') ? 'active' : '' }}"
                                     href="{{ route('permohonan.index') }}">
-                                    Permohonan Surat +
+                                    <i class="bi bi-plus-circle me-2 py-1"></i>
+                                     Permohonan Surat  
+                                </a>
+                                <a class="dropdown-item {{ request()->is('layanan-surat/permohonan/unverified') ? 'active' : ''}}"
+                                href="{{route('permohonan.unverified')}}">
+                                    Surat Belum Diverifikasi
                                 </a>
 
 

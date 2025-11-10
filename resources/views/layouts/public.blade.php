@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/stylesheet.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/mmenu.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}" id="colors">
+
     {{-- Menggunakan Font Awesome 6.x (sesuai link Anda) --}}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
     <link
@@ -19,7 +20,7 @@
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700,800" rel="stylesheet"
         type="text/css">
-
+    @include('includes.style')
     @stack('styles')
 
     {{-- STYLE UNTUK GALERI --}}
@@ -94,6 +95,8 @@
                                         href="{{ route('public.galeri.index') }}">Galeri</a></li>
                                 <li><a class="{{ request()->routeIs('public.agenda.index') ? 'current' : '' }}"
                                         href="{{ route('public.agenda.index') }}">Agenda</a></li>
+                                <li><a class="{{ request()->routeis('public.permohonanSurat.*') ? 'current' : '' }}"
+                                        href="{{ route('public.permohonanSurat.index') }}">Persuratan</a></li>
                                 <li><a href="#">Kontak</a></li>
                             </ul>
                         </nav>
@@ -102,7 +105,7 @@
                     <div class="utf_right_side">
                         <div class="header_widget">
                             <a href="{{ route('login') }}" class="button border">
-                                <i class="fa-solid fa-right-to-bracket"></i> Sign In
+                                <i class="fa-solid fa-right-to-bracket"></i> Login
                             </a>
                         </div>
                     </div>
@@ -171,6 +174,7 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('frontend/scripts/chosen.min.js') }}"></script>
     <script src="{{ asset('frontend/scripts/slick.min.js') }}"></script>
     <script src="{{ asset('frontend/scripts/rangeslider.min.js') }}"></script>
