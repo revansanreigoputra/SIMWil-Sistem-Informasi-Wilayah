@@ -26,19 +26,6 @@
                         <th class="text-center">Penggunaan Data BPS</th>
                         <th class="text-center">Pelibatan Masyarakat</th>
                         <th class="text-center">Dokumen RKPDes</th>
-                        <th class="text-center">Dokumen RPJMDes</th>
-                        <th class="text-center">Dokumen Hasil Musrenbang</th>
-                        <th class="text-center">Jumlah Musrenbang Desa/Kelurahan</th>
-                        <th class="text-center">Jumlah Kehadiran Masyarakat</th>
-                        <th class="text-center">Peserta Laki-laki</th>
-                        <th class="text-center">Peserta Perempuan</th>
-                        <th class="text-center">Musrenbang Antar Desa</th>
-                        <th class="text-center">Usulan Masyarakat Disetujui</th>
-                        <th class="text-center">Usulan Pemdes Disetujui</th>
-                        <th class="text-center">Usulan Rencana Kerja Pemkab</th>
-                        <th class="text-center">Usulan Rencana Kerja Ditolak</th>
-                        <th class="text-center">Kegiatan Terdanai</th>
-                        <th class="text-center">Kegiatan Tidak Sesuai</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -54,21 +41,6 @@
                             <td><span class="badge bg-{{ $item->penggunaan_data_bps === 'Ada' ? 'success' : 'secondary' }}">{{ $item->penggunaan_data_bps ?? '-' }}</span></td>
                             <td><span class="badge bg-{{ $item->pelibatan_masyarakat === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pelibatan_masyarakat ?? '-' }}</span></td>
                             <td><span class="badge bg-{{ $item->dokumen_rkpdes === 'Ada' ? 'success' : 'secondary' }}">{{ $item->dokumen_rkpdes ?? '-' }}</span></td>
-                            <td><span class="badge bg-{{ $item->dokumen_rpjmdes === 'Ada' ? 'success' : 'secondary' }}">{{ $item->dokumen_rpjmdes ?? '-' }}</span></td>
-                            <td><span class="badge bg-{{ $item->dokumen_hasil_musrenbang === 'Ada' ? 'success' : 'secondary' }}">{{ $item->dokumen_hasil_musrenbang ?? '-' }}</span></td>
-
-                            {{-- Kolom numeric --}}
-                            <td class="text-center">{{ $item->jumlah_musrenbang_desa_kelurahan ?? '-' }}</td>
-                            <td class="text-center">{{ $item->jumlah_kehadiran_masyarakat ?? '-' }}</td>
-                            <td class="text-center">{{ $item->jumlah_peserta_laki ?? '-' }}</td>
-                            <td class="text-center">{{ $item->jumlah_peserta_perempuan ?? '-' }}</td>
-                            <td class="text-center">{{ $item->jumlah_musrenbang_antar_desa ?? '-' }}</td>
-                            <td class="text-center">{{ $item->usulan_masyarakat_disetujui ?? '-' }}</td>
-                            <td class="text-center">{{ $item->usulan_pemerintah_desa_disetujui ?? '-' }}</td>
-                            <td class="text-center">{{ $item->usulan_rencana_kerja_pemkab ?? '-' }}</td>
-                            <td class="text-center">{{ $item->usulan_rencana_kerja_ditolak ?? '-' }}</td>
-                            <td class="text-center">{{ $item->jumlah_kegiatan_terdanai ?? '-' }}</td>
-                            <td class="text-center">{{ $item->jumlah_kegiatan_tidak_sesuai ?? '-' }}</td>
 
                             <td>
                                 <div class="d-flex gap-1 justify-content-center">

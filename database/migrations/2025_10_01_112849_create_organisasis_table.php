@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('organisasis', function (Blueprint $table) {
             $table->id();
-           $table->foreignId('desa_id')->constrained('desas')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('desa_id')->constrained('desas')->onUpdate('cascade')->onDelete('cascade');
             $table->date('tanggal');
 
             $table->enum('jenis_organisasi', [

@@ -23,7 +23,7 @@ class OrganisasiController extends Controller
      */
     public function create()
     {
-       $desas = Desa::orderBy('nama_desa')->get();
+        $desas = Desa::orderBy('nama_desa')->get();
         return view('pages.perkembangan.lembagakemasyarakatan.organisasi.create', compact('desas'));
     }
 
