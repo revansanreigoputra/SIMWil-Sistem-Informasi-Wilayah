@@ -13,7 +13,8 @@ class SikapdanmentalController extends Controller
      */
     public function index()
     {
-        $data = sikapdanmental::with(['desa'])->orderBy('tanggal', 'desc')->get();
+        $desaId = session('desa_id');
+        $data = sikapdanmental::where('desa_id',$desaId)->with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.peransertamasyarakat.sikapdanmental.index', compact('data'));
     }
 
@@ -33,7 +34,6 @@ class SikapdanmentalController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jumlah_pungutan_gelandangan' => 'nullable|integer|min:0',
             'jumlah_pungutan_terminal_pelabuhan_pasar' => 'nullable|integer|min:0',
             'permintaan_sumbangan_perorangan' => 'nullable|in:Ada,Tidak Ada',
@@ -68,18 +68,14 @@ class SikapdanmentalController extends Controller
             'masyarakat_apatih' => 'nullable|in:Ya,Tidak',
             'aparat_kurang_menangani' => 'nullable|in:Tinggi,Sedang,Rendah',
         ]);
-
+        $validated['desa_id'] = session('desa_id');
         sikapdanmental::create($validated);
         return redirect()->route('perkembangan.peransertamasyarakat.sikapdanmental.index')
             ->with('success', 'Data sikap dan mental masyarakat berhasil ditambahkan.');
     }
-
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
-        $sikapdanmental = sikapdanmental::findOrFail($id);
+        $sikapdanmental = sikapdanmental::with(['desa'])->findOrFail($id);
         $sikapdanmental->load('desa');
         return view('pages.perkembangan.peransertamasyarakat.sikapdanmental.show', compact('sikapdanmental'));
     }
@@ -101,7 +97,6 @@ class SikapdanmentalController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jumlah_pungutan_gelandangan' => 'nullable|integer|min:0',
             'jumlah_pungutan_terminal_pelabuhan_pasar' => 'nullable|integer|min:0',
             'permintaan_sumbangan_perorangan' => 'nullable|in:Ada,Tidak Ada',
@@ -149,10 +144,5 @@ class SikapdanmentalController extends Controller
         $sikapdanmental = sikapdanmental::findOrFail($id);
         $sikapdanmental->delete();
         return redirect()->route('perkembangan.peransertamasyarakat.sikapdanmental.index')->with('success', 'Data sikap dan mental masyarakat berhasil dihapus.');
-    }
-    public function getDesasByKecamatan($id_kecamatan)
-    {
-        $desas = Desa::where('id_kecamatan', $id_kecamatan)->orderBy('nama_desa')->get();
-        return response()->json($desas);
     }
 }

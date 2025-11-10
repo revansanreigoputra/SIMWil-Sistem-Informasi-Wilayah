@@ -12,7 +12,7 @@ class Sikapdanmental extends Model
     protected $table = 'sikapdanmentals';
 
     protected $fillable = [
-        'id_desa',
+        'desa_id',
         'tanggal',
         'jumlah_pungutan_gelandangan',
         'jumlah_pungutan_terminal_pelabuhan_pasar',
@@ -48,12 +48,8 @@ class Sikapdanmental extends Model
         'masyarakat_apatih',
         'aparat_kurang_menangani',
     ];
-
-    /**
-     * Relasi ke tabel desa
-     */
     public function desa()
     {
-        return $this->belongsTo(Desa::class, 'id_desa');
+        return $this->belongsTo(Desa::class);
     }
 }
