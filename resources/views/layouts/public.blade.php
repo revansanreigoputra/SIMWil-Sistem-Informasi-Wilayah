@@ -73,7 +73,7 @@
                     <div class="utf_left_side">
                         <div id="logo">
                             <a href="{{ url('/') }}">
-                                <img src="{{ asset('frontend/images/logo-dark.png') }}" alt="">
+                                <img src="{{ asset('frontend/images/logo_simwil_blue.png') }}" alt="">
                             </a>
                         </div>
                         <div class="mmenu-trigger">

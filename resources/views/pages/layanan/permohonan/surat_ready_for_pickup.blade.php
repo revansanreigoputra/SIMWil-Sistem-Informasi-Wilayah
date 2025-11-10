@@ -13,13 +13,11 @@ Berikut adalah detail permohonan Anda:
 
 Silakan datang ke Kantor Desa selama jam kerja untuk mengambil dokumen asli. Mohon bawa identitas diri (KTP/KK) yang sah.
 
-@component('mail::button', ['url' => url('/layanan/permohonan/' . $permohonan->id)])
-Lihat Detail Permohonan
-@endcomponent
+Jika Anda memiliki pertanyaan atau membutuhkan informasi lebih lanjut, jangan ragu untuk menghubungi kami.
 
 Terima kasih atas kerja samanya.
 
 Hormat kami,
 
-{{ config('app.name') }}
+Sekretaris Kantor Desa
 @endcomponent

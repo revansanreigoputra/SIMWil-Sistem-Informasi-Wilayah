@@ -35,7 +35,7 @@
                                     <td>{{ $kopTemplate->nama }}</td>
                                     <td class="text-center">
                                         @if ($kopTemplate->logo)
-                                            <img src="{{ asset('storage/' . $kopTemplate->logo) }}" alt="Logo"
+                                         <img src="{{ asset($kopTemplate->logo) }}" alt="Logo" 
                                                 class="img-fluid rounded shadow-sm" width="80">
                                         @else
                                             <span class="text-muted">Tidak ada logo</span>

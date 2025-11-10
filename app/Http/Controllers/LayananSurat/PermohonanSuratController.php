@@ -42,6 +42,7 @@ use Illuminate\Support\Collection;
 use App\Mail\SuratReadyForPickup;
 use Illuminate\Support\Facades\Mail;
 use Throwable;
+use Illuminate\Support\Facades\File;
 
 class PermohonanSuratController extends Controller
 {
@@ -927,7 +928,7 @@ class PermohonanSuratController extends Controller
         $isAnggota = $permohonan->anggotaKeluarga !== null;
         $kopTemplate = optional($permohonan->jenisSurat)->kopTemplate;
         $ttdModel = $permohonan->ttd;
-        $locationSource = $isAnggota ? optional($subject->dataKeluarga) : $subject;
+        $locationSource = $isAnggota ? $subject->dataKeluarga : $subject;
 
         // --- START FIX: Ensure requiredVars is an array ---
         $requiredVars = optional($permohonan->jenisSurat)->required_variables;
@@ -949,12 +950,13 @@ class PermohonanSuratController extends Controller
         // --- 2. Build Core Letter Data (Kop, TTD, Paragraf) ---
 
         // Logo/Kop Data (pulled from TTD/KopTemplate)
-        $data['logo_url'] = optional($kopTemplate)->logo ? Storage::disk('public')->path(optional($kopTemplate)->logo) : null;
+        $data['logo_url'] = optional($kopTemplate)->logo ? public_path($kopTemplate->logo) : null;
         $data['instansi_kabupaten'] = optional($kopTemplate)->nama_kabupaten ?? 'PEMERINTAH KABUPATEN CONTOH';
-        $data['instansi_kecamatan'] = optional($kopTemplate)->nama_kecamatan ?? optional($locationSource->kecamatans)->nama_kecamatan ?? 'N/A';
-        $data['instansi_desa'] = optional($kopTemplate)->nama_desa ?? optional($locationSource->desas)->nama_desa ?? 'N/A';
-        $data['instansi_alamat'] = optional($kopTemplate)->alamat_instansi ?? 'N/A';
 
+
+        $data['instansi_kecamatan'] = $kopTemplate?->nama_kecamatan ?? $locationSource?->kecamatans?->nama_kecamatan ?? 'N/A';
+        $data['instansi_desa'] = $kopTemplate?->nama_desa ?? $locationSource?->desas?->nama_desa ?? 'N/A';
+        $data['instansi_alamat'] = $kopTemplate?->alamat_instansi ?? 'N/A';
         // Letter Metadata
         $data['nomor'] = $permohonan->nomor_surat;
         $data['paragraf_pembuka'] = $permohonan->paragraf_pembuka ?? optional($permohonan->jenisSurat)->paragraf_pembuka;
@@ -976,9 +978,6 @@ class PermohonanSuratController extends Controller
             // If the subject IS the DataKeluarga, the name is kepala_keluarga
             $namaKepalaKeluarga = $subject->kepala_keluarga ?? 'N/A';
         }
-        // Ambil Kepala Keluarga berdasarkan relasi hubungan keluarga
-        // --- Determine Kepala Keluarga Name ---
-        // --- Determine Kepala Keluarga Name ---
         $dataKeluargaId = $isAnggota
             ? $subject->data_keluarga_id
             : $subject->id;

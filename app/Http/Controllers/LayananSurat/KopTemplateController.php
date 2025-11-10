@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\LayananSurat;
+
 use App\Models\LayananSurat\KopTemplate;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Facades\Storage; 
+use Illuminate\Support\Facades\File;
 class KopTemplateController extends Controller
 {
     public function index()
@@ -20,13 +21,13 @@ class KopTemplateController extends Controller
 
         return view('pages.layanan.template.kop_templates.create');
     }
-   
+
     public function store(Request $request)
     {
-         
+
         $request->validate([
             'nama' => 'required|string|max:255|unique:kop_templates,nama',
-           
+
             'jenis_kop' => ['required', Rule::in(['kop surat', 'kop laporan'])],
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ], [
@@ -38,17 +39,20 @@ class KopTemplateController extends Controller
             'jenis_kop.in' => 'Jenis kop yang dipilih tidak valid.'
         ]);
 
-          $data = $request->only(['nama', 'jenis_kop']);
+        $data = $request->only(['nama', 'jenis_kop']);
 
-         
+
+
         if ($request->hasFile('logo')) {
-            
-            $path = $request->file('logo')->store('uploads/kop_logos', 'public');
-            $data['logo'] = $path;
+            $file = $request->file('logo');
+            $filename = $file->hashName();
+            $targetPath = public_path('asset/uploads/kop_logos');
+            $file->move($targetPath, $filename);
+
+            $data['logo'] = 'asset/uploads/kop_logos/' . $filename;
         }
- 
         KopTemplate::create($data);
- 
+
         return redirect()->route('kop_templates.index')->with('success', 'Kop Template berhasil dibuat.');
     }
     public function edit($id)
@@ -75,13 +79,17 @@ class KopTemplateController extends Controller
 
         $data = $request->only(['nama', 'jenis_kop']);
 
-        if ($request->hasFile('logo')) {
-            // Hapus logo lama jika ada
-            if ($kopTemplate->logo) {
-                Storage::disk('public')->delete($kopTemplate->logo);
+       
+        if ($request->hasFile('logo')) { 
+            if ($kopTemplate->logo && File::exists(public_path($kopTemplate->logo))) {
+                File::delete(public_path($kopTemplate->logo));
             }
-            $path = $request->file('logo')->store('uploads/kop_logos', 'public');
-            $data['logo'] = $path;
+ 
+            $file = $request->file('logo');
+            $filename = $file->hashName();
+            $targetPath = public_path('asset/uploads/kop_logos');
+            $file->move($targetPath, $filename);
+            $data['logo'] = 'asset/uploads/kop_logos/' . $filename;
         }
 
         $kopTemplate->update($data);

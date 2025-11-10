@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BpdController;
 use App\Http\Controllers\TtdController;
@@ -18,7 +17,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KecamatanController;
 use App\Http\Controllers\MasterDdkController;
 use App\Http\Controllers\DataKeluargaController;
-// use App\Http\Controllers\MutasiController;
 use App\Http\Controllers\APBDesaController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\DesaKelurahanController;
@@ -39,19 +37,9 @@ use App\Http\Controllers\PolitikController;
 use App\Http\Controllers\KonfliksaraController;
 use App\Http\Controllers\PerkelahianController;
 use App\Http\Controllers\PencurianController;
-// use App\Http\Controllers\IrigasiController;
-// use App\Http\Controllers\NotificationController;
-// use App\Http\Controllers\PerangkatDesaController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\TransportasiDaratController;
 use App\Http\Controllers\PertanggungjawabanController;
-// use App\Http\Controllers\PembinaanpusatController;
-// use App\Http\Controllers\PembinaanprovinsiController;
-// use App\Http\Controllers\IrigasiController;
-// use App\Http\Controllers\NotificationController;
-// use App\Http\Controllers\PerangkatDesaController;
-// use App\Http\Controllers\Auth\AuthenticatedSessionController;
-// use App\Http\Controllers\TransportasiDaratController;
 use App\Http\Controllers\IrigasiController;
 use App\Http\Controllers\AnggotaKeluargaController;
 use App\Http\Controllers\AgendaController;
@@ -59,81 +47,13 @@ use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\GlosariumController;
 use App\Http\Controllers\SanitasiController;
-// use App\Http\Controllers\DesaKelurahanController;
-// use App\Http\Controllers\BpdController;
-// use App\Http\Controllers\DusunController;
 use App\Http\Controllers\PPendidikanController;
-// use App\Http\Controllers\JumlahController;
-// use App\Http\Controllers\MutasiController;
-// use App\Http\Controllers\IrigasiController;
-// use App\Http\Controllers\JabatanController;
-// use App\Http\Controllers\ProfileController;
-// use App\Http\Controllers\SettingController;
-// use App\Http\Controllers\IrigasiController;
-// use App\Http\Controllers\SanitasiController;
-// use App\Http\Controllers\DesaKelurahanController;
-// use App\Http\Controllers\BpdController;
-// use App\Http\Controllers\DusunController;
 use App\Http\Controllers\EnergiPeneranganController;
 use App\Http\Controllers\KemasyarakatanController;
-// use App\Http\Controllers\DashboardController;
-// use App\Http\Controllers\GlosariumController;
-// use App\Http\Controllers\KecamatanController;
-// use App\Http\Controllers\MasterDdkController;
-// use App\Http\Controllers\PPendidikanController;
-// use App\Http\Controllers\DataKeluargaController;
-// use App\Http\Controllers\LayananSuratController;
-// use App\Http\Controllers\NotificationController;
-// use App\Http\Controllers\PerangkatDesaController;
-// use App\Http\Controllers\AnggotaKeluargaController;
-
-
-// use App\Http\Controllers\TransportasiDaratController;
-// use App\Http\Controllers\Auth\AuthenticatedSessionController;
-// use App\Http\Controllers\DusunController;
-// use App\Http\Controllers\AgendaController;
-// use App\Http\Controllers\BeritaController;
-// use App\Http\Controllers\GaleriController;
-// use App\Http\Controllers\JumlahController;
-// use App\Http\Controllers\MutasiController;
-// use App\Http\Controllers\APBDesaController;
-// use App\Http\Controllers\IrigasiController;
-// use App\Http\Controllers\MutasiController;
-// use App\Http\Controllers\JabatanController;
-// use App\Http\Controllers\ProfileController;
-// use App\Http\Controllers\SettingController;
-// use App\Http\Controllers\SanitasiController;
-// use App\Http\Controllers\IrigasiController;
-// use App\Http\Controllers\DashboardController;
-// use App\Http\Controllers\GlosariumController;
-// use App\Http\Controllers\KecamatanController;
-// use App\Http\Controllers\MasterDdkController;
 use App\Http\Controllers\MataPencaharianPokokController;
-// use App\Http\Controllers\PPendidikanController;
-// use App\Http\Controllers\DataKeluargaController;
-// use App\Http\Controllers\LayananSuratController;
-// use App\Http\Controllers\NotificationController;
-// use App\Http\Controllers\DesaKelurahanController;
-// use App\Http\Controllers\PerangkatDesaController;
-// use App\Http\Controllers\PembinaanpusatController;
-// use App\Http\Controllers\AnggotaKeluargaController;
-// use App\Http\Controllers\PembinaanprovinsiController;
-
-
-// use App\Http\Controllers\TransportasiDaratController;
-// use App\Http\Controllers\PertanggungjawabanController;
 use App\Http\Controllers\SektorPertambanganController;
 use App\Http\Controllers\SubsektorKerajinanController;
-
-
 use App\Http\Controllers\PerkembanganPendudukController;
-// use App\Http\Controllers\Auth\AuthenticatedSessionController;
-// use App\Http\Controllers\Auth\AuthenticatedSessionController;
-// use App\Http\Controllers\AnggotaKeluargaController;
-// use App\Http\Controllers\AgendaController;
-// use App\Http\Controllers\GlosariumController;
-// use App\Http\Controllers\BeritaController;
-// use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\TapController;
 use App\Http\Controllers\LayananSurat\{
     KopTemplateController,
@@ -145,7 +65,6 @@ use App\Http\Controllers\LayananSurat\{
 use App\Http\Controllers\LayananSuratController;
 use App\Http\Controllers\MasterPerkembanganController;
 use App\Http\Controllers\MasterPotensiController;
-// use App\Http\Controllers\LayananSuratController;
 use App\Http\Controllers\PengangguranController;
 use App\Http\Controllers\KesejahteraanKeluargaController;
 use App\Http\Controllers\MenurutSektorUsahaController;
@@ -174,8 +93,6 @@ use App\Http\Controllers\PrasaranapendidikanController;
 use App\Http\Controllers\PrasaranaHiburanController;
 use App\Http\Controllers\PrasaranaKebersihanController;
 
-// use App\Models\LayananSurat\JenisSurat;
-// use App\Models\LayananSurat\KopTemplate;
 // LANDING PAGE CONTROLLERS
 use App\Http\Controllers\LandingPage\HomeController;
 use App\Http\Controllers\LandingPage\PublicBeritaController;
@@ -244,6 +161,10 @@ Route::middleware('auth')->group(function () {
     //     Route::post('/mark-as-read', [NotificationController::class, 'markAsRead'])->name('mark-as-read');
     //     Route::post('/mark-all-as-read', [NotificationController::class, 'markAllAsRead'])->name('mark-all-as-read');
     //     Route::get('/count', [NotificationController::class, 'getCount'])->name('count');
+    Route::get('/notifications/unverified-permohonan', [NotificationController::class, 'getUnverifiedPermohonan'])
+        ->name('notifications.unverified');
+    Route::post('/notifications/mark-as-read/{id}', [NotificationController::class, 'markAsRead'])
+        ->name('notifications.mark_read');
     // });
 });
 

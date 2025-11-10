@@ -8,12 +8,12 @@
         <!-- END NAVBAR TOGGLER -->
         <!-- BEGIN NAVBAR LOGO -->
         <div class="navbar-brand navbar-brand-autodark">
-            <a href="{{ route('dashboard') }}" aria-label="{{ $websiteSetting?->website_name ?? 'Laravel POS' }}">
+            <a href="{{ route('dashboard') }}" aria-label="{{ $websiteSetting?->website_name ?? 'Sistem Wilayah' }}">
                 @if ($websiteSetting?->logo)
                     <img src="{{ asset('storage/' . $websiteSetting->logo) }}" alt="{{ $websiteSetting->website_name }}"
                         class="navbar-brand-image" style="height: 32px; width: auto; max-width: 150px;">
                 @else
-                    {{ $websiteSetting?->website_name ?? 'Laravel POS' }}
+                    {{ $websiteSetting?->website_name ?? 'Sistem Wilayah' }}
                 @endif
             </a>
         </div>

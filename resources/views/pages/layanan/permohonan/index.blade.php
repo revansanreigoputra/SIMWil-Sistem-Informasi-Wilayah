@@ -214,10 +214,12 @@
                                                                     Hapus
                                                                 </button>
                                                             @endcan
-                                                            <a href="{{ route('permohonan.cetak', $permohonan->id) }}"
-                                                                class="btn btn-sm btn-success" target="_blank">
-                                                                <i class="bi bi-printer me-2 py-1"></i>
-                                                                Cetak</a>
+                                                            @if ($permohonan->status !== 'belum_diverifikasi')
+                                                                <a href="{{ route('permohonan.cetak', $permohonan->id) }}"
+                                                                    class="btn btn-sm btn-success" target="_blank">
+                                                                    <i class="bi bi-printer me-2 py-1"></i>
+                                                                    Cetak</a>
+                                                            @endif
                                                         </td>
                                                     </tr>
                                                 @empty

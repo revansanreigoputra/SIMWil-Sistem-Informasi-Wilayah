@@ -39,7 +39,7 @@
                 {{-- Bagian II: Data Pemohon (id_anggota_keluargas) --}}
                 <h5 class="mt-3 mb-3 pb-2 border-bottom">Data Pemohon</h5>
 
-                {{-- Kontainer Peringatan Data Kritis (AKAN DIISI OLEH JS) --}}
+                {{-- Kontainer Peringatan Data penting (AKAN DIISI OLEH JS) --}}
                 <div id="critical-data-warning" class="mb-3" style="display: none;"></div>
 
                 <div class="mb-3">
@@ -47,22 +47,28 @@
                     <select name="id_anggota_keluargas" id="id_anggota_keluargas"
                         class="form-select @error('id_anggota_keluargas') is-invalid @enderror" required>
                         <option value="">-- Pilih Anggota Keluarga/Penduduk --</option>
+
+                        {{-- OPTIMISASI: Hitung selected value SEKALI SAJA di luar loop --}}
+                        @php
+                            $selectedValue = old(
+                                'id_anggota_keluargas',
+                                $permohonan->id_data_keluargas
+                                    ? 'kk_' . $permohonan->id_data_keluargas
+                                    : $permohonan->id_anggota_keluargas,
+                            );
+                        @endphp
+
                         @foreach ($anggotaKeluargas as $anggota)
                             @php
-                                $selectedValue = old(
-                                    'id_anggota_keluargas',
-                                    $permohonan->id_data_keluargas
-                                        ? 'kk_' . $permohonan->id_data_keluargas
-                                        : $permohonan->id_anggota_keluargas,
-                                );
-                                $anggotaId =
-                                    isset($anggota->is_kk) && $anggota->is_kk ? 'kk_' . $anggota->id : $anggota->id;
+                                // Cek apakah ini data KK
                                 $isKKLeader = isset($anggota->is_kk) && $anggota->is_kk;
+                                // Gunakan ID langsung dari controller karena sudah di-format di sana
+                                $anggotaId = $anggota->id;
                             @endphp
-                            <option value="{{ $anggotaId }}"
-                                {{ $isKKLeader ? 'style="font-weight: bold; background-color: #f0f0f0;"' : '' }}
-                                {{ $selectedValue == $anggotaId ? 'selected' : '' }}>
-                                {{ $anggota->nik }} - {{ $anggota->nama }} {{ $isKKLeader ? '(KK)' : '' }}
+                            <option value="{{ $anggotaId }}" {{-- Beri styling agar terlihat beda --}}
+                                {{ $isKKLeader ? 'style=font-weight:bold;background-color:#f0f0f0;' : '' }}
+                                {{-- Bandingkan nilai untuk auto-select --}} {{ $selectedValue == $anggotaId ? 'selected' : '' }}>
+                                {{ $anggota->nik }} - {{ $anggota->nama }}
                             </option>
                         @endforeach
                     </select>
@@ -70,7 +76,6 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-
                 {{-- Bagian III: CUSTOM DYNAMIC FIELDS CONTAINER --}}
                 @if ($customFields->isNotEmpty())
                     <h5 class="mt-4 mb-3 pb-2 border-bottom" id="custom-fields-title">Data Tambahan Surat</h5>
@@ -135,7 +140,7 @@
                     </div>
                     <small class="form-text text-muted">Anda dapat mengubah nomor urut jika diperlukan.</small>
 
-                   
+
                     <input type="hidden" name="original_nomor_surat" value="{{ $permohonan->nomor_surat }}">
                 </div>
 
@@ -272,7 +277,7 @@
             handleStatusChange();
             statusSelect.on('change', handleStatusChange);
 
-            // --- Logika Kontrol Field Kritis (Mutasi) ---
+            // --- Logika Kontrol Field penting (Mutasi) ---
             function controlFieldEditability(type) {
                 const normalizedType = type ? type.toLowerCase() : '';
 
@@ -303,7 +308,7 @@
 
                     if (isKelahiran) {
                         message =
-                            'Data Anggota Keluarga **Bayi** merupakan data kritis. Koreksi **Nama/NIK/Tanggal Lahir** hanya dapat dilakukan di **Menu Data Keluarga**.';
+                            'Data Anggota Keluarga **Bayi** merupakan data penting. Koreksi **Nama/NIK/Tanggal Lahir** hanya dapat dilakukan di **Menu Data Keluarga**.';
                         target = 'Bayi Baru';
 
                         // Disable Pemohon & Custom Fields
@@ -331,7 +336,7 @@
 
                     } else if (isPindahKeluar) {
                         message =
-                            'Data Anggota Keluarga yang dimutasi (**Pindah Keluar**) adalah data kritis sistem. Data NIK dan Status Kependudukan hanya dapat dikoreksi di **Tabel Data Penduduk**.';
+                            'Data Anggota Keluarga yang dimutasi (**Pindah Keluar**) adalah data penting sistem. Data NIK dan Status Kependudukan hanya dapat dikoreksi di **Tabel Data Penduduk**.';
                         target = 'Penduduk Pindah';
 
                         // Nonaktifkan Pemohon Select (subjek mutasi) 
@@ -344,7 +349,7 @@
 
                     } else if (isMutasiMasuk) {
                         message =
-                            'Data Anggota Keluarga (**Pindah Masuk**) adalah data kritis sistem. Koreksi data dasar Anggota Keluarga harus dilakukan di **Tabel Data Penduduk**.';
+                            'Data Anggota Keluarga (**Pindah Masuk**) adalah data penting sistem. Koreksi data dasar Anggota Keluarga harus dilakukan di **Tabel Data Penduduk**.';
                         target = 'Penduduk Baru';
                         pemohonSelect.attr('aria-disabled', 'true')
                             .css('pointer-events', 'none') // Menonaktifkan interaksi klik
@@ -354,7 +359,7 @@
 
                     // Memperbarui Judul Custom Field
                     customFieldsTitle.html(
-                        `Data Tambahan Surat <span class="text-danger">(${target} Kritis)</span>`);
+                        `Data Tambahan Surat <span class="text-danger">(${target} penting)</span>`);
 
                     // Menampilkan Peringatan
                     criticalWarning.html(`
