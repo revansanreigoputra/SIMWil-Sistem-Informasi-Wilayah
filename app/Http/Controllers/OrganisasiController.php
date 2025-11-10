@@ -43,7 +43,6 @@ class OrganisasiController extends Controller
 
         $validated['desa_id'] = session('desa_id');
         organisasi::create($validated);
-
         return redirect()->route('perkembangan.lembagakemasyarakatan.organisasi.index')->with('success', 'Data organisasi berhasil disimpan.');
     }
 
