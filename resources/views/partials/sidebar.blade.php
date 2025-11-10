@@ -655,52 +655,10 @@
                                                 href="{{ route('potensi.kelembagaan.pendidikan.index') }}">
                                                 Lembaga Pendidikan
                                             </a>
-                                            @can('adat.view')
-                                                <a class="dropdown-item {{ request()->is('potensi/potensi-kelembagaan/lembagaAdat*') ? 'active' : '' }}"
-                                                    href="{{ route('potensi.potensi-kelembagaan.lembagaAdat.index') }}">
-                                                    Lembaga Adat
-                                                </a>
-                                                @can('p_kewarganegaraan.view')
-                                                    <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/kewarganegaraan*') ? 'active' : '' }}"
-                                                        href="{{ route('potensi.potensi-sdm.kewarganegaraan.index') }}">
-                                                        Kewarganegaraan
-                                                    </a>
-                                                @endcan
-                                            @endcan
-                                            @can('p_cacat.view')
-                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/cacat*') ? 'active' : '' }}"
-                                                    href="{{ route('potensi.potensi-sdm.cacat.index') }}">
-                                                    Cacat
-                                                </a>
-                                            @endcan
                                             <a class="dropdown-item {{ request()->is('potensi/potensi-kelembagaan/keamanan*') ? 'active' : '' }}"
                                                 href="{{ route('potensi.kelembagaan.keamanan.index') }}">
                                                 Lembaga Keamanan
                                             </a>
-                                            @can('p_cacat.view')
-                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/cacat*') ? 'active' : '' }}"
-                                                    href="{{ route('potensi.potensi-sdm.cacat.index') }}">
-                                                    Cacat
-                                                </a>
-                                            @endcan
-                                            @can('p_etnis_suku.view')
-                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/etnis-suku*') ? 'active' : '' }}"
-                                                    href="{{ route('potensi.potensi-sdm.etnis-suku.index') }}">
-                                                    Etnis/Suku
-                                                </a>
-                                            @endcan
-                                            @can('p_tenaga_kerja.view')
-                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/tenaga-kerja*') ? 'active' : '' }}"
-                                                    href="{{ route('potensi.potensi-sdm.tenaga-kerja.index') }}">
-                                                    Tenaga Kerja
-                                                </a>
-                                            @endcan
-                                            @can('p_kualitas_angkatan_kerja.view')
-                                                <a class="dropdown-item {{ request()->is('potensi/potensi-sdm/kualitas-angkatan-kerja*') ? 'active' : '' }}"
-                                                    href="{{ route('potensi.potensi-sdm.kualitas-angkatan-kerja.index') }}">
-                                                    Kualitas Angkatan <br> Kerja
-                                                </a>
-                                            @endcan
                                         </div>
                                     </div>
 
