@@ -876,6 +876,14 @@ class PermissionSeeder extends Seeder
             'pengolahan-hasil-ternak.update',
             'pengolahan-hasil-ternak.delete',
 
+            // lahan pakan ternak permissions
+            'lahan-pakan-ternak.view',
+            'lahan-pakan-ternak.create',
+            'lahan-pakan-ternak.store',
+            'lahan-pakan-ternak.edit',
+            'lahan-pakan-ternak.update',
+            'lahan-pakan-ternak.delete',
+
             //sektor tambang
             'sektor-tambang.view',
             'sektor-tambang.store',
