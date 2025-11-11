@@ -13,7 +13,8 @@ class PerjudianController extends Controller
      */
     public function index()
     {
-        $data = Perjudian::with(['desa'])->orderBy('tanggal', 'desc')->get();
+        $desaId = session('desa_id');
+        $data = Perjudian::where('desa_id',$desaId)->with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.keamanandanketertiban.perjudian.index', compact('data'));
     }
 
@@ -33,15 +34,13 @@ class PerjudianController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jumlah_penduduk_berjudi' => 'nullable|numeric',
             'jenis_perjudian' => 'nullable|string',
             'jumlah_kasus_penipuan_penggelapan' => 'nullable|numeric',
             'jumlah_kasus_sengketa_warisan_jualbeli_utangpiutang' => 'nullable|numeric',
         ]);
-
+        $validated['desa_id'] = session('desa_id');
         Perjudian::create($validated);
-
         return redirect()->route('perkembangan.keamanandanketertiban.perjudian.index')->with('success', 'Data Perjudian berhasil ditambahkan.');
     }
 
@@ -50,7 +49,7 @@ class PerjudianController extends Controller
      */
     public function show($id)
     {
-        $perjudian = Perjudian::findOrFail($id);
+        $perjudian = Perjudian::with(['desa'])->findOrFail($id);
         $perjudian->load(['desa']);
         return view('pages.perkembangan.keamanandanketertiban.perjudian.show', compact('perjudian'));
     }
@@ -72,7 +71,6 @@ class PerjudianController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jumlah_penduduk_berjudi' => 'nullable|numeric',
             'jenis_perjudian' => 'nullable|string',
             'jumlah_kasus_penipuan_penggelapan' => 'nullable|numeric',

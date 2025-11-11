@@ -14,7 +14,7 @@ class Perjudian extends Model
 
     // Kolom yang boleh diisi (fillable)
     protected $fillable = [
-        'id_desa',
+        'desa_id',
         'tanggal',
         'jumlah_penduduk_berjudi',
         'jenis_perjudian',
@@ -25,6 +25,6 @@ class Perjudian extends Model
     // Relasi ke tabel desa
     public function desa()
     {
-        return $this->belongsTo(Desa::class, 'id_desa');
+        return $this->belongsTo(Desa::class);
     }
 }
