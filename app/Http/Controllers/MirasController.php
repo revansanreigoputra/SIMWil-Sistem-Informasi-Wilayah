@@ -13,7 +13,8 @@ class MirasController extends Controller
      */
     public function index()
     {
-        $data = miras::with(['desa'])->orderBy('tanggal', 'desc')->get();
+        $desaId = session('desa_id');
+        $data = miras::where('desa_id',$desaId)->with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.keamanandanketertiban.miras.index', compact('data'));
     }
 
@@ -33,7 +34,6 @@ class MirasController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jumlah_warung_miras' => 'required|integer|min:0',
             'jumlah_penduduk_miras' => 'required|integer|min:0',
             'jumlah_kasus_mabuk_miras' => 'required|integer|min:0',
@@ -44,6 +44,7 @@ class MirasController extends Controller
             'jumlah_pelaku_miras_diadili' => 'required|integer|min:0',
             'jumlah_pelaku_narkoba_diadili' => 'required|integer|min:0',
         ]);
+        $validated['desa_id'] = session('desa_id');
         miras::create($validated);
         return redirect()->route('perkembangan.keamanandanketertiban.miras.index')->with('success', 'Data Miras berhasil ditambahkan.');
     }
@@ -53,7 +54,7 @@ class MirasController extends Controller
      */
     public function show($id)
     {
-        $miras = miras::findOrFail($id);
+        $miras = miras::with(['desa'])->findOrFail($id);
         $miras->load(['desa']);
         return view('pages.perkembangan.keamanandanketertiban.miras.show', compact('miras'));
     }
@@ -75,7 +76,6 @@ class MirasController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jumlah_warung_miras' => 'required|integer|min:0',
             'jumlah_penduduk_miras' => 'required|integer|min:0',
             'jumlah_kasus_mabuk_miras' => 'required|integer|min:0',

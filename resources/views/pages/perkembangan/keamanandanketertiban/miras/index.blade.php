@@ -27,10 +27,6 @@
                         <th class="text-center">Kasus Mabuk Miras</th>
                         <th class="text-center">Pengedar Narkoba</th>
                         <th class="text-center">Penduduk Narkoba</th>
-                        <th class="text-center">Kasus Teler Narkoba</th>
-                        <th class="text-center">Kasus Kematian Narkoba</th>
-                        <th class="text-center">Pelaku Miras Diadili</th>
-                        <th class="text-center">Pelaku Narkoba Diadili</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -45,10 +41,6 @@
                             <td class="text-center">{{ $item->jumlah_kasus_mabuk_miras ?? 0 }}</td>
                             <td class="text-center">{{ $item->jumlah_pengedar_narkoba ?? 0 }}</td>
                             <td class="text-center">{{ $item->jumlah_penduduk_narkoba ?? 0 }}</td>
-                            <td class="text-center">{{ $item->jumlah_kasus_teler_narkoba ?? 0 }}</td>
-                            <td class="text-center">{{ $item->jumlah_kasus_kematian_narkoba ?? 0 }}</td>
-                            <td class="text-center">{{ $item->jumlah_pelaku_miras_diadili ?? 0 }}</td>
-                            <td class="text-center">{{ $item->jumlah_pelaku_narkoba_diadili ?? 0 }}</td>
                             <td>
                                 <div class="d-flex gap-1 justify-content-center">
                                     <!-- Tombol Detail -->

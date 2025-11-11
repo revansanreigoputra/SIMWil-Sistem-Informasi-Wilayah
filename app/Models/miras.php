@@ -14,7 +14,7 @@ class miras extends Model
 
     // Kolom yang bisa diisi massal
     protected $fillable = [
-        'id_desa',
+        'desa_id',
         'tanggal',
         'jumlah_warung_miras',
         'jumlah_penduduk_miras',
@@ -37,7 +37,7 @@ class miras extends Model
      */
     public function desa()
     {
-        return $this->belongsTo(Desa::class, 'id_desa');
+        return $this->belongsTo(Desa::class);
     }
 
 }
