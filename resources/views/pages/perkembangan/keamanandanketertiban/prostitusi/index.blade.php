@@ -25,9 +25,6 @@
                         <th class="text-center">Jumlah Penduduk Pramu Nikmat</th>
                         <th class="text-center">Lokalisasi Prostitusi</th>
                         <th class="text-center">Jumlah Tempat Pramu Nikmat</th>
-                        <th class="text-center">Jumlah Kasus Prostitusi</th>
-                        <th class="text-center">Jumlah Pembinaan Pelaku</th>
-                        <th class="text-center">Jumlah Penertiban Tempat</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -40,9 +37,6 @@
                             <td class="text-center">{{ $item->jumlah_penduduk_pramu_nikmat ?? 0 }}</td>
                             <td class="text-center">{{ $item->lokalisasi_prostitusi ?? '-' }}</td>
                             <td class="text-center">{{ $item->jumlah_tempat_pramunikmat ?? 0 }}</td>
-                            <td class="text-center">{{ $item->jumlah_kasus_prostitusi ?? 0 }}</td>
-                            <td class="text-center">{{ $item->jumlah_pembinaan_pelaku ?? 0 }}</td>
-                            <td class="text-center">{{ $item->jumlah_penertiban_tempat ?? 0 }}</td>
                             <td>
                                 <div class="d-flex gap-1 justify-content-center">
                                     <!-- Tombol Detail -->

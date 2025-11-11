@@ -14,7 +14,7 @@ class Prostitusi extends Model
 
     // Kolom yang boleh diisi (mass assignable)
     protected $fillable = [
-        'id_desa',
+        'desa_id',
         'tanggal',
         'jumlah_penduduk_pramu_nikmat',
         'lokalisasi_prostitusi',
@@ -34,6 +34,6 @@ class Prostitusi extends Model
      */
     public function desa()
     {
-        return $this->belongsTo(Desa::class, 'id_desa');
+        return $this->belongsTo(Desa::class);
     }
 }

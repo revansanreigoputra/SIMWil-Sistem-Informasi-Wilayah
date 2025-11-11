@@ -13,7 +13,8 @@ class ProstitusiController extends Controller
      */
     public function index()
     {
-        $data = Prostitusi::with(['desa'])->orderBy('tanggal', 'desc')->get();
+        $desaId = session('desa_id');
+        $data = Prostitusi::where('desa_id',$desaId)->with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.keamanandanketertiban.prostitusi.index', compact('data'));
     }
 
@@ -33,7 +34,6 @@ class ProstitusiController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jumlah_penduduk_pramu_nikmat' => 'nullable|integer|min:0',
             'lokalisasi_prostitusi' => 'required|in:Ada,Tidak Ada',
             'jumlah_tempat_pramunikmat' => 'nullable|integer|min:0',
@@ -41,6 +41,7 @@ class ProstitusiController extends Controller
             'jumlah_pembinaan_pelaku' => 'nullable|integer|min:0',
             'jumlah_penertiban_tempat' => 'nullable|integer|min:0',
         ]);
+        $validated['desa_id'] = session('desa_id');
         Prostitusi::create($validated);
         return redirect()->route('perkembangan.keamanandanketertiban.prostitusi.index')->with('success', 'Data Prostitusi berhasil ditambahkan.');
     }
@@ -50,7 +51,7 @@ class ProstitusiController extends Controller
      */
     public function show($id)
     {
-        $prostitusi = prostitusi::findOrFail($id);
+        $prostitusi = prostitusi::with(['desa'])->findOrFail($id);
         $prostitusi->load(['desa']);
         return view('pages.perkembangan.keamanandanketertiban.prostitusi.show', compact('prostitusi'));
     }
@@ -72,7 +73,6 @@ class ProstitusiController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jumlah_penduduk_pramu_nikmat' => 'nullable|integer|min:0',
             'lokalisasi_prostitusi' => 'required|in:Ada,Tidak Ada',
             'jumlah_tempat_pramunikmat' => 'nullable|integer|min:0',
