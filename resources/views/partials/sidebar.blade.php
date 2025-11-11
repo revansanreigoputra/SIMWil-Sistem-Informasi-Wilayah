@@ -540,6 +540,13 @@
                                                 </a>
                                             @endcan
 
+                                            @can('pengolahan-hasil-ternak.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/pengolahan-hasil-ternak*') ? 'active' : '' }}"
+                                                    href="{{ route('pengolahan-hasil-ternak.index') }}">
+                                                    Pengolahan Hasil <br> Ternak
+                                                </a>
+                                            @endcan
+
                                         </div>
                                     </div>
 
