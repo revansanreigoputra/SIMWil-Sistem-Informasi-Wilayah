@@ -16,7 +16,7 @@ class Perkelahian extends Model
      * Kolom yang dapat diisi (mass assignable)
      */
     protected $fillable = [
-        'id_desa',
+        'desa_id',
         'tanggal',
         'kasus_tahun_ini',
         'kasus_korban_jiwa',
@@ -31,6 +31,6 @@ class Perkelahian extends Model
      */
     public function desa()
     {
-        return $this->belongsTo(Desa::class, 'id_desa');
+        return $this->belongsTo(Desa::class);
     }
 }
