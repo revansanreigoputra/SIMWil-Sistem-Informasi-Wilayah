@@ -441,7 +441,7 @@
                                             <br>
 
                                             @can('lahan.view')
-                                                <a class="dropdown-item {{ request()->is('potensi/sda/lahan*') ? 'active' : '' }}"
+                                                <a class="dropdown-item {{ request()->routeIs('lahan.*') ? 'active' : '' }}"
                                                     href="{{ route('lahan.index') }}">
                                                     Kep. Lahan Tanaman
                                                 </a>
@@ -548,7 +548,7 @@
                                             @endcan
 
                                             @can('lahan-pakan-ternak.view')
-                                                <a class="dropdown-item {{ request()->is('potensi/sda/lahan-pakan-ternak*') ? 'active' : '' }}"
+                                                <a class="dropdown-item {{ request()->routeIs('lahan-pakan-ternak.*') ? 'active' : '' }}"
                                                     href="{{ route('lahan-pakan-ternak.index') }}">
                                                     Lahan Pakan Ternak
                                                 </a>
