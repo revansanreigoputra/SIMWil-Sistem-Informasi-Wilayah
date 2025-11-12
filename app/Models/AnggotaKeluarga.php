@@ -50,6 +50,7 @@ class AnggotaKeluarga extends Model
         'mutasi_type',
         'tanggal_mutasi',
         'catatan_mutasi',
+        'email'
     ];
     protected $casts = [
         'tanggal_mutasi' => 'date',

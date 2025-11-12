@@ -101,7 +101,9 @@ class DatabaseSeeder extends Seeder
             SakitKelainanSeeder::class,
             StatusKepemilikanSeeder::class,
             TempatPerawatanSeeder::class,
-            TempatpersalinanSeeder::class,
+            TempatpersalinanSeeder::class,  
+            PemilikOrganisasiSeeder::class,  
+            PartisipasiPolitikSeeder::class,     
 
             JenisWabahSeeder::class,
             JenisPenyakitSeeder::class,
@@ -126,6 +128,7 @@ class DatabaseSeeder extends Seeder
             JenisLembagaEkonomiSeeder::class,
             KategoriUsahaPengangkutanSeeder::class,
             KategoriUsahaJasaDanHiburanSeeder::class,
+            JenisUsahaHiburanSeeder::class,
             KategoriSekolahSeeder::class,
             JenisSekolahTingkatanSeeder::class,
             KategoriPrasaranaTransportasiDaratSeeder::class,

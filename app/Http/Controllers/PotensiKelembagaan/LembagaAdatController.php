@@ -3,64 +3,145 @@
 namespace App\Http\Controllers\PotensiKelembagaan;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\PotensiKelembagaan\LembagaAdat;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class LembagaAdatController extends Controller
 {
     /**
-     * Menampilkan daftar lembaga adat.
+     * Display a listing of the resource.
      */
     public function index()
     {
-        return view('pages.potensi.kelembagaan.adat.index');
+        $lembagaAdats = LembagaAdat::orderBy('tanggal', 'desc')->paginate(10);
+        return view('pages.potensi.potensi-kelembagaan.lembagaAdat.index', compact('lembagaAdats'));
     }
 
     /**
-     * Menampilkan form create lembaga adat.
+     * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('pages.potensi.kelembagaan.adat.create');
+        return view('pages.potensi.potensi-kelembagaan.lembagaAdat.create');
     }
 
     /**
-     * Simpan data baru lembaga adat.
+     * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        return view('potensi.kelembagaan.adat.index');
+        $validator = Validator::make($request->all(), [
+            'tanggal' => 'required|date',
+            'pemangku_adat' => 'nullable|boolean',
+            'kepengurusan_adat' => 'nullable|boolean',
+            'rumah_adat' => 'nullable|boolean',
+            'barang_pusaka' => 'nullable|boolean',
+            'naskah_naskah' => 'nullable|boolean',
+            'lainnya' => 'nullable|boolean',
+            'musyawarah_adat' => 'nullable|boolean',
+            'sanksi_adat' => 'nullable|boolean',
+            'upacara_adat_perkawinan' => 'nullable|boolean',
+            'upacara_adat_kematian' => 'nullable|boolean',
+            'upacara_adat_kelahiran' => 'nullable|boolean',
+            'upacara_adat_bercocok_tanam' => 'nullable|boolean',
+            'upacara_adat_perikanan_laut' => 'nullable|boolean',
+            'upacara_adat_bidang_kehutanan' => 'nullable|boolean',
+            'upacara_adat_pengelolaan_sda' => 'nullable|boolean',
+            'upacara_adat_pembangunan_rumah' => 'nullable|boolean',
+            'upacara_adat_penyelesaian_masalah' => 'nullable|boolean',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        LembagaAdat::create($request->all());
+
+        return redirect()->route('potensi.potensi-kelembagaan.lembagaAdat.index')
+            ->with('success', 'Data Lembaga Adat berhasil ditambahkan.');
     }
 
     /**
-     * Tampilkan detail lembaga adat.
+     * Display the specified resource.
      */
-    public function show($id)
+    public function show(LembagaAdat $adat)
     {
-        return view('pages.potensi.kelembagaan.adat.show');
+        return view('pages.potensi.potensi-kelembagaan.lembagaAdat.show', compact('adat'));
     }
 
     /**
-     * Tampilkan form edit lembaga adat.
+     * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(LembagaAdat $adat)
     {
-        return view('pages.potensi.kelembagaan.adat.edit');
+        return view('pages.potensi.potensi-kelembagaan.lembagaAdat.edit', compact('adat'));
     }
 
     /**
-     * Update data lembaga adat.
+     * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, LembagaAdat $adat)
     {
-        return view('potensi.kelembagaan.adat.index');
+        $validator = Validator::make($request->all(), [
+            'tanggal' => 'required|date',
+            'pemangku_adat' => 'nullable|boolean',
+            'kepengurusan_adat' => 'nullable|boolean',
+            'rumah_adat' => 'nullable|boolean',
+            'barang_pusaka' => 'nullable|boolean',
+            'naskah_naskah' => 'nullable|boolean',
+            'lainnya' => 'nullable|boolean',
+            'musyawarah_adat' => 'nullable|boolean',
+            'sanksi_adat' => 'nullable|boolean',
+            'upacara_adat_perkawinan' => 'nullable|boolean',
+            'upacara_adat_kematian' => 'nullable|boolean',
+            'upacara_adat_kelahiran' => 'nullable|boolean',
+            'upacara_adat_bercocok_tanam' => 'nullable|boolean',
+            'upacara_adat_perikanan_laut' => 'nullable|boolean',
+            'upacara_adat_bidang_kehutanan' => 'nullable|boolean',
+            'upacara_adat_pengelolaan_sda' => 'nullable|boolean',
+            'upacara_adat_pembangunan_rumah' => 'nullable|boolean',
+            'upacara_adat_penyelesaian_masalah' => 'nullable|boolean',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $adat->update($request->all());
+
+        return redirect()->route('potensi.potensi-kelembagaan.lembagaAdat.index')
+            ->with('success', 'Data Lembaga Adat berhasil diperbarui.');
     }
 
     /**
-     * Hapus data lembaga adat.
+     * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(LembagaAdat $adat)
     {
-        return view('potensi.kelembagaan.adat.index');
+        $adat->delete();
+
+        return redirect()->route('potensi.potensi-kelembagaan.lembagaAdat.index')
+            ->with('success', 'Data Lembaga Adat berhasil dihapus.');
+    }
+    public function print($id)
+    {
+        $data = LembagaAdat::findOrFail($id);
+        $pdf = Pdf::loadView('pages.potensi.potensi-kelembagaan.lembagaAdat.print', compact('data'))
+                  ->setPaper('a4', 'portrait');
+        return $pdf->stream('Data_Lembaga_Adat_' . $data->id . '.pdf');
+    }
+
+    public function download($id)
+    {
+        $data = LembagaAdat::findOrFail($id);
+        $pdf = Pdf::loadView('pages.potensi.potensi-kelembagaan.lembagaAdat.print', compact('data'))
+                  ->setPaper('a4', 'portrait');
+        return $pdf->download('Data_Lembaga_Adat_' . $data->id . '.pdf');
     }
 }

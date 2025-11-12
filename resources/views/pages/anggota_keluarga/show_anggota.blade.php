@@ -149,6 +149,10 @@
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <strong>NIK:</strong>
+                                    <p>${anggota.email}</p>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <strong>NIK:</strong>
                                     <p>${anggota.nik}</p>
                                 </div>
                                 <div class="col-md-6 mb-3">

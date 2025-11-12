@@ -26,7 +26,7 @@ use App\Models\MasterDDK\{
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Exports\DataKeluargaExport;
 use App\Http\Controllers\Imports\DataKeluargaImport;
-use App\Http\Controllers\Exports\DataKeluargaTemplateExport;
+use App\Http\Controllers\Exports\DataKeluargaTemplateImport;
 use Maatwebsite\Excel\Concerns\{FromCollection, WithHeadings};
 
 class DataKeluargaController extends Controller
@@ -324,7 +324,7 @@ class DataKeluargaController extends Controller
     public function template()
     {
         // Gunakan kelas Export baru yang dikhususkan untuk template
-        return Excel::download(new DataKeluargaTemplateExport(), 'template_data_keluarga.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+        return Excel::download(new DataKeluargaTemplateImport(), 'template_data_keluarga.xlsx', \Maatwebsite\Excel\Excel::XLSX);
     }
     /**
      * Import data from Excel.
@@ -350,5 +350,30 @@ class DataKeluargaController extends Controller
         }
 
         return redirect()->route('data_keluarga.index')->with('success', 'Data Keluarga berhasil diimpor!');
+    }
+    public function show(DataKeluarga $dataKeluarga)
+    {
+        // Eager load all related data for the main family head and all members
+        $dataKeluarga->load([
+            'desas',
+            'kecamatans',
+            'perangkatDesas',
+            'anggotaKeluarga.hubunganKeluarga',
+            'anggotaKeluarga.agama',
+            'anggotaKeluarga.golonganDarah',
+            'anggotaKeluarga.kewarganegaraan',
+            'anggotaKeluarga.pendidikan',
+            'anggotaKeluarga.mataPencaharian',
+            'anggotaKeluarga.kb',
+            'anggotaKeluarga.cacat',
+            'anggotaKeluarga.kedudukanPajak',
+            'anggotaKeluarga.lembaga'
+        ]);
+
+        // The first member (no_urut=1) is assumed to be the head of household for the detail card
+        $kepalaKeluargaDetail = $dataKeluarga->anggotaKeluarga->where('no_urut', 1)->first();
+        $anggotaKeluargas = $dataKeluarga->anggotaKeluarga; // All family members
+
+        return view('pages.data_keluarga.show', compact('dataKeluarga', 'kepalaKeluargaDetail', 'anggotaKeluargas'));
     }
 }

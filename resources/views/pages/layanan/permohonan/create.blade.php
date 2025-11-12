@@ -14,8 +14,13 @@
                 @csrf
 
                 {{-- Hidden JSON Data Map for JavaScript (CRUCIAL: Ensure mutasi_type is included in $jenisSurats) --}}
-                <div id="jenis-surat-map" data-map="{{ json_encode($jenisSurats) }}" style="display: none;"></div>
+                {{-- <div id="jenis-surat-map" data-map="{{ json_encode($jenisSurats) }}" style="display: none;"></div>
                 <div id="data-storage-container" data-old-custom-data="{{ json_encode(old('custom_data', [])) }}"
+                    style="display: none;"></div> --}}
+
+                {{-- Hidden JSON Data Map for JavaScript (CRUCIAL: Ensure mutasi_type is included in $jenisSurats) --}}
+                <div id="jenis-surat-map" data-map="{{ json_encode($jenisSurats) }}" style="display: none;"></div>
+                <div id="data-storage-container" data-old-custom-data="{{ json_encode($oldCustomData ?? []) }}"
                     style="display: none;"></div>
 
                 {{-- NEW: Hidden Input for Pre-selected Jenis Surat (Required if the select is disabled) --}}
@@ -39,7 +44,8 @@
                     <label for="jenis_surat_id" class="form-label fw-semibold">Jenis Surat</label>
                     <select name="jenis_surat_id" id="jenis_surat_id"
                         class="form-select @error('jenis_surat_id') is-invalid @enderror" required {{-- ADDITIONALLY DISABLE the select if pre-selected, to prevent modal popup --}}
-                        {{ $preselected_jenis_surat_id ?? null ? 'disabled' : '' }}>
+                        {{ $preselected_jenis_surat_id ?? null ? 'disabled' : '' }}
+                        data-next-nomor-url="{{ route('permohonan.get_next_nomor', ['jenisSuratId' => 0]) }}">
                         <option value="">-- Pilih Jenis Surat --</option>
                         @foreach ($jenisSurats as $js)
                             <option value="{{ $js->id }}" {{-- Use pre-selected variable from controller --}}
@@ -178,7 +184,7 @@
                             @foreach ($kopTemplates as $kop)
                                 <option value="{{ $kop->id }}"
                                     {{ old('id_kop_templates') == $kop->id ? 'selected' : '' }}>
-                                   {{ $kop->jenis_kop }} - {{ $kop->nama }}
+                                    {{ $kop->jenis_kop }} - {{ $kop->nama }}
                                 </option>
                             @endforeach
                         </select>
@@ -200,6 +206,8 @@
                                         Diverifikasi</option>
                                     <option value="ditolak" {{ old('status') == 'ditolak' ? 'selected' : '' }}>Ditolak
                                     </option>
+                                    <option value="siap_diambil" {{ old('status') == 'siap_diambil' ? 'selected' : '' }}>
+                                        Siap Diambil</option>
                                     <option value="sudah_diambil"
                                         {{ old('status') == 'sudah_diambil' ? 'selected' : '' }}>Sudah Diambil</option>
                                 </select>
@@ -276,7 +284,7 @@
             pendidikan: [],
             pekerjaan: []
         };
- 
+
 
         // CAPTURE PHP DEFAULTS AND PRE-SELECTION DATA
         const initialPembuka = '{{ old('paragraf_pembuka', optional($defaultJenisSurat)->paragraf_pembuka) }}'.trim();
@@ -540,8 +548,38 @@
                     jenisSuratSelect.is(':disabled')) {
                     penutupField.val(newPenutup);
                 }
-
                 renderCustomFields(selectedId);
+                // render nomor surat
+                let url = jenisSuratSelect.data('next-nomor-url');
+
+                // 2. Replace the dummy '0' with the actual selectedId
+                // This regex replaces the last segment of the URL if it is '0'
+                url = url.replace(/\/0$/, '/' + selectedId);
+
+                if (url && selectedId) {
+                    // Optional: Show loading state
+                    // $('#nomor_urut_input').val('Loading...');
+
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.success) {
+                                $('#nomor_urut_input').val(response.next_number);
+                            } else {
+                                // Fallback to 1 if calculation fails server-side
+                                $('#nomor_urut_input').val(1);
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error AJAX next number:', error);
+                            // Fallback on error, maybe keep the old value or set to 1
+                        }
+                    });
+                }
+
+
             };
 
             // ------------------------------------------------------------------------

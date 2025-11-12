@@ -8,12 +8,12 @@
         <!-- END NAVBAR TOGGLER -->
         <!-- BEGIN NAVBAR LOGO -->
         <div class="navbar-brand navbar-brand-autodark">
-            <a href="{{ route('dashboard') }}" aria-label="{{ $websiteSetting?->website_name ?? 'Laravel POS' }}">
+            <a href="{{ route('dashboard') }}" aria-label="{{ $websiteSetting?->website_name ?? 'Sistem Wilayah' }}">
                 @if ($websiteSetting?->logo)
                     <img src="{{ asset('storage/' . $websiteSetting->logo) }}" alt="{{ $websiteSetting->website_name }}"
                         class="navbar-brand-image" style="height: 32px; width: auto; max-width: 150px;">
                 @else
-                    {{ $websiteSetting?->website_name ?? 'Laravel POS' }}
+                    {{ $websiteSetting?->website_name ?? 'Sistem Wilayah' }}
                 @endif
             </a>
         </div>
@@ -263,9 +263,14 @@
                                 </div>
 
                                 {{-- Permohonan Surat --}}
-                                <a class="dropdown-item {{ request()->is('layanan-surat/permohonan*') ? 'active' : '' }}"
+                                <a class="dropdown-item {{ request()->is('layanan-surat/permohonan') ? 'active' : '' }}"
                                     href="{{ route('permohonan.index') }}">
-                                    Permohonan Surat +
+                                    <i class="bi bi-plus-circle me-2 py-1"></i>
+                                     Permohonan Surat  
+                                </a>
+                                <a class="dropdown-item {{ request()->is('layanan-surat/permohonan/unverified') ? 'active' : ''}}"
+                                href="{{route('permohonan.unverified')}}">
+                                    Surat Belum Diverifikasi
                                 </a>
 
 
@@ -325,7 +330,7 @@
                                     </a>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
                     </li>
                 @endcan
                 {{-- Mutasi --}}
@@ -641,36 +646,50 @@
                                         </a>
                                         <div
                                             class="dropdown-menu {{ request()->is('potensi/potensi-kelembagaan*') ? 'show' : '' }}">
-                                            <a class="dropdown-item {{ request()->is('potensi/potensi-kelembagaan/pemerintah*') ? 'active' : '' }}"
-                                                href="{{ route('potensi.kelembagaan.pemerintah.index') }}">
-                                                Lembaga Pemerintah
-                                            </a>
-                                            <a class="dropdown-item {{ request()->is('potensi/potensi-kelembagaan/kemasyarakatan*') ? 'active' : '' }}"
-                                                href="{{ route('potensi.kelembagaan.kemasyarakatan.index') }}">
-                                                Lembaga Kemasyarakatan
-                                            </a>
-                                            <a class="dropdown-item {{ request()->is('potensi/potensi-kelembagaan/politik*') ? 'active' : '' }}"
-                                                href="{{ route('potensi.kelembagaan.politik.index') }}">
-                                                Partisipasi Politik
-                                            </a>
-                                            <a class="dropdown-item {{ request()->is('potensi/potensi-kelembagaan/ekonomi*') ? 'active' : '' }}"
-                                                href="{{ route('potensi.kelembagaan.ekonomi.index') }}">
-                                                Lembaga Ekonomi
-                                            </a>
+                                            @can('potensi.kelembagaan.pemerintah.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-kelembagaan/pemerintah*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-kelembagaan.pemerintah.index') }}">
+                                                    Lembaga Pemerintah
+                                                </a>
+                                            @endcan
+                                            @can('lembaga-kemasyarakatan.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-kelembagaan/lembaga-kemasyarakatan*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-kelembagaan.lembaga-kemasyarakatan.index') }}">
+                                                    Lembaga Kemasyarakatan
+                                                </a>
+                                            @endcan
+                                            @can('lembaga-kemasyarakatan.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-kelembagaan/politik*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-kelembagaan.politik.index') }}">
+                                                    Partisipasi Politik
+                                                </a>
+                                            @endcan
+                                            @can('lembaga-ekonomi.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-kelembagaan/ekonomi*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-kelembagaan.ekonomi.index') }}">
+                                                    Lembaga Ekonomi
+                                                </a>
+                                            @endcan
                                             <a class="dropdown-item {{ request()->is('potensi/potensi-kelembagaan/pengangkutan*') ? 'active' : '' }}"
-                                                href="{{ route('potensi.kelembagaan.pengangkutan.index') }}">
+                                                href="{{ route('potensi.potensi-kelembagaan.pengangkutan.index') }}">
                                                 Jasa Pengangkutan
                                             </a>
                                             <a class="dropdown-item {{ request()->is('potensi/potensi-kelembagaan/hiburan*') ? 'active' : '' }}"
-                                                href="{{ route('potensi.kelembagaan.hiburan.index') }}">
+                                                href="{{ route('potensi.potensi-kelembagaan.hiburan.index') }}">
                                                 Jasa, Hiburan, DLL
                                             </a>
                                             <a class="dropdown-item {{ request()->is('potensi/potensi-kelembagaan/pendidikan*') ? 'active' : '' }}"
-                                                href="{{ route('potensi.kelembagaan.pendidikan.index') }}">
+                                                href="{{ route('potensi.potensi-kelembagaan.pendidikan.index') }}">
                                                 Lembaga Pendidikan
                                             </a>
+                                            @can('adat.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/potensi-kelembagaan/lembagaAdat*') ? 'active' : '' }}"
+                                                    href="{{ route('potensi.potensi-kelembagaan.lembagaAdat.index') }}">
+                                                    Lembaga Adat
+                                                </a>
+                                            @endcan
                                             <a class="dropdown-item {{ request()->is('potensi/potensi-kelembagaan/keamanan*') ? 'active' : '' }}"
-                                                href="{{ route('potensi.kelembagaan.keamanan.index') }}">
+                                                href="{{ route('potensi.potensi-kelembagaan.keamanan.index') }}">
                                                 Lembaga Keamanan
                                             </a>
                                         </div>
@@ -1089,7 +1108,7 @@
                                                     Perlembagaan Sistem<br> Keamanan
                                                 </a>
                                             @endcan
-                                            
+
                                         </div>
                                     </div>
 
