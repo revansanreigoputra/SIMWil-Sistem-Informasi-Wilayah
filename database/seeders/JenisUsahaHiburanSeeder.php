@@ -9,7 +9,7 @@ class JenisUsahaHiburanSeeder extends Seeder
 {
     public function run(): void
     {
-        \DB::table('jenis_usaha_hiburan')->truncate();
+        // \DB::table('jenis_usaha_hiburan')->truncate();
 
         $data = [
             ['nama' => 'Organ Tunggal', 'kategori_id' => 2],

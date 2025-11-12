@@ -13,7 +13,7 @@ class KategoriUsahaJasaDanHiburanSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('kategori_usaha_jasa_dan_hiburan')->truncate();
+        // DB::table('kategori_usaha_jasa_dan_hiburan')->truncate();
         
         DB::table('kategori_usaha_jasa_dan_hiburan')->insert([
             ['nama' => 'Jasa dan Perdagangan'],

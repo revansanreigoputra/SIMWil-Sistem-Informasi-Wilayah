@@ -12,7 +12,7 @@ class JenisLembagaSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('jenis_lembaga')->truncate();
+        // DB::table('jenis_lembaga')->truncate();
         
         DB::table('jenis_lembaga')->insert([
             ['nama' => 'Karang Taruna'],
