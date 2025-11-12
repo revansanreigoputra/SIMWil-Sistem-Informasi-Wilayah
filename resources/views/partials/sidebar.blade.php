@@ -1015,6 +1015,67 @@
                                                 </a>
                                             @endcan
 
+                                            @can('perjudian.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/keamanandanketertiban/perjudian*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.keamanandanketertiban.perjudian.index') }}">
+                                                    Perjudian, Penipuan<br> dan Penggelapan
+                                                </a>
+                                            @endcan
+                                            @can('miras.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/keamanandanketertiban/miras*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.keamanandanketertiban.miras.index') }}">
+                                                    Pemakaian Miras<br> dan Narkoba
+                                                </a>
+                                            @endcan
+                                            @can(abilities: 'prostitusi.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/keamanandanketertiban/prostitusi*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.keamanandanketertiban.prostitusi.index') }}">
+                                                    Prostitusi
+                                                </a>
+                                            @endcan
+                                            @can(abilities: 'pembunuhan.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/keamanandanketertiban/pembunuhan*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.keamanandanketertiban.pembunuhan.index') }}">
+                                                    Pembunuhan
+                                                </a>
+                                            @endcan
+                                            @can(abilities: 'penculikan.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/keamanandanketertiban/penculikan*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.keamanandanketertiban.penculikan.index') }}">
+                                                    Penculikan
+                                                </a>
+                                            @endcan
+                                            @can(abilities: 'seksual.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/keamanandanketertiban/seksual*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.keamanandanketertiban.seksual.index') }}">
+                                                    Kejahatan Seksual
+                                                </a>
+                                            @endcan
+                                            @can(abilities: 'sosial.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/keamanandanketertiban/sosial*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.keamanandanketertiban.sosial.index') }}">
+                                                    Kesejahteraan Sosial
+                                                </a>
+                                            @endcan
+                                            @can(abilities: 'kdrt.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/keamanandanketertiban/kdrt*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.keamanandanketertiban.kdrt.index') }}">
+                                                    Kekerasan Dalam<br> Rumah Tangga
+                                                </a>
+                                            @endcan
+                                            @can(abilities: 'teror.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/keamanandanketertiban/teror*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.keamanandanketertiban.teror.index') }}">
+                                                    Teror dan Intimidasi
+                                                </a>
+                                            @endcan
+                                            @can(abilities: 'sistemkeamanan.view')
+                                                <a class="dropdown-item {{ request()->is('perkembangan/keamanandanketertiban/sistemkeamanan*') ? 'active' : '' }}"
+                                                    href="{{ route('perkembangan.keamanandanketertiban.sistemkeamanan.index') }}">
+                                                    Perlembagaan Sistem<br> Keamanan
+                                                </a>
+                                            @endcan
+                                            
                                         </div>
                                     </div>
 

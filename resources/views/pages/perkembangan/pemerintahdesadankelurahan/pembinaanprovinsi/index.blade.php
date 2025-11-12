@@ -25,16 +25,6 @@
                         <th class="text-center">Pedoman Pelaksanaan</th>
                         <th class="text-center">Pedoman Bantuan Keuangan</th>
                         <th class="text-center">Fasilitasi Keberadaan</th>
-                        <th class="text-center">Fasilitasi Pelaksanaan</th>
-                        <th class="text-center">Jumlah Kegiatan Pendidikan</th>
-                        <th class="text-center">Penanggulangan Kemiskinan</th>
-                        <th class="text-center">Penanganan Bencana</th>
-                        <th class="text-center">Peningkatan Pendapatan</th>
-                        <th class="text-center">Penyediaan Sarana</th>
-                        <th class="text-center">Pemanfaatan SDA</th>
-                        <th class="text-center">Pengembangan Sosial</th>
-                        <th class="text-center">Pedoman Pendataan</th>
-                        <th class="text-center">Pemberian Sanksi</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -49,18 +39,6 @@
                             <td><span class="badge bg-{{ $item->pedoman_pelaksanaan_tugas === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pedoman_pelaksanaan_tugas ?? '-' }}</span></td>
                             <td><span class="badge bg-{{ $item->pedoman_bantuan_keuangan === 'Ada' ? 'success' : 'secondary' }}">{{ $item->pedoman_bantuan_keuangan ?? '-' }}</span></td>
                             <td><span class="badge bg-{{ $item->kegiatan_fasilitasi_keberadaan === 'Ada' ? 'success' : 'secondary' }}">{{ $item->kegiatan_fasilitasi_keberadaan ?? '-' }}</span></td>
-                            <td><span class="badge bg-{{ $item->fasilitasi_pelaksanaan_pedoman === 'Ada' ? 'success' : 'secondary' }}">{{ $item->fasilitasi_pelaksanaan_pedoman ?? '-' }}</span></td>
-
-                            {{-- Angka atau "-" --}}
-                            <td class="text-center">{{ $item->jumlah_kegiatan_pendidikan ?? '-' }}</td>
-                            <td class="text-center">{{ $item->kegiatan_penanggulangan_kemiskinan ?? '-' }}</td>
-                            <td class="text-center">{{ $item->kegiatan_penanganan_bencana ?? '-' }}</td>
-                            <td class="text-center">{{ $item->kegiatan_peningkatan_pendapatan ?? '-' }}</td>
-                            <td class="text-center">{{ $item->kegiatan_penyediaan_sarana ?? '-' }}</td>
-                            <td class="text-center">{{ $item->kegiatan_pemanfaatan_sda ?? '-' }}</td>
-                            <td class="text-center">{{ $item->kegiatan_pengembangan_sosial ?? '-' }}</td>
-                            <td class="text-center">{{ $item->pedoman_pendataan ?? '-' }}</td>
-                            <td class="text-center">{{ $item->pemberian_sanksi ?? '-' }}</td>
 
                             <td>
                                 <div class="d-flex gap-1 justify-content-center">

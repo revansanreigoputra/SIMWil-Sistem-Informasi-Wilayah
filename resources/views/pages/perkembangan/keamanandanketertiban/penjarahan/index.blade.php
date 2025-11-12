@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Data Penjarahan')
+@section('title', 'Data Penjarahan dan Penyerobotan Tanah')
 
 @section('action')
     <a href="{{ route('perkembangan.keamanandanketertiban.penjarahan.create') }}" class="btn btn-primary mb-3">

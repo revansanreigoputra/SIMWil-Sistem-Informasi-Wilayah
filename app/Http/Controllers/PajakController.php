@@ -13,7 +13,8 @@ class PajakController extends Controller
      */
     public function index()
     {
-        $data = pajak::with(['desa'])->orderBy('tanggal', 'desc')->get();
+        $desaId = session('desa_id');
+        $data = pajak::where('desa_id',$desaId)->with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.kedaulatanmasyarakat.pajak.index', compact('data'));
     }
 
@@ -32,7 +33,6 @@ class PajakController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'id_desa' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
 
             // Data Pajak
@@ -58,7 +58,8 @@ class PajakController extends Controller
             'jumlah_penyelesaian_pungli' => 'required|integer|min:0|lte:jumlah_kasus_pungli',
         ]);
 
-        Pajak::create($request->all());
+        $validated['desa_id'] = session('desa_id');
+        Pajak::create($validated);
         return redirect()->route('perkembangan.kedaulatanmasyarakat.pajak.index')->with('success', 'Data pajak berhasil disimpan.');
     }
 
@@ -88,7 +89,6 @@ class PajakController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'id_desa' => 'required|exists:desas,id',
             'tanggal' => 'required|date',
 
             // Data Pajak
@@ -127,10 +127,5 @@ class PajakController extends Controller
         $pajak = pajak::findOrFail($id);
         $pajak->delete();
         return redirect()->route('perkembangan.kedaulatanmasyarakat.pajak.index')->with('success', 'Data pajak berhasil dihapus.');
-    }
-    public function getDesasByKecamatan($id_kecamatan)
-    {
-        $desas = Desa::where('id_kecamatan', $id_kecamatan)->get();
-        return response()->json($desas);
     }
 }

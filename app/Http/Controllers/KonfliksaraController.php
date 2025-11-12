@@ -13,7 +13,8 @@ class KonfliksaraController extends Controller
      */
     public function index()
     {
-        $data = konfliksara::with(['desa'])->orderBy('tanggal', 'desc')->get();
+        $desaId = session('desa_id');
+        $data = konfliksara::where('desa_id',$desaId)->with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.keamanandanketertiban.konfliksara.index', compact('data'));
     }
 
@@ -33,7 +34,6 @@ class KonfliksaraController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'kasus_konflik_tahun_ini' => 'nullable|integer',
             'kasus_konflik_sara_tahun_ini' => 'nullable|integer',
             'kasus_pertengkaran_tetangga' => 'nullable|integer',
@@ -57,9 +57,8 @@ class KonfliksaraController extends Controller
             'anak_yatim_konflik_sara' => 'nullable|integer',
             'pelaku_diadili' => 'nullable|integer',
         ]);
-
+        $validated['desa_id'] = session('desa_id');
         konfliksara::create($validated);
-
         return redirect()->route('perkembangan.keamanandanketertiban.konfliksara.index')->with('success', 'Data konflik sara berhasil disimpan.');
     }
 
@@ -68,7 +67,7 @@ class KonfliksaraController extends Controller
      */
     public function show($id)
     {
-        $konfliksara = konfliksara::find($id);
+        $konfliksara = konfliksara::with(['desa'])->findOrFail($id);
         $konfliksara->load(['desa']);
         return view('pages.perkembangan.keamanandanketertiban.konfliksara.show', compact('konfliksara'));
     }
@@ -90,7 +89,6 @@ class KonfliksaraController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'kasus_konflik_tahun_ini' => 'nullable|integer',
             'kasus_konflik_sara_tahun_ini' => 'nullable|integer',
             'kasus_pertengkaran_tetangga' => 'nullable|integer',
@@ -127,10 +125,5 @@ class KonfliksaraController extends Controller
         $konfliksara = konfliksara::findOrFail($id);
         $konfliksara->delete();
         return redirect()->route('perkembangan.keamanandanketertiban.konfliksara.index')->with('success', 'Data konflik sara berhasil dihapus.');
-    }
-    public function getDesasByKecamatan($id_kecamatan)
-    {
-        $desas = Desa::where('id_kecamatan', $id_kecamatan)->get();
-        return response()->json($desas);
     }
 }

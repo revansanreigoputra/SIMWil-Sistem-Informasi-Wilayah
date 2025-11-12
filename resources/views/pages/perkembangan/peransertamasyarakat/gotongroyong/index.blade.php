@@ -25,18 +25,6 @@
                         <th class="text-center">Kelompok Arisan</th>
                         <th class="text-center">Orang Tua Asuh</th>
                         <th class="text-center">Dana Sehat</th>
-                        <th class="text-center">Pembangunan Rumah</th>
-                        <th class="text-center">Pengolahan Tanah</th>
-                        <th class="text-center">Pembiayaan Pendidikan</th>
-                        <th class="text-center">Pemeliharaan Fasilitas Umum</th>
-                        <th class="text-center">Pemberian Modal Usaha</th>
-                        <th class="text-center">Pengerjaan Sawah/Kebun</th>
-                        <th class="text-center">Penangkapan Ikan/Usaha</th>
-                        <th class="text-center">Menjaga Ketertiban</th>
-                        <th class="text-center">Peristiwa Kematian</th>
-                        <th class="text-center">Menjaga Kebersihan Desa</th>
-                        <th class="text-center">Membangun Jalan/Irigasi</th>
-                        <th class="text-center">Pemberantasan Sarang Nyamuk</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -51,19 +39,6 @@
 
                         {{-- Gunakan ternary untuk tampilkan keterangan --}}
                         <td><span class="badge bg-{{ $item->dana_sehat === 'Ada' ? 'success' : 'secondary'}}">{{ $item->dana_sehat ?? '-' }}</span></td>
-                        <td><span class="badge bg-{{ $item->pembangunan_rumah === 'Ada' ? 'success' : 'secondary' }}">{{$item->pembangunan_rumah }}</span></td>
-                        <td><span class="badge bg-{{ $item->pengolahan_tanah === 'Ada' ? 'success' : 'secondary' }}">{{$item->pengolahan_tanah }}</span></td>
-                        <td><span class="badge bg-{{ $item->pembiayaan_pendidikan === 'Ada' ? 'success' : 'secondary' }}">{{$item->pembiayaan_pendidikan }}</span></td>
-                        <td><span class="badge bg-{{ $item->pemeliharaan_fasilitas_umum === 'Ada' ? 'success' : 'secondary' }}">{{$item->pemeliharaan_fasilitas_umum }}</span></td>
-                        <td><span class="badge bg-{{ $item->pemberian_modal_usaha === 'Ada' ? 'success' : 'secondary' }}">{{$item->pemberian_modal_usaha }}</span></td>
-                        <td><span class="badge bg-{{ $item->pengerjaan_sawah_kebun === 'Ada' ? 'success' : 'secondary' }}">{{$item->pengerjaan_sawah_kebun }}</span></td>
-                        <td><span class="badge bg-{{ $item->penangkapan_ikan_usaha === 'Ada' ? 'success' : 'secondary' }}">{{$item->penangkapan_ikan_usaha }}</span></td>
-                        <td><span class="badge bg-{{ $item->menjaga_ketertiban === 'Ada' ? 'success' : 'secondary' }}">{{$item->menjaga_ketertiban }}</span></td>
-                        <td><span class="badge bg-{{ $item->peristiwa_kematian === 'Ada' ? 'success' : 'secondary' }}">{{$item->peristiwa_kematian }}</span></td>
-                        <td><span class="badge bg-{{ $item->menjaga_kebersihan_desa === 'Ada' ? 'success' : 'secondary' }}">{{$item->menjaga_kebersihan_desa }}</span></td>
-                        <td><span class="badge bg-{{ $item->membangun_jalan_irigasi === 'Ada' ? 'success' : 'secondary' }}">{{$item->membangun_jalan_irigasi }}</span></td>
-                        <td><span class="badge bg-{{ $item->pemberantasan_sarang_nyamuk === 'Ada' ? 'success' : 'secondary' }}">{{$item->pemberantasan_sarang_nyamuk }}</span></td>
-
                         <td>
                             <div class="d-flex gap-1 justify-content-center">
                                 <a href="{{ route('perkembangan.peransertamasyarakat.gotongroyong.show', $item->id) }}" class="btn btn-sm btn-info">

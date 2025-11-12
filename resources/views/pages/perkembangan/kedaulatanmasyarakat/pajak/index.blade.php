@@ -26,14 +26,6 @@
                         <th class="text-center">Jumlah Wajib Pajak</th>
                         <th class="text-center">Target PBB (Rp)</th>
                         <th class="text-center">Realisasi PBB (Rp)</th>
-                        <th class="text-center">Tindakan Penunggak</th>
-                        <th class="text-center">Jenis Retribusi</th>
-                        <th class="text-center">Jumlah Wajib Retribusi</th>
-                        <th class="text-center">Target Retribusi (Rp)</th>
-                        <th class="text-center">Realisasi Retribusi (Rp)</th>
-                        <th class="text-center">Jenis Pungutan Resmi</th>
-                        <th class="text-center">Target Pungutan Resmi (Rp)</th>
-                        <th class="text-center">Realisasi Pungutan Resmi (Rp)</th>
                         <th class="text-center">Penyelesaian Pungli <br> (Selesai/Jumlah)</th>
                         <th class="text-center">Aksi</th>
                     </tr>
@@ -50,18 +42,6 @@
                             <td class="text-center">{{ number_format($item->jumlah_wajib_pajak ?? 0, 0, ',', '.') }}</td>
                             <td class="text-center">{{ number_format($item->target_pbb ?? 0, 0, ',', '.') }}</td>
                             <td class="text-center">{{ number_format($item->realisasi_pbb ?? 0, 0, ',', '.') }}</td>
-                            <td class="text-center">{{ number_format($item->jumlah_tindakan_penunggak_pbb ?? 0, 0, ',', '.') }}</td>
-
-                            <!-- Data Retribusi -->
-                            <td class="text-center">{{ $item->jenis_retribusi ?? '-' }}</td>
-                            <td class="text-center">{{ number_format($item->jumlah_wajib_retribusi ?? 0, 0, ',', '.') }}</td>
-                            <td class="text-center">{{ number_format($item->target_retribusi ?? 0, 0, ',', '.') }}</td>
-                            <td class="text-center">{{ number_format($item->realisasi_retribusi ?? 0, 0, ',', '.') }}</td>
-
-                            <!-- Data Pungutan Resmi -->
-                            <td class="text-center">{{ $item->jenis_pungutan_resmi ?? '-' }}</td>
-                            <td class="text-center">{{ number_format($item->target_pungutan_resmi ?? 0, 0, ',', '.') }}</td>
-                            <td class="text-center">{{ number_format($item->realisasi_pungutan_resmi ?? 0, 0, ',', '.') }}</td>
 
                             <!-- Kasus Pungli -->
                             <td class="text-center">{{ $item->jumlah_penyelesaian_pungli ?? 0 }} / {{ $item->jumlah_kasus_pungli ?? 0 }}</td>

@@ -28,15 +28,6 @@
                             <th class="text-center">Bantuan Provinsi</th>
                             <th class="text-center">Bantuan Pusat</th>
                             <th class="text-center">Pendapatan Asli Desa</th>
-                            <th class="text-center">Swadaya Masyarakat</th>
-                            <th class="text-center">Alokasi Dana Desa</th>
-                            <th class="text-center">Sumber Pendapatan Perusahaan</th>
-                            <th class="text-center">Sumber Pendapatan Lain</th>
-                            <th class="text-center">Jumlah Penerimaan</th>
-                            <th class="text-center">Belanja Publik</th>
-                            <th class="text-center">Belanja Aparatur</th>
-                            <th class="text-center">Jumlah Belanja</th>
-                            <th class="text-center">Saldo Anggaran</th>
                             <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
@@ -51,15 +42,6 @@
                                 <td class="text-center">{{ number_format($item->bantuan_pemerintah_provinsi, 0, ',', '.') }}</td>
                                 <td class="text-center">{{ number_format($item->bantuan_pemerintah_pusat, 0, ',', '.') }}</td>
                                 <td class="text-center">{{ number_format($item->pendapatan_asli_desa, 0, ',', '.') }}</td>
-                                <td class="text-center">{{ number_format($item->swadaya_masyarakat, 0, ',', '.') }}</td>
-                                <td class="text-center">{{ number_format($item->alokasi_dana_desa, 0, ',', '.') }}</td>
-                                <td class="text-center">{{ number_format($item->sumber_pendapatan_perusahaan, 0, ',', '.') }}</td>
-                                <td class="text-center">{{ number_format($item->sumber_pendapatan_lain, 0, ',', '.') }}</td>
-                                <td class="text-center">{{ number_format($item->jumlah_penerimaan, 0, ',', '.') }}</td>
-                                <td class="text-center">{{ number_format($item->jumlah_belanja_publik, 0, ',', '.') }}</td>
-                                <td class="text-center">{{ number_format($item->jumlah_belanja_aparatur, 0, ',', '.') }}</td>
-                                <td class="text-center">{{ number_format($item->jumlah_belanja, 0, ',', '.') }}</td>
-                                <td class="text-center">{{ number_format($item->saldo_anggaran, 0, ',', '.') }}</td>
                                 <td>
                                     <div class="d-flex gap-1 justify-content-center">
                                         <!-- Tombol Detail -->

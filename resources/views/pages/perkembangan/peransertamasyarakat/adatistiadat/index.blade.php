@@ -25,13 +25,6 @@
                         <th class="text-center">Perkawinan</th>
                         <th class="text-center">Kelahiran Anak</th>
                         <th class="text-center">Upacara Kematian</th>
-                        <th class="text-center">Pengelolaan Hutan</th>
-                        <th class="text-center">Tanah Pertanian</th>
-                        <th class="text-center">Pengelolaan Laut/Pantai</th>
-                        <th class="text-center">Memecahkan Konflik</th>
-                        <th class="text-center">Menjauhkan Bencana</th>
-                        <th class="text-center">Memulihkan Hubungan Alam-Manusia</th>
-                        <th class="text-center">Penanggulangan Kemiskinan</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -46,13 +39,6 @@
                         <td><span class="badge bg-{{ $item->perkawinan === 'Aktif' ? 'success' : ($item->perkawinan === 'Pernah Ada' ? 'warning' : 'secondary') }}">{{ $item->perkawinan ?? '-' }}</span></td>
                         <td><span class="badge bg-{{ $item->kelahiran_anak === 'Aktif' ? 'success' : ($item->kelahiran_anak === 'Pernah Ada' ? 'warning' : 'secondary') }}">{{ $item->kelahiran_anak ?? '-' }}</span></td>
                         <td><span class="badge bg-{{ $item->upacara_kematian === 'Aktif' ? 'success' : ($item->upacara_kematian === 'Pernah Ada' ? 'warning' : 'secondary') }}">{{ $item->upacara_kematian ?? '-' }}</span></td>
-                        <td><span class="badge bg-{{ $item->pengelolaan_hutan === 'Aktif' ? 'success' : ($item->pengelolaan_hutan === 'Pernah Ada' ? 'warning' : 'secondary') }}">{{ $item->pengelolaan_hutan ?? '-' }}</span></td>
-                        <td><span class="badge bg-{{ $item->tanah_pertanian === 'Aktif' ? 'success' : ($item->tanah_pertanian === 'Pernah Ada' ? 'warning' : 'secondary') }}">{{ $item->tanah_pertanian ?? '-' }}</span></td>
-                        <td><span class="badge bg-{{ $item->pengelolaan_laut === 'Aktif' ? 'success' : ($item->pengelolaan_laut === 'Pernah Ada' ? 'warning' : 'secondary') }}">{{ $item->pengelolaan_laut ?? '-' }}</span></td>
-                        <td><span class="badge bg-{{ $item->memecahkan_konflik === 'Aktif' ? 'success' : ($item->memecahkan_konflik === 'Pernah Ada' ? 'warning' : 'secondary') }}">{{ $item->memecahkan_konflik ?? '-' }}</span></td>
-                        <td><span class="badge bg-{{ $item->menjauhkan_bala === 'Aktif' ? 'success' : ($item->menjauhkan_bala === 'Pernah Ada' ? 'warning' : 'secondary') }}">{{ $item->menjauhkan_bala ?? '-' }}</span></td>
-                        <td><span class="badge bg-{{ $item->memulihkan_hubungan_alam === 'Aktif' ? 'success' : ($item->memulihkan_hubungan_alam === 'Pernah Ada' ? 'warning' : 'secondary') }}">{{ $item->memulihkan_hubungan_alam ?? '-' }}</span></td>
-                        <td><span class="badge bg-{{ $item->penanggulangan_kemiskinan === 'Aktif' ? 'success' : ($item->penanggulangan_kemiskinan === 'Pernah Ada' ? 'warning' : 'secondary') }}">{{ $item->penanggulangan_kemiskinan ?? '-' }}</span></td>
 
                         <td>
                             <div class="d-flex gap-1 justify-content-center">

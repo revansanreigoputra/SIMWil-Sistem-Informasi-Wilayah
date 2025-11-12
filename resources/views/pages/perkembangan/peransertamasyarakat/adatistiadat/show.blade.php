@@ -63,9 +63,9 @@
                                     @if ($adatistiadat->$key === 'Aktif')
                                         <span class="badge bg-success">Aktif</span>
                                     @elseif ($adatistiadat->$key === 'Tidak Aktif')
-                                        <span class="badge bg-danger">Tidak Aktif</span>
-                                    @elseif ($adatistiadat->$key === 'pernah Ada')
-                                        <span class="badge bg-danger">Pernah Ada</span>
+                                        <span class="badge bg-secondary">Tidak Aktif</span>
+                                    @elseif ($adatistiadat->$key === 'Pernah Ada')
+                                        <span class="badge bg-warning">Pernah Ada</span>
                                     @else
                                         <span class="badge bg-secondary">-</span>
                                     @endif

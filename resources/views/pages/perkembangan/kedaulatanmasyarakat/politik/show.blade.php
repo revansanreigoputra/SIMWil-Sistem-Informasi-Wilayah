@@ -32,6 +32,7 @@
                     <td>:</td>
                     <td>{{ $politik->desa->nama_desa ?? '-' }}</td>
                 </tr>
+
             </table>
 
             <!-- Partai Politik dan Pemilihan Umum -->
@@ -73,11 +74,11 @@
                     <col style="width: 5%;">
                     <col style="width: 60%;">
                 </colgroup>
-                <tr><td>Penentuan Jabatan Kepala Desa</td><td>:</td><td>{{ ucfirst(str_replace('_',' ',$politik->penentuan_jabatan_kepala_desa)) ?? '-' }}</td></tr>
-                <tr><td>Penentuan Sekretaris Desa</td><td>:</td><td>{{ ucfirst(str_replace('_',' ',$politik->penentuan_sekretaris_desa)) ?? '-' }}</td></tr>
-                <tr><td>Penentuan Perangkat Desa</td><td>:</td><td>{{ ucfirst(str_replace('_',' ',$politik->penentuan_perangkat_desa)) ?? '-' }}</td></tr>
+                <tr><td>Penentuan Jabatan Kepala Desa</td><td>:</td><td>{{ $politik->PenentuanKepalaDesa?->nama ?? '-' }}</td>
+                <tr><td>Penentuan Sekretaris Desa</td><td>:</td><td>{{ $politik->PenentuanSekretarisDesa?->nama?? '-' }}</td></tr>
+                <tr><td>Penentuan Perangkat Desa</td><td>:</td><td>{{ $politik->PenentuanPerangkatDesa?->nama ?? '-' }}</td></tr>
                 <tr><td>Masa Jabatan Kepala Desa (Tahun)</td><td>:</td><td>{{ $politik->masa_jabatan_kepala_desa ?? '-' }}</td></tr>
-                <tr><td>Penentuan Jabatan Lurah</td><td>:</td><td>{{ ucfirst(str_replace('_',' ',$politik->penentuan_jabatan_lurah)) ?? '-' }}</td></tr>
+                <tr><td>Penentuan Jabatan Lurah</td><td>:</td><td>{{ $politik->PenentuanLurah?->nama ?? '-' }}</td></tr>
             </table>
 
             <!-- BPD -->
@@ -88,10 +89,10 @@
                     <col style="width: 5%;">
                     <col style="width: 60%;">
                 </colgroup>
+                <tr><td>Penentuan Anggota BPD</td><td>:</td><td>{{ $politik->PenentuanAnggotaBpd?->nama ?? '-' }}</td>
+                <tr><td>Penentuan Ketua BPD</td><td>:</td><td>{{ $politik->PenentuanKetuaBpd?->nama ?? '-' }}</td>
                 @foreach ([
                     'jumlah_anggota_bpd' => 'Jumlah Anggota BPD',
-                    'penentuan_anggota_bpd' => 'Penentuan Anggota BPD',
-                    'pimpinan_bpd' => 'Pimpinan BPD',
                     'kantor_bpd' => 'Kantor BPD',
                     'anggaran_bpd' => 'Anggaran BPD',
                     'peraturan_desa' => 'Peraturan Desa',
@@ -117,14 +118,15 @@
                     <col style="width: 5%;">
                     <col style="width: 60%;">
                 </colgroup>
+                <tr><td>Pemilihan Pengurus LKD</td><td>:</td><td>{{ $politik->PengurusLkd?->nama ?? '-' }}</td>
+                <tr><td>Pemilihan Pengurus LKK</td><td>:</td><td>{{ $politik->PengurusLkk?->nama ?? '-' }}</td>
+                <tr><td>Dasar Hukum LKD</td><td>:</td><td>{{ $politik->HukumLkd?->nama ?? '-' }}</td>
+                <tr><td>Dasar Hukum LKK</td><td>:</td><td>{{ $politik->HukumLkk?->nama ?? '-' }}</td>
+                
                 @foreach ([
                     'keberadaan_organisasi_lkd' => 'Keberadaan Organisasi LKD',
-                    'dasar_hukum_organisasi_lkd' => 'Dasar Hukum Organisasi LKD',
                     'jumlah_organisasi_lkd_desa' => 'Jumlah Organisasi LKD Desa',
-                    'dasar_hukum_pembentukan_lkd_kelurahan' => 'Dasar Hukum Pembentukan LKD Kelurahan',
                     'jumlah_organisasi_lkd_kelurahan' => 'Jumlah Organisasi LKD Kelurahan',
-                    'pemilihan_pengurus_lkd' => 'Pemilihan Pengurus LKD',
-                    'pemilihan_pengurus_organisasi_lkd' => 'Pemilihan Pengurus Organisasi LKD',
                     'status_lkd' => 'Status LKD',
                     'jumlah_kegiatan_lkd' => 'Jumlah Kegiatan LKD',
                     'fungsi_tugas_lkd' => 'Fungsi dan Tugas LKD',

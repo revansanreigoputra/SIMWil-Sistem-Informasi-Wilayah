@@ -13,7 +13,8 @@ class GotongroyongController extends Controller
      */
     public function index()
     {
-        $data = Gotongroyong::with(['desa'])->orderBy('tanggal', 'desc')->get();
+        $desaId = session('desa_id');
+        $data = Gotongroyong::where('desa_id',$desaId)->with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.peransertamasyarakat.gotongroyong.index', compact('data'));
     }
 
@@ -33,7 +34,6 @@ class GotongroyongController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jumlah_kelompok_arisan' => 'nullable|integer|min:0',
             'jumlah_penduduk_orang_tua_asuh' => 'nullable|integer|min:0',
             'dana_sehat' => 'required|in:Ada,Tidak Ada',
@@ -50,9 +50,8 @@ class GotongroyongController extends Controller
             'membangun_jalan_irigasi' => 'required|in:Ada,Tidak Ada',
             'pemberantasan_sarang_nyamuk' => 'required|in:Ada,Tidak Ada',
         ]);
-
+        $validated['desa_id'] = session('desa_id');
         Gotongroyong::create($validated);
-
         return redirect()->route('perkembangan.peransertamasyarakat.gotongroyong.index')->with('success', 'Data semangat kegotongroyongan penduduk berhasil ditambahkan.');
     }
 
@@ -61,7 +60,7 @@ class GotongroyongController extends Controller
      */
     public function show($id)
     {
-        $gotongroyong = Gotongroyong::findOrFail($id);
+        $gotongroyong = Gotongroyong::with(['desa'])->findOrFail($id);
         $gotongroyong ->load(['desa']);
         return view('pages.perkembangan.peransertamasyarakat.gotongroyong.show', compact('gotongroyong'));
     }
@@ -83,7 +82,6 @@ class GotongroyongController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jumlah_kelompok_arisan' => 'nullable|integer|min:0',
             'jumlah_penduduk_orang_tua_asuh' => 'nullable|integer|min:0',
             'dana_sehat' => 'required|in:Ada,Tidak Ada',
@@ -117,14 +115,5 @@ class GotongroyongController extends Controller
         $gotongroyong->delete();
         return redirect()->route('perkembangan.peransertamasyarakat.gotongroyong.index')
             ->with('success', 'Data semangat kegotongroyongan penduduk berhasil dihapus.');
-    }
-
-    /**
-     * Get desa by kecamatan (optional ajax)
-     */
-    public function getDesasByKecamatan($id_kecamatan)
-    {
-        $desas = Desa::where('id_kecamatan', $id_kecamatan)->get();
-        return response()->json($desas);
     }
 }

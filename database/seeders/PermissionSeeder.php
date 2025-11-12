@@ -1046,6 +1046,86 @@ class PermissionSeeder extends Seeder
             'penjarahan.update',
             'penjarahan.delete',
 
+            //Perjudian
+            'perjudian.view',
+            'perjudian.create',
+            'perjudian.store',
+            'perjudian.edit',
+            'perjudian.update',
+            'perjudian.delete',
+
+            //Miras
+            'miras.view',
+            'miras.create',
+            'miras.store',
+            'miras.edit',
+            'miras.update',
+            'miras.delete',
+
+            //prostitusi
+            'prostitusi.view',
+            'prostitusi.create',
+            'prostitusi.store',
+            'prostitusi.edit',
+            'prostitusi.update',
+            'prostitusi.delete',
+
+            //pembunuhan
+            'pembunuhan.view',
+            'pembunuhan.create',
+            'pembunuhan.store',
+            'pembunuhan.edit',
+            'pembunuhan.update',
+            'pembunuhan.delete',
+
+            //penculikan
+            'penculikan.view',
+            'penculikan.create',
+            'penculikan.store',
+            'penculikan.edit',
+            'penculikan.update',
+            'penculikan.delete',
+
+            //seksual
+            'seksual.view',
+            'seksual.create',
+            'seksual.store',
+            'seksual.edit',
+            'seksual.update',
+            'seksual.delete',
+
+            //sosial
+            'sosial.view',
+            'sosial.create',
+            'sosial.store',
+            'sosial.edit',
+            'sosial.update',
+            'sosial.delete',
+
+            //kdrt
+            'kdrt.view',
+            'kdrt.create',
+            'kdrt.store',
+            'kdrt.edit',
+            'kdrt.update',
+            'kdrt.delete',
+
+            //teror
+            'teror.view',
+            'teror.create',
+            'teror.store',
+            'teror.edit',
+            'teror.update',
+            'teror.delete',
+
+            //sistem keamanan
+            'sistemkeamanan.view',
+            'sistemkeamanan.create',
+            'sistemkeamanan.store',
+            'sistemkeamanan.edit',
+            'sistemkeamanan.update',
+            'sistemkeamanan.delete',
+
 
             // potensi permissions
             'potensi.laporan.view',

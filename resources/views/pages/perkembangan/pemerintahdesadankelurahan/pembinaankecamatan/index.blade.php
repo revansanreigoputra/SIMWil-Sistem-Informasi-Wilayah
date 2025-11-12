@@ -24,20 +24,6 @@
                         <th class="text-center">Desa</th>
                         <th class="text-center">Fasilitasi Penyusunan Perdes</th>
                         <th class="text-center">Fasilitasi Administrasi Tata Pemerintahan</th>
-                        <th class="text-center">Fasilitasi Pengelolaan Keuangan</th>
-                        <th class="text-center">Fasilitasi Urusan Otonomi</th>
-                        <th class="text-center">Fasilitasi Penerapan Peraturan</th>
-                        <th class="text-center">Fasilitasi Penyediaan Data</th>
-                        <th class="text-center">Fasilitasi Pelaksanaan Tugas</th>
-                        <th class="text-center">Fasilitasi Ketenteraman</th>
-                        <th class="text-center">Fasilitasi Penetapan Penguatan</th>
-                        <th class="text-center">Penanggulangan Kemiskinan (APBD)</th>
-                        <th class="text-center">Fasilitasi Partisipasi Masyarakat</th>
-                        <th class="text-center">Fasilitasi Kerjasama Desa</th>
-                        <th class="text-center">Fasilitasi Program Pemberdayaan</th>
-                        <th class="text-center">Fasilitasi Kerjasama Lembaga</th>
-                        <th class="text-center">Fasilitasi Bantuan Teknis</th>
-                        <th class="text-center">Fasilitasi Koordinasi Unit Kerja</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -49,20 +35,6 @@
                             <td clas="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
                             <td class="text-center">{{ $item->fasilitasi_penyusunan_perdes ?? '-' }}</td>
                             <td class="text-center">{{ $item->fasilitasi_administrasi_tata_pemerintahan ?? '-' }}</td>
-                            <td class="text-center">{{ $item->fasilitasi_pengelolaan_keuangan ?? '-' }}</td>
-                            <td class="text-center">{{ $item->fasilitasi_urusan_otonomi ?? '-' }}</td>
-                            <td class="text-center">{{ $item->fasilitasi_penerapan_peraturan ?? '-' }}</td>
-                            <td class="text-center">{{ $item->fasilitasi_penyediaan_data ?? '-' }}</td>
-                            <td class="text-center">{{ $item->fasilitasi_pelaksanaan_tugas ?? '-' }}</td>
-                            <td class="text-center">{{ $item->fasilitasi_ketenteraman ?? '-' }}</td>
-                            <td class="text-center">{{ $item->fasilitasi_penetapan_penguatan ?? '-' }}</td>
-                            <td class="text-center">{{ $item->penanggulangan_kemiskinan_apbd ?? '-' }}</td>
-                            <td class="text-center">{{ $item->fasilitasi_partisipasi_masyarakat ?? '-' }}</td>
-                            <td class="text-center">{{ $item->fasilitasi_kerjasama_desa ?? '-' }}</td>
-                            <td class="text-center">{{ $item->fasilitasi_program_pemberdayaan ?? '-' }}</td>
-                            <td class="text-center">{{ $item->fasilitasi_kerjasama_lembaga ?? '-' }}</td>
-                            <td class="text-center">{{ $item->fasilitasi_bantuan_teknis ?? '-' }}</td>
-                            <td class="text-center">{{ $item->fasilitasi_koordinasi_unit_kerja ?? '-' }}</td>
                             <td>
                                 <div class="d-flex gap-1 justify-content-center">
                                     <!-- Tombol Detail -->

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('adatistiadats', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_desa');
+            $table->foreignId('desa_id')->constrained('desas')->onUpdate('cascade')->onDelete('cascade');
             $table->date('tanggal');
             $table->enum('perkawinan', ['Aktif', 'Tidak Aktif', 'Pernah Ada'])->nullable();
             $table->enum('kelahiran_anak', ['Aktif', 'Tidak Aktif', 'Pernah Ada'])->nullable();

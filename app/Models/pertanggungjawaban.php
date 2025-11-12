@@ -12,7 +12,7 @@ class pertanggungjawaban extends Model
     protected $table = 'pertanggungjawabans';
 
     protected $fillable = [
-        'id_desa',
+        'desa_id',
         'tanggal',
         'penyampaian_laporan',
         'jumlah_informasi',
@@ -24,7 +24,7 @@ class pertanggungjawaban extends Model
     ];
 
     protected $casts = [
-        'id_desa',
+        'desa_id',
         'tanggal' => 'date',
         'penyampaian_laporan',
         'status_laporan',
@@ -37,6 +37,6 @@ class pertanggungjawaban extends Model
     //Relasi ke Desa
     public function desa()
     {
-        return $this->belongsTo(Desa::class, 'id_desa');
+        return $this->belongsTo(Desa::class);
     }
 }

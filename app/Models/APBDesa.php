@@ -13,7 +13,7 @@ class APBDesa extends Model
     protected $table = 'a_p_b_desas';
 
     protected $fillable = [
-        'id_desa',
+        'desa_id',
         'tanggal',
         'apbd_kabupaten',
         'bantuan_pemerintah_kabupaten',
@@ -32,7 +32,7 @@ class APBDesa extends Model
     ];
 
     protected $casts = [
-        'id_desa',
+        'desa_id',
         'tanggal' => 'date',
         'apbd_kabupaten' => 'integer',
         'bantuan_pemerintah_kabupaten' => 'integer',
@@ -53,7 +53,7 @@ class APBDesa extends Model
     //Relasi ke Desa
     public function desa()
     {
-        return $this->belongsTo(Desa::class, 'id_desa');
+        return $this->belongsTo(Desa::class);
     }
 }
 

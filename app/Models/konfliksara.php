@@ -12,7 +12,7 @@ class KonflikSara extends Model
     protected $table = 'konfliksaras';
 
     protected $fillable = [
-        'id_desa',
+        'desa_id',
         'tanggal',
         'kasus_konflik_tahun_ini',
         'kasus_konflik_sara_tahun_ini',
@@ -44,6 +44,6 @@ class KonflikSara extends Model
      */
     public function desa()
     {
-        return $this->belongsTo(Desa::class, 'id_desa');
+        return $this->belongsTo(Desa::class);
     }
 }

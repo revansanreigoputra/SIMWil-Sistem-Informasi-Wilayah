@@ -3,6 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\politik;
+use App\Models\MasterPerkembangan\PenentuanKepalaDesa;
+use App\Models\MasterPerkembangan\PenentuanSekretarisDesa;
+use App\Models\MasterPerkembangan\PenentuanPerangkatDesa;
+use App\Models\MasterPerkembangan\PenentuanLurah;
+use App\Models\MasterPerkembangan\PenentuanAnggotaBpd;
+use App\Models\MasterPerkembangan\PenentuanKetuaBpd;
+use App\Models\MasterPerkembangan\PengurusLkd;
+use App\Models\MasterPerkembangan\PengurusLkk;
+use App\Models\MasterPerkembangan\HukumLkk;
+use App\Models\MasterPerkembangan\HukumLkd;
 use App\Models\Desa;
 use Illuminate\Http\Request;
 
@@ -13,7 +23,21 @@ class PolitikController extends Controller
      */
     public function index()
     {
-        $data = Politik::with(['desa'])->orderBy('tanggal', 'desc')->get();
+        $desaId = session('desa_id');
+        $data = Politik::with([
+            'desa',
+            'penentuanKepalaDesa',
+            'penentuanSekretarisDesa',
+            'penentuanPerangkatDesa',
+            'penentuanLurah',
+            'penentuanAnggotaBpd',
+            'penentuanKetuaBpd',
+            'pengurusLkd',
+            'pengurusLkk',
+            'hukumLkk',
+            'HukumLkd'
+        ])->where('desa_id', $desaId)->latest()->get();
+
         return view('pages.perkembangan.kedaulatanmasyarakat.politik.index', compact('data'));
     }
 
@@ -22,8 +46,17 @@ class PolitikController extends Controller
      */
     public function create()
     {
-        $desas = Desa::orderBy('nama_desa')->get();
-        return view('pages.perkembangan.kedaulatanmasyarakat.politik.create', compact('desas'));
+        $penentuankepaladesa = PenentuanKepalaDesa::all();
+        $penentuansekretarisdesa = PenentuanSekretarisDesa::all();
+        $penentuanperangkatdesa = PenentuanPerangkatDesa::all();
+        $penentuanlurah = PenentuanLurah::all();
+        $penentuananggotabpd = PenentuanAnggotaBpd::all();
+        $penentuanketuabpd = PenentuanKetuaBpd::all();
+        $penguruslkd = PengurusLkd::all();
+        $penguruslkk = PengurusLkk::all();
+        $hukumlkd = HukumLkd::all();
+        $hukumlkk = HukumLkk::all();
+        return view('pages.perkembangan.kedaulatanmasyarakat.politik.create', compact('penentuankepaladesa', 'penentuansekretarisdesa', 'penentuanperangkatdesa', 'penentuanlurah', 'penentuananggotabpd', 'penentuanketuabpd', 'penguruslkd', 'penguruslkk', 'hukumlkd', 'hukumlkk',));
     }
 
     /**
@@ -33,7 +66,6 @@ class PolitikController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
 
             // Partai Politik dan Pemilu
             'jumlah_penduduk_memiliki_hak_pilih' => 'nullable|integer|min:0',
@@ -51,16 +83,16 @@ class PolitikController extends Controller
             'jumlah_pengguna_hak_pilih_gubernur' => 'nullable|integer|min:0',
 
             // Penentuan Kepala Desa / Lurah
-            'penentuan_jabatan_kepala_desa' => 'nullable|in:dipilih_rakyat_langsung,ditunjuk_bupati_walikota,turun_temurun',
-            'penentuan_sekretaris_desa' => 'nullable|in:diangkat_kepala_desa,diangkat_bupati_walikota,diangkat_kepala_desa_disahkan_bupati',
-            'penentuan_perangkat_desa' => 'nullable|in:diangkat_kepala_desa_ditetapkan_camat,diangkat_dan_ditetapkan_kepala_desa',
+            'penentuan_kepala_desa_id' => 'required|exists:penentuan_kepala_desa,id',
+            'penentuan_sekretaris_desa_id' => 'required|exists:penentuan_sekretaris_desa,id',
+            'penentuan_perangkat_desa_id' => 'required|exists:penentuan_perangkat_desa,id',
             'masa_jabatan_kepala_desa' => 'nullable|integer|min:0',
-            'penentuan_jabatan_lurah' => 'nullable|in:diangkat_bupati_walikota,dipilih_rakyat_langsung',
+            'penentuan_lurah_id' => 'required|exists:penentuan_lurah,id',
 
             // BPD
             'jumlah_anggota_bpd' => 'nullable|integer|min:0',
-            'penentuan_anggota_bpd' => 'nullable|in:dipilih_rakyat_langsung,dipilih_musyawarah_masyarakat,diangkat_kepala_desa,diangkat_camat',
-            'pimpinan_bpd' => 'nullable|in:dipilih_anggota_bpd,ditunjuk_kepala_desa,ditunjuk_camat,dipilih_rakyat_langsung',
+            'penentuan_anggota_bpd_id' => 'required|exists:penentuan_anggota_bpd,id',
+            'penentuan_ketua_bpd_id' => 'required|exists:penentuan_ketua_bpd,id',
             'kantor_bpd' => 'nullable|in:Ada,Tidak Ada',
             'anggaran_bpd' => 'nullable|in:Ada,Tidak Ada',
             'peraturan_desa' => 'nullable|integer|min:0',
@@ -73,12 +105,12 @@ class PolitikController extends Controller
 
             // LKD/LKK
             'keberadaan_organisasi_lkd' => 'nullable|in:Ada,Tidak Ada',
-            'dasar_hukum_organisasi_lkd' => 'nullable|in:peraturan_desa,keputusan_kepala_desa,keputusan_camat,belum_diatur',
+            'hukum_lkds_id' => 'required|exists:hukum_lkds,id',
             'jumlah_organisasi_lkd_desa' => 'nullable|integer|min:0',
-            'dasar_hukum_pembentukan_lkd_kelurahan' => 'nullable|in:keputusan_lurah,keputusan_camat,belum_diatur',
+            'hukum_lkks_id' => 'required|exists:hukum_lkks,id',
             'jumlah_organisasi_lkd_kelurahan' => 'nullable|integer|min:0',
-            'pemilihan_pengurus_lkd' => 'nullable|in:dipilih_rakyat_langsung,diangkat_kepala_desa,diangkat_camat',
-            'pemilihan_pengurus_organisasi_lkd' => 'nullable|in:dipilih_rakyat_langsung,diangkat_ketua_lkd_lkk,diangkat_kepala_desa,diangkat_camat',
+            'pengurus_lkd_id' => 'required|exists:pengurus_lkd,id',
+            'pengurus_lkk_id' => 'required|exists:pengurus_lkk,id',
             'status_lkd' => 'nullable|in:Aktif,Pasif',
             'jumlah_kegiatan_lkd' => 'nullable|integer|min:0',
             'fungsi_tugas_lkd' => 'nullable|in:Aktif,Pasif',
@@ -91,7 +123,10 @@ class PolitikController extends Controller
             'keberadaan_alat_kelengkapan' => 'nullable|in:Ada,Tidak Ada',
             'kegiatan_administrasi' => 'nullable|in:Berfungsi,Tidak Berfungsi',
         ]);
-        politik::create($validated);
+
+        $data = $validated;
+        $data['desa_id'] = session('desa_id');
+        Politik::create($data);
         return redirect()->route('perkembangan.kedaulatanmasyarakat.politik.index')->with('success', 'Data Politik berhasil ditambahkan.');
     }
 
@@ -100,9 +135,33 @@ class PolitikController extends Controller
      */
     public function show($id)
     {
-        $politik = politik::findOrFail($id);
-        $politik->load(['desa']);
-        return view('pages.perkembangan.kedaulatanmasyarakat.politik.show', compact('politik'));
+        $politik = Politik::with([
+        'penentuanKepalaDesa',
+        'penentuanSekretarisDesa',
+        'penentuanPerangkatDesa',
+        'penentuanLurah',
+        'penentuanAnggotaBpd',
+        'penentuanKetuaBpd',
+        'pengurusLkd',
+        'pengurusLkk',
+        'hukumLkk',
+        'HukumLkd',
+        'desa'
+    ])->findOrFail($id);
+
+
+
+    // Ambil data desa dari session jika create tidak input desa
+        $desa = null;
+
+        if (session('nama_desa')) {
+            $desa = (object)[
+                'nama_desa' => session('nama_desa')
+            ];
+        } else {
+            $desa = $politik->desa; // relasi desa
+        }
+        return view('pages.perkembangan.kedaulatanmasyarakat.politik.show', compact('desa','politik'));
     }
 
     /**
@@ -110,9 +169,18 @@ class PolitikController extends Controller
      */
     public function edit($id)
     {
-        $politik = politik::findOrFail($id);
-        $desas = Desa::orderBy('nama_desa')->get();
-        return view('pages.perkembangan.kedaulatanmasyarakat.politik.edit', compact('politik', 'desas'));
+        $politik = Politik::findOrFail($id);
+        $penentuankepaladesa = PenentuanKepalaDesa::all();
+        $penentuansekretarisdesa = PenentuanSekretarisDesa::all();
+        $penentuanperangkatdesa = PenentuanPerangkatDesa::all();
+        $penentuanlurah = PenentuanLurah::all();
+        $penentuananggotabpd = PenentuanAnggotaBpd::all();
+        $penentuanketuabpd = PenentuanKetuaBpd::all();
+        $penguruslkd = PengurusLkd::all();
+        $penguruslkk = PengurusLkk::all();
+        $hukumlkd = HukumLkd::all();
+        $hukumlkk = HukumLkk::all();
+        return view('pages.perkembangan.kedaulatanmasyarakat.politik.edit', compact('politik', 'penentuankepaladesa', 'penentuansekretarisdesa', 'penentuanperangkatdesa', 'penentuanlurah', 'penentuananggotabpd', 'penentuanketuabpd', 'penguruslkd', 'penguruslkk', 'hukumlkk', 'hukumlkd',));
     }
 
     /**
@@ -122,7 +190,6 @@ class PolitikController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
 
             // Partai Politik dan Pemilu
             'jumlah_penduduk_memiliki_hak_pilih' => 'nullable|integer|min:0',
@@ -140,16 +207,16 @@ class PolitikController extends Controller
             'jumlah_pengguna_hak_pilih_gubernur' => 'nullable|integer|min:0',
 
             // Penentuan Kepala Desa / Lurah
-            'penentuan_jabatan_kepala_desa' => 'nullable|in:dipilih_rakyat_langsung,ditunjuk_bupati_walikota,turun_temurun',
-            'penentuan_sekretaris_desa' => 'nullable|in:diangkat_kepala_desa,diangkat_bupati_walikota,diangkat_kepala_desa_disahkan_bupati',
-            'penentuan_perangkat_desa' => 'nullable|in:diangkat_kepala_desa_ditetapkan_camat,diangkat_dan_ditetapkan_kepala_desa',
+            'penentuan_kepala_desa_id' => 'required|exists:penentuan_kepala_desa,id',
+            'penentuan_sekretaris_desa_id' => 'required|exists:penentuan_sekretaris_desa,id',
+            'penentuan_perangkat_desa_id' => 'required|exists:penentuan_perangkat_desa,id',
             'masa_jabatan_kepala_desa' => 'nullable|integer|min:0',
-            'penentuan_jabatan_lurah' => 'nullable|in:diangkat_bupati_walikota,dipilih_rakyat_langsung',
+            'penentuan_lurah_id' => 'required|exists:penentuan_lurah,id',
 
             // BPD
             'jumlah_anggota_bpd' => 'nullable|integer|min:0',
-            'penentuan_anggota_bpd' => 'nullable|in:dipilih_rakyat_langsung,dipilih_musyawarah_masyarakat,diangkat_kepala_desa,diangkat_camat',
-            'pimpinan_bpd' => 'nullable|in:dipilih_anggota_bpd,ditunjuk_kepala_desa,ditunjuk_camat,dipilih_rakyat_langsung',
+            'penentuan_anggota_bpd_id' => 'required|exists:penentuan_anggota_bpd,id',
+            'penentuan_ketua_bpd_id' => 'required|exists:penentuan_ketua_bpd,id',
             'kantor_bpd' => 'nullable|in:Ada,Tidak Ada',
             'anggaran_bpd' => 'nullable|in:Ada,Tidak Ada',
             'peraturan_desa' => 'nullable|integer|min:0',
@@ -162,12 +229,12 @@ class PolitikController extends Controller
 
             // LKD/LKK
             'keberadaan_organisasi_lkd' => 'nullable|in:Ada,Tidak Ada',
-            'dasar_hukum_organisasi_lkd' => 'nullable|in:peraturan_desa,keputusan_kepala_desa,keputusan_camat,belum_diatur',
+            'hukum_lkds_id' => 'required|exists:hukum_lkds,id',
             'jumlah_organisasi_lkd_desa' => 'nullable|integer|min:0',
-            'dasar_hukum_pembentukan_lkd_kelurahan' => 'nullable|in:keputusan_lurah,keputusan_camat,belum_diatur',
+            'hukum_lkks_id' => 'required|exists:hukum_lkks,id',
             'jumlah_organisasi_lkd_kelurahan' => 'nullable|integer|min:0',
-            'pemilihan_pengurus_lkd' => 'nullable|in:dipilih_rakyat_langsung,diangkat_kepala_desa,diangkat_camat',
-            'pemilihan_pengurus_organisasi_lkd' => 'nullable|in:dipilih_rakyat_langsung,diangkat_ketua_lkd_lkk,diangkat_kepala_desa,diangkat_camat',
+            'pengurus_lkd_id' => 'required|exists:pengurus_lkd,id',
+            'pengurus_lkk_id' => 'required|exists:pengurus_lkk,id',
             'status_lkd' => 'nullable|in:Aktif,Pasif',
             'jumlah_kegiatan_lkd' => 'nullable|integer|min:0',
             'fungsi_tugas_lkd' => 'nullable|in:Aktif,Pasif',
@@ -180,7 +247,7 @@ class PolitikController extends Controller
             'keberadaan_alat_kelengkapan' => 'nullable|in:Ada,Tidak Ada',
             'kegiatan_administrasi' => 'nullable|in:Berfungsi,Tidak Berfungsi',
         ]);
-        $politik = politik::findOrFail($id);
+        $politik = Politik::findOrFail($id);
         $politik->update($validated);
         return redirect()->route('perkembangan.kedaulatanmasyarakat.politik.index')->with('success', 'Data Politik berhasil diupdate.');
     }
@@ -190,13 +257,8 @@ class PolitikController extends Controller
      */
     public function destroy($id)
     {
-        $politik = politik::findOrFail($id);
+        $politik = Politik::findOrFail($id);
         $politik->delete();
         return redirect()->route('perkembangan.kedaulatanmasyarakat.politik.index')->with('success', 'Data Politik berhasil dihapus.');
-    }
-    public function getDesasByKecamatan($id_kecamatan)
-    {
-        $desas = Desa::where('id_kecamatan', $id_kecamatan)->get();
-        return response()->json($desas);
     }
 }

@@ -12,7 +12,7 @@
     </div>
 
     <div class="card-body">
-        <form id="form-politik" action="{{ route('perkembangan.kedaulatanmasyarakat.politik.store') }}" method="POST">
+        <form action="{{ route('perkembangan.kedaulatanmasyarakat.politik.store') }}" method="POST">
             @csrf
 
             {{-- Bagian Umum --}}
@@ -26,18 +26,6 @@
                     @error('tanggal')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                </div>
-
-                <div class="col-md-6 mb-3">
-                    <label for="id_desa" class="form-label fw-semibold">
-                        <i class="fas fa-map-marker-alt me-1"></i> Desa <span class="text-danger">*</span>
-                    </label>
-                    <select name="id_desa" id="id_desa" class="form-control" required>
-                        <option value="">-- Pilih Desa --</option>
-                        @foreach ($desas as $desa)
-                            <option value="{{ $desa->id }}">{{ $desa->nama_desa }}</option>
-                        @endforeach
-                    </select>
                 </div>
             </div>
 
@@ -91,19 +79,13 @@
                     <div class="col-md-6">
                         <div class="card border-0 shadow-sm h-100">
                             <div class="card-body">
-                                <label class="form-label fw-bold">Penentuan Jabatan Kepala Desa<span class="text-danger">*</span></label>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="radio" name="penentuan_jabatan_kepala_desa" value="dipilih_rakyat_langsung"required>
-                                    <label class="form-check-label">Dipilih Rakyat Langsung</label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="radio" name="penentuan_jabatan_kepala_desa" value="ditunjuk_bupati_walikota"required>
-                                    <label class="form-check-label">Ditunjuk Bupati/Walikota</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="penentuan_jabatan_kepala_desa" value="turun_temurun"required>
-                                    <label class="form-check-label">Turun Temurun</label>
-                                </div>
+                                <label for="penentuan_kepala_desa_id" class="form-label">Penentuan Jabatan Kepala Desa <span class="text-danger">*</span></label>
+                                <select name="penentuan_kepala_desa_id" id="penentuan_kepala_desa_id" class="form-select" required>
+                                    <option value="">-- Pilih --</option>
+                                    @foreach ($penentuankepaladesa as $item)
+                                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -111,19 +93,13 @@
                     <div class="col-md-6">
                         <div class="card border-0 shadow-sm h-100">
                             <div class="card-body">
-                                <label class="form-label fw-bold">Penentuan Sekretaris Desa <span class="text-danger">*</span></label>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="radio" name="penentuan_sekretaris_desa" value="diangkat_kepala_desa"required>
-                                    <label class="form-check-label">Diangkat Kepala Desa</label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="radio" name="penentuan_sekretaris_desa" value="diangkat_bupati_walikota"required>
-                                    <label class="form-check-label">Diangkat Bupati/Walikota</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="penentuan_sekretaris_desa" value="diangkat_kepala_desa_disahkan_bupati"required>
-                                    <label class="form-check-label">Diangkat Kepala Desa & Disahkan Bupati</label>
-                                </div>
+                                <label for="penentuan_sekretaris_desa_id" class="form-label">Penentuan Sekretaris Desa <span class="text-danger">*</span></label>
+                                <select name="penentuan_sekretaris_desa_id" id="penentuan_sekretaris_desa_id" class="form-select" required>
+                                    <option value="">-- Pilih --</option>
+                                    @foreach ($penentuansekretarisdesa as $item)
+                                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -131,15 +107,13 @@
                     <div class="col-md-6">
                         <div class="card border-0 shadow-sm h-100">
                             <div class="card-body">
-                                <label class="form-label fw-bold">Penentuan Perangkat Desa <span class="text-danger">*</span></label>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="radio" name="penentuan_perangkat_desa" value="diangkat_kepala_desa_ditetapkan_camat"required>
-                                    <label class="form-check-label">Diangkat Kepala Desa, Ditetapkan Camat</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="penentuan_perangkat_desa" value="diangkat_dan_ditetapkan_kepala_desa"required>
-                                    <label class="form-check-label">Diangkat & Ditetapkan Kepala Desa</label>
-                                </div>
+                                <label for="penentuan_perangkat_desa_id" class="form-label">Penentuan Perangkat Desa <span class="text-danger">*</span></label>
+                                <select name="penentuan_perangkat_desa_id" id="penentuan_perangkat_desa_id" class="form-select" required>
+                                    <option value="">-- Pilih --</option>
+                                    @foreach ($penentuanperangkatdesa as $item)
+                                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -147,15 +121,13 @@
                     <div class="col-md-6">
                         <div class="card border-0 shadow-sm h-100">
                             <div class="card-body">
-                                <label class="form-label fw-bold">Penentuan Jabatan Lurah <span class="text-danger">*</span></label>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="radio" name="penentuan_jabatan_lurah" value="diangkat_bupati_walikota"required>
-                                    <label class="form-check-label">Diangkat Bupati/Walikota</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="penentuan_jabatan_lurah" value="dipilih_rakyat_langsung"required>
-                                    <label class="form-check-label">Dipilih Rakyat Langsung</label>
-                                </div>
+                                <label for="penentuan_lurah_id" class="form-label">Penentuan Lurah <span class="text-danger">*</span></label>
+                                <select name="penentuan_lurah_id" id="penentuan_lurah_id" class="form-select" required>
+                                    <option value="">-- Pilih --</option>
+                                    @foreach ($penentuanlurah as $item)
+                                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -182,22 +154,22 @@
 
                 {{-- Baris 2: Penentuan Anggota + Pimpinan BPD --}}
                 <div class="col-md-6">
-                    <label class="form-label fw-bold">Penentuan Anggota BPD <span class="text-danger">*</span></label>
-                    @foreach (['dipilih_rakyat_langsung','dipilih_musyawarah_masyarakat','diangkat_kepala_desa','diangkat_camat'] as $option)
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="radio" name="penentuan_anggota_bpd" value="{{ $option }}"required>
-                            <label class="form-check-label">{{ ucwords(str_replace('_',' ', $option)) }}</label>
-                        </div>
-                    @endforeach
+                    <label for="penentuan_anggota_bpd_id" class="form-label">Penentuan Anggota BPD <span class="text-danger">*</span></label>
+                    <select name="penentuan_anggota_bpd_id" id="penentuan_anggota_bpd_id" class="form-select" required>
+                        <option value="">-- Pilih --</option>
+                        @foreach ($penentuananggotabpd as $item)
+                            <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label fw-bold">Pimpinan BPD <span class="text-danger">*</span></label>
-                    @foreach (['dipilih_anggota_bpd','ditunjuk_kepala_desa','ditunjuk_camat','dipilih_rakyat_langsung'] as $option)
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="radio" name="pimpinan_bpd" value="{{ $option }}"required>
-                            <label class="form-check-label">{{ ucwords(str_replace('_',' ', $option)) }}</label>
-                        </div>
-                    @endforeach
+                    <label for="penentuan_ketua_bpd_id" class="form-label">Penentuan Ketua BPD <span class="text-danger">*</span></label>
+                    <select name="penentuan_ketua_bpd_id" id="penentuan_ketua_bpd_id" class="form-select" required>
+                        <option value="">-- Pilih --</option>
+                        @foreach ($penentuanketuabpd as $item)
+                            <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 {{-- Baris 3: Kantor + Anggaran BPD --}}
@@ -265,42 +237,43 @@
 
                 {{-- Baris 2 --}}
                 <div class="col-md-6">
-                    <label class="form-label fw-bold">Dasar Hukum Organisasi LKD <span class="text-danger">*</span></label>
-                    @foreach (['peraturan_desa','keputusan_kepala_desa','keputusan_camat','belum_diatur'] as $option)
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="radio" name="dasar_hukum_organisasi_lkd" value="{{ $option }}"required>
-                            <label class="form-check-label">{{ ucwords(str_replace('_',' ', $option)) }}</label>
-                        </div>
-                    @endforeach
+                    <label for="hukum_lkds_id" class="form-label">Dasar Hukum LKD <span class="text-danger">*</span></label>
+                    <select name="hukum_lkds_id" id="hukum_lkds_id" class="form-select" required>
+                        <option value="">--Pilih--</option>
+                        @foreach ($hukumlkd as $item)
+                            <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label fw-bold">Pemilihan Pengurus Organisasi LKD <span class="text-danger">*</span></label>
-                    @foreach (['dipilih_rakyat_langsung','diangkat_ketua_lkd_lkk','diangkat_kepala_desa','diangkat_camat'] as $option)
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="radio" name="pemilihan_pengurus_organisasi_lkd" value="{{ $option }}"required>
-                            <label class="form-check-label">{{ ucwords(str_replace('_',' ', $option)) }}</label>
-                        </div>
-                    @endforeach
+                    <label for="hukum_lkks_id" class="form-label">Dasar Hukum LKK <span class="text-danger">*</span></label>
+                    <select name="hukum_lkks_id" id="hukum_lkks_id" class="form-select" required>
+                        <option value="">--Pilih--</option>
+                        @foreach ($hukumlkk as $item)
+                            <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                        @endforeach
+                    </select>
                 </div>
+                
 
                 {{-- Baris 3 --}}
                 <div class="col-md-6">
-                    <label class="form-label fw-bold">Dasar Hukum Pembentukan LKD Kelurahan <span class="text-danger">*</span></label>
-                    @foreach (['keputusan_lurah','keputusan_camat','belum_diatur'] as $option)
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="radio" name="dasar_hukum_pembentukan_lkd_kelurahan" value="{{ $option }}"required>
-                            <label class="form-check-label">{{ ucwords(str_replace('_',' ', $option)) }}</label>
-                        </div>
-                    @endforeach
+                    <label for="pengurus_lkd_id" class="form-label">Pengurus LKD <span class="text-danger">*</span></label>
+                    <select name="pengurus_lkd_id" id="pengurus_lkd_id" class="form-select" required>
+                        <option value="">-- Pilih --</option>
+                        @foreach ($penguruslkd as $item)
+                            <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label fw-bold">Pemilihan Pengurus LKD <span class="text-danger">*</span></label>
-                    @foreach (['dipilih_rakyat_langsung','diangkat_kepala_desa','diangkat_camat'] as $option)
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="radio" name="pemilihan_pengurus_lkd" value="{{ $option }}"required>
-                            <label class="form-check-label">{{ ucwords(str_replace('_',' ', $option)) }}</label>
-                        </div>
-                    @endforeach
+                    <label for="pengurus_lkk_id" class="form-label">Pengurus LKK <span class="text-danger">*</span></label>
+                    <select name="pengurus_lkk_id" id="pengurus_lkk_id" class="form-select" required>
+                        <option value="">-- Pilih --</option>
+                        @foreach ($penguruslkk as $item)
+                            <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 {{-- Baris 4 dst: Sisa Radio LKD --}}
@@ -345,22 +318,23 @@
                     </div>
                 @endforeach
             </div>
+            <hr class="my-3">
             {{-- Tombol Aksi --}}
             <div class="d-flex justify-content-between align-items-center">
-                <small class="text-muted">
-                    <span class="text-danger">*</span> wajib diisi
-                </small>
-                <div class="btn-group gap-2">
-                    <a href="{{ route('perkembangan.kedaulatanmasyarakat.politik.index') }}"
-                        class="btn btn-outline-secondary rounded">
-                        <i class="fas fa-arrow-left me-1"></i> Kembali
-                    </a>
-                    <button type="submit" class="btn btn-primary rounded">
+                    <small class="text-muted">
+                        <span class="text-danger">*</span> wajib diisi
+                    </small>
+                    <div class="btn-group gap-2">
+                        <a href="{{ route('perkembangan.kedaulatanmasyarakat.politik.index') }}"
+                            class="btn btn-outline-secondary rounded">
+                            <i class="fas fa-arrow-left me-1"></i> Kembali
+                        </a>
+                        <button type="submit" class="btn btn-primary">
                         <i class="fas fa-save me-1"></i> Simpan Data
-                    </button>
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 @endsection

@@ -13,7 +13,8 @@ class MusrenbangdesaController extends Controller
      */
     public function index()
     {
-        $data = musrenbangdesa::with(['desa'])->orderBy('tanggal', 'desc')->get(); 
+        $desaId = session('desa_id');
+        $data = musrenbangdesa::where('desa_id',$desaId)->with(['desa'])->orderBy('tanggal', 'desc')->get(); 
         return view('pages.perkembangan.peransertamasyarakat.musrenbangdesa.index', compact('data'));
     }
 
@@ -33,7 +34,6 @@ class MusrenbangdesaController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jumlah_musrenbang_desa_kelurahan' => 'nullable|integer',
             'jumlah_kehadiran_masyarakat' => 'nullable|integer',
             'jumlah_peserta_laki' => 'nullable|integer',
@@ -52,6 +52,7 @@ class MusrenbangdesaController extends Controller
             'jumlah_kegiatan_terdanai' => 'nullable|integer',
             'jumlah_kegiatan_tidak_sesuai' => 'nullable|integer',
         ]);
+        $validated['desa_id'] = session('desa_id');
         musrenbangdesa::create($validated);
         return redirect()->route('perkembangan.peransertamasyarakat.musrenbangdesa.index')->with('success', 'Data Musrenbang Desa berhasil ditambahkan.');
 
@@ -62,7 +63,7 @@ class MusrenbangdesaController extends Controller
      */
     public function show($id)
     {
-        $musrenbangdesa = musrenbangdesa::findOrFail($id);
+        $musrenbangdesa = musrenbangdesa::with(['desa'])->findOrFail($id);
         $musrenbangdesa->load(['desa']); // Memuat relasi desa
         return view('pages.perkembangan.peransertamasyarakat.musrenbangdesa.show', compact('musrenbangdesa'));
     }
@@ -84,7 +85,6 @@ class MusrenbangdesaController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jumlah_musrenbang_desa_kelurahan' => 'nullable|integer',
             'jumlah_kehadiran_masyarakat' => 'nullable|integer',
             'jumlah_peserta_laki' => 'nullable|integer',
@@ -116,10 +116,5 @@ class MusrenbangdesaController extends Controller
         $musrenbangdesa = musrenbangdesa::findOrFail($id);  
         $musrenbangdesa->delete();
         return redirect()->route('perkembangan.peransertamasyarakat.musrenbangdesa.index')->with('success', 'Data Musrenbang Desa berhasil dihapus.');    
-    }
-    public function getDesasByKecamatan($id_kecamatan)
-    {
-        $desas = Desa::where('id_kecamatan', $id_kecamatan)->get();
-        return response()->json($desas);
     }
 }
