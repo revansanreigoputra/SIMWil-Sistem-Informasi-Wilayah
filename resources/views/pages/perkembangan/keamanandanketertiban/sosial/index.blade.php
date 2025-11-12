@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Data Sosial')
+@section('title', 'Data Kesejahteraan Sosial')
 
 @section('action')
     <a href="{{ route('perkembangan.keamanandanketertiban.sosial.create') }}" class="btn btn-primary mb-3">

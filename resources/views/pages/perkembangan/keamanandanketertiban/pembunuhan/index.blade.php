@@ -24,9 +24,6 @@
                         <th class="text-center">Desa</th>
                         <th class="text-center">Jumlah Kasus Pembunuhan Tahun Ini</th>
                         <th class="text-center">Jumlah Kasus dengan Korban Penduduk Setempat</th>
-                        <th class="text-center">Jumlah Kasus dengan Pelaku Penduduk Setempat</th>
-                        <th class="text-center">Jumlah Kasus Bunuh Diri</th>
-                        <th class="text-center">Jumlah Kasus Diproses Hukum</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -38,9 +35,6 @@
                             <td class="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
                             <td class="text-center">{{ $item->jumlah_kasus_tahun_ini ?? 0 }}</td>
                             <td class="text-center">{{ $item->jumlah_kasus_korban_penduduk ?? 0 }}</td>
-                            <td class="text-center">{{ $item->jumlah_kasus_pelaku_penduduk ?? 0 }}</td>
-                            <td class="text-center">{{ $item->jumlah_kasus_bunuh_diri ?? 0 }}</td>
-                            <td class="text-center">{{ $item->jumlah_kasus_diproses_hukum ?? 0 }}</td>
                             <td>
                                 <div class="d-flex gap-1 justify-content-center">
                                     <!-- Tombol Detail -->

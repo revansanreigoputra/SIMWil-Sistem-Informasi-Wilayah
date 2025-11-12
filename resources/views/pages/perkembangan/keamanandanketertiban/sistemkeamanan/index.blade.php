@@ -25,12 +25,6 @@
                         <th class="text-center">Organisasi Siskamling</th>
                         <th class="text-center">Organisasi Pertahanan Sipil</th>
                         <th class="text-center">Jumlah RT/Pos Ronda</th>
-                        <th class="text-center">Jumlah Anggota Hansip & Linmas</th>
-                        <th class="text-center">Jadwal Kegiatan Siskamling</th>
-                        <th class="text-center">Buku Anggota Hansip & Linmas</th>
-                        <th class="text-center">Jumlah Kelompok Satpam Swasta</th>
-                        <th class="text-center">Jumlah Pembinaan Siskamling</th>
-                        <th class="text-center">Jumlah Pos Jaga Induk</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -43,12 +37,6 @@
                             <td class="text-center">{{ $item->organisasi_siskamling ?? '-' }}</td>
                             <td class="text-center">{{ $item->organisasi_pertahanan_sipil ?? '-' }}</td>
                             <td class="text-center">{{ $item->jumlah_rt_atau_pos_ronda ?? 0 }}</td>
-                            <td class="text-center">{{ $item->jumlah_anggota_hansip_dan_linmas ?? 0 }}</td>
-                            <td class="text-center">{{ $item->jadwal_kegiatan_siskamling ?? '-' }}</td>
-                            <td class="text-center">{{ $item->buku_anggota_hansip_linmas ?? '-' }}</td>
-                            <td class="text-center">{{ $item->jumlah_kelompok_satpam_swasta ?? 0 }}</td>
-                            <td class="text-center">{{ $item->jumlah_pembinaan_siskamling ?? 0 }}</td>
-                            <td class="text-center">{{ $item->jumlah_pos_jaga_induk_desa ?? 0 }}</td>
                             <td>
                                 <div class="d-flex gap-1 justify-content-center">
                                     <!-- Tombol Detail -->

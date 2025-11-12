@@ -25,8 +25,6 @@
                         <th class="text-center">Jumlah Kasus Suami terhadap Istri</th>
                         <th class="text-center">Jumlah Kasus Istri terhadap Suami</th>
                         <th class="text-center">Jumlah Kasus Orang Tua terhadap Anak</th>
-                        <th class="text-center">Jumlah Kasus Anak terhadap Orang Tua</th>
-                        <th class="text-center">Jumlah Kasus Kepala Keluarga terhadap Anggota Lainnya</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -39,8 +37,6 @@
                             <td class="text-center">{{ $item->jumlah_kasus_suami_terhadap_istri ?? 0 }}</td>
                             <td class="text-center">{{ $item->jumlah_kasus_istri_terhadap_suami ?? 0 }}</td>
                             <td class="text-center">{{ $item->jumlah_kasus_orangtua_terhadap_anak ?? 0 }}</td>
-                            <td class="text-center">{{ $item->jumlah_kasus_anak_terhadap_orangtua ?? 0 }}</td>
-                            <td class="text-center">{{ $item->jumlah_kasus_kepala_keluarga_terhadap_anggota_lainnya ?? 0 }}</td>
                             <td>
                                 <div class="d-flex gap-1 justify-content-center">
                                     <!-- Tombol Detail -->

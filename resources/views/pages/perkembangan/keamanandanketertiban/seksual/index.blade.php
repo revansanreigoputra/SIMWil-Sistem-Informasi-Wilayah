@@ -25,8 +25,6 @@
                         <th class="text-center">Jumlah Kasus Perkosaan</th>
                         <th class="text-center">Jumlah Kasus Perkosaan Anak</th>
                         <th class="text-center">Jumlah Kasus Hamil di Luar Nikah (Hukum Negara)</th>
-                        <th class="text-center">Jumlah Kasus Hamil di Luar Nikah (Hukum Adat)</th>
-                        <th class="text-center">Jumlah Tempat Penampungan/Penyewaan Kamar Pekerja Seks</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -39,8 +37,6 @@
                             <td class="text-center">{{ $item->jumlah_kasus_perkosaan ?? 0 }}</td>
                             <td class="text-center">{{ $item->jumlah_kasus_perkosaan_anak ?? 0 }}</td>
                             <td class="text-center">{{ $item->jumlah_kasus_hamil_luar_nikah_hukum_negara ?? 0 }}</td>
-                            <td class="text-center">{{ $item->jumlah_kasus_hamil_luar_nikah_hukum_adat ?? 0 }}</td>
-                            <td class="text-center">{{ $item->jumlah_tempat_penampungan_pekerja_seks ?? 0 }}</td>
                             <td>
                                 <div class="d-flex gap-1 justify-content-center">
                                     <!-- Tombol Detail -->

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Data Teror')
+@section('title', 'Data Teror dan Intimidasi')
 
 @section('action')
     <a href="{{ route('perkembangan.keamanandanketertiban.teror.create') }}" class="btn btn-primary mb-3">
@@ -25,9 +25,6 @@
                         <th class="text-center">Jumlah Kasus Intimidasi Dalam Desa</th>
                         <th class="text-center">Jumlah Kasus Intimidasi Luar Desa</th>
                         <th class="text-center">Jumlah Kasus Selebaran Gelap</th>
-                        <th class="text-center">Jumlah Kasus Terorisme</th>
-                        <th class="text-center">Jumlah Kasus Hasutan/Pemaksaan</th>
-                        <th class="text-center">Jumlah Penyelesaian Kasus</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -40,9 +37,6 @@
                             <td class="text-center">{{ $item->jumlah_kasus_intimidasi_dalam_desa ?? 0 }}</td>
                             <td class="text-center">{{ $item->jumlah_kasus_intimidasi_luar_desa ?? 0 }}</td>
                             <td class="text-center">{{ $item->jumlah_kasus_selebaran_gelap ?? 0 }}</td>
-                            <td class="text-center">{{ $item->jumlah_kasus_terorisme ?? 0 }}</td>
-                            <td class="text-center">{{ $item->jumlah_kasus_hasutan_pemaksaan ?? 0 }}</td>
-                            <td class="text-center">{{ $item->jumlah_penyelesaian_kasus ?? 0 }}</td>
                             <td>
                                 <div class="d-flex gap-1 justify-content-center">
                                     <!-- Tombol Detail -->

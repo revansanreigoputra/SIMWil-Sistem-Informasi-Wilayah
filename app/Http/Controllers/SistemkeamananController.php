@@ -13,7 +13,8 @@ class SistemkeamananController extends Controller
      */
     public function index()
     {
-        $data = sistemkeamanan::with(['desa'])->orderBy('tanggal', 'desc')->get();
+        $desaId = session('desa_id');
+        $data = sistemkeamanan::where('desa_id',$desaId)->with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.keamanandanketertiban.sistemkeamanan.index', compact('data'));
     }
 
@@ -33,7 +34,6 @@ class SistemkeamananController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'organisasi_siskamling' => 'nullable|in:Ada,Tidak Ada',
             'organisasi_pertahanan_sipil' => 'nullable|in:Ada,Tidak Ada',
             'jumlah_rt_atau_pos_ronda' => 'nullable|integer|min:0',
@@ -44,6 +44,7 @@ class SistemkeamananController extends Controller
             'jumlah_pembinaan_siskamling' => 'nullable|integer|min:0',
             'jumlah_pos_jaga_induk_desa' => 'nullable|integer|min:0',
         ]);
+        $validated['desa_id'] = session('desa_id');
         sistemkeamanan::create($validated);
         return redirect()->route('perkembangan.keamanandanketertiban.sistemkeamanan.index')->with('success', 'Data Sistem Keamanan berhasil ditambahkan.');
     }
@@ -53,7 +54,7 @@ class SistemkeamananController extends Controller
      */
     public function show($id)
     {
-        $sistemkeamanan = sistemkeamanan::findOrFail($id);
+        $sistemkeamanan = sistemkeamanan::with(['desa'])->findOrFail($id);
         $sistemkeamanan->load(['desa']);
         return view('pages.perkembangan.keamanandanketertiban.sistemkeamanan.show', compact('sistemkeamanan'));
     }
@@ -75,7 +76,6 @@ class SistemkeamananController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'organisasi_siskamling' => 'nullable|in:Ada,Tidak Ada',
             'organisasi_pertahanan_sipil' => 'nullable|in:Ada,Tidak Ada',
             'jumlah_rt_atau_pos_ronda' => 'nullable|integer|min:0',

@@ -24,8 +24,6 @@
                         <th class="text-center">Desa</th>
                         <th class="text-center">Jumlah Kasus Penculikan</th>
                         <th class="text-center">Jumlah Kasus dengan Korban Penduduk Setempat</th>
-                        <th class="text-center">Jumlah Kasus dengan Pelaku Penduduk Setempat</th>
-                        <th class="text-center">Jumlah Kasus Diselesaikan Secara Hukum</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -37,8 +35,6 @@
                             <td class="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
                             <td class="text-center">{{ $item->jumlah_kasus_penculikan ?? 0 }}</td>
                             <td class="text-center">{{ $item->jumlah_kasus_korban_penduduk ?? 0 }}</td>
-                            <td class="text-center">{{ $item->jumlah_kasus_pelaku_penduduk ?? 0 }}</td>
-                            <td class="text-center">{{ $item->jumlah_kasus_diproses_hukum ?? 0 }}</td>
                             <td>
                                 <div class="d-flex gap-1 justify-content-center">
                                     <!-- Tombol Detail -->
