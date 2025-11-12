@@ -25,9 +25,10 @@
                         <div class="card">
                             <div class="card-header d-flex">
                                 <h3 class="card-title">Notifikasi</h3>
-                                <button type="button" class="btn-close ms-auto" data-bs-dismiss="dropdown" aria-label="Close"></button>
+                                <button type="button" class="btn-close ms-auto" data-bs-dismiss="dropdown"
+                                    aria-label="Close"></button>
                             </div>
-                           <div class="list-group list-group-flush list-group-hoverable" id="notification-list">
+                            <div class="list-group list-group-flush list-group-hoverable" id="notification-list">
                                 <div class="py-4 text-center list-group-item" id="no-notification-placeholder">
                                     <div class="text-muted">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
@@ -71,32 +72,34 @@
         </div>
     </div>
 </header>
-<script>
-    $(document).ready(function() {
-        const badge = $('#notification-badge');
-        const list = $('#notification-list');
-        const placeholder = $('#no-notification-placeholder');
-        const pollingInterval = 30000;  
 
-        function fetchNotifications() {
-            $.ajax({
-                url: "{{ route('notifications.unverified') }}",
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) { 
-                    if (data.count > 0) {
-                        badge.text(data.count).show(); 
-                    } else {
-                        badge.hide();
-                    }
- 
-                    if (data.notifications.length > 0) {
-                        placeholder.hide(); 
-                        list.find('.notification-item').remove();
+@push('addon-script')
+    <script>
+        $(document).ready(function() {
+            const badge = $('#notification-badge');
+            const list = $('#notification-list');
+            const placeholder = $('#no-notification-placeholder');
+            const pollingInterval = 30000;
 
-                        let html = '';
-                        data.notifications.forEach(notif => {
-                            html += `
+            function fetchNotifications() {
+                $.ajax({
+                    url: "{{ route('notifications.unverified') }}",
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.count > 0) {
+                            badge.text(data.count).show();
+                        } else {
+                            badge.hide();
+                        }
+
+                        if (data.notifications.length > 0) {
+                            placeholder.hide();
+                            list.find('.notification-item').remove();
+
+                            let html = '';
+                            data.notifications.forEach(notif => {
+                                html += `
                                 <div class="list-group-item notification-item">
                                     <div class="row align-items-center">
                                         <div class="col-auto"><span class="status-dot status-dot-animated bg-red d-block"></span></div>
@@ -114,22 +117,23 @@
                                     </div>
                                 </div>
                             `;
-                        });
-                        list.prepend(html); // Add new items at the top
-                    } else {
-                        list.find('.notification-item').remove();
-                        placeholder.show();
+                            });
+                            list.prepend(html); // Add new items at the top
+                        } else {
+                            list.find('.notification-item').remove();
+                            placeholder.show();
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Notification polling error:", error);
                     }
-                },
-                error: function(xhr, status, error) {
-                    console.error("Notification polling error:", error);
-                }
-            });
-        }
+                });
+            }
 
-        // Initial fetch
-        fetchNotifications();
-        // Poll every X seconds
-        setInterval(fetchNotifications, pollingInterval);
-    });
-</script>
+            // Initial fetch
+            fetchNotifications();
+            // Poll every X seconds
+            setInterval(fetchNotifications, pollingInterval);
+        });
+    </script>
+@endpush

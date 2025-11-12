@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\LayananSurat;
 use App\Models\LayananSurat\Permohonan;  
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\Controller;
 class NotificationController extends Controller
 {public function getUnverifiedPermohonan()
     {

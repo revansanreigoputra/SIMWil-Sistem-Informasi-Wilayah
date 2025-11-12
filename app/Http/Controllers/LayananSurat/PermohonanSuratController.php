@@ -840,12 +840,21 @@ class PermohonanSuratController extends Controller
                         break;
                 }
             }
+            // email notification logic 
+            $successMessage = 'Permohonan Surat berhasil diperbarui.';
 
-            return redirect()->route('permohonan.index')->with('success', 'Permohonan Surat berhasil diperbarui.');
+            if ($newStatus === 'siap_diambil') {
+                if (!empty($emailTujuan)) {
+                    $successMessage = "Status diupdate menjadi siap diambil, email pemberitahuan sudah terkirim kepada {$emailTujuan}.";
+                } else {
+                    $successMessage = "Status diupdate menjadi siap diambil, namun email pemberitahuan tidak dapat dikirim karena alamat email tidak ditemukan.";
+                }
+            }
+
+            return redirect()->route('permohonan.index')->with('success', $successMessage);
         } catch (ModelNotFoundException $e) {
             return redirect()->route('permohonan.index')->with('error', 'Permohonan Surat tidak ditemukan.');
         } catch (\Illuminate\Validation\ValidationException $e) {
-            // Jika validasi gagal, kembalikan dengan error dan input lama
             return redirect()->back()->withErrors($e->errors())->withInput();
         } catch (Exception $e) {
             Log::error('Error updating Permohonan ID ' . $id . ': ' . $e->getMessage());
