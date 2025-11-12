@@ -18,7 +18,6 @@ use App\Http\Controllers\KecamatanController;
 use App\Http\Controllers\MasterDdkController;
 use App\Http\Controllers\DataKeluargaController;
 use App\Http\Controllers\APBDesaController;
-use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\DesaKelurahanController;
 use App\Http\Controllers\PerangkatDesaController;
 use App\Http\Controllers\PembinaanpusatController;
@@ -60,7 +59,8 @@ use App\Http\Controllers\LayananSurat\{
     JenisSuratController,
     PermohonanSuratController,
     LaporanSuratController,
-    PermohonanMasukController
+    PermohonanMasukController,
+    NotificationController
 };
 use App\Http\Controllers\LayananSuratController;
 use App\Http\Controllers\MasterPerkembanganController;
