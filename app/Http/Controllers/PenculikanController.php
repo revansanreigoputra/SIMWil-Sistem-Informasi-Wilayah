@@ -13,6 +13,7 @@ class PenculikanController extends Controller
      */
     public function index()
     {
+        $desaId = session('desa_id');
         $data = penculikan::with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.keamanandanketertiban.penculikan.index', compact('data'));
     }
@@ -33,12 +34,12 @@ class PenculikanController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jumlah_kasus_penculikan' => 'nullable|integer|min:0',
             'jumlah_kasus_korban_penduduk' => 'nullable|integer|min:0',
             'jumlah_kasus_pelaku_penduduk' => 'nullable|integer|min:0',
             'jumlah_kasus_diproses_hukum' => 'nullable|integer|min:0',
         ]);
+        $validated['desa_id'] = session('desa_id');
         penculikan::create($validated);
         return redirect()->route('perkembangan.keamanandanketertiban.penculikan.index')->with('success', 'Data Penculikan berhasil ditambahkan.');
     }
@@ -48,7 +49,7 @@ class PenculikanController extends Controller
      */
     public function show($id)
     {
-        $penculikan = penculikan::findOrFail($id);
+        $penculikan = penculikan::with(['desa'])->findOrFail($id);
         $penculikan->load(['desa']);
         return view('pages.perkembangan.keamanandanketertiban.penculikan.show', compact('penculikan'));
     }
@@ -70,7 +71,6 @@ class PenculikanController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jumlah_kasus_penculikan' => 'nullable|integer|min:0',
             'jumlah_kasus_korban_penduduk' => 'nullable|integer|min:0',
             'jumlah_kasus_pelaku_penduduk' => 'nullable|integer|min:0',

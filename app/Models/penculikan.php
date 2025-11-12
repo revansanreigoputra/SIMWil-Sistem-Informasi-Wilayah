@@ -14,7 +14,7 @@ class Penculikan extends Model
 
     // Kolom yang boleh diisi (mass assignable)
     protected $fillable = [
-        'id_desa',
+        'desa_id',
         'tanggal',
         'jumlah_kasus_penculikan',
         'jumlah_kasus_korban_penduduk',
@@ -25,6 +25,6 @@ class Penculikan extends Model
     // Jika tabel berelasi dengan tabel desa, tambahkan relasi berikut:
     public function desa()
     {
-        return $this->belongsTo(Desa::class, 'id_desa');
+        return $this->belongsTo(Desa::class);
     }
 }

@@ -13,7 +13,8 @@ class PembunuhanController extends Controller
      */
     public function index()
     {
-        $data = Pembunuhan::with(['desa'])->orderBy('tanggal', 'desc')->get();
+        $desaId = session('desa_id');
+        $data = Pembunuhan::where('desa_id',$desaId)->with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.keamanandanketertiban.pembunuhan.index', compact('data'));
     }
 
@@ -33,13 +34,13 @@ class PembunuhanController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jumlah_kasus_tahun_ini' => 'nullable|integer|min:0',
             'jumlah_kasus_korban_penduduk' => 'nullable|integer|min:0',
             'jumlah_kasus_pelaku_penduduk' => 'nullable|integer|min:0',
             'jumlah_kasus_bunuh_diri' => 'nullable|integer|min:0',
             'jumlah_kasus_diproses_hukum' => 'nullable|integer|min:0',
         ]);
+        $validated['desa_id'] = session('desa_id');
         Pembunuhan::create($validated);
         return redirect()->route('perkembangan.keamanandanketertiban.pembunuhan.index')->with('success', 'Data Pembunuhan berhasil ditambahkan.');
     }
@@ -49,7 +50,7 @@ class PembunuhanController extends Controller
      */
     public function show($id)
     {
-        $pembunuhan = pembunuhan::findOrFail($id);
+        $pembunuhan = pembunuhan::with(['desa'])->findOrFail($id);
         $pembunuhan->load(['desa']);
         return view('pages.perkembangan.keamanandanketertiban.pembunuhan.show', compact('pembunuhan'));
     }
@@ -71,7 +72,6 @@ class PembunuhanController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jumlah_kasus_tahun_ini' => 'nullable|integer|min:0',
             'jumlah_kasus_korban_penduduk' => 'nullable|integer|min:0',
             'jumlah_kasus_pelaku_penduduk' => 'nullable|integer|min:0',
