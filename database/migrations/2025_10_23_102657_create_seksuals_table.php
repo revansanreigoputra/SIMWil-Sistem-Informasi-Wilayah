@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('seksuals', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_desa');
+            $table->foreignId('desa_id')->constrained('desas')->onUpdate('cascade')->onDelete('cascade');
             $table->date('tanggal');
             $table->integer('jumlah_kasus_perkosaan')->nullable();
             $table->integer('jumlah_kasus_perkosaan_anak')->nullable();
