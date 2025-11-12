@@ -441,7 +441,7 @@
                                             <br>
 
                                             @can('lahan.view')
-                                                <a class="dropdown-item {{ request()->is('potensi/sda/lahan*') ? 'active' : '' }}"
+                                                <a class="dropdown-item {{ request()->routeIs('lahan.*') ? 'active' : '' }}"
                                                     href="{{ route('lahan.index') }}">
                                                     Kep. Lahan Tanaman
                                                 </a>
@@ -537,6 +537,20 @@
                                                 <a class="dropdown-item {{ request()->is('potensi/sda/produksi-ternak*') ? 'active' : '' }}"
                                                     href="{{ route('produksi-ternak.index') }}">
                                                     Produksi Ternak
+                                                </a>
+                                            @endcan
+
+                                            @can('pengolahan-hasil-ternak.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/pengolahan-hasil-ternak*') ? 'active' : '' }}"
+                                                    href="{{ route('pengolahan-hasil-ternak.index') }}">
+                                                    Pengolahan Hasil <br> Ternak
+                                                </a>
+                                            @endcan
+
+                                            @can('lahan-pakan-ternak.view')
+                                                <a class="dropdown-item {{ request()->routeIs('lahan-pakan-ternak.*') ? 'active' : '' }}"
+                                                    href="{{ route('lahan-pakan-ternak.index') }}">
+                                                    Lahan Pakan Ternak
                                                 </a>
                                             @endcan
 

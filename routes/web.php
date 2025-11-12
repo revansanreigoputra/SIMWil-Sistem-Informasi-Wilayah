@@ -826,6 +826,28 @@ Route::middleware(['auth'])->prefix('potensi/sda/produksi-ternak')->name('produk
     Route::delete('/{produksiTernak}', [\App\Http\Controllers\ProduksiTernakController::class, 'destroy'])->name('destroy');
 });
 
+// Pengolahan Hasil Ternak routes
+Route::middleware(['auth'])->prefix('potensi/sda/pengolahan-hasil-ternak')->name('pengolahan-hasil-ternak.')->group(function () {
+    Route::get('/', [\App\Http\Controllers\PengolahanHasilTernakController::class, 'index'])->name('index');
+    Route::get('/create', [\App\Http\Controllers\PengolahanHasilTernakController::class, 'create'])->name('create');
+    Route::post('/', [\App\Http\Controllers\PengolahanHasilTernakController::class, 'store'])->name('store');
+    Route::get('/{pengolahanHasilTernak}', [\App\Http\Controllers\PengolahanHasilTernakController::class, 'show'])->name('show');
+    Route::get('/{pengolahanHasilTernak}/edit', [\App\Http\Controllers\PengolahanHasilTernakController::class, 'edit'])->name('edit');
+    Route::put('/{pengolahanHasilTernak}', [\App\Http\Controllers\PengolahanHasilTernakController::class, 'update'])->name('update');
+    Route::delete('/{pengolahanHasilTernak}', [\App\Http\Controllers\PengolahanHasilTernakController::class, 'destroy'])->name('destroy');
+});
+
+// Lahan Pakan Ternak routes
+Route::middleware(['auth'])->prefix('potensi/sda/lahan-pakan-ternak')->name('lahan-pakan-ternak.')->group(function () {
+    Route::get('/', [\App\Http\Controllers\LahanPakanTernakController::class, 'index'])->name('index');
+    Route::get('/create', [\App\Http\Controllers\LahanPakanTernakController::class, 'create'])->name('create');
+    Route::post('/', [\App\Http\Controllers\LahanPakanTernakController::class, 'store'])->name('store');
+    Route::get('/{lahanPakanTernak}', [\App\Http\Controllers\LahanPakanTernakController::class, 'show'])->name('show');
+    Route::get('/{lahanPakanTernak}/edit', [\App\Http\Controllers\LahanPakanTernakController::class, 'edit'])->name('edit');
+    Route::put('/{lahanPakanTernak}', [\App\Http\Controllers\LahanPakanTernakController::class, 'update'])->name('update');
+    Route::delete('/{lahanPakanTernak}', [\App\Http\Controllers\LahanPakanTernakController::class, 'destroy'])->name('destroy');
+});
+
 //APB Desa Routes
 Route::middleware(['auth'])->prefix('perkembangan/pemerintahdesadankelurahan/apbdesa')->name('perkembangan.pemerintahdesadankelurahan.apbdesa.')->group(function () {
     Route::get('/', [APBDesaController::class, 'index'])->name('index');
