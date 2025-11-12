@@ -36,19 +36,6 @@
                     <label for="tanggal" class="form-label fw-semibold">Tanggal <span class="text-danger">*</span></label>
                     <input type="date" name="tanggal" id="tanggal" class="form-control" value="{{ old('tanggal') }}" required>
                 </div>
-
-                <!-- Desa -->
-                <div class="col-md-6 mb-3">
-                    <label for="id_desa" class="form-label fw-semibold">Desa <span class="text-danger">*</span></label>
-                    <select name="id_desa" id="id_desa" class="form-select" required>
-                        <option value="">-- Pilih Desa --</option>
-                        @foreach ($desas as $item)
-                            <option value="{{ $item->id }}" {{ old('id_desa') == $item->id ? 'selected' : '' }}>
-                                {{ $item->nama_desa }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
             </div>
 
             <!-- Data Penculikan -->
