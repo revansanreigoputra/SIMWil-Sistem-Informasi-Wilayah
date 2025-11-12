@@ -13,7 +13,8 @@ class KdrtController extends Controller
      */
     public function index()
     {
-        $data = kdrt::with(['desa'])->orderBy('tanggal', 'desc')->get();
+        $desaId = session('desa_id');
+        $data = kdrt::where('desa_id',$desaId)->with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.keamanandanketertiban.kdrt.index', compact('data'));
     }
 
@@ -33,13 +34,13 @@ class KdrtController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jumlah_kasus_suami_terhadap_istri' => 'nullable|integer|min:0',
             'jumlah_kasus_istri_terhadap_suami' => 'nullable|integer|min:0',
             'jumlah_kasus_orangtua_terhadap_anak' => 'nullable|integer|min:0',
             'jumlah_kasus_anak_terhadap_orangtua' => 'nullable|integer|min:0',
             'jumlah_kasus_kepala_keluarga_terhadap_anggota_lainnya' => 'nullable|integer|min:0',
         ]);
+        $validated['desa_id'] = session('desa_id');
         kdrt::create($validated);
         return redirect()->route('perkembangan.keamanandanketertiban.kdrt.index')->with('success', 'Data KDRT berhasil ditambahkan.');
     }
@@ -49,7 +50,7 @@ class KdrtController extends Controller
      */
     public function show($id)
     {
-       $kdrt = kdrt::findOrFail($id);
+       $kdrt = kdrt::with(['desa'])->findOrFail($id);
        $kdrt->load(['desa']);
        return view('pages.perkembangan.keamanandanketertiban.kdrt.show', compact('kdrt')); 
     }
@@ -71,7 +72,6 @@ class KdrtController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jumlah_kasus_suami_terhadap_istri' => 'nullable|integer|min:0',
             'jumlah_kasus_istri_terhadap_suami' => 'nullable|integer|min:0',
             'jumlah_kasus_orangtua_terhadap_anak' => 'nullable|integer|min:0',

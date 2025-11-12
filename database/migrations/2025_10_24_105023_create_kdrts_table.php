@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('kdrts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_desa'); 
+           $table->foreignId('desa_id')->constrained('desas')->onUpdate('cascade')->onDelete('cascade'); 
             $table->date('tanggal');
             $table->integer('jumlah_kasus_suami_terhadap_istri')->nullable();
             $table->integer('jumlah_kasus_istri_terhadap_suami')->nullable();
