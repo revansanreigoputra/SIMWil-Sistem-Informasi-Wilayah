@@ -13,7 +13,8 @@ class SosialController extends Controller
      */
     public function index()
     {
-        $data = Sosial::with(['desa'])->orderBy('tanggal', 'desc')->get();
+        $desaId = session('desa_id');
+        $data = Sosial::where('desa_id',$desaId)->with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.keamanandanketertiban.sosial.index', compact('data'));
     }
 
@@ -33,7 +34,6 @@ class SosialController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jumlah_anak_remaja_preman_pengangguran' => 'nullable|integer|min:0',
             'jumlah_gelandangan' => 'nullable|integer|min:0',
             'jumlah_pengemis_jalanan' => 'nullable|integer|min:0',
@@ -79,6 +79,7 @@ class SosialController extends Controller
             'jumlah_warga_pendatang_pekerja_musiman' => 'nullable|integer|min:0',
             
         ]);
+        $validated['desa_id'] = session('desa_id');
         Sosial::create($validated);
         return redirect()->route('perkembangan.keamanandanketertiban.sosial.index')->with('success', 'Data Sosial berhasil ditambahkan.');
     }
@@ -88,7 +89,7 @@ class SosialController extends Controller
      */
     public function show($id)
     {
-        $sosial = sosial::findOrFail($id);
+        $sosial = sosial::with(['desa'])->findOrFail($id);
         $sosial->load(['desa']);
         return view('pages.perkembangan.keamanandanketertiban.sosial.show', compact('sosial'));
     }
@@ -110,7 +111,6 @@ class SosialController extends Controller
     {
         $validated = $request->validate([
            'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jumlah_anak_remaja_preman_pengangguran' => 'nullable|integer|min:0',
             'jumlah_gelandangan' => 'nullable|integer|min:0',
             'jumlah_pengemis_jalanan' => 'nullable|integer|min:0',

@@ -12,7 +12,7 @@ class Sosial extends Model
     protected $table = 'sosials';
 
     protected $fillable = [
-        'id_desa',
+        'desa_id',
         'tanggal',
         'jumlah_anak_remaja_preman_pengangguran',
         'jumlah_gelandangan',
@@ -64,6 +64,6 @@ class Sosial extends Model
      */
     public function desa()
     {
-        return $this->belongsTo(Desa::class, 'id_desa');
+        return $this->belongsTo(Desa::class);
     }
 }
