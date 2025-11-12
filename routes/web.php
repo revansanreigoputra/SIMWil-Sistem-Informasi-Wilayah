@@ -784,6 +784,11 @@ Route::middleware(['auth'])->prefix('data_keluarga')->name('data_keluarga.')->gr
     Route::get('/', [DataKeluargaController::class, 'index'])->middleware('permission:data_keluarga.view')->name('index');
     Route::get('/create', [DataKeluargaController::class, 'create'])->middleware('permission:data_keluarga.create')->name('create');
     Route::post('/', [DataKeluargaController::class, 'store'])->middleware('permission:data_keluarga.store')->name('store');
+
+    Route::post('import', [DataKeluargaController::class, 'import'])->name('import');
+    Route::get('/export', [DataKeluargaController::class, 'export'])->name('export'); // Adjusted URI
+    Route::get('/template', [DataKeluargaController::class, 'template'])->name('template'); // Adjusted URI
+
     Route::get('/{dataKeluarga}', [DataKeluargaController::class, 'show'])->middleware('permission:data_keluarga.show')->name('show');
     Route::get('/laporan/kepala-keluarga', [DataKeluargaController::class, 'headsReport'])->middleware('permission:data_keluarga.report')->name('report.heads');
     Route::get('/laporan/anggota-keluarga', [DataKeluargaController::class, 'membersReport'])->middleware('permission:data_keluarga.report')->name('report.members');
@@ -792,10 +797,6 @@ Route::middleware(['auth'])->prefix('data_keluarga')->name('data_keluarga.')->gr
 
     // Cleanup: Removed duplicated delete route and show route definition
     Route::delete('/{dataKeluarga}', [DataKeluargaController::class, 'destroy'])->middleware('permission:data_keluarga.destroy')->name('destroy');
-
-    Route::post('import', [DataKeluargaController::class, 'import'])->name('import');
-    Route::get('/export', [DataKeluargaController::class, 'export'])->name('export'); // Adjusted URI
-    Route::get('/template', [DataKeluargaController::class, 'template'])->name('template'); // Adjusted URI
 });
 // Anggota Keluarga final Routes
 Route::middleware(['auth'])->prefix('anggota_keluarga')->name('anggota_keluarga.')->group(function () {
