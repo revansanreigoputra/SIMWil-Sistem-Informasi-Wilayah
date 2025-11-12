@@ -1381,20 +1381,16 @@ Route::delete('perkembangan-penduduk/{id}', [PerkembanganPendudukController::cla
 
 
 // produk domestik desa
-
 Route::prefix('perkembangan/produk-domestik')->name('perkembangan.produk-domestik.')->group(function () {
     Route::resource('sektor-pertambangan', SektorPertambanganController::class);
+
 
     // Subsektor Kerajinan routes
  Route::resource('subsektor-kerajinan', SubsektorKerajinanController::class);
 
- // sektor industri pengolahan routes
-
-    Route::resource('subsektor-kerajinan', SubsektorKerajinanController::class);
 
     // sektor industri pengolahan routes
     Route::resource('sektor-industri-pengolahan', SektorIndustriPengolahanController::class);
-
 
 // subsektor kehutanan
   Route::prefix('perkembangan/produk-domestik')->group(function () {

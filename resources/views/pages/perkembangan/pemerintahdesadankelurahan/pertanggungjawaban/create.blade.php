@@ -1,4 +1,4 @@
-@extends('layouts.master')
+d@extends('layouts.master')
 
 @section('title', 'Tambah Data Pertanggungjawaban Kepala Desa/Lurah')
 
