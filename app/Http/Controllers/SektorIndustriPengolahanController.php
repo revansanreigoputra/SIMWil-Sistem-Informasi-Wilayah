@@ -100,12 +100,13 @@ public function edit($id)
 }
 
 
-    public function destroy(SektorIndustriPengolahan $sektor)
-    {
-        $sektor->delete();
+    public function destroy(SektorIndustriPengolahan $sektor_industri_pengolahan)
+{
+    $sektor_industri_pengolahan->delete();
 
-        return redirect()
-            ->route('perkembangan.produk-domestik.sektor-industri-pengolahan.index')
-            ->with('success', 'Data berhasil dihapus.');
-    }
+    return redirect()
+        ->route('perkembangan.produk-domestik.sektor-industri-pengolahan.index')
+        ->with('success', 'Data berhasil dihapus.');
+}
+
 }
