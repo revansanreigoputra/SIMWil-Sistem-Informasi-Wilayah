@@ -12,7 +12,7 @@ class Pembunuhan extends Model
     protected $table = 'pembunuhans';
 
     protected $fillable = [
-        'id_desa',
+        'desa_id',
         'tanggal',
         'jumlah_kasus_tahun_ini',
         'jumlah_kasus_korban_penduduk',
@@ -26,6 +26,6 @@ class Pembunuhan extends Model
      */
     public function desa()
     {
-        return $this->belongsTo(Desa::class, 'id_desa');
+        return $this->belongsTo(Desa::class);
     }
 }
