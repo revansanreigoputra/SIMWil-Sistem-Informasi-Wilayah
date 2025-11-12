@@ -24,7 +24,8 @@
                                 Tanggal <span class="text-danger">*</span>
                             </label>
                             <input type="date" class="form-control @error('tanggal') is-invalid @enderror" id="tanggal"
-                                name="tanggal" value="{{ old('tanggal', $lahanPakanTernak->tanggal->format('Y-m-d')) }}" required>
+                                name="tanggal" value="{{ old('tanggal', $lahanPakanTernak->tanggal->format('Y-m-d')) }}"
+                                required>
                             @error('tanggal')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -32,88 +33,116 @@
                     </div>
                 </div>
 
-                <h6 class="fw-bold text-primary mt-4 mb-3">Lahan Pakan Ternak (Ha)</h6>
+                <h6 class="fw-bold text-primary mt-4 mb-3">Kesediaan Hijauan Pakan Ternak</h6>
                 <div class="row">
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <label for="luas_tanaman_pakan_ternak" class="form-label">Luas Tanaman Pakan Ternak</label>
-                            <input type="number" step="0.01" class="form-control" id="luas_tanaman_pakan_ternak" name="luas_tanaman_pakan_ternak" value="{{ old('luas_tanaman_pakan_ternak', $lahanPakanTernak->luas_tanaman_pakan_ternak) }}">
+                            <label for="luas_tanaman_pakan_ternak" class="form-label">Luas Tanaman Pakan Ternak (Ha)</label>
+                            <input type="number" step="0.01" class="form-control" id="luas_tanaman_pakan_ternak"
+                                name="luas_tanaman_pakan_ternak"
+                                value="{{ old('luas_tanaman_pakan_ternak', $lahanPakanTernak->luas_tanaman_pakan_ternak) }}">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <label for="produksi_hijauan_makanan_ternak" class="form-label">Produksi Hijauan Makanan Ternak</label>
-                            <input type="number" step="0.01" class="form-control" id="produksi_hijauan_makanan_ternak" name="produksi_hijauan_makanan_ternak" value="{{ old('produksi_hijauan_makanan_ternak', $lahanPakanTernak->produksi_hijauan_makanan_ternak) }}">
+                            <label for="produksi_hijauan_makanan_ternak" class="form-label">Produksi Hijauan Makanan
+                                Ternak (Ton/Ha)</label>
+                            <input type="number" step="0.01" class="form-control" id="produksi_hijauan_makanan_ternak"
+                                name="produksi_hijauan_makanan_ternak"
+                                value="{{ old('produksi_hijauan_makanan_ternak', $lahanPakanTernak->produksi_hijauan_makanan_ternak) }}">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <label for="dipasok_dari_luar_desa_kelurahan" class="form-label">Dipasok Dari Luar Desa/Kelurahan</label>
-                            <input type="number" step="0.01" class="form-control" id="dipasok_dari_luar_desa_kelurahan" name="dipasok_dari_luar_desa_kelurahan" value="{{ old('dipasok_dari_luar_desa_kelurahan', $lahanPakanTernak->dipasok_dari_luar_desa_kelurahan) }}">
+                            <label for="dipasok_dari_luar_desa_kelurahan" class="form-label">Dipasok Dari Luar
+                                Desa/Kelurahan (Ton)</label>
+                            <input type="number" step="0.01" class="form-control" id="dipasok_dari_luar_desa_kelurahan"
+                                name="dipasok_dari_luar_desa_kelurahan"
+                                value="{{ old('dipasok_dari_luar_desa_kelurahan', $lahanPakanTernak->dipasok_dari_luar_desa_kelurahan) }}">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <label for="disubsidi_dinas" class="form-label">Disubsidi Dinas</label>
-                            <input type="number" step="0.01" class="form-control" id="disubsidi_dinas" name="disubsidi_dinas" value="{{ old('disubsidi_dinas', $lahanPakanTernak->disubsidi_dinas) }}">
+                            <label for="disubsidi_dinas" class="form-label">Disubsidi Dinas (Ton)</label>
+                            <input type="number" step="0.01" class="form-control" id="disubsidi_dinas"
+                                name="disubsidi_dinas"
+                                value="{{ old('disubsidi_dinas', $lahanPakanTernak->disubsidi_dinas) }}">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <label for="lainnya_pakan_ternak" class="form-label">Lainnya Pakan Ternak</label>
-                            <input type="number" step="0.01" class="form-control" id="lainnya_pakan_ternak" name="lainnya_pakan_ternak" value="{{ old('lainnya_pakan_ternak', $lahanPakanTernak->lainnya_pakan_ternak) }}">
+                            <label for="lainnya_pakan_ternak" class="form-label">Lainnya (Ton)</label>
+                            <input type="number" step="0.01" class="form-control" id="lainnya_pakan_ternak"
+                                name="lainnya_pakan_ternak"
+                                value="{{ old('lainnya_pakan_ternak', $lahanPakanTernak->lainnya_pakan_ternak) }}">
                         </div>
                     </div>
                 </div>
 
-                <h6 class="fw-bold text-primary mt-4 mb-3">Kepemilikan Lahan Pakan Ternak (Ha)</h6>
+                <h6 class="fw-bold text-primary mt-4 mb-3">Lahan Pemeliharaan Ternak/Padang Penggembalaan</h6>
                 <div class="row">
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <label for="milik_masyarakat_umum" class="form-label">Milik Masyarakat Umum</label>
-                            <input type="number" step="0.01" class="form-control" id="milik_masyarakat_umum" name="milik_masyarakat_umum" value="{{ old('milik_masyarakat_umum', $lahanPakanTernak->milik_masyarakat_umum) }}">
+                            <label for="milik_masyarakat_umum" class="form-label">Milik Masyarakat Umum (Ha)</label>
+                            <input type="number" step="0.01" class="form-control" id="milik_masyarakat_umum"
+                                name="milik_masyarakat_umum"
+                                value="{{ old('milik_masyarakat_umum', $lahanPakanTernak->milik_masyarakat_umum) }}">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <label for="milik_perusahaan_peternakan_ranch" class="form-label">Milik Perusahaan Peternakan/Ranch</label>
-                            <input type="number" step="0.01" class="form-control" id="milik_perusahaan_peternakan_ranch" name="milik_perusahaan_peternakan_ranch" value="{{ old('milik_perusahaan_peternakan_ranch', $lahanPakanTernak->milik_perusahaan_peternakan_ranch) }}">
+                            <label for="milik_perusahaan_peternakan_ranch" class="form-label">Milik Perusahaan
+                                Peternakan/Ranch (Ha)</label>
+                            <input type="number" step="0.01" class="form-control" id="milik_perusahaan_peternakan_ranch"
+                                name="milik_perusahaan_peternakan_ranch"
+                                value="{{ old('milik_perusahaan_peternakan_ranch', $lahanPakanTernak->milik_perusahaan_peternakan_ranch) }}">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <label for="milik_perorangan" class="form-label">Milik Perorangan</label>
-                            <input type="number" step="0.01" class="form-control" id="milik_perorangan" name="milik_perorangan" value="{{ old('milik_perorangan', $lahanPakanTernak->milik_perorangan) }}">
+                            <label for="milik_perorangan" class="form-label">Milik Perorangan (Ha)</label>
+                            <input type="number" step="0.01" class="form-control" id="milik_perorangan"
+                                name="milik_perorangan"
+                                value="{{ old('milik_perorangan', $lahanPakanTernak->milik_perorangan) }}">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <label for="sewa_pakai" class="form-label">Sewa Pakai</label>
-                            <input type="number" step="0.01" class="form-control" id="sewa_pakai" name="sewa_pakai" value="{{ old('sewa_pakai', $lahanPakanTernak->sewa_pakai) }}">
+                            <label for="sewa_pakai" class="form-label">Sewa Pakai (Ha)</label>
+                            <input type="number" step="0.01" class="form-control" id="sewa_pakai" name="sewa_pakai"
+                                value="{{ old('sewa_pakai', $lahanPakanTernak->sewa_pakai) }}">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <label for="milik_pemerintah" class="form-label">Milik Pemerintah</label>
-                            <input type="number" step="0.01" class="form-control" id="milik_pemerintah" name="milik_pemerintah" value="{{ old('milik_pemerintah', $lahanPakanTernak->milik_pemerintah) }}">
+                            <label for="milik_pemerintah" class="form-label">Milik Pemerintah (Ha)</label>
+                            <input type="number" step="0.01" class="form-control" id="milik_pemerintah"
+                                name="milik_pemerintah"
+                                value="{{ old('milik_pemerintah', $lahanPakanTernak->milik_pemerintah) }}">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <label for="milik_masyarakat_adat" class="form-label">Milik Masyarakat Adat</label>
-                            <input type="number" step="0.01" class="form-control" id="milik_masyarakat_adat" name="milik_masyarakat_adat" value="{{ old('milik_masyarakat_adat', $lahanPakanTernak->milik_masyarakat_adat) }}">
+                            <label for="milik_masyarakat_adat" class="form-label">Milik Masyarakat Adat (Ha)</label>
+                            <input type="number" step="0.01" class="form-control" id="milik_masyarakat_adat"
+                                name="milik_masyarakat_adat"
+                                value="{{ old('milik_masyarakat_adat', $lahanPakanTernak->milik_masyarakat_adat) }}">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <label for="lainnya_pemeliharaan_ternak" class="form-label">Lainnya Pemeliharaan Ternak</label>
-                            <input type="number" step="0.01" class="form-control" id="lainnya_pemeliharaan_ternak" name="lainnya_pemeliharaan_ternak" value="{{ old('lainnya_pemeliharaan_ternak', $lahanPakanTernak->lainnya_pemeliharaan_ternak) }}">
+                            <label for="luas_lahan_gembalaan" class="form-label">Luas Lahan Gembalaan (Ha)</label>
+                            <input type="number" step="0.01" class="form-control" id="luas_lahan_gembalaan"
+                                name="luas_lahan_gembalaan"
+                                value="{{ old('luas_lahan_gembalaan', $lahanPakanTernak->luas_lahan_gembalaan) }}">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <label for="luas_lahan_gembalaan" class="form-label">Luas Lahan Gembalaan</label>
-                            <input type="number" step="0.01" class="form-control" id="luas_lahan_gembalaan" name="luas_lahan_gembalaan" value="{{ old('luas_lahan_gembalaan', $lahanPakanTernak->luas_lahan_gembalaan) }}">
+                            <label for="lainnya_pemeliharaan_ternak" class="form-label">Lainnya (Ha)</label>
+                            <input type="number" step="0.01" class="form-control" id="lainnya_pemeliharaan_ternak"
+                                name="lainnya_pemeliharaan_ternak"
+                                value="{{ old('lainnya_pemeliharaan_ternak', $lahanPakanTernak->lainnya_pemeliharaan_ternak) }}">
                         </div>
                     </div>
                 </div>

@@ -122,16 +122,16 @@
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <label for="lainnya_pemeliharaan_ternak" class="form-label">Lainnya (Ha)</label>
-                            <input type="number" step="0.01" class="form-control" id="lainnya_pemeliharaan_ternak"
-                                name="lainnya_pemeliharaan_ternak" value="{{ old('lainnya_pemeliharaan_ternak', 0) }}">
+                            <label for="luas_lahan_gembalaan" class="form-label">Luas Lahan Gembalaan (Ha)</label>
+                            <input type="number" step="0.01" class="form-control" id="luas_lahan_gembalaan"
+                                name="luas_lahan_gembalaan" value="{{ old('luas_lahan_gembalaan', 0) }}">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <label for="luas_lahan_gembalaan" class="form-label">Luas Lahan Gembalaan (Ha)</label>
-                            <input type="number" step="0.01" class="form-control" id="luas_lahan_gembalaan"
-                                name="luas_lahan_gembalaan" value="{{ old('luas_lahan_gembalaan', 0) }}">
+                            <label for="lainnya_pemeliharaan_ternak" class="form-label">Lainnya (Ha)</label>
+                            <input type="number" step="0.01" class="form-control" id="lainnya_pemeliharaan_ternak"
+                                name="lainnya_pemeliharaan_ternak" value="{{ old('lainnya_pemeliharaan_ternak', 0) }}">
                         </div>
                     </div>
                 </div>

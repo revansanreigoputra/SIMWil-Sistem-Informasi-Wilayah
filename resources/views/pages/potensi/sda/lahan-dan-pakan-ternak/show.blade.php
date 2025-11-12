@@ -14,29 +14,23 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="mb-3">
-                        <label class="form-label fw-semibold">Tanggal Pencatatan</label>
+                        <label class="form-label fw-semibold">Tanggal</label>
                         <p class="form-control-plaintext">{{ $lahanPakanTernak->tanggal->format('d F Y') }}</p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Desa</label>
-                        <p class="form-control-plaintext">{{ $lahanPakanTernak->desa->nama_desa }}</p>
                     </div>
                 </div>
             </div>
 
             <hr>
 
-            <h6 class="fw-bold text-primary mt-4 mb-3">Lahan Pakan Ternak (Ha)</h6>
+            <h6 class="fw-bold text-primary mt-4 mb-3">Kesediaan Hijauan Pakan Ternak</h6>
             <div class="row">
                 @php
                     $lahan_pakan_ternak_data = [
-                        'Luas Tanaman Pakan Ternak' => 'luas_tanaman_pakan_ternak',
-                        'Produksi Hijauan Makanan Ternak' => 'produksi_hijauan_makanan_ternak',
-                        'Dipasok Dari Luar Desa/Kelurahan' => 'dipasok_dari_luar_desa_kelurahan',
-                        'Disubsidi Dinas' => 'disubsidi_dinas',
-                        'Lainnya Pakan Ternak' => 'lainnya_pakan_ternak',
+                        'Luas Tanaman Pakan Ternak (Ha)' => 'luas_tanaman_pakan_ternak',
+                        'Produksi Hijauan Makanan Ternak (Ton/Ha)' => 'produksi_hijauan_makanan_ternak',
+                        'Dipasok Dari Luar Desa/Kelurahan (Ton)' => 'dipasok_dari_luar_desa_kelurahan',
+                        'Disubsidi Dinas (Ton)' => 'disubsidi_dinas',
+                        'Lainnya (Ton)' => 'lainnya_pakan_ternak',
                     ];
                 @endphp
                 @foreach ($lahan_pakan_ternak_data as $label => $field)
@@ -50,18 +44,18 @@
                 @endforeach
             </div>
 
-            <h6 class="fw-bold text-primary mt-4 mb-3">Kepemilikan Lahan Pakan Ternak (Ha)</h6>
+            <h6 class="fw-bold text-primary mt-4 mb-3">Lahan Pemeliharaan Ternak/Padang Penggembalaan</h6>
             <div class="row">
                 @php
                     $kepemilikan_lahan_pakan_ternak = [
-                        'Milik Masyarakat Umum' => 'milik_masyarakat_umum',
-                        'Milik Perusahaan Peternakan/Ranch' => 'milik_perusahaan_peternakan_ranch',
-                        'Milik Perorangan' => 'milik_perorangan',
-                        'Sewa Pakai' => 'sewa_pakai',
-                        'Milik Pemerintah' => 'milik_pemerintah',
-                        'Milik Masyarakat Adat' => 'milik_masyarakat_adat',
-                        'Lainnya Pemeliharaan Ternak' => 'lainnya_pemeliharaan_ternak',
-                        'Luas Lahan Gembalaan' => 'luas_lahan_gembalaan',
+                        'Milik Masyarakat Umum (Ha)' => 'milik_masyarakat_umum',
+                        'Milik Perusahaan Peternakan/Ranch (Ha)' => 'milik_perusahaan_peternakan_ranch',
+                        'Milik Perorangan (Ha)' => 'milik_perorangan',
+                        'Sewa Pakai (Ha)' => 'sewa_pakai',
+                        'Milik Pemerintah (Ha)' => 'milik_pemerintah',
+                        'Milik Masyarakat Adat (Ha)' => 'milik_masyarakat_adat',
+                        'Luas Lahan Gembalaan (Ha)' => 'luas_lahan_gembalaan',
+                        'Lainnya (Ha)' => 'lainnya_pemeliharaan_ternak',
                     ];
                 @endphp
                 @foreach ($kepemilikan_lahan_pakan_ternak as $label => $field)

@@ -22,8 +22,9 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Desa</th>
                             <th>Tanggal</th>
+                            <th>Luas Tanaman Pakan Ternak</th>
+                            <th>Milik Masyarakat Umum</th>
                             <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
@@ -31,8 +32,9 @@
                         @foreach ($lahanPakanTernaks as $lahanPakanTernak)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $lahanPakanTernak->desa->nama_desa }}</td>
                                 <td>{{ $lahanPakanTernak->tanggal->format('d-m-Y') }}</td>
+                                <td>{{ number_format($lahanPakanTernak->luas_tanaman_pakan_ternak, 2, ',', '.') }}</td>
+                                <td>{{ number_format($lahanPakanTernak->milik_masyarakat_umum, 2, ',', '.') }}</td>
                                 <td>
                                     @canany(['lahan-pakan-ternak.view', 'lahan-pakan-ternak.update', 'lahan-pakan-ternak.delete'])
                                         <div class="d-flex gap-1 justify-content-center">
