@@ -1854,6 +1854,17 @@ Route::prefix('perkembangan/struktur-mata-pencaharian')->name('perkembangan.stru
     Route::resource('sektor-kehutanan', SektorKehutananController::class);
 });
 
+// PAlatProduksiIkanLaut routes
+Route::middleware(['auth'])->prefix('potensi/sda/alat-produksi-ikan-laut')->name('p-alat-produksi-ikan-laut.')->group(function () {
+    Route::get('/', [App\Http\Controllers\PAlatProduksiIkanLautController::class, 'index'])->name('index');
+    Route::get('/create', [App\Http\Controllers\PAlatProduksiIkanLautController::class, 'create'])->name('create');
+    Route::post('/', [App\Http\Controllers\PAlatProduksiIkanLautController::class, 'store'])->name('store');
+    Route::get('/{pAlatProduksiIkanLaut}', [App\Http\Controllers\PAlatProduksiIkanLautController::class, 'show'])->name('show');
+    Route::get('/{pAlatProduksiIkanLaut}/edit', [App\Http\Controllers\PAlatProduksiIkanLautController::class, 'edit'])->name('edit');
+    Route::put('/{pAlatProduksiIkanLaut}', [App\Http\Controllers\PAlatProduksiIkanLautController::class, 'update'])->name('update');
+    Route::delete('/{pAlatProduksiIkanLaut}', [App\Http\Controllers\PAlatProduksiIkanLautController::class, 'destroy'])->name('destroy');
+});
+
 //sektor industri besar
 Route::resource(
     'perkembangan/struktur-mata-pencaharian/sektor-industri-menengah-besar',
