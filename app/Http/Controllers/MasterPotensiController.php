@@ -82,7 +82,7 @@ class MasterPotensiController extends Controller
                 // Jika tab-nya jenis_sekolah_tingkatan, ambil juga relasinya
                 if ($activeTab === 'jenis_sekolah_tingkatan') {
                     $query->with('KategoriSekolah'); // Asumsi nama relasinya 'KategoriSekolah'
-                } 
+                }
                 // TAMBAHAN UNTUK RELASI BARU
                 elseif ($activeTab === 'jenis_lembaga_ekonomi') {
                     $query->with('KategoriLembagaEkonomi'); // Asumsi relasi 'KategoriLembagaEkonomi'
@@ -96,7 +96,7 @@ class MasterPotensiController extends Controller
                     $query->with('KategoriPrasaranaTransportasiLainnya'); // Asumsi relasi 'KategoriPrasaranaTransportasiLainnya'
                 }
                 // === AKHIR PERBAIKAN 1 ===
-                
+
                 $data = $query->orderBy('id')->get();
 
                 // === PERBAIKAN 2: AMBIL DATA KATEGORI UNTUK DROPDOWN ===
@@ -145,25 +145,24 @@ class MasterPotensiController extends Controller
     private function getModelForTab(?string $tabName): ?string
     {
         if (!$tabName) {
-            return null; 
+            return null;
         }
 
         $tabName = strtolower($tabName);
 
         if ($tabName === 'tempat_ibadah') {
             $className = "App\\Models\\TempatIbadah";
-            if (class_exists($className)) {
-                return $className;
-            }
-        }elseif ($tabName === 'jenis_produksi_ternak') {
-            $className = "App\\Models\\JenisProduksiTernak"; // Direct model, not in MasterPotensi namespace
-            if (class_exists($className)) {
-                return $className;
-            }
+            return class_exists($className) ? $className : null;
         }
 
         $modelName = Str::studly($tabName);
         $className = "App\\Models\\MasterPotensi\\{$modelName}";
+        if (class_exists($className)) {
+            return $className;
+        }
+
+        // Handle models directly under App\Models
+        $className = "App\\Models\\{$modelName}";
         if (class_exists($className)) {
             return $className;
         }
@@ -179,7 +178,7 @@ class MasterPotensiController extends Controller
     {
         $rules = [
             'nama' => 'required|string|max:255',
-            'tab'  => 'required|string'
+            'tab' => 'required|string'
         ];
 
         // === PERBAIKAN 3: TAMBAHKAN VALIDASI UNTUK RELASI BARU ===
@@ -205,9 +204,6 @@ class MasterPotensiController extends Controller
                 $rules['kategori_prasarana_transportasi_lainnya_id'] = 'required|integer|exists:kategori_prasarana_transportasi_lainnya,id';
                 break;
             // AKHIR TAMBAHAN
-            case 'jenis_produksi_ternak':
-                // No specific category for jenis_produksi_ternak
-                break;
             default:
                 break;
         }
@@ -229,6 +225,7 @@ class MasterPotensiController extends Controller
         if (isset($validated['nama_tempat'])) {
             $data['nama_tempat'] = $validated['nama_tempat'];
         }
+
         // Data untuk 'jenis_sekolah_tingkatan'
         if (isset($validated['kategori_sekolah_id'])) {
             $data['kategori_sekolah_id'] = $validated['kategori_sekolah_id'];
@@ -265,7 +262,7 @@ class MasterPotensiController extends Controller
         $tabName = $request->input('tab');
 
         if (!$tabName) {
-            return response()->json(['error' => 'Parameter "tab" tidak ada dalam request.'], 422); 
+            return response()->json(['error' => 'Parameter "tab" tidak ada dalam request.'], 422);
         }
 
         $model = $this->getModelForTab($tabName);
@@ -289,7 +286,7 @@ class MasterPotensiController extends Controller
     {
         $rules = [
             'nama' => 'required|string|max:255',
-            'tab'  => 'required|string'
+            'tab' => 'required|string'
         ];
 
         // === PERBAIKAN 5: TAMBAHKAN VALIDASI UPDATE UNTUK RELASI BARU ===
@@ -305,16 +302,12 @@ class MasterPotensiController extends Controller
                 $rules['kategori_prasarana_transportasi_darat_id'] = 'required|integer|exists:kategori_prasarana_transportasi_darat,id';
                 break;
             case 'jenis_prasarana_komunikasi_informasi':
-                $rules['kategori_prasarana_komunikasi_informasi_id'] = 'required|integer|exists:kategori_prasarana_komunikasi_informasi,id';
+                $rules['kategori_prasarana_komunikasi_informasi_id'] = 'required|integer';
                 break;
             // TAMBAHAN UNTUK 'jenis_prasarana_transportasi_lainnya'
             case 'jenis_prasarana_transportasi_lainnya':
                 $rules['kategori_prasarana_transportasi_lainnya_id'] = 'required|integer|exists:kategori_prasarana_transportasi_lainnya,id';
                 break;
-             case 'jenis_produksi_ternak':
-                // No specific category for jenis_produksi_ternak
-                break;
-                
             // AKHIR TAMBAHAN
         }
         // =====================================================================
@@ -335,14 +328,14 @@ class MasterPotensiController extends Controller
         ];
 
         if ($request->has('nama_tempat') && $request->tab === 'tempat_ibadah') {
-             $dataToUpdate['nama_tempat'] = $request->input('nama_tempat');
+            $dataToUpdate['nama_tempat'] = $request->input('nama_tempat');
         }
 
         // === PERBAIKAN 6: TAMBAHKAN DATA UPDATE RELASI BARU ===
         if (isset($validated['kategori_sekolah_id'])) {
             $dataToUpdate['kategori_sekolah_id'] = $validated['kategori_sekolah_id'];
         }
-        
+
         // TAMBAHAN DATA RELASI UPDATE
         if (isset($validated['kategori_lembaga_ekonomi_id'])) {
             $dataToUpdate['kategori_lembaga_ekonomi_id'] = $validated['kategori_lembaga_ekonomi_id'];

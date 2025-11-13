@@ -559,6 +559,13 @@
                                                 </a>
                                             @endcan
 
+                                            @can('p-alat-produksi-ikan-laut.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/alat-produksi-ikan-laut*') ? 'active' : '' }}"
+                                                    href="{{ route('p-alat-produksi-ikan-laut.index') }}">
+                                                    Alat Produksi Ikan Laut
+                                                </a>
+                                            @endcan
+
                                         </div>
                                     </div>
 

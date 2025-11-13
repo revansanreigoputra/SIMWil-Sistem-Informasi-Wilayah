@@ -912,6 +912,14 @@ class PermissionSeeder extends Seeder
             'sektor-kehutanan.update',
             'sektor-kehutanan.destroy',
 
+            // PAlatProduksiIkanLaut permissions
+            'p-alat-produksi-ikan-laut.view',
+            'p-alat-produksi-ikan-laut.create',
+            'p-alat-produksi-ikan-laut.store',
+            'p-alat-produksi-ikan-laut.edit',
+            'p-alat-produksi-ikan-laut.update',
+            'p-alat-produksi-ikan-laut.delete',
+
             // produksi ternak permissions
             'produksi-ternak.view',
             'produksi-ternak.create',
