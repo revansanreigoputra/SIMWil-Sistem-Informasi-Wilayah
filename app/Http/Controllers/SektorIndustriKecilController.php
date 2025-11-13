@@ -97,4 +97,13 @@ class SektorIndustriKecilController extends Controller
             ->route('perkembangan.struktur-mata-pencaharian.sektor-industri-kecil.index')
             ->with('success', 'Data sektor industri kecil berhasil dihapus.');
     }
+    public function show($id)
+{
+    // Ambil data sektor industri kecil beserta relasinya
+    $data = SektorIndustriKecil::with(['desa', 'mataPencaharian'])->findOrFail($id);
+
+    // Kirim ke view detail
+    return view('pages.perkembangan.struktur-mata-pencaharian.sektor-industri-kecil.show', compact('data'));
+}
+
 }

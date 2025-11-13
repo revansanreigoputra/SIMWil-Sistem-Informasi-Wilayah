@@ -17,7 +17,7 @@
             </tr>
             <tr>
                 <th>Mata Pencaharian</th>
-                <td>{{ $data->mata_pencaharian ?? '-' }}</td>
+                <td>{{ $data->mataPencaharian->mata_pencaharian ?? '-' }}</td>
             </tr>
             <tr>
                 <th>Jumlah (Orang)</th>
