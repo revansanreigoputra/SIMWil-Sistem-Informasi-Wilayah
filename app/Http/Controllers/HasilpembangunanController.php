@@ -13,7 +13,8 @@ class HasilpembangunanController extends Controller
      */
     public function index()
     {
-        $data = hasilpembangunan::with(['desa'])->orderBy('tanggal', 'desc')->get();
+        $desaId = session('desa_id');
+        $data = hasilpembangunan::where('desa_id',$desaId)->with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.peransertamasyarakat.hasilpembangunan.index', compact('data'));
     }
 
@@ -33,7 +34,6 @@ class HasilpembangunanController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jumlah_masyarakat_terlibat' => 'nullable|integer',
             'jumlah_penduduk_dilibatkan' => 'nullable|integer',
             'jumlah_kegiatan_masyarakat' => 'nullable|integer',
@@ -54,9 +54,8 @@ class HasilpembangunanController extends Controller
             'jumlah_kegiatan_didanai_apbd_provinsi' => 'nullable|integer',
             'jumlah_kegiatan_didanai_apbn' => 'nullable|integer',
         ]);
-
+        $validated['desa_id'] = session('desa_id');
         HasilPembangunan::create($validated);
-
         return redirect()->route('perkembangan.peransertamasyarakat.hasilpembangunan.index')->with('success', 'Data hasil pembangunan berhasil ditambahkan.');
     }
 
@@ -65,7 +64,7 @@ class HasilpembangunanController extends Controller
      */
     public function show($id)
     {
-        $hasilpembangunan = hasilpembangunan::findOrFail($id);
+        $hasilpembangunan = hasilpembangunan::with(['desa'])->findOrFail($id);
         $hasilpembangunan->load(['desa']);
         return view('pages.perkembangan.peransertamasyarakat.hasilpembangunan.show', compact('hasilpembangunan'));
     }
@@ -87,7 +86,6 @@ class HasilpembangunanController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jumlah_masyarakat_terlibat' => 'nullable|integer',
             'jumlah_penduduk_dilibatkan' => 'nullable|integer',
             'jumlah_kegiatan_masyarakat' => 'nullable|integer',
@@ -121,10 +119,5 @@ class HasilpembangunanController extends Controller
         $hasilpembangunan = hasilpembangunan::findOrFail($id);
         $hasilpembangunan->delete();
         return redirect()->route('perkembangan.peransertamasyarakat.hasilpembangunan.index')->with('success', 'Data hasil pembangunan berhasil dihapus.');
-    }
-    public function getDesasByKecamatan($id_kecamatan)
-    {
-        $desas = Desa::where('id_kecamatan', $id_kecamatan)->get();
-        return response()->json($desas);
     }
 }

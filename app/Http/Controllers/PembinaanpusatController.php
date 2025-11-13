@@ -13,7 +13,8 @@ class PembinaanpusatController extends Controller
      */
     public function index()
     {
-         $data = PembinaanPusat::with(['desa'])->orderBy('tanggal', 'desc')->get();
+        $desaId = session('desa_id');
+        $data = PembinaanPusat::where('desa_id',$desaId)->with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.pemerintahdesadankelurahan.pembinaanpusat.index', compact('data'));
     }
 
@@ -33,7 +34,6 @@ class PembinaanpusatController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'pedoman_pelaksanaan_urusan' => 'nullable|in:Ada,Tidak Ada',
             'pedoman_bantuan_pembiayaan' => 'nullable|in:Ada,Tidak Ada',
             'pedoman_administrasi' => 'nullable|in:Ada,Tidak Ada',
@@ -47,6 +47,7 @@ class PembinaanpusatController extends Controller
             'jumlah_sanksi' => 'nullable|numeric', 
         ]);
 
+         $validated['desa_id'] = session('desa_id');
         PembinaanPusat::create($validated);
 
         return redirect()->route('perkembangan.pemerintahdesadankelurahan.pembinaanpusat.index')->with('success', 'Data Pembinaan Pusat berhasil ditambahkan.');
@@ -57,7 +58,7 @@ class PembinaanpusatController extends Controller
      */
     public function show($id)
     {
-        $pembinaan = PembinaanPusat::findOrFail($id);
+        $pembinaan = PembinaanPusat::with(['desa'])->findOrFail($id);
         $pembinaan->load(['desa']);
         return view('pages.perkembangan.pemerintahdesadankelurahan.pembinaanpusat.show', compact('pembinaan'));
     }
@@ -79,7 +80,6 @@ class PembinaanpusatController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'pedoman_pelaksanaan_urusan' => 'nullable|in:Ada,Tidak Ada',
             'pedoman_bantuan_pembiayaan' => 'nullable|in:Ada,Tidak Ada',
             'pedoman_administrasi' => 'nullable|in:Ada,Tidak Ada',

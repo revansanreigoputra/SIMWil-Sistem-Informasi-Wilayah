@@ -13,7 +13,8 @@ class APBDesaController extends Controller
      */
     public function index()
     {
-        $data = ApbDesa::with(['desa'])->orderBy('tanggal', 'desc')->get();
+        $desaId = session('desa_id');
+        $data = ApbDesa::where('desa_id',$desaId)->with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.pemerintahdesadankelurahan.apbdesa.index', compact('data'));
 
     }
@@ -35,7 +36,6 @@ class APBDesaController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'apbd_kabupaten' => 'nullable|numeric',
             'bantuan_pemerintah_kabupaten' => 'nullable|numeric',
             'bantuan_pemerintah_provinsi' => 'nullable|numeric',
@@ -52,6 +52,7 @@ class APBDesaController extends Controller
             'saldo_anggaran' => 'nullable|numeric',
         ]);
 
+        $validated['desa_id'] = session('desa_id');
         ApbDesa::create($validated);
 
         return redirect()->route('perkembangan.pemerintahdesadankelurahan.apbdesa.index')->with('success', 'Data APB Desa berhasil ditambahkan.');
@@ -62,7 +63,7 @@ class APBDesaController extends Controller
      */
     public function show($id)
     {
-        $apb = ApbDesa::findOrFail($id);
+        $apb = ApbDesa::with(['desa'])->findOrFail($id);
         $apb->load(['desa']); // pastikan relasi terload
         return view('pages.perkembangan.pemerintahdesadankelurahan.apbdesa.show', compact('apb'));
 
@@ -85,7 +86,6 @@ class APBDesaController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'apbd_kabupaten' => 'nullable|numeric',
             'bantuan_pemerintah_kabupaten' => 'nullable|numeric',
             'bantuan_pemerintah_provinsi' => 'nullable|numeric',

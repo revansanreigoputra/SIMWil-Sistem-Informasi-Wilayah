@@ -14,7 +14,7 @@ class pembinaankecamatan extends Model
 
     // Kolom yang bisa diisi (mass assignment)
     protected $fillable = [
-        'id_desa',
+        'desa_id',
         'tanggal',
         'fasilitasi_penyusunan_perdes',
         'fasilitasi_administrasi_tata_pemerintahan',
@@ -35,6 +35,6 @@ class pembinaankecamatan extends Model
     ];
     public function desa()
     {
-        return $this->belongsTo(Desa::class, 'id_desa');
+        return $this->belongsTo(Desa::class);
     }
 }

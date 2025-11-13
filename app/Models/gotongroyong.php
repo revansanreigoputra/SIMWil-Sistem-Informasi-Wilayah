@@ -10,7 +10,7 @@ class Gotongroyong extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id_desa',
+        'desa_id',
         'tanggal',
         'jumlah_kelompok_arisan',
         'jumlah_penduduk_orang_tua_asuh',
@@ -32,6 +32,6 @@ class Gotongroyong extends Model
 
     public function desa()
     {
-        return $this->belongsTo(Desa::class, 'id_desa');
+        return $this->belongsTo(Desa::class);
     }
 }

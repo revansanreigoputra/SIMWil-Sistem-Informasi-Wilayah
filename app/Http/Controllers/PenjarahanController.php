@@ -13,8 +13,9 @@ class PenjarahanController extends Controller
      */
     public function index()
     {
-            $data = Penjarahan::with(['desa'])->orderBy('tanggal', 'desc')->get();
-            return view('pages.perkembangan.keamanandanketertiban.penjarahan.index', compact('data'));
+        $desaId = session('desa_id');
+        $data = Penjarahan::where('desa_id',$desaId)->with(['desa'])->orderBy('tanggal', 'desc')->get();
+        return view('pages.perkembangan.keamanandanketertiban.penjarahan.index', compact('data'));
     }
 
     /**
@@ -33,15 +34,13 @@ class PenjarahanController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'korban_dan_pelaku_penduduk_setempat' => 'nullable|numeric',
             'korban_penduduk_setempat_pelaku_bukan_setempat' => 'nullable|numeric',
             'korban_bukan_setempat_pelaku_penduduk_setempat' => 'nullable|numeric',
             'pelaku_diadili_atau_diproses_hukum' => 'nullable|numeric',
         ]);
-
+        $validated['desa_id'] = session('desa_id');
         Penjarahan::create($validated);
-
         return redirect()->route('perkembangan.keamanandanketertiban.penjarahan.index')->with('success', 'Data Penjarahan berhasil ditambahkan.');
     }
 
@@ -50,7 +49,7 @@ class PenjarahanController extends Controller
      */
     public function show($id)
     {
-        $penjarahan = Penjarahan::findOrFail($id);
+        $penjarahan = Penjarahan::with(['desa'])->findOrFail($id);
         $penjarahan->load(['desa']);
         return view('pages.perkembangan.keamanandanketertiban.penjarahan.show', compact('penjarahan'));
     }
@@ -72,7 +71,6 @@ class PenjarahanController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'korban_dan_pelaku_penduduk_setempat' => 'nullable|numeric',
             'korban_penduduk_setempat_pelaku_bukan_setempat' => 'nullable|numeric',
             'korban_bukan_setempat_pelaku_penduduk_setempat' => 'nullable|numeric',

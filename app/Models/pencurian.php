@@ -12,7 +12,7 @@ class Pencurian extends Model
     protected $table = 'pencurians';
 
     protected $fillable = [
-        'id_desa',
+        'desa_id',
         'tanggal',
         'kasus_tahun_ini',
         'korban_penduduk_setempat',
@@ -26,6 +26,6 @@ class Pencurian extends Model
      */
     public function desa()
     {
-        return $this->belongsTo(Desa::class, 'id_desa');
+        return $this->belongsTo(Desa::class);
     }
 }

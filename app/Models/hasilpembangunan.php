@@ -12,7 +12,7 @@ class hasilpembangunan extends Model
     protected $table = 'hasilpembangunans';
 
     protected $fillable = [
-        'id_desa',
+        'desa_id',
         'tanggal',
         'jumlah_masyarakat_terlibat',
         'jumlah_penduduk_dilibatkan',
@@ -36,6 +36,6 @@ class hasilpembangunan extends Model
     ];
     public function desa()
     {
-        return $this->belongsTo(Desa::class, 'id_desa');
+        return $this->belongsTo(Desa::class);
     }
 }

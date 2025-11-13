@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pertanggungjawabans', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_desa');
+            $table->foreignId('desa_id')->constrained('desas')->onUpdate('cascade')->onDelete('cascade');
             $table->date('tanggal');
             $table->enum('penyampaian_laporan', ['ada', 'tidak_ada'])->nullable();
             $table->integer('jumlah_informasi')->nullable();

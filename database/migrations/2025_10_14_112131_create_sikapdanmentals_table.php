@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('sikapdanmentals', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_desa');
+            $table->foreignId('desa_id')->constrained('desas')->onUpdate('cascade')->onDelete('cascade');
             $table->date('tanggal');
 
             // Kolom jenis pungutan & permintaan sumbangan

@@ -409,6 +409,58 @@ class PermissionSeeder extends Seeder
             'iklim.edit',
             'iklim.update',
             'iklim.delete',
+            
+            // lahan
+            'lahan.view',
+            'lahan.create',
+            'lahan.store',
+            'lahan.edit',
+            'lahan.update',
+            'lahan.delete',
+            
+            // hasil
+            'hasiltanaman.view',
+            'hasiltanaman.create',
+            'hasiltanaman.store',
+            'hasiltanaman.edit',
+            'hasiltanaman.update',
+            'hasiltanaman.delete',
+            
+            // kepemilikan
+            'kepemilikan.view',
+            'kepemilikan.create',
+            'kepemilikan.store',
+            'kepemilikan.edit',
+            'kepemilikan.update',
+            'kepemilikan.delete',
+
+            // hasilbuah
+            'hasilbuah.view',
+            'hasilbuah.create',
+            'hasilbuah.store',
+            'hasilbuah.edit',
+            'hasilbuah.update',
+            'hasilbuah.delete',
+            'hasilbuah.store',
+            'hasilbuah.edit',
+            'hasilbuah.update',
+            'hasilbuah.delete',
+
+            // apotikhidup
+            'apotikhidup.view',
+            'apotikhidup.create',
+            'apotikhidup.store',
+            'apotikhidup.edit',
+            'apotikhidup.update',
+            'apotikhidup.delete',
+            
+            // kebun
+            'kebun.view',
+            'kebun.create',
+            'kebun.store',
+            'kebun.edit',
+            'kebun.update',
+            'kebun.delete',
 
             // pengangguran
             'pengangguran.view',
@@ -868,6 +920,86 @@ class PermissionSeeder extends Seeder
             'penjarahan.edit',
             'penjarahan.update',
             'penjarahan.delete',
+
+            //Perjudian
+            'perjudian.view',
+            'perjudian.create',
+            'perjudian.store',
+            'perjudian.edit',
+            'perjudian.update',
+            'perjudian.delete',
+
+            //Miras
+            'miras.view',
+            'miras.create',
+            'miras.store',
+            'miras.edit',
+            'miras.update',
+            'miras.delete',
+
+            //prostitusi
+            'prostitusi.view',
+            'prostitusi.create',
+            'prostitusi.store',
+            'prostitusi.edit',
+            'prostitusi.update',
+            'prostitusi.delete',
+
+            //pembunuhan
+            'pembunuhan.view',
+            'pembunuhan.create',
+            'pembunuhan.store',
+            'pembunuhan.edit',
+            'pembunuhan.update',
+            'pembunuhan.delete',
+
+            //penculikan
+            'penculikan.view',
+            'penculikan.create',
+            'penculikan.store',
+            'penculikan.edit',
+            'penculikan.update',
+            'penculikan.delete',
+
+            //seksual
+            'seksual.view',
+            'seksual.create',
+            'seksual.store',
+            'seksual.edit',
+            'seksual.update',
+            'seksual.delete',
+
+            //sosial
+            'sosial.view',
+            'sosial.create',
+            'sosial.store',
+            'sosial.edit',
+            'sosial.update',
+            'sosial.delete',
+
+            //kdrt
+            'kdrt.view',
+            'kdrt.create',
+            'kdrt.store',
+            'kdrt.edit',
+            'kdrt.update',
+            'kdrt.delete',
+
+            //teror
+            'teror.view',
+            'teror.create',
+            'teror.store',
+            'teror.edit',
+            'teror.update',
+            'teror.delete',
+
+            //sistem keamanan
+            'sistemkeamanan.view',
+            'sistemkeamanan.create',
+            'sistemkeamanan.store',
+            'sistemkeamanan.edit',
+            'sistemkeamanan.update',
+            'sistemkeamanan.delete',
 
 
             // potensi permissions

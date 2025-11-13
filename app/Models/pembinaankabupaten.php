@@ -10,7 +10,7 @@ class Pembinaankabupaten extends Model
     use HasFactory;
 
     protected $fillable = [
-    'id_desa',
+    'desa_id',
     'tanggal',
     'pelimpahan_tugas',
     'pengaturan_kewenangan',
@@ -34,6 +34,6 @@ class Pembinaankabupaten extends Model
 ];
     public function desa()
      {
-            return $this->belongsTo(Desa::class, 'id_desa');
+            return $this->belongsTo(Desa::class);
         }
 }

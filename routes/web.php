@@ -40,6 +40,16 @@ use App\Http\Controllers\KonfliksaraController;
 use App\Http\Controllers\PerkelahianController;
 use App\Http\Controllers\PencurianController;
 use App\Http\Controllers\PenjarahanController;
+use App\Http\Controllers\PerjudianController;
+use App\Http\Controllers\MirasController;
+use App\Http\Controllers\ProstitusiController;
+use App\Http\Controllers\PembunuhanController;
+use App\Http\Controllers\PenculikanController;
+use App\Http\Controllers\SeksualController;
+use App\Http\Controllers\SosialController;
+use App\Http\Controllers\KdrtController;
+use App\Http\Controllers\TerorController;
+use App\Http\Controllers\SistemkeamananController;
 // use App\Http\Controllers\IrigasiController;
 // use App\Http\Controllers\NotificationController;
 // use App\Http\Controllers\PerangkatDesaController;
@@ -192,13 +202,19 @@ use App\Models\LayananSurat\KopTemplate;
 // POTENSI SDA
 use App\Http\Controllers\TopografiController;
 use App\Http\Controllers\JlahanController;
+use App\Http\Controllers\KlahanController;
+use App\Http\Controllers\IklimTanahErosiController;
+use App\Http\Controllers\HasilProduksiController;
+use App\Http\Controllers\KepemilikanLahanBuahController;
+use App\Http\Controllers\HasilProduksiBuahController;
+use App\Http\Controllers\ApotikHidupController;
+use App\Http\Controllers\KepemilikanLahanKebunController;
 
 
 // kelembagaan
 use App\Http\Controllers\LembagaAdatController;
 use App\Http\Controllers\SaranaTransportasiController;
 use App\Http\Controllers\BatasWilayahController;
-use App\Http\Controllers\IklimTanahErosiController;
 use App\Http\Controllers\JenisTransportasiController;
 use App\Http\Controllers\KomunikasiInformasiController;
 use App\Http\Controllers\PrasaranaPeribadatanController;
@@ -648,6 +664,72 @@ Route::middleware(['auth'])->prefix('potensi/sda/jlahan')->name('jlahan.')->grou
     Route::delete('/{jlahan}', [JlahanController::class, 'destroy'])->name('destroy');
 });
 
+// lahan routes
+Route::middleware(['auth'])->prefix('potensi/sda/lahan')->name('lahan.')->group(function () {
+    Route::get('/', [KlahanController::class, 'index'])->name('index');
+    Route::get('/create', [KlahanController::class, 'create'])->name('create');
+    Route::post('/', [KlahanController::class, 'store'])->name('store');
+    Route::get('/{lahan}', [KlahanController::class, 'show'])->name('show');
+    Route::get('/{lahan}/edit', [KlahanController::class, 'edit'])->name('edit');
+    Route::put('/{lahan}', [KlahanController::class, 'update'])->name('update');
+    Route::delete('/{lahan}', [KlahanController::class, 'destroy'])->name('destroy');
+});
+
+// hasil routes
+Route::middleware(['auth'])->prefix('potensi/sda/hasil')->name('hasiltanaman.')->group(function () {
+    Route::get('/', [HasilProduksiController::class, 'index'])->name('index');
+    Route::get('/create', [HasilProduksiController::class, 'create'])->name('create');
+    Route::post('/', [HasilProduksiController::class, 'store'])->name('store');
+    Route::get('/{hasiltanaman}', [HasilProduksiController::class, 'show'])->name('show');
+    Route::get('/{hasiltanaman}/edit', [HasilProduksiController::class, 'edit'])->name('edit');
+    Route::put('/{hasiltanaman}', [HasilProduksiController::class, 'update'])->name('update');
+    Route::delete('/{hasiltanaman}', [HasilProduksiController::class, 'destroy'])->name('destroy');
+});
+
+// kepemilikan routes
+Route::middleware(['auth'])->prefix('potensi/sda/kepemilikan')->name('kepemilikan.')->group(function () {
+    Route::get('/', [KepemilikanLahanBuahController::class, 'index'])->name('index');
+    Route::get('/create', [KepemilikanLahanBuahController::class, 'create'])->name('create');
+    Route::post('/', [KepemilikanLahanBuahController::class, 'store'])->name('store');
+    Route::get('/{kepemilikan}', [KepemilikanLahanBuahController::class, 'show'])->name('show');
+    Route::get('/{kepemilikan}/edit', [KepemilikanLahanBuahController::class, 'edit'])->name('edit');
+    Route::put('/{kepemilikan}', [KepemilikanLahanBuahController::class, 'update'])->name('update');
+    Route::delete('/{kepemilikan}', [KepemilikanLahanBuahController::class, 'destroy'])->name('destroy');
+});
+
+// hasilbuah routes
+Route::middleware(['auth'])->prefix('potensi/sda/hasilbuah')->name('hasilbuah.')->group(function () {
+    Route::get('/', [HasilProduksiBuahController::class, 'index'])->name('index');
+    Route::get('/create', [HasilProduksiBuahController::class, 'create'])->name('create');
+    Route::post('/', [HasilProduksiBuahController::class, 'store'])->name('store');
+    Route::get('/{hasilbuah}', [HasilProduksiBuahController::class, 'show'])->name('show');
+    Route::get('/{hasilbuah}/edit', [HasilProduksiBuahController::class, 'edit'])->name('edit');
+    Route::put('/{hasilbuah}', [HasilProduksiBuahController::class, 'update'])->name('update');
+    Route::delete('/{hasilbuah}', [HasilProduksiBuahController::class, 'destroy'])->name('destroy');
+});
+
+// apotikhidup routes
+Route::middleware(['auth'])->prefix('potensi/sda/apotikhidup')->name('apotikhidup.')->group(function () {
+    Route::get('/', [ApotikHidupController::class, 'index'])->name('index');
+    Route::get('/create', [ApotikHidupController::class, 'create'])->name('create');
+    Route::post('/', [ApotikHidupController::class, 'store'])->name('store');
+    Route::get('/{apotikhidup}', [ApotikHidupController::class, 'show'])->name('show');
+    Route::get('/{apotikhidup}/edit', [ApotikHidupController::class, 'edit'])->name('edit');
+    Route::put('/{apotikhidup}', [ApotikHidupController::class, 'update'])->name('update');
+    Route::delete('/{apotikhidup}', [ApotikHidupController::class, 'destroy'])->name('destroy');
+});
+
+// kebun routes
+Route::middleware(['auth'])->prefix('potensi/sda/kebun')->name('kebun.')->group(function () {
+    Route::get('/', [KepemilikanLahanKebunController::class, 'index'])->name('index');
+    Route::get('/create', [KepemilikanLahanKebunController::class, 'create'])->name('create');
+    Route::post('/', [KepemilikanLahanKebunController::class, 'store'])->name('store');
+    Route::get('/{kebun}', [KepemilikanLahanKebunController::class, 'show'])->name('show');
+    Route::get('/{kebun}/edit', [KepemilikanLahanKebunController::class, 'edit'])->name('edit');
+    Route::put('/{kebun}', [KepemilikanLahanKebunController::class, 'update'])->name('update');
+    Route::delete('/{kebun}', [KepemilikanLahanKebunController::class, 'destroy'])->name('destroy');
+});
+
 //APB Desa Routes
 Route::middleware(['auth'])->prefix('perkembangan/pemerintahdesadankelurahan/apbdesa')->name('perkembangan.pemerintahdesadankelurahan.apbdesa.')->group(function () {
     Route::get('/', [APBDesaController::class, 'index'])->name('index');
@@ -1076,6 +1158,116 @@ Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.penjarah
     Route::delete('/{id}', [PenjarahanController::class, 'destroy'])->name('destroy');
 });
 
+//perjudian route
+Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.perjudian')->name('perkembangan.keamanandanketertiban.perjudian.')->group(function(){
+    Route::get('/', [PerjudianController::class, 'index'])->name('index');
+    Route::get('/create', [PerjudianController::class, 'create'])->name('create');
+    Route::post('/', [PerjudianController::class, 'store'])->name('store');
+    Route::get('/{id}', [PerjudianController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [PerjudianController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [PerjudianController::class, 'update'])->name('update');
+    Route::delete('/{id}', [PerjudianController::class, 'destroy'])->name('destroy');
+});
+
+//miras route
+route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.miras')->name('perkembangan.keamanandanketertiban.miras.')->group(function(){
+    Route::get('/', [MirasController::class, 'index'])->name('index');
+    Route::get('/create', [MirasController::class, 'create'])->name('create');
+    Route::post('/', [MirasController::class, 'store'])->name('store');
+    Route::get('/{id}', [MirasController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [MirasController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [MirasController::class, 'update'])->name('update');
+    Route::delete('/{id}', [MirasController::class, 'destroy'])->name('destroy');
+});
+
+//prostitusi routes
+Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.prostitusi')->name('perkembangan.keamanandanketertiban.prostitusi.')->group(function(){
+    Route::get('/', [ProstitusiController::class, 'index'])->name('index');
+    Route::get('/create', [ProstitusiController::class, 'create'])->name('create');
+    Route::post('/', [ProstitusiController::class, 'store'])->name('store');
+    Route::get('/{id}', [ProstitusiController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [ProstitusiController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [ProstitusiController::class, 'update'])->name('update');
+    Route::delete('/{id}', [ProstitusiController::class, 'destroy'])->name('destroy');
+});
+
+//pembunuhan routes
+Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.pembunuhan')->name('perkembangan.keamanandanketertiban.pembunuhan.')->group(function(){
+    Route::get('/', [PembunuhanController::class, 'index'])->name('index');
+    Route::get('/create', [PembunuhanController::class, 'create'])->name('create');
+    Route::post('/', [PembunuhanController::class, 'store'])->name('store');
+    Route::get('/{id}', [PembunuhanController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [PembunuhanController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [PembunuhanController::class, 'update'])->name('update');
+    Route::delete('/{id}', [PembunuhanController::class, 'destroy'])->name('destroy');
+});
+
+//penculikan routes
+Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.penculikan')->name('perkembangan.keamanandanketertiban.penculikan.')->group(function(){
+    Route::get('/', [PenculikanController::class, 'index'])->name('index');
+    Route::get('/create', [PenculikanController::class, 'create'])->name('create');
+    Route::post('/', [PenculikanController::class, 'store'])->name('store');
+    Route::get('/{id}', [PenculikanController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [PenculikanController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [PenculikanController::class, 'update'])->name('update');
+    Route::delete('/{id}', [PenculikanController::class, 'destroy'])->name('destroy');
+});
+
+//seksual routes
+Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.seksual')->name('perkembangan.keamanandanketertiban.seksual.')->group(function(){
+    Route::get('/', [SeksualController::class, 'index'])->name('index');
+    Route::get('/create', [SeksualController::class, 'create'])->name('create');
+    Route::post('/', [SeksualController::class, 'store'])->name('store');
+    Route::get('/{id}', [SeksualController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [SeksualController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [SeksualController::class, 'update'])->name('update');
+    Route::delete('/{id}', [SeksualController::class, 'destroy'])->name('destroy');
+});
+
+//sosial route
+Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.sosial')->name('perkembangan.keamanandanketertiban.sosial.')->group(function(){
+    Route::get('/', [SosialController::class, 'index'])->name('index');
+    Route::get('/create', [SosialController::class, 'create'])->name('create');
+    Route::post('/', [SosialController::class, 'store'])->name('store');
+    Route::get('/{id}', [SosialController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [SosialController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [SosialController::class, 'update'])->name('update');
+    Route::delete('/{id}', [SosialController::class, 'destroy'])->name('destroy');
+});
+
+//kdrt route
+Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.kdrt')->name('perkembangan.keamanandanketertiban.kdrt.')->group(function(){
+    Route::get('/', [KdrtController::class, 'index'])->name('index');
+    Route::get('/create', [KdrtController::class, 'create'])->name('create');
+    Route::post('/', [KdrtController::class, 'store'])->name('store');
+    Route::get('/{id}', [KdrtController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [KdrtController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [KdrtController::class, 'update'])->name('update');
+    Route::delete('/{id}', [KdrtController::class, 'destroy'])->name('destroy');
+});
+
+//teror route
+route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.teror')->name('perkembangan.keamanandanketertiban.teror.')->group(function(){
+    Route::get('/', [TerorController::class, 'index'])->name('index');
+    Route::get('/create', [TerorController::class, 'create'])->name('create');
+    Route::post('/', [TerorController::class, 'store'])->name('store');
+    Route::get('/{id}', [TerorController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [TerorController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [TerorController::class, 'update'])->name('update');
+    Route::delete('/{id}', [TerorController::class, 'destroy'])->name('destroy');
+});
+
+
+//sistem Keamanan route
+Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.sistemkeamanan')->name('perkembangan.keamanandanketertiban.sistemkeamanan.')->group(function(){
+    Route::get('/', [SistemKeamananController::class, 'index'])->name('index');
+    Route::get('/create', [SistemKeamananController::class, 'create'])->name('create');
+    Route::post('/', [SistemKeamananController::class, 'store'])->name('store');
+    Route::get('/{id}', [SistemKeamananController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [SistemKeamananController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [SistemKeamananController::class, 'update'])->name('update');
+    Route::delete('/{id}', [SistemKeamananController::class, 'destroy'])->name('destroy');
+});
 
 // Pengangkutan
 Route::prefix('potensi/kelembagaan/pengangkutan')->name('potensi.kelembagaan.pengangkutan.')->group(function () {

@@ -12,7 +12,7 @@ class Pajak extends Model
     protected $table = 'pajaks';
 
     protected $fillable = [
-        'id_desa',
+        'desa_id',
         'tanggal',
         'jenis_pajak',
         'jumlah_wajib_pajak',
@@ -36,6 +36,6 @@ class Pajak extends Model
      */
     public function desa()
     {
-        return $this->belongsTo(Desa::class, 'id_desa');
+        return $this->belongsTo(Desa::class);
     }
 }
