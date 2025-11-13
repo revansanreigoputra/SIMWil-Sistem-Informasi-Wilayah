@@ -161,6 +161,12 @@ class MasterPotensiController extends Controller
             return $className;
         }
 
+        // Handle models directly under App\Models
+        $className = "App\\Models\\{$modelName}";
+        if (class_exists($className)) {
+            return $className;
+        }
+
         return null;
     }
 
