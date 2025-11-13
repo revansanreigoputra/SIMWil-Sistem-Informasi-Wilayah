@@ -11,69 +11,42 @@
             <table class="table table-borderless">
                 <tr>
                     <th width="25%">Desa</th>
-                    <td>{{ $item->desa->nama_desa ?? '-' }}</td>
+                    <td>{{ $saranaProduksi->desa->nama_desa ?? '-' }}</td>
                 </tr>
                 <tr>
                     <th>Tanggal</th>
-                    <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($saranaProduksi->tanggal)->format('d-m-Y') }}</td>
                 </tr>
-                <tr>
-                    <th>Memiliki penggilingan padi (Orang)</th>
-                    <td>{{ number_format($item->produksi1, 0, ',', '.') }}</td>
-                </tr>
-                <tr>
-                    <th>Memiliki traktor (Orang)</th>
-                    <td>{{ number_format($item->produksi2, 0, ',', '.') }}</td>
-                </tr>
-                <tr>
-                    <th>Memiliki kapal penangkap ikan (Orang)</th>
-                    <td>{{ number_format($item->produksi3, 0, ',', '.') }}</td>
-                </tr>
-                <tr>
-                    <th>Memiliki alat pengolahan hasil perikanan (Orang)</th>
-                    <td>{{ number_format($item->produksi4, 0, ',', '.') }}</td>
-                </tr>
-                <tr>
-                    <th>Memiliki alat pengolahan hasil peternakan (Orang)</th>
-                    <td>{{ number_format($item->produksi5, 0, ',', '.') }}</td>
-                </tr>
-                <tr>
-                    <th>Memiliki alat pengolahan hasil perkebunan (Orang)</th>
-                    <td>{{ number_format($item->produksi6, 0, ',', '.') }}</td>
-                </tr>
-                <tr>
-                    <th>Memiliki alat pengolahan hasil hutan (Orang)</th>
-                    <td>{{ number_format($item->produksi7, 0, ',', '.') }}</td>
-                </tr>
-                <tr>
-                    <th>Memiliki alat produksi dan pengolah hasil pertambangan (Orang)</th>
-                    <td>{{ number_format($item->produksi8, 0, ',', '.') }}</td>
-                </tr>
-                <tr>
-                    <th>Memiliki alat produksi dan pengolah hasil pariwisata (Orang)</th>
-                    <td>{{ number_format($item->produksi9, 0, ',', '.') }}</td>
-                </tr>
-                <tr>
-                    <th>Memiliki alat produksi dan pengolah hasil industri jasa perdagangan (Orang)</th>
-                    <td>{{ number_format($item->produksi10, 0, ',', '.') }}</td>
-                </tr>
-                <tr>
-                    <th>Memiliki alat produksi dan pengolah hasil industri kerajinan keluarga skala kecil dan menengah (Orang)</th>
-                    <td>{{ number_format($item->produksi11, 0, ',', '.') }}</td>
-                </tr>
-                <tr>
-                    <th>Memiliki alat produksi dan pengolah hasil industri Migas (Orang)</th>
-                    <td>{{ number_format($item->produksi12, 0, ',', '.') }}</td>
-                </tr>
+                @for($i = 1; $i <= 12; $i++)
+                    <tr>
+                        <th>
+                            @switch($i)
+                                @case(1) Memiliki penggilingan padi (Orang) @break
+                                @case(2) Memiliki traktor (Orang) @break
+                                @case(3) Memiliki kapal penangkap ikan (Orang) @break
+                                @case(4) Memiliki alat pengolahan hasil perikanan (Orang) @break
+                                @case(5) Memiliki alat pengolahan hasil peternakan (Orang) @break
+                                @case(6) Memiliki alat pengolahan hasil perkebunan (Orang) @break
+                                @case(7) Memiliki alat pengolahan hasil hutan (Orang) @break
+                                @case(8) Memiliki alat produksi dan pengolah hasil pertambangan (Orang) @break
+                                @case(9) Memiliki alat produksi dan pengolah hasil pariwisata (Orang) @break
+                                @case(10) Memiliki alat produksi dan pengolah hasil industri jasa perdagangan (Orang) @break
+                                @case(11) Memiliki alat produksi dan pengolah hasil industri kerajinan keluarga skala kecil dan menengah (Orang) @break
+                                @case(12) Memiliki alat produksi dan pengolah hasil industri Migas (Orang) @break
+                            @endswitch
+                        </th>
+                        <td>{{ number_format($saranaProduksi->{'produksi'.$i} ?? 0, 0, ',', '.') }}</td>
+                    </tr>
+                @endfor
                 <tr>
                     <th>Jumlah</th>
-                    <td>{{ number_format($item->produksi13 ?? $item->jumlah, 0, ',', '.') }}</td>
+                    <td>{{ number_format($saranaProduksi->produksi13 ?? $saranaProduksi->jumlah, 0, ',', '.') }}</td>
                 </tr>
             </table>
 
-            <div class="mt-3">
+            <div class="mt-3 d-flex justify-content-between">
                 <a href="{{ route('perkembangan.asetekonomi.sarana_produksi.index') }}" class="btn btn-secondary">Kembali</a>
-                <a href="{{ route('perkembangan.asetekonomi.sarana_produksi.edit', $item->id) }}" class="btn btn-warning">Edit</a>
+                <a href="{{ route('perkembangan.asetekonomi.sarana_produksi.edit', $saranaProduksi->id) }}" class="btn btn-warning">Edit</a>
             </div>
         </div>
     </div>

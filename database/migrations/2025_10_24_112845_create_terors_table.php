@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('terors', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_desa');
+            $table->foreignId('desa_id')->constrained('desas')->onUpdate('cascade')->onDelete('cascade');
             $table->date('tanggal');
             $table->integer('jumlah_kasus_intimidasi_dalam_desa')->nullable();
             $table->integer('jumlah_kasus_intimidasi_luar_desa')->nullable();

@@ -13,7 +13,8 @@ class SeksualController extends Controller
      */
     public function index()
     {
-        $data = Seksual::with(['desa'])->orderBy('tanggal', 'desc')->get();
+        $desaId = session('desa_id');
+        $data = Seksual::where('desa_id',$desaId)->with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.keamanandanketertiban.seksual.index', compact('data'));
     }
 
@@ -33,13 +34,13 @@ class SeksualController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jumlah_kasus_perkosaan' => 'nullable|integer|min:0',
             'jumlah_kasus_perkosaan_anak' => 'nullable|integer|min:0',
             'jumlah_kasus_hamil_luar_nikah_hukum_negara' => 'nullable|integer|min:0',
             'jumlah_kasus_hamil_luar_nikah_hukum_adat' => 'nullable|integer|min:0',
             'jumlah_tempat_penampungan_pekerja_seks' => 'nullable|integer|min:0',
         ]);
+        $validated['desa_id'] = session('desa_id');
         Seksual::create($validated);
         return redirect()->route('perkembangan.keamanandanketertiban.seksual.index')->with('success', 'Data Seksual berhasil ditambahkan.');
     }
@@ -49,7 +50,7 @@ class SeksualController extends Controller
      */
     public function show($id)
     {
-        $seksual = seksual::findOrFail($id);
+        $seksual = seksual::with(['desa'])->findOrFail($id);
         $seksual->load(['desa']);
         return view('pages.perkembangan.keamanandanketertiban.seksual.show', compact('seksual'));
     }
@@ -71,7 +72,6 @@ class SeksualController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jumlah_kasus_perkosaan' => 'nullable|integer|min:0',
             'jumlah_kasus_perkosaan_anak' => 'nullable|integer|min:0',
             'jumlah_kasus_hamil_luar_nikah_hukum_negara' => 'nullable|integer|min:0',

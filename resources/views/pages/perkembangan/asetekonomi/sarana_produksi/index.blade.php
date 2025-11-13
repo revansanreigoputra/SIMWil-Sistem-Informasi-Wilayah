@@ -37,70 +37,43 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($data as $index => $item)
+                    @forelse ($data as $index => $item)
                         <tr class="text-center">
-                            {{-- nomor: cek apakah $data adalah paginated atau collection biasa --}}
-                            <td>
-                                {{ method_exists($data, 'firstItem') ? $data->firstItem() + $index : $loop->iteration }}
-                            </td>
-
+                            <td>{{ $data->firstItem() + $index }}</td>
                             <td>{{ $item->desa->nama_desa ?? '-' }}</td>
                             <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d/m/Y') }}</td>
-
-                            <td><span class="badge bg-primary">{{ $item->produksi1 }}</span></td>
-                            <td><span class="badge bg-info">{{ $item->produksi2 }}</span></td>
-                            <td><span class="badge bg-warning text-dark">{{ $item->produksi3 }}</span></td>
-                            <td><span class="badge bg-secondary">{{ $item->produksi4 }}</span></td>
-                            <td><span class="badge bg-success">{{ $item->produksi5 }}</span></td>
-                            <td><span class="badge bg-dark">{{ $item->produksi6 }}</span></td>
-                            <td><span class="badge bg-primary">{{ $item->produksi7 }}</span></td>
-                            <td><span class="badge bg-info">{{ $item->produksi8 }}</span></td>
-                            <td><span class="badge bg-warning text-dark">{{ $item->produksi9 }}</span></td>
-                            <td><span class="badge bg-secondary">{{ $item->produksi10 }}</span></td>
-                            <td><span class="badge bg-success">{{ $item->produksi11 }}</span></td>
-                            <td><span class="badge bg-dark">{{ $item->produksi12 }}</span></td>
+                            @for($i = 1; $i <= 12; $i++)
+                                <td><span class="badge bg-info">{{ $item->{'produksi'.$i} ?? 0 }}</span></td>
+                            @endfor
                             <td><span class="badge bg-primary">{{ $item->produksi13 ?? $item->jumlah }}</span></td>
-
                             <td>
                                 @canany(['sarana_produksi.view','sarana_produksi.update','sarana_produksi.delete'])
                                     <div class="d-flex gap-1 justify-content-center">
                                         @can('sarana_produksi.view')
-                                            <a href="{{ route('perkembangan.asetekonomi.sarana_produksi.show', $item->id) }}" 
-                                               class="btn btn-sm btn-info text-white">
-                                                Detail
-                                            </a>
+                                            <a href="{{ route('perkembangan.asetekonomi.sarana_produksi.show', $item->id) }}" class="btn btn-sm btn-info text-white">Detail</a>
                                         @endcan
                                         @can('sarana_produksi.update')
-                                            <a href="{{ route('perkembangan.asetekonomi.sarana_produksi.edit', $item->id) }}" 
-                                               class="btn btn-sm btn-warning">
-                                                Edit
-                                            </a>
+                                            <a href="{{ route('perkembangan.asetekonomi.sarana_produksi.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
                                         @endcan
                                         @can('sarana_produksi.delete')
-                                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#delete-sarana-{{ $item->id }}">
-                                                Hapus
-                                            </button>
+                                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete-sarana-{{ $item->id }}">Hapus</button>
                                         @endcan
                                     </div>
 
                                     <!-- Modal Hapus -->
-                                    <div class="modal fade" id="delete-sarana-{{ $item->id }}" tabindex="-1"
-                                        aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="delete-sarana-{{ $item->id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title">Hapus Data?</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body text-start">
                                                     <p>Data tanggal <strong>{{ $item->tanggal }}</strong> dari desa <strong>{{ $item->desa->nama_desa ?? '-' }}</strong> akan dihapus dan tidak bisa dikembalikan.</p>
                                                     <p>Yakin ingin menghapus data ini?</p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Batal</button>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                                                     <form action="{{ route('perkembangan.asetekonomi.sarana_produksi.destroy', $item->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
@@ -115,12 +88,15 @@
                                 @endcanany
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="17" class="text-center">Data masih kosong</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
 
-        {{-- pagination hanya tampil kalau $data dipagination --}}
         @if (method_exists($data, 'links'))
             <div class="d-flex justify-content-center mt-3">
                 {{ $data->links() }}
@@ -133,21 +109,7 @@
 @push('addon-script')
 <script>
     $(document).ready(function() {
-        $('#sarana-table').DataTable({
-            "language": {
-                "lengthMenu": "Tampilkan _MENU_ data per halaman",
-                "zeroRecords": "Tidak ada data ditemukan",
-                "info": "Menampilkan _START_ - _END_ dari _TOTAL_ data",
-                "infoEmpty": "Tidak ada data tersedia",
-                "search": "Cari:",
-                "paginate": {
-                    "first": "Pertama",
-                    "last": "Terakhir",
-                    "next": "Berikutnya",
-                    "previous": "Sebelumnya"
-                }
-            }
-        });
+        $('#sarana-table').DataTable();
     });
 </script>
 @endpush

@@ -13,7 +13,7 @@ class Kdrt extends Model
      */
     protected $table = 'kdrts';
     protected $fillable = [
-        'id_desa',
+        'desa_id',
         'tanggal',
         'jumlah_kasus_suami_terhadap_istri',
         'jumlah_kasus_istri_terhadap_suami',
@@ -27,6 +27,6 @@ class Kdrt extends Model
      */
     public function desa()
     {
-        return $this->belongsTo(Desa::class, 'id_desa');
+        return $this->belongsTo(Desa::class);
     }
 }

@@ -9,29 +9,20 @@
     </div>
 
     <div class="card-body">
-        <form action="{{ route('perkembangan.asetekonomi.sarana_produksi.update', $item->id) }}" method="POST">
+        <form action="{{ route('perkembangan.asetekonomi.sarana_produksi.update', $saranaProduksi) }}" method="POST">
             @csrf
             @method('PUT')
 
-            <div class="row">
-                <div class="col-md-6 mb-2">
-                    <label>Desa</label>
-                    <select name="desa_id" id="desa_id" class="form-control" required>
-                        <option value="">-- Pilih Desa --</option>
-                        @foreach($desas as $desa)
-                            <option value="{{ $desa->id }}" {{ old('desa_id', $item->desa_id) == $desa->id ? 'selected' : '' }}>
-                                {{ $desa->nama_desa }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="col-md-6 mb-2">
-                    <label>Tanggal</label>
-                    <input type="date" name="tanggal" class="form-control" value="{{ old('tanggal', $item->tanggal) }}" required>
+            {{-- Tanggal --}}
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="tanggal" class="form-label">Tanggal</label>
+                    <input type="date" name="tanggal" id="tanggal" class="form-control" 
+                           value="{{ old('tanggal', $saranaProduksi->tanggal) }}" required>
                 </div>
             </div>
 
+            {{-- Produksi 1-12 --}}
             <div class="row mt-2">
                 @for($i = 1; $i <= 12; $i++)
                     <div class="col-md-6 mb-2">
@@ -54,56 +45,43 @@
                         <input 
                             type="number" 
                             name="produksi{{ $i }}" 
-                            id="produksi{{ $i }}" 
                             class="form-control produksi" 
                             min="0" 
-                            value="{{ old('produksi'.$i, $item->{'produksi'.$i}) }}">
+                            value="{{ old('produksi'.$i, $saranaProduksi->{'produksi'.$i}) }}">
                     </div>
                 @endfor
 
+                {{-- Jumlah otomatis --}}
                 <div class="col-md-6 mb-2">
                     <label>Jumlah (Otomatis)</label>
-                    <input 
-                        type="number" 
-                        name="produksi13" 
-                        id="jumlah" 
-                        class="form-control" 
-                        value="{{ old('produksi13', $item->produksi13) }}" 
-                        readonly>
+                    <input type="number" id="jumlah" class="form-control" 
+                           value="{{ old('produksi13', $saranaProduksi->produksi13) }}" readonly>
                 </div>
             </div>
 
+            {{-- Tombol --}}
             <div class="d-flex justify-content-between mt-3">
-                <a href="{{ route('perkembangan.asetekonomi.sarana_produksi.index') }}" class="btn btn-secondary">
-                    Kembali
-                </a>
-                <button type="submit" class="btn btn-primary">
-                    Update
-                </button>
+                <a href="{{ route('perkembangan.asetekonomi.sarana_produksi.index') }}" class="btn btn-secondary">Kembali</a>
+                <button type="submit" class="btn btn-primary">Update</button>
             </div>
         </form>
     </div>
 </div>
 
+{{-- Script hitung otomatis --}}
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const produksiInputs = document.querySelectorAll('.produksi');
-        const jumlahInput = document.getElementById('jumlah');
+document.addEventListener('DOMContentLoaded', function() {
+    const inputs = document.querySelectorAll('.produksi');
+    const jumlahInput = document.getElementById('jumlah');
 
-        function updateJumlah() {
-            let total = 0;
-            produksiInputs.forEach(input => {
-                total += parseFloat(input.value) || 0;
-            });
-            jumlahInput.value = total;
-        }
+    function hitungJumlah() {
+        let total = 0;
+        inputs.forEach(input => total += parseFloat(input.value) || 0);
+        jumlahInput.value = total;
+    }
 
-        produksiInputs.forEach(input => {
-            input.addEventListener('input', updateJumlah);
-        });
-
-        // Hitung total saat halaman pertama kali dibuka
-        updateJumlah();
-    });
+    inputs.forEach(input => input.addEventListener('input', hitungJumlah));
+    hitungJumlah(); // hitung saat halaman load
+});
 </script>
 @endsection

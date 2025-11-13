@@ -12,7 +12,7 @@ class Seksual extends Model
     protected $table = 'seksuals';
 
     protected $fillable = [
-        'id_desa',
+        'desa_id',
         'tanggal',
         'jumlah_kasus_perkosaan',
         'jumlah_kasus_perkosaan_anak',
@@ -26,6 +26,6 @@ class Seksual extends Model
      */
     public function desa()
     {
-        return $this->belongsTo(Desa::class, 'id_desa');
+        return $this->belongsTo(Desa::class);
     }
 }

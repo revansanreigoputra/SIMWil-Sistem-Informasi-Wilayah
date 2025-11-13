@@ -22,19 +22,9 @@
                 </div>
             @endif
 
+            {{-- Desa otomatis dari session, tidak perlu input manual --}}
+            
             <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="desa_id" class="form-label">Desa</label>
-                    <select name="desa_id" id="desa_id" class="form-select" required>
-                        <option value="">-- Pilih Desa --</option>
-                        @foreach($desas as $desa)
-                            <option value="{{ $desa->id }}" {{ old('desa_id') == $desa->id ? 'selected' : '' }}>
-                                {{ $desa->nama_desa }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-
                 <div class="col-md-6 mb-3">
                     <label for="jenis_lantai_id" class="form-label">Jenis Lantai</label>
                     <select name="jenis_lantai_id" id="jenis_lantai_id" class="form-select" required>
@@ -46,14 +36,14 @@
                         @endforeach
                     </select>
                 </div>
-            </div>
 
-            <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="tanggal" class="form-label">Tanggal</label>
                     <input type="date" name="tanggal" id="tanggal" class="form-control" value="{{ old('tanggal') }}" required>
                 </div>
+            </div>
 
+            <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="jumlah" class="form-label">Jumlah</label>
                     <input type="number" name="jumlah" id="jumlah" class="form-control" min="0" value="{{ old('jumlah', 0) }}" required>

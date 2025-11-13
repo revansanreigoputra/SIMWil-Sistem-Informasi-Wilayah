@@ -13,7 +13,8 @@ class TerorController extends Controller
      */
     public function index()
     {
-        $data = teror::with(['desa'])->orderBy('tanggal', 'desc')->get();
+        $desaId = session('desa_id');
+        $data = teror::where('desa_id',$desaId)->with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.keamanandanketertiban.teror.index', compact('data'));
     }
 
@@ -33,7 +34,6 @@ class TerorController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jumlah_kasus_intimidasi_dalam_desa' => 'nullable|integer|min:0',
             'jumlah_kasus_intimidasi_luar_desa' => 'nullable|integer|min:0',
             'jumlah_kasus_selebaran_gelap' => 'nullable|integer|min:0',
@@ -41,6 +41,7 @@ class TerorController extends Controller
             'jumlah_kasus_hasutan_pemaksaan' => 'nullable|integer|min:0',
             'jumlah_penyelesaian_kasus' => 'nullable|integer|min:0',
         ]);
+        $validated['desa_id'] = session('desa_id');
         teror::create($validated);
         return redirect()->route('perkembangan.keamanandanketertiban.teror.index')->with('success', 'Data Teror dan Intimidasi berhasil ditambahkan.');
     }
@@ -50,7 +51,7 @@ class TerorController extends Controller
      */
     public function show($id)
     {
-        $teror = teror::findOrFail($id);
+        $teror = teror::with(['desa'])->findOrFail($id);
         $teror->load(['desa']);
         return view('pages.perkembangan.keamanandanketertiban.teror.show', compact('teror'));
     }
@@ -72,7 +73,6 @@ class TerorController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'jumlah_kasus_intimidasi_dalam_desa' => 'nullable|integer|min:0',
             'jumlah_kasus_intimidasi_luar_desa' => 'nullable|integer|min:0',
             'jumlah_kasus_selebaran_gelap' => 'nullable|integer|min:0',

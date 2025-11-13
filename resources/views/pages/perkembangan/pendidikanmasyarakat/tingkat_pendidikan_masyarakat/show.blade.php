@@ -14,8 +14,8 @@
                     <td>{{ $item->desa->nama_desa ?? '-' }}</td>
                 </tr>
                 <tr>
-                    <th>Tahun</th>
-                    <td>{{ $item->tahun ?? '-' }}</td>
+                    <th>Tanggal</th>
+                    <td>{{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d F Y') ?? '-' }}</td>
                 </tr>
                 <tr>
                     <th>Tidak Tamat SD</th>
@@ -55,7 +55,7 @@
                 </tr>
             </table>
 
-            <div class="mt-3">
+            <div class="mt-3 d-flex justify-content-between">
                 <a href="{{ route('perkembangan.pendidikanmasyarakat.tingkat_pendidikan_masyarakat.index') }}" class="btn btn-secondary">Kembali</a>
                 <a href="{{ route('perkembangan.pendidikanmasyarakat.tingkat_pendidikan_masyarakat.edit', $item->id) }}" class="btn btn-warning">Edit</a>
             </div>

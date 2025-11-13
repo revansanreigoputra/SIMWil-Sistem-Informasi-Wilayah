@@ -26,11 +26,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($data as $index => $item)
+                    @forelse ($items as $index => $item)
                         <tr>
-                            <td class="text-center">{{ $index + 1 }}</td>
+                            <td class="text-center">{{ $items->firstItem() + $index }}</td>
                             <td class="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
-                            <td class="text-center"><span class="badge bg-info">{{ $item->jenisDinding->nama_dinding ?? '-' }}</span></td>
+                            <td class="text-center">
+                                <span class="badge bg-info">{{ $item->jenisDinding->nama_dinding ?? '-' }}</span>
+                            </td>
                             <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->format('d/m/Y') }}</td>
                             <td class="text-center"><span class="badge bg-primary">{{ $item->jumlah }}</span></td>
                             <td>
@@ -67,7 +69,8 @@
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>Data tanggal <strong>{{ $item->tanggal }}</strong> dari desa <strong>{{ $item->desa->nama_desa ?? '-' }}</strong> akan dihapus dan tidak bisa dikembalikan.</p>
+                                                    <p>Data tanggal <strong>{{ $item->tanggal }}</strong> dari desa 
+                                                        <strong>{{ $item->desa->nama_desa ?? '-' }}</strong> akan dihapus dan tidak bisa dikembalikan.</p>
                                                     <p>Yakin ingin menghapus data ini?</p>
                                                 </div>
                                                 <div class="modal-footer">
@@ -94,6 +97,11 @@
                     @endforelse
                 </tbody>
             </table>
+
+            {{-- Tambahkan pagination --}}
+            <div class="d-flex justify-content-center mt-3">
+                {{ $items->links() }}
+            </div>
         </div>
     </div>
 </div>

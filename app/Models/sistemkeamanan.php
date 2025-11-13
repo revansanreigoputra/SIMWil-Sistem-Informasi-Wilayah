@@ -12,7 +12,7 @@ class SistemKeamanan extends Model
     protected $table = 'sistemkeamanans';
 
     protected $fillable = [
-        'id_desa',
+        'desa_id',
         'tanggal',
         'organisasi_siskamling',
         'organisasi_pertahanan_sipil',
@@ -31,6 +31,6 @@ class SistemKeamanan extends Model
      */
     public function desa()
     {
-        return $this->belongsTo(Desa::class, 'id_desa');
+        return $this->belongsTo(Desa::class);
     }
 }

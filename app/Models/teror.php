@@ -12,7 +12,7 @@ class Teror extends Model
     protected $table = 'terors'; // nama tabel
 
     protected $fillable = [
-        'id_desa',
+        'desa_id',
         'tanggal',
         'jumlah_kasus_intimidasi_dalam_desa',
         'jumlah_kasus_intimidasi_luar_desa',
@@ -28,6 +28,6 @@ class Teror extends Model
      */
     public function desa()
     {
-        return $this->belongsTo(Desa::class, 'id_desa');
+        return $this->belongsTo(Desa::class);
     }
 }
