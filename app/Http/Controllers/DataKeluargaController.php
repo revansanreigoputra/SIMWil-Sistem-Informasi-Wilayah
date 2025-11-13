@@ -131,7 +131,7 @@ class DataKeluargaController extends Controller
             'lembaga_id' => 'nullable|exists:lembagas,id',
             'nama_lembaga' => 'nullable|string',
         ]);
-        $dataKeluargaData = $request->only([
+        $dataKeluargaData =([
             'no_kk',
             'kepala_keluarga',
             'alamat',
@@ -141,7 +141,7 @@ class DataKeluargaController extends Controller
             'kecamatan_id',
             'nama_pengisi_id'
         ]);
-        $anggotaKeluargaData = $request->only([
+        $anggotaKeluargaData =([
             'nik',
             'no_akta_kelahiran',
             'jenis_kelamin',
@@ -163,12 +163,16 @@ class DataKeluargaController extends Controller
             'kedudukan_pajak_id',
             'lembaga_id',
             'nama_lembaga'
-        ]);
+        ]); 
+        $dataKeluargaData = array_intersect_key($validatedData, array_flip($dataKeluargaData));
 
+        // Ambil data untuk AnggotaKeluarga
+        // Gunakan array_intersect_key untuk memastikan data diambil dari $validatedData
+        $anggotaKeluargaData = array_intersect_key($validatedData, array_flip($anggotaKeluargaData, $dataKeluargaData));
         $dataKeluarga = DataKeluarga::create($dataKeluargaData);
         $anggotaKeluargaData['data_keluarga_id'] = $dataKeluarga->id;
         $anggotaKeluargaData['no_urut'] = 1;
-
+        $anggotaKeluargaData['status_kehidupan'] = 'hidup';
         $anggotaKeluargaData['nama'] = $dataKeluarga->kepala_keluarga; // Use the name from the family data
         AnggotaKeluarga::create($anggotaKeluargaData);
         return redirect()->route('data_keluarga.index')->with('success', 'Data Kepala Keluarga berhasil ditambahkan.');

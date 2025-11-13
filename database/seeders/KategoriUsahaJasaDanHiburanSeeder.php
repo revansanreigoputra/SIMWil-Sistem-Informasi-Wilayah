@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use App\Models\MasterPotensi\KategoriUsahaJasaDanHiburan;
 
 class KategoriUsahaJasaDanHiburanSeeder extends Seeder
 {
@@ -13,11 +12,15 @@ class KategoriUsahaJasaDanHiburanSeeder extends Seeder
      */
     public function run(): void
     {
-        // DB::table('kategori_usaha_jasa_dan_hiburan')->truncate();
-        
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
+        DB::table('kategori_usaha_jasa_dan_hiburan')->truncate();
+
         DB::table('kategori_usaha_jasa_dan_hiburan')->insert([
             ['nama' => 'Jasa dan Perdagangan'],
             ['nama' => 'Jasa Hiburan'],
         ]);
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

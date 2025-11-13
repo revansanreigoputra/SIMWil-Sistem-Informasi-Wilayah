@@ -193,8 +193,8 @@
                         let content = `
                             <div class="row">
                                  <div class="col-md-6 mb-3">
-                                    <strong>NIK:</strong>
-                                    <p>${anggota.email}</p>
+                                    <strong>Email:</strong>
+                                    <p>${anggota.email || 'N/A'}</p>
                                 </div>
                                 <div class="col-md-6 mb-3"><strong>NIK:</strong><p>${anggota.nik || 'N/A'}</p></div>
                                 <div class="col-md-6 mb-3"><strong>Nama Lengkap:</strong><p>${anggota.nama || 'N/A'}</p></div>
