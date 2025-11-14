@@ -130,6 +130,7 @@ class DataKeluargaController extends Controller
             'kedudukan_pajak_id' => 'nullable|exists:kedudukan_pajaks,id',
             'lembaga_id' => 'nullable|exists:lembagas,id',
             'nama_lembaga' => 'nullable|string',
+            'nama_orang_tua' => 'nullable|string', 
         ]);
         $dataKeluargaData =([
             'no_kk',
@@ -165,10 +166,8 @@ class DataKeluargaController extends Controller
             'nama_lembaga'
         ]); 
         $dataKeluargaData = array_intersect_key($validatedData, array_flip($dataKeluargaData));
-
-        // Ambil data untuk AnggotaKeluarga
-        // Gunakan array_intersect_key untuk memastikan data diambil dari $validatedData
-        $anggotaKeluargaData = array_intersect_key($validatedData, array_flip($anggotaKeluargaData, $dataKeluargaData));
+ 
+        $anggotaKeluargaData = array_intersect_key($validatedData, array_flip($anggotaKeluargaData));
         $dataKeluarga = DataKeluarga::create($dataKeluargaData);
         $anggotaKeluargaData['data_keluarga_id'] = $dataKeluarga->id;
         $anggotaKeluargaData['no_urut'] = 1;
