@@ -559,10 +559,19 @@
                                                 </a>
                                             @endcan
 
+                                            <br>
+                                            
                                             @can('p-alat-produksi-ikan-laut.view')
                                                 <a class="dropdown-item {{ request()->is('potensi/sda/alat-produksi-ikan-laut*') ? 'active' : '' }}"
                                                     href="{{ route('p-alat-produksi-ikan-laut.index') }}">
                                                     Alat Produksi Ikan Laut
+                                                </a>
+                                            @endcan
+
+                                            @can('p-alat-produksi-ikan-tawar.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/alat-produksi-ikan-tawar*') ? 'active' : '' }}"
+                                                    href="{{ route('p-alat-produksi-ikan-tawar.index') }}">
+                                                    Alat Produksi Ikan <br> Tawar
                                                 </a>
                                             @endcan
 

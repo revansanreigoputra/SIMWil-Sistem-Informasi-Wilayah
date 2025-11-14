@@ -920,6 +920,14 @@ class PermissionSeeder extends Seeder
             'p-alat-produksi-ikan-laut.update',
             'p-alat-produksi-ikan-laut.delete',
 
+            // PAlatProduksiIkanTawar permissions
+            'p-alat-produksi-ikan-tawar.view',
+            'p-alat-produksi-ikan-tawar.create',
+            'p-alat-produksi-ikan-tawar.store',
+            'p-alat-produksi-ikan-tawar.edit',
+            'p-alat-produksi-ikan-tawar.update',
+            'p-alat-produksi-ikan-tawar.delete',
+
             // produksi ternak permissions
             'produksi-ternak.view',
             'produksi-ternak.create',

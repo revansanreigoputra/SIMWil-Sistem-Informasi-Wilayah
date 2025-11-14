@@ -152,13 +152,14 @@
                                         class="text-danger">*</span></label>
                                 <select name="hubungan_keluarga_id" id="hubungan_keluarga_id"
                                     class="form-select @error('hubungan_keluarga_id') is-invalid @enderror" required>
-                                    <option value="" disabled selected>-- Pilih Hubungan --</option>
+                                    {{-- The 'Kepala Keluarga' relationship is automatically set for the initial member --}}
+                                    {{-- We assume $kepalaKeluarga is passed from the controller and represents the 'Kepala Keluarga' relationship type --}}
                                     @if (isset($kepalaKeluarga))
                                         <option value="{{ $kepalaKeluarga->id }}" selected>
                                             {{ $kepalaKeluarga->nama }}
                                         </option>
                                     @else
-                                        <option value="" disabled selected>-- Data Kepala Keluarga Tidak Ditemukan --
+                                        <option value="" disabled selected>-- Data Hubungan Kepala Keluarga Tidak Ditemukan --
                                         </option>
                                     @endif
                                 </select>
