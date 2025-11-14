@@ -19,7 +19,7 @@ class DataKeluargaTemplateImport implements WithHeadings, WithEvents, ShouldAuto
     private $dropdownColumns = [
         // Indeks kolom (dimulai dari 0) => Nama Tabel/Array Data
         10 => ['Laki-laki', 'Perempuan'],
-        11 => 'hubungan_keluarga',
+        11 => ['Kepala Keluarga'],
         15 => ['Menikah', 'Belum Menikah', 'Cerai'],
 
         // PASTIKAN NAMA TABEL TEPAT SESUAI DATABASE (e.g., 'agamas' jamak, bukan 'agama' tunggal)

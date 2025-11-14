@@ -31,6 +31,7 @@
             gap: 15px;
         }
 
+
         .utf_gallery_item {
             display: block;
             overflow: hidden;
@@ -51,6 +52,88 @@
             height: 100%;
             object-fit: cover;
             /* Gambar memenuhi kotak tanpa distorsi */
+        }
+
+        #navigation.style_one ul li a {
+            /* Kurangi padding kiri-kanan (aslinya mungkin 15px) */
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+
+            /* Kecilkan font sedikit (jika perlu) */
+            font-size: 15px !important;
+        }
+
+        /* Hilangkan semua jarak putih di sisi layar */
+        html,
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        /* Pastikan wrapper utama nempel ke tepi kiri-kanan */
+        #main_wrapper {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+        }
+
+        /* Pastikan tidak ada shadow atau padding di belakang header */
+        #header_part {
+            margin: 0 !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+        }
+
+        /* 1. Paksa container DI DALAM header_part untuk selalu full-width */
+        #header_part .container {
+            display: flex !important;
+            align-items: center !important;
+            width: 100% !important;
+            max-width: 1170px !important;
+            /* Kunci Lebar Container */
+            padding-left: 15px !important;
+            /* Padding standar container */
+            padding-right: 15px !important;
+            /* Padding standar container */
+            margin: 0 auto !important;
+            /* Buat container rata tengah */
+            box-sizing: border-box !important;
+        }
+
+        /* 2. Sisi Kiri (Logo + Nav) - Tidak berubah */
+        #header_part .utf_left_side {
+            display: flex !important;
+            align-items: center !important;
+            gap: 25px;
+            float: none !important;
+            width: auto !important;
+        }
+
+        /* 3. Sisi Kanan (Login) */
+        #header_part .utf_right_side {
+            display: flex !important;
+            align-items: center !important;
+            float: none !important;
+            width: auto !important;
+            flex-shrink: 0;
+            margin-left: auto !important;
+            /* Kunci pendorong ke kanan */
+        }
+
+        #header_part #navigation ul#responsive {
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            list-style: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        #header_part #navigation ul#responsive li {
+            float: none !important;
+        }
+
+        #header_part .utf_left_side .clearfix {
+            display: none !important;
         }
     </style>
 </head>
@@ -73,7 +156,7 @@
                     <div class="utf_left_side">
                         <div id="logo">
                             <a href="{{ url('/') }}">
-                                <img src="{{ asset('frontend/images/logo_simwil_blue.png') }}" alt="">
+                                <img src="{{ asset('frontend/images/logo simwil.png') }}" alt="">
                             </a>
                         </div>
                         <div class="mmenu-trigger">
@@ -125,7 +208,7 @@
                     {{-- Kolom 1: Logo & Deskripsi (Lebih Lebar) --}}
                     <div class="col-md-4 col-sm-12 col-xs-12">
                         <a href="{{ url('/') }}"><img class="footer-logo"
-                                src="{{ asset('frontend/images/logo-dark.png') }}" alt=""></a>
+                                src="{{ asset('frontend/images/logo simwil.png') }}" alt=""></a>
                         <p>Sistem Informasi Wilayah yang memberikan kemudahan bagi anda dalam mengurus segala bentuk
                             urusan.</p>
                     </div>
