@@ -343,7 +343,7 @@ class AnggotaKeluargaController extends Controller
                 'kb',
                 'cacat',
                 'kedudukanPajak',
-                'lembaga'
+                'lembaga',
             ])->findOrFail($id);
 
             return response()->json([
