@@ -85,12 +85,13 @@ class SektorListrikGasAirMinumController extends Controller
 }
 
 
-    public function destroy(SektorListrikGasAirMinum $sektor)
-    {
-        $sektor->delete();
+    public function destroy($id)
+{
+    $sektor = SektorListrikGasAirMinum::findOrFail($id);
+    $sektor->delete();
 
-        return redirect()
-            ->route('perkembangan.produk-domestik.sektor-listrik-gas-air-minum.index')
-            ->with('success', 'Data berhasil dihapus.');
-    }
+    return redirect()
+        ->route('perkembangan.produk-domestik.sektor-listrik-gas-air-minum.index')
+        ->with('success', 'Data berhasil dihapus.');
+}
 }
