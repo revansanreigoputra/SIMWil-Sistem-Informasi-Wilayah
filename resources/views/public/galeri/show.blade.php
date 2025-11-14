@@ -2,6 +2,7 @@
 
 @section('title', 'Detail Album: ' . $album->album)
 
+@push('styles')
 <style>
     .utf_gallery_container {
         display: grid;
@@ -27,7 +28,7 @@
         transform: scale(1.05);
     }
 </style>
-
+@endpush
 
 @section('content')
     <section class="fullwidth_block padding-top-75 padding-bottom-75">
@@ -59,7 +60,7 @@
 
                 <div class="col-md-12 centered_content">
                     <a href="{{ route('public.galeri.index') }}" class="button border margin-top-20">
-                        <i class="fa-solid fa-arrow-left"></i> Kembali ke Daftar Album
+                        <i></i> Kembali
                     </a>
                 </div>
             </div>

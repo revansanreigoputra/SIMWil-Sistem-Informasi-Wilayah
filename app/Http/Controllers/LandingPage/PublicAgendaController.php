@@ -14,7 +14,7 @@ class PublicAgendaController extends Controller
     public function index()
     {
         // Ambil semua agenda, urutkan dari yg terbaru dibuat, dan paginasi
-        $agendas = Agenda::latest()->paginate(8);
+        $agendas = Agenda::latest()->paginate(9);
 
         return view('public.agenda.index', compact('agendas'));
     }

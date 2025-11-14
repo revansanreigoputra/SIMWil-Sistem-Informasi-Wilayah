@@ -36,7 +36,7 @@
 
                     <div class="text-center margin-top-30">
                         <a href="{{ route('public.berita.index') }}" class="button border">
-                            <i class="fa-solid fa-arrow-left"></i> Kembali ke Daftar Berita
+                            <i></i> Kembali
                         </a>
                     </div>
 
