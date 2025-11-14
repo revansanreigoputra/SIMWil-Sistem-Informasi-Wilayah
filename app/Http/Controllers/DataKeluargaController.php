@@ -66,7 +66,7 @@ class DataKeluargaController extends Controller
 
     public function create()
     {
-        $hubunganKeluarga = HubunganKeluarga::all(); // Corrected variable name
+        $kepalaKeluarga = HubunganKeluarga::where('nama', 'Kepala Keluarga')->firstOrFail();
         $agama = Agama::all();
         $golonganDarah = GolonganDarah::all();
         $kewarganegaraan = Kewarganegaraan::all();
@@ -83,7 +83,8 @@ class DataKeluargaController extends Controller
             'desas',
             'kecamatans',
             'perangkatDesas',
-            'hubunganKeluarga',
+            // 'hubunganKeluarga',
+            'kepalaKeluarga',
             'agama',
             'golonganDarah',
             'kewarganegaraan',
@@ -113,7 +114,7 @@ class DataKeluargaController extends Controller
             'nik' => 'nullable|string|size:16|unique:anggota_keluargas,nik',
             'no_akta_kelahiran' => 'nullable|string',
             'jenis_kelamin' => 'nullable|in:Laki-laki,Perempuan',
-            'hubungan_keluarga_id' => 'nullable|exists:hubungan_keluarga,id',
+            // 'hubungan_keluarga_id' => 'nullable|exists:hubungan_keluarga,id',
             'tempat_lahir' => 'nullable|string',
             'tanggal_lahir' => 'nullable|date',
             'tanggal_pencatatan' => 'nullable|date',
@@ -130,9 +131,9 @@ class DataKeluargaController extends Controller
             'kedudukan_pajak_id' => 'nullable|exists:kedudukan_pajaks,id',
             'lembaga_id' => 'nullable|exists:lembagas,id',
             'nama_lembaga' => 'nullable|string',
-            'nama_orang_tua' => 'nullable|string', 
-        ]);
-        $dataKeluargaData =([
+            'nama_orang_tua' => 'nullable|string',
+        ]); 
+        $dataKeluargaData = ([
             'no_kk',
             'kepala_keluarga',
             'alamat',
@@ -142,11 +143,11 @@ class DataKeluargaController extends Controller
             'kecamatan_id',
             'nama_pengisi_id'
         ]);
-        $anggotaKeluargaData =([
+        $anggotaKeluargaData = ([
             'nik',
             'no_akta_kelahiran',
             'jenis_kelamin',
-            'hubungan_keluarga_id',
+            // 'hubungan_keluarga_id',
             'tempat_lahir',
             'tanggal_lahir',
             'tanggal_pencatatan',
@@ -164,15 +165,15 @@ class DataKeluargaController extends Controller
             'kedudukan_pajak_id',
             'lembaga_id',
             'nama_lembaga'
-        ]); 
+        ]);
         $dataKeluargaData = array_intersect_key($validatedData, array_flip($dataKeluargaData));
- 
+
         $anggotaKeluargaData = array_intersect_key($validatedData, array_flip($anggotaKeluargaData));
         $dataKeluarga = DataKeluarga::create($dataKeluargaData);
         $anggotaKeluargaData['data_keluarga_id'] = $dataKeluarga->id;
         $anggotaKeluargaData['no_urut'] = 1;
         $anggotaKeluargaData['status_kehidupan'] = 'hidup';
-        $anggotaKeluargaData['nama'] = $dataKeluarga->kepala_keluarga; // Use the name from the family data
+        $anggotaKeluargaData['nama'] = $dataKeluarga->kepala_keluarga;   
         AnggotaKeluarga::create($anggotaKeluargaData);
         return redirect()->route('data_keluarga.index')->with('success', 'Data Kepala Keluarga berhasil ditambahkan.');
     }
