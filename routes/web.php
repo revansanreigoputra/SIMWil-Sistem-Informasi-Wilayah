@@ -1830,6 +1830,17 @@ Route::middleware(['auth'])->prefix('potensi/sda/alat-produksi-ikan-laut')->name
     Route::delete('/{pAlatProduksiIkanLaut}', [App\Http\Controllers\PAlatProduksiIkanLautController::class, 'destroy'])->name('destroy');
 });
 
+// PAlatProduksiIkanTawar routes
+Route::middleware(['auth'])->prefix('potensi/sda/alat-produksi-ikan-tawar')->name('p-alat-produksi-ikan-tawar.')->group(function () {
+    Route::get('/', [App\Http\Controllers\PAlatProduksiIkanTawarController::class, 'index'])->name('index');
+    Route::get('/create', [App\Http\Controllers\PAlatProduksiIkanTawarController::class, 'create'])->name('create');
+    Route::post('/', [App\Http\Controllers\PAlatProduksiIkanTawarController::class, 'store'])->name('store');
+    Route::get('/{pAlatProduksiIkanTawar}', [App\Http\Controllers\PAlatProduksiIkanTawarController::class, 'show'])->name('show');
+    Route::get('/{pAlatProduksiIkanTawar}/edit', [App\Http\Controllers\PAlatProduksiIkanTawarController::class, 'edit'])->name('edit');
+    Route::put('/{pAlatProduksiIkanTawar}', [App\Http\Controllers\PAlatProduksiIkanTawarController::class, 'update'])->name('update');
+    Route::delete('/{pAlatProduksiIkanTawar}', [App\Http\Controllers\PAlatProduksiIkanTawarController::class, 'destroy'])->name('destroy');
+});
+
 //sektor industri besar
 Route::resource(
     'perkembangan/struktur-mata-pencaharian/sektor-industri-menengah-besar',
