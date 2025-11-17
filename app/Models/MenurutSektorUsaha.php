@@ -9,17 +9,18 @@ class MenurutSektorUsaha extends Model
 {
     use HasFactory;
 
-    protected $table = 'menurut_sektor_usahas';
-
     protected $fillable = [
-        'id_kec',
         'id_desa',
         'tanggal',
-        'id_komoditas_sektor',
         'kk',
         'anggota',
         'buruh',
         'anggota_buruh',
         'pendapatan',
     ];
+
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class, 'id_desa');
+    }
 }

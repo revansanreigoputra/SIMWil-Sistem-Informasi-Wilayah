@@ -28,23 +28,6 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-
-                <div class="col-md-6 mb-3">
-                    <label for="id_desa" class="form-label fw-semibold">
-                        <i class="fas fa-map-marker-alt me-1"></i> Desa <span class="text-danger">*</span>
-                    </label>
-                    <select name="id_desa" id="id_desa" class="form-control" required>
-                        <option value="">-- Pilih Desa --</option>
-                        @foreach ($desas as $desa)
-                            <option value="{{ $desa->id }}" {{ old('id_desa', $konfliksara->id_desa) == $desa->id ? 'selected' : '' }}>
-                                {{ $desa->nama_desa }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('id_desa')
-                        <div class="text-danger small">{{ $message }}</div>
-                    @enderror
-                </div>
             </div>
 
             <div class="row">

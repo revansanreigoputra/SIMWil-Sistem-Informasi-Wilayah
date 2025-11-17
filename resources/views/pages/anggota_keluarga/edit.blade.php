@@ -83,7 +83,7 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Tanggal Lahir</label>
-                            <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir', $anggota_keluarga->tanggal_lahir) }}" class="form-control">
+                            <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir', optional($anggota_keluarga->tanggal_lahir)->format('Y-m-d')) }}" class="form-control">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Status Perkawinan</label>
@@ -217,7 +217,7 @@
                     <div class="card bg-card-inside-form p-2 ">
                         <div class="col-md-12">
                             <label class="form-label">Tanggal Pencatatan</label>
-                            <input type="date" name="tanggal_pencatatan" value="{{ old('tanggal_pencatatan', $anggota_keluarga->tanggal_pencatatan) }}" class="form-control">
+                            <input type="date" name="tanggal_pencatatan" value="{{ old('tanggal_pencatatan', optional($anggota_keluarga->tanggal_pencatatan)->format('Y-m-d')) }}" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -238,7 +238,7 @@
         // Cacat logic
         const cacatSelect = document.getElementById('cacat-select');
         const namaCacatContainer = document.getElementById('nama-cacat-container');
-        
+
         // Initial state
         if (cacatSelect.value) {
             namaCacatContainer.style.display = 'block';
@@ -255,7 +255,7 @@
         // Lembaga logic
         const lembagaSelect = document.getElementById('lembaga-select');
         const namaLembagaContainer = document.getElementById('nama-lembaga-container');
-        
+
         // Initial state
         if (lembagaSelect.value) {
             namaLembagaContainer.style.display = 'block';

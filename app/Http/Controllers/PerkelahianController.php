@@ -13,7 +13,8 @@ class PerkelahianController extends Controller
      */
     public function index()
     {
-        $data = perkelahian::with(['desa'])->orderBy('tanggal', 'desc')->get();
+        $desaId = session('desa_id');
+        $data = perkelahian::where('desa_id',$desaId)->with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.keamanandanketertiban.perkelahian.index', compact('data'));
     }
 
@@ -33,16 +34,14 @@ class PerkelahianController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'kasus_tahun_ini' => 'nullable|integer',
             'kasus_korban_jiwa' => 'nullable|integer',
             'kasus_luka_parah' => 'nullable|integer',
             'kasus_kerugian_material' => 'nullable|integer',
             'pelaku_diadili' => 'nullable|integer',
         ]);
-
+        $validated['desa_id'] = session('desa_id');
         perkelahian::create($validated);
-
         return redirect()->route('perkembangan.keamanandanketertiban.perkelahian.index')->with('success', 'Data Perkelahian berhasil ditambahkan.');
     }
 
@@ -51,7 +50,8 @@ class PerkelahianController extends Controller
      */
     public function show($id)
     {
-        $perkelahian = perkelahian::findOrFail($id);
+        $perkelahian = perkelahian::with(['desa'])->findOrFail($id);
+        $perkelahian->load(['desa']);
         return view('pages.perkembangan.keamanandanketertiban.perkelahian.show', compact('perkelahian'));
     }
 
@@ -72,7 +72,6 @@ class PerkelahianController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'kasus_tahun_ini' => 'nullable|integer',
             'kasus_korban_jiwa' => 'nullable|integer',
             'kasus_luka_parah' => 'nullable|integer',
@@ -94,10 +93,5 @@ class PerkelahianController extends Controller
         $perkelahian = perkelahian::findOrFail($id);
         $perkelahian->delete();
         return redirect()->route('perkembangan.keamanandanketertiban.perkelahian.index')->with('success', 'Data Perkelahian berhasil dihapus.');
-    }
-    public function getDesasByKecamatan($id_kecamatan)
-    {
-        $desas = Desa::where('id_kecamatan', $id_kecamatan)->get();
-        return response()->json($desas);
     }
 }

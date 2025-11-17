@@ -12,20 +12,20 @@
         <form action="{{ route('perkembangan.asetekonomi.sarana_produksi.store') }}" method="POST">
             @csrf
 
-            <div class="row">
-                <div class="col-md-6 mb-2">
-                    <label>Desa</label>
-                    <select name="desa_id" class="form-control" required>
-                        <option value="">-- Pilih Desa --</option>
-                        @foreach($desas as $desa)
-                            <option value="{{ $desa->id }}">{{ $desa->nama_desa }}</option>
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach($errors->all() as $err)
+                            <li>{{ $err }}</li>
                         @endforeach
-                    </select>
+                    </ul>
                 </div>
+            @endif
 
-                <div class="col-md-6 mb-2">
-                    <label>Tanggal</label>
-                    <input type="date" name="tanggal" class="form-control" required>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="tanggal" class="form-label">Tanggal</label>
+                    <input type="date" name="tanggal" id="tanggal" class="form-control" required>
                 </div>
             </div>
 
@@ -56,7 +56,6 @@
             <hr>
             <div class="mt-3">
                 <label class="form-label fw-bold">Total Jumlah Produksi</label>
-                {{-- hanya tampilan, tidak dikirim ke server --}}
                 <input type="number" id="total_jumlah" class="form-control bg-light" readonly>
             </div>
 

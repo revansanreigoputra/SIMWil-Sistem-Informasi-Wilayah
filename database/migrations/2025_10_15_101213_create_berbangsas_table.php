@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('berbangsas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_desa');
+            $table->foreignId('desa_id')->constrained('desas')->onUpdate('cascade')->onDelete('cascade');
             $table->date('tanggal');
 
             // Data kegiatan nilai ideologi dan kebangsaan

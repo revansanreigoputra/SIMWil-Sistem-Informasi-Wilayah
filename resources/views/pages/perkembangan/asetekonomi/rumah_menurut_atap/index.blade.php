@@ -26,9 +26,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($items as $index => $item)
+                    @foreach ($items as $index => $item)
                         <tr>
-                            <td class="text-center">{{ $index + 1 }}</td>
+                            <td class="text-center">{{ $items->firstItem() + $index }}</td>
                             <td class="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
                             <td class="text-center">
                                 <span class="badge bg-info">{{ $item->jenisAtap->nama_jenis_atap ?? '-' }}</span>
@@ -72,8 +72,7 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <p>Data tanggal <strong>{{ $item->tanggal }}</strong> dari desa 
-                                                       <strong>{{ $item->desa->nama_desa ?? '-' }}</strong> akan dihapus 
-                                                       dan tidak bisa dikembalikan.</p>
+                                                       <strong>{{ $item->desa->nama_desa ?? '-' }}</strong> akan dihapus dan tidak bisa dikembalikan.</p>
                                                     <p>Yakin ingin menghapus data ini?</p>
                                                 </div>
                                                 <div class="modal-footer">
@@ -93,13 +92,22 @@
                                 @endcanany
                             </td>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="6" class="text-center">Data masih kosong</td>
+                    @endforeach
+
+                    @if ($items->isEmpty())
+                        <tr style="display:none;">
+                            <td colspan="6"></td>
                         </tr>
-                    @endforelse
+                        <tr>
+                            <td colspan="6" class="text-center text-muted py-4">Data masih kosong</td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
+        </div>
+
+        <div class="d-flex justify-content-center mt-3">
+            {{ $items->links() }}
         </div>
     </div>
 </div>

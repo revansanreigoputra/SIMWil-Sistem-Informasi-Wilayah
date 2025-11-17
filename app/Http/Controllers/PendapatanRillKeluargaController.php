@@ -3,39 +3,49 @@
 namespace App\Http\Controllers;
 
 use App\Models\PendapatanRillKeluarga;
-use App\Models\Desa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PendapatanRillKeluargaController extends Controller
 {
     public function index()
     {
-        $data = PendapatanRillKeluarga::with('desa')->latest()->paginate(10);
+        $desaId = session('desa_id');
+
+        $data = PendapatanRillKeluarga::with('desa')
+            ->where('id_desa', $desaId)
+            ->latest()
+            ->paginate(10);
+
         return view('pages.perkembangan.pendapatanperkapital.pendapatan_rill_keluarga.index', compact('data'));
     }
 
     public function create()
     {
-        $desas = Desa::all();
-        return view('pages.perkembangan.pendapatanperkapital.pendapatan_rill_keluarga.create', compact('desas'));
+        return view('pages.perkembangan.pendapatanperkapital.pendapatan_rill_keluarga.create');
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'id_desa' => 'required',
+        $validator = Validator::make($request->all(), [
             'tanggal' => 'required|date',
-            'kk' => 'required|integer',
+            'kk' => 'required|integer|min:1',
             'ak' => 'required|integer|min:1',
-            'pendapatan_kk' => 'required|numeric',
-            'pendapatan_ak' => 'required|numeric',
+            'pendapatan_kk' => 'required|numeric|min:0',
+            'pendapatan_ak' => 'required|numeric|min:0',
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $desaId = session('desa_id');
 
         $total1 = $request->pendapatan_kk + $request->pendapatan_ak;
         $total2 = $total1 / $request->ak;
 
         PendapatanRillKeluarga::create([
-            'id_desa' => $request->id_desa,
+            'id_desa' => $desaId,
             'tanggal' => $request->tanggal,
             'kk' => $request->kk,
             'ak' => $request->ak,
@@ -45,33 +55,46 @@ class PendapatanRillKeluargaController extends Controller
             'total2' => $total2,
         ]);
 
-        return redirect()->route('perkembangan.pendapatanperkapital.pendapatan_rill_keluarga.index')->with('success', 'Data berhasil ditambahkan.');
+        return redirect()->route('perkembangan.pendapatanperkapital.pendapatan_rill_keluarga.index')
+                         ->with('success', 'Data berhasil ditambahkan.');
     }
 
-    public function edit($id)
+    // 🔹 Method SHOW
+    public function show(PendapatanRillKeluarga $pendapatan_rill_keluarga)
     {
-        $item = PendapatanRillKeluarga::findOrFail($id);
-        $desas = Desa::all();
-        return view('pages.perkembangan.pendapatanperkapital.pendapatan_rill_keluarga.edit', compact('item', 'desas'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'id_desa' => 'required',
-            'tanggal' => 'required|date',
-            'kk' => 'required|integer',
-            'ak' => 'required|integer|min:1',
-            'pendapatan_kk' => 'required|numeric',
-            'pendapatan_ak' => 'required|numeric',
+        return view('pages.perkembangan.pendapatanperkapital.pendapatan_rill_keluarga.show', [
+            'item' => $pendapatan_rill_keluarga,
         ]);
+    }
+
+    public function edit(PendapatanRillKeluarga $pendapatan_rill_keluarga)
+    {
+        return view('pages.perkembangan.pendapatanperkapital.pendapatan_rill_keluarga.edit', [
+            'item' => $pendapatan_rill_keluarga,
+        ]);
+    }
+
+    public function update(Request $request, PendapatanRillKeluarga $pendapatan_rill_keluarga)
+    {
+        $validator = Validator::make($request->all(), [
+            'tanggal' => 'required|date',
+            'kk' => 'required|integer|min:1',
+            'ak' => 'required|integer|min:1',
+            'pendapatan_kk' => 'required|numeric|min:0',
+            'pendapatan_ak' => 'required|numeric|min:0',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $desaId = session('desa_id');
 
         $total1 = $request->pendapatan_kk + $request->pendapatan_ak;
         $total2 = $total1 / $request->ak;
 
-        $item = PendapatanRillKeluarga::findOrFail($id);
-        $item->update([
-            'id_desa' => $request->id_desa,
+        $pendapatan_rill_keluarga->update([
+            'id_desa' => $desaId,
             'tanggal' => $request->tanggal,
             'kk' => $request->kk,
             'ak' => $request->ak,
@@ -81,12 +104,15 @@ class PendapatanRillKeluargaController extends Controller
             'total2' => $total2,
         ]);
 
-        return redirect()->route('perkembangan.pendapatanperkapital.pendapatan_rill_keluarga.index')->with('success', 'Data berhasil diperbarui.');
+        return redirect()->route('perkembangan.pendapatanperkapital.pendapatan_rill_keluarga.index')
+                         ->with('success', 'Data berhasil diperbarui.');
     }
 
-    public function destroy($id)
+    public function destroy(PendapatanRillKeluarga $pendapatan_rill_keluarga)
     {
-        PendapatanRillKeluarga::findOrFail($id)->delete();
-        return redirect()->back()->with('success', 'Data berhasil dihapus.');
+        $pendapatan_rill_keluarga->delete();
+
+        return redirect()->route('perkembangan.pendapatanperkapital.pendapatan_rill_keluarga.index')
+                         ->with('success', 'Data berhasil dihapus.');
     }
 }

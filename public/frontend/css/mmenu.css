@@ -540,7 +540,7 @@ em.mm-counter+a.mm-fullsubopen+a, em.mm-counter+a.mm-fullsubopen+span {
 	display: none;
 	position: relative;
 	margin: 0 0 10px;
-	/*background-color: #ff2222;*/
+	background-color: #000ba6;
 	border-radius: 30px;
 	cursor: pointer
 }

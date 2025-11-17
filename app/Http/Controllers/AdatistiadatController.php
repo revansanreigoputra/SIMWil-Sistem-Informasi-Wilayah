@@ -13,7 +13,8 @@ class AdatistiadatController extends Controller
      */
     public function index()
     {
-        $data = adatistiadat::with(['desa'])->orderBy('tanggal', 'desc')->get();
+        $desaId = session('desa_id');
+        $data = adatistiadat::where('desa_id',$desaId)->with(['desa'])->orderBy('tanggal', 'desc')->get();
         return view('pages.perkembangan.peransertamasyarakat.adatistiadat.index', compact('data'));
     }
 
@@ -33,7 +34,6 @@ class AdatistiadatController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'perkawinan' => 'required|in:Aktif,Tidak Aktif,Pernah Ada',
             'kelahiran_anak' => 'required|in:Aktif,Tidak Aktif,Pernah Ada',
             'upacara_kematian' => 'required|in:Aktif,Tidak Aktif,Pernah Ada',
@@ -45,9 +45,8 @@ class AdatistiadatController extends Controller
             'memulihkan_hubungan_alam' => 'required|in:Aktif,Tidak Aktif,Pernah Ada',
             'penanggulangan_kemiskinan' => 'required|in:Aktif,Tidak Aktif,Pernah Ada',
         ]);
-
+        $validated['desa_id'] = session('desa_id');
         adatistiadat::create($validated);
-
         return redirect()->route('perkembangan.peransertamasyarakat.adatistiadat.index')->with('success', 'Data adat istiadat masyarakat berhasil ditambahkan.');
     }
 
@@ -56,7 +55,7 @@ class AdatistiadatController extends Controller
      */
     public function show($id)
     {
-        $adatistiadat = adatistiadat::findOrFail($id);
+        $adatistiadat = adatistiadat::with(['desa'])->findOrFail($id);
         $adatistiadat->load('desa');
         return view('pages.perkembangan.peransertamasyarakat.adatistiadat.show', compact('adatistiadat'));  
     }
@@ -78,7 +77,6 @@ class AdatistiadatController extends Controller
     {
         $validated = $request->validate([
             'tanggal' => 'required|date',
-            'id_desa' => 'required|exists:desas,id',
             'perkawinan' => 'required|in:Aktif,Tidak Aktif,Pernah Ada',
             'kelahiran_anak' => 'required|in:Aktif,Tidak Aktif,Pernah Ada',
             'upacara_kematian' => 'required|in:Aktif,Tidak Aktif,Pernah Ada',
@@ -105,10 +103,5 @@ class AdatistiadatController extends Controller
         $adatistiadat = adatistiadat::findOrFail($id);
         $adatistiadat->delete();
         return redirect()->route('perkembangan.peransertamasyarakat.adatistiadat.index')->with('success', 'Data adat istiadat masyarakat berhasil dihapus.');
-    }
-    public function getDesasByKecamatan($id_kecamatan)
-    {
-        $desas = Desa::where('id_kecamatan', $id_kecamatan)->orderBy('nama_desa')->get();
-        return response()->json($desas);
     }
 }

@@ -14,7 +14,7 @@ class organisasi extends Model
 
     // Kolom yang bisa diisi (mass assignable)
     protected $fillable = [
-        'id_desa',
+        'desa_id',
         'tanggal',
         'jenis_organisasi',
         'kepengurusan',
@@ -24,7 +24,7 @@ class organisasi extends Model
     ];
     public function desa()
     {
-        return $this->belongsTo(Desa::class, 'id_desa');
+        return $this->belongsTo(Desa::class);
     }
 }
 

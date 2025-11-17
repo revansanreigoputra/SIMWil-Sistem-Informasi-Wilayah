@@ -13,23 +13,12 @@
             @csrf
             @method('PUT')
 
-            {{-- Baris 1: Desa & Tanggal --}}
+            {{-- Baris 1: Tanggal --}}
             <div class="row mb-2">
                 <div class="col-md-6 mb-2">
-                    <label>Desa/Kelurahan</label>
-                    <select name="id_desa" class="form-control" required>
-                        <option value="">-- Pilih Desa --</option>
-                        @foreach($desas as $desa)
-                            <option value="{{ $desa->id }}" {{ $item->id_desa == $desa->id ? 'selected' : '' }}>
-                                {{ $desa->nama_desa }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="col-md-6 mb-2">
                     <label>Tanggal</label>
-                    <input type="date" name="tanggal" class="form-control" value="{{ $item->tanggal->format('Y-m-d') }}" required>
+                    <input type="date" name="tanggal" class="form-control" 
+                        value="{{ \Carbon\Carbon::parse($item->tanggal)->format('Y-m-d') }}" required>
                 </div>
             </div>
 
@@ -53,12 +42,13 @@
             @endphp
 
             @foreach($fields as $field => $label)
-            <div class="row mb-2">
-                <div class="col-md-6 mb-2">
-                    <label>{{ $label }}</label>
-                    <input type="number" name="{{ $field }}" class="form-control" value="{{ $item->$field }}" min="0" required>
+                <div class="row mb-2">
+                    <div class="col-md-6 mb-2">
+                        <label>{{ $label }}</label>
+                        <input type="number" name="{{ $field }}" class="form-control" 
+                            value="{{ $item->$field }}" min="0" required>
+                    </div>
                 </div>
-            </div>
             @endforeach
 
             {{-- Tombol --}}

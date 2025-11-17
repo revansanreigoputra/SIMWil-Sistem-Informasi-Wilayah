@@ -12,7 +12,7 @@ class musrenbangdesa extends Model
     protected $table = 'musrenbangdesas';
 
     protected $fillable = [
-        'id_desa',
+        'desa_id',
         'tanggal',
         'jumlah_musrenbang_desa_kelurahan',
         'jumlah_kehadiran_masyarakat',
@@ -34,6 +34,6 @@ class musrenbangdesa extends Model
     ];
     public function desa()
     {
-        return $this->belongsTo(Desa::class, 'id_desa');
+        return $this->belongsTo(Desa::class);
     }
 }

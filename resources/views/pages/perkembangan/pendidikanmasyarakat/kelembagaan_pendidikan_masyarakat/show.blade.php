@@ -10,11 +10,11 @@
             <table class="table table-borderless">
                 <tr>
                     <th width="25%">Desa/Kelurahan</th>
-                    <td>{{ $item->desa->nama_desa }}</td>
+                    <td>{{ $item->desa->nama_desa ?? '-' }}</td>
                 </tr>
                 <tr>
                     <th>Tanggal</th>
-                    <td>{{ $item->tanggal->format('d-m-Y') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
                 </tr>
 
                 @php
@@ -36,16 +36,20 @@
                 @endphp
 
                 @foreach($fields as $field => $label)
-                <tr>
-                    <th>{{ $label }}</th>
-                    <td>{{ $item->$field }}</td>
-                </tr>
+                    <tr>
+                        <th>{{ $label }}</th>
+                        <td>{{ $item->$field ?? 0 }}</td>
+                    </tr>
                 @endforeach
             </table>
 
             <div class="mt-3">
-                <a href="{{ route('perkembangan.pendidikanmasyarakat.kelembagaan.index') }}" class="btn btn-secondary">Kembali</a>
-                <a href="{{ route('perkembangan.pendidikanmasyarakat.kelembagaan.edit', $item->id) }}" class="btn btn-warning">Edit</a>
+                <a href="{{ route('perkembangan.pendidikanmasyarakat.kelembagaan.index') }}" class="btn btn-secondary">
+                    Kembali
+                </a>
+                <a href="{{ route('perkembangan.pendidikanmasyarakat.kelembagaan.edit', $item->id) }}" class="btn btn-warning">
+                    Edit
+                </a>
             </div>
         </div>
     </div>

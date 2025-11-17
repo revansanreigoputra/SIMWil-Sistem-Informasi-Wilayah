@@ -14,18 +14,6 @@
 
             <div class="row">
                 <div class="col-md-6 mb-2">
-                    <label>Desa</label>
-                    <select name="desa_id" id="desa_id" class="form-control" required>
-                        <option value="">-- Pilih Desa --</option>
-                        @foreach($desas as $desa)
-                            <option value="{{ $desa->id }}" {{ old('desa_id') == $desa->id ? 'selected' : '' }}>
-                                {{ $desa->nama_desa }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="col-md-6 mb-2">
                     <label>Tanggal</label>
                     <input type="date" name="tanggal" class="form-control" value="{{ old('tanggal') }}" required>
                 </div>

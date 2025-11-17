@@ -9,7 +9,7 @@
     </div>
 
     <div class="card-body">
-        <form action="{{ route('perkembangan.asetekonomi.rumah_menurut_lantai.update', $rumahMenurutLantai->id) }}" method="POST">
+        <form action="{{ route('perkembangan.asetekonomi.rumah_menurut_lantai.update', $item->id) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -23,43 +23,34 @@
                 </div>
             @endif
 
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="desa_id" class="form-label">Desa</label>
-                    <select name="desa_id" id="desa_id" class="form-select" required>
-                        <option value="">-- Pilih Desa --</option>
-                        @foreach($desas as $desa)
-                            <option value="{{ $desa->id }}" {{ old('desa_id', $rumahMenurutLantai->desa_id) == $desa->id ? 'selected' : '' }}>
-                                {{ $desa->nama_desa }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+            {{-- Desa otomatis dari session, tidak perlu input manual --}}
 
+            <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="jenis_lantai_id" class="form-label">Jenis Lantai</label>
                     <select name="jenis_lantai_id" id="jenis_lantai_id" class="form-select" required>
                         <option value="">-- Pilih Jenis Lantai --</option>
                         @foreach($jenisLantais as $jenis)
-                            <option value="{{ $jenis->id }}" {{ old('jenis_lantai_id', $rumahMenurutLantai->jenis_lantai_id) == $jenis->id ? 'selected' : '' }}>
+                            <option value="{{ $jenis->id }}" 
+                                {{ old('jenis_lantai_id', $item->jenis_lantai_id) == $jenis->id ? 'selected' : '' }}>
                                 {{ $jenis->nama_lantai }}
                             </option>
                         @endforeach
                     </select>
                 </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="tanggal" class="form-label">Tanggal</label>
+                    <input type="date" name="tanggal" id="tanggal" class="form-control" 
+                           value="{{ old('tanggal', $item->tanggal) }}" required>
+                </div>
             </div>
 
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="tanggal" class="form-label">Tanggal</label>
-                    <input type="date" name="tanggal" id="tanggal" class="form-control" 
-                           value="{{ old('tanggal', $rumahMenurutLantai->tanggal) }}" required>
-                </div>
-
-                <div class="col-md-6 mb-3">
                     <label for="jumlah" class="form-label">Jumlah</label>
                     <input type="number" name="jumlah" id="jumlah" class="form-control" min="0"
-                           value="{{ old('jumlah', $rumahMenurutLantai->jumlah) }}" required>
+                           value="{{ old('jumlah', $item->jumlah) }}" required>
                 </div>
             </div>
 

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\SaranaTransportasiUmum;
-use App\Models\Desa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class SaranaTransportasiUmumController extends Controller
 {
@@ -13,7 +13,8 @@ class SaranaTransportasiUmumController extends Controller
      */
     public function index()
     {
-        $data = SaranaTransportasiUmum::with('desa')
+        $desaId = session('desa_id'); // ambil desa dari session
+        $data = SaranaTransportasiUmum::where('id_desa', $desaId)
             ->orderBy('tanggal', 'desc')
             ->paginate(10);
 
@@ -25,8 +26,6 @@ class SaranaTransportasiUmumController extends Controller
      */
     public function create()
     {
-        $desas = Desa::all();
-
         $jenis_aset_list = [
             'Memiliki cidemo/andong/dokar',
             'Memiliki bajaj/kancil',
@@ -39,7 +38,7 @@ class SaranaTransportasiUmumController extends Controller
             'Memiliki Helikopter atau Pesawat',
         ];
 
-        return view('pages.perkembangan.asetekonomi.sarana_transportasi_umum.create', compact('desas', 'jenis_aset_list'));
+        return view('pages.perkembangan.asetekonomi.sarana_transportasi_umum.create', compact('jenis_aset_list'));
     }
 
     /**
@@ -47,16 +46,19 @@ class SaranaTransportasiUmumController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'id_desa' => 'required|exists:desas,id',
+        $validator = Validator::make($request->all(), [
             'tanggal' => 'required|date',
             'jenis_aset' => 'required|string|max:255',
             'jumlah_pemilik' => 'nullable|integer|min:0',
             'jumlah_aset' => 'nullable|integer|min:0',
         ]);
 
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         SaranaTransportasiUmum::create([
-            'id_desa' => $request->id_desa,
+            'id_desa' => session('desa_id'), // otomatis dari session
             'tanggal' => $request->tanggal,
             'jenis_aset' => $request->jenis_aset,
             'jumlah_pemilik' => $request->jumlah_pemilik,
@@ -71,20 +73,16 @@ class SaranaTransportasiUmumController extends Controller
     /**
      * Tampilkan detail data tertentu.
      */
-    public function show($id)
+    public function show(SaranaTransportasiUmum $item)
     {
-        $item = SaranaTransportasiUmum::with('desa')->findOrFail($id);
         return view('pages.perkembangan.asetekonomi.sarana_transportasi_umum.show', compact('item'));
     }
 
     /**
      * Tampilkan form edit data.
      */
-    public function edit($id)
+    public function edit(SaranaTransportasiUmum $item)
     {
-        $item = SaranaTransportasiUmum::findOrFail($id);
-        $desas = Desa::all();
-
         $jenis_aset_list = [
             'Memiliki cidemo/andong/dokar',
             'Memiliki bajaj/kancil',
@@ -97,25 +95,27 @@ class SaranaTransportasiUmumController extends Controller
             'Memiliki Helikopter atau Pesawat',
         ];
 
-        return view('pages.perkembangan.asetekonomi.sarana_transportasi_umum.edit', compact('item', 'desas', 'jenis_aset_list'));
+        return view('pages.perkembangan.asetekonomi.sarana_transportasi_umum.edit', compact('item', 'jenis_aset_list'));
     }
 
     /**
      * Update data yang sudah ada.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, SaranaTransportasiUmum $item)
     {
-        $request->validate([
-            'id_desa' => 'required|exists:desas,id',
+        $validator = Validator::make($request->all(), [
             'tanggal' => 'required|date',
             'jenis_aset' => 'required|string|max:255',
             'jumlah_pemilik' => 'nullable|integer|min:0',
             'jumlah_aset' => 'nullable|integer|min:0',
         ]);
 
-        $item = SaranaTransportasiUmum::findOrFail($id);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $item->update([
-            'id_desa' => $request->id_desa,
+            'id_desa' => session('desa_id'), // otomatis dari session
             'tanggal' => $request->tanggal,
             'jenis_aset' => $request->jenis_aset,
             'jumlah_pemilik' => $request->jumlah_pemilik,
@@ -130,9 +130,8 @@ class SaranaTransportasiUmumController extends Controller
     /**
      * Hapus data dari database.
      */
-    public function destroy($id)
+    public function destroy(SaranaTransportasiUmum $item)
     {
-        $item = SaranaTransportasiUmum::findOrFail($id);
         $item->delete();
 
         return redirect()

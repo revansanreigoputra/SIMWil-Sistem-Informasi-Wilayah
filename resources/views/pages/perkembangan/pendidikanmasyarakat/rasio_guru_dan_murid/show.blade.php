@@ -1,10 +1,10 @@
 @extends('layouts.master')
 
-@section('title', 'Detail Rasio Guru & Murid')
+@section('title', 'Detail Rasio Guru dan Murid')
 
 @section('content')
 <div class="container">
-    <h4>Detail Data Rasio Guru & Murid</h4>
+    <h4>Detail Data Rasio Guru dan Murid</h4>
     <div class="card mt-3">
         <div class="card-body">
             <table class="table table-borderless">
@@ -37,24 +37,24 @@
                     <td>{{ $item->siswa_sd }}</td>
                 </tr>
 
-                {{-- SMP --}}
+                {{-- SLTP --}}
                 <tr>
-                    <th>Jumlah Guru SMP (Orang)</th>
-                    <td>{{ $item->guru_smp }}</td>
+                    <th>Jumlah Guru SLTP (Orang)</th>
+                    <td>{{ $item->guru_sltp }}</td>
                 </tr>
                 <tr>
-                    <th>Jumlah Siswa SMP (Orang)</th>
-                    <td>{{ $item->siswa_smp }}</td>
+                    <th>Jumlah Siswa SLTP (Orang)</th>
+                    <td>{{ $item->siswa_sltp }}</td>
                 </tr>
 
-                {{-- SMA --}}
+                {{-- SLTA --}}
                 <tr>
-                    <th>Jumlah Guru SMA (Orang)</th>
-                    <td>{{ $item->guru_sma }}</td>
+                    <th>Jumlah Guru SLTA (Orang)</th>
+                    <td>{{ $item->guru_slta }}</td>
                 </tr>
                 <tr>
-                    <th>Jumlah Siswa SMA (Orang)</th>
-                    <td>{{ $item->siswa_sma }}</td>
+                    <th>Jumlah Siswa SLTA (Orang)</th>
+                    <td>{{ $item->siswa_slta }}</td>
                 </tr>
 
                 {{-- SLB --}}

@@ -30,21 +30,6 @@
                 @enderror
             </div>
 
-            <!-- Kolom Desa -->
-            <div class="col-md-6 mb-3">
-                <label for="id_desa" class="form-label fw-semibold">
-                    <i class="fas fa-map-marker-alt me-1"></i>
-                    Desa <span class="text-danger">*</span>
-                </label>
-                <select name="id_desa" id="id_desa" class="form-control" required>
-                    <option value="">-- Pilih Desa --</option>
-                    @foreach ($desas as $item)
-                        <option value="{{ $item->id }}" {{ old('id_desa', $apb->id_desa) == $item->id ? 'selected' : '' }}>
-                            {{ $item->nama_desa }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
 
             <div class="row">
                 <div class="col-md-6 mb-3">

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('konfliksaras', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_desa');
+            $table->foreignId('desa_id')->constrained('desas')->onUpdate('cascade')->onDelete('cascade');
             $table->date('tanggal');
             $table->integer('kasus_konflik_tahun_ini')->nullable();
             $table->integer('kasus_konflik_sara_tahun_ini')->nullable();

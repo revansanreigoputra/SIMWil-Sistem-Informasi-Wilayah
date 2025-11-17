@@ -26,7 +26,7 @@ use App\Models\MasterDDK\{
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Exports\DataKeluargaExport;
 use App\Http\Controllers\Imports\DataKeluargaImport;
-use App\Http\Controllers\Exports\DataKeluargaTemplateExport;
+use App\Http\Controllers\Exports\DataKeluargaTemplateImport;
 use Maatwebsite\Excel\Concerns\{FromCollection, WithHeadings};
 
 class DataKeluargaController extends Controller
@@ -66,7 +66,7 @@ class DataKeluargaController extends Controller
 
     public function create()
     {
-        $hubunganKeluarga = HubunganKeluarga::all(); // Corrected variable name
+        $kepalaKeluarga = HubunganKeluarga::where('nama', 'Kepala Keluarga')->firstOrFail();
         $agama = Agama::all();
         $golonganDarah = GolonganDarah::all();
         $kewarganegaraan = Kewarganegaraan::all();
@@ -83,7 +83,8 @@ class DataKeluargaController extends Controller
             'desas',
             'kecamatans',
             'perangkatDesas',
-            'hubunganKeluarga',
+            // 'hubunganKeluarga',
+            'kepalaKeluarga',
             'agama',
             'golonganDarah',
             'kewarganegaraan',
@@ -113,7 +114,7 @@ class DataKeluargaController extends Controller
             'nik' => 'nullable|string|size:16|unique:anggota_keluargas,nik',
             'no_akta_kelahiran' => 'nullable|string',
             'jenis_kelamin' => 'nullable|in:Laki-laki,Perempuan',
-            'hubungan_keluarga_id' => 'nullable|exists:hubungan_keluarga,id',
+            'hubungan_keluarga_id' => 'required|exists:hubungan_keluarga,id',
             'tempat_lahir' => 'nullable|string',
             'tanggal_lahir' => 'nullable|date',
             'tanggal_pencatatan' => 'nullable|date',
@@ -130,8 +131,9 @@ class DataKeluargaController extends Controller
             'kedudukan_pajak_id' => 'nullable|exists:kedudukan_pajaks,id',
             'lembaga_id' => 'nullable|exists:lembagas,id',
             'nama_lembaga' => 'nullable|string',
+            'nama_orang_tua' => 'nullable|string',
         ]);
-        $dataKeluargaData = $request->only([
+        $dataKeluargaData = ([
             'no_kk',
             'kepala_keluarga',
             'alamat',
@@ -141,7 +143,7 @@ class DataKeluargaController extends Controller
             'kecamatan_id',
             'nama_pengisi_id'
         ]);
-        $anggotaKeluargaData = $request->only([
+        $anggotaKeluargaData = ([
             'nik',
             'no_akta_kelahiran',
             'jenis_kelamin',
@@ -164,12 +166,15 @@ class DataKeluargaController extends Controller
             'lembaga_id',
             'nama_lembaga'
         ]);
+        $dataKeluargaData = array_intersect_key($validatedData, array_flip($dataKeluargaData));
 
+        $anggotaKeluargaData = array_intersect_key($validatedData, array_flip($anggotaKeluargaData));
         $dataKeluarga = DataKeluarga::create($dataKeluargaData);
         $anggotaKeluargaData['data_keluarga_id'] = $dataKeluarga->id;
         $anggotaKeluargaData['no_urut'] = 1;
-
-        $anggotaKeluargaData['nama'] = $dataKeluarga->kepala_keluarga; // Use the name from the family data
+        $anggotaKeluargaData['status_kehidupan'] = 'hidup';
+        $anggotaKeluargaData['nama'] = $dataKeluarga->kepala_keluarga;
+        $anggotaKeluargaData['hubungan_keluarga_id'] = $request->input('hubungan_keluarga_id'); // Ensure this is explicitly set
         AnggotaKeluarga::create($anggotaKeluargaData);
         return redirect()->route('data_keluarga.index')->with('success', 'Data Kepala Keluarga berhasil ditambahkan.');
     }
@@ -324,7 +329,7 @@ class DataKeluargaController extends Controller
     public function template()
     {
         // Gunakan kelas Export baru yang dikhususkan untuk template
-        return Excel::download(new DataKeluargaTemplateExport(), 'template_data_keluarga.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+        return Excel::download(new DataKeluargaTemplateImport(), 'template_data_keluarga.xlsx', \Maatwebsite\Excel\Excel::XLSX);
     }
     /**
      * Import data from Excel.
@@ -350,5 +355,30 @@ class DataKeluargaController extends Controller
         }
 
         return redirect()->route('data_keluarga.index')->with('success', 'Data Keluarga berhasil diimpor!');
+    }
+    public function show(DataKeluarga $dataKeluarga)
+    {
+        // Eager load all related data for the main family head and all members
+        $dataKeluarga->load([
+            'desas',
+            'kecamatans',
+            'perangkatDesas',
+            'anggotaKeluarga.hubunganKeluarga',
+            'anggotaKeluarga.agama',
+            'anggotaKeluarga.golonganDarah',
+            'anggotaKeluarga.kewarganegaraan',
+            'anggotaKeluarga.pendidikan',
+            'anggotaKeluarga.mataPencaharian',
+            'anggotaKeluarga.kb',
+            'anggotaKeluarga.cacat',
+            'anggotaKeluarga.kedudukanPajak',
+            'anggotaKeluarga.lembaga'
+        ]);
+
+        // The first member (no_urut=1) is assumed to be the head of household for the detail card
+        $kepalaKeluargaDetail = $dataKeluarga->anggotaKeluarga->where('no_urut', 1)->first();
+        $anggotaKeluargas = $dataKeluarga->anggotaKeluarga; // All family members
+
+        return view('pages.data_keluarga.show', compact('dataKeluarga', 'kepalaKeluargaDetail', 'anggotaKeluargas'));
     }
 }

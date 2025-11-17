@@ -16,26 +16,30 @@
         <div class="table-responsive">
             <table id="transportasi-table" class="table table-striped">
                 <thead>
-                    <tr>
-                        <th class="text-center">No</th>
-                        <th class="text-center">Desa</th>
-                        <th class="text-center">Tanggal</th>
-                        <th class="text-center">Jenis Aset</th>
-                        <th class="text-center">Jumlah Aset</th>
-                        <th class="text-center">Aksi</th>
+                    <tr class="text-center">
+                        <th>No</th>
+                        <th>Desa</th>
+                        <th>Tanggal</th>
+                        <th>Jenis Aset</th>
+                        <th>Jumlah Pemilik</th>
+                        <th>Jumlah Aset</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($data as $index => $item)
-                        <tr>
-                            <td class="text-center">{{ $data->firstItem() + $index }}</td>
-                            <td class="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
-                            <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->format('d/m/Y') }}</td>
-                            <td class="text-center">{{ $item->jenis_aset ?? '-' }}</td>
-                            <td class="text-center">
+                        <tr class="text-center">
+                            <td>{{ $data->firstItem() + $index }}</td>
+                            <td>{{ $item->desa->nama_desa ?? '-' }}</td>
+                            <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d/m/Y') }}</td>
+                            <td>{{ $item->jenis_aset ?? '-' }}</td>
+                            <td>
+                                <span class="badge bg-success">{{ $item->jumlah_pemilik ?? 0 }}</span>
+                            </td>
+                            <td>
                                 <span class="badge bg-primary">{{ $item->jumlah_aset ?? 0 }}</span>
                             </td>
-                            <td class="text-center">
+                            <td>
                                 @canany(['sarana_transportasi_umum.view','sarana_transportasi_umum.update','sarana_transportasi_umum.delete'])
                                     <div class="d-flex gap-1 justify-content-center">
                                         @can('sarana_transportasi_umum.view')
@@ -105,7 +109,15 @@
 @push('addon-script')
 <script>
     $(document).ready(function() {
-        $('#transportasi-table').DataTable();
+        $('#transportasi-table').DataTable({
+            paging: false,
+            info: false,
+            searching: true,
+            ordering: true,
+            columnDefs: [
+                { orderable: false, targets: 6 } // kolom aksi tidak bisa di-sort
+            ]
+        });
     });
 </script>
 @endpush

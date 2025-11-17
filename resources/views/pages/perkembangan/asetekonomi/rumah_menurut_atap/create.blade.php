@@ -12,9 +12,10 @@
         <form action="{{ route('perkembangan.asetekonomi.rumah_menurut_atap.store') }}" method="POST">
             @csrf
 
+            {{-- Pesan error validasi --}}
             @if($errors->any())
                 <div class="alert alert-danger">
-                    <ul>
+                    <ul class="mb-0">
                         @foreach($errors->all() as $err)
                             <li>{{ $err }}</li>
                         @endforeach
@@ -22,17 +23,9 @@
                 </div>
             @endif
 
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="id_desa" class="form-label">Desa</label>
-                    <select name="id_desa" id="id_desa" class="form-select" required>
-                        <option value="">-- Pilih Desa --</option>
-                        @foreach($desas as $desa)
-                            <option value="{{ $desa->id }}">{{ $desa->nama_desa }}</option>
-                        @endforeach
-                    </select>
-                </div>
+            {{-- Tidak ada dropdown desa karena diambil otomatis dari session --}}
 
+            <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="id_aset_atap" class="form-label">Jenis Atap</label>
                     <select name="id_aset_atap" id="id_aset_atap" class="form-select" required>
@@ -42,17 +35,19 @@
                         @endforeach
                     </select>
                 </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="tanggal" class="form-label">Tanggal</label>
+                    <input type="date" name="tanggal" id="tanggal" 
+                           class="form-control" required>
+                </div>
             </div>
 
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="tanggal" class="form-label">Tanggal</label>
-                    <input type="date" name="tanggal" id="tanggal" class="form-control" required>
-                </div>
-
-                <div class="col-md-6 mb-3">
                     <label for="jumlah" class="form-label">Jumlah Rumah</label>
-                    <input type="number" name="jumlah" id="jumlah" class="form-control" min="0" value="0" required>
+                    <input type="number" name="jumlah" id="jumlah" 
+                           class="form-control" min="0" value="0" required>
                 </div>
             </div>
 

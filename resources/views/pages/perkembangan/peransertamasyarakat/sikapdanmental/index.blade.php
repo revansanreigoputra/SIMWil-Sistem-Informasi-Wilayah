@@ -25,12 +25,6 @@
                         <th class="text-center">Pungutan Gelandangan</th>
                         <th class="text-center">Pungutan Terminal</th>
                         <th class="text-center">Permintaan Sumbangan (Perorangan)</th>
-                        <th class="text-center">Permintaan Sumbangan (Terorganisir)</th>
-                        <th class="text-center">Praktik Jalan Pintas</th>
-                        <th class="text-center">Pelayanan Gratis</th>
-                        <th class="text-center">Keluhan Pelayanan</th>
-                        <th class="text-center">Kegiatan Ekonomi</th>
-                        <th class="text-center">Kebiasaan Masyarakat</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -49,41 +43,6 @@
                                     {{ $item->permintaan_sumbangan_perorangan ?? '-' }}
                                 </span>
                             </td>
-                            <td>
-                                <span class="badge bg-{{ $item->permintaan_sumbangan_terorganisir === 'Ada' ? 'success' : 'secondary' }}">
-                                    {{ $item->permintaan_sumbangan_terorganisir ?? '-' }}
-                                </span>
-                            </td>
-                            <td>
-                                <span class="badge bg-{{ $item->praktik_jalan_pintas === 'Ya' ? 'warning' : 'secondary' }}">
-                                    {{ $item->praktik_jalan_pintas ?? '-' }}
-                                </span>
-                            </td>
-                            <td>
-                                <span class="badge bg-{{ $item->pelayanan_gratis_aparat === 'Ya' ? 'success' : 'secondary' }}">
-                                    {{ $item->pelayanan_gratis_aparat ?? '-' }}
-                                </span>
-                            </td>
-                            <td>
-                                <span class="badge bg-{{ $item->keluhan_pelayanan === 'Ya' ? 'warning' : 'secondary' }}">
-                                    {{ $item->keluhan_pelayanan ?? '-' }}
-                                </span>
-                            </td>
-
-                            {{-- Kegiatan Ekonomi ringkas --}}
-                            <td>
-                                Petani: {{ $item->petani_gagal_panen ?? '-' }} <br>
-                                Nelayan: {{ $item->nelayan_tidak_melayat ?? '-' }} <br>
-                                Kerja Luar Desa: {{ $item->cari_pekerjaan_luar_desa ?? '-' }}
-                            </td>
-
-                            {{-- Kebiasaan ringkas --}}
-                            <td>
-                                Rayakan Pesta: {{ $item->rayakan_pesta ?? '-' }} <br>
-                                Bermusyawarah: {{ $item->bermusyawarah ?? '-' }} <br>
-                                Provokasi Isu: {{ $item->terprovokasi_isu ?? '-' }}
-                            </td>
-
                             {{-- Tombol Aksi --}}
                             <td>
                                 <div class="d-flex gap-1 justify-content-center">

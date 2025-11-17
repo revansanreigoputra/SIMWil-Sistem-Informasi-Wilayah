@@ -12,7 +12,7 @@ class Penjarahan extends Model
     protected $table = 'penjarahans'; // nama tabel sesuai migration
 
     protected $fillable = [
-        'id_desa',
+        'desa_id',
         'tanggal',
         'korban_dan_pelaku_penduduk_setempat',
         'korban_penduduk_setempat_pelaku_bukan_setempat',
@@ -25,6 +25,6 @@ class Penjarahan extends Model
      */
     public function desa()
     {
-        return $this->belongsTo(Desa::class, 'id_desa');
+        return $this->belongsTo(Desa::class);
     }
 }
