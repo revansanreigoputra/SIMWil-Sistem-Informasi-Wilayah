@@ -1841,6 +1841,17 @@ Route::middleware(['auth'])->prefix('potensi/sda/alat-produksi-ikan-tawar')->nam
     Route::delete('/{pAlatProduksiIkanTawar}', [App\Http\Controllers\PAlatProduksiIkanTawarController::class, 'destroy'])->name('destroy');
 });
 
+// PNamaIkan routes
+Route::middleware(['auth'])->prefix('potensi/sda/jenis-dan-produksi-ikan')->name('p-nama-ikan.')->group(function () {
+    Route::get('/', [App\Http\Controllers\PNamaIkanController::class, 'index'])->name('index');
+    Route::get('/create', [App\Http\Controllers\PNamaIkanController::class, 'create'])->name('create');
+    Route::post('/', [App\Http\Controllers\PNamaIkanController::class, 'store'])->name('store');
+    Route::get('/{pNamaIkan}', [App\Http\Controllers\PNamaIkanController::class, 'show'])->name('show');
+    Route::get('/{pNamaIkan}/edit', [App\Http\Controllers\PNamaIkanController::class, 'edit'])->name('edit');
+    Route::put('/{pNamaIkan}', [App\Http\Controllers\PNamaIkanController::class, 'update'])->name('update');
+    Route::delete('/{pNamaIkan}', [App\Http\Controllers\PNamaIkanController::class, 'destroy'])->name('destroy');
+});
+
 //sektor industri besar
 Route::resource(
     'perkembangan/struktur-mata-pencaharian/sektor-industri-menengah-besar',

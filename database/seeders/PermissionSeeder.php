@@ -66,10 +66,10 @@ class PermissionSeeder extends Seeder
             'data_keluarga.edit',
             'data_keluarga.update',
             'data_keluarga.delete',
-            'data_keluarga.destroy', 
+            'data_keluarga.destroy',
             'data_keluarga.export',
             'data_keluarga.import',
-            
+
             // Anggota Keluarga Permissions
             'anggota_keluarga.view',
             'anggota_keluarga.create',
@@ -121,7 +121,7 @@ class PermissionSeeder extends Seeder
             'potensi.kelembagaan.pemerintah.delete',
             'potensi.kelembagaan.pemerintah.destroy',
             'potensi.kelembagaan.pemerintah.print',
-            
+
             // politik permissions
             'lembaga-politik.view',
             'lembaga-politik.create',
@@ -358,7 +358,7 @@ class PermissionSeeder extends Seeder
 
             'adat.print',
             'adat.download',
-            
+
             // kemasyarakatan
             'kemasyarakatan.view',
             'kemasyarakatan.create',
@@ -927,6 +927,14 @@ class PermissionSeeder extends Seeder
             'p-alat-produksi-ikan-tawar.edit',
             'p-alat-produksi-ikan-tawar.update',
             'p-alat-produksi-ikan-tawar.delete',
+
+            // PNamaIkan permissions
+            'p-nama-ikan.view',
+            'p-nama-ikan.create',
+            'p-nama-ikan.store',
+            'p-nama-ikan.edit',
+            'p-nama-ikan.update',
+            'p-nama-ikan.delete',
 
             // produksi ternak permissions
             'produksi-ternak.view',

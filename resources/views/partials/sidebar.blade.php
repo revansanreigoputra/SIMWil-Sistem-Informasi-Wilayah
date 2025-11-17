@@ -266,7 +266,7 @@
                                 <a class="dropdown-item {{ request()->is('layanan-surat/permohonan') ? 'active' : '' }}"
                                     href="{{ route('permohonan.index') }}">
                                     <i class="bi bi-plus-circle me-2 py-1"></i>
-                                     Permohonan Surat  
+                                     Permohonan Surat
                                 </a>
                                 <a class="dropdown-item {{ request()->is('layanan-surat/permohonan/unverified') ? 'active' : ''}}"
                                 href="{{route('permohonan.unverified')}}">
@@ -330,7 +330,7 @@
                                     </a>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                     </li>
                 @endcan
                 {{-- Mutasi --}}
@@ -560,7 +560,7 @@
                                             @endcan
 
                                             <br>
-                                            
+
                                             @can('p-alat-produksi-ikan-laut.view')
                                                 <a class="dropdown-item {{ request()->is('potensi/sda/alat-produksi-ikan-laut*') ? 'active' : '' }}"
                                                     href="{{ route('p-alat-produksi-ikan-laut.index') }}">
@@ -572,6 +572,13 @@
                                                 <a class="dropdown-item {{ request()->is('potensi/sda/alat-produksi-ikan-tawar*') ? 'active' : '' }}"
                                                     href="{{ route('p-alat-produksi-ikan-tawar.index') }}">
                                                     Alat Produksi Ikan <br> Tawar
+                                                </a>
+                                            @endcan
+
+                                            @can('p-nama-ikan.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/jenis-dan-produksi-ikan*') ? 'active' : '' }}"
+                                                    href="{{ route('p-nama-ikan.index') }}">
+                                                    Jenis dan Produksi <br> Ikan
                                                 </a>
                                             @endcan
 
