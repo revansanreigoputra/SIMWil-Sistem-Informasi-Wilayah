@@ -15,7 +15,7 @@
                 </tr>
                 <tr>
                     <th>Jenis Dinding</th>
-                    <td>{{ $rumahMenurutDinding->jenisDinding->nama_dinding ?? '-' }}</td>
+                    <td>{{ $rumahMenurutDinding->asetDinding->nama ?? '-' }}</td>
                 </tr>
                 <tr>
                     <th>Tanggal</th>

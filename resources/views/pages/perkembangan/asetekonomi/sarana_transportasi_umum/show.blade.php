@@ -12,18 +12,22 @@
                     <th width="25%">Desa</th>
                     <td>{{ $item->desa->nama_desa ?? '-' }}</td>
                 </tr>
+
                 <tr>
                     <th>Tanggal</th>
                     <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
                 </tr>
+
                 <tr>
                     <th>Jenis Aset</th>
-                    <td>{{ $item->jenis_aset ?? '-' }}</td>
+                    <td>{{ $item->asetSarana->nama ?? '-' }}</td>
                 </tr>
+
                 <tr>
                     <th>Jumlah Pemilik (Orang)</th>
                     <td>{{ $item->jumlah_pemilik ?? '-' }}</td>
                 </tr>
+
                 <tr>
                     <th>Jumlah Aset (Unit)</th>
                     <td>{{ $item->jumlah_aset ?? '-' }}</td>

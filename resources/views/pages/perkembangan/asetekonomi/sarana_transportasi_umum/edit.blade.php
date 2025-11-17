@@ -17,20 +17,23 @@
                 {{-- Tanggal --}}
                 <div class="col-md-6 mb-2">
                     <label for="tanggal" class="form-label">Tanggal <span class="text-danger">*</span></label>
-                    <input type="date" name="tanggal" id="tanggal" class="form-control" value="{{ old('tanggal', $item->tanggal) }}" required>
+                    <input type="date" name="tanggal" id="tanggal" class="form-control" 
+                        value="{{ old('tanggal', $item->tanggal) }}" required>
                     @error('tanggal')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
 
-                {{-- Jenis Aset --}}
+                {{-- Jenis Aset (ambil dari master) --}}
                 <div class="col-md-6 mb-2">
                     <label for="jenis_aset" class="form-label">Jenis Aset <span class="text-danger">*</span></label>
                     <select name="jenis_aset" id="jenis_aset" class="form-control" required>
                         <option value="">-- Pilih Jenis Aset --</option>
+
                         @foreach($jenis_aset_list as $jenis)
-                            <option value="{{ $jenis }}" {{ old('jenis_aset', $item->jenis_aset) == $jenis ? 'selected' : '' }}>
-                                {{ $jenis }}
+                            <option value="{{ $jenis->id }}" 
+                                {{ old('jenis_aset', $item->jenis_aset) == $jenis->id ? 'selected' : '' }}>
+                                {{ $jenis->nama }}
                             </option>
                         @endforeach
                     </select>
@@ -44,7 +47,9 @@
                 {{-- Jumlah Pemilik --}}
                 <div class="col-md-6 mb-2">
                     <label for="jumlah_pemilik" class="form-label">Jumlah Pemilik (Orang)</label>
-                    <input type="number" name="jumlah_pemilik" id="jumlah_pemilik" class="form-control" min="0" value="{{ old('jumlah_pemilik', $item->jumlah_pemilik ?? 0) }}">
+                    <input type="number" name="jumlah_pemilik" id="jumlah_pemilik" 
+                        class="form-control" min="0" 
+                        value="{{ old('jumlah_pemilik', $item->jumlah_pemilik ?? 0) }}">
                     @error('jumlah_pemilik')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
@@ -53,7 +58,9 @@
                 {{-- Jumlah Aset --}}
                 <div class="col-md-6 mb-2">
                     <label for="jumlah_aset" class="form-label">Jumlah Aset (Unit)</label>
-                    <input type="number" name="jumlah_aset" id="jumlah_aset" class="form-control" min="0" value="{{ old('jumlah_aset', $item->jumlah_aset ?? 0) }}">
+                    <input type="number" name="jumlah_aset" id="jumlah_aset" 
+                        class="form-control" min="0" 
+                        value="{{ old('jumlah_aset', $item->jumlah_aset ?? 0) }}">
                     @error('jumlah_aset')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror

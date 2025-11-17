@@ -32,7 +32,10 @@
                             <td>{{ $data->firstItem() + $index }}</td>
                             <td>{{ $item->desa->nama_desa ?? '-' }}</td>
                             <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d/m/Y') }}</td>
-                            <td>{{ $item->jenis_aset ?? '-' }}</td>
+
+                            {{-- FIX: Jenis Aset dari master --}}
+                            <td>{{ $item->asetSarana->nama ?? '-' }}</td>
+
                             <td>
                                 <span class="badge bg-success">{{ $item->jumlah_pemilik ?? 0 }}</span>
                             </td>
@@ -73,7 +76,7 @@
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>Data aset <strong>{{ $item->jenis_aset }}</strong> dari desa 
+                                                    <p>Data aset <strong>{{ $item->asetSarana->nama ?? '-' }}</strong> dari desa 
                                                        <strong>{{ $item->desa->nama_desa ?? '-' }}</strong> akan dihapus dan tidak bisa dikembalikan.</p>
                                                     <p>Yakin ingin menghapus data ini?</p>
                                                 </div>
@@ -115,7 +118,7 @@
             searching: true,
             ordering: true,
             columnDefs: [
-                { orderable: false, targets: 6 } // kolom aksi tidak bisa di-sort
+                { orderable: false, targets: 6 }
             ]
         });
     });

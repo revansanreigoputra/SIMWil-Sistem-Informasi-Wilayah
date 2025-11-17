@@ -27,8 +27,8 @@
                     <label for="id_aset_dinding" class="form-label">Jenis Dinding</label>
                     <select name="id_aset_dinding" id="id_aset_dinding" class="form-select" required>
                         <option value="">-- Pilih Jenis Dinding --</option>
-                        @foreach($jenisDindings as $dinding)
-                            <option value="{{ $dinding->id }}">{{ $dinding->nama_dinding }}</option>
+                        @foreach($asetDindings as $dinding)
+                            <option value="{{ $dinding->id }}">{{ $dinding->nama }}</option>
                         @endforeach
                     </select>
                 </div>

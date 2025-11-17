@@ -10,16 +10,25 @@ return new class extends Migration
     {
         Schema::create('menurut_sektor_usahas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_kec')->nullable();   // bisa dihapus kalau ga dipakai
-            $table->unsignedBigInteger('id_desa')->nullable();  // bisa dihapus kalau ga dipakai
+
+            // Relasi
+            $table->unsignedBigInteger('id_desa');
+            $table->unsignedBigInteger('sektor_id');
+
+            // Kolom yang WAJIB ADA
             $table->date('tanggal');
-            $table->unsignedBigInteger('id_komoditas_sektor')->nullable(); // opsional
-            $table->integer('kk');
-            $table->integer('anggota');
-            $table->integer('buruh');
-            $table->integer('anggota_buruh');
-            $table->bigInteger('pendapatan');
+            $table->integer('kk')->default(0);
+            $table->integer('anggota')->default(0);
+            $table->integer('buruh')->default(0);
+            $table->integer('anggota_buruh')->default(0);
+            $table->integer('pendapatan')->default(0);
+
             $table->timestamps();
+
+            $table->foreign('sektor_id')
+                ->references('id')
+                ->on('komoditas_sektor')
+                ->onDelete('cascade');
         });
     }
 

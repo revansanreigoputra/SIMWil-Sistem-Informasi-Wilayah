@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\MasterPerkembangan\AsetAtap;
 
 class RumahMenurutAtap extends Model
 {
@@ -23,9 +24,9 @@ class RumahMenurutAtap extends Model
         return $this->belongsTo(Desa::class, 'id_desa');
     }
 
-    // Relasi ke tabel jenis atap
-    public function jenisAtap()
+    // Relasi ke master data AsetAtap
+    public function asetAtap()
     {
-        return $this->belongsTo(JenisAtap::class, 'id_aset_atap');
+        return $this->belongsTo(AsetAtap::class, 'id_aset_atap');
     }
 }

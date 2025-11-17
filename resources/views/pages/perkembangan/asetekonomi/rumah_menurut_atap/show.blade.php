@@ -15,7 +15,7 @@
                 </tr>
                 <tr>
                     <th>Jenis Atap</th>
-                    <td>{{ $item->jenisAtap->nama_jenis_atap ?? '-' }}</td>
+                    <td>{{ $item->asetAtap->nama ?? '-' }}</td>
                 </tr>
                 <tr>
                     <th>Tanggal</th>

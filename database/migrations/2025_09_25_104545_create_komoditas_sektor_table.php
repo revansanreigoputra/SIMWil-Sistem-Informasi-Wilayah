@@ -11,11 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // If the table already exists (created by an earlier migration copy), skip creating it
-        if (Schema::hasTable('komoditas_sektor')) {
-            return;
-        }
-
         Schema::create('komoditas_sektor', function (Blueprint $table) {
             $table->id();
             $table->string('nama');

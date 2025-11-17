@@ -31,7 +31,7 @@
                             <td class="text-center">{{ $items->firstItem() + $index }}</td>
                             <td class="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
                             <td class="text-center">
-                                <span class="badge bg-info">{{ $item->jenisDinding->nama_dinding ?? '-' }}</span>
+                                <span class="badge bg-info">{{ $item->asetDinding->nama ?? '-' }}</span>
                             </td>
                             <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->format('d/m/Y') }}</td>
                             <td class="text-center"><span class="badge bg-primary">{{ $item->jumlah }}</span></td>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\MasterPerkembangan\AsetLainnya;
 
 class PemilikAsetEkonomiLainnya extends Model
 {
@@ -11,7 +12,7 @@ class PemilikAsetEkonomiLainnya extends Model
 
     protected $fillable = [
         'id_desa',
-        'id_jenis_aset_lainnya',
+        'id_aset_lainnya',
         'tanggal',
         'jumlah',
     ];
@@ -21,8 +22,8 @@ class PemilikAsetEkonomiLainnya extends Model
         return $this->belongsTo(Desa::class, 'id_desa');
     }
 
-    public function jenisAsetLainnya()
+    public function asetLainnya()
     {
-        return $this->belongsTo(JenisAsetLainnya::class, 'id_jenis_aset_lainnya');
+        return $this->belongsTo(AsetLainnya::class, 'id_aset_lainnya');
     }
 }

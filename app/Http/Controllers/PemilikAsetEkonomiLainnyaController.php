@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PemilikAsetEkonomiLainnya;
-use App\Models\JenisAsetLainnya;
+use App\Models\MasterPerkembangan\AsetLainnya;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -12,7 +12,8 @@ class PemilikAsetEkonomiLainnyaController extends Controller
     public function index()
     {
         $desaId = session('desa_id');
-        $items = PemilikAsetEkonomiLainnya::with(['desa', 'jenisAsetLainnya'])
+
+        $items = PemilikAsetEkonomiLainnya::with(['desa', 'asetLainnya'])
                     ->where('id_desa', $desaId)
                     ->orderBy('tanggal', 'desc')
                     ->paginate(10);
@@ -22,22 +23,20 @@ class PemilikAsetEkonomiLainnyaController extends Controller
 
     public function create()
     {
-        $jenisAsets = JenisAsetLainnya::all();
-        return view('pages.perkembangan.asetekonomi.pemilik_aset_ekonomi_lainnya.create', compact('jenisAsets'));
+        $asetLainnya = AsetLainnya::all();
+        return view('pages.perkembangan.asetekonomi.pemilik_aset_ekonomi_lainnya.create', compact('asetLainnya'));
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id_jenis_aset_lainnya' => 'required|exists:jenis_aset_lainnyas,id',
+            'id_aset_lainnya' => 'required|exists:aset_lainnya,id',
             'tanggal' => 'required|date',
             'jumlah' => 'required|integer|min:0',
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $data = $request->all();
@@ -51,30 +50,28 @@ class PemilikAsetEkonomiLainnyaController extends Controller
 
     public function show($id)
     {
-        $item = PemilikAsetEkonomiLainnya::with(['desa', 'jenisAsetLainnya'])->findOrFail($id);
+        $item = PemilikAsetEkonomiLainnya::with(['desa', 'asetLainnya'])->findOrFail($id);
         return view('pages.perkembangan.asetekonomi.pemilik_aset_ekonomi_lainnya.show', compact('item'));
     }
 
     public function edit($id)
     {
         $item = PemilikAsetEkonomiLainnya::findOrFail($id);
-        $jenisAsets = JenisAsetLainnya::all();
+        $asetLainnya = AsetLainnya::all();
 
-        return view('pages.perkembangan.asetekonomi.pemilik_aset_ekonomi_lainnya.edit', compact('item', 'jenisAsets'));
+        return view('pages.perkembangan.asetekonomi.pemilik_aset_ekonomi_lainnya.edit', compact('item', 'asetLainnya'));
     }
 
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'id_jenis_aset_lainnya' => 'required|exists:jenis_aset_lainnyas,id',
+            'id_aset_lainnya' => 'required|exists:aset_lainnya,id',
             'tanggal' => 'required|date',
             'jumlah' => 'required|integer|min:0',
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $data = $request->all();

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\MasterPerkembangan\AsetDinding;
 
 class RumahMenurutDinding extends Model
 {
@@ -18,8 +19,8 @@ class RumahMenurutDinding extends Model
         return $this->belongsTo(Desa::class, 'id_desa');
     }
 
-    public function jenisDinding()
+    public function asetDinding()
     {
-        return $this->belongsTo(JenisDinding::class, 'id_aset_dinding');
+        return $this->belongsTo(AsetDinding::class, 'id_aset_dinding');
     }
 }

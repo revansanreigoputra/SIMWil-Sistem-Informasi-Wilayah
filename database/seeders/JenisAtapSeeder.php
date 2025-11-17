@@ -22,7 +22,6 @@ class JenisAtapSeeder extends Seeder
             ['nama_jenis_atap' => 'Kayu'],
             ['nama_jenis_atap' => 'Beto'],
             ['nama_jenis_atap' => 'Seng'],
-            ['nama_jenis_atap' => 'Daun ilalang'],
         ]);
     }
 }

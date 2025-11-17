@@ -20,6 +20,7 @@ class AsetLainnyaSeeder extends Seeder
             ['nama' => 'Memiliki usaha perikanan'],
             ['nama' => 'Memiliki usaha pasar swalayan'],
             ['nama' => 'Memiliki usaha di pasar swalayan'],
+            ['nama' => 'lainnya'],
         ];
 
         AsetLainnya::insert($data);

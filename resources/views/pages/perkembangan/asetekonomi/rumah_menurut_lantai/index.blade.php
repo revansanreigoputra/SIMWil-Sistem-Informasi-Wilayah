@@ -16,9 +16,12 @@
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
+        @if(session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
 
         <div class="table-responsive">
-            <table id="rumah-lantai-table" class="table table-striped">
+            <table id="rumah-lantai-table" class="table table-striped table-bordered">
                 <thead>
                     <tr>
                         <th class="text-center">No</th>
@@ -34,23 +37,19 @@
                         <tr>
                             <td class="text-center">{{ $index + 1 }}</td>
                             <td class="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
-                            <td class="text-center">{{ $item->jenisLantai->nama_lantai ?? '-' }}</td>
+                            <td class="text-center">{{ $item->asetLantai->nama ?? '-' }}</td>
                             <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->format('d/m/Y') }}</td>
                             <td class="text-center"><span class="badge bg-primary">{{ $item->jumlah }}</span></td>
-                            <td>
+                            <td class="text-center">
                                 @canany(['rumah_menurut_lantai.view','rumah_menurut_lantai.update','rumah_menurut_lantai.delete'])
                                     <div class="d-flex gap-1 justify-content-center">
                                         @can('rumah_menurut_lantai.view')
                                             <a href="{{ route('perkembangan.asetekonomi.rumah_menurut_lantai.show', $item->id) }}" 
-                                               class="btn btn-sm btn-info">
-                                                Detail
-                                            </a>
+                                               class="btn btn-sm btn-info">Detail</a>
                                         @endcan
                                         @can('rumah_menurut_lantai.update')
                                             <a href="{{ route('perkembangan.asetekonomi.rumah_menurut_lantai.edit', $item->id) }}" 
-                                               class="btn btn-sm btn-warning">
-                                                Edit
-                                            </a>
+                                               class="btn btn-sm btn-warning">Edit</a>
                                         @endcan
                                         @can('rumah_menurut_lantai.delete')
                                             <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
@@ -94,8 +93,9 @@
                     @endforeach
                 </tbody>
             </table>
-        </div>
 
+            {{ $items->links() }}
+        </div>
     </div>
 </div>
 @endsection
@@ -103,7 +103,14 @@
 @push('addon-script')
 <script>
     $(document).ready(function() {
-        $('#rumah-lantai-table').DataTable();
+        $('#rumah-lantai-table').DataTable({
+            "paging": false,
+            "info": false,
+            "order": [],
+            "columnDefs": [
+                { "orderable": false, "targets": 5 }
+            ]
+        });
     });
 </script>
 @endpush

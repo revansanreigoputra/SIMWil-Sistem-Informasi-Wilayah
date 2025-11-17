@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\MasterPerkembangan\AsetLantai;
+use App\Models\Desa;
 
 class RumahMenurutLantai extends Model
 {
@@ -18,11 +20,11 @@ class RumahMenurutLantai extends Model
 
     public function desa()
     {
-        return $this->belongsTo(Desa::class);
+        return $this->belongsTo(Desa::class, 'desa_id');
     }
 
-    public function jenisLantai()
+    public function asetLantai()
     {
-        return $this->belongsTo(JenisLantai::class, 'jenis_lantai_id');
+        return $this->belongsTo(AsetLantai::class, 'jenis_lantai_id');
     }
 }

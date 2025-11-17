@@ -14,56 +14,68 @@
 <div class="card">
     <div class="card-body">
         <div class="table-responsive">
-            <table id="aset-table" class="table table-striped">
+            <table id="aset-lainnya-table" class="table table-striped">
                 <thead>
                     <tr>
                         <th class="text-center">No</th>
                         <th class="text-center">Desa</th>
                         <th class="text-center">Jenis Aset</th>
                         <th class="text-center">Tanggal</th>
-                        <th class="text-center">Jumlah</th>
+                        <th class="text-center">Jumlah Pemilik</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($items as $index => $item)
                         <tr>
-                            {{-- Aman untuk paginator ataupun collection biasa --}}
+                            <td class="text-center">{{ $items->firstItem() + $index }}</td>
+
                             <td class="text-center">
-                                {{ ($items instanceof \Illuminate\Pagination\LengthAwarePaginator)
-                                    ? ($items->firstItem() + $index)
-                                    : $loop->iteration }}
+                                {{ $item->desa->nama_desa ?? '-' }}
                             </td>
 
-                            <td class="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
-                            <td class="text-center">{{ $item->jenisAsetLainnya->nama_jenis_aset ?? '-' }}</td>
-                            <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->format('d/m/Y') }}</td>
-                            <td class="text-center"><span class="badge bg-success">{{ $item->jumlah }}</span></td>
-                            <td>
+                            <td class="text-center">
+                                <span class="badge bg-info">
+                                    {{ $item->asetLainnya->nama ?? '-' }}
+                                </span>
+                            </td>
+
+                            <td class="text-center">
+                                {{ \Carbon\Carbon::parse($item->tanggal)->format('d/m/Y') }}
+                            </td>
+
+                            <td class="text-center">
+                                <span class="badge bg-primary">{{ $item->jumlah }}</span>
+                            </td>
+
+                            <td class="text-center">
                                 @canany(['pemilik_aset_ekonomi_lainnya.view','pemilik_aset_ekonomi_lainnya.update','pemilik_aset_ekonomi_lainnya.delete'])
                                     <div class="d-flex gap-1 justify-content-center">
+
                                         @can('pemilik_aset_ekonomi_lainnya.view')
-                                            <a href="{{ route('perkembangan.asetekonomi.pemilik_aset_ekonomi_lainnya.show', $item->id) }}"
+                                            <a href="{{ route('perkembangan.asetekonomi.pemilik_aset_ekonomi_lainnya.show', $item->id) }}" 
                                                class="btn btn-sm btn-info">
                                                 Detail
                                             </a>
                                         @endcan
+
                                         @can('pemilik_aset_ekonomi_lainnya.update')
-                                            <a href="{{ route('perkembangan.asetekonomi.pemilik_aset_ekonomi_lainnya.edit', $item->id) }}"
+                                            <a href="{{ route('perkembangan.asetekonomi.pemilik_aset_ekonomi_lainnya.edit', $item->id) }}" 
                                                class="btn btn-sm btn-warning">
                                                 Edit
                                             </a>
                                         @endcan
+
                                         @can('pemilik_aset_ekonomi_lainnya.delete')
                                             <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#delete-aset-{{ $item->id }}">
+                                                data-bs-target="#delete-aset-lainnya-{{ $item->id }}">
                                                 Hapus
                                             </button>
                                         @endcan
                                     </div>
 
-                                    <!-- Modal Hapus -->
-                                    <div class="modal fade" id="delete-aset-{{ $item->id }}" tabindex="-1"
+                                    {{-- Modal Hapus --}}
+                                    <div class="modal fade" id="delete-aset-lainnya-{{ $item->id }}" tabindex="-1"
                                         aria-labelledby="deleteModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
@@ -73,12 +85,14 @@
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>Data tanggal <strong>{{ $item->tanggal }}</strong> dari desa <strong>{{ $item->desa->nama_desa ?? '-' }}</strong> akan dihapus dan tidak bisa dikembalikan.</p>
+                                                    <p>Data tanggal <strong>{{ $item->tanggal }}</strong> dari desa 
+                                                       <strong>{{ $item->desa->nama_desa ?? '-' }}</strong> akan dihapus.</p>
                                                     <p>Yakin ingin menghapus data ini?</p>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">Batal</button>
+
                                                     <form action="{{ route('perkembangan.asetekonomi.pemilik_aset_ekonomi_lainnya.destroy', $item->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
@@ -94,15 +108,19 @@
                             </td>
                         </tr>
                     @endforeach
+
+                    @if ($items->isEmpty())
+                        <tr style="display:none;"><td colspan="6"></td></tr>
+                        <tr>
+                            <td colspan="6" class="text-center text-muted py-4">Data masih kosong</td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
         </div>
 
         <div class="d-flex justify-content-center mt-3">
-            {{-- Tampilkan pagination jika available --}}
-            @if ($items instanceof \Illuminate\Pagination\LengthAwarePaginator)
-                {{ $items->links() }}
-            @endif
+            {{ $items->links() }}
         </div>
     </div>
 </div>
@@ -111,7 +129,7 @@
 @push('addon-script')
 <script>
     $(document).ready(function() {
-        $('#aset-table').DataTable();
+        $('#aset-lainnya-table').DataTable();
     });
 </script>
 @endpush

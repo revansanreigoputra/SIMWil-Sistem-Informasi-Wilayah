@@ -23,31 +23,27 @@
                 </div>
             @endif
 
-            {{-- Tidak ada dropdown desa karena diambil otomatis dari session --}}
-
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="id_aset_atap" class="form-label">Jenis Atap</label>
                     <select name="id_aset_atap" id="id_aset_atap" class="form-select" required>
                         <option value="">-- Pilih Jenis Atap --</option>
-                        @foreach($jenisAtaps as $jenis)
-                            <option value="{{ $jenis->id }}">{{ $jenis->nama_jenis_atap }}</option>
+                        @foreach($asetAtaps as $aset)
+                            <option value="{{ $aset->id }}">{{ $aset->nama }}</option>
                         @endforeach
                     </select>
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <label for="tanggal" class="form-label">Tanggal</label>
-                    <input type="date" name="tanggal" id="tanggal" 
-                           class="form-control" required>
+                    <input type="date" name="tanggal" id="tanggal" class="form-control" required>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="jumlah" class="form-label">Jumlah Rumah</label>
-                    <input type="number" name="jumlah" id="jumlah" 
-                           class="form-control" min="0" value="0" required>
+                    <input type="number" name="jumlah" id="jumlah" class="form-control" min="0" value="0" required>
                 </div>
             </div>
 

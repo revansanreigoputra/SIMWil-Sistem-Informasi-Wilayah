@@ -11,14 +11,14 @@ return new class extends Migration
         Schema::create('pemilik_aset_ekonomi_lainnyas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_desa');
-            $table->unsignedBigInteger('id_jenis_aset_lainnya');
+            $table->unsignedBigInteger('id_aset_lainnya'); // ganti kolom FK
             $table->date('tanggal');
             $table->integer('jumlah');
             $table->timestamps();
 
-            // Relasi ke tabel desa dan jenis_aset_lainnyas
+            // Relasi
             $table->foreign('id_desa')->references('id')->on('desas')->onDelete('cascade');
-            $table->foreign('id_jenis_aset_lainnya')->references('id')->on('jenis_aset_lainnyas')->onDelete('cascade');
+            $table->foreign('id_aset_lainnya')->references('id')->on('aset_lainnya')->onDelete('cascade');
         });
     }
 

@@ -7,32 +7,50 @@
     <div class="card-header">
         <h5 class="card-title">Detail Data Menurut Sektor Usaha</h5>
     </div>
+
     <div class="card-body">
-        <table class="table table-striped">
+        <table class="table table-bordered table-striped">
+
             <tr>
-                <th>Tanggal</th>
-                <td>{{ \Carbon\Carbon::parse($menurut_sektor_usaha->tanggal)->format('d-m-Y') }}</td>
+                <th width="30%">Tanggal</th>
+                <td>
+                    {{ $menurut_sektor_usaha->tanggal 
+                        ? \Carbon\Carbon::parse($menurut_sektor_usaha->tanggal)->format('d-m-Y')
+                        : '-' 
+                    }}
+                </td>
             </tr>
+
             <tr>
-                <th>KK</th>
+                <th>Sektor Usaha</th>
+                <td>{{ $menurut_sektor_usaha->sektor->nama ?? '-' }}</td>
+            </tr>
+
+            <tr>
+                <th>Jumlah Keluarga (KK)</th>
                 <td>{{ $menurut_sektor_usaha->kk }}</td>
             </tr>
+
             <tr>
-                <th>Anggota</th>
+                <th>Total Anggota</th>
                 <td>{{ $menurut_sektor_usaha->anggota }}</td>
             </tr>
+
             <tr>
-                <th>Buruh</th>
+                <th>Buruh (KK)</th>
                 <td>{{ $menurut_sektor_usaha->buruh }}</td>
             </tr>
+
             <tr>
-                <th>Anggota Buruh</th>
+                <th>Total Anggota Buruh</th>
                 <td>{{ $menurut_sektor_usaha->anggota_buruh }}</td>
             </tr>
+
             <tr>
-                <th>Pendapatan</th>
+                <th>Pendapatan Perkapita</th>
                 <td>Rp {{ number_format($menurut_sektor_usaha->pendapatan, 0, ',', '.') }}</td>
             </tr>
+
         </table>
 
         <div class="mt-3 d-flex justify-content-between">

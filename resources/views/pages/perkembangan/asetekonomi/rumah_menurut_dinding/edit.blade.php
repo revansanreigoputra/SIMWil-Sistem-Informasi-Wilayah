@@ -23,17 +23,15 @@
                 </div>
             @endif
 
-            {{-- Desa otomatis dari session, tidak perlu input manual --}}
-
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="id_aset_dinding" class="form-label">Jenis Dinding</label>
                     <select name="id_aset_dinding" id="id_aset_dinding" class="form-select" required>
                         <option value="">-- Pilih Jenis Dinding --</option>
-                        @foreach($jenisDindings as $dinding)
+                        @foreach($asetDindings as $dinding)
                             <option value="{{ $dinding->id }}" 
                                 {{ old('id_aset_dinding', $rumahMenurutDinding->id_aset_dinding) == $dinding->id ? 'selected' : '' }}>
-                                {{ $dinding->nama_dinding }}
+                                {{ $dinding->nama }}
                             </option>
                         @endforeach
                     </select>

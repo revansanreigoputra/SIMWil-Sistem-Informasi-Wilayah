@@ -14,15 +14,16 @@
             @method('PUT')
 
             <div class="row">
-                {{-- Desa dihapus karena otomatis dari session --}}
-                
+                {{-- Desa otomatis dari session sehingga tidak ditampilkan --}}
+
                 <div class="col-md-6 mb-2">
                     <label>Jenis Aset</label>
-                    <select name="id_jenis_aset_lainnya" id="id_jenis_aset_lainnya" class="form-control" required>
+                    <select name="id_aset_lainnya" id="id_aset_lainnya" class="form-control" required>
                         <option value="">-- Pilih Jenis Aset --</option>
-                        @foreach($jenisAsets as $aset)
-                            <option value="{{ $aset->id }}" {{ old('id_jenis_aset_lainnya', $item->id_jenis_aset_lainnya) == $aset->id ? 'selected' : '' }}>
-                                {{ $aset->nama_jenis_aset }}
+                        @foreach($asetLainnya as $aset)
+                            <option value="{{ $aset->id }}"
+                                {{ old('id_aset_lainnya', $item->id_aset_lainnya) == $aset->id ? 'selected' : '' }}>
+                                {{ $aset->nama }}
                             </option>
                         @endforeach
                     </select>
@@ -30,21 +31,26 @@
 
                 <div class="col-md-6 mb-2">
                     <label>Tanggal</label>
-                    <input type="date" name="tanggal" class="form-control" value="{{ old('tanggal', $item->tanggal) }}" required>
+                    <input type="date" name="tanggal" class="form-control"
+                        value="{{ old('tanggal', $item->tanggal) }}" required>
                 </div>
             </div>
 
             <div class="row mt-2">
                 <div class="col-md-6 mb-2">
                     <label>Jumlah</label>
-                    <input type="number" name="jumlah" id="jumlah" class="form-control" value="{{ old('jumlah', $item->jumlah) }}" required>
+                    <input type="number" name="jumlah" id="jumlah" class="form-control"
+                        value="{{ old('jumlah', $item->jumlah) }}" required>
                 </div>
             </div>
 
             <div class="d-flex justify-content-between mt-3">
-                <a href="{{ route('perkembangan.asetekonomi.pemilik_aset_ekonomi_lainnya.index') }}" class="btn btn-secondary">Kembali</a>
+                <a href="{{ route('perkembangan.asetekonomi.pemilik_aset_ekonomi_lainnya.index') }}" class="btn btn-secondary">
+                    Kembali
+                </a>
                 <button type="submit" class="btn btn-primary">Update</button>
             </div>
+
         </form>
     </div>
 </div>
