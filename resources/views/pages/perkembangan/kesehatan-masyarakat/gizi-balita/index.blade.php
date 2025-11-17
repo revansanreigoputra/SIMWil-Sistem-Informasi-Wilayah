@@ -117,6 +117,12 @@
                                                                         value="{{ $item->bergizi_lebih }}"
                                                                         class="form-control" required>
                                                                 </div>
+                                                                <div class="col-md-6">
+                                                        <label class="form-label">Total Balita</label>
+                                                        <input type="number" name="jumlah_balita"
+                                                            value="{{ $item->jumlah_balita }}"
+                                                            class="form-control" required>
+                                                    </div>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
@@ -202,6 +208,10 @@
                             <div class="col-md-6">
                                 <label class="form-label">Bergizi Lebih</label>
                                 <input type="number" name="bergizi_lebih" class="form-control" value="{{ old('bergizi_lebih', 0) }}" required>
+                            </div>
+                             <div class="col-md-6">
+                                <label class="form-label">Total Balita</label>
+                                <input type="number" name="jumlah_balita" class="form-control" value="{{ old('jumlah_balita', 0) }}" required>
                             </div>
                         </div>
                     </div>

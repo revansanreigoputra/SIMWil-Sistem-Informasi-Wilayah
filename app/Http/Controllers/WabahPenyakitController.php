@@ -56,10 +56,14 @@ class WabahPenyakitController extends Controller
             ->with('success', 'Data wabah penyakit berhasil ditambahkan.');
     }
 
-    public function show(WabahPenyakit $wabahPenyakit)
-    {
-        return view('pages.perkembangan.kesehatan-masyarakat.wabah-penyakit.show', compact('wabahPenyakit'));
-    }
+   public function show($id)
+{
+    // Ambil data berdasarkan ID
+    $data = WabahPenyakit::with('jenisWabah')->findOrFail($id);
+
+    // Kirim data ke view
+    return view('pages.perkembangan.kesehatan-masyarakat.wabah-penyakit.show', compact('data'));
+}
 
     public function edit(WabahPenyakit $wabahPenyakit)
     {

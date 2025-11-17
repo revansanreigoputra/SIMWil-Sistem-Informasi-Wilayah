@@ -51,5 +51,6 @@ class DataKeluarga extends Model
     {
         return $this->hasMany(AnggotaKeluarga::class, 'data_keluarga_id');
     }
+ 
     
 }

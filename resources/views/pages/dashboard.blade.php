@@ -250,12 +250,12 @@
             border-top: 1px solid #dee2e6;
         }
 
-        #modern-dashboard-wrapper .table-borderless> :not(caption)>*>* {
+        #modern-dashboard-wrapper .table-borderless> :not(caption)>> {
             border-bottom-width: 0;
             border-top-width: 0;
         }
 
-        #modern-dashboard-wrapper .table-centered> :not(caption)>*>* {
+        #modern-dashboard-wrapper .table-centered> :not(caption)>> {
             vertical-align: middle;
         }
 
@@ -360,7 +360,7 @@
                 <div class="h-100">
                     <div class="row mb-4 pb-1">
                         <div class="col-12">
-                           <div class="d-flex justify-content-between align-items-md-center flex-md-row flex-column">
+                            <div class="d-flex justify-content-between align-items-md-center flex-md-row flex-column">
                                 <div class="flex-grow-1">
                                     <h1 class="fw-bold fs-2 text-dark mb-3 ms-3" style="letter-spacing: 0.5px;">
                                         {{ salamWaktu() . ', ' . Auth::user()->name }}!
@@ -399,7 +399,7 @@
                                     <div class="d-flex align-items-end justify-content-between mt-4">
                                         <div>
                                             <h4 class="fs-22 fw-semibold ff-secondary mb-4">
-                                                <span class="counter-value" data-target="8">0</span>
+                                                <span class="counter-value" data-target="{{ $totalKecamatan }}">0</span>
                                             </h4>
                                             <a href="{{ route('kecamatan.index') }}"
                                                 class="text-decoration-underline text-muted" data-bs-toggle="tooltip"
@@ -428,7 +428,7 @@
                                     <div class="d-flex align-items-end justify-content-between mt-4">
                                         <div>
                                             <h4 class="fs-22 fw-semibold ff-secondary mb-4">
-                                                <span class="counter-value" data-target="165">0</span>
+                                                <span class="counter-value" data-target="{{ $totalDesa }}">0</span>
                                             </h4>
                                             <a href="{{ route('desa.index') }}" class="text-decoration-underline text-muted"
                                                 data-bs-toggle="tooltip" data-bs-placement="top"
@@ -456,7 +456,7 @@
                                     <div class="d-flex align-items-end justify-content-between mt-4">
                                         <div>
                                             <h4 class="fs-22 fw-semibold ff-secondary mb-4">
-                                                <span class="counter-value" data-target="108335">0</span>
+                                                <span class="counter-value" data-target="{{ $totalKeluarga }}">0</span>
                                             </h4>
                                             <a href="{{ route('data_keluarga.index') }}"
                                                 class="text-decoration-underline text-muted" data-bs-toggle="tooltip"
@@ -485,7 +485,7 @@
                                     <div class="d-flex align-items-end justify-content-between mt-4">
                                         <div>
                                             <h4 class="fs-22 fw-semibold ff-secondary mb-4">
-                                                <span class="counter-value" data-target="523890">0</span>
+                                                <span class="counter-value" data-target="{{ $totalPenduduk }}">0</span>
                                             </h4>
                                             <a href="{{ route('anggota_keluarga.index') }}"
                                                 class="text-decoration-underline text-muted" data-bs-toggle="tooltip"
@@ -511,7 +511,18 @@
                                     <h4 class="card-title mb-0">Grafik Umur Penduduk</h4>
                                 </div>
                                 <div class="card-body">
-                                    <div id="column-charts" class="apex-charts" dir="ltr"></div>
+                                    @if (!empty($umurLabels))
+                                        <div id="column-charts" class="apex-charts" dir="ltr"></div>
+                                    @else
+                                        {{-- Placeholder baru yang lebih bagus --}}
+                                        <div class="d-flex align-items-center justify-content-center flex-column text-muted"
+                                            style="height: 333px; opacity: 0.8;">
+                                            <i class="ri-bar-chart-2-line"
+                                                style="font-size: 3.5rem; margin-bottom: 0.5rem;"></i>
+                                            <h5 class="text-muted mb-0">Belum ada data.</h5>
+                                            {{-- <p>Grafik umur akan muncul di sini.</p> --}}
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -521,7 +532,18 @@
                                     <h4 class="card-title mb-0">Populasi Berdasarkan Gender</h4>
                                 </div>
                                 <div class="card-body">
-                                    <div id="pie-charts" class="apex-charts"></div>
+                                    @if (!empty($genderSeries))
+                                        <div id="pie-charts" class="apex-charts"></div>
+                                    @else
+                                        {{-- Placeholder baru yang lebih bagus --}}
+                                        <div class="d-flex align-items-center justify-content-center flex-column text-muted"
+                                            style="height: 333px; opacity: 0.8;">
+                                            <i class="ri-pie-chart-line"
+                                                style="font-size: 3.5rem; margin-bottom: 0.5rem;"></i>
+                                            <h5 class="text-muted mb-0">Belum ada data.</h5>
+                                            {{-- <p>Grafik gender akan muncul di sini.</p> --}}
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -534,7 +556,18 @@
                                     <h4 class="card-title mb-0 flex-grow-1">Statistik Penganut Agama</h4>
                                 </div>
                                 <div class="card-body">
-                                    <div id="store-visits-source" class="apex-charts" dir="ltr"></div>
+                                    @if (!empty($agamaSeries))
+                                        <div id="store-visits-source" class="apex-charts" dir="ltr"></div>
+                                    @else
+                                        {{-- Placeholder baru yang lebih bagus --}}
+                                        <div class="d-flex align-items-center justify-content-center flex-column text-muted"
+                                            style="height: 333px; opacity: 0.8;">
+                                            <i class="ri-donut-chart-line"
+                                                style="font-size: 3.5rem; margin-bottom: 0.5rem;"></i>
+                                            <h5 class="text-muted mb-0">Belum ada data.</h5>
+                                            {{-- <p>Statistik agama akan muncul di sini.</p> --}}
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -560,33 +593,50 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td><a href="#" class="fw-medium link-primary">#SWL-2112</a>
-                                                    </td>
-                                                    <td>Alex Smith</td>
-                                                    <td>SK Tidak Mampu</td>
-                                                    <td><span class="badge bg-success-subtle text-success">Closing</span>
-                                                    </td>
-                                                    <td>23/09/2025</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><a href="#" class="fw-medium link-primary">#SWL-2111</a>
-                                                    </td>
-                                                    <td>Jansh Brown</td>
-                                                    <td>SP Berkelakuan Baik</td>
-                                                    <td><span class="badge bg-warning-subtle text-warning">Dalam
-                                                            Proses</span></td>
-                                                    <td>12/09/2025</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><a href="#" class="fw-medium link-primary">#SWL-2109</a>
-                                                    </td>
-                                                    <td>Ayaan Bowen</td>
-                                                    <td>SK Domisili</td>
-                                                    <td><span class="badge bg-danger-subtle text-danger">Pengecekan
-                                                            Dokumen</span></td>
-                                                    <td>03/09/2025</td>
-                                                </tr>
+                                                @forelse($pengajuanTerakhir as $permohonan)
+                                                    <tr>
+                                                        <td>
+                                                            {{-- Mengambil ID dari permohonans --}}
+                                                            <a href="#"
+                                                                class="fw-medium link-primary">#SWL-{{ $permohonan->id }}</a>
+                                                        </td>
+                                                        <td>
+                                                            {{-- Mengambil nama dari relasi 'anggotaKeluarga' --}}
+                                                            {{-- 'nama_lengkap' adalah kolom di tabel 'anggota_keluargas' (sesuaikan jika beda) --}}
+                                                            {{ $permohonan->anggotaKeluarga->nama_lengkap ?? 'Data Penduduk Dihapus' }}
+                                                        </td>
+                                                        <td>
+                                                            {{-- Mengambil nama dari relasi 'kopTemplate' --}}
+                                                            {{-- 'nama_template' adalah asumsi kolom di 'kop_templates' (sesuaikan jika beda) --}}
+                                                            {{ $permohonan->kopTemplate->nama_template ?? 'Jenis Tidak Ditemukan' }}
+                                                        </td>
+                                                        <td>
+                                                            {{-- PENTING: Ini akan mengambil data dari kolom 'status' --}}
+                                                            {{-- Pastikan Anda sudah menambahkan kolom 'status' di tabel 'permohonans' --}}
+                                                            @if ($permohonan->status == 'Closing')
+                                                                <span
+                                                                    class="badge bg-success-subtle text-success">{{ $permohonan->status }}</span>
+                                                            @elseif($permohonan->status == 'Dalam Proses')
+                                                                <span
+                                                                    class="badge bg-warning-subtle text-warning">{{ $permohonan->status }}</span>
+                                                            @else
+                                                                {{-- Tampilkan status apa adanya jika tidak cocok --}}
+                                                                <span
+                                                                    class="badge bg-danger-subtle text-danger">{{ $permohonan->status ?? 'Status T/A' }}</span>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            {{-- Menggunakan 'created_at' dari tabel permohonans --}}
+                                                            {{ $permohonan->created_at->format('d/m/Y') }}
+                                                        </td>
+                                                    </tr>
+                                                @empty
+                                                    {{-- Ini akan tampil jika tidak ada data permohonan --}}
+                                                    <tr>
+                                                        <td colspan="5" class="text-center">Belum ada data pengajuan.
+                                                        </td>
+                                                    </tr>
+                                                @endforelse
                                             </tbody>
                                         </table>
                                     </div>
@@ -639,8 +689,8 @@
                         height: 333,
                         type: 'donut'
                     },
-                    series: [840, 140, 125, 17, 15, 4],
-                    labels: ["Islam", "Kristen Protestan", "Katolik", "Hindu", "Buddha", "Konghucu"],
+                    series: {!! json_encode($agamaSeries) !!},
+                    labels: {!! json_encode($agamaLabels) !!},
                     colors: ["#13c56b", "#6691e7", "#e8bc52", "#ed5e5e", "#50c3e6", "#865ce2"],
                     legend: {
                         position: "bottom"
@@ -666,8 +716,8 @@
                         height: 333,
                         type: 'donut'
                     },
-                    series: [363869, 142976],
-                    labels: ['Perempuan', 'Laki-laki'],
+                    series: {!! json_encode($genderSeries) !!},
+                    labels: {!! json_encode($genderLabels) !!},
                     legend: {
                         position: "bottom"
                     },
@@ -690,10 +740,10 @@
                 var columnOptions = {
                     series: [{
                         name: 'Perempuan',
-                        data: [76, 85, 101, 98, 87, 105, 91, 114, 94, 56, 34, 17]
+                        data: {!! json_encode($umurSeriesPerempuan) !!}
                     }, {
                         name: 'Laki-laki',
-                        data: [44, 55, 57, 56, 61, 58, 63, 60, 66, 23, 12, 8]
+                        data: {!! json_encode($umurSeriesLaki) !!}
                     }],
                     chart: {
                         type: 'bar',
@@ -705,7 +755,7 @@
                     plotOptions: {
                         bar: {
                             horizontal: false,
-                            columnWidth: '55%',
+                            columnWidth: '20px',
                             borderRadius: 5,
                             borderRadiusApplication: 'end'
                         }
@@ -719,9 +769,7 @@
                         colors: ['transparent']
                     },
                     xaxis: {
-                        categories: ['0-5', '5-7', '7-13', '13-16', '16-19', '19-23', '23-30', '30-40', '40-56',
-                            '56-65', '65-75', '>75'
-                        ],
+                        categories: {!! json_encode($umurLabels) !!},
                         title: {
                             text: 'Kelompok Umur (Thn)'
                         }
@@ -759,8 +807,8 @@
                     flatpickr(el, {
                         mode: el.dataset.rangeDate ? "range" : "single",
                         dateFormat: el.dataset.dateFormat || "d M, Y",
-                        defaultDate: el.dataset.defaultDate ? el.dataset.defaultDate.split(" to ") :
-                            null,
+                        defaultDate: el.dataset.defaultDate ? el.dataset.defaultDate.split(
+                            " to ") : null,
                     });
                 }
             });

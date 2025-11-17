@@ -40,7 +40,12 @@
                                 <td>
                                     @canany(['sektor-industri-pengolahan.update', 'sektor-industri-pengolahan.delete'])
                                         <div class="d-flex gap-1 justify-content-center">
-                                            
+                                            <a href="{{ route('perkembangan.produk-domestik.sektor-industri-pengolahan.show', $sektor->id) }}" 
+                                            class="btn btn-sm btn-info text-white">
+                                            Detail
+                                                </a>
+
+                                        
                                             {{-- TOMBOL EDIT --}}
                                             @can('sektor-industri-pengolahan.update')
                                                 <a href="{{ route('perkembangan.produk-domestik.sektor-industri-pengolahan.edit', $sektor->id) }}"

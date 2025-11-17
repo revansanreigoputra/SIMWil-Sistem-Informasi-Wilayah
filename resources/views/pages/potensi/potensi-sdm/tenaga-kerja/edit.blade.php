@@ -6,7 +6,7 @@
     <div class="card">
         <div class="card-header">
             <h5 class="card-title">
-                 Edit Data Potensi Tenaga Kerja: {{ $pTenagaKerja->tenaga_kerja }}
+                 Edit Data Potensi Tenaga Kerja: {{ $pTenagaKerja->tenagaKerja->tenaga_kerja }}
             </h5>
         </div>
 
@@ -40,13 +40,20 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="tenaga_kerja" class="form-label required">
+                            <label for="tenaga_kerja_id" class="form-label required">
                                 <i class="fas fa-briefcase"></i> Tenaga Kerja
                             </label>
-                            <input type="text" name="tenaga_kerja" id="tenaga_kerja"
-                                class="form-control @error('tenaga_kerja') is-invalid @enderror"
-                                value="{{ old('tenaga_kerja', $pTenagaKerja->tenaga_kerja) }}" placeholder="Masukkan jenis tenaga kerja" required>
-                            @error('tenaga_kerja')
+                            <select name="tenaga_kerja_id" id="tenaga_kerja_id"
+                                class="form-control @error('tenaga_kerja_id') is-invalid @enderror" required>
+                                <option value="">Pilih Jenis Tenaga Kerja</option>
+                                @foreach ($masterTenagaKerjas as $tenagaKerja)
+                                    <option value="{{ $tenagaKerja->id }}"
+                                        {{ old('tenaga_kerja_id', $pTenagaKerja->tenaga_kerja_id) == $tenagaKerja->id ? 'selected' : '' }}>
+                                        {{ $tenagaKerja->tenaga_kerja }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('tenaga_kerja_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -151,10 +158,10 @@
             // Store original values for reset function
             const originalValues = {
                 tanggal: "{{ $pTenagaKerja->tanggal }}",
-                tenaga_kerja: "{{ $pTenagaKerja->tenaga_kerja }}",
+                tenaga_kerja_id: "{{ $pTenagaKerja->tenaga_kerja_id }}",
                 jumlah_laki_laki: "{{ $pTenagaKerja->jumlah_laki_laki }}",
                 jumlah_perempuan: "{{ $pTenagaKerja->jumlah_perempuan }}",
-                total: "{{ $pTenagaKerja->jumlah_total }}"
+                jumlah_total: "{{ $pTenagaKerja->jumlah_total }}"
             };
 
             // Form validation
@@ -204,10 +211,10 @@
         function resetToOriginal() {
             const originalValues = {
                 tanggal: "{{ $pTenagaKerja->tanggal }}",
-                tenaga_kerja: "{{ $pTenagaKerja->tenaga_kerja }}",
+                tenaga_kerja_id: "{{ $pTenagaKerja->tenaga_kerja_id }}",
                 jumlah_laki_laki: "{{ $pTenagaKerja->jumlah_laki_laki }}",
                 jumlah_perempuan: "{{ $pTenagaKerja->jumlah_perempuan }}",
-                total: "{{ $pTenagaKerja->jumlah_total }}"
+                jumlah_total: "{{ $pTenagaKerja->jumlah_total }}"
             };
 
             Object.keys(originalValues).forEach(key => {

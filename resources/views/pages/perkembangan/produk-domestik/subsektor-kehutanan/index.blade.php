@@ -39,6 +39,9 @@
                                 <td>
                                     @canany(['subsektor-kehutanan.update', 'subsektor-kehutanan.delete'])
                                         <div class="d-flex gap-1 justify-content-center">
+                                <a href="{{ route('perkembangan.produk-domestik.subsektor-kehutanan.show', $item->id) }}" class="btn btn-sm btn-info text-white">
+                                    Detail
+                                </a>
                                             {{-- TOMBOL EDIT --}}
                                             @can('subsektor-kehutanan.update')
                                                 <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
@@ -55,7 +58,7 @@
                                                 </button>
                                             @endcan
                                         </div>
-
+                                                
                                         {{-- MODAL EDIT --}}
                                         <div class="modal fade" id="editModal-{{ $item->id }}" tabindex="-1">
                                             <div class="modal-dialog">

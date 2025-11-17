@@ -11,9 +11,15 @@ class PEtnisSuku extends Model
 
     protected $fillable = [
         'tanggal',
-        'etnis_suku',
+        'etnis_id',
         'jumlah_laki_laki',
         'jumlah_perempuan',
         'jumlah_total',
+        'desa_id',
     ];
+
+    public function etnis()
+    {
+        return $this->belongsTo(\App\Models\MasterPerkembangan\Etnis::class);
+    }
 }

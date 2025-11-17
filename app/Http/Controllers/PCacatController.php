@@ -17,7 +17,8 @@ class PCacatController extends Controller
     {
         abort_if(Gate::denies('p_cacat.view'), 403);
 
-        $pCacats = PCacat::with('cacat')->latest()->get();
+        $desaId = session('desa_id');
+        $pCacats = PCacat::with('cacat')->where('desa_id', $desaId)->latest()->get();
 
         return view('pages.potensi.potensi-sdm.cacat.index', compact('pCacats'));
     }
@@ -49,6 +50,7 @@ class PCacatController extends Controller
         ]);
 
         $validated['jumlah_total'] = $validated['jumlah_laki_laki'] + $validated['jumlah_perempuan'];
+        $validated['desa_id'] = session('desa_id');
 
         PCacat::create($validated);
 
@@ -92,6 +94,7 @@ class PCacatController extends Controller
         ]);
 
         $validated['jumlah_total'] = $validated['jumlah_laki_laki'] + $validated['jumlah_perempuan'];
+        $validated['desa_id'] = session('desa_id'); // Ensure desa_id is kept consistent
 
         $pCacat->update($validated);
 

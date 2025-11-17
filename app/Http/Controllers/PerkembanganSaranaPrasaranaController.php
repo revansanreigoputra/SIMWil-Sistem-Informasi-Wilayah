@@ -49,10 +49,11 @@ class PerkembanganSaranaPrasaranaController extends Controller
             ->with('success', 'Data Sarana & Prasarana berhasil ditambahkan.');
     }
 
-    public function edit(PerkembanganSaranaPrasarana $saranaPrasarana)
-    {
-        return view('pages.perkembangan.kesehatan-masyarakat.sarana-prasarana.edit', compact('saranaPrasarana'));
-    }
+  public function edit($id)
+{
+    $data = PerkembanganSaranaPrasarana::findOrFail($id);
+    return view('pages.perkembangan.kesehatan-masyarakat.sarana-prasarana.edit', compact('data'));
+}
 
     public function update(Request $request, PerkembanganSaranaPrasarana $saranaPrasarana)
     {

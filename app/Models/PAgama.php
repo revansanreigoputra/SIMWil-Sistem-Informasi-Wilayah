@@ -15,10 +15,16 @@ class PAgama extends Model
         'laki',
         'perempuan',
         'total',
+        'desa_id',
     ];
 
     public function agama()
     {
         return $this->belongsTo(Agama::class, 'id_agama');
+    }
+
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class, 'desa_id');
     }
 }

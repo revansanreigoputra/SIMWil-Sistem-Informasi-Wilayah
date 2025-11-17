@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+@extends('layouts.master')
+
 @section('title', 'Detail Potensi Kualitas Angkatan Kerja')
 
 @section('action')
@@ -29,7 +31,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label text-muted">Angkatan Kerja</label>
-                                <p class="fw-semibold">{{ $pKualitasAngkatanKerja->angkatan_kerja }}</p>
+                                <p class="fw-semibold">{{ $pKualitasAngkatanKerja->kualitasAngkatanKerja->kualitas_angkatan_kerja }}</p>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label text-muted">Jumlah Laki-laki</label>
@@ -71,7 +73,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p>Data potensi kualitas angkatan kerja <strong>{{ $pKualitasAngkatanKerja->angkatan_kerja }}</strong> yang dihapus tidak bisa dikembalikan.</p>
+                        <p>Data potensi kualitas angkatan kerja <strong>{{ $pKualitasAngkatanKerja->kualitasAngkatanKerja->kualitas_angkatan_kerja }}</strong> yang dihapus tidak bisa dikembalikan.</p>
                         <p>Yakin ingin menghapus data ini?</p>
                     </div>
                     <div class="modal-footer">

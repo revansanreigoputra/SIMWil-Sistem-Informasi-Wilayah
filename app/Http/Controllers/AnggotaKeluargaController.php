@@ -199,7 +199,7 @@ class AnggotaKeluargaController extends Controller
         // Remove the temporary fields before creating the AnggotaKeluarga record
         unset($validatedData['nama_cacat']);
         unset($validatedData['nama_lembaga']);
-
+        $validatedData['status_kehidupan'] = 'hidup';
         AnggotaKeluarga::create($validatedData);
 
         return redirect()->route('anggota_keluarga.index')->with('success', 'Anggota keluarga berhasil ditambahkan.');
@@ -343,7 +343,7 @@ class AnggotaKeluargaController extends Controller
                 'kb',
                 'cacat',
                 'kedudukanPajak',
-                'lembaga'
+                'lembaga',
             ])->findOrFail($id);
 
             return response()->json([

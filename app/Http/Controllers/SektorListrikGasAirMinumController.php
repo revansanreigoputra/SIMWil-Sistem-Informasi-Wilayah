@@ -60,35 +60,38 @@ class SektorListrikGasAirMinumController extends Controller
     return view('pages.perkembangan.produk-domestik.sektor-listrik-gas-air-minum.edit', compact('sektor'));
 }
 
-    public function update(Request $request, SektorListrikGasAirMinum $sektor)
-    {
-        $validator = Validator::make($request->all(), [
-            'tanggal' => 'required|date',
-        ]);
+    public function update(Request $request, $id)
+{
+    $validator = Validator::make($request->all(), [
+        'tanggal' => 'required|date',
+    ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput()
-                ->with('error', 'Gagal memperbarui data sektor listrik, gas, dan air minum.');
-        }
-
-        $data = $request->all();
-        $data['desa_id'] = session('desa_id');
-
-        $sektor->update($data);
-
-        return redirect()
-            ->route('perkembangan.produk-domestik.sektor-listrik-gas-air-minum.index')
-            ->with('success', 'Data berhasil diperbarui.');
+    if ($validator->fails()) {
+        return redirect()->back()
+            ->withErrors($validator)
+            ->withInput()
+            ->with('error', 'Gagal memperbarui data sektor listrik, gas, dan air minum.');
     }
 
-    public function destroy(SektorListrikGasAirMinum $sektor)
-    {
-        $sektor->delete();
+    $data = $request->all();
+    $data['desa_id'] = session('desa_id');
 
-        return redirect()
-            ->route('perkembangan.produk-domestik.sektor-listrik-gas-air-minum.index')
-            ->with('success', 'Data berhasil dihapus.');
-    }
+    $sektor = SektorListrikGasAirMinum::findOrFail($id);
+    $sektor->update($data);
+
+    return redirect()
+        ->route('perkembangan.produk-domestik.sektor-listrik-gas-air-minum.index')
+        ->with('success', 'Data berhasil diperbarui.');
+}
+
+
+    public function destroy($id)
+{
+    $sektor = SektorListrikGasAirMinum::findOrFail($id);
+    $sektor->delete();
+
+    return redirect()
+        ->route('perkembangan.produk-domestik.sektor-listrik-gas-air-minum.index')
+        ->with('success', 'Data berhasil dihapus.');
+}
 }

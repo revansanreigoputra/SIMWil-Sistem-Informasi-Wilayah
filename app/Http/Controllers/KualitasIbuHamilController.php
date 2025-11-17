@@ -2,151 +2,139 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Desa;
 use App\Models\KualitasIbuHamil;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class KualitasIbuHamilController extends Controller
 {
     /**
-     * Menampilkan daftar data kualitas ibu hamil per desa.
+     * Tampilkan daftar data Kualitas Ibu Hamil (filter sesuai desa dari session)
      */
     public function index()
     {
-        // Ambil desa_id dari session login
-        $desaId = session('desa_id') ?? auth()->user()->desa_id ?? null;
+        $desaId = session('desa_id');
 
-        // Jika admin kabupaten tidak pilih desa, tampilkan kosong
-        if (!$desaId && auth()->user()->role != 'admin_kabupaten') {
-            return redirect()->back()->with('error', 'Silakan pilih desa terlebih dahulu.');
-        }
-
-        // Filter data berdasarkan desa aktif
         $kualitas = KualitasIbuHamil::with('desa')
-            ->when($desaId, fn($q) => $q->where('desa_id', $desaId))
+            ->where('desa_id', $desaId)
             ->latest()
-            ->get();
+            ->paginate(10);
 
         return view('pages.perkembangan.kesehatan-masyarakat.kualitas-ibu-hamil.index', compact('kualitas'));
     }
 
     /**
-     * Form tambah data kualitas ibu hamil.
+     * Form tambah data baru
      */
-   public function create()
-{
-    $desas = Desa::all();
-    return view('pages.perkembangan.kesehatan-masyarakat.kualitas-ibu-hamil.create', compact('desas'));
-}
+    public function create()
+    {
+        return view('pages.perkembangan.kesehatan-masyarakat.kualitas-ibu-hamil.create');
+    }
 
     /**
-     * Simpan data baru kualitas ibu hamil.
+     * Simpan data baru
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'tanggal' => 'required|date',
-            'jumlah_ibu_hamil' => 'nullable|integer',
-            'total_pemeriksaan' => 'nullable|integer',
-            'jumlah_melahirkan' => 'nullable|integer',
-            'jumlah_kematian_ibu' => 'nullable|integer',
-            'jumlah_ibu_nifas_hidup' => 'nullable|integer',
-            'jumlah_ibu_nifas' => 'nullable|integer',
-            'periksa_posyandu' => 'nullable|integer',
-            'periksa_puskesmas' => 'nullable|integer',
-            'periksa_rumah_sakit' => 'nullable|integer',
-            'periksa_dokter_praktek' => 'nullable|integer',
-            'periksa_bidan_praktek' => 'nullable|integer',
-            'periksa_dukun_terlatih' => 'nullable|integer',
+            'jumlah_ibu_hamil' => 'nullable|integer|min:0',
+            'total_pemeriksaan' => 'nullable|integer|min:0',
+            'jumlah_melahirkan' => 'nullable|integer|min:0',
+            'jumlah_kematian_ibu' => 'nullable|integer|min:0',
+            'jumlah_ibu_nifas_hidup' => 'nullable|integer|min:0',
+            'jumlah_ibu_nifas' => 'nullable|integer|min:0',
+            'periksa_posyandu' => 'nullable|integer|min:0',
+            'periksa_puskesmas' => 'nullable|integer|min:0',
+            'periksa_rumah_sakit' => 'nullable|integer|min:0',
+            'periksa_dokter_praktek' => 'nullable|integer|min:0',
+            'periksa_bidan_praktek' => 'nullable|integer|min:0',
+            'periksa_dukun_terlatih' => 'nullable|integer|min:0',
         ]);
 
-        $desaId = session('desa_id') ?? auth()->user()->desa_id;
-
-        if (is_null($desaId)) {
-            return redirect()->back()->with('error', 'Akses ditolak: tidak ada desa aktif.');
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Gagal menambahkan data kualitas ibu hamil.');
         }
 
-        KualitasIbuHamil::create(array_merge($request->all(), [
-            'desa_id' => $desaId,
-        ]));
+        $data = $validator->validated();
+        $data['desa_id'] = session('desa_id'); // otomatis dari session
 
-        return redirect()->route('perkembangan.kesehatan-masyarakat.kualitas-ibu-hamil.index')
-            ->with('success', 'Data berhasil ditambahkan.');
+        KualitasIbuHamil::create($data);
+
+        return redirect()
+            ->route('perkembangan.kesehatan-masyarakat.kualitas-ibu-hamil.index')
+            ->with('success', 'Data kualitas ibu hamil berhasil ditambahkan.');
     }
 
     /**
-     * Form edit data.
+     * Tampilkan detail
      */
-    public function edit($id)
+    public function show($id)
     {
-        $desaId = session('desa_id') ?? auth()->user()->desa_id;
-        $data = KualitasIbuHamil::where('id', $id)
-            ->when($desaId, fn($q) => $q->where('desa_id', $desaId))
-            ->firstOrFail();
-
-        return view('pages.perkembangan.kesehatan-masyarakat.kualitas-ibu-hamil.edit', compact('data'));
+        $data = KualitasIbuHamil::with('desa')->findOrFail($id);
+        return view('pages.perkembangan.kesehatan-masyarakat.kualitas-ibu-hamil.show', compact('data'));
     }
 
     /**
-     * Update data kualitas ibu hamil.
+     * Form edit data
      */
-    public function update(Request $request, $id)
+    public function edit(KualitasIbuHamil $kualitasIbuHamil)
+{
+    $data = $kualitasIbuHamil;
+    return view('pages.perkembangan.kesehatan-masyarakat.kualitas-ibu-hamil.edit', compact('data'));
+}
+
+
+    /**
+     * Update data
+     */
+    public function update(Request $request, KualitasIbuHamil $kualitasIbuHamil)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'tanggal' => 'required|date',
-            'jumlah_ibu_hamil' => 'nullable|integer',
-            'total_pemeriksaan' => 'nullable|integer',
-            'jumlah_melahirkan' => 'nullable|integer',
-            'jumlah_kematian_ibu' => 'nullable|integer',
-            'jumlah_ibu_nifas_hidup' => 'nullable|integer',
-            'jumlah_ibu_nifas' => 'nullable|integer',
-            'periksa_posyandu' => 'nullable|integer',
-            'periksa_puskesmas' => 'nullable|integer',
-            'periksa_rumah_sakit' => 'nullable|integer',
-            'periksa_dokter_praktek' => 'nullable|integer',
-            'periksa_bidan_praktek' => 'nullable|integer',
-            'periksa_dukun_terlatih' => 'nullable|integer',
+            'jumlah_ibu_hamil' => 'nullable|integer|min:0',
+            'total_pemeriksaan' => 'nullable|integer|min:0',
+            'jumlah_melahirkan' => 'nullable|integer|min:0',
+            'jumlah_kematian_ibu' => 'nullable|integer|min:0',
+            'jumlah_ibu_nifas_hidup' => 'nullable|integer|min:0',
+            'jumlah_ibu_nifas' => 'nullable|integer|min:0',
+            'periksa_posyandu' => 'nullable|integer|min:0',
+            'periksa_puskesmas' => 'nullable|integer|min:0',
+            'periksa_rumah_sakit' => 'nullable|integer|min:0',
+            'periksa_dokter_praktek' => 'nullable|integer|min:0',
+            'periksa_bidan_praktek' => 'nullable|integer|min:0',
+            'periksa_dukun_terlatih' => 'nullable|integer|min:0',
         ]);
 
-        $desaId = session('desa_id') ?? auth()->user()->desa_id;
-        $data = KualitasIbuHamil::where('id', $id)
-            ->when($desaId, fn($q) => $q->where('desa_id', $desaId))
-            ->firstOrFail();
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Gagal memperbarui data kualitas ibu hamil.');
+        }
 
-        $data->update(array_merge($request->all(), [
-            'desa_id' => $desaId,
-        ]));
+        $data = $validator->validated();
+        $data['desa_id'] = session('desa_id');
 
-        return redirect()->route('perkembangan.kesehatan-masyarakat.kualitas-ibu-hamil.index')
-            ->with('success', 'Data berhasil diperbarui.');
+        $kualitasIbuHamil->update($data);
+
+        return redirect()
+            ->route('perkembangan.kesehatan-masyarakat.kualitas-ibu-hamil.index')
+            ->with('success', 'Data kualitas ibu hamil berhasil diperbarui.');
     }
 
     /**
-     * Hapus data kualitas ibu hamil.
+     * Hapus data
      */
-    public function destroy($id)
+    public function destroy(KualitasIbuHamil $kualitasIbuHamil)
     {
-        $desaId = session('desa_id') ?? auth()->user()->desa_id;
-        $data = KualitasIbuHamil::where('id', $id)
-            ->when($desaId, fn($q) => $q->where('desa_id', $desaId))
-            ->firstOrFail();
+        $kualitasIbuHamil->delete();
 
-        $data->delete();
-
-        return redirect()->route('perkembangan.kesehatan-masyarakat.kualitas-ibu-hamil.index')
-            ->with('success', 'Data berhasil dihapus.');
+        return redirect()
+            ->route('perkembangan.kesehatan-masyarakat.kualitas-ibu-hamil.index')
+            ->with('success', 'Data kualitas ibu hamil berhasil dihapus.');
     }
-
-    public function show($id)
-{
-    $desaId = session('desa_id') ?? auth()->user()->desa_id;
-
-    $data = KualitasIbuHamil::with('desa')
-        ->when($desaId, fn($q) => $q->where('desa_id', $desaId))
-        ->findOrFail($id);
-
-    return view('pages.perkembangan.kesehatan-masyarakat.kualitas-ibu-hamil.show', compact('data'));
 }
-
-}
-

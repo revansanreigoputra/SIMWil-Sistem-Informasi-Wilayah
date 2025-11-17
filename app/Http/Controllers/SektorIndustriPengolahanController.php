@@ -55,47 +55,58 @@ class SektorIndustriPengolahanController extends Controller
             ->route('perkembangan.produk-domestik.sektor-industri-pengolahan.index')
             ->with('success', 'Data berhasil ditambahkan.');
     }
+    
+public function edit($id)
+{
+    $sektorIndustriPengolahan = SektorIndustriPengolahan::findOrFail($id);
+    return view('pages.perkembangan.produk-domestik.sektor-industri-pengolahan.edit', compact('sektorIndustriPengolahan'));
+}
 
-    public function edit(SektorIndustriPengolahan $sektor)
-    {
-        return view('pages.perkembangan.produk-domestik.sektor-industri-pengolahan.edit', compact('sektor'));
+  public function update(Request $request, SektorIndustriPengolahan $sektor_industri_pengolahan)
+{
+    $validator = Validator::make($request->all(), [
+        'tanggal' => 'required|date',
+        'jenis_industri' => 'required|string|max:255',
+        'nilai_produksi' => 'required|integer|min:0',
+        'nilai_bahan_baku' => 'required|integer|min:0',
+        'nilai_bahan_penolong' => 'required|integer|min:0',
+        'biaya_antara' => 'required|integer|min:0',
+        'jumlah_jenis_industri' => 'required|integer|min:0',
+    ]);
+
+    if ($validator->fails()) {
+        return redirect()->back()
+            ->withErrors($validator)
+            ->withInput()
+            ->with('error', 'Gagal memperbarui data sektor industri pengolahan.');
     }
 
-    public function update(Request $request, SektorIndustriPengolahan $sektor)
-    {
-        $validator = Validator::make($request->all(), [
-            'tanggal' => 'required|date',
-            'jenis_industri' => 'required|string|max:255',
-            'nilai_produksi' => 'required|integer|min:0',
-            'nilai_bahan_baku' => 'required|integer|min:0',
-            'nilai_bahan_penolong' => 'required|integer|min:0',
-            'biaya_antara' => 'required|integer|min:0',
-            'jumlah_jenis_industri' => 'required|integer|min:0',
-        ]);
+    $data = $request->all();
+    $data['desa_id'] = session('desa_id');
 
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput()
-                ->with('error', 'Gagal memperbarui data sektor industri pengolahan.');
-        }
+    $sektor_industri_pengolahan->update($data);
 
-        $data = $request->all();
-        $data['desa_id'] = session('desa_id');
+    return redirect()
+        ->route('perkembangan.produk-domestik.sektor-industri-pengolahan.index')
+        ->with('success', 'Data berhasil diperbarui.');
+}
 
-        $sektor->update($data);
 
-        return redirect()
-            ->route('perkembangan.produk-domestik.sektor-industri-pengolahan.index')
-            ->with('success', 'Data berhasil diperbarui.');
-    }
 
-    public function destroy(SektorIndustriPengolahan $sektor)
-    {
-        $sektor->delete();
+    public function show($id)
+{
+    $sektor = \App\Models\SektorIndustriPengolahan::with('desa')->findOrFail($id);
+    return view('pages.perkembangan.produk-domestik.sektor-industri-pengolahan.show', compact('sektor'));
+}
 
-        return redirect()
-            ->route('perkembangan.produk-domestik.sektor-industri-pengolahan.index')
-            ->with('success', 'Data berhasil dihapus.');
-    }
+
+    public function destroy(SektorIndustriPengolahan $sektor_industri_pengolahan)
+{
+    $sektor_industri_pengolahan->delete();
+
+    return redirect()
+        ->route('perkembangan.produk-domestik.sektor-industri-pengolahan.index')
+        ->with('success', 'Data berhasil dihapus.');
+}
+
 }

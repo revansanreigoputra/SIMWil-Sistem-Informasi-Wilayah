@@ -59,13 +59,13 @@ class SektorAngkutanKomunikasiController extends Controller
             ->with('success', 'Data berhasil ditambahkan.');
     }
 
-    public function show(SektorAngkutanKomunikasi $sektorAngkutan)
+  public function show($id)
 {
-    // kirim juga dengan key 'angkutan' supaya view yang pakai $angkutan aman
-    return view('pages.perkembangan.produk-domestik.sektor-angkutan.show', [
-        'angkutan' => $sektorAngkutan
-    ]);
+    $angkutan = \App\Models\SektorAngkutanKomunikasi::with('desa')->findOrFail($id);
+
+    return view('pages.perkembangan.produk-domestik.sektor-angkutan.show', compact('angkutan'));
 }
+
 
    public function edit(SektorAngkutanKomunikasi $sektorAngkutan)
 {

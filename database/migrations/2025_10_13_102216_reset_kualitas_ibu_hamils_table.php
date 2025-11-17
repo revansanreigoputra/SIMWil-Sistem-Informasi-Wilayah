@@ -15,7 +15,7 @@ return new class extends Migration
 
             // 🔹 Tambahkan kolom desa_id sebagai foreign key
             $table->unsignedBigInteger('desa_id')->nullable();
-            $table->foreign('desa_id')->references('id')->on('desas')->onDelete('set null');
+            $table->foreign('desa_id')->references('id')->on('desas')->onDelete('cascade');
 
             $table->date('tanggal')->nullable();
             $table->integer('jumlah_ibu_hamil')->default(0);

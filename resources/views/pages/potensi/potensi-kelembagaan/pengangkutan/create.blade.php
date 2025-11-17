@@ -1,0 +1,180 @@
+@extends('layouts.master')
+
+@section('title', 'Tambah Data Usaha Jasa Pengangkutan')
+
+@section('content')
+    {{-- Memeriksa apakah pengguna memiliki izin 'create-pengangkutan' --}}
+    @can('create-pengangkutan')
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-truck me-2"></i>Formulir Tambah Data Usaha Jasa Pengangkutan
+                </h5>
+            </div>
+            <div class="card-body p-4">
+                <form action="{{ route('potensi.potensi-kelembagaan.pengangkutan.store') }}" method="POST">
+                    @csrf
+
+                    {{-- SECTION 1: Data Umum --}}
+                    <div class="mb-2 border rounded-3 p-4 bg-light">
+                        <h6 class="fw-bold mb-3 text-primary">
+                            <i class="bi bi-info-circle me-1"></i> Data Umum
+                        </h6>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="tanggal" class="form-label fw-semibold">Tanggal <span class="text-danger">*</span></label>
+                                <input type="date" name="tanggal" id="tanggal"
+                                    class="form-control @error('tanggal') is-invalid @enderror"
+                                    value="{{ old('tanggal', date('Y-m-d')) }}" required>
+                                @error('tanggal')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="kategori" class="form-label fw-semibold">Kategori <span class="text-danger">*</span></label>
+                                <select name="kategori" id="kategori"
+                                    class="form-select @error('kategori') is-invalid @enderror" required>
+                                    <option value="">-- Pilih Kategori --</option>
+                                    <option value="Angkutan Darat" {{ old('kategori') == 'Angkutan Darat' ? 'selected' : '' }}>Angkutan Darat</option>
+                                    <option value="Angkutan Laut" {{ old('kategori') == 'Angkutan Laut' ? 'selected' : '' }}>Angkutan Laut</option>
+                                </select>
+                                @error('kategori')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="jenis_angkutan" class="form-label fw-semibold">Jenis Angkutan <span class="text-danger">*</span></label>
+                                <select name="jenis_angkutan" id="jenis_angkutan"
+                                    class="form-select @error('jenis_angkutan') is-invalid @enderror" required>
+                                    <option value="">-- Pilih Jenis Angkutan --</option>
+                                </select>
+                                @error('jenis_angkutan')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- SECTION 2: Data Kegiatan --}}
+                    <div class="mb-2 border rounded-3 p-4 bg-light">
+                        <h6 class="fw-bold mb-3 text-primary">
+                            <i class="bi bi-clipboard-data me-1"></i> Data Kegiatan
+                        </h6>
+                        <div class="row g-3">
+                            {{-- Diubah menjadi col-md-3 agar sejajar dalam satu baris --}}
+                            <div class="col-md-3">
+                                <label for="jumlah_unit" class="form-label fw-semibold">Jumlah Unit <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="number" name="jumlah_unit" id="jumlah_unit"
+                                        class="form-control @error('jumlah_unit') is-invalid @enderror"
+                                        value="{{ old('jumlah_unit', 0) }}" required min="0">
+                                    <span class="input-group-text">Unit</span>
+                                </div>
+                                @error('jumlah_unit')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="jumlah_pemilik" class="form-label fw-semibold">Jumlah Pemilik <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="number" name="jumlah_pemilik" id="jumlah_pemilik"
+                                        class="form-control @error('jumlah_pemilik') is-invalid @enderror"
+                                        value="{{ old('jumlah_pemilik', 0) }}" required min="0">
+                                    <span class="input-group-text">Orang</span>
+                                </div>
+                                @error('jumlah_pemilik')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="kapasitas" class="form-label fw-semibold">Kapasitas <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="number" name="kapasitas" id="kapasitas"
+                                        class="form-control @error('kapasitas') is-invalid @enderror"
+                                        value="{{ old('kapasitas', 0) }}" required min="0">
+                                    <span class="input-group-text">Orang/Unit</span>
+                                </div>
+                                @error('kapasitas')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="tenaga_kerja" class="form-label fw-semibold">Tenaga Kerja <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="number" name="tenaga_kerja" id="tenaga_kerja"
+                                        class="form-control @error('tenaga_kerja') is-invalid @enderror"
+                                        value="{{ old('tenaga_kerja', 0) }}" required min="0">
+                                    <span class="input-group-text">Orang</span>
+                                </div>
+                                @error('tenaga_kerja')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Tombol --}}
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <a href="{{ route('potensi.potensi-kelembagaan.pengangkutan.index') }}" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left"></i> Kembali
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-1"></i> Simpan Data
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    @else
+        {{-- Jika pengguna tidak punya izin, tampilkan pesan ini --}}
+        <div class="alert alert-danger mt-3">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            Maaf, Anda tidak memiliki izin untuk membuat data Usaha Jasa Pengangkutan baru.
+        </div>
+    @endcan
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const kategoriSelect = document.getElementById('kategori');
+            const jenisSelect = document.getElementById('jenis_angkutan');
+
+            const jenisOptions = {
+                'Angkutan Darat': ['Bus Umum', 'Angkot', 'Taksi', 'Ojek', 'Travel'],
+                'Angkutan Laut': ['Kapal Ferry', 'Kapal Tongkang', 'Kapal Penumpang', 'Perahu Motor']
+            };
+
+            function updateJenisOptions(selectedKategori) {
+                jenisSelect.innerHTML = '<option value="">-- Pilih Jenis Angkutan --</option>';
+
+                if (selectedKategori && jenisOptions[selectedKategori]) {
+                    jenisOptions[selectedKategori].forEach(jenis => {
+                        const option = document.createElement('option');
+                        option.value = jenis;
+                        option.textContent = jenis;
+
+                        // Memastikan nilai lama tetap terpilih setelah validasi gagal
+                        if ("{{ old('jenis_angkutan') }}" === jenis) {
+                            option.selected = true;
+                        }
+
+                        jenisSelect.appendChild(option);
+                    });
+                }
+            }
+
+            kategoriSelect.addEventListener('change', function () {
+                updateJenisOptions(this.value);
+            });
+
+            // Panggil fungsi saat halaman dimuat untuk menangani data lama (old)
+            if ("{{ old('kategori') }}") {
+                updateJenisOptions("{{ old('kategori') }}");
+            }
+        });
+    </script>
+@endsection

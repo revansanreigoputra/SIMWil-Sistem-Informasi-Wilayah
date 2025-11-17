@@ -68,7 +68,7 @@
 
         .nav-primary-pills .nav-link:hover:not(.active) {
             background-color: transparent !important;
-            color: #0099D0 !important; 
+            color: #0099D0 !important;
             border-bottom: 3px solid #ccc;
         }
 
@@ -89,10 +89,12 @@
 <!-- FFor id generator -->
 
 @section('action')
-    <a id="create-permohonan-btn" href="{{ route('permohonan.create') }}" class="btn btn-primary">
-        Buat Dokumen Baru
-    </a>
-
+    @can('permohonan.create')
+        <a id="create-permohonan-btn" href="{{ route('permohonan.create') }}" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-2 py-1"></i>
+            Buat Dokumen Baru
+        </a>
+    @endcan
 
 @endsection
 
@@ -184,6 +186,9 @@
                                                                     case 'ditolak':
                                                                         $statusClass = 'badge bg-danger';
                                                                         break;
+                                                                    case 'siap_diambil':
+                                                                        $statusClass = 'badge bg-warning';
+                                                                        break;
                                                                     case 'sudah_diambil':
                                                                         $statusClass = 'badge bg-success';
                                                                         break;
@@ -198,17 +203,23 @@
                                                             {{-- ACTION BUTTONS --}}
                                                             @can('permohonan.edit')
                                                                 <a href="{{ route('permohonan.edit', $permohonan->id) }}"
-                                                                    class="btn btn-sm btn-warning">Edit</a>
+                                                                    class="btn btn-sm btn-warning">
+                                                                    <i class="bi bi-pencil me-2 py-1"></i>Edit</a>
                                                             @endcan
                                                             @can('permohonan.delete')
                                                                 <button type="button" class="btn btn-danger btn-sm"
                                                                     data-bs-toggle="modal"
                                                                     data-bs-target="#delete-confirm-{{ $permohonan->id }}">
+                                                                    <i class="bi bi-trash me-2 py-1"></i>
                                                                     Hapus
                                                                 </button>
                                                             @endcan
-                                                            <a href="{{ route('permohonan.cetak', $permohonan->id) }}"
-                                                                class="btn btn-sm btn-success" target="_blank">Cetak</a>
+                                                            @if ($permohonan->status !== 'belum_diverifikasi')
+                                                                <a href="{{ route('permohonan.cetak', $permohonan->id) }}"
+                                                                    class="btn btn-sm btn-success" target="_blank">
+                                                                    <i class="bi bi-printer me-2 py-1"></i>
+                                                                    Cetak</a>
+                                                            @endif
                                                         </td>
                                                     </tr>
                                                 @empty

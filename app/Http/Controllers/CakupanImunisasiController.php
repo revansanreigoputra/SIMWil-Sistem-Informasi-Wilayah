@@ -60,14 +60,15 @@ class CakupanImunisasiController extends Controller
 
   public function show($id)
 {
-    $data = CakupanAirBersih::with('desa')->findOrFail($id);
-    return view('perkembangan.kesehatan_masyarakat.cakupan-imunisasi.show', compact('data'));
+    $data = CakupanImunisasi::with('desa')->findOrFail($id);
+    return view('pages.perkembangan.kesehatan-masyarakat.cakupan-imunisasi.show', compact('data'));
 }
 
-    public function edit(CakupanImunisasi $cakupanImunisasi)
-    {
-        return view('pages.perkembangan.kesehatan-masyarakat.cakupan-imunisasi.edit', compact('cakupanImunisasi'));
-    }
+    public function edit($id)
+{
+    $data = CakupanImunisasi::findOrFail($id);
+    return view('pages.perkembangan.kesehatan-masyarakat.cakupan-imunisasi.edit', compact('data'));
+}
 
     public function update(Request $request, CakupanImunisasi $cakupanImunisasi)
     {

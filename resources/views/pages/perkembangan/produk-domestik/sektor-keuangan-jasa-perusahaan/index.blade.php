@@ -35,13 +35,44 @@
                         <td class="text-center">{{ $row->jumlah_lembaga_bukan_bank ?? 0 }}</td>
                         <td class="text-center">{{ $row->jumlah_usaha_sewa ?? 0 }}</td>
                         <td class="text-center">{{ $row->jumlah_perusahaan_jasa ?? 0 }}</td>
-                        <td>
+                        <td class="text-center">
                             <a href="{{ route('perkembangan.produk-domestik.sektor-keuangan-jasa-perusahaan.show', $row->id) }}" class="btn btn-info btn-sm">Detail</a>
                             <a href="{{ route('perkembangan.produk-domestik.sektor-keuangan-jasa-perusahaan.edit', $row->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('perkembangan.produk-domestik.sektor-keuangan-jasa-perusahaan.destroy', $row->id) }}" method="POST" style="display:inline;">
-                                @csrf @method('DELETE')
-                                <button class="btn btn-danger btn-sm" onclick="return confirm('Hapus data ini?')">Hapus</button>
-                            </form>
+
+                            <!-- Tombol Hapus (Trigger Modal) -->
+                            <button type="button" class="btn btn-danger btn-sm" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#delete-sektor-keuangan-jasa-perusahaan-{{ $row->id }}">
+                                Hapus
+                            </button>
+
+                            <!-- MODAL HAPUS -->
+                            <div class="modal fade" id="delete-sektor-keuangan-jasa-perusahaan-{{ $row->id }}" tabindex="-1"
+                                aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-danger text-white">
+                                            <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus Data</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Data sektor keuangan dan jasa perusahaan tanggal 
+                                                <strong>{{ $row->tanggal }}</strong> 
+                                                akan dihapus dan tidak bisa dikembalikan.</p>
+                                            <p>Yakin ingin menghapus data ini?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                            <form action="{{ route('perkembangan.produk-domestik.sektor-keuangan-jasa-perusahaan.destroy', $row->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Hapus</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </td>
                     </tr>
                     @endforeach

@@ -65,10 +65,11 @@ class PenderitaSakitController extends Controller
             ->with('success', 'Data Penderita Sakit berhasil ditambahkan.');
     }
 
-    public function show(PenderitaSakit $penderitaSakit)
-    {
-        return view('pages.perkembangan.kesehatan-masyarakat.penderita-sakit.show', compact('penderitaSakit'));
-    }
+    public function show($id)
+{
+    $data = PenderitaSakit::findOrFail($id);
+    return view('pages.perkembangan.kesehatan-masyarakat.penderita-sakit.show', compact('data'));
+}
 
     public function edit(PenderitaSakit $penderitaSakit)
     {

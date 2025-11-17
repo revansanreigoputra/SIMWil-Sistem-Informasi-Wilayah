@@ -25,12 +25,12 @@
                     <input type="number" name="perempuan_usia_subur_15_49" class="form-control" value="{{ $data->perempuan_usia_subur_15_49 }}">
                 </div>
                 <div class="col-md-3 mb-3">
-                    <label>Pasangan Usia Subur (PUS)</label>
-                    <input type="number" name="pasangan_usia_subur" class="form-control" value="{{ $data->pasangan_usia_subur }}">
+                    <label>Wanita Kawin Muda (&lt; 16 tahun)</label>
+                    <input type="number" name="wanita_kawin_muda_kurang_16" class="form-control" value="{{ $data->wanita_kawin_muda_kurang_16 }}">
                 </div>
                 <div class="col-md-3 mb-3">
-                    <label>Wanita Kawin Muda (&lt; 16 tahun)</label>
-                    <input type="number" name="wanita_kawin_muda_16" class="form-control" value="{{ $data->wanita_kawin_muda_16 }}">
+                    <label>Pasangan Usia Subur (PUS)</label>
+                    <input type="number" name="pasangan_usia_subur" class="form-control" value="{{ $data->pasangan_usia_subur }}">
                 </div>
             </div>
 
@@ -38,55 +38,51 @@
             <div class="row">
                 <div class="col-md-3 mb-3">
                     <label>Pengguna KB Suntik</label>
-                    <input type="number" name="alat_kontrasepsi_suntik" class="form-control" value="{{ $data->alat_kontrasepsi_suntik }}">
+                    <input type="number" name="pengguna_kontrasepsi_suntik" class="form-control" value="{{ $data->pengguna_kontrasepsi_suntik }}">
                 </div>
                 <div class="col-md-3 mb-3">
                     <label>Pengguna KB Spiral</label>
-                    <input type="number" name="metode_spiral" class="form-control" value="{{ $data->metode_spiral }}">
+                    <input type="number" name="pengguna_kontrasepsi_spiral" class="form-control" value="{{ $data->pengguna_kontrasepsi_spiral }}">
                 </div>
                 <div class="col-md-3 mb-3">
                     <label>Pengguna KB Kondom</label>
-                    <input type="number" name="kontrasepsi_kondom" class="form-control" value="{{ $data->kontrasepsi_kondom }}">
+                    <input type="number" name="pengguna_kontrasepsi_kondom" class="form-control" value="{{ $data->pengguna_kontrasepsi_kondom }}">
                 </div>
                 <div class="col-md-3 mb-3">
                     <label>Pengguna KB Pil</label>
-                    <input type="number" name="kontrasepsi_pil" class="form-control" value="{{ $data->kontrasepsi_pil }}">
+                    <input type="number" name="pengguna_kontrasepsi_pil" class="form-control" value="{{ $data->pengguna_kontrasepsi_pil }}">
                 </div>
                 <div class="col-md-3 mb-3">
                     <label>Metode Vasektomi</label>
-                    <input type="number" name="metode_vasektomi" class="form-control" value="{{ $data->metode_vasektomi }}">
+                    <input type="number" name="pengguna_kontrasepsi_vasektomi" class="form-control" value="{{ $data->pengguna_kontrasepsi_vasektomi }}">
                 </div>
                 <div class="col-md-3 mb-3">
                     <label>Metode Tubektomi</label>
-                    <input type="number" name="metode_tubektomi" class="form-control" value="{{ $data->metode_tubektomi }}">
+                    <input type="number" name="pengguna_kontrasepsi_tubektomi" class="form-control" value="{{ $data->pengguna_kontrasepsi_tubektomi }}">
                 </div>
                 <div class="col-md-3 mb-3">
                     <label>Metode KB Alami</label>
-                    <input type="number" name="metode_kb_alamiah" class="form-control" value="{{ $data->metode_kb_alamiah }}">
+                    <input type="number" name="pengguna_kb_alamiah" class="form-control" value="{{ $data->pengguna_kb_alamiah }}">
                 </div>
                 <div class="col-md-3 mb-3">
                     <label>KB Tradisional</label>
-                    <input type="number" name="kb_tradisional" class="form-control" value="{{ $data->kb_tradisional }}">
+                    <input type="number" name="pengguna_kb_tradisional" class="form-control" value="{{ $data->pengguna_kb_tradisional }}">
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label>Lainnya</label>
+                    <input type="number" name="pengguna_kontrasepsi_lainnya" class="form-control" value="{{ $data->pengguna_kontrasepsi_lainnya }}">
                 </div>
             </div>
 
-            <h5 class="mt-4">C. Tambahan (Opsional)</h5>
+            <h5 class="mt-4">C. Tambahan</h5>
             <div class="row">
                 <div class="col-md-3 mb-3">
-                    <label>Total Peserta KB Aktif</label>
-                    <input type="number" name="total_kb_aktif" class="form-control" value="{{ $data->total_kb_aktif }}">
+                    <label>Akseptor KB</label>
+                    <input type="number" name="akseptor_kb" class="form-control" value="{{ $data->akseptor_kb }}">
                 </div>
                 <div class="col-md-3 mb-3">
-                    <label>Jumlah Akseptor Baru</label>
-                    <input type="number" name="akseptor_baru" class="form-control" value="{{ $data->akseptor_baru }}">
-                </div>
-                <div class="col-md-3 mb-3">
-                    <label>Jumlah Drop Out</label>
-                    <input type="number" name="drop_out" class="form-control" value="{{ $data->drop_out }}">
-                </div>
-                <div class="col-md-3 mb-3">
-                    <label>Total Peserta KB</label>
-                    <input type="number" name="total_kb" class="form-control" value="{{ $data->total_kb }}">
+                    <label>PUS Tidak Menggunakan KB</label>
+                    <input type="number" name="pus_tidak_menggunakan_kb" class="form-control" value="{{ $data->pus_tidak_menggunakan_kb }}">
                 </div>
             </div>
 

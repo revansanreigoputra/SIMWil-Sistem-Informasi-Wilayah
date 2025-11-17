@@ -148,8 +148,12 @@
                         let content = `
                             <div class="row">
                                 <div class="col-md-6 mb-3">
+                                    <strong>Email:</strong>
+                                    <p>${anggota.email || 'N/A'}</p>
+                                </div>
+                                <div class="col-md-6 mb-3">
                                     <strong>NIK:</strong>
-                                    <p>${anggota.nik}</p>
+                                    <p>${anggota.nik || 'N/A'}</p>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <strong>Nama Lengkap:</strong>

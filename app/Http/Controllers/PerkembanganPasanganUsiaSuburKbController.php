@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PerkembanganPasanganUsiaSuburKb;
+use App\Models\Desa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -53,33 +54,39 @@ public function show($id)
     return view('pages.perkembangan.kesehatan-masyarakat.pasangan-usia-subur.show', compact('pasanganUsiaSuburKb'));
 }
 
-    public function edit(PerkembanganPasanganUsiaSuburKb $pasanganUsiaSuburKb)
-    {
-        return view('pages.perkembangan.kesehatan-masyarakat.pasangan-usia-subur.edit', compact('pasanganUsiaSuburKb'));
+ public function edit(PerkembanganPasanganUsiaSuburKb $pasangan_usia_subur)
+{
+    $desa = Desa::all();
+    return view('pages.perkembangan.kesehatan-masyarakat.pasangan-usia-subur.edit', [
+        'data' => $pasangan_usia_subur,
+        'desa' => $desa
+    ]);
+}
+
+
+    public function update(Request $request, $id)
+{
+    $validator = Validator::make($request->all(), [
+        'tanggal' => 'required|date',
+    ]);
+
+    if ($validator->fails()) {
+        return redirect()->back()
+            ->withErrors($validator)
+            ->withInput()
+            ->with('error', 'Gagal memperbarui data.');
     }
 
-    public function update(Request $request, PerkembanganPasanganUsiaSuburKb $pasanganUsiaSuburKb)
-    {
-        $validator = Validator::make($request->all(), [
-            'tanggal' => 'required|date',
-        ]);
+    $data = $request->all();
+    $data['desa_id'] = session('desa_id');
 
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput()
-                ->with('error', 'Gagal memperbarui data.');
-        }
+    $pasanganUsiaSuburKb = PerkembanganPasanganUsiaSuburKb::findOrFail($id);
+    $pasanganUsiaSuburKb->update($data);
 
-        $data = $request->all();
-        $data['desa_id'] = session('desa_id');
-
-        $pasanganUsiaSuburKb->update($data);
-
-        return redirect()
-            ->route('perkembangan.kesehatan-masyarakat.pasangan-usia-subur.index')
-            ->with('success', 'Data berhasil diperbarui.');
-    }
+    return redirect()
+        ->route('perkembangan.kesehatan-masyarakat.pasangan-usia-subur.index')
+        ->with('success', 'Data berhasil diperbarui.');
+}
 
    public function destroy($id)
 {

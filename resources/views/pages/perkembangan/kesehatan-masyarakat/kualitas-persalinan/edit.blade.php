@@ -4,86 +4,117 @@
 
 @section('content')
 <div class="card">
+    <div class="card-header">
+        <h5 class="card-title">Formulir Edit Data Kualitas Persalinan</h5>
+    </div>
     <div class="card-body">
-        <form action="{{ route('perkembangan.kesehatan-masyarakat.kualitas-persalinan.update', $data->id) }}" method="POST">
+        <form action="{{ route('perkembangan.kesehatan-masyarakat.kualitas-persalinan.update', $kualitasPersalinan->id) }}" method="POST">
             @csrf
             @method('PUT')
+
             <div class="row">
-                {{-- 1. Informasi dasar --}}
-
-                
-             <div class="col-md-6 mb-3">
-                <label for="desa_id" class="form-label">Desa</label>
-                <select name="desa_id" class="form-control" required>
-                    @foreach ($desas as $desa)
-                        <option value="{{ $desa->id }}" {{ $data->desa_id == $desa->id ? 'selected' : '' }}>
-                            {{ $desa->nama_desa }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-            
+                {{-- Informasi Umum --}}
                 <div class="col-md-6 mb-3">
-                    <input type="date" name="tanggal" class="form-control" 
-                  value="{{ \Carbon\Carbon::parse($data->tanggal)->format('Y-m-d') }}" required>
+                    <label class="form-label">Tanggal</label>
+                    <input type="date" name="tanggal" class="form-control"
+                        value="{{ \Carbon\Carbon::parse($kualitasPersalinan->tanggal)->format('Y-m-d') }}" required>
                 </div>
 
-                {{-- 2. Tempat Persalinan --}}
+                {{-- Tempat Persalinan --}}
+                <h6 class="mt-3 fw-bold text-primary">Tempat Persalinan</h6>
+
                 <div class="col-md-6 mb-3">
-                    <label for="persalinan_rumah_sakit_umum" class="form-label">Persalinan Rumah Sakit Umum</label>
-                    <input type="number" name="persalinan_rumah_sakit_umum" class="form-control" value="{{ $data->persalinan_rumah_sakit_umum }}" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="persalinan_puskesmas" class="form-label">Persalinan Puskesmas</label>
-                    <input type="number" name="persalinan_puskesmas" class="form-control" value="{{ $data->persalinan_puskesmas }}" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="persalinan_praktek_bidan" class="form-label">Persalinan Praktek Bidan</label>
-                    <input type="number" name="persalinan_praktek_bidan" class="form-control" value="{{ $data->persalinan_praktek_bidan }}" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="persalinan_rumah_bersalin" class="form-label">Persalinan Rumah Bersalin</label>
-                    <input type="number" name="persalinan_rumah_bersalin" class="form-control" value="{{ $data->persalinan_rumah_bersalin }}" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="persalinan_polindes" class="form-label">Persalinan Polindes</label>
-                    <input type="number" name="persalinan_polindes" class="form-control" value="{{ $data->persalinan_polindes }}" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="persalinan_balai_kesehatan" class="form-label">Persalinan Balai Kesehatan</label>
-                    <input type="number" name="persalinan_balai_kesehatan" class="form-control" value="{{ $data->persalinan_balai_kesehatan }}" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="persalinan_ibu_anak" class="form-label">Persalinan Ibu Anak</label>
-                    <input type="number" name="persalinan_ibu_anak" class="form-control" value="{{ $data->persalinan_ibu_anak }}" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="persalinan_praktek_dokter" class="form-label">Persalinan Praktek Dokter</label>
-                    <input type="number" name="persalinan_praktek_dokter" class="form-control" value="{{ $data->persalinan_praktek_dokter }}" required>
+                    <label class="form-label">Persalinan Rumah Sakit Umum</label>
+                    <input type="number" name="persalinan_rumah_sakit_umum" class="form-control"
+                        value="{{ $kualitasPersalinan->persalinan_rumah_sakit_umum }}">
                 </div>
 
-                {{-- 3. Penolong Persalinan --}}
                 <div class="col-md-6 mb-3">
-                    <label for="ditolong_dokter" class="form-label">Ditolong Dokter</label>
-                    <input type="number" name="ditolong_dokter" class="form-control" value="{{ $data->ditolong_dokter }}" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="ditolong_bidan" class="form-label">Ditolong Bidan</label>
-                    <input type="number" name="ditolong_bidan" class="form-control" value="{{ $data->ditolong_bidan }}" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="ditolong_perawat" class="form-label">Ditolong Perawat</label>
-                    <input type="number" name="ditolong_perawat" class="form-control" value="{{ $data->ditolong_perawat }}" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="ditolong_dukun" class="form-label">Ditolong Dukun</label>
-                    <input type="number" name="ditolong_dukun" class="form-control" value="{{ $data->ditolong_dukun }}" required>
+                    <label class="form-label">Persalinan Puskesmas</label>
+                    <input type="number" name="persalinan_puskesmas" class="form-control"
+                        value="{{ $kualitasPersalinan->persalinan_puskesmas }}">
                 </div>
 
-                {{-- 4. Total --}}
                 <div class="col-md-6 mb-3">
-                    <label for="total_persalinan" class="form-label">Total Persalinan</label>
-                    <input type="number" name="total_persalinan" class="form-control" value="{{ $data->total_persalinan }}" required>
+                    <label class="form-label">Persalinan Praktek Bidan</label>
+                    <input type="number" name="persalinan_praktek_bidan" class="form-control"
+                        value="{{ $kualitasPersalinan->persalinan_praktek_bidan }}">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Persalinan Rumah Bersalin</label>
+                    <input type="number" name="persalinan_rumah_bersalin" class="form-control"
+                        value="{{ $kualitasPersalinan->persalinan_rumah_bersalin }}">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Persalinan Polindes</label>
+                    <input type="number" name="persalinan_polindes" class="form-control"
+                        value="{{ $kualitasPersalinan->persalinan_polindes }}">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Persalinan Balai Kesehatan Ibu Anak</label>
+                    <input type="number" name="persalinan_balai_kesehatan_ibu_anak" class="form-control"
+                        value="{{ $kualitasPersalinan->persalinan_balai_kesehatan_ibu_anak }}">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Persalinan Praktek Dokter</label>
+                    <input type="number" name="persalinan_praktek_dokter" class="form-control"
+                        value="{{ $kualitasPersalinan->persalinan_praktek_dokter }}">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Persalinan di Rumah Sendiri</label>
+                    <input type="number" name="rumah_sendiri" class="form-control"
+                        value="{{ $kualitasPersalinan->rumah_sendiri }}">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Persalinan di Rumah Dukun</label>
+                    <input type="number" name="rumah_dukun" class="form-control"
+                        value="{{ $kualitasPersalinan->rumah_dukun }}">
+                </div>
+
+                {{-- Penolong Persalinan --}}
+                <h6 class="mt-4 fw-bold text-primary">Penolong Persalinan</h6>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Ditolong Dokter</label>
+                    <input type="number" name="ditolong_dokter" class="form-control"
+                        value="{{ $kualitasPersalinan->ditolong_dokter }}">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Ditolong Bidan</label>
+                    <input type="number" name="ditolong_bidan" class="form-control"
+                        value="{{ $kualitasPersalinan->ditolong_bidan }}">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Ditolong Perawat</label>
+                    <input type="number" name="ditolong_perawat" class="form-control"
+                        value="{{ $kualitasPersalinan->ditolong_perawat }}">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Ditolong Dukun Bersalin</label>
+                    <input type="number" name="ditolong_dukun_bersalin" class="form-control"
+                        value="{{ $kualitasPersalinan->ditolong_dukun_bersalin }}">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Ditolong Keluarga</label>
+                    <input type="number" name="ditolong_keluarga" class="form-control"
+                        value="{{ $kualitasPersalinan->ditolong_keluarga }}">
+                </div>
+
+                {{-- Total --}}
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Total Persalinan</label>
+                    <input type="number" name="total_persalinan" class="form-control"
+                        value="{{ $kualitasPersalinan->total_persalinan }}">
                 </div>
             </div>
 

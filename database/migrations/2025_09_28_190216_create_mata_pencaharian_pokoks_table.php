@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedInteger('laki_laki')->default(0);
             $table->unsignedInteger('perempuan')->default(0);
             $table->unsignedInteger('total')->default(0);
+            $table->foreignId('desa_id')->constrained('desas')->onDelete('cascade'); // Add desa_id
             $table->timestamps();
         });
     }

@@ -4,9 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\JenisAsetLainnya;
 use App\Models\JenisAtap;
-use App\Models\JpHiburan;
-use App\Models\LayananSurat\JenisSurat;
-use App\Models\LayananSurat\KopTemplate;
+use App\Models\JpHiburan; 
+use App\Models\LayananSurat\{KopTemplate, Permohonan, JenisSurat};
 use App\Models\User;
 
 use Illuminate\Database\Seeder;
@@ -101,8 +100,10 @@ class DatabaseSeeder extends Seeder
             SakitKelainanSeeder::class,
             StatusKepemilikanSeeder::class,
             TempatPerawatanSeeder::class,
-            TempatpersalinanSeeder::class,
-            
+            TempatpersalinanSeeder::class,  
+            PemilikOrganisasiSeeder::class,  
+            PartisipasiPolitikSeeder::class,     
+
             JenisWabahSeeder::class,
             JenisPenyakitSeeder::class,
             JenisDampakSeeder::class,
@@ -112,6 +113,7 @@ class DatabaseSeeder extends Seeder
             AlatProduksiIkanLautSeeder::class,
             AlatProduksiIkanTawarSeeder::class,
             SatuanProduksiTernakSeeder::class,
+            SatuanProduksiKehutananSeeder::class,
             NamaIkanSeeder::class,
             JenisPotensiAirSeeder::class,
             PengelolaanPotensiAirSeeder::class,
@@ -125,6 +127,7 @@ class DatabaseSeeder extends Seeder
             JenisLembagaEkonomiSeeder::class,
             KategoriUsahaPengangkutanSeeder::class,
             KategoriUsahaJasaDanHiburanSeeder::class,
+            JenisUsahaHiburanSeeder::class,
             KategoriSekolahSeeder::class,
             JenisSekolahTingkatanSeeder::class,
             KategoriPrasaranaTransportasiDaratSeeder::class,
@@ -141,7 +144,11 @@ class DatabaseSeeder extends Seeder
             TempatIbadahSeeder::class,
             KopTemplateSeeder::class,
             JenisSuratSeeder::class,
+            PermohonanSeeder::class,
             JenisAsetLainnyaSeeder::class,
+            TenagaKerjaSeeder::class,
+            KualitasAngkatanKerjaSeeder::class,
+            JenisProduksiTernakSeeder::class,
         ]);
     }
 }

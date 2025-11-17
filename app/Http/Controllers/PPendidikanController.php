@@ -14,7 +14,8 @@ class PPendidikanController extends Controller
      */
     public function index()
     {
-        $p_pendidikans = P_pendidikan::with('pendidikan')->latest()->paginate(10);
+        $desaId = session('desa_id');
+        $p_pendidikans = P_pendidikan::where('desa_id', $desaId)->with('pendidikan')->latest()->paginate(10);
         return view('pages.potensi.potensi-sdm.pendidikan.index', compact('p_pendidikans'));
     }
 
@@ -43,7 +44,9 @@ class PPendidikanController extends Controller
             return redirect()->back()->withErrors($validator)->withInput()->with('error', 'Gagal menambahkan data potensi pendidikan.');
         }
 
-        P_pendidikan::create($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+        P_pendidikan::create($data);
 
         return redirect()->route('potensi.potensi-sdm.pendidikan.index')->with('success', 'Data potensi pendidikan berhasil ditambahkan.');
     }
@@ -81,7 +84,9 @@ class PPendidikanController extends Controller
             return redirect()->back()->withErrors($validator)->withInput()->with('error', 'Gagal memperbarui data potensi pendidikan.');
         }
 
-        $p_pendidikan->update($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+        $p_pendidikan->update($data);
 
         return redirect()->route('potensi.potensi-sdm.pendidikan.index')->with('success', 'Data potensi pendidikan berhasil diperbarui.');
     }

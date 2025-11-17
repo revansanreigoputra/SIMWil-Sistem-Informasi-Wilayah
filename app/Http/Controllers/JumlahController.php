@@ -25,7 +25,6 @@ class JumlahController extends Controller
             'tanggal' => 'required|date',
             'jumlah_laki' => 'required|integer|min:0',
             'jumlah_perempuan' => 'required|integer|min:0',
-            'jumlah_total' => 'required|integer|min:0',
             'jumlah_kk' => 'required|integer|min:0',
             'jumlah_penduduk' => 'required|integer|min:0',
         ]);
@@ -35,6 +34,7 @@ class JumlahController extends Controller
         }
 
         $data = $request->all();
+        $data['jumlah_total'] = $data['jumlah_laki'] + $data['jumlah_perempuan'];
         $data['desa_id'] = session('desa_id');
 
         Jumlah::create($data);
@@ -58,7 +58,6 @@ class JumlahController extends Controller
             'tanggal' => 'required|date',
             'jumlah_laki' => 'required|integer|min:0',
             'jumlah_perempuan' => 'required|integer|min:0',
-            'jumlah_total' => 'required|integer|min:0',
             'jumlah_kk' => 'required|integer|min:0',
             'jumlah_penduduk' => 'required|integer|min:0',
         ]);
@@ -68,6 +67,7 @@ class JumlahController extends Controller
         }
 
         $data = $request->all();
+        $data['jumlah_total'] = $data['jumlah_laki'] + $data['jumlah_perempuan'];
         $data['desa_id'] = session('desa_id'); // Ensure desa_id is updated if needed, or kept consistent
 
         $jumlah->update($data);

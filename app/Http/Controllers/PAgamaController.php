@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\PAgama;
 use App\Models\MasterDDK\Agama;
+use App\Models\Desa; // Import Desa model
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Auth; // Import Auth facade
+use Illuminate\Support\Facades\Session; // Import Session facade
 
 class PAgamaController extends Controller
 {
@@ -17,7 +20,8 @@ class PAgamaController extends Controller
     {
         abort_if(Gate::denies('p_agama.view'), 403);
 
-        $p_agamas = PAgama::with('agama')->latest()->get();
+        $desaId = Session::get('desa_id'); // Get desa_id from session
+        $p_agamas = PAgama::with('agama')->where('desa_id', $desaId)->latest()->get();
 
         return view('pages.potensi.potensi-sdm.agama.index', compact('p_agamas'));
     }
@@ -49,6 +53,7 @@ class PAgamaController extends Controller
         ]);
 
         $validated['total'] = $validated['laki'] + $validated['perempuan'];
+        $validated['desa_id'] = Session::get('desa_id'); // Add desa_id from session
 
         PAgama::create($validated);
 
@@ -94,6 +99,7 @@ class PAgamaController extends Controller
         ]);
 
         $validated['total'] = $validated['laki'] + $validated['perempuan'];
+        $validated['desa_id'] = Session::get('desa_id'); // Ensure desa_id is updated or kept consistent
 
         $p_agama->update($validated);
 

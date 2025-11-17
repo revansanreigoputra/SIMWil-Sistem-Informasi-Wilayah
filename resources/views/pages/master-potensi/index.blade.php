@@ -117,17 +117,22 @@
                                     <th>Kategori Lembaga Ekonomi</th>
                                 @elseif ($activeTab === 'jenis_prasarana_transportasi_darat')
                                     <th>Kategori Prasarana Transportasi Darat</th>
+                                @elseif ($activeTab === 'jenis_prasarana_transportasi_lainnya')
+                                    <th>Kategori Prasarana Transportasi Lainnya</th>
                                 @elseif ($activeTab === 'jenis_prasarana_komunikasi_informasi')
                                     <th>Kategori Prasarana Komunikasi Informasi</th>
+                                @elseif ($activeTab === 'jenis_sekolah_tingkatan')
+                                    <th>Kategori Sekolah</th>
                                 @endif
 
                                 {{-- Perbaikan: Judul kolom dinamis --}}
                                 @if ($activeTab === 'tempat_ibadah')
                                     <th>Nama Tempat Ibadah</th>
+                                @elseif ($activeTab === 'jenis_produksi_ternak')
+                                    <th>Nama Jenis Produksi Ternak</th>
                                 @else
                                     <th>Nama {{ Str::headline($activeTab) }}</th>
                                 @endif
-                                
                                 <th style="width:20%" class="text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -141,29 +146,33 @@
                                         <td>{{ $item->kategoriLembagaEkonomi->nama ?? '-' }}</td>
                                     @elseif ($activeTab === 'jenis_prasarana_transportasi_darat')
                                         <td>{{ $item->kategoriPrasaranaTransportasiDarat->nama ?? '-' }}</td>
+                                    @elseif ($activeTab === 'jenis_prasarana_transportasi_lainnya')
+                                        <td>{{ $item->kategoriPrasaranaTransportasiLainnya->nama ?? '-' }}</td>
                                     @elseif ($activeTab === 'jenis_prasarana_komunikasi_informasi')
                                         <td>{{ $item->kategoriPrasaranaKomunikasiInformasi->nama ?? '-' }}</td>
+                                    @elseif ($activeTab === 'jenis_sekolah_tingkatan')
+                                        <td>{{ $item->KategoriSekolah->nama ?? '-' }}</td>
+                                    @elseif ($activeTab === 'jenis_produksi_ternak')
+                                        {{-- No specific category for jenis_produksi_ternak, just the name --}}
                                     @endif
-
                                     {{-- Perbaikan Kritis: Tampilkan 'nama_tempat' untuk tempat_ibadah --}}
                                     @php
                                         // Tentukan nilai yang akan ditampilkan (nama atau nama_tempat)
-                                        $displayValue = ($activeTab === 'tempat_ibadah') ? ($item->nama_tempat ?? '') : ($item->nama ?? '');
+                                        $displayValue =
+                                            $activeTab === 'tempat_ibadah'
+                                                ? $item->nama_tempat ?? ''
+                                                : $item->nama ?? '';
                                     @endphp
-                                    
+
                                     <td>{{ $displayValue }}</td>
 
                                     <td class="text-center">
                                         {{-- Data untuk tombol edit --}}
-                                        <button type="button" class="btn btn-sm btn-warning edit-btn"
-                                            data-bs-toggle="modal" data-bs-target="#edit-modal"
-                                            data-id="{{ $item->id }}" 
-                                            {{-- data-display-value digunakan untuk skrip edit/AJAX --}}
-                                            data-display-value="{{ $displayValue }}" 
-                                            data-tab="{{ $activeTab }}" 
-                                            data-bagian="{{ $activeBagian }}">
+                                        <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                                            data-bs-target="#edit-modal" data-id="{{ $item->id }}">
                                             <i class="fas fa-edit"></i> Edit
                                         </button>
+
 
                                         <form action="{{ route('master-potensi.destroy', $item->id) }}" method="POST"
                                             class="d-inline">
@@ -179,7 +188,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="{{ in_array($activeTab, ['jenis_lembaga_ekonomi', 'jenis_prasarana_transportasi_darat', 'jenis_prasarana_komunikasi_informasi']) ? 4 : 3 }}"
+                                    <td colspan="{{ in_array($activeTab, ['jenis_lembaga_ekonomi', 'jenis_prasarana_transportasi_darat', 'jenis_prasarana_komunikasi_informasi', 'jenis_produksi_ternak']) ? 3 : 2 }}"
                                         class="text-center text-muted py-4">
                                         Data tidak ditemukan.
                                     </td>
@@ -199,68 +208,4 @@
         @include('pages.master-potensi.create')
         @include('pages.master-potensi.edit')
     @endif
-
-    {{-- Hapus skrip DOMContentLoaded lama, kita akan menggunakan AJAX/jQuery di addon-script --}}
 @endsection
-
-@push('addon-script')
-    @if ($activeTab)
-        <script>
-            // Skrip Modal Edit menggunakan AJAX untuk memuat data
-            $('#edit-modal').on('show.bs.modal', function(event) {
-                var button = $(event.relatedTarget);
-                var id = button.data('id');
-                var tab = button.data('tab');
-                var modal = $(this);
-                
-                // Tampilkan loading state
-                modal.find('.modal-body').html('<div class="text-center py-5"><i class="fas fa-spinner fa-spin fa-2x"></i><p class="mt-2">Memuat data...</p></div>');
-
-                // Endpoint untuk mengambil data edit (asumsi controller sudah dimodifikasi untuk menerima query parameter 'tab')
-                // Ganti `master-potensi/edit` dengan `master-potensi` jika route edit Anda adalah GET master-potensi/{id}
-                var url = "{{ url('master-potensi') }}/" + id + "/edit?tab=" + tab; 
-                // Jika route edit Anda adalah: /master-potensi/{id}, gunakan: var url = "{{ url('master-potensi') }}/" + id + "?tab=" + tab; 
-                
-                $.ajax({
-                    url: url,
-                    method: 'GET',
-                    success: function(data) {
-                        var isTempatIbadah = (tab === 'tempat_ibadah');
-                        
-                        // Tentukan nama input dan nilai data berdasarkan tab
-                        var inputName = isTempatIbadah ? 'nama_tempat' : 'nama';
-                        var dataValue = isTempatIbadah ? (data.nama_tempat || '') : (data.nama || '');
-                        var labelText = isTempatIbadah ? 'Nama Tempat Ibadah' : 'Nama ' + tab.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-
-                        // Ganti konten modal body dengan form dinamis
-                        var modalBodyHtml = `
-                            <form id="edit-form-ajax" action="{{ url('master-potensi') }}/${id}" method="POST">
-                                @csrf
-                                @method('PUT')
-                                <input type="hidden" name="tab" value="${tab}">
-                                
-                                <div class="mb-3">
-                                    <label for="edit-input-utama" class="form-label">${labelText}</label>
-                                    <input type="text" class="form-control" id="edit-nama" 
-                                        name="${inputName}" 
-                                        value="${dataValue}" required>
-                                </div>
-                                
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                                </div>
-                            </form>
-                        `;
-
-                        modal.find('.modal-body').html(modalBodyHtml);
-
-                    },
-                    error: function() {
-                        modal.find('.modal-body').html('<div class="alert alert-danger">Gagal memuat data. Periksa Controller/Route.</div>');
-                    }
-                });
-            });
-        </script>
-    @endif
-@endpush

@@ -12,7 +12,7 @@ class JasaPengangkutanController extends Controller
      public function index()
     {
         $data = JasaPengangkutan::latest()->get();
-        return view('pages.potensi.kelembagaan.pengangkutan.index', compact('data'));
+        return view('pages.potensi.potensi-kelembagaan.pengangkutan.index', compact('data'));
     }
 
     public function create()
@@ -26,7 +26,7 @@ class JasaPengangkutanController extends Controller
             'Kapal Tongkang',
         ];
 
-        return view('pages.potensi.kelembagaan.pengangkutan.create', compact('kategoriOptions', 'jenisAngkutanOptions'));
+        return view('pages.potensi.potensi-kelembagaan.pengangkutan.create', compact('kategoriOptions', 'jenisAngkutanOptions'));
     }
 
     public function store(Request $request)
@@ -43,7 +43,7 @@ class JasaPengangkutanController extends Controller
 
         JasaPengangkutan::create($request->all());
 
-       return redirect()->route('potensi.kelembagaan.pengangkutan.index')
+       return redirect()->route('potensi.potensi-kelembagaan.pengangkutan.index')
                  ->with('success', 'Data berhasil disimpan!');
 
     }
@@ -51,7 +51,6 @@ class JasaPengangkutanController extends Controller
     {
         $data = JasaPengangkutan::findOrFail($id);
 
-        // ini penting biar form edit punya pilihan dropdown juga
         $kategoriOptions = ['Angkutan Darat', 'Angkutan Laut'];
         $jenisAngkutanOptions = [
             'Bus Umum',
@@ -60,7 +59,7 @@ class JasaPengangkutanController extends Controller
             'Kapal Tongkang',
         ];
 
-        return view('pages.potensi.kelembagaan.pengangkutan.edit', compact('data', 'kategoriOptions', 'jenisAngkutanOptions'));
+        return view('pages.potensi.potensi-kelembagaan.pengangkutan.edit', compact('data', 'kategoriOptions', 'jenisAngkutanOptions'));
     }
     public function update(Request $request, $id)
     {
@@ -77,7 +76,7 @@ class JasaPengangkutanController extends Controller
         $data = JasaPengangkutan::findOrFail($id);
         $data->update($request->all());
 
-        return redirect()->route('potensi.kelembagaan.pengangkutan.index')
+        return redirect()->route('potensi.potensi-kelembagaan.pengangkutan.index')
             ->with('success', 'Data berhasil diperbarui!');
     }
     public function destroy($id)
@@ -85,7 +84,7 @@ class JasaPengangkutanController extends Controller
         $data = JasaPengangkutan::findOrFail($id);
         $data->delete();
 
-        return redirect()->route('potensi.kelembagaan.pengangkutan.index')
+        return redirect()->route('potensi.potensi-kelembagaan.pengangkutan.index')
                      ->with('success', 'Data berhasil dihapus!');
     }
     public function show($id)
@@ -93,7 +92,6 @@ class JasaPengangkutanController extends Controller
         
         $data = JasaPengangkutan::findOrFail($id);
 
-        // ini penting biar form edit punya pilihan dropdown juga
         $kategoriOptions = ['Angkutan Darat', 'Angkutan Laut'];
         $jenisAngkutanOptions = [
             'Bus Umum',
@@ -101,17 +99,21 @@ class JasaPengangkutanController extends Controller
             'Kapal Ferry',
             'Kapal Tongkang',
         ];
-        return view('pages.potensi.kelembagaan.pengangkutan.show', compact('data', 'kategoriOptions', 'jenisAngkutanOptions'));
+        return view('pages.potensi.potensi-kelembagaan.pengangkutan.show', compact('data', 'kategoriOptions', 'jenisAngkutanOptions'));
     }
     public function print($id)
     {
         $data = JasaPengangkutan::findOrFail($id);
+        $pdf = Pdf::loadView('pages.potensi.potensi-kelembagaan.pengangkutan.print', compact('data'))
+                  ->setPaper('a4', 'portrait');
+        return $pdf->stream('Data_Jasa_Pengangkutan_' . $data->id . '.pdf');
+    }
 
-        $pdf = Pdf::loadView('pages.potensi.kelembagaan.pengangkutan.print', compact('data'))
-              ->setPaper('a4', 'portrait');
-
-        // Pilih salah satu:
-        return $pdf->download('Detail_Jasa_Pengangkutan_'.$data->id.'.pdf'); // auto-download
-        // return $pdf->stream('Detail_Jasa_Pengangkutan_'.$data->id.'.pdf'); // preview di browser
+    public function download($id)
+    {
+        $data = JasaPengangkutan::findOrFail($id);
+        $pdf = Pdf::loadView('pages.potensi.potensi-kelembagaan.pengangkutan.print', compact('data'))
+                  ->setPaper('a4', 'portrait');
+        return $pdf->download('Data_Jasa_Pengangkutan_' . $data->id . '.pdf');
     }
 }
