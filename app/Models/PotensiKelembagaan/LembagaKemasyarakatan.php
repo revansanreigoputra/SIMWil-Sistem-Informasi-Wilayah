@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\MasterPotensi\JenisLembaga; 
 use App\Models\MasterPotensi\DasarHukum; 
+use App\Models\Desa;
 
 class LembagaKemasyarakatan extends Model
 {
@@ -14,6 +15,7 @@ class LembagaKemasyarakatan extends Model
     protected $table = 'lembaga_kemasyarakatans';
 
     protected $fillable = [
+        'desa_id',
         'tanggal',
         'jenis_lembaga_id',
         'jumlah',
@@ -33,5 +35,9 @@ class LembagaKemasyarakatan extends Model
     public function dasarHukum()
     {
         return $this->belongsTo(DasarHukum::class, 'dasar_hukum_id');
+    }
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class, 'desa_id');
     }
 }

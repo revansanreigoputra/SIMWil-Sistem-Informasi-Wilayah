@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Desa;
 
 class JasaPengangkutan extends Model
 {
@@ -15,6 +16,7 @@ class JasaPengangkutan extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'desa_id',
         'tanggal',
         'kategori',
         'jenis_angkutan',
@@ -23,4 +25,9 @@ class JasaPengangkutan extends Model
         'kapasitas',
         'tenaga_kerja',
     ];
+
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class, 'desa_id');
+    }
 }

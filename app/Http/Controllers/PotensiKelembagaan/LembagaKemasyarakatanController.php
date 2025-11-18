@@ -8,12 +8,20 @@ use App\Models\PotensiKelembagaan\LembagaKemasyarakatan;
 use App\Models\MasterPotensi\JenisLembaga;
 use App\Models\MasterPotensi\DasarHukum;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class LembagaKemasyarakatanController extends Controller
 {
     public function index()
     {
-        $data = LembagaKemasyarakatan::with(['jenisLembaga', 'dasarHukum'])->get();
+        $desaId = session('desa_id');
+
+        $data = LembagaKemasyarakatan::with(['jenisLembaga', 'dasarHukum', 'desa'])
+            ->where('desa_id', $desaId)
+            ->latest()
+            ->get();
+
         return view('pages.potensi.potensi-kelembagaan.lembaga-kemasyarakatan.index', compact('data'));
     }
 
@@ -21,6 +29,7 @@ class LembagaKemasyarakatanController extends Controller
     {
         $jenisLembaga = JenisLembaga::all();
         $dasarHukum = DasarHukum::all();
+
         return view('pages.potensi.potensi-kelembagaan.lembaga-kemasyarakatan.create', compact('jenisLembaga', 'dasarHukum'));
     }
 
@@ -37,23 +46,54 @@ class LembagaKemasyarakatanController extends Controller
             'ruang_lingkup_kegiatan' => 'nullable|string',
         ]);
 
-        LembagaKemasyarakatan::create($request->all());
+        DB::beginTransaction();
+        try {
+            $model = new LembagaKemasyarakatan();
+            $dataToSave = $request->only($model->getFillable());
 
-       return redirect()->route('potensi.potensi-kelembagaan.lembaga-kemasyarakatan.index');
+            $dataToSave['desa_id'] = session('desa_id');
 
+            LembagaKemasyarakatan::create($dataToSave);
+
+            DB::commit();
+
+            return redirect()->route('potensi.potensi-kelembagaan.lembaga-kemasyarakatan.index')
+                ->with('success', 'Data Lembaga Kemasyarakatan berhasil disimpan.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            Log::error('Gagal menyimpan Lembaga Kemasyarakatan: ' . $e->getMessage(), [
+                'input' => $request->all(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ]);
+
+            return back()->withErrors(['error' => 'Terjadi kesalahan saat menyimpan data.'])->withInput();
+        }
     }
+
     public function show($id)
     {
-        $data = LembagaKemasyarakatan::with(['jenisLembaga', 'dasarHukum'])->findOrFail($id);
+        $desaId = session('desa_id');
+
+        $data = LembagaKemasyarakatan::with(['jenisLembaga', 'dasarHukum'])
+            ->where('desa_id', $desaId)
+            ->findOrFail($id);
+
         return view('pages.potensi.potensi-kelembagaan.lembaga-kemasyarakatan.show', compact('data'));
     }
+
     public function edit($id)
     {
-        $data = LembagaKemasyarakatan::findOrFail($id);
+        $desaId = session('desa_id');
+
+        $data = LembagaKemasyarakatan::where('desa_id', $desaId)->findOrFail($id);
+
         $jenisLembaga = JenisLembaga::all();
         $dasarHukum = DasarHukum::all();
 
-        return view('pages.potensi.potensi-kelembagaan.lembaga-kemasyarakatan.edit', compact('data', 'jenisLembaga', 'dasarHukum'));
+        return view('pages.potensi.potensi-kelembagaan.lembaga-kemasyarakatan.edit',
+            compact('data', 'jenisLembaga', 'dasarHukum'));
     }
 
     public function update(Request $request, $id)
@@ -69,34 +109,74 @@ class LembagaKemasyarakatanController extends Controller
             'ruang_lingkup_kegiatan' => 'nullable|string',
         ]);
 
-        $data = LembagaKemasyarakatan::findOrFail($id);
-        $data->update($request->validated());
+        DB::beginTransaction();
+        try {
+            $desaId = session('desa_id');
 
-        return redirect()->route('potensi.potensi-kelembagaan.lembaga-kemasyarakatan.index')
-            ->with('success', 'Data berhasil diperbarui.');
+            $data = LembagaKemasyarakatan::where('desa_id', $desaId)->findOrFail($id);
+
+            $model = new LembagaKemasyarakatan();
+            $dataToUpdate = $request->only($model->getFillable());
+
+            $dataToUpdate['desa_id'] = $desaId;
+
+            $data->update($dataToUpdate);
+
+            DB::commit();
+
+            return redirect()->route('potensi.potensi-kelembagaan.lembaga-kemasyarakatan.index')
+                ->with('success', 'Data berhasil diperbarui.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            Log::error('Gagal update Lembaga Kemasyarakatan: ' . $e->getMessage(), [
+                'id' => $id,
+                'input' => $request->all(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ]);
+
+            return back()->withErrors(['error' => 'Terjadi kesalahan saat memperbarui data.'])->withInput();
+        }
     }
 
     public function destroy($id)
     {
-        $data = LembagaKemasyarakatan::findOrFail($id);
+        $desaId = session('desa_id');
+
+        $data = LembagaKemasyarakatan::where('desa_id', $desaId)->findOrFail($id);
+
         $data->delete();
 
         return redirect()->route('potensi.potensi-kelembagaan.lembaga-kemasyarakatan.index')
             ->with('success', 'Data berhasil dihapus.');
     }
-     public function print($id)
+
+    public function print($id)
     {
-        $data = LembagaKemasyarakatan::with(['jenisLembaga', 'dasarHukum'])->findOrFail($id);
+        $desaId = session('desa_id');
+
+        $data = LembagaKemasyarakatan::with(['jenisLembaga', 'dasarHukum'])
+            ->where('desa_id', $desaId)
+            ->findOrFail($id);
+
         $pdf = Pdf::loadView('pages.potensi.potensi-kelembagaan.lembaga-kemasyarakatan.print', compact('data'))
                   ->setPaper('a4', 'portrait');
+
         return $pdf->stream('Data_Lembaga_Kemasyarakatan_' . $data->id . '.pdf');
     }
 
     public function download($id)
     {
-        $data = LembagaKemasyarakatan::with(['jenisLembaga', 'dasarHukum'])->findOrFail($id);
+        $desaId = session('desa_id');
+
+        $data = LembagaKemasyarakatan::with(['jenisLembaga', 'dasarHukum'])
+            ->where('desa_id', $desaId)
+            ->findOrFail($id);
+
         $pdf = Pdf::loadView('pages.potensi.potensi-kelembagaan.lembaga-kemasyarakatan.print', compact('data'))
                   ->setPaper('a4', 'portrait');
+
         return $pdf->download('Data_Lembaga_Kemasyarakatan_' . $data->id . '.pdf');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models\PotensiKelembagaan;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Desa;
 
 class LembagaKeamanan extends Model
 {
@@ -12,6 +13,7 @@ class LembagaKeamanan extends Model
     protected $table = 'lembaga_keamanan';
 
     protected $fillable = [
+        'desa_id',
         'tanggal',
         'keberadaan_hansip_linmas',
         'jumlah_hansip',
@@ -35,5 +37,9 @@ class LembagaKeamanan extends Model
     public function pemilikOrganisasi()
     {
         return $this->belongsTo(PemilikOrganisasi::class);
+    }
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class, 'desa_id');
     }
 }

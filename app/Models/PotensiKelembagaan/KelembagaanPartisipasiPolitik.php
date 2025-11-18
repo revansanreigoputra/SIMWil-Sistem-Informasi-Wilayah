@@ -5,6 +5,7 @@ namespace App\Models\PotensiKelembagaan;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\PotensiKelembagaan\PartisipasiPolitik;
+use App\Models\Desa;
 
 class KelembagaanPartisipasiPolitik extends Model
 {
@@ -13,6 +14,7 @@ class KelembagaanPartisipasiPolitik extends Model
     protected $table = 'kelembagaan_partisipasi_politik';
 
     protected $fillable = [
+        'desa_id',
         'partisipasi_politik_id',
         'tanggal',
         'jumlah_wanita_hak_pilih',
@@ -29,4 +31,9 @@ class KelembagaanPartisipasiPolitik extends Model
     {
         return $this->belongsTo(PartisipasiPolitik::class, 'partisipasi_politik_id');
     }
+    public function desa()
+    {
+        return $this->belongsTo(\App\Models\Desa::class, 'desa_id');
+    }
+
 }

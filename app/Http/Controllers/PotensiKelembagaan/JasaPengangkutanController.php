@@ -9,15 +9,19 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class JasaPengangkutanController extends Controller
 {
-     public function index()
+    public function index()
     {
-        $data = JasaPengangkutan::latest()->get();
+        $desaId = session('desa_id');
+
+        $data = JasaPengangkutan::where('desa_id', $desaId)
+                ->latest()
+                ->get();
+
         return view('pages.potensi.potensi-kelembagaan.pengangkutan.index', compact('data'));
     }
 
     public function create()
     {
-        // Dropdown options
         $kategoriOptions = ['Angkutan Darat', 'Angkutan Laut'];
         $jenisAngkutanOptions = [
             'Bus Umum',
@@ -41,13 +45,16 @@ class JasaPengangkutanController extends Controller
             'tenaga_kerja' => 'required|integer|min:0',
         ]);
 
-        JasaPengangkutan::create($request->all());
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');  // ← tambahin desa_id
 
-       return redirect()->route('potensi.potensi-kelembagaan.pengangkutan.index')
+        JasaPengangkutan::create($data);
+
+        return redirect()->route('potensi.potensi-kelembagaan.pengangkutan.index')
                  ->with('success', 'Data berhasil disimpan!');
-
     }
-        public function edit($id)
+
+    public function edit($id)
     {
         $data = JasaPengangkutan::findOrFail($id);
 
@@ -61,6 +68,7 @@ class JasaPengangkutanController extends Controller
 
         return view('pages.potensi.potensi-kelembagaan.pengangkutan.edit', compact('data', 'kategoriOptions', 'jenisAngkutanOptions'));
     }
+
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -74,11 +82,16 @@ class JasaPengangkutanController extends Controller
         ]);
 
         $data = JasaPengangkutan::findOrFail($id);
-        $data->update($request->all());
+
+        $updateData = $request->all();
+        $updateData['desa_id'] = session('desa_id');   // ← pastikan tetap sesuai desa login
+
+        $data->update($updateData);
 
         return redirect()->route('potensi.potensi-kelembagaan.pengangkutan.index')
             ->with('success', 'Data berhasil diperbarui!');
     }
+
     public function destroy($id)
     {
         $data = JasaPengangkutan::findOrFail($id);
@@ -87,9 +100,9 @@ class JasaPengangkutanController extends Controller
         return redirect()->route('potensi.potensi-kelembagaan.pengangkutan.index')
                      ->with('success', 'Data berhasil dihapus!');
     }
+
     public function show($id)
     {
-        
         $data = JasaPengangkutan::findOrFail($id);
 
         $kategoriOptions = ['Angkutan Darat', 'Angkutan Laut'];
@@ -99,21 +112,27 @@ class JasaPengangkutanController extends Controller
             'Kapal Ferry',
             'Kapal Tongkang',
         ];
+
         return view('pages.potensi.potensi-kelembagaan.pengangkutan.show', compact('data', 'kategoriOptions', 'jenisAngkutanOptions'));
     }
+
     public function print($id)
     {
         $data = JasaPengangkutan::findOrFail($id);
+
         $pdf = Pdf::loadView('pages.potensi.potensi-kelembagaan.pengangkutan.print', compact('data'))
                   ->setPaper('a4', 'portrait');
+
         return $pdf->stream('Data_Jasa_Pengangkutan_' . $data->id . '.pdf');
     }
 
     public function download($id)
     {
         $data = JasaPengangkutan::findOrFail($id);
+
         $pdf = Pdf::loadView('pages.potensi.potensi-kelembagaan.pengangkutan.print', compact('data'))
                   ->setPaper('a4', 'portrait');
+
         return $pdf->download('Data_Jasa_Pengangkutan_' . $data->id . '.pdf');
     }
 }
