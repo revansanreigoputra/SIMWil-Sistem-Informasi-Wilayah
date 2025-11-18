@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\JpHiburan; 
+use App\Models\JpHiburan;
 use App\Models\LayananSurat\{KopTemplate, Permohonan, JenisSurat};
 use App\Models\User;
 
@@ -103,9 +103,9 @@ class DatabaseSeeder extends Seeder
             SakitKelainanSeeder::class,
             StatusKepemilikanSeeder::class,
             TempatPerawatanSeeder::class,
-            TempatpersalinanSeeder::class,  
-            PemilikOrganisasiSeeder::class,  
-            PartisipasiPolitikSeeder::class,     
+            TempatpersalinanSeeder::class,
+            PemilikOrganisasiSeeder::class,
+            PartisipasiPolitikSeeder::class,
 
             JenisDampakSeeder::class,
             JenisHutanSeeder::class,
@@ -145,6 +145,8 @@ class DatabaseSeeder extends Seeder
             KopTemplateSeeder::class,
             JenisSuratSeeder::class,
             PermohonanSeeder::class,
+            WilayahKerjaSeeder::class,
+            KategoriKeahlianSeeder::class,
         ]);
     }
 }
