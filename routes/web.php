@@ -951,10 +951,12 @@ Route::middleware(['auth'])
         Route::get('/', [App\Http\Controllers\AsetTanahController::class, 'index'])->name('index');
         Route::get('/create', [App\Http\Controllers\AsetTanahController::class, 'create'])->name('create');
         Route::post('/store', [App\Http\Controllers\AsetTanahController::class, 'store'])->name('store');
-        Route::get('/show/{id}', [App\Http\Controllers\AsetTanahController::class, 'show'])->name('show');
-        Route::get('/edit/{id}', [App\Http\Controllers\AsetTanahController::class, 'edit'])->name('edit');
-        Route::put('/update/{id}', [App\Http\Controllers\AsetTanahController::class, 'update'])->name('update');
-        Route::delete('/destroy/{id}', [App\Http\Controllers\AsetTanahController::class, 'destroy'])->name('destroy');
+
+        // 🔥 WAJIB pakai {asetTanah}, bukan {id}
+        Route::get('/show/{asetTanah}', [App\Http\Controllers\AsetTanahController::class, 'show'])->name('show');
+        Route::get('/edit/{asetTanah}', [App\Http\Controllers\AsetTanahController::class, 'edit'])->name('edit');
+        Route::put('/update/{asetTanah}', [App\Http\Controllers\AsetTanahController::class, 'update'])->name('update');
+        Route::delete('/destroy/{asetTanah}', [App\Http\Controllers\AsetTanahController::class, 'destroy'])->name('destroy');
     });
 
 
