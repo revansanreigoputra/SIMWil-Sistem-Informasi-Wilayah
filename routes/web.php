@@ -1854,6 +1854,17 @@ Route::middleware(['auth'])->prefix('potensi/sda/jenis-dan-produksi-ikan')->name
     Route::delete('/{pNamaIkan}', [App\Http\Controllers\PNamaIkanController::class, 'destroy'])->name('destroy');
 });
 
+// DepositProduksiGalian routes
+Route::middleware(['auth'])->prefix('potensi/sda/deposit-produksi-galian')->name('deposit-produksi-galian.')->group(function () {
+    Route::get('/', [App\Http\Controllers\DepositProduksiGalianController::class, 'index'])->name('index');
+    Route::get('/create', [App\Http\Controllers\DepositProduksiGalianController::class, 'create'])->name('create');
+    Route::post('/', [App\Http\Controllers\DepositProduksiGalianController::class, 'store'])->name('store');
+    Route::get('/{depositProduksiGalian}', [App\Http\Controllers\DepositProduksiGalianController::class, 'show'])->name('show');
+    Route::get('/{depositProduksiGalian}/edit', [App\Http\Controllers\DepositProduksiGalianController::class, 'edit'])->name('edit');
+    Route::put('/{depositProduksiGalian}', [App\Http\Controllers\DepositProduksiGalianController::class, 'update'])->name('update');
+    Route::delete('/{depositProduksiGalian}', [App\Http\Controllers\DepositProduksiGalianController::class, 'destroy'])->name('destroy');
+});
+
 //sektor industri besar
 Route::resource(
     'perkembangan/struktur-mata-pencaharian/sektor-industri-menengah-besar',

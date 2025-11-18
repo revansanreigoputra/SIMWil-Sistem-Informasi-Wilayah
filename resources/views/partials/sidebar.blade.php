@@ -582,6 +582,13 @@
                                                 </a>
                                             @endcan
 
+                                            @can('deposit-produksi-galian.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/deposit-produksi-galian*') ? 'active' : '' }}"
+                                                    href="{{ route('deposit-produksi-galian.index') }}">
+                                                    Deposit dan Produksi <br> Galian
+                                                </a>
+                                            @endcan
+
                                         </div>
                                     </div>
 
