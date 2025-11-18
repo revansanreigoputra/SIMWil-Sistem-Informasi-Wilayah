@@ -3,78 +3,32 @@
 @section('title', 'Agenda Kegiatan')
 
 @push('styles')
+    {{-- CSS KUSTOM (DESAIN BARU ANDA + PERBAIKAN FONT/IKON) --}}
     <style>
-        body {
-            background-color: #f8f9fa;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .agenda-card {
+        .agenda-card-wrapper {
+            background: #ffffff;
             border-radius: 16px;
-            background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
             border: 1px solid #f0f0f0;
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 30px;
             display: flex;
             flex-direction: column;
-            height: 100%;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+            height: calc(100% - 30px);
 
+            /* --- FIX 1: FONT --- */
+            /* Paksa font agar tidak dirusak stylesheet.css */
+            font-family: 'Nunito', 'Open Sans', Arial, sans-serif !important;
         }
 
-        .agenda-card:hover {
+        .agenda-card-wrapper:hover {
             transform: translateY(-6px);
             box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
-            border-color: #ffebeb;
         }
 
-        .agenda-date-box {
-            background-color: #fff3f3;
-            border: 1px solid #ffd6d6;
-            border-radius: 10px;
-            width: 70px;
-            padding: 6px 0;
-            line-height: 1.3;
-            box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.05);
-            flex-shrink: 0;
-        }
-
-        .agenda-date-box span {
-            display: block;
-        }
-
-        .agenda-card .card-body {
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            flex-grow: 1;
-        }
-
-        .agenda-card h6 {
-            color: #222;
-            font-weight: 600;
-            line-height: 1.4;
-        }
-
-        .agenda-card p {
-            line-height: 1.6;
-            font-size: 0.9rem;
-            margin-bottom: 0.8rem;
-        }
-
-        hr {
-            border-color: rgba(0, 0, 0, 0.05);
-            margin: 0.75rem 0 1rem 0;
-        }
-
-        .agenda-icon {
-            width: 18px;
-            text-align: center;
-            margin-right: 8px;
-        }
-
+        /* Status Badge (pojok kanan atas) */
         .agenda-status {
             position: absolute;
             top: 14px;
@@ -84,120 +38,148 @@
             border-radius: 50px;
             color: #fff;
             font-weight: 500;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 5px;
+            z-index: 2;
+
+            /* --- FIX 1: FONT --- */
+            font-family: 'Nunito', 'Open Sans', Arial, sans-serif !important;
         }
 
         .agenda-status i {
             font-size: 0.65rem;
+
+            /* --- FIX 2: IKON --- */
+            /* Paksa ikon status agar tidak rusak */
+            font-family: "Font Awesome 6 Free", "Font Awesome 6 Solid" !important;
+            font-weight: 900 !important;
+            font-style: normal !important;
         }
 
-        .agenda-status.upcoming {
-            background-color: #ff5a5f;
+        .agenda-status.upcoming { background-color: #ff5a5f; }
+        .agenda-status.ongoing { background-color: #00bcd4; }
+        .agenda-status.finished { background-color: #adb5bd; }
+
+        /* Konten Card */
+        .agenda-card-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
         }
 
-        .agenda-status.ongoing {
-            background-color: #00bcd4;
+        /* Header (Tanggal + Judul) */
+        .agenda-header {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            padding-top: 1.5rem;
         }
 
-        .agenda-status.finished {
-            background-color: #adb5bd;
+        /* Kotak Tanggal (kiri) */
+        .agenda-date {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            width: 70px;
+            padding: 6px 0;
+            line-height: 1.3;
+            text-align: center;
+            flex-shrink: 0;
+            margin-right: 15px;
+            border: 1px solid #eee;
         }
 
-        .equal-height .agenda-card {
-            flex: 1;
+        .agenda-date .day {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            display: block;
         }
 
-        @media (max-width: 768px) {
-            .equal-height {
-                flex-direction: column;
-            }
-
-            .equal-height>[class*='col-'] {
-                display: block;
-                margin-bottom: 1rem;
-            }
-
-            .agenda-card {
-                height: auto;
-                min-height: unset;
-            }
-
-            .agenda-date-box {
-                width: 60px;
-            }
-
-            .agenda-card .card-body {
-                padding: 1rem;
-            }
-
-            .agenda-card h6 {
-                font-size: 1rem;
-                text-align: center;
-            }
+        .agenda-date .month {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: #6c757d;
+            display: block;
         }
 
-        .agenda-card h6 {
+        /* Judul (kanan) */
+        .agenda-title {
+            flex-grow: 1;
+        }
+
+        .agenda-title h6 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #222;
+            line-height: 1.4;
+            margin: 0;
             min-height: 2.8em;
+
+            /* --- FIX 1: FONT --- */
+            font-family: 'Nunito', 'Open Sans', Arial, sans-serif !important;
         }
 
-        .agenda-card p.card-text:has(i.fa-clock) {
-            min-height: 3.2em;
+        /* Garis pemisah */
+        .agenda-card-content hr {
+            border: 0;
+            border-top: 1px solid #f0f0f0;
+            margin: 0.75rem 0 1rem 0;
         }
 
-        .agenda-card p.card-text:has(i.fa-location-dot) {
-            min-height: 3.2em;
+        /* Detail (Waktu, Lokasi, Peserta) */
+        .agenda-details {
+            font-size: 0.85rem;
+            color: #666;
+            flex-grow: 1;
         }
 
-        .agenda-card div.pt-2>p.card-text:has(i.fa-users) {
-            min-height: 3.2em;
+        .agenda-detail-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.8rem;
+            line-height: 1.5;
         }
 
-        .agenda-column-item {
-            margin-bottom: 1.5rem;
+        .agenda-detail-item i {
+            width: 18px;
+            text-align: center;
+            margin-right: 8px;
+            margin-top: 3px;
+            color: #00bcd4; /* Warna ikon default */
+
+            /* --- FIX 2: IKON --- */
+            /* Paksa ikon detail agar tidak rusak */
+            font-family: "Font Awesome 6 Free", "Font Awesome 6 Solid" !important;
+            font-weight: 900 !important;
+            font-style: normal !important;
         }
 
-        .pagination {
+        /* Warna ikon spesifik (Sudah Benar) */
+        .agenda-detail-item i.fa-location-dot { color: #28a745; }
+        .agenda-detail-item i.fa-users { color: #17a2b8; }
+        .agenda-detail-item i.fa-clock { color: #6c757d; }
+
+        /* Jaga tinggi konsisten (Sudah Benar) */
+        .agenda-detail-item:has(i.fa-clock) { min-height: 3.2em; }
+        .agenda-detail-item:has(i.fa-location-dot) { min-height: 3.2em; }
+
+        /* Alert kustom jika kosong (Sudah Benar) */
+        .agenda-empty-alert {
+            border: 1px solid #eee;
+            background-color: #f9f9f9;
+            color: #777;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        /* --- TAMBAHAN UNTUK PAGINATION KE TENGAH --- */
+        .utf_pagination_container_part {
             display: flex;
             justify-content: center;
-            align-items: center;
-            gap: 10px;
-            margin-top: 1.5rem;
-            list-style: none;
-            padding: 0;
-        }
-
-        .pagination .page-item {
-            display: inline;
-        }
-
-        .pagination .page-link {
-            border: none;
-            background: #ff5a5f;
-            color: #fff;
-            font-weight: 600;
-            font-size: 15px;
-            padding: 4px 8px;
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        .pagination .page-link:hover {
-            color: #0097a7;
-            text-decoration: underline;
-        }
-
-        .pagination .page-item.active .page-link {
-            background: #ff5a5f;
-            color: #fff;
-            text-decoration: underline;
-            cursor: default;
-        }
-
-        .pagination .page-item.disabled .page-link {
-            color: #c0c0c0;
-            cursor: not-allowed;
         }
     </style>
 @endpush
@@ -206,6 +188,7 @@
     <section class="fullwidth_block padding-top-75 padding-bottom-75">
         <div class="container">
 
+            {{-- Ini adalah Judul Halaman (Sudah Benar) --}}
             <div class="row">
                 <div class="col-md-12">
                     <h3 class="headline_part centered margin-bottom-50">
@@ -215,7 +198,8 @@
                 </div>
             </div>
 
-            <div class="row g-4">
+            {{-- Ini adalah Grid Konten (Sudah Benar) --}}
+            <div class="row">
                 @forelse ($agendas as $agenda)
                     @php
                         $tglMulai = \Carbon\Carbon::parse($agenda->tgl_dari);
@@ -237,31 +221,34 @@
                         }
                     @endphp
 
-                    <div class="col-lg-3 col-md-6 col-12 d-flex agenda-column-item">
-                        <div class="card agenda-card shadow-sm w-100">
+                    {{-- =============================================== --}}
+                    {{--               INI PERUBAHANNYA                  --}}
+                    {{--  Saya ganti 'col-md-3' menjadi 'col-md-4'       --}}
+                    {{-- =============================================== --}}
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+
+                        {{-- 2. KITA PAKAI KARTU KUSTOM BARU --}}
+                        <div class="agenda-card-wrapper">
                             <span class="agenda-status {{ $badgeClass }}">
-                                <i class="{{ $statusIcon }}"></i>
-                                <span>{{ $status }}</span>
+                                <i class="{{ $statusIcon }}"></i> <span>{{ $status }}</span>
                             </span>
 
-                            <div class="card-body">
-                                <div>
-                                    <div
-                                        class="d-flex flex-column flex-md-row align-items-center align-items-md-start mb-4 pt-3">
-                                        <div class="agenda-date-box text-center me-md-3 mb-3 mb-md-0">
-                                            <span class="fs-5 fw-bold text-primary">{{ $tglMulai->format('d') }}</span>
-                                            <span class="small text-uppercase fw-semibold text-secondary">
-                                                {{ $tglMulai->translatedFormat('M') }}
-                                            </span>
-                                        </div>
-                                        <div class="flex-grow-1 text-center text-md-start">
-                                            <h6 class="card-title mb-0">{{ $agenda->kegiatan }}</h6>
-                                        </div>
+                            <div class="agenda-card-content">
+                                <div class="agenda-header">
+                                    <div class="agenda-date">
+                                        <span class="day">{{ $tglMulai->format('d') }}</span>
+                                        <span class="month">{{ $tglMulai->translatedFormat('M') }}</span>
                                     </div>
+                                    <div class="agenda-title">
+                                        <h6>{{ $agenda->kegiatan }}</h6>
+                                    </div>
+                                </div>
 
-                                    <hr>
-                                    <p class="card-text text-muted d-flex align-items-start">
-                                        <i class="fa-solid fa-clock agenda-icon"></i>
+                                <hr>
+
+                                <div class="agenda-details">
+                                    <p class="agenda-detail-item">
+                                        <i class="fa-solid fa-clock"></i>
                                         <span>
                                             <strong>Waktu:</strong> {{ $tglMulai->translatedFormat('d M Y') }}
                                             @if ($tglMulai->diffInDays($tglSelesai) > 0)
@@ -269,26 +256,23 @@
                                             @endif
                                         </span>
                                     </p>
-                                    <p class="card-text text-muted d-flex align-items-start">
-                                        <i class="fa-solid fa-location-dot agenda-icon text-success"></i>
+                                    <p class="agenda-detail-item">
+                                        <i class="fa-solid fa-location-dot"></i>
                                         <span>{{ $agenda->lokasi }}</span>
                                     </p>
-                                </div>
-
-                                @if ($agenda->peserta)
-                                    <div class="pt-2">
-                                        <p class="card-text text-muted d-flex align-items-start mb-0">
-                                            <i class="fa-solid fa-users agenda-icon text-info"></i>
+                                    @if ($agenda->peserta)
+                                        <p class="agenda-detail-item">
+                                            <i class="fa-solid fa-users"></i>
                                             <span>Peserta: {{ $agenda->peserta }}</span>
                                         </p>
-                                    </div>
-                                @endif
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>
                 @empty
-                    <div class="col-12">
-                        <div class="alert alert-info text-center" role="alert">
+                    <div class="col-md-12">
+                        <div class="agenda-empty-alert" role="alert">
                             Belum ada agenda kegiatan yang tersedia.
                         </div>
                     </div>
@@ -296,71 +280,15 @@
             </div>
 
             @if ($agendas->hasPages())
-                <nav class="d-flex justify-content-center mt-4">
-                    <ul class="pagination pagination-sm justify-content-center" style="gap: 6px;">
-
-                        <li class="page-item {{ $agendas->onFirstPage() ? 'disabled' : '' }}">
-                            <a href="{{ $agendas->previousPageUrl() }}"
-                                class="page-link border-0 fw-semibold d-flex align-items-center justify-content-center"
-                                style="width:30px; height:30px; font-size:14px; border-radius:8px; background:{{ $agendas->onFirstPage() ? '#e9f4ff' : '#fff' }}; color:#00bcd4;">
-                                < </a>
-                        </li>
-
-                        {{-- Halaman --}}
-                        @php
-                            $current = $agendas->currentPage();
-                            $last = $agendas->lastPage();
-                            $start = max($current - 2, 1);
-                            $end = min($current + 2, $last);
-                        @endphp
-
-                        @if ($start > 1)
-                            <li class="page-item">
-                                <a href="{{ $agendas->url(1) }}" class="page-link border-0 fw-semibold"
-                                    style="width:30px; height:30px; border-radius:8px; background: #ff5a5f;; color: #fff;">1</a>
-                            </li>
-                            @if ($start > 2)
-                                <li class="page-item disabled">
-                                    <span class="page-link border-0 bg-transparent text-muted"
-                                        style="font-size:13px;">...</span>
-                                </li>
-                            @endif
-                        @endif
-
-                        @for ($page = $start; $page <= $end; $page++)
-                            <li class="page-item {{ $page == $current ? 'active' : '' }}">
-                                <a href="{{ $agendas->url($page) }}"
-                                    class="page-link border-0 fw-semibold d-flex align-items-center justify-content-center"
-                                    style="width:30px; height:30px; border-radius:8px; font-size:14px; background:{{ $page == $current ? '#00bcd4' : '#fff' }}; color:{{ $page == $current ? '#fff' : '#00bcd4' }};">
-                                    {{ $page }}
-                                </a>
-                            </li>
-                        @endfor
-
-                        @if ($end < $last)
-                            @if ($end < $last - 1)
-                                <li class="page-item disabled">
-                                    <span class="page-link border-0 bg-transparent text-muted"
-                                        style="font-size:13px;">...</span>
-                                </li>
-                            @endif
-                            <li class="page-item">
-                                <a href="{{ $agendas->url($last) }}" class="page-link border-0 fw-semibold"
-                                    style="width:30px; height:30px; border-radius:8px; background: #ff5a5f;; color: #fff;">{{ $last }}</a>
-                            </li>
-                        @endif
-
-                        {{-- Tombol Berikutnya --}}
-                        <li class="page-item {{ $agendas->hasMorePages() ? '' : 'disabled' }}">
-                            <a href="{{ $agendas->nextPageUrl() }}"
-                                class="page-link border-0 fw-semibold d-flex align-items-center justify-content-center"
-                                style="width:30px; height:30px; font-size:14px; border-radius:8px; background:{{ $agendas->hasMorePages() ? '#fff' : '#e9f4ff' }}; color:#00bcd4;">
-                                >
-                            </a>
-                        </li>
-
-                    </ul>
-                </nav>
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        {{-- 3. KITA PAKAI PAGINATION ASLI DARI TEMPLATE (sama kayak Berita) --}}
+                        <div class="utf_pagination_container_part">
+                            {{ $agendas->links() }}
+                        </div>
+                    </div>
+                </div>
             @endif
         </div>
     </section>

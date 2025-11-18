@@ -2,7 +2,7 @@
 
 @section('title', 'Galeri Foto')
 
-@section('content')
+@push('styles')
 
     <style>
         .album-card-container {
@@ -26,7 +26,7 @@
 
         .album-card:hover {
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-            transform: translateY(-4px);
+            /* transform: translateY(-4px); */
             transition: all 0.25s ease;
         }
 
@@ -47,18 +47,19 @@
             background: #f5f5f5;
             padding: 20px 15px;
             text-align: center;
-            flex-grow: 1;
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
         }
 
         .album-card .album-content h3 {
-            color: #666;
-            font-size: 1.0rem;
+            color: #333;
+            font-size: 0.8rem;     /* Tulisannya dikecilkan sedikit */
+            letter-spacing: 0.5px; /* Jaraknya dirapatkan */
             font-weight: 600;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
+            text-transform: uppercase; /* Biar tetap kapital */
             margin: 0;
             line-height: 1.2;
         }
@@ -67,14 +68,16 @@
             display: none !important;
         }
 
-         .headline_part span {
+         /* .headline_part span {
             display: block;
             font-size: 0.9em;
             color: #888;
             margin-top: 5px;
-        }
+        } */
     </style>
+@endpush
 
+@section('content')
     <section class="fullwidth_block padding-top-75 padding-bottom-75">
         <div class="container">
             <div class="row">
@@ -97,7 +100,7 @@
                                         <img src="{{ asset('storage/foto_foto/' . $album->photos->first()->foto) }}"
                                             alt="{{ $album->album }}">
                                     @else
-                                        <img src="{{ asset('frontend/images/blog-compact-post-01.jpg') }}"
+                                        <img src="https://via.placeholder.com/300x180.png?text=Belum+Ada+Foto"
                                             alt="Belum ada foto">
                                     @endif
                                 </div>
@@ -110,7 +113,7 @@
                         </a>
                     </div>
                 @empty
-                    <div class="col-12">
+                    <div class="col-md-12">
                         <p class="text-center">Belum ada album galeri yang tersedia saat ini.</p>
                     </div>
                 @endforelse
