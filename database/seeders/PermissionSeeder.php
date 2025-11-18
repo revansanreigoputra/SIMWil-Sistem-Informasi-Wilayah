@@ -936,6 +936,14 @@ class PermissionSeeder extends Seeder
             'p-nama-ikan.update',
             'p-nama-ikan.delete',
 
+            // DepositProduksiGalian permissions
+            'deposit-produksi-galian.view',
+            'deposit-produksi-galian.create',
+            'deposit-produksi-galian.store',
+            'deposit-produksi-galian.edit',
+            'deposit-produksi-galian.update',
+            'deposit-produksi-galian.delete',
+
             // produksi ternak permissions
             'produksi-ternak.view',
             'produksi-ternak.create',
