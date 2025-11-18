@@ -28,14 +28,27 @@
                 <tbody>
                     @forelse ($items as $index => $item)
                         <tr>
-                            <td class="text-center">{{ $items->firstItem() + $index }}</td>
+                            <td class="text-center">
+                                {{ (isset($items) && method_exists($items, 'firstItem') && $items->firstItem() !== null)
+                                    ? ($items->firstItem() + $index)
+                                    : ($index + 1) }}
+                            </td>
+
                             <td class="text-center">{{ $item->desa->nama_desa ?? '-' }}</td>
+
                             <td class="text-center">
                                 <span class="badge bg-info">{{ $item->asetDinding->nama ?? '-' }}</span>
                             </td>
-                            <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal)->format('d/m/Y') }}</td>
-                            <td class="text-center"><span class="badge bg-primary">{{ $item->jumlah }}</span></td>
-                            <td>
+
+                            <td class="text-center">
+                                {{ $item->tanggal ? \Carbon\Carbon::parse($item->tanggal)->format('d/m/Y') : '-' }}
+                            </td>
+
+                            <td class="text-center">
+                                <span class="badge bg-primary">{{ $item->jumlah ?? 0 }}</span>
+                            </td>
+
+                            <td class="text-center">
                                 @canany(['rumah_menurut_dinding.view','rumah_menurut_dinding.update','rumah_menurut_dinding.delete'])
                                     <div class="d-flex gap-1 justify-content-center">
                                         @can('rumah_menurut_dinding.view')
@@ -69,7 +82,7 @@
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>Data tanggal <strong>{{ $item->tanggal }}</strong> dari desa 
+                                                    <p>Data tanggal <strong>{{ $item->tanggal ?? '-' }}</strong> dari desa 
                                                         <strong>{{ $item->desa->nama_desa ?? '-' }}</strong> akan dihapus dan tidak bisa dikembalikan.</p>
                                                     <p>Yakin ingin menghapus data ini?</p>
                                                 </div>
@@ -98,10 +111,12 @@
                 </tbody>
             </table>
 
-            {{-- Tambahkan pagination --}}
-            <div class="d-flex justify-content-center mt-3">
-                {{ $items->links() }}
-            </div>
+            {{-- Pagination (aman meskipun $items kosong) --}}
+            @if (isset($items) && method_exists($items, 'links'))
+                <div class="d-flex justify-content-center mt-3">
+                    {{ $items->links() }}
+                </div>
+            @endif
         </div>
     </div>
 </div>
@@ -110,7 +125,27 @@
 @push('addon-script')
 <script>
     $(document).ready(function() {
-        $('#rumah-dinding-table').DataTable();
+
+        // Matikan pop-up error DataTables supaya tidak tampil warning di console/UI
+        $.fn.dataTable.ext.errMode = 'none';
+
+        // Hanya inisialisasi DataTables jika ada data
+        @if(isset($items) && $items->count() > 0)
+            $('#rumah-dinding-table').DataTable({
+                // Default content untuk mencegah "Requested unknown parameter" bila kolom tidak cocok
+                columnDefs: [
+                    { targets: '_all', defaultContent: '-' }
+                ],
+                // Nonaktifkan fitur yang bisa bentrok dengan pagination Laravel
+                searching: false,
+                paging: false,
+                info: false,
+                ordering: false,
+                autoWidth: false,
+                responsive: true
+            });
+        @endif
+
     });
 </script>
 @endpush

@@ -44,7 +44,7 @@
 
                                     <!-- Modal Hapus -->
                                     <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete-keluarga-{{ $item->id }}">Hapus</button>
-                                    <div class="modal fade" id="delete-keluarga-{{ $item->id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="delete-keluarga-{{ $item->id }}" tabindex="-1">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -78,9 +78,11 @@
                 </tbody>
             </table>
         </div>
+
         <div class="d-flex justify-content-center mt-3">
             {{ $data->links() }}
         </div>
+
     </div>
 </div>
 @endsection
@@ -88,8 +90,19 @@
 @push('addon-script')
 <script>
 $(document).ready(function() {
-    $('#kesejahteraan-table').DataTable();
+
+    // 🔥 Matikan semua error DataTables (biar nggak muncul warning)
+    $.fn.dataTable.ext.errMode = 'none';
+
+    $('#kesejahteraan-table').DataTable({
+        // 🔥 Default content untuk mencegah error "unknown parameter"
+        columnDefs: [
+            { targets: '_all', defaultContent: '-' }
+        ],
+        // Biarkan DataTables tetap hidup meski ada colspan row kosong
+        autoWidth: false
+    });
+
 });
 </script>
 @endpush
-

@@ -36,16 +36,34 @@
                         <th>Aksi</th>
                     </tr>
                 </thead>
+
                 <tbody>
                     @forelse ($data as $index => $item)
                         <tr class="text-center">
-                            <td>{{ $data->firstItem() + $index }}</td>
+                            {{-- No: aman kalau $data paginator atau collection --}}
+                            <td>
+                                {{ (isset($data) && method_exists($data, 'firstItem') && $data->firstItem() !== null)
+                                    ? ($data->firstItem() + $index)
+                                    : ($index + 1) }}
+                            </td>
+
+                            {{-- Desa --}}
                             <td>{{ $item->desa->nama_desa ?? '-' }}</td>
-                            <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d/m/Y') }}</td>
-                            @for($i = 1; $i <= 12; $i++)
+
+                            {{-- Tanggal aman walau null --}}
+                            <td>
+                                {{ $item->tanggal ? \Carbon\Carbon::parse($item->tanggal)->format('d/m/Y') : '-' }}
+                            </td>
+
+                            {{-- produksi1 sampai produksi12 --}}
+                            @for ($i = 1; $i <= 12; $i++)
                                 <td><span class="badge bg-info">{{ $item->{'produksi'.$i} ?? 0 }}</span></td>
                             @endfor
-                            <td><span class="badge bg-primary">{{ $item->produksi13 ?? $item->jumlah }}</span></td>
+
+                            {{-- Jumlah --}}
+                            <td><span class="badge bg-primary">{{ $item->jumlah ?? ($item->produksi13 ?? 0) }}</span></td>
+
+                            {{-- Aksi --}}
                             <td>
                                 @canany(['sarana_produksi.view','sarana_produksi.update','sarana_produksi.delete'])
                                     <div class="d-flex gap-1 justify-content-center">
@@ -69,7 +87,7 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body text-start">
-                                                    <p>Data tanggal <strong>{{ $item->tanggal }}</strong> dari desa <strong>{{ $item->desa->nama_desa ?? '-' }}</strong> akan dihapus dan tidak bisa dikembalikan.</p>
+                                                    <p>Data tanggal <strong>{{ $item->tanggal ?? '-' }}</strong> dari desa <strong>{{ $item->desa->nama_desa ?? '-' }}</strong> akan dihapus dan tidak bisa dikembalikan.</p>
                                                     <p>Yakin ingin menghapus data ini?</p>
                                                 </div>
                                                 <div class="modal-footer">
@@ -90,13 +108,16 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="17" class="text-center">Data masih kosong</td>
+                            <td colspan="17" class="text-center py-3">
+                                <strong>Data masih kosong</strong>
+                            </td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
 
+        {{-- Laravel Pagination --}}
         @if (method_exists($data, 'links'))
             <div class="d-flex justify-content-center mt-3">
                 {{ $data->links() }}
@@ -108,8 +129,25 @@
 
 @push('addon-script')
 <script>
-    $(document).ready(function() {
-        $('#sarana-table').DataTable();
+$(document).ready(function() {
+
+    // Matikan semua error DataTables (supaya tidak menampilkan warning)
+    $.fn.dataTable.ext.errMode = 'none';
+
+    $('#sarana-table').DataTable({
+        // Default content untuk mencegah "Requested unknown parameter" bila kolom hilang
+        columnDefs: [
+            { targets: '_all', defaultContent: '-' }
+        ],
+        // Karena kamu memakai pagination Laravel, matikan paging/info/search agar tidak bentrok
+        searching: false,
+        paging: false,
+        info: false,
+        ordering: false,
+        autoWidth: false,
+        responsive: true
     });
+
+});
 </script>
 @endpush

@@ -25,8 +25,9 @@
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
+
                 <tbody>
-                    @foreach ($items as $index => $item)
+                    @forelse ($items as $index => $item)
                         <tr>
                             <td class="text-center">{{ $items->firstItem() + $index }}</td>
 
@@ -107,14 +108,13 @@
                                 @endcanany
                             </td>
                         </tr>
-                    @endforeach
-
-                    @if ($items->isEmpty())
-                        <tr style="display:none;"><td colspan="6"></td></tr>
+                    @empty
                         <tr>
-                            <td colspan="6" class="text-center text-muted py-4">Data masih kosong</td>
+                            <td colspan="6" class="text-center text-muted py-4">
+                                Data masih kosong
+                            </td>
                         </tr>
-                    @endif
+                    @endforelse
                 </tbody>
             </table>
         </div>
@@ -129,7 +129,12 @@
 @push('addon-script')
 <script>
     $(document).ready(function() {
-        $('#aset-lainnya-table').DataTable();
+
+        // Inisialisasi DataTables hanya jika data tidak kosong
+        @if(!$items->isEmpty())
+            $('#aset-lainnya-table').DataTable();
+        @endif
+
     });
 </script>
 @endpush
