@@ -158,8 +158,7 @@ class JenisSuratController extends Controller
             'nama' => 'required|string|max:255|unique:jenis_surats,nama,' . $jenisSurat->id,
             'paragraf_pembuka' => 'nullable|string',
             'paragraf_penutup' => 'nullable|string',
-            'kop_template_id' => 'nullable|exists:kop_templates,id',
-            // mutation type
+            'kop_template_id' => 'nullable|exists:kop_templates,id', 
             'mutasi_type' => ['required', Rule::in(['none', 'meninggal', 'pindah_keluar', 'mutasi_masuk_kk', 'pencatatan_kelahiran'])],
             'variables' => 'nullable|array',
             'variables.*.key' => 'required_with:variables|string|max:50|regex:/^[a-z0-9_]+$/i',

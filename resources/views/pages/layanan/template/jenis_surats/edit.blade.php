@@ -99,10 +99,11 @@
                                         {{ old('mutasi_type', $jenisSurat->mutasi_type) == 'mutasi_masuk_kk' ? 'selected' : '' }}>
                                         03. Mutasi Masuk (Menambah KK/Penduduk Baru)
                                     </option>
-                                    <option value="pencatatan_kelahiran"
-                                    {{ old('mutasi_type') == 'pencatatan_kelahiran' ? 'selected' : '' }}>
+                                    <option value="pencatatan_kelahiran" {{-- ADD THE SECOND PARAMETER HERE --}}
+                                        {{ old('mutasi_type', $jenisSurat->mutasi_type) == 'pencatatan_kelahiran' ? 'selected' : '' }}>
                                         04. Mutasi Kelahiran (Menambah Anggota Keluarga)
                                     </option>
+                                     
                                 </select>
                                 @error('mutasi_type')
                                     <div class="invalid-feedback">{{ $message }}</div>

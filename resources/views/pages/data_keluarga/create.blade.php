@@ -8,11 +8,23 @@
             <div class="card-header bg-primary text-white">
                 <h5 class="card-title mb-0">Formulir Tambah Data Keluarga (KK)</h5>
             </div>
+            @if (session('error_banner'))
+                <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-exclamation-circle-fill me-2 fs-4"></i>
+                        <div>
+                            <strong>Terjadi Kesalahan!</strong>
+                            <br>
+                            {{ session('error_banner') }}
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+            {{-- BATAS ALERT ERROR --}}
             <form action="{{ route('data_keluarga.store') }}" method="POST">
                 @csrf
-
                 <div class="card-body">
-
                     {{-- Bagian 1: Data KK (Kartu Keluarga) --}}
                     <div class="card bg-light p-3 mb-4">
                         <h6 class="text-primary mb-3">I. Data Kartu Keluarga</h6>
@@ -150,19 +162,22 @@
                             <div class="col-md-6">
                                 <label class="form-label" for="hubungan_keluarga_id">Hubungan Dalam Keluarga <span
                                         class="text-danger">*</span></label>
+
                                 <select name="hubungan_keluarga_id" id="hubungan_keluarga_id"
-                                    class="form-select @error('hubungan_keluarga_id') is-invalid @enderror" required>
-                                    {{-- The 'Kepala Keluarga' relationship is automatically set for the initial member --}}
-                                    {{-- We assume $kepalaKeluarga is passed from the controller and represents the 'Kepala Keluarga' relationship type --}}
+                                    class="form-select @error('hubungan_keluarga_id') is-invalid @enderror"
+                                    style="pointer-events: none; background-color: #e9ecef;" tabindex="-1"
+                                    aria-disabled="true" required>
+
                                     @if (isset($kepalaKeluarga))
+                                        {{-- Pastikan value ini ter-selected --}}
                                         <option value="{{ $kepalaKeluarga->id }}" selected>
                                             {{ $kepalaKeluarga->nama }}
                                         </option>
                                     @else
-                                        <option value="" disabled selected>-- Data Hubungan Kepala Keluarga Tidak Ditemukan --
-                                        </option>
+                                        <option value="" disabled selected>-- Data Master Tidak Ditemukan --</option>
                                     @endif
                                 </select>
+
                                 @error('hubungan_keluarga_id')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\JenisAsetLainnya;
 use App\Models\JenisAtap;
-use App\Models\JpHiburan; 
+use App\Models\JpHiburan;
 use App\Models\LayananSurat\{KopTemplate, Permohonan, JenisSurat};
 use App\Models\User;
 
@@ -100,9 +100,9 @@ class DatabaseSeeder extends Seeder
             SakitKelainanSeeder::class,
             StatusKepemilikanSeeder::class,
             TempatPerawatanSeeder::class,
-            TempatpersalinanSeeder::class,  
-            PemilikOrganisasiSeeder::class,  
-            PartisipasiPolitikSeeder::class,     
+            TempatpersalinanSeeder::class,
+            PemilikOrganisasiSeeder::class,
+            PartisipasiPolitikSeeder::class,
 
             JenisWabahSeeder::class,
             JenisPenyakitSeeder::class,
@@ -145,6 +145,8 @@ class DatabaseSeeder extends Seeder
             KopTemplateSeeder::class,
             JenisSuratSeeder::class,
             PermohonanSeeder::class,
+            WilayahKerjaSeeder::class,
+            KategoriKeahlianSeeder::class,
             JenisAsetLainnyaSeeder::class,
             TenagaKerjaSeeder::class,
             KualitasAngkatanKerjaSeeder::class,

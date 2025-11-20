@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Tap;
 use Illuminate\Http\Request;
+use App\Models\MasterPerkembangan\Provinsi;
+use App\Models\MasterPerkembangan\KabupatenKota;
+use App\Models\WilayahKerja;
+use App\Models\KategoriKeahlian;
 
 class TapController extends Controller
 {
@@ -112,26 +116,12 @@ class TapController extends Controller
     private function getMasterData()
     {
         return [
-            'wilayah_kerjas' => [
-                ['id' => 1, 'nama' => 'Wilayah Barat'],
-                ['id' => 2, 'nama' => 'Wilayah Timur'],
-                ['id' => 3, 'nama' => 'Wilayah Tengah'],
-            ],
-            'kategori_keahlians' => [
-                ['id' => 1, 'nama' => 'Pemberdayaan Masyarakat'],
-                ['id' => 2, 'nama' => 'Teknik Sipil'],
-                ['id' => 3, 'nama' => 'Keuangan Desa'],
-            ],
-            'provinsis' => [
-                ['id' => 11, 'nama' => 'ACEH'],
-                ['id' => 12, 'nama' => 'SUMATERA UTARA'],
-                ['id' => 34, 'nama' => 'DI YOGYAKARTA'],
-            ],
-            'kabupatens' => [
-                ['id' => 1101, 'nama' => 'KAB. ACEH SELATAN'],
-                ['id' => 1201, 'nama' => 'KAB. TAPANULI TENGAH'],
-                ['id' => 3404, 'nama' => 'KAB. SLEMAN'],
-            ],
+
+            'provinsis'           => Provinsi::orderBy('nama', 'asc')->get(),
+            'kabupatens'          => KabupatenKota::orderBy('nama', 'asc')->get(),
+            'wilayah_kerjas'      => WilayahKerja::orderBy('nama', 'asc')->get(),
+            'kategori_keahlians'  => KategoriKeahlian::orderBy('nama', 'asc')->get(),
+
         ];
     }
 }

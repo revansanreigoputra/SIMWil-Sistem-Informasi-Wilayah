@@ -137,6 +137,16 @@ class AnggotaKeluargaController extends Controller
      */
     public function store(Request $request)
     {
+        // Notice for duplicate NIK
+        $existingNik = AnggotaKeluarga::where('nik', $request->nik)->first();
+
+        if ($existingNik) {
+             
+            return redirect()->back()
+                ->withInput() 
+                ->with('error_banner', "Gagal! NIK {$request->nik} sudah terdaftar di sistem atas nama: {$existingNik->nama}");
+        }
+
         $validatedData = $request->validate([
             'data_keluarga_id' => 'required|exists:data_keluargas,id',
             'no_urut' => 'nullable|integer',

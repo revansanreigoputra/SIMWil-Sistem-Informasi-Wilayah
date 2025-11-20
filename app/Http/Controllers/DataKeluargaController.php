@@ -83,7 +83,7 @@ class DataKeluargaController extends Controller
             'desas',
             'kecamatans',
             'perangkatDesas',
-            // 'hubunganKeluarga',
+
             'kepalaKeluarga',
             'agama',
             'golonganDarah',
@@ -99,7 +99,14 @@ class DataKeluargaController extends Controller
 
     public function store(Request $request)
     {
+        $existingNik = AnggotaKeluarga::where('nik', $request->nik)->first();
 
+        if ($existingNik) {
+
+            return redirect()->back()
+                ->withInput()
+                ->with('error_banner', "Gagal! NIK {$request->nik} sudah terdaftar di sistem atas nama: {$existingNik->nama}");
+        }
         $validatedData = $request->validate([
             'no_kk' => 'required|string|unique:data_keluargas,no_kk',
             'kepala_keluarga' => 'required|string', // Name of the head
@@ -114,7 +121,7 @@ class DataKeluargaController extends Controller
             'nik' => 'nullable|string|size:16|unique:anggota_keluargas,nik',
             'no_akta_kelahiran' => 'nullable|string',
             'jenis_kelamin' => 'nullable|in:Laki-laki,Perempuan',
-            'hubungan_keluarga_id' => 'required|exists:hubungan_keluarga,id',
+            'hubungan_keluarga_id' => 'nullable|exists:hubungan_keluarga,id',
             'tempat_lahir' => 'nullable|string',
             'tanggal_lahir' => 'nullable|date',
             'tanggal_pencatatan' => 'nullable|date',
@@ -174,7 +181,6 @@ class DataKeluargaController extends Controller
         $anggotaKeluargaData['no_urut'] = 1;
         $anggotaKeluargaData['status_kehidupan'] = 'hidup';
         $anggotaKeluargaData['nama'] = $dataKeluarga->kepala_keluarga;
-        $anggotaKeluargaData['hubungan_keluarga_id'] = $request->input('hubungan_keluarga_id'); // Ensure this is explicitly set
         AnggotaKeluarga::create($anggotaKeluargaData);
         return redirect()->route('data_keluarga.index')->with('success', 'Data Kepala Keluarga berhasil ditambahkan.');
     }
