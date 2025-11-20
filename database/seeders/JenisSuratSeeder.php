@@ -90,10 +90,10 @@ class JenisSuratSeeder extends Seeder
         ];
 
         // 3. COMBINE and JSON ENCODE
-        $kelahiranVariables = json_encode(array_merge(
+        $kelahiranVariables = array_merge(
             $this->filterSystemVariables($fullSystemVariables, ['nama', 'nik', 'alamat', 'kepala_keluarga']), // Use a single filter call
             $skkCustomInputFields
-        ));
+    );
         // SKK ENDS HERE
 
         // B. SKD (Surat Keterangan Domisili)
@@ -114,12 +114,12 @@ class JenisSuratSeeder extends Seeder
         ];
         $skdDependencies = $this->filterSystemVariables($fullSystemVariables, $skdDependenciesKeys);
 
-        $domisiliVariables = json_encode(array_merge( 
+        $domisiliVariables =  array_merge( 
             $skdDependencies,
             
             $skdCustomVariables,
             $skkBaseSystemVars,
-        ));
+        );
 
 
         // C. SKU (Surat Keterangan Umum)
@@ -136,12 +136,11 @@ class JenisSuratSeeder extends Seeder
         ];
         $skuDependencies = $this->filterSystemVariables($fullSystemVariables, $skuDependenciesKeys);
 
-        $umumVariables = json_encode(array_merge(
+        $umumVariables = array_merge(
             $skuSystemVariables,
             $skuDependencies,
              
-        ));
-
+        );
 
         // D. SRRT (Surat Rekomendasi RT)
         $srrtCustomVariables = [
@@ -160,12 +159,12 @@ class JenisSuratSeeder extends Seeder
         ];
         $srrtDependencies = $this->filterSystemVariables($fullSystemVariables, $srrtDependenciesKeys);
 
-        $srrtVariables = json_encode(array_merge(
+        $srrtVariables = array_merge(
             $srrtSystemVariables,
             $srrtDependencies,
            
             $srrtCustomVariables
-        ));
+        );
 
 
         // E. SKTM (Surat Keterangan Tidak Mampu)
@@ -187,12 +186,12 @@ class JenisSuratSeeder extends Seeder
         ];
         $sktmDependencies = $this->filterSystemVariables($fullSystemVariables, $sktmDependenciesKeys);
 
-        $sktmVariables = json_encode(array_merge(
+        $sktmVariables = array_merge(
             $sktmSystemVariables,
             $sktmDependencies,
             
             $sktmCustomVariables
-        ));
+        );
 
         // F. SURAT BERKELAKUAN BAIK (SBB) 
         $sbbCustomVariables = [
@@ -210,12 +209,12 @@ class JenisSuratSeeder extends Seeder
             'kecamatan'
         ];
         $sbbDependenciesKeys = $this->filterSystemVariables($fullSystemVariables, $sbbCustomVariables);
-        $sbbVariables = json_encode(array_merge(
+        $sbbVariables = array_merge(
             $sbbSystemVariables,
             $sbbDependenciesKeys,
             
             $sbbCustomVariables
-        ));
+        );
         // SBB END HERE
 
         // G. SURAT KETERANGAN KEMATIAN (SKM)
@@ -236,12 +235,12 @@ class JenisSuratSeeder extends Seeder
             'kecamatan'
         ];
         $skmDependencies = $this->filterSystemVariables($fullSystemVariables, $skmDependeciesKeys);
-        $skmVariables = json_encode(array_merge(
+        $skmVariables =  array_merge(
             $skmSystemVariables,
             $skmDependencies,
            
             $skmCustomVariables
-        ));
+        );
         // SKM END HERE
 
         // H. SURAT KETERANGAN USAHA
@@ -253,12 +252,12 @@ class JenisSuratSeeder extends Seeder
         ];
         $skuhRequiredKeys = ['nama', 'nik'];
         $skuhSystemVariables = $this->filterSystemVariables($fullSystemVariables, $skuhRequiredKeys);
-        $skuhVariables = json_encode(array_merge(
+        $skuhVariables = array_merge(
             $skuhSystemVariables,
             $skuhCustomVariables,
            
 
-        ));
+        );
         // SKUH END HERE
 
         // I. SURAT KETERANGAN KEHILANGAN
@@ -279,12 +278,12 @@ class JenisSuratSeeder extends Seeder
             'kecamatan'
         ];
         $skkhDependencies = $this->filterSystemVariables($fullSystemVariables, $SkkhDependenciesKeys);
-        $skkhVariables = json_encode(array_merge(
+        $skkhVariables = array_merge(
             $skkhSystemVariables,
             $skkhCustomVariables,
            
             $skkhDependencies
-        ));
+        );
 
         // J. SURAT PENGANTAR PINDAH DOMISILI (SPPD)
         $sppdCustomVariables = [
@@ -303,12 +302,12 @@ class JenisSuratSeeder extends Seeder
             'kecamatan'
         ];
         $sppdDependencies = $this->filterSystemVariables($fullSystemVariables, $sppdDependenciesKeys);
-        $sppdVariables = json_encode(array_merge(
+        $sppdVariables = array_merge(
             $sppdSystemVariables,
             $sppdCustomVariables,
             $sppdDependencies,
            
-        ));
+        );
 
         // K. SURAT REKOMENDASI IMB
         $srimbVariables = [
@@ -431,7 +430,7 @@ class JenisSuratSeeder extends Seeder
                 'nama' => 'Surat Rekomendasi Ijin Mendirikan Bangunan',
                 'paragraf_pembuka' => 'Yang bertanda tangan di bawah ini menerangkan bahwa warga berikut benar-benar memiliki data bangunan sebagai berikut:',
                 'paragraf_penutup' => 'Demikian surat rekomendasi ini dibuat untuk dipergunakan sebagaimana mestinya.',
-                'required_variables' => json_encode($srimbVariables),
+                'required_variables' => $srimbVariables,
                 'kop_template_id' => $kopSuratId,
                 'mutasi_type' => 'none',
             ],

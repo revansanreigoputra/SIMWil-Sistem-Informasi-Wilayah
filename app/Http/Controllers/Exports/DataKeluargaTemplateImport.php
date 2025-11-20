@@ -175,7 +175,16 @@ class DataKeluargaTemplateImport implements WithHeadings, WithEvents, ShouldAuto
                 $sheet->getStyle($contentRange)->getAlignment()->setWrapText(true);
 
                 // AutoSize Columns again after final styling/wrapping
-                foreach (range('A', $sheet->getHighestColumn()) as $column) {
+                // foreach (range('A', $sheet->getHighestColumn()) as $column) {
+                //     $sheet->getColumnDimension($column)->setAutoSize(true);
+                // }
+                
+                // change loop that match with php 8.3 ver
+                $highestColumn = $sheet->getHighestColumn();
+                $highestColumnIndex = Coordinate::columnIndexFromString($highestColumn);
+
+                for ($i = 1; $i <= $highestColumnIndex; $i++) {
+                    $column = Coordinate::stringFromColumnIndex($i);
                     $sheet->getColumnDimension($column)->setAutoSize(true);
                 }
             },

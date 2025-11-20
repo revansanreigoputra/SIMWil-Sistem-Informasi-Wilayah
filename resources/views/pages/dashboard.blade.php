@@ -356,59 +356,28 @@
 @section('content')
     <div id="modern-dashboard-wrapper">
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 ">
                 <div class="h-100">
                     <div class="row mb-4 pb-1">
-                        <div class="col-12">
+                        <div class="col-12 mb-4">
                             <div class="d-flex justify-content-between align-items-md-center flex-md-row flex-column">
-                                {{-- <div class="flex-grow-1">
+                                <div class="flex-grow-1">
                                     <h1 class="fw-bold fs-2 text-dark mb-3 ms-3" style="letter-spacing: 0.5px;">
                                         {{ salamWaktu() . ', ' . Auth::user()->name }}!
                                     </h1>
-                                   
+
                                 </div>
                                 <div class="mt-3 mt-lg-0">
-                                    <div class="input-group" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                        title="Pilih rentang tanggal untuk filter statistik">
-                                        <input type="text" id="dash-filter-picker"
-                                            class="form-control border-0 dash-filter-picker shadow"
-                                            data-provider="flatpickr" data-range-date="true" data-date-format="d M, Y"
-                                            placeholder="Pilih rentang tanggal"
-                                            data-default-date="01 Jan 2025 to 31 Dec 2025">
-                                        <div class="input-group-text bg-primary border-primary text-white">
-                                            <i class="ri-calendar-2-line"></i>
+                                    <div class="d-flex align-items-center bg-white shadow-sm rounded px-3 py-2 border">
+                                        <div class="d-flex align-items-center justify-content-center bg-primary bg-opacity-10 rounded-circle me-3"
+                                            style="width: 35px; height: 35px;">
+                                            <i class="ri-calendar-2-line text-primary"></i>
                                         </div>
-                                    </div>
-                                </div> --}}
-                                
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- Bagian Card Statistik --}}
-                    <div class="row">
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card card-animate">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center">
-                                        <div class="flex-grow-1 overflow-hidden">
-                                            <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Total
-                                                Kecamatan</p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex align-items-end justify-content-between mt-4">
                                         <div>
-                                            <h4 class="fs-22 fw-semibold ff-secondary mb-4">
-                                                <span class="counter-value" data-target="{{ $totalKecamatan }}">0</span>
-                                            </h4>
-                                            <a href="{{ route('kecamatan.index') }}"
-                                                class="text-decoration-underline text-muted" data-bs-toggle="tooltip"
-                                                data-bs-placement="top" title="Klik untuk melihat daftar kecamatan">Lihat
-                                                Detail</a>
-                                        </div>
-                                        <div class="avatar-sm flex-shrink-0">
-                                            <span class="avatar-title bg-success-subtle rounded fs-3">
-                                                <i class="bx bxs-landmark text-success"></i>
+                                            <small class="text-muted d-block"
+                                                style="font-size: 0.7rem; line-height: 1.2;">Hari Ini</small>
+                                            <span class="fw-bold text-dark">
+                                                {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('l, d F Y') }}
                                             </span>
                                         </div>
                                     </div>
@@ -416,227 +385,278 @@
                             </div>
                         </div>
 
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card card-animate">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center">
-                                        <div class="flex-grow-1 overflow-hidden">
-                                            <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Total
-                                                Desa/Kelurahan</p>
+                        {{-- Bagian Card Statistik --}}
+                        <div class="row">
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card card-animate">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-grow-1 overflow-hidden">
+                                                <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Total
+                                                    Kecamatan</p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-end justify-content-between mt-4">
+                                            <div>
+                                                <h4 class="fs-22 fw-semibold ff-secondary mb-4">
+                                                    <span class="counter-value" data-target="{{ $totalKecamatan }}">0</span>
+                                                </h4>
+                                                <a href="{{ route('kecamatan.index') }}"
+                                                    class="text-decoration-underline text-muted" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="Klik untuk melihat daftar kecamatan">Lihat
+                                                    Detail</a>
+                                            </div>
+                                            <div class="avatar-sm flex-shrink-0">
+                                                <span class="avatar-title bg-success-subtle rounded fs-3">
+                                                    <i class="bx bxs-landmark text-success"></i>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="d-flex align-items-end justify-content-between mt-4">
-                                        <div>
-                                            <h4 class="fs-22 fw-semibold ff-secondary mb-4">
-                                                <span class="counter-value" data-target="{{ $totalDesa }}">0</span>
-                                            </h4>
-                                            <a href="{{ route('desa.index') }}" class="text-decoration-underline text-muted"
-                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                title="Klik untuk melihat daftar desa/kelurahan">Lihat Detail</a>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card card-animate">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-grow-1 overflow-hidden">
+                                                <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Total
+                                                    Desa/Kelurahan</p>
+                                            </div>
                                         </div>
-                                        <div class="avatar-sm flex-shrink-0">
-                                            <span class="avatar-title bg-info-subtle rounded fs-3">
-                                                <i class="bx bx-buildings text-info"></i>
-                                            </span>
+                                        <div class="d-flex align-items-end justify-content-between mt-4">
+                                            <div>
+                                                <h4 class="fs-22 fw-semibold ff-secondary mb-4">
+                                                    <span class="counter-value" data-target="{{ $totalDesa }}">0</span>
+                                                </h4>
+                                                <a href="{{ route('desa.index') }}"
+                                                    class="text-decoration-underline text-muted" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="Klik untuk melihat daftar desa/kelurahan">Lihat Detail</a>
+                                            </div>
+                                            <div class="avatar-sm flex-shrink-0">
+                                                <span class="avatar-title bg-info-subtle rounded fs-3">
+                                                    <i class="bx bx-buildings text-info"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card card-animate">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-grow-1 overflow-hidden">
+                                                <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Total
+                                                    Keluarga
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-end justify-content-between mt-4">
+                                            <div>
+                                                <h4 class="fs-22 fw-semibold ff-secondary mb-4">
+                                                    <span class="counter-value" data-target="{{ $totalKeluarga }}">0</span>
+                                                </h4>
+                                                <a href="{{ route('data_keluarga.index') }}"
+                                                    class="text-decoration-underline text-muted" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" title="Klik untuk melihat data keluarga">Lihat
+                                                    Detail</a>
+                                            </div>
+                                            <div class="avatar-sm flex-shrink-0">
+                                                <span class="avatar-title bg-warning-subtle rounded fs-3">
+                                                    <i class="bx bxs-user-account text-warning"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card card-animate">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-grow-1 overflow-hidden">
+                                                <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Total
+                                                    Penduduk
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-end justify-content-between mt-4">
+                                            <div>
+                                                <h4 class="fs-22 fw-semibold ff-secondary mb-4">
+                                                    <span class="counter-value" data-target="{{ $totalPenduduk }}">0</span>
+                                                </h4>
+                                                <a href="{{ route('anggota_keluarga.index') }}"
+                                                    class="text-decoration-underline text-muted" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" title="Klik untuk melihat data penduduk">Lihat
+                                                    Detail</a>
+                                            </div>
+                                            <div class="avatar-sm flex-shrink-0">
+                                                <span class="avatar-title bg-primary-subtle rounded fs-3">
+                                                    <i class="bx bxs-group text-primary"></i>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card card-animate">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center">
-                                        <div class="flex-grow-1 overflow-hidden">
-                                            <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Total Keluarga
-                                            </p>
-                                        </div>
+                        {{-- Bagian Grafik --}}
+                        <div class="row d-flex mb-5">
+                            <div class="col-xl-8">
+                                <div class="card h-100  ">
+                                    <div class="card-header">
+                                        <h4 class="card-title mb-0">Grafik Umur Penduduk</h4>
                                     </div>
-                                    <div class="d-flex align-items-end justify-content-between mt-4">
-                                        <div>
-                                            <h4 class="fs-22 fw-semibold ff-secondary mb-4">
-                                                <span class="counter-value" data-target="{{ $totalKeluarga }}">0</span>
-                                            </h4>
-                                            <a href="{{ route('data_keluarga.index') }}"
-                                                class="text-decoration-underline text-muted" data-bs-toggle="tooltip"
-                                                data-bs-placement="top" title="Klik untuk melihat data keluarga">Lihat
-                                                Detail</a>
-                                        </div>
-                                        <div class="avatar-sm flex-shrink-0">
-                                            <span class="avatar-title bg-warning-subtle rounded fs-3">
-                                                <i class="bx bxs-user-account text-warning"></i>
-                                            </span>
-                                        </div>
+                                    <div class="card-body">
+                                        @if (!empty($umurLabels))
+                                            <div id="column-charts" class="apex-charts" dir="ltr"></div>
+                                        @else
+                                            {{-- Placeholder baru yang lebih bagus --}}
+                                            <div class="d-flex align-items-center justify-content-center flex-column text-muted"
+                                                style="height: 333px; opacity: 0.8;">
+                                                <i class="ri-bar-chart-2-line"
+                                                    style="font-size: 3.5rem; margin-bottom: 0.5rem;"></i>
+                                                <h5 class="text-muted mb-0">Belum ada data.</h5>
+                                                {{-- <p>Grafik umur akan muncul di sini.</p> --}}
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4">
+                                <div class="card h-100 ">
+                                    <div class="card-header">
+                                        <h4 class="card-title mb-0">Populasi Berdasarkan Gender</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        @if (!empty($genderSeries))
+                                            <div id="pie-charts" class="apex-charts"></div>
+                                        @else
+                                            {{-- Placeholder baru yang lebih bagus --}}
+                                            <div class="d-flex align-items-center justify-content-center flex-column text-muted"
+                                                style="height: 333px; opacity: 0.8;">
+                                                <i class="ri-pie-chart-line"
+                                                    style="font-size: 3.5rem; margin-bottom: 0.5rem;"></i>
+                                                <h5 class="text-muted mb-0">Belum ada data.</h5>
+                                                {{-- <p>Grafik gender akan muncul di sini.</p> --}}
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card card-animate">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center">
-                                        <div class="flex-grow-1 overflow-hidden">
-                                            <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Total Penduduk
-                                            </p>
-                                        </div>
+                        <div class="row d-flex">
+                            <div class="col-xl-4">
+                                <div class="card h-100">
+                                    <div class="card-header align-items-center d-flex">
+                                        <h4 class="card-title mb-0 flex-grow-1">Statistik Penganut Agama</h4>
                                     </div>
-                                    <div class="d-flex align-items-end justify-content-between mt-4">
-                                        <div>
-                                            <h4 class="fs-22 fw-semibold ff-secondary mb-4">
-                                                <span class="counter-value" data-target="{{ $totalPenduduk }}">0</span>
-                                            </h4>
-                                            <a href="{{ route('anggota_keluarga.index') }}"
-                                                class="text-decoration-underline text-muted" data-bs-toggle="tooltip"
-                                                data-bs-placement="top" title="Klik untuk melihat data penduduk">Lihat
-                                                Detail</a>
-                                        </div>
-                                        <div class="avatar-sm flex-shrink-0">
-                                            <span class="avatar-title bg-primary-subtle rounded fs-3">
-                                                <i class="bx bxs-group text-primary"></i>
-                                            </span>
-                                        </div>
+                                    <div class="card-body">
+                                        @if (!empty($agamaSeries))
+                                            <div id="store-visits-source" class="apex-charts" dir="ltr"></div>
+                                        @else
+                                            {{-- Placeholder baru yang lebih bagus --}}
+                                            <div class="d-flex align-items-center justify-content-center flex-column text-muted"
+                                                style="height: 333px; opacity: 0.8;">
+                                                <i class="ri-donut-chart-line"
+                                                    style="font-size: 3.5rem; margin-bottom: 0.5rem;"></i>
+                                                <h5 class="text-muted mb-0">Belum ada data.</h5>
+                                                {{-- <p>Statistik agama akan muncul di sini.</p> --}}
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    {{-- Bagian Grafik --}}
-                    <div class="row d-flex mb-5">
-                        <div class="col-xl-8">
-                            <div class="card h-100  ">
-                                <div class="card-header">
-                                    <h4 class="card-title mb-0">Grafik Umur Penduduk</h4>
-                                </div>
-                                <div class="card-body">
-                                    @if (!empty($umurLabels))
-                                        <div id="column-charts" class="apex-charts" dir="ltr"></div>
-                                    @else
-                                        {{-- Placeholder baru yang lebih bagus --}}
-                                        <div class="d-flex align-items-center justify-content-center flex-column text-muted"
-                                            style="height: 333px; opacity: 0.8;">
-                                            <i class="ri-bar-chart-2-line"
-                                                style="font-size: 3.5rem; margin-bottom: 0.5rem;"></i>
-                                            <h5 class="text-muted mb-0">Belum ada data.</h5>
-                                            {{-- <p>Grafik umur akan muncul di sini.</p> --}}
+                            <div class="col-xl-8">
+                                <div class="card h-100">
+                                    <div class="card-header align-items-center d-flex">
+                                        <h4 class="card-title mb-0 flex-grow-1">Status Pengajuan Terakhir</h4>
+                                        <div class="flex-shrink-0">
+                                            <a href="{{ route('permohonan.unverified') }}">
+                                                <button type="button" class="btn btn-soft-info btn-sm"><i
+                                                        class="bi bi-search me-2"></i> Detail</button>
+                                            </a>
                                         </div>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-4">
-                            <div class="card h-100 ">
-                                <div class="card-header">
-                                    <h4 class="card-title mb-0">Populasi Berdasarkan Gender</h4>
-                                </div>
-                                <div class="card-body">
-                                    @if (!empty($genderSeries))
-                                        <div id="pie-charts" class="apex-charts"></div>
-                                    @else
-                                        {{-- Placeholder baru yang lebih bagus --}}
-                                        <div class="d-flex align-items-center justify-content-center flex-column text-muted"
-                                            style="height: 333px; opacity: 0.8;">
-                                            <i class="ri-pie-chart-line"
-                                                style="font-size: 3.5rem; margin-bottom: 0.5rem;"></i>
-                                            <h5 class="text-muted mb-0">Belum ada data.</h5>
-                                            {{-- <p>Grafik gender akan muncul di sini.</p> --}}
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row d-flex">
-                        <div class="col-xl-4">
-                            <div class="card h-100">
-                                <div class="card-header align-items-center d-flex">
-                                    <h4 class="card-title mb-0 flex-grow-1">Statistik Penganut Agama</h4>
-                                </div>
-                                <div class="card-body">
-                                    @if (!empty($agamaSeries))
-                                        <div id="store-visits-source" class="apex-charts" dir="ltr"></div>
-                                    @else
-                                        {{-- Placeholder baru yang lebih bagus --}}
-                                        <div class="d-flex align-items-center justify-content-center flex-column text-muted"
-                                            style="height: 333px; opacity: 0.8;">
-                                            <i class="ri-donut-chart-line"
-                                                style="font-size: 3.5rem; margin-bottom: 0.5rem;"></i>
-                                            <h5 class="text-muted mb-0">Belum ada data.</h5>
-                                            {{-- <p>Statistik agama akan muncul di sini.</p> --}}
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-8">
-                            <div class="card h-100">
-                                <div class="card-header align-items-center d-flex">
-                                    <h4 class="card-title mb-0 flex-grow-1">Status Pengajuan Terakhir</h4>
-                                    <div class="flex-shrink-0">
-                                        <a href="{{ route('permohonan.unverified') }}">
-                                            <button type="button" class="btn btn-soft-info btn-sm"><i
-                                                    class="bi bi-search me-2"></i> Detail</button>
-                                        </a>
                                     </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-responsive table-card">
-                                        <table
-                                            class="table table-borderless table-centered align-middle table-nowrap mb-0">
-                                            <thead class="text-muted table-light">
-                                                <tr>
-                                                    <th scope="col">No</th>
-                                                    <th scope="col">Nama Penduduk</th>
-                                                    <th scope="col">Nama Surat</th>
-                                                    <th scope="col">Status Pengajuan</th>
-                                                    <th scope="col">Tgl Pengajuan</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @forelse($pengajuanTerakhir as $permohonan)
+                                    <div class="card-body">
+                                        <div class="table-responsive table-card">
+                                            <table
+                                                class="table table-borderless table-centered align-middle table-nowrap mb-0">
+                                                <thead class="text-muted table-light">
                                                     <tr>
-                                                        <td>
-                                                            {{ $loop->iteration }}
-                                                        </td>
-                                                        <td>
-                                                            {{-- Mengambil nama dari relasi 'anggotaKeluarga' --}}
-                                                            {{-- 'nama_lengkap' adalah kolom di tabel 'anggota_keluargas' (sesuaikan jika beda) --}}
-                                                            {{ $permohonan->anggotaKeluarga->nama ?? 'Data Penduduk Dihapus' }}
-                                                        </td>
-                                                        <td>
-                                                            {{-- Mengambil nama dari relasi 'kopTemplate' --}}
-                                                            {{-- 'nama_template' adalah asumsi kolom di 'kop_templates' (sesuaikan jika beda) --}}
-                                                            {{ $permohonan->jenisSurat->nama ?? 'Surat Tidak Ditemukan' }}
-                                                        </td>
-                                                        <td>
-                                                            @if ($permohonan->status == 'Closing')
-                                                                <span
-                                                                    class="badge bg-success-subtle text-success">{{ $permohonan->status }}</span>
-                                                            @elseif($permohonan->status == 'Dalam Proses')
-                                                                <span
-                                                                    class="badge bg-warning-subtle text-warning">{{ $permohonan->status }}</span>
-                                                            @else
-                                                                <span
-                                                                    class="badge bg-danger-subtle text-danger">{{ $permohonan->status ?? 'Status T/A' }}</span>
-                                                            @endif
-                                                        </td>
-                                                        <td>
-
-                                                            {{ $permohonan->created_at->format('d/m/Y') }}
-                                                        </td>
+                                                        <th scope="col">No</th>
+                                                        <th scope="col">Nama Penduduk</th>
+                                                        <th scope="col">Nama Surat</th>
+                                                        <th scope="col">Status Pengajuan</th>
+                                                        <th scope="col">Tgl Pengajuan</th>
                                                     </tr>
-                                                @empty
+                                                </thead>
+                                                <tbody>
+                                                    @forelse($pengajuanTerakhir as $permohonan)
+                                                        <tr>
+                                                            <td>
+                                                                {{ $loop->iteration }}
+                                                            </td>
+                                                            <td>
+                                                                {{-- Mengambil nama dari relasi 'anggotaKeluarga' --}}
+                                                                {{-- 'nama_lengkap' adalah kolom di tabel 'anggota_keluargas' (sesuaikan jika beda) --}}
+                                                                {{ $permohonan->anggotaKeluarga->nama ?? 'Data Penduduk Dihapus' }}
+                                                            </td>
+                                                            <td>
+                                                                {{-- Mengambil nama dari relasi 'kopTemplate' --}}
+                                                                {{-- 'nama_template' adalah asumsi kolom di 'kop_templates' (sesuaikan jika beda) --}}
+                                                                {{ $permohonan->jenisSurat->nama ?? 'Surat Tidak Ditemukan' }}
+                                                            </td>
+                                                            <td>
+                                                                @php
+                                                                    $statusClass = '';
+                                                                    switch ($permohonan->status) {
+                                                                        case 'belum_diverifikasi':
+                                                                            $statusClass = 'badge bg-secondary';
+                                                                            break;
+                                                                        case 'diverifikasi':
+                                                                            $statusClass = 'badge bg-primary';
+                                                                            break;
+                                                                        case 'ditolak':
+                                                                            $statusClass = 'badge bg-danger';
+                                                                            break;
+                                                                        case 'siap_diambil':
+                                                                            $statusClass = 'badge bg-warning';
+                                                                            break;
+                                                                        case 'sudah_diambil':
+                                                                            $statusClass = 'badge bg-success';
+                                                                            break;
+                                                                        default:
+                                                                            $statusClass = 'badge bg-secondary';
+                                                                    }
+                                                                @endphp
+                                                                <span
+                                                                    class="{{ $statusClass }}">{{ ucfirst($permohonan->status) }}</span>
+                                                            </td>
+                                                            <td>
 
-                                                    <tr>
-                                                        <td colspan="5" class="text-center">Belum ada data pengajuan.
-                                                        </td>
-                                                    </tr>
-                                                @endforelse
-                                            </tbody>
-                                        </table>
+                                                                {{ $permohonan->created_at->format('d/m/Y') }}
+                                                            </td>
+                                                        </tr>
+                                                    @empty
+
+                                                        <tr>
+                                                            <td colspan="5" class="text-center">Belum ada data
+                                                                pengajuan.
+                                                            </td>
+                                                        </tr>
+                                                    @endforelse
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -645,179 +665,178 @@
                 </div>
             </div>
         </div>
-    </div>
-@endsection
+    @endsection
 
-@push('addon-script')
-    {{-- Library JS yang dibutuhkan --}}
-    <script src="{{ asset('backend/libs/apexcharts/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('backend/libs/flatpickr/flatpickr.min.js') }}"></script>
+    @push('addon-script')
+        {{-- Library JS yang dibutuhkan --}}
+        <script src="{{ asset('backend/libs/apexcharts/apexcharts.min.js') }}"></script>
+        <script src="{{ asset('backend/libs/flatpickr/flatpickr.min.js') }}"></script>
 
-    {{-- Script Inisialisasi --}}
-    <script>
-        $(document).ready(function() {
+        {{-- Script Inisialisasi --}}
+        <script>
+            $(document).ready(function() {
 
-            $('.counter-value').each(function() {
-                var $this = $(this);
-                var target = parseInt($this.data('target'));
+                $('.counter-value').each(function() {
+                    var $this = $(this);
+                    var target = parseInt($this.data('target'));
 
-                $({
-                    Counter: 0
-                }).animate({
-                    Counter: target
-                }, {
-                    duration: 2000, // Durasi animasi 2 detik
-                    easing: 'swing',
-                    step: function() {
-                        // Format angka dengan pemisah ribuan (titik)
-                        $this.text(Math.ceil(this.Counter).toLocaleString('id-ID'));
-                    },
-                    complete: function() {
-                        // Pastikan angka akhir sesuai target dengan format yg benar
-                        $this.text(target.toLocaleString('id-ID'));
-                    }
-                });
-            });
-
-            // --- Chart Statistik Agama (Donut) ---
-            const $chartEl = $('#store-visits-source');
-            if ($chartEl.length) {
-                const options = {
-                    chart: {
-                        height: 333,
-                        type: 'donut'
-                    },
-                    series: {!! json_encode($agamaSeries) !!},
-                    labels: {!! json_encode($agamaLabels) !!},
-                    colors: ["#13c56b", "#6691e7", "#e8bc52", "#ed5e5e", "#50c3e6", "#865ce2"],
-                    legend: {
-                        position: "bottom"
-                    },
-                    stroke: {
-                        show: false
-                    },
-                    dataLabels: {
-                        dropShadow: {
-                            enabled: false
-                        }
-                    },
-                };
-                const chart = new ApexCharts($chartEl[0], options);
-                chart.render();
-            }
-
-            // --- Chart Populasi Gender (Donut) ---
-            const $pieCharts = $('#pie-charts');
-            if ($pieCharts.length) {
-                const pieoptions = {
-                    chart: {
-                        height: 333,
-                        type: 'donut'
-                    },
-                    series: {!! json_encode($genderSeries) !!},
-                    labels: {!! json_encode($genderLabels) !!},
-                    legend: {
-                        position: "bottom"
-                    },
-                    stroke: {
-                        show: false
-                    },
-                    dataLabels: {
-                        dropShadow: {
-                            enabled: false
-                        }
-                    }
-                };
-                const piechart = new ApexCharts($pieCharts[0], pieoptions);
-                piechart.render();
-            }
-
-            // --- Chart Umur Penduduk (Column) ---
-            const $columnCharts = document.querySelector("#column-charts");
-            if ($columnCharts) {
-                var columnOptions = {
-                    series: [{
-                        name: 'Perempuan',
-                        data: {!! json_encode($umurSeriesPerempuan) !!}
+                    $({
+                        Counter: 0
+                    }).animate({
+                        Counter: target
                     }, {
-                        name: 'Laki-laki',
-                        data: {!! json_encode($umurSeriesLaki) !!}
-                    }],
-                    chart: {
-                        type: 'bar',
-                        height: 333,
-                        toolbar: {
+                        duration: 2000, // Durasi animasi 2 detik
+                        easing: 'swing',
+                        step: function() {
+                            // Format angka dengan pemisah ribuan (titik)
+                            $this.text(Math.ceil(this.Counter).toLocaleString('id-ID'));
+                        },
+                        complete: function() {
+                            // Pastikan angka akhir sesuai target dengan format yg benar
+                            $this.text(target.toLocaleString('id-ID'));
+                        }
+                    });
+                });
+
+                // --- Chart Statistik Agama (Donut) ---
+                const $chartEl = $('#store-visits-source');
+                if ($chartEl.length) {
+                    const options = {
+                        chart: {
+                            height: 333,
+                            type: 'donut'
+                        },
+                        series: {!! json_encode($agamaSeries) !!},
+                        labels: {!! json_encode($agamaLabels) !!},
+                        colors: ["#13c56b", "#6691e7", "#e8bc52", "#ed5e5e", "#50c3e6", "#865ce2"],
+                        legend: {
+                            position: "bottom"
+                        },
+                        stroke: {
                             show: false
-                        }
-                    },
-                    plotOptions: {
-                        bar: {
-                            horizontal: false,
-                            columnWidth: '20px',
-                            borderRadius: 5,
-                            borderRadiusApplication: 'end'
-                        }
-                    },
-                    dataLabels: {
-                        enabled: false
-                    },
-                    stroke: {
-                        show: true,
-                        width: 2,
-                        colors: ['transparent']
-                    },
-                    xaxis: {
-                        categories: {!! json_encode($umurLabels) !!},
-                        title: {
-                            text: 'Kelompok Umur (Thn)'
-                        }
-                    },
-                    yaxis: {
-                        title: {
-                            text: 'Jumlah Penduduk'
-                        }
-                    },
-                    fill: {
-                        opacity: 1
-                    },
-                    tooltip: {
-                        x: {
-                            formatter: function(val) {
-                                return val + " Thn";
+                        },
+                        dataLabels: {
+                            dropShadow: {
+                                enabled: false
+                            }
+                        },
+                    };
+                    const chart = new ApexCharts($chartEl[0], options);
+                    chart.render();
+                }
+
+                // --- Chart Populasi Gender (Donut) ---
+                const $pieCharts = $('#pie-charts');
+                if ($pieCharts.length) {
+                    const pieoptions = {
+                        chart: {
+                            height: 333,
+                            type: 'donut'
+                        },
+                        series: {!! json_encode($genderSeries) !!},
+                        labels: {!! json_encode($genderLabels) !!},
+                        legend: {
+                            position: "bottom"
+                        },
+                        stroke: {
+                            show: false
+                        },
+                        dataLabels: {
+                            dropShadow: {
+                                enabled: false
                             }
                         }
-                    },
-                    legend: {
-                        position: 'top',
-                        horizontalAlign: 'center'
-                    },
-                };
-                var columnChart = new ApexCharts($columnCharts, columnOptions);
-                columnChart.render();
-            }
-        });
+                    };
+                    const piechart = new ApexCharts($pieCharts[0], pieoptions);
+                    piechart.render();
+                }
 
-        // Script ini tidak memakai jQuery, jadi aman dijalankan di luar
-        document.addEventListener('DOMContentLoaded', function() {
-            // Inisialisasi Flatpickr
-            document.querySelectorAll('[data-provider="flatpickr"]').forEach(function(el) {
-                if (typeof flatpickr !== 'undefined') {
-                    flatpickr(el, {
-                        mode: el.dataset.rangeDate ? "range" : "single",
-                        dateFormat: el.dataset.dateFormat || "d M, Y",
-                        defaultDate: el.dataset.defaultDate ? el.dataset.defaultDate.split(
-                            " to ") : null,
-                    });
+                // --- Chart Umur Penduduk (Column) ---
+                const $columnCharts = document.querySelector("#column-charts");
+                if ($columnCharts) {
+                    var columnOptions = {
+                        series: [{
+                            name: 'Perempuan',
+                            data: {!! json_encode($umurSeriesPerempuan) !!}
+                        }, {
+                            name: 'Laki-laki',
+                            data: {!! json_encode($umurSeriesLaki) !!}
+                        }],
+                        chart: {
+                            type: 'bar',
+                            height: 333,
+                            toolbar: {
+                                show: false
+                            }
+                        },
+                        plotOptions: {
+                            bar: {
+                                horizontal: false,
+                                columnWidth: '20px',
+                                borderRadius: 5,
+                                borderRadiusApplication: 'end'
+                            }
+                        },
+                        dataLabels: {
+                            enabled: false
+                        },
+                        stroke: {
+                            show: true,
+                            width: 2,
+                            colors: ['transparent']
+                        },
+                        xaxis: {
+                            categories: {!! json_encode($umurLabels) !!},
+                            title: {
+                                text: 'Kelompok Umur (Thn)'
+                            }
+                        },
+                        yaxis: {
+                            title: {
+                                text: 'Jumlah Penduduk'
+                            }
+                        },
+                        fill: {
+                            opacity: 1
+                        },
+                        tooltip: {
+                            x: {
+                                formatter: function(val) {
+                                    return val + " Thn";
+                                }
+                            }
+                        },
+                        legend: {
+                            position: 'top',
+                            horizontalAlign: 'center'
+                        },
+                    };
+                    var columnChart = new ApexCharts($columnCharts, columnOptions);
+                    columnChart.render();
                 }
             });
 
-            // Inisialisasi semua tooltip Bootstrap
-            if (typeof bootstrap !== 'undefined' && typeof bootstrap.Tooltip !== 'undefined') {
-                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-                var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-                    return new bootstrap.Tooltip(tooltipTriggerEl)
+            // Script ini tidak memakai jQuery, jadi aman dijalankan di luar
+            document.addEventListener('DOMContentLoaded', function() {
+                // Inisialisasi Flatpickr
+                document.querySelectorAll('[data-provider="flatpickr"]').forEach(function(el) {
+                    if (typeof flatpickr !== 'undefined') {
+                        flatpickr(el, {
+                            mode: el.dataset.rangeDate ? "range" : "single",
+                            dateFormat: el.dataset.dateFormat || "d M, Y",
+                            defaultDate: el.dataset.defaultDate ? el.dataset.defaultDate.split(
+                                " to ") : null,
+                        });
+                    }
                 });
-            }
-        });
-    </script>
-@endpush
+
+                // Inisialisasi semua tooltip Bootstrap
+                if (typeof bootstrap !== 'undefined' && typeof bootstrap.Tooltip !== 'undefined') {
+                    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+                    var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+                        return new bootstrap.Tooltip(tooltipTriggerEl)
+                    });
+                }
+            });
+        </script>
+    @endpush
