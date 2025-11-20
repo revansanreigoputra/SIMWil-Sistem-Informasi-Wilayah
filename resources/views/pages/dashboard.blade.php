@@ -361,12 +361,11 @@
                     <div class="row mb-4 pb-1">
                         <div class="col-12">
                             <div class="d-flex justify-content-between align-items-md-center flex-md-row flex-column">
-                                <div class="flex-grow-1">
+                                {{-- <div class="flex-grow-1">
                                     <h1 class="fw-bold fs-2 text-dark mb-3 ms-3" style="letter-spacing: 0.5px;">
                                         {{ salamWaktu() . ', ' . Auth::user()->name }}!
                                     </h1>
-                                    {{-- <p class="text-muted mb-0">Silahkan manage konten sesuai dengan role permission yang
-                                        anda dapatkan.</p> --}}
+                                   
                                 </div>
                                 <div class="mt-3 mt-lg-0">
                                     <div class="input-group" data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -380,7 +379,8 @@
                                             <i class="ri-calendar-2-line"></i>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
+                                
                             </div>
                         </div>
                     </div>
@@ -504,9 +504,9 @@
                     </div>
 
                     {{-- Bagian Grafik --}}
-                    <div class="row">
+                    <div class="row d-flex mb-5">
                         <div class="col-xl-8">
-                            <div class="card">
+                            <div class="card h-100  ">
                                 <div class="card-header">
                                     <h4 class="card-title mb-0">Grafik Umur Penduduk</h4>
                                 </div>
@@ -527,7 +527,7 @@
                             </div>
                         </div>
                         <div class="col-xl-4">
-                            <div class="card">
+                            <div class="card h-100 ">
                                 <div class="card-header">
                                     <h4 class="card-title mb-0">Populasi Berdasarkan Gender</h4>
                                 </div>
@@ -549,9 +549,9 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row d-flex">
                         <div class="col-xl-4">
-                            <div class="card card-height-100">
+                            <div class="card h-100">
                                 <div class="card-header align-items-center d-flex">
                                     <h4 class="card-title mb-0 flex-grow-1">Statistik Penganut Agama</h4>
                                 </div>
@@ -572,11 +572,14 @@
                             </div>
                         </div>
                         <div class="col-xl-8">
-                            <div class="card">
+                            <div class="card h-100">
                                 <div class="card-header align-items-center d-flex">
                                     <h4 class="card-title mb-0 flex-grow-1">Status Pengajuan Terakhir</h4>
-                                    <div class="flex-shrink-0"><button type="button" class="btn btn-soft-info btn-sm"><i
-                                                class="ri-file-list-3-line align-middle"></i> Generate Report</button>
+                                    <div class="flex-shrink-0">
+                                        <a href="{{ route('permohonan.unverified') }}">
+                                            <button type="button" class="btn btn-soft-info btn-sm"><i
+                                                    class="bi bi-search me-2"></i> Detail</button>
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -585,9 +588,9 @@
                                             class="table table-borderless table-centered align-middle table-nowrap mb-0">
                                             <thead class="text-muted table-light">
                                                 <tr>
-                                                    <th scope="col">Order ID</th>
-                                                    <th scope="col">Konsumen</th>
-                                                    <th scope="col">Jenis Pengajuan</th>
+                                                    <th scope="col">No</th>
+                                                    <th scope="col">Nama Penduduk</th>
+                                                    <th scope="col">Nama Surat</th>
                                                     <th scope="col">Status Pengajuan</th>
                                                     <th scope="col">Tgl Pengajuan</th>
                                                 </tr>
@@ -596,23 +599,19 @@
                                                 @forelse($pengajuanTerakhir as $permohonan)
                                                     <tr>
                                                         <td>
-                                                            {{-- Mengambil ID dari permohonans --}}
-                                                            <a href="#"
-                                                                class="fw-medium link-primary">#SWL-{{ $permohonan->id }}</a>
+                                                            {{ $loop->iteration }}
                                                         </td>
                                                         <td>
                                                             {{-- Mengambil nama dari relasi 'anggotaKeluarga' --}}
                                                             {{-- 'nama_lengkap' adalah kolom di tabel 'anggota_keluargas' (sesuaikan jika beda) --}}
-                                                            {{ $permohonan->anggotaKeluarga->nama_lengkap ?? 'Data Penduduk Dihapus' }}
+                                                            {{ $permohonan->anggotaKeluarga->nama ?? 'Data Penduduk Dihapus' }}
                                                         </td>
                                                         <td>
                                                             {{-- Mengambil nama dari relasi 'kopTemplate' --}}
                                                             {{-- 'nama_template' adalah asumsi kolom di 'kop_templates' (sesuaikan jika beda) --}}
-                                                            {{ $permohonan->kopTemplate->nama_template ?? 'Jenis Tidak Ditemukan' }}
+                                                            {{ $permohonan->jenisSurat->nama ?? 'Surat Tidak Ditemukan' }}
                                                         </td>
                                                         <td>
-                                                            {{-- PENTING: Ini akan mengambil data dari kolom 'status' --}}
-                                                            {{-- Pastikan Anda sudah menambahkan kolom 'status' di tabel 'permohonans' --}}
                                                             @if ($permohonan->status == 'Closing')
                                                                 <span
                                                                     class="badge bg-success-subtle text-success">{{ $permohonan->status }}</span>
@@ -620,18 +619,17 @@
                                                                 <span
                                                                     class="badge bg-warning-subtle text-warning">{{ $permohonan->status }}</span>
                                                             @else
-                                                                {{-- Tampilkan status apa adanya jika tidak cocok --}}
                                                                 <span
                                                                     class="badge bg-danger-subtle text-danger">{{ $permohonan->status ?? 'Status T/A' }}</span>
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            {{-- Menggunakan 'created_at' dari tabel permohonans --}}
+
                                                             {{ $permohonan->created_at->format('d/m/Y') }}
                                                         </td>
                                                     </tr>
                                                 @empty
-                                                    {{-- Ini akan tampil jika tidak ada data permohonan --}}
+
                                                     <tr>
                                                         <td colspan="5" class="text-center">Belum ada data pengajuan.
                                                         </td>
