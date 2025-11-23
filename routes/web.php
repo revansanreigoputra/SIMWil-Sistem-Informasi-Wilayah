@@ -1843,6 +1843,17 @@ Route::middleware(['auth'])->prefix('potensi/sda/alat-produksi-ikan-tawar')->nam
     Route::delete('/{pAlatProduksiIkanTawar}', [App\Http\Controllers\PAlatProduksiIkanTawarController::class, 'destroy'])->name('destroy');
 });
 
+// PSumberAirBersih routes
+Route::middleware(['auth'])->prefix('potensi/sda/sumber-air-bersih')->name('p-sumber-air-bersih.')->group(function () {
+    Route::get('/', [App\Http\Controllers\PSumberAirBersihController::class, 'index'])->name('index');
+    Route::get('/create', [App\Http\Controllers\PSumberAirBersihController::class, 'create'])->name('create');
+    Route::post('/', [App\Http\Controllers\PSumberAirBersihController::class, 'store'])->name('store');
+    Route::get('/{pSumberAirBersih}', [App\Http\Controllers\PSumberAirBersihController::class, 'show'])->name('show');
+    Route::get('/{pSumberAirBersih}/edit', [App\Http\Controllers\PSumberAirBersihController::class, 'edit'])->name('edit');
+    Route::put('/{pSumberAirBersih}', [App\Http\Controllers\PSumberAirBersihController::class, 'update'])->name('update');
+    Route::delete('/{pSumberAirBersih}', [App\Http\Controllers\PSumberAirBersihController::class, 'destroy'])->name('destroy');
+});
+
 // PNamaIkan routes
 Route::middleware(['auth'])->prefix('potensi/sda/jenis-dan-produksi-ikan')->name('p-nama-ikan.')->group(function () {
     Route::get('/', [App\Http\Controllers\PNamaIkanController::class, 'index'])->name('index');

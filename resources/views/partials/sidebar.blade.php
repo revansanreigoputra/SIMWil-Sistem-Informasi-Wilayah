@@ -266,10 +266,10 @@
                                 <a class="dropdown-item {{ request()->is('layanan-surat/permohonan') ? 'active' : '' }}"
                                     href="{{ route('permohonan.index') }}">
                                     <i class="bi bi-plus-circle me-2 py-1"></i>
-                                     Permohonan Surat
+                                    Permohonan Surat
                                 </a>
-                                <a class="dropdown-item {{ request()->is('layanan-surat/permohonan/unverified') ? 'active' : ''}}"
-                                href="{{route('permohonan.unverified')}}">
+                                <a class="dropdown-item {{ request()->is('layanan-surat/permohonan/unverified') ? 'active' : '' }}"
+                                    href="{{ route('permohonan.unverified') }}">
                                     Surat Belum Diverifikasi
                                 </a>
 
@@ -582,10 +582,19 @@
                                                 </a>
                                             @endcan
 
+                                            <br>
                                             @can('deposit-produksi-galian.view')
                                                 <a class="dropdown-item {{ request()->is('potensi/sda/deposit-produksi-galian*') ? 'active' : '' }}"
                                                     href="{{ route('deposit-produksi-galian.index') }}">
                                                     Deposit dan Produksi <br> Galian
+                                                </a>
+                                            @endcan
+
+                                            <br>
+                                            @can('p-sumber-air-bersih.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/sumber-air-bersih*') ? 'active' : '' }}"
+                                                    href="{{ route('p-sumber-air-bersih.index') }}">
+                                                    Sumber Air Bersih
                                                 </a>
                                             @endcan
 
@@ -1359,144 +1368,146 @@
                                                     </a>
                                                 @endcan
 
-                                               @can('subsektor-kehutanan.view')
-                                            <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/subsektor-kehutanan*') ? 'active' : '' }}"
-                                            href="{{ route('perkembangan.produk-domestik.subsektor-kehutanan.index') }}">
-                                                Subsektor <br> Kehutanan
-                                            </a>
-                                        @endcan
-                                         @can('sektor-bangunan.view')
-                                                <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/sektor-bangunan*') ? 'active' : '' }}"
-                                                href="{{ route('perkembangan.produk-domestik.sektor-bangunan.index') }}">
-                                                    Sektor <br> Bangunan/konstruksi
-                                                </a>
-                                            @endcan
+                                                @can('subsektor-kehutanan.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/subsektor-kehutanan*') ? 'active' : '' }}"
+                                                        href="{{ route('perkembangan.produk-domestik.subsektor-kehutanan.index') }}">
+                                                        Subsektor <br> Kehutanan
+                                                    </a>
+                                                @endcan
+                                                @can('sektor-bangunan.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/sektor-bangunan*') ? 'active' : '' }}"
+                                                        href="{{ route('perkembangan.produk-domestik.sektor-bangunan.index') }}">
+                                                        Sektor <br> Bangunan/konstruksi
+                                                    </a>
+                                                @endcan
 
-                                             @can('sektor-jasa-jasa.view')
-                                                <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/sektor-jasa-jasa*') ? 'active' : '' }}"
-                                                href="{{ route('perkembangan.produk-domestik.sektor-jasa-jasa.index') }}">
-                                                    Sektor Jasa Jasa
-                                                </a>
-                                            @endcan
+                                                @can('sektor-jasa-jasa.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/sektor-jasa-jasa*') ? 'active' : '' }}"
+                                                        href="{{ route('perkembangan.produk-domestik.sektor-jasa-jasa.index') }}">
+                                                        Sektor Jasa Jasa
+                                                    </a>
+                                                @endcan
 
-                                             @can('sektor-keuangan-jasa-perusahaan.view')
-                                                <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/sektor-keuangan-jasa-perusahaan*') ? 'active' : '' }}"
-                                                href="{{ route('perkembangan.produk-domestik.sektor-keuangan-jasa-perusahaan.index') }}">
-                                                    Sektor keungan <br> jasa perusahaan
-                                                </a>
-                                            @endcan
+                                                @can('sektor-keuangan-jasa-perusahaan.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/sektor-keuangan-jasa-perusahaan*') ? 'active' : '' }}"
+                                                        href="{{ route('perkembangan.produk-domestik.sektor-keuangan-jasa-perusahaan.index') }}">
+                                                        Sektor keungan <br> jasa perusahaan
+                                                    </a>
+                                                @endcan
 
-                                              @can('sektor-angkutan.view')
-                                                <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/sektor-angkutan') ? 'active' : '' }}"
-                                                href="{{ route('perkembangan.produk-domestik.sektor-angkutan.index') }}">
-                                                    Sektor Angkutan <br> Dan Komunikasi
-                                                </a>
-                                            @endcan
+                                                @can('sektor-angkutan.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/sektor-angkutan') ? 'active' : '' }}"
+                                                        href="{{ route('perkembangan.produk-domestik.sektor-angkutan.index') }}">
+                                                        Sektor Angkutan <br> Dan Komunikasi
+                                                    </a>
+                                                @endcan
 
-                                             @can('sektor-listrik-gas-air-minum.view')
-                                                <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/sektor-listrik-gas-air-minum') ? 'active' : '' }}"
-                                                href="{{ route('perkembangan.produk-domestik.sektor-listrik-gas-air-minum.index') }}">
-                                                    Sektor listrik, Gas <br> dan minum
-                                                </a>
-                                            @endcan
+                                                @can('sektor-listrik-gas-air-minum.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/sektor-listrik-gas-air-minum') ? 'active' : '' }}"
+                                                        href="{{ route('perkembangan.produk-domestik.sektor-listrik-gas-air-minum.index') }}">
+                                                        Sektor listrik, Gas <br> dan minum
+                                                    </a>
+                                                @endcan
 
                                                 @can('sektor-perdagangan-hotel-restoran.view')
-                                                <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/sektor-perdagangan-hotel-restoran') ? 'active' : '' }}"
-                                                href="{{ route('perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.index') }}">
-                                                    Sektor perdagangan <br> hotel dan restoran
-                                                </a>
-                                            @endcan
-                                        </div>
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/produk-domestik/sektor-perdagangan-hotel-restoran') ? 'active' : '' }}"
+                                                        href="{{ route('perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.index') }}">
+                                                        Sektor perdagangan <br> hotel dan restoran
+                                                    </a>
+                                                @endcan
+                                            </div>
 
                                         </div>
                                     @endcanany
 
-                               {{-- Struktur Mata Pencaharian Menurut Sektor --}}
-                    @canany(['sektor-pertanian.view', 'sektor-pertanian.create', 'sektor-pertanian.show', 'sektor-pertanian.edit', 'sektor-pertanian.destroy'])
-                        <div class="dropend">
-                            <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/struktur-mata-pencaharian*') ? 'active' : '' }}"
-                                 href="#sidebar-strukturmatapencaharian" data-bs-toggle="dropdown"
-                                 data-bs-auto-close="false" role="button" aria-expanded="false">
-                                Struktur Mata <br> Pencaharian <br> Menurut Sektor
-                            </a>
+                                    {{-- Struktur Mata Pencaharian Menurut Sektor --}}
+                                    @canany(['sektor-pertanian.view', 'sektor-pertanian.create', 'sektor-pertanian.show',
+                                        'sektor-pertanian.edit', 'sektor-pertanian.destroy'])
+                                        <div class="dropend">
+                                            <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/struktur-mata-pencaharian*') ? 'active' : '' }}"
+                                                href="#sidebar-strukturmatapencaharian" data-bs-toggle="dropdown"
+                                                data-bs-auto-close="false" role="button" aria-expanded="false">
+                                                Struktur Mata <br> Pencaharian <br> Menurut Sektor
+                                            </a>
 
-                            <div class="dropdown-menu {{ request()->is('perkembangan/struktur-mata-pencaharian*') ? 'show' : '' }}">
-                                @can('sektor-pertanian.view')
-                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-pertanian*') ? 'active' : '' }}"
-                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-pertanian.index') }}">
-                                        Sektor Pertanian
-                                    </a>
-                                @endcan
+                                            <div
+                                                class="dropdown-menu {{ request()->is('perkembangan/struktur-mata-pencaharian*') ? 'show' : '' }}">
+                                                @can('sektor-pertanian.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-pertanian*') ? 'active' : '' }}"
+                                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-pertanian.index') }}">
+                                                        Sektor Pertanian
+                                                    </a>
+                                                @endcan
 
-                                 @can('sektor-perkebunan.view')
-                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-perkebunan*') ? 'active' : '' }}"
-                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-perkebunan.index') }}">
-                                        Sektor Perkebunan
-                                    </a>
-                                @endcan
+                                                @can('sektor-perkebunan.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-perkebunan*') ? 'active' : '' }}"
+                                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-perkebunan.index') }}">
+                                                        Sektor Perkebunan
+                                                    </a>
+                                                @endcan
 
-                                 @can('sektor-peternakan.view')
-                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-peternakan*') ? 'active' : '' }}"
-                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-peternakan.index') }}">
-                                        Sektor Perternakan
-                                    </a>
-                                @endcan
+                                                @can('sektor-peternakan.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-peternakan*') ? 'active' : '' }}"
+                                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-peternakan.index') }}">
+                                                        Sektor Perternakan
+                                                    </a>
+                                                @endcan
 
-                                 @can('sektor-perikanan.view')
-                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-perikanan*') ? 'active' : '' }}"
-                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-perikanan.index') }}">
-                                        Sektor Perikanan
-                                    </a>
-                                @endcan
+                                                @can('sektor-perikanan.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-perikanan*') ? 'active' : '' }}"
+                                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-perikanan.index') }}">
+                                                        Sektor Perikanan
+                                                    </a>
+                                                @endcan
 
-                                @can('sektor-kehutanan.view')
-                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-kehutanan*') ? 'active' : '' }}"
-                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-kehutanan.index') }}">
-                                        Sektor Kehutanan
-                                    </a>
-                                @endcan
+                                                @can('sektor-kehutanan.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-kehutanan*') ? 'active' : '' }}"
+                                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-kehutanan.index') }}">
+                                                        Sektor Kehutanan
+                                                    </a>
+                                                @endcan
 
-                                  @can('sektor-tambang.view')
-                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-tambang*') ? 'active' : '' }}"
-                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-tambang.index') }}">
-                                        Sektor Pertambangan
-                                    </a>
-                                @endcan
+                                                @can('sektor-tambang.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-tambang*') ? 'active' : '' }}"
+                                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-tambang.index') }}">
+                                                        Sektor Pertambangan
+                                                    </a>
+                                                @endcan
 
-                                 @can('sektor-perdagangan.view')
-                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-perdagangan*') ? 'active' : '' }}"
-                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-perdagangan.index') }}">
-                                        Sektor Perdagangan
-                                    </a>
-                                @endcan
+                                                @can('sektor-perdagangan.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-perdagangan*') ? 'active' : '' }}"
+                                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-perdagangan.index') }}">
+                                                        Sektor Perdagangan
+                                                    </a>
+                                                @endcan
 
-                                 @can('sektor-industri-kecil.view')
-                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-industri-kecil*') ? 'active' : '' }}"
-                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-industri-kecil.index') }}">
-                                        Sektor industri kecil <br> dan Kerajinan RT
-                                    </a>
-                                @endcan
+                                                @can('sektor-industri-kecil.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-industri-kecil*') ? 'active' : '' }}"
+                                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-industri-kecil.index') }}">
+                                                        Sektor industri kecil <br> dan Kerajinan RT
+                                                    </a>
+                                                @endcan
 
-                                 @can('sektor-industri-menengah-besar.view')
-                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-industri-menengah-besar*') ? 'active' : '' }}"
-                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-industri-menengah-besar.index') }}">
-                                        Sektor industri besar <br> Menengah
-                                    </a>
-                                @endcan
+                                                @can('sektor-industri-menengah-besar.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-industri-menengah-besar*') ? 'active' : '' }}"
+                                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-industri-menengah-besar.index') }}">
+                                                        Sektor industri besar <br> Menengah
+                                                    </a>
+                                                @endcan
 
 
-                                 @can('sektor-jasa-usaha.view')
-                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-jasa-usahar*') ? 'active' : '' }}"
-                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-jasa-usaha.index') }}">
-                                        Sektor Jasa
-                                    </a>
-                                @endcan
+                                                @can('sektor-jasa-usaha.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/struktur-mata-pencaharian/sektor-jasa-usahar*') ? 'active' : '' }}"
+                                                        href="{{ route('perkembangan.struktur-mata-pencaharian.sektor-jasa-usaha.index') }}">
+                                                        Sektor Jasa
+                                                    </a>
+                                                @endcan
 
-                            </div>
-                        </div>
-                    @endcanany
+                                            </div>
+                                        </div>
+                                    @endcanany
 
-                                     {{-- Kesehatan Masyarakat --}}
+                                    {{-- Kesehatan Masyarakat --}}
                                     @canany(['kualitas-ibu-hamil.view', 'kualitas-bayi.view'])
                                         <div class="dropend">
                                             <a class="dropdown-item dropdown-toggle {{ request()->is('perkembangan/kesehatan-masyarakat*') ? 'active' : '' }}"
@@ -1505,7 +1516,8 @@
                                                 Kesehatan Masyarakat
                                             </a>
 
-                                            <div class="dropdown-menu {{ request()->is('perkembangan/kesehatan-masyarakat*') ? 'show' : '' }}">
+                                            <div
+                                                class="dropdown-menu {{ request()->is('perkembangan/kesehatan-masyarakat*') ? 'show' : '' }}">
                                                 @can('kualitas-ibu-hamil.view')
                                                     <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/kualitas-ibu-hamil*') ? 'active' : '' }}"
                                                         href="{{ route('perkembangan.kesehatan-masyarakat.kualitas-ibu-hamil.index') }}">
@@ -1513,74 +1525,74 @@
                                                     </a>
                                                 @endcan
 
-                                              @can('kualitas-bayi.view')
-                                            <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/kualitas-bayi*') ? 'show' : '' }}"
-                                                href="{{ route('perkembangan.kesehatan-masyarakat.kualitas-bayi.index') }}">
-                                                Kualitas Bayi
-                                            </a>
-                                        @endcan
+                                                @can('kualitas-bayi.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/kualitas-bayi*') ? 'show' : '' }}"
+                                                        href="{{ route('perkembangan.kesehatan-masyarakat.kualitas-bayi.index') }}">
+                                                        Kualitas Bayi
+                                                    </a>
+                                                @endcan
 
-                                             @can('kualitas-persalinan.view')
-                                            <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/kualitas-persalinan*') ? 'show' : '' }}"
-                                                href="{{ route('perkembangan.kesehatan-masyarakat.kualitas-persalinan.index') }}">
-                                                Kualitas persalinan
-                                            </a>
-                                        @endcan
+                                                @can('kualitas-persalinan.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/kualitas-persalinan*') ? 'show' : '' }}"
+                                                        href="{{ route('perkembangan.kesehatan-masyarakat.kualitas-persalinan.index') }}">
+                                                        Kualitas persalinan
+                                                    </a>
+                                                @endcan
 
-                                         @can('cakupan-imunisasi.view')
-                                        <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/cakupan-imunisasi*') ? 'show' : '' }}"
-                                                href="{{ route('perkembangan.kesehatan-masyarakat.cakupan-imunisasi.index') }}">
-                                                Cakupan imunisasi
-                                            </a>
-                                    @endcan
-                                     @can('wabah-penyakit.view')
-                                        <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/wabah-penyakit*') ? 'show' : '' }}"
-                                                href="{{ route('perkembangan.kesehatan-masyarakat.wabah-penyakit.index') }}">
-                                                Wabah penyakit
-                                            </a>
-                                    @endcan
-                                      @can('gizi-balita.view')
-                                        <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/gizi-balita*') ? 'show' : '' }}"
-                                                href="{{ route('perkembangan.kesehatan-masyarakat.gizi-balita.index') }}">
-                                             Status Gizi Balita
-                                            </a>
-                                    @endcan
-                                      @can('subsektor-harapan.view')
-                                        <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/subsektor-harapan*') ? 'show' : '' }}"
-                                                href="{{ route('perkembangan.kesehatan-masyarakat.subsektor-harapan.index') }}">
-                                              Angka Harapan <br> Hidup
-                                            </a>
-                                    @endcan
-                                      @can('penderita-sakit.view')
-                                        <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/penderita-sakit*') ? 'show' : '' }}"
-                                                href="{{ route('perkembangan.kesehatan-masyarakat.penderita-sakit.index') }}">
-                                              Penderita Sakit
-                                            </a>
-                                    @endcan
-                                     @can('sarana-prasarana.view')
-                                        <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/sarana-prasarana*') ? 'show' : '' }}"
-                                                href="{{ route('perkembangan.kesehatan-masyarakat.sarana-prasarana.index') }}">
-                                              Perkembangan sarana <br> dan prasarana
-                                            </a>
-                                    @endcan
-                                     @can('pasangan-usia-subur.view')
-                                        <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/pasangan-usia-subur*') ? 'show' : '' }}"
-                                                href="{{ route('perkembangan.kesehatan-masyarakat.pasangan-usia-subur.index') }}">
-                                               Pasangan usia subur<br> KB
-                                            </a>
-                                    @endcan
-                                     @can('cakupan-air-bersih.view')
-                                        <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/cakupan-air-bersih*') ? 'show' : '' }}"
-                                                href="{{ route('perkembangan.kesehatan-masyarakat.cakupan-air-bersih.index') }}">
-                                               Cakupan pemenuhan <br>kebutuhan air<br> bersih
-                                            </a>
-                                    @endcan
-                                     @can('perilaku-hidup-bersih-dan-sehat.view')
-                                        <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/perilaku-hidup-bersih-dan-sehat*') ? 'show' : '' }}"
-                                                href="{{ route('perkembangan.kesehatan-masyarakat.perilaku-hidup-bersih-dan-sehat.index') }}">
-                                               Perilaku hidup bersih <br> dan sehat
-                                            </a>
-                                    @endcan
+                                                @can('cakupan-imunisasi.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/cakupan-imunisasi*') ? 'show' : '' }}"
+                                                        href="{{ route('perkembangan.kesehatan-masyarakat.cakupan-imunisasi.index') }}">
+                                                        Cakupan imunisasi
+                                                    </a>
+                                                @endcan
+                                                @can('wabah-penyakit.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/wabah-penyakit*') ? 'show' : '' }}"
+                                                        href="{{ route('perkembangan.kesehatan-masyarakat.wabah-penyakit.index') }}">
+                                                        Wabah penyakit
+                                                    </a>
+                                                @endcan
+                                                @can('gizi-balita.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/gizi-balita*') ? 'show' : '' }}"
+                                                        href="{{ route('perkembangan.kesehatan-masyarakat.gizi-balita.index') }}">
+                                                        Status Gizi Balita
+                                                    </a>
+                                                @endcan
+                                                @can('subsektor-harapan.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/subsektor-harapan*') ? 'show' : '' }}"
+                                                        href="{{ route('perkembangan.kesehatan-masyarakat.subsektor-harapan.index') }}">
+                                                        Angka Harapan <br> Hidup
+                                                    </a>
+                                                @endcan
+                                                @can('penderita-sakit.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/penderita-sakit*') ? 'show' : '' }}"
+                                                        href="{{ route('perkembangan.kesehatan-masyarakat.penderita-sakit.index') }}">
+                                                        Penderita Sakit
+                                                    </a>
+                                                @endcan
+                                                @can('sarana-prasarana.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/sarana-prasarana*') ? 'show' : '' }}"
+                                                        href="{{ route('perkembangan.kesehatan-masyarakat.sarana-prasarana.index') }}">
+                                                        Perkembangan sarana <br> dan prasarana
+                                                    </a>
+                                                @endcan
+                                                @can('pasangan-usia-subur.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/pasangan-usia-subur*') ? 'show' : '' }}"
+                                                        href="{{ route('perkembangan.kesehatan-masyarakat.pasangan-usia-subur.index') }}">
+                                                        Pasangan usia subur<br> KB
+                                                    </a>
+                                                @endcan
+                                                @can('cakupan-air-bersih.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/cakupan-air-bersih*') ? 'show' : '' }}"
+                                                        href="{{ route('perkembangan.kesehatan-masyarakat.cakupan-air-bersih.index') }}">
+                                                        Cakupan pemenuhan <br>kebutuhan air<br> bersih
+                                                    </a>
+                                                @endcan
+                                                @can('perilaku-hidup-bersih-dan-sehat.view')
+                                                    <a class="dropdown-item {{ request()->is('perkembangan/kesehatan-masyarakat/perilaku-hidup-bersih-dan-sehat*') ? 'show' : '' }}"
+                                                        href="{{ route('perkembangan.kesehatan-masyarakat.perilaku-hidup-bersih-dan-sehat.index') }}">
+                                                        Perilaku hidup bersih <br> dan sehat
+                                                    </a>
+                                                @endcan
                                             </div>
                                         </div>
                                     @endcanany

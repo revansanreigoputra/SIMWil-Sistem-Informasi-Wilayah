@@ -928,6 +928,14 @@ class PermissionSeeder extends Seeder
             'p-alat-produksi-ikan-tawar.update',
             'p-alat-produksi-ikan-tawar.delete',
 
+            // PSumberAirBersih permissions
+            'p-sumber-air-bersih.view',
+            'p-sumber-air-bersih.create',
+            'p-sumber-air-bersih.store',
+            'p-sumber-air-bersih.edit',
+            'p-sumber-air-bersih.update',
+            'p-sumber-air-bersih.delete',
+
             // PNamaIkan permissions
             'p-nama-ikan.view',
             'p-nama-ikan.create',
