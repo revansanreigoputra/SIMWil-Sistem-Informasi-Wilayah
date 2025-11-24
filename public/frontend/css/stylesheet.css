@@ -5156,7 +5156,8 @@ a.button.border {
     margin-bottom: 20px;
 	border-radius:10px;
 	transform: translate3d(0, 0, 0);
-	transition: transform 0.3s;	
+	transition: transform 0.3s;
+	height: 100%;	
 }
 .box_icon_two:hover {
 	box-shadow: 0 0px 30px rgba(0, 0, 0, 0.2);
@@ -5173,6 +5174,18 @@ a.button.border {
 	backface-visibility: visible;
 	-webkit-animation-name: flip;
 	animation-name: flip;
+}
+/* same h in card alur permohonan surat */
+.row-equal-height {
+    display: flex;
+    flex-wrap: wrap; 
+}
+
+ 
+.row-equal-height > [class*='col-'] {
+    display: flex;  
+    flex-direction: column; 
+    padding-bottom: 20px; 
 }
 @-webkit-keyframes flip {
 	0% {
