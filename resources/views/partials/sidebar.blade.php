@@ -598,6 +598,13 @@
                                                 </a>
                                             @endcan
 
+                                            @can('p-sumber-air-panas.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/sumber-air-panas*') ? 'active' : '' }}"
+                                                    href="{{ route('p-sumber-air-panas.index') }}">
+                                                    Sumber Air Panas
+                                                </a>
+                                            @endcan
+
                                         </div>
                                     </div>
 
@@ -1233,7 +1240,7 @@
 
                                             {{-- Tingkat Pendidikan Masyarakat --}}
                                             @can('tingkat_pendidikan_masyarakat.view')
-                                                <a class="dropdown-item {{ request()->is('pendidikanmasyarakat/tingkat_pendidikan_masyarakat*') ? 'active' : '' }}"
+                                                <a class="dropdown-item {{ request()->is('perkembangan/pendidikanmasyarakat/tingkat_pendidikan_masyarakat*') ? 'active' : '' }}"
                                                     href="{{ route('perkembangan.pendidikanmasyarakat.tingkat_pendidikan_masyarakat.index') }}">
                                                     Tingkat Pendidikan
                                                 </a>

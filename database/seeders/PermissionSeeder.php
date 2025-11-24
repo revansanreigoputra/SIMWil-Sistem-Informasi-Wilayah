@@ -936,6 +936,14 @@ class PermissionSeeder extends Seeder
             'p-sumber-air-bersih.update',
             'p-sumber-air-bersih.delete',
 
+            // PSumberAirPanas permissions
+            'p-sumber-air-panas.view',
+            'p-sumber-air-panas.create',
+            'p-sumber-air-panas.store',
+            'p-sumber-air-panas.edit',
+            'p-sumber-air-panas.update',
+            'p-sumber-air-panas.delete',
+
             // PNamaIkan permissions
             'p-nama-ikan.view',
             'p-nama-ikan.create',
