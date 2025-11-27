@@ -62,8 +62,8 @@
                                         href="{{ route('public.galeri.index') }}">Galeri</a></li>
                                 <li><a class="{{ request()->routeIs('public.agenda.index') ? 'current' : '' }}"
                                         href="{{ route('public.agenda.index') }}">Agenda</a></li>
-                                <li><a class="{{request()->routeis('public.permohonanSurat.*') ? 'current' : ''}}"
-                                    href="{{route('public.permohonanSurat.index')}}">Persuratan</a></li>
+                                <li><a class="{{ request()->routeis('public.permohonanSurat.*') ? 'current' : '' }}"
+                                        href="{{ route('public.permohonanSurat.index') }}">Persuratan</a></li>
                                 <li><a href="#">Kontak</a></li>
                             </ul>
                         </nav>
@@ -351,7 +351,7 @@
                                 data-responsive="off"
                                 style="z-index:6;color:#fff;letter-spacing:0px;font-weight:600;">Cari & Jelajahi
                                 Informasi Terupdate</div>
-                            <div class="utf_rev_description_text">SiKAB Sleman - Aplikasi yang akan memberikan
+                            <div class="utf_rev_description_text">SIMWIL - Aplikasi yang akan memberikan
                                 kemudahan bagi anda dalam mengurus segala bentuk urusan yang berkaitan dengan
                                 pemerintahan daerah secara online.
                             </div>
@@ -408,7 +408,65 @@
                     </div>
                 </div>
             </div>
+
+           
         </div>
+         <section class="fullwidth_block margin-top-0 padding-top-75 padding-bottom-75"
+                data-background-color="#f9f9f9">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="headline_part centered margin-bottom-50">
+                                Alur Pengajuan Surat
+                                <span>Ikuti 4 langkah mudah untuk mengajukan permohonan surat secara online</span>
+                            </h3>
+                        </div>
+                    </div>
+                    {{-- Alur permohonan surat --}}
+                    <div class="row row-equal-height">
+
+                        <div class="col-md-3 col-sm-4 col-xs-12">
+                            <div class="box_icon_two">
+                                <i class="fa fa-mouse-pointer"></i>
+                                <h3>1. Pilih Jenis Surat</h3>
+                                <p>Pilih jenis surat pada menu Shortcut Surat atau halaman
+                                    Persuratan. <br>
+                                    <small class="text-danger">* surat yang memiliki dampak perubahan data penduduk
+                                        silakan datangi kantor desa secara langsung.</small>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-sm-4 col-xs-12">
+                            <div class="box_icon_two">
+                                <i class="fa fa-user"></i>
+                                <h3>2. Verifikasi NIK</h3>
+                                <p>Sistem akan memvalidasi NIK Anda. Pastikan data kependudukan Anda terdaftar di sistem
+                                    desa.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-sm-4 col-xs-12">
+                            <div class="box_icon_two">
+                                <i class="fa fa-pencil-square-o"></i>
+                                <h3>3. Isi & Kirim</h3>
+                                <p>Lengkapi formulir permohonan sesuai petunjuk yang tersedia, lalu kirim pengajuan.</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-sm-4 col-xs-12">
+                            <div class="box_icon_two">
+                                <i class="fa fa-envelope"></i>
+                                <h3>4. Pantau & Ambil</h3>
+                                <p>Cek status secara berkala. Jika status <b>"Siap"</b> & ada email masuk, ambil surat
+                                    di kantor desa.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
         {{-- MODAL JENIS SURAT START  --}}
         <div id="mutasi-warning-dialog" class="zoom-anim-dialog mfp-hide">
             <div class="small_dialog_header">
@@ -416,8 +474,8 @@
             </div>
             <div class="utf_signin_form style_one p-4">
                 <p class="lead text-center">
-                     Untuk mengajukan surat yang memicu perubahan data penduduk  (seperti Pindah, Meninggal, atau
-                    pencatatan baru), harap  datangi kantor desa secara langsung  untuk registrasi.
+                    Untuk mengajukan surat yang memicu perubahan data penduduk (seperti Pindah, Meninggal, atau
+                    pencatatan baru), harap datangi kantor desa secara langsung untuk registrasi.
                 </p>
                 <div class="row mt-4">
                     <div class="col-md-12 text-center">

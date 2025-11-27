@@ -150,12 +150,12 @@
 
         .form-control:focus,
         .form-select:focus {
-            border-color: #16a34a;
+            border-color: #000ba6;
             box-shadow: 0 0 0 0.2rem rgba(22, 163, 74, 0.2);
         }
 
         .btn-submit {
-            background-color: #16a34a;
+            background-color: #000ba6;
             border: none;
             color: white;
             padding: 11px;
@@ -165,7 +165,7 @@
         }
 
         .btn-submit:hover {
-            background-color: #15803d;
+            background-color: #000ba6;
             transform: translateY(-1px);
         }
 
@@ -195,7 +195,7 @@
         }
 
         .link-forgot-password:hover {
-            color: #16a34a;
+            color: #000ba6;
         }
 
         @media (max-width: 576px) {

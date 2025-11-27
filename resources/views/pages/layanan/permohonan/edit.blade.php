@@ -312,14 +312,16 @@
                         target = 'Bayi Baru';
 
                         // Disable Pemohon & Custom Fields
-                        pemohonSelect.attr('disabled', true).css('background-color', '#eee');
+                        pemohonSelect
+                            .css('background-color', '#eee')  
+                            .css('pointer-events', 'none')  
+                            .css('touch-action', 'none')  
+                            .attr('tabindex', '-1')  
+                            .attr('readonly', true);  
+
                         customFieldsContainer.find('.custom-field').attr('readonly', true).css('background-color',
                             '#eee');
-                        pemohonSelect.attr('aria-disabled', 'true')
-                            .css('pointer-events', 'none') // Menonaktifkan interaksi klik
-                            .css('touch-action', 'none')
-                            .css('background-color', '#eee'); // Visualisasi non-aktif
-
+ 
                     } else if (isMeninggal) {
                         // MEKANISME BARU: PEMOHON DISABLE, CUSTOM FIELD AKTIF
                         message =
