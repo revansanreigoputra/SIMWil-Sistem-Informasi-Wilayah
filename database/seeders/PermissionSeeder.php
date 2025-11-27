@@ -494,15 +494,6 @@ class PermissionSeeder extends Seeder
             'hasilbuah.update',
             'hasilbuah.delete',
 
-            // jenis populasi ternak permissions
-            'jenis-populasi-ternak.view',
-            'jenis-populasi-ternak.create',
-            'jenis-populasi-ternak.store',
-            'jenis-populasi-ternak.edit',
-            'jenis-populasi-ternak.update',
-            'jenis-populasi-ternak.delete',
-            'jenis-populasi-ternak.destroy',
-
             // apotikhidup
             'apotikhidup.view',
             'apotikhidup.create',
@@ -559,358 +550,348 @@ class PermissionSeeder extends Seeder
             'dampakpengolahan.update',
             'dampakpengolahan.delete',
 
-            // pengangguran
-            'pengangguran.view',
-            'pengangguran.create',
-            'pengangguran.store',
-            'pengangguran.edit',
-            'pengangguran.update',
-            'pengangguran.delete',
+            // jenis populasi ternak permissions
+            'jenis-populasi-ternak.view',
+            'jenis-populasi-ternak.create',
+            'jenis-populasi-ternak.store',
+            'jenis-populasi-ternak.edit',
+            'jenis-populasi-ternak.update',
+            'jenis-populasi-ternak.delete',
+            'jenis-populasi-ternak.destroy',
 
-            // kesejahteraan keluarga
-            'kesejahteraan.view',
-            'kesejahteraan.create',
-            'kesejahteraan.store',
-            'kesejahteraan.edit',
-            'kesejahteraan.update',
-            'kesejahteraan.delete',
+            // produksi ternak permissions
+            'produksi-ternak.view',
+            'produksi-ternak.create',
+            'produksi-ternak.store',
+            'produksi-ternak.edit',
+            'produksi-ternak.update',
+            'produksi-ternak.delete',
 
-            // menurut sektor usaha
-            'menurut_sektor_usaha.view',
-            'menurut_sektor_usaha.create',
-            'menurut_sektor_usaha.store',
-            'menurut_sektor_usaha.edit',
-            'menurut_sektor_usaha.update',
-            'menurut_sektor_usaha.delete',
+            // pengolahan hasil ternak permissions
+            'pengolahan-hasil-ternak.view',
+            'pengolahan-hasil-ternak.create',
+            'pengolahan-hasil-ternak.store',
+            'pengolahan-hasil-ternak.edit',
+            'pengolahan-hasil-ternak.update',
+            'pengolahan-hasil-ternak.delete',
 
-            // Pendapatan Riil Keluarga
-            'pendapatan_rill_keluarga.view',
-            'pendapatan_rill_keluarga.create',
-            'pendapatan_rill_keluarga.store',
-            'pendapatan_rill_keluarga.edit',
-            'pendapatan_rill_keluarga.update',
-            'pendapatan_rill_keluarga.delete',
+            // lahan pakan ternak permissions
+            'lahan-pakan-ternak.view',
+            'lahan-pakan-ternak.create',
+            'lahan-pakan-ternak.store',
+            'lahan-pakan-ternak.edit',
+            'lahan-pakan-ternak.update',
+            'lahan-pakan-ternak.delete',
 
-            // Tingkat Pendidikan Masyarakat
-            'tingkat_pendidikan_masyarakat.view',
-            'tingkat_pendidikan_masyarakat.create',
-            'tingkat_pendidikan_masyarakat.store',
-            'tingkat_pendidikan_masyarakat.edit',
-            'tingkat_pendidikan_masyarakat.update',
-            'tingkat_pendidikan_masyarakat.delete',
+            //sektor tambang
+            'sektor-tambang.view',
+            'sektor-tambang.store',
+            'sektor-tambang.update',
+            'sektor-tambang.destroy',
 
-            // Wajib Belajar 9 Tahun
-            'wajib_belajar_9_tahun.view',
-            'wajib_belajar_9_tahun.create',
-            'wajib_belajar_9_tahun.store',
-            'wajib_belajar_9_tahun.edit',
-            'wajib_belajar_9_tahun.update',
-            'wajib_belajar_9_tahun.delete',
+            // sektor pertambangan
+            'sektor-perdagangan.view',
+            'sektor-perdagangan.create',
+            'sektor-perdagangan.show',
+            'sektor-perdagangan.edit',
+            'sektor-perdagangan.destroy',
 
-            // Rasio Guru & Murid
-            'rasio_guru_dan_murid.view',
-            'rasio_guru_dan_murid.create',
-            'rasio_guru_dan_murid.store',
-            'rasio_guru_dan_murid.edit',
-            'rasio_guru_dan_murid.update',
-            'rasio_guru_dan_murid.delete',
+            // sektor industri kecil
 
-            // Kelembagaan Pendidikan Masyarakat
-            'kelembagaan.view',
-            'kelembagaan.create',
-            'kelembagaan.store',
-            'kelembagaan.edit',
-            'kelembagaan.update',
-            'kelembagaan.delete',
+            'sektor-industri-kecil.view',
+            'sektor-industri-kecil.create',
+            'sektor-industri-kecil.destroy',
+            'sektor-industri-kecil.show',
 
-            // Aset Tanah
-            'aset_tanah.view',
-            'aset_tanah.create',
-            'aset_tanah.store',
-            'aset_tanah.edit',
-            'aset_tanah.update',
-            'aset_tanah.delete',
+            // sektor industri besar dan menengah
 
-            // Sarana Transportasi Umum
-            'sarana_transportasi_umum.view',
-            'sarana_transportasi_umum.create',
-            'sarana_transportasi_umum.store',
-            'sarana_transportasi_umum.edit',
-            'sarana_transportasi_umum.update',
-            'sarana_transportasi_umum.delete',
+            'sektor-industri-menengah-besar.view',
+            'sektor-industri-menengah-besar.destroy',
+            'sektor-industri-menengah-besar.show',
+            'sektor-industri-menengah-besar.create',
 
-            // Rumah Menurut Dinding
-            'rumah_menurut_dinding.view',
-            'rumah_menurut_dinding.create',
-            'rumah_menurut_dinding.store',
-            'rumah_menurut_dinding.edit',
-            'rumah_menurut_dinding.update',
-            'rumah_menurut_dinding.delete',
+            //sektor jasa usaha mata pencaharian
+            'sektor-jasa-usaha.view',
+            'sektor-jasa-usaha.show',
+            'sektor-jasa-usaha.update',
+            'sektor-jasa-usaha.destroy',
+            'sektor-jasa-usaha.store',
 
-            // Rumah Menurut Lantai
-            'rumah_menurut_lantai.view',
-            'rumah_menurut_lantai.create',
-            'rumah_menurut_lantai.store',
-            'rumah_menurut_lantai.edit',
-            'rumah_menurut_lantai.update',
-            'rumah_menurut_lantai.delete',
+            // Pertanggungjawaban
+            'pertanggungjawaban.view',
+            'pertanggungjawaban.create',
+            'pertanggungjawaban.store',
+            'pertanggungjawaban.edit',
+            'pertanggungjawaban.update',
+            'pertanggungjawaban.delete',
 
-            // Rumah Menurut Atap
-            'rumah_menurut_atap.view',
-            'rumah_menurut_atap.create',
-            'rumah_menurut_atap.store',
-            'rumah_menurut_atap.edit',
-            'rumah_menurut_atap.update',
-            'rumah_menurut_atap.delete',
+            //pembinaan Pusat
+            'pembinaanpusat.view',
+            'pembinaanpusat.create',
+            'pembinaanpusat.store',
+            'pembinaanpusat.edit',
+            'pembinaanpusat.update',
+            'pembinaanpusat.delete',
 
-            // Pemilik Aset Ekonomi Lainnya
-            'pemilik_aset_ekonomi_lainnya.view',
-            'pemilik_aset_ekonomi_lainnya.create',
-            'pemilik_aset_ekonomi_lainnya.store',
-            'pemilik_aset_ekonomi_lainnya.edit',
-            'pemilik_aset_ekonomi_lainnya.update',
-            'pemilik_aset_ekonomi_lainnya.delete',
+            //pembinaan Provinsi
+            'pembinaanprovinsi.view',
+            'pembinaanprovinsi.create',
+            'pembinaanprovinsi.store',
+            'pembinaanprovinsi.edit',
+            'pembinaanprovinsi.update',
+            'pembinaanprovinsi.delete',
 
-            // Sarana Produksi
-            'sarana_produksi.view',
-            'sarana_produksi.create',
-            'sarana_produksi.store',
-            'sarana_produksi.edit',
-            'sarana_produksi.update',
-            'sarana_produksi.delete',
+            //pembinaan Kabupaten
+            'pembinaankabupaten.view',
+            'pembinaankabupaten.create',
+            'pembinaankabupaten.store',
+            'pembinaankabupaten.edit',
+            'pembinaankabupaten.update',
+            'pembinaankabupaten.delete',
 
-            // perkembangan penduduk
-            'perkembangan-penduduk.view',
-            'perkembangan-penduduk.create',
-            'perkembangan-penduduk.store',
-            'perkembangan-penduduk.edit',
-            'perkembangan-penduduk.update',
-            'perkembangan-penduduk.delete',
-            'perkembangan-penduduk.destroy',
-            'perkembangan-penduduk.show',
+            //pembinaan Kecamatan
+            'pembinaankecamatan.view',
+            'pembinaankecamatan.create',
+            'pembinaankecamatan.store',
+            'pembinaankecamatan.edit',
+            'pembinaankecamatan.update',
+            'pembinaankecamatan.delete',
 
-            // sektor pertambangan permissions
-            'sektor-pertambangan.view',
-            'sektor-pertambangan.create',
-            'sektor-pertambangan.store',
-            'sektor-pertambangan.edit',
-            'sektor-pertambangan.update',
-            'sektor-pertambangan.delete',
-            'sektor-pertambangan.destroy',
+            //organisasi
+            'organisasi.view',
+            'organisasi.create',
+            'organisasi.store',
+            'organisasi.edit',
+            'organisasi.update',
+            'organisasi.delete',
 
-            // subsektor kerajinan permissions
-            'subsektor-kerajinan.view',
-            'subsektor-kerajinan.create',
-            'subsektor-kerajinan.store',
-            'subsektor-kerajinan.edit',
-            'subsektor-kerajinan.update',
-            'subsektor-kerajinan.delete',
-            'subsektor-kerajinan.destroy',
+            //musrenbang
+            'musrenbangdesa.view',
+            'musrenbangdesa.create',
+            'musrenbangdesa.store',
+            'musrenbangdesa.edit',
+            'musrenbangdesa.update',
+            'musrenbangdesa.delete',
 
-            // sektor industri pengolahan permissions
-            'sektor-industri-pengolahan.view',
-            'sektor-industri-pengolahan.create',
-            'sektor-industri-pengolahan.store',
-            'sektor-industri-pengolahan.edit',
-            'sektor-industri-pengolahan.update',
-            'sektor-industri-pengolahan.delete',
-            'sektor-industri-pengolahan.destroy',
+            //hasil Pembangunan
+            'hasilpembangunan.view',
+            'hasilpembangunan.create',
+            'hasilpembangunan.store',
+            'hasilpembangunan.edit',
+            'hasilpembangunan.update',
+            'hasilpembangunan.delete',
 
-            // subsektor kehutanan permissions
-                'subsektor-kehutanan.view',
-                'subsektor-kehutanan.create',
-                'subsektor-kehutanan.store',
-                'subsektor-kehutanan.edit',
-                'subsektor-kehutanan.update',
-                'subsektor-kehutanan.delete',
-                'subsektor-kehutanan.destroy',
+            // gotong royong
+            'gotongroyong.view',
+            'gotongroyong.create',
+            'gotongroyong.store',
+            'gotongroyong.edit',
+            'gotongroyong.update',
+            'gotongroyong.delete',
 
-             //sektor bangunan permissions
-             'sektor-bangunan.view',
-             'sektor-bangunan.create',
-             'sektor-bangunan.store',
-             'sektor-bangunan.edit',
-             'sektor-bangunan.update',
-             'sektor-bangunan.delete',
-             'sektor-bangunan.destroy',
+            // adat istiadat
+            'adatistiadat.view',
+            'adatistiadat.create',
+            'adatistiadat.store',
+            'adatistiadat.edit',
+            'adatistiadat.update',
+            'adatistiadat.delete',
 
-             // kualitas ibu hamil permissions
-            'kualitas-ibu-hamil.view',
-            'kualitas-ibu-hamil.create',
-            'kualitas-ibu-hamil.store',
-            'kualitas-ibu-hamil.edit',
-            'kualitas-ibu-hamil.update',
-            'kualitas-ibu-hamil.delete',
-            'kualitas-ibu-hamil.destroy',
-             'kualitas-ibu-hamil.show',
+            //sikap dan mental
+            'sikapdanmental.view',
+            'sikapdanmental.create',
+            'sikapdanmental.store',
+            'sikapdanmental.edit',
+            'sikapdanmental.update',
+            'sikapdanmental.delete',
 
-            // kualitas bayi permession
-                'kualitas-bayi.view',
-                'kualitas-bayi.create',
-                'kualitas-bayi.store',
-                'kualitas-bayi.edit',
-                'kualitas-bayi.update',
-                'kualitas-bayi.delete',
-                'kualitas-bayi.destroy',
-                 'kualitas-bayi.show',
+            //berbangsa
+            'berbangsa.view',
+            'berbangsa.create',
+            'berbangsa.store',
+            'berbangsa.edit',
+            'berbangsa.update',
+            'berbangsa.delete',
 
-                // kualitas persalinan permission
-                'kualitas-persalinan.view',
-                'kualitas-persalinan.create',
-                'kualitas-persalinan.store',
-                'kualitas-persalinan.edit',
-                'kualitas-persalinan.update',
-                'kualitas-persalinan.delete',
-                'kualitas-persalinan.destroy',
-                'kualitas-persalinan.show',
+            //pajak
+            'pajak.view',
+            'pajak.create',
+            'pajak.store',
+            'pajak.edit',
+            'pajak.update',
+            'pajak.delete',
 
-                // cakupan imunisasi permission
-                'cakupan-imunisasi.view',
-                'cakupan-imunisasi.create',
-                'cakupan-imunisasi.edit',
-                'cakupan-imunisasi.delete',
-                'cakupan-imunisasi.update',
-                'cakupan-imunisasi.show',
+            //politik
+            'politik.view',
+            'politik.create',
+            'politik.store',
+            'politik.edit',
+            'politik.update',
+            'politik.delete',
 
+            //Konflik Sara
+            'konfliksara.view',
+            'konfliksara.create',
+            'konfliksara.store',
+            'konfliksara.edit',
+            'konfliksara.update',
+            'konfliksara.delete',
 
-                // wabah penyakit
-               'wabah-penyakit.view',
-                'wabah-penyakit.create',
-                'wabah-penyakit.edit',
-                'wabah-penyakit.delete',
-                'wabah-penyakit.show',
+            //Perkelahian
+            'perkelahian.view',
+            'perkelahian.create',
+            'perkelahian.store',
+            'perkelahian.edit',
+            'perkelahian.update',
+            'perkelahian.delete',
 
-                // status gizi balita
-                'gizi-balita.view',
-                'gizi-balita.create',
-                'gizi-balita.edit',
-                 'gizi-balita.delete',
-                  'gizi-balita.show',
+            //Pencurian
+            'pencurian.view',
+            'pencurian.create',
+            'pencurian.store',
+            'pencurian.edit',
+            'pencurian.update',
+            'pencurian.delete',
 
-                  // subsektor harapan
-                'subsektor-harapan.view',
-                'subsektor-harapan.create',
-                'subsektor-harapan.show',
-                'subsektor-harapan.edit',
-                'subsektor-harapan.delete',
+            //Penjarahan
+            'penjarahan.view',
+            'penjarahan.create',
+            'penjarahan.store',
+            'penjarahan.edit',
+            'penjarahan.update',
+            'penjarahan.delete',
 
-                // penderita-sakit permession
+            //Perjudian
+            'perjudian.view',
+            'perjudian.create',
+            'perjudian.store',
+            'perjudian.edit',
+            'perjudian.update',
+            'perjudian.delete',
 
-                'penderita-sakit.view',
-                'penderita-sakit.create',
-                'penderita-sakit.show',
-                'penderita-sakit.edit',
-                'penderita-sakit.delete',
+            //Miras
+            'miras.view',
+            'miras.create',
+            'miras.store',
+            'miras.edit',
+            'miras.update',
+            'miras.delete',
 
-                // sarana dan prasana
+            //prostitusi
+            'prostitusi.view',
+            'prostitusi.create',
+            'prostitusi.store',
+            'prostitusi.edit',
+            'prostitusi.update',
+            'prostitusi.delete',
 
-                // sarana dan prasana
-                'sarana-prasarana.view',
-                'sarana-prasarana.create',
-                 'sarana-prasarana.update',
-                'sarana-prasarana.delete',
-                'sarana-prasarana.show',
+            //pembunuhan
+            'pembunuhan.view',
+            'pembunuhan.create',
+            'pembunuhan.store',
+            'pembunuhan.edit',
+            'pembunuhan.update',
+            'pembunuhan.delete',
 
-                // perkembangan pasangan subur dini hari
+            //penculikan
+            'penculikan.view',
+            'penculikan.create',
+            'penculikan.store',
+            'penculikan.edit',
+            'penculikan.update',
+            'penculikan.delete',
 
+            //seksual
+            'seksual.view',
+            'seksual.create',
+            'seksual.store',
+            'seksual.edit',
+            'seksual.update',
+            'seksual.delete',
 
-                'pasangan-usia-subur.view',
-                'pasangan-usia-subur.create',
-                'pasangan-usia-subur.update',
-                'pasangan-usia-subur.delete',
-                'pasangan-usia-subur.show',
+            //sosial
+            'sosial.view',
+            'sosial.create',
+            'sosial.store',
+            'sosial.edit',
+            'sosial.update',
+            'sosial.delete',
 
-                // cakupan air bersih
+            //kdrt
+            'kdrt.view',
+            'kdrt.create',
+            'kdrt.store',
+            'kdrt.edit',
+            'kdrt.update',
+            'kdrt.delete',
 
-                'cakupan-air-bersih.view',
-                'cakupan-air-bersih.create',
-                'cakupan-air-bersih.show',
-                'cakupan-air-bersih.update',
-                'cakupan-air-bersih.delete',
+            //teror
+            'teror.view',
+            'teror.create',
+            'teror.store',
+            'teror.edit',
+            'teror.update',
+            'teror.delete',
 
-                //perilaku hidup bersih
-                'perilaku-hidup-bersih-dan-sehat.view',
-                'perilaku-hidup-bersih-dan-sehat.create',
-                'perilaku-hidup-bersih-dan-sehat.show',
-                'perilaku-hidup-bersih-dan-sehat.update',
-                'perilaku-hidup-bersih-dan-sehat.delete',
-
-                // sektor jasa jasa
-
-                    'sektor-jasa-jasa.view',
-                   'sektor-jasa-jasa.create',
-                    'sektor-jasa-jasa.show',
-                    'sektor-jasa-jasa.edit',
-                    'sektor-jasa-jasa.destroy',
-
-                    // sektor keungan jasa perusahaan
-         'sektor-keuangan-jasa-perusahaan.view',
-        'sektor-keuangan-jasa-perusahaan.create',
-        'sektor-keuangan-jasa-perusahaan.show',
-         'sektor-keuangan-jasa-perusahaan.edit',
-        'sektor-keuangan-jasa-perusahaan.destroy',
-
-            // sektor angkutan dan komunikasi
-
-            'sektor-angkutan.view',
-            'sektor-angkutan.create',
-            'sektor-angkutan.update',
-            'sektor-angkutan.delete',
-             'sektor-angkutan.edit',
-              'sektor-angkutan.show',
-              'sektor-angkutan.destroy',
-
-              //Sektor air minum dan gas
-                'sektor-listrik-gas-air-minum.view',
-                'sektor-listrik-gas-air-minum.create',
-                'sektor-listrik-gas-air-minum.show',
-                'sektor-listrik-gas-air-minum.edit',
-                'sektor-listrik-gas-air-minum.destroy',
-
-                // sektor perdagangan dan hotel]
-
-                'sektor-perdagangan-hotel-restoran.view',
-                'sektor-perdagangan-hotel-restoran.create',
-                'sektor-perdagangan-hotel-restoran.show',
-                'sektor-perdagangan-hotel-restoran.edit',
-                'sektor-perdagangan-hotel-restoran.destroy',
-
-                // sektor pertanian
-                 'sektor-pertanian.view',
-                'sektor-pertanian.create',
-                'sektor-pertanian.show',
-                'sektor-pertanian.edit',
-                'sektor-pertanian.destroy',
+            //sistem keamanan
+            'sistemkeamanan.view',
+            'sistemkeamanan.create',
+            'sistemkeamanan.store',
+            'sistemkeamanan.edit',
+            'sistemkeamanan.update',
+            'sistemkeamanan.delete',
 
 
-                // sektor pertanian
-            'sektor-perkebunan.view',
-            'sektor-perkebunan.create',
-            'sektor-perkebunan.show',
-            'sektor-perkebunan.edit',
-            'sektor-perkebunan.destroy',
+            // potensi permissions
+            'potensi.laporan.view',
+            'potensi.laporan.export',
 
-            // sektor peternakan
+            // layanan surat permissions
+            'layanan_surat.view',
+            'layanan_surat.create',
+            'layanan_surat.store',
+            'layanan_surat.edit',
+            'layanan_surat.update',
+            'layanan_surat.delete',
+            'layanan_surat.cetak',
+            // template permissions
+            'kop_template.view',
+            'kop_template.create',
+            'kop_template.store',
+            'kop_template.edit',
+            'kop_template.update',
+            'kop_template.delete',
+            'kop_template.destroy',
 
-            'sektor-peternakan.view',
-            'sektor-peternakan.create',
-            'sektor-peternakan.show',
-            'sektor-peternakan.edit',
+            'format_nomor_surat.view',
+            'format_nomor_surat.create',
+            'format_nomor_surat.store',
+            'format_nomor_surat.edit',
+            'format_nomor_surat.update',
+            'format_nomor_surat.delete',
+            'format_nomor_surat.destroy',
 
-            // sektor perikanan
+            // berita permissions
+            'berita.view',
+            'berita.create',
+            'berita.update',
+            'berita.delete',
 
-            'sektor-perikanan.view',
-            'sektor-perikanan.show',
-            'sektor-perikanan.update',
-            'sektor-perikanan.destroy',
-            'sektor-perikanan.store',
+            // agenda permissions
+            'agenda.view',
+            'agenda.create',
+            'agenda.update',
+            'agenda.delete',
 
-
-            // sektor kehutanan
-            'sektor-kehutanan.view',
-            'sektor-kehutanan.store',
-            'sektor-kehutanan.update',
-            'sektor-kehutanan.destroy',
+            //LembagaKemasyarakatan permissions
+            'lembaga-kemasyarakatan.view',
+            'lembaga-kemasyarakatan.create',
+            'lembaga-kemasyarakatan.store',
+            'lembaga-kemasyarakatan.show',
+            'lembaga-kemasyarakatan.edit',
+            'lembaga-kemasyarakatan.update',
+            'lembaga-kemasyarakatan.destroy',
+            'lembaga-kemasyarakatan.print',
 
             // PAlatProduksiIkanLaut permissions
             'p-alat-produksi-ikan-laut.view',
@@ -959,6 +940,14 @@ class PermissionSeeder extends Seeder
             'deposit-produksi-galian.edit',
             'deposit-produksi-galian.update',
             'deposit-produksi-galian.delete',
+
+            // Kualitas Air Minum permissions
+            'kualitas-air-minum.view',
+            'kualitas-air-minum.create',
+            'kualitas-air-minum.store',
+            'kualitas-air-minum.edit',
+            'kualitas-air-minum.update',
+            'kualitas-air-minum.delete',
 
             // produksi ternak permissions
             'produksi-ternak.view',

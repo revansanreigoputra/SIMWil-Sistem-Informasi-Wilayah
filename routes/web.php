@@ -96,6 +96,7 @@ use App\Http\Controllers\SektorPerdaganganController;
 use App\Http\Controllers\SektorIndustriKecilController;
 use App\Http\Controllers\SektorIndustriMenengahBesarController;
 use App\Http\Controllers\SektorJasaUsahaController;
+use App\Http\Controllers\KualitasAirMinumController;
 
 
 
@@ -1843,6 +1844,17 @@ Route::middleware(['auth'])->prefix('potensi/sda/alat-produksi-ikan-tawar')->nam
     Route::delete('/{pAlatProduksiIkanTawar}', [App\Http\Controllers\PAlatProduksiIkanTawarController::class, 'destroy'])->name('destroy');
 });
 
+// KualitasAirMinum routes
+Route::middleware(['auth'])->prefix('potensi/sda/kualitas-air-minum')->name('kualitas-air-minum.')->group(function () {
+    Route::get('/', [App\Http\Controllers\KualitasAirMinumController::class, 'index'])->name('index');
+    Route::get('/create', [App\Http\Controllers\KualitasAirMinumController::class, 'create'])->name('create');
+    Route::post('/', [App\Http\Controllers\KualitasAirMinumController::class, 'store'])->name('store');
+    Route::get('/{kualitasAirMinum}', [App\Http\Controllers\KualitasAirMinumController::class, 'show'])->name('show');
+    Route::get('/{kualitasAirMinum}/edit', [App\Http\Controllers\KualitasAirMinumController::class, 'edit'])->name('edit');
+    Route::put('/{kualitasAirMinum}', [App\Http\Controllers\KualitasAirMinumController::class, 'update'])->name('update');
+    Route::delete('/{kualitasAirMinum}', [App\Http\Controllers\KualitasAirMinumController::class, 'destroy'])->name('destroy');
+});
+
 // PSumberAirBersih routes
 Route::middleware(['auth'])->prefix('potensi/sda/sumber-air-bersih')->name('p-sumber-air-bersih.')->group(function () {
     Route::get('/', [App\Http\Controllers\PSumberAirBersihController::class, 'index'])->name('index');
@@ -1863,6 +1875,17 @@ Route::middleware(['auth'])->prefix('potensi/sda/sumber-air-panas')->name('p-sum
     Route::get('/{pSumberAirPanas}/edit', [App\Http\Controllers\PSumberAirPanasController::class, 'edit'])->name('edit');
     Route::put('/{pSumberAirPanas}', [App\Http\Controllers\PSumberAirPanasController::class, 'update'])->name('update');
     Route::delete('/{pSumberAirPanas}', [App\Http\Controllers\PSumberAirPanasController::class, 'destroy'])->name('destroy');
+});
+
+// KualitasAirMinum routes
+Route::middleware(['auth'])->prefix('potensi/sda/kualitas-air-minum')->name('kualitas-air-minum.')->group(function () {
+    Route::get('/', [App\Http\Controllers\KualitasAirMinumController::class, 'index'])->name('index');
+    Route::get('/create', [App\Http\Controllers\KualitasAirMinumController::class, 'create'])->name('create');
+    Route::post('/', [App\Http\Controllers\KualitasAirMinumController::class, 'store'])->name('store');
+    Route::get('/{kualitasAirMinum}', [App\Http\Controllers\KualitasAirMinumController::class, 'show'])->name('show');
+    Route::get('/{kualitasAirMinum}/edit', [App\Http\Controllers\KualitasAirMinumController::class, 'edit'])->name('edit');
+    Route::put('/{kualitasAirMinum}', [App\Http\Controllers\KualitasAirMinumController::class, 'update'])->name('update');
+    Route::delete('/{kualitasAirMinum}', [App\Http\Controllers\KualitasAirMinumController::class, 'destroy'])->name('destroy');
 });
 
 // PNamaIkan routes

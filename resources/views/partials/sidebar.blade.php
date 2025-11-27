@@ -605,6 +605,13 @@
                                                 </a>
                                             @endcan
 
+                                            @can('kualitas-air-minum.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/kualitas-air-minum*') ? 'active' : '' }}"
+                                                    href="{{ route('kualitas-air-minum.index') }}">
+                                                    Kualitas Air Minum
+                                                </a>
+                                            @endcan
+
                                         </div>
                                     </div>
 
