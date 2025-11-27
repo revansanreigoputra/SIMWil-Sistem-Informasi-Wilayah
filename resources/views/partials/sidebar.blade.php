@@ -612,6 +612,13 @@
                                                 </a>
                                             @endcan
 
+                                            @can('sumber-daya-air.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/sumber-daya-air*') ? 'active' : '' }}"
+                                                    href="{{ route('sumber-daya-air.index') }}">
+                                                    Sumber Daya Air
+                                                </a>
+                                            @endcan
+
                                         </div>
                                     </div>
 

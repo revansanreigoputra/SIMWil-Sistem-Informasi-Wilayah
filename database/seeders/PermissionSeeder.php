@@ -909,6 +909,15 @@ class PermissionSeeder extends Seeder
             'p-alat-produksi-ikan-tawar.update',
             'p-alat-produksi-ikan-tawar.delete',
 
+            // SumberDayaAir permissions
+            'sumber-daya-air.view',
+            'sumber-daya-air.create',
+            'sumber-daya-air.store',
+            'sumber-daya-air.show',
+            'sumber-daya-air.edit',
+            'sumber-daya-air.update',
+            'sumber-daya-air.delete',
+
             // PSumberAirBersih permissions
             'p-sumber-air-bersih.view',
             'p-sumber-air-bersih.create',

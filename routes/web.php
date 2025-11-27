@@ -91,7 +91,7 @@ use App\Http\Controllers\MataPencaharianPerkebunanController;
 use App\Http\Controllers\SektorPeternakanController;
 use App\Http\Controllers\SektorPerikananController;
 use App\Http\Controllers\SektorKehutananController;
-use  App\Http\Controllers\SektorTambangController;
+use App\Http\Controllers\SektorTambangController;
 use App\Http\Controllers\SektorPerdaganganController;
 use App\Http\Controllers\SektorIndustriKecilController;
 use App\Http\Controllers\SektorIndustriMenengahBesarController;
@@ -861,7 +861,7 @@ Route::middleware(['auth'])
         Route::put('/{menurut_sektor_usaha}', [MenurutSektorUsahaController::class, 'update'])->name('update');
         Route::delete('/{menurut_sektor_usaha}', [MenurutSektorUsahaController::class, 'destroy'])->name('destroy');
     });
-    // Pendapatan Rill Keluarga
+// Pendapatan Rill Keluarga
 // Pendapatan Rill Keluarga
 Route::middleware(['auth'])
     ->prefix('perkembangan/pendapatanperkapital/pendapatan_rill_keluarga')
@@ -1241,7 +1241,7 @@ Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.penjarah
 });
 
 //perjudian route
-Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.perjudian')->name('perkembangan.keamanandanketertiban.perjudian.')->group(function(){
+Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.perjudian')->name('perkembangan.keamanandanketertiban.perjudian.')->group(function () {
     Route::get('/', [PerjudianController::class, 'index'])->name('index');
     Route::get('/create', [PerjudianController::class, 'create'])->name('create');
     Route::post('/', [PerjudianController::class, 'store'])->name('store');
@@ -1252,7 +1252,7 @@ Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.perjudia
 });
 
 //miras route
-route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.miras')->name('perkembangan.keamanandanketertiban.miras.')->group(function(){
+route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.miras')->name('perkembangan.keamanandanketertiban.miras.')->group(function () {
     Route::get('/', [MirasController::class, 'index'])->name('index');
     Route::get('/create', [MirasController::class, 'create'])->name('create');
     Route::post('/', [MirasController::class, 'store'])->name('store');
@@ -1263,7 +1263,7 @@ route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.miras')-
 });
 
 //prostitusi routes
-Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.prostitusi')->name('perkembangan.keamanandanketertiban.prostitusi.')->group(function(){
+Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.prostitusi')->name('perkembangan.keamanandanketertiban.prostitusi.')->group(function () {
     Route::get('/', [ProstitusiController::class, 'index'])->name('index');
     Route::get('/create', [ProstitusiController::class, 'create'])->name('create');
     Route::post('/', [ProstitusiController::class, 'store'])->name('store');
@@ -1274,7 +1274,7 @@ Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.prostitu
 });
 
 //pembunuhan routes
-Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.pembunuhan')->name('perkembangan.keamanandanketertiban.pembunuhan.')->group(function(){
+Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.pembunuhan')->name('perkembangan.keamanandanketertiban.pembunuhan.')->group(function () {
     Route::get('/', [PembunuhanController::class, 'index'])->name('index');
     Route::get('/create', [PembunuhanController::class, 'create'])->name('create');
     Route::post('/', [PembunuhanController::class, 'store'])->name('store');
@@ -1285,7 +1285,7 @@ Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.pembunuh
 });
 
 //penculikan routes
-Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.penculikan')->name('perkembangan.keamanandanketertiban.penculikan.')->group(function(){
+Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.penculikan')->name('perkembangan.keamanandanketertiban.penculikan.')->group(function () {
     Route::get('/', [PenculikanController::class, 'index'])->name('index');
     Route::get('/create', [PenculikanController::class, 'create'])->name('create');
     Route::post('/', [PenculikanController::class, 'store'])->name('store');
@@ -1296,7 +1296,7 @@ Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.penculik
 });
 
 //seksual routes
-Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.seksual')->name('perkembangan.keamanandanketertiban.seksual.')->group(function(){
+Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.seksual')->name('perkembangan.keamanandanketertiban.seksual.')->group(function () {
     Route::get('/', [SeksualController::class, 'index'])->name('index');
     Route::get('/create', [SeksualController::class, 'create'])->name('create');
     Route::post('/', [SeksualController::class, 'store'])->name('store');
@@ -1307,7 +1307,7 @@ Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.seksual'
 });
 
 //sosial route
-Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.sosial')->name('perkembangan.keamanandanketertiban.sosial.')->group(function(){
+Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.sosial')->name('perkembangan.keamanandanketertiban.sosial.')->group(function () {
     Route::get('/', [SosialController::class, 'index'])->name('index');
     Route::get('/create', [SosialController::class, 'create'])->name('create');
     Route::post('/', [SosialController::class, 'store'])->name('store');
@@ -1318,7 +1318,7 @@ Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.sosial')
 });
 
 //kdrt route
-Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.kdrt')->name('perkembangan.keamanandanketertiban.kdrt.')->group(function(){
+Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.kdrt')->name('perkembangan.keamanandanketertiban.kdrt.')->group(function () {
     Route::get('/', [KdrtController::class, 'index'])->name('index');
     Route::get('/create', [KdrtController::class, 'create'])->name('create');
     Route::post('/', [KdrtController::class, 'store'])->name('store');
@@ -1329,7 +1329,7 @@ Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.kdrt')->
 });
 
 //teror route
-route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.teror')->name('perkembangan.keamanandanketertiban.teror.')->group(function(){
+route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.teror')->name('perkembangan.keamanandanketertiban.teror.')->group(function () {
     Route::get('/', [TerorController::class, 'index'])->name('index');
     Route::get('/create', [TerorController::class, 'create'])->name('create');
     Route::post('/', [TerorController::class, 'store'])->name('store');
@@ -1341,7 +1341,7 @@ route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.teror')-
 
 
 //sistem Keamanan route
-Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.sistemkeamanan')->name('perkembangan.keamanandanketertiban.sistemkeamanan.')->group(function(){
+Route::middleware(['auth'])->prefix('perkembangan.keamanandanketertiban.sistemkeamanan')->name('perkembangan.keamanandanketertiban.sistemkeamanan.')->group(function () {
     Route::get('/', [SistemKeamananController::class, 'index'])->name('index');
     Route::get('/create', [SistemKeamananController::class, 'create'])->name('create');
     Route::post('/', [SistemKeamananController::class, 'store'])->name('store');
@@ -1578,115 +1578,115 @@ Route::prefix('perkembangan/produk-domestik')->name('perkembangan.produk-domesti
 
 
     // Subsektor Kerajinan routes
- Route::resource('subsektor-kerajinan', SubsektorKerajinanController::class);
+    Route::resource('subsektor-kerajinan', SubsektorKerajinanController::class);
 
 
     // sektor industri pengolahan routes
     Route::resource('sektor-industri-pengolahan', SektorIndustriPengolahanController::class);
 
-// subsektor kehutanan
-  Route::prefix('perkembangan/produk-domestik')->group(function () {
-    Route::resource('subsektor-kehutanan', SubsektorKehutananController::class);
-  });
-
-// sektor bangunan
-Route::prefix('perkembangan/produk-domestik')
-    ->group(function () {
-        Route::resource('sektor-bangunan', SektorBangunanController::class);
+    // subsektor kehutanan
+    Route::prefix('perkembangan/produk-domestik')->group(function () {
+        Route::resource('subsektor-kehutanan', SubsektorKehutananController::class);
     });
+
+    // sektor bangunan
+    Route::prefix('perkembangan/produk-domestik')
+        ->group(function () {
+            Route::resource('sektor-bangunan', SektorBangunanController::class);
+        });
 });
 
-  // subsektor kerajinan
-    Route::resource('subsektor-kerajinan', SubsektorKerajinanController::class);
+// subsektor kerajinan
+Route::resource('subsektor-kerajinan', SubsektorKerajinanController::class);
 
 
 // kualitas ibu hamil
 
-  Route::prefix('perkembangan/kesehatan-masyarakat')
+Route::prefix('perkembangan/kesehatan-masyarakat')
     ->name('perkembangan.kesehatan-masyarakat.')
     ->group(function () {
         Route::resource('kualitas-ibu-hamil', KualitasIbuHamilController::class);
     });
 
-     // kualitas bayi
-    Route::prefix('perkembangan/kesehatan-masyarakat')
+// kualitas bayi
+Route::prefix('perkembangan/kesehatan-masyarakat')
     ->name('perkembangan.kesehatan-masyarakat.')
     ->group(function () {
         Route::resource('kualitas-bayi', KualitasBayiController::class);
 
     });
 
-   // kualitas persalinan
-    Route::prefix('perkembangan/kesehatan-masyarakat')
+// kualitas persalinan
+Route::prefix('perkembangan/kesehatan-masyarakat')
     ->name('perkembangan.kesehatan-masyarakat.')
     ->group(function () {
         Route::resource('kualitas-persalinan', KualitasPersalinanController::class);
     });
 
 
-    // cakupan amunisasi
+// cakupan amunisasi
 
-    Route::prefix('perkembangan/kesehatan-masyarakat')
+Route::prefix('perkembangan/kesehatan-masyarakat')
     ->name('perkembangan.kesehatan-masyarakat.')
     ->group(function () {
         Route::resource('cakupan-imunisasi', CakupanImunisasiController::class);
     });
 
-    // wabah penyakit
-    Route::prefix('perkembangan/kesehatan-masyarakat')
+// wabah penyakit
+Route::prefix('perkembangan/kesehatan-masyarakat')
     ->name('perkembangan.kesehatan-masyarakat.')
     ->group(function () {
         Route::resource('wabah-penyakit', WabahPenyakitController::class);
     });
 
-    // status gizi balita
-    Route::prefix('perkembangan/kesehatan-masyarakat')
+// status gizi balita
+Route::prefix('perkembangan/kesehatan-masyarakat')
     ->name('perkembangan.kesehatan-masyarakat.')
     ->group(function () {
         Route::resource('gizi-balita', StatusGiziBalitaController::class);
     });
 
-    // subsektor harapan
-    Route::prefix('perkembangan/kesehatan-masyarakat')
+// subsektor harapan
+Route::prefix('perkembangan/kesehatan-masyarakat')
     ->name('perkembangan.kesehatan-masyarakat.')
     ->group(function () {
         Route::resource('subsektor-harapan', SubsektorHarapanController::class);
     });
 
-    // penderita sakit
-   Route::prefix('perkembangan/kesehatan-masyarakat')
+// penderita sakit
+Route::prefix('perkembangan/kesehatan-masyarakat')
     ->name('perkembangan.kesehatan-masyarakat.')
     ->group(function () {
         Route::resource('penderita-sakit', PenderitaSakitController::class);
     });
 
-    // PERKEMBANGAN SARANA DAN PRASANA
+// PERKEMBANGAN SARANA DAN PRASANA
 
-    Route::prefix('perkembangan/kesehatan-masyarakat')
+Route::prefix('perkembangan/kesehatan-masyarakat')
     ->name('perkembangan.kesehatan-masyarakat.')
     ->group(function () {
         Route::resource('sarana-prasarana', PerkembanganSaranaPrasaranaController::class);
     });
 
 
-    // pasangan usia subur
-    Route::prefix('perkembangan/kesehatan-masyarakat')
+// pasangan usia subur
+Route::prefix('perkembangan/kesehatan-masyarakat')
     ->name('perkembangan.kesehatan-masyarakat.')
     ->group(function () {
         Route::resource('pasangan-usia-subur', PerkembanganPasanganUsiaSuburKbController::class);
     });
 
-    // cakupan air bersih
-    Route::resource('perkembangan/kesehatan-masyarakat/cakupan-air-bersih', CakupanAirBersihController::class)
+// cakupan air bersih
+Route::resource('perkembangan/kesehatan-masyarakat/cakupan-air-bersih', CakupanAirBersihController::class)
     ->names('perkembangan.kesehatan-masyarakat.cakupan-air-bersih');
 
-        // Perilaku hidup sehat
-        Route::prefix('perkembangan/kesehatan-masyarakat')->name('perkembangan.kesehatan-masyarakat.')->group(function () {
+// Perilaku hidup sehat
+Route::prefix('perkembangan/kesehatan-masyarakat')->name('perkembangan.kesehatan-masyarakat.')->group(function () {
     Route::resource('perilaku-hidup-bersih-dan-sehat', PerilakuHidupBersihDanSehatController::class);
 });
 
-    // sektor jasa jasa
-    Route::prefix('perkembangan/produk-domestik/sektor-jasa-jasa')->name('perkembangan.produk-domestik.sektor-jasa-jasa.')->group(function () {
+// sektor jasa jasa
+Route::prefix('perkembangan/produk-domestik/sektor-jasa-jasa')->name('perkembangan.produk-domestik.sektor-jasa-jasa.')->group(function () {
     Route::get('/', [SektorJasaJasaController::class, 'index'])->name('index');
     Route::get('/create', [SektorJasaJasaController::class, 'create'])->name('create');
     Route::post('/', [SektorJasaJasaController::class, 'store'])->name('store');
@@ -1696,9 +1696,9 @@ Route::prefix('perkembangan/produk-domestik')
     Route::delete('/{sektorJasaJasa}', [SektorJasaJasaController::class, 'destroy'])->name('destroy');
 });
 
-        // Sektor keungan jasa perusahaans
+// Sektor keungan jasa perusahaans
 
-        Route::prefix('perkembangan/produk-domestik/sektor-keuangan-jasa-perusahaan')
+Route::prefix('perkembangan/produk-domestik/sektor-keuangan-jasa-perusahaan')
     ->name('perkembangan.produk-domestik.sektor-keuangan-jasa-perusahaan.')
     ->group(function () {
         Route::get('/', [SektorKeuanganJasaPerusahaanController::class, 'index'])->name('index');
@@ -1710,8 +1710,8 @@ Route::prefix('perkembangan/produk-domestik')
         Route::delete('/{sektorKeuanganJasaPerusahaan}', [SektorKeuanganJasaPerusahaanController::class, 'destroy'])->name('destroy');
     });
 
-    // sektor angkutan dan komunikasi
-    Route::prefix('perkembangan/produk-domestik/sektor-angkutan')->name('perkembangan.produk-domestik.sektor-angkutan.')->group(function () {
+// sektor angkutan dan komunikasi
+Route::prefix('perkembangan/produk-domestik/sektor-angkutan')->name('perkembangan.produk-domestik.sektor-angkutan.')->group(function () {
     Route::get('/', [SektorAngkutanKomunikasiController::class, 'index'])->name('index');
     Route::get('/create', [SektorAngkutanKomunikasiController::class, 'create'])->name('create');
     Route::post('/', [SektorAngkutanKomunikasiController::class, 'store'])->name('store');
@@ -1722,7 +1722,7 @@ Route::prefix('perkembangan/produk-domestik')
 });
 
 
-            // Sektor listrik gas air minum
+// Sektor listrik gas air minum
 Route::prefix('perkembangan/produk-domestik')->name('perkembangan.produk-domestik.')->group(function () {
     Route::resource('sektor-listrik-gas-air-minum', App\Http\Controllers\SektorListrikGasAirMinumController::class);
 });
@@ -1740,21 +1740,21 @@ Route::prefix('perkembangan/produk-domestik')->group(function () {
     Route::resource('sektor-perdagangan-hotel-restoran', SektorPerdaganganHotelRestoranController::class)
         ->parameters(['sektor-perdagangan-hotel-restoran' => 'perdagangan'])
         ->names([
-            'index'   => 'perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.index',
-            'create'  => 'perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.create',
-            'store'   => 'perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.store',
-            'show'    => 'perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.show',
-            'edit'    => 'perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.edit',
-            'update'  => 'perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.update',
+            'index' => 'perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.index',
+            'create' => 'perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.create',
+            'store' => 'perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.store',
+            'show' => 'perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.show',
+            'edit' => 'perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.edit',
+            'update' => 'perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.update',
             'destroy' => 'perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.destroy',
         ]);
 });
-            //sektor perdagangan hotek restoran
-        Route::get('sektor-perdagangan-hotel-restoran', function () {
-            return redirect()->route('perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.index');
-        })->name('sektor-perdagangan-hotel-restoran.index');
+//sektor perdagangan hotek restoran
+Route::get('sektor-perdagangan-hotel-restoran', function () {
+    return redirect()->route('perkembangan.produk-domestik.sektor-perdagangan-hotel-restoran.index');
+})->name('sektor-perdagangan-hotel-restoran.index');
 
-        //subsektor kerajinan
+//subsektor kerajinan
 Route::resource('subsektor-kerajinan', SubsektorKerajinanController::class);
 
 //sektor mata pencaharian pertanian
@@ -1770,8 +1770,8 @@ Route::prefix('perkembangan/struktur-mata-pencaharian/sektor-pertanian')
         Route::delete('/{mataPencaharianSektorPertanian}', [MataPencaharianSektorPertanianController::class, 'destroy'])->name('destroy');
     });
 
-            // Sektor Perkebunan
-            Route::prefix('perkembangan/struktur-mata-pencaharian/sektor-perkebunan')->name('perkembangan.struktur-mata-pencaharian.sektor-perkebunan.')->group(function () {
+// Sektor Perkebunan
+Route::prefix('perkembangan/struktur-mata-pencaharian/sektor-perkebunan')->name('perkembangan.struktur-mata-pencaharian.sektor-perkebunan.')->group(function () {
     Route::get('/', [MataPencaharianPerkebunanController::class, 'index'])->name('index');
     Route::get('/create', [MataPencaharianPerkebunanController::class, 'create'])->name('create');
     Route::post('/', [MataPencaharianPerkebunanController::class, 'store'])->name('store');
@@ -1781,19 +1781,19 @@ Route::prefix('perkembangan/struktur-mata-pencaharian/sektor-pertanian')
     Route::delete('/{sektorPerkebunan}', [MataPencaharianPerkebunanController::class, 'destroy'])->name('destroy');
 });
 
- // sektor peternakan
+// sektor peternakan
 Route::prefix('perkembangan/struktur-mata-pencaharian')
     ->name('perkembangan.struktur-mata-pencaharian.')
     ->group(function () {
         Route::resource('sektor-peternakan', SektorPeternakanController::class);
     });
 
-    //sektortambang
-    Route::resource('perkembangan/struktur-mata-pencaharian/sektor-tambang', App\Http\Controllers\SektorTambangController::class)
+//sektortambang
+Route::resource('perkembangan/struktur-mata-pencaharian/sektor-tambang', App\Http\Controllers\SektorTambangController::class)
     ->names('perkembangan.struktur-mata-pencaharian.sektor-tambang');
 
-    // sektor perdagangan mata pencaharian
-   Route::prefix('perkembangan')->name('perkembangan.')->group(function () {
+// sektor perdagangan mata pencaharian
+Route::prefix('perkembangan')->name('perkembangan.')->group(function () {
     Route::prefix('struktur-mata-pencaharian')->name('struktur-mata-pencaharian.')->group(function () {
         Route::resource('sektor-perdagangan', SektorPerdaganganController::class);
     });
@@ -1842,6 +1842,17 @@ Route::middleware(['auth'])->prefix('potensi/sda/alat-produksi-ikan-tawar')->nam
     Route::get('/{pAlatProduksiIkanTawar}/edit', [App\Http\Controllers\PAlatProduksiIkanTawarController::class, 'edit'])->name('edit');
     Route::put('/{pAlatProduksiIkanTawar}', [App\Http\Controllers\PAlatProduksiIkanTawarController::class, 'update'])->name('update');
     Route::delete('/{pAlatProduksiIkanTawar}', [App\Http\Controllers\PAlatProduksiIkanTawarController::class, 'destroy'])->name('destroy');
+});
+
+// SumberDayaAir routes
+Route::middleware(['auth'])->prefix('potensi/sda/sumber-daya-air')->name('sumber-daya-air.')->group(function () {
+    Route::get('/', [App\Http\Controllers\SumberDayaAirController::class, 'index'])->name('index');
+    Route::get('/create', [App\Http\Controllers\SumberDayaAirController::class, 'create'])->name('create');
+    Route::post('/', [App\Http\Controllers\SumberDayaAirController::class, 'store'])->name('store');
+    Route::get('/{sumberDayaAir}', [App\Http\Controllers\SumberDayaAirController::class, 'show'])->name('show');
+    Route::get('/{sumberDayaAir}/edit', [App\Http\Controllers\SumberDayaAirController::class, 'edit'])->name('edit');
+    Route::put('/{sumberDayaAir}', [App\Http\Controllers\SumberDayaAirController::class, 'update'])->name('update');
+    Route::delete('/{sumberDayaAir}', [App\Http\Controllers\SumberDayaAirController::class, 'destroy'])->name('destroy');
 });
 
 // KualitasAirMinum routes
