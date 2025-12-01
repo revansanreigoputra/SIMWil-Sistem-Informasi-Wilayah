@@ -105,7 +105,7 @@
                                         style="position: absolute; top: 8px; right: 8px; z-index: 10;" title="Hapus Foto">
                                         <i class="bi bi-trash3-fill"></i>
                                     </button>
-                                    <img src="{{ asset('storage/foto_foto/' . $photo->foto) }}" class="card-img-top"
+                                    <img src="{{ asset('asset/uploads/foto_foto/' . $photo->foto) }}" class="card-img-top"
                                         alt="Foto {{ $loop->iteration }}" style="aspect-ratio: 1 / 1; object-fit: cover;">
                                 </div>
                             </div>
@@ -121,7 +121,7 @@
                                     </div>
                                     <div class="modal-body text-center">
                                         <p>Yakin ingin menghapus foto ini dari album?</p>
-                                        <img src="{{ asset('storage/foto_foto/' . $photo->foto) }}" class="img-thumbnail"
+                                        <img src="{{ asset('asset/uploads/foto_foto/' . $photo->foto) }}" class="img-thumbnail"
                                             width="200" alt="Foto">
                                     </div>
                                     <div class="modal-footer">

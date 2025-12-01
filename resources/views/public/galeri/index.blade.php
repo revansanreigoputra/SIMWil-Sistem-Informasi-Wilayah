@@ -97,7 +97,7 @@
 
                                 <div class="album-image-wrapper">
                                     @if ($album->photos->first())
-                                        <img src="{{ asset('storage/foto_foto/' . $album->photos->first()->foto) }}"
+                                        <img src="{{ asset('asset/uploads/foto_foto/' . $album->photos->first()->foto) }}"
                                             alt="{{ $album->album }}">
                                     @else
                                         <img src="https://via.placeholder.com/300x180.png?text=Belum+Ada+Foto"

@@ -18,7 +18,7 @@
                     <div class="blog-post">
                         <div class="post-content">
                             <div class="post-img" style="margin-bottom: 30px;">
-                                <img src="{{ asset('storage/foto_berita/' . $berita->gambar) }}" alt="{{ $berita->judul }}"
+                                <img src="{{ asset('asset/uploads/foto_berita/' . $berita->gambar) }}" alt="{{ $berita->judul }}"
                                     style="
                                     display: block;
                                     width: 30%;
