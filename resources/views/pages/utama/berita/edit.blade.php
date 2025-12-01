@@ -21,8 +21,13 @@
                 <div class="mb-3">
                     <label for="fupload" class="form-label">Gambar</label>
                     <p class="form-text text-muted">Gambar saat ini:</p>
-                    <img src="{{ asset('storage/foto_berita/' . $berita->gambar) }}" class="img-thumbnail mb-2"
-                        style="max-width: 50px; height: auto;" alt="Gambar {{ $berita->judul }}">
+                     @if ($berita->gambar)
+                        <img src="{{ asset('asset/uploads/foto_berita/' . $berita->gambar) }}" class="img-thumbnail mb-2"
+                            style="max-width: 150px; height: auto;" alt="Gambar {{ $berita->judul }}">
+                    @else
+                        <p class="text-muted small">Tidak ada gambar saat ini.</p>
+                    @endif
+
                     <input type="file" name="fupload" id="fupload" class="form-control">
                     <small class="form-text text-danger">Kosongkan jika tidak ingin mengubah gambar.</small>
                 </div>

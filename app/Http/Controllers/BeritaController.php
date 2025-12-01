@@ -6,6 +6,7 @@ use App\Models\Berita;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class BeritaController extends Controller
 {
@@ -28,13 +29,18 @@ class BeritaController extends Controller
             'fupload' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-        $gambarPath = $request->file('fupload')->store('public/foto_berita');
+        // Proses Upload Gambar Manual ke asset/uploads/foto_berita
+        $file = $request->file('fupload');
+        $filename = $file->hashName();
+        $destinationPath = public_path('asset/uploads/foto_berita');
+        $file->move($destinationPath, $filename);
+        // Mengikuti pola upload manual seperti KopTemplate
 
         $dataToStore = [
             'judul' => $validatedData['judul'],
             'slug' => Str::slug($validatedData['judul'], '-'),
             'isi_berita' => $validatedData['isi_berita'],
-            'gambar' => basename($gambarPath)
+            'gambar' => $filename // Menyimpan nama file saja
         ];
 
         Berita::create($dataToStore);
@@ -66,13 +72,22 @@ class BeritaController extends Controller
             'isi_berita' => $validatedData['isi_berita'],
         ];
 
-        if ($request->hasFile('fupload')) {
+       if ($request->hasFile('fupload')) {
+            // Hapus gambar lama jika ada
             if ($berita->gambar) {
-                Storage::delete('public/foto_berita/' . $berita->gambar);
+                $oldImagePath = public_path('asset/uploads/foto_berita/' . $berita->gambar);
+                if (File::exists($oldImagePath)) {
+                    File::delete($oldImagePath);
+                }
             }
 
-            $gambarPath = $request->file('fupload')->store('public/foto_berita');
-            $dataToUpdate['gambar'] = basename($gambarPath);
+           // Upload gambar baru
+            $file = $request->file('fupload');
+            $filename = $file->hashName();
+            $destinationPath = public_path('asset/uploads/foto_berita');
+            $file->move($destinationPath, $filename);
+
+            $dataToUpdate['gambar'] = $filename;
         }
 
         $berita->update($dataToUpdate);
@@ -87,8 +102,12 @@ class BeritaController extends Controller
 
     public function destroy(Berita $berita)
     {
+      // Hapus gambar dari folder asset/uploads/foto_berita
         if ($berita->gambar) {
-            Storage::delete('public/foto_berita/' . $berita->gambar);
+            $imagePath = public_path('asset/uploads/foto_berita/' . $berita->gambar);
+            if (File::exists($imagePath)) {
+                File::delete($imagePath);
+            }
         }
 
         $berita->delete();

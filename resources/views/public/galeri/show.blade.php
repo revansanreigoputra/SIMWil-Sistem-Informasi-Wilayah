@@ -46,9 +46,10 @@
                 <div class="col-md-12">
                     <div class="utf_gallery_container mfp-gallery">
                         @forelse ($album->photos as $foto)
-                            <a href="{{ asset('storage/foto_foto/' . $foto->foto) }}" class="utf_gallery_item"
+                            <a href="{{ asset('asset/uploads/foto_foto/' . $foto->foto) }}" class="utf_gallery_item"
                                 title="Klik untuk perbesar">
-                                <img src="{{ asset('storage/foto_foto/' . $foto->foto) }}" alt="Foto">
+                                {{-- 2. Ubah src (untuk tampilan gambar) --}}
+                                <img src="{{ asset('asset/uploads/foto_foto/' . $foto->foto) }}" alt="Foto">
                             </a>
                         @empty
                             <div class="col-12">

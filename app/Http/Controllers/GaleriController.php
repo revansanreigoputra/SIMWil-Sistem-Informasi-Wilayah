@@ -6,7 +6,7 @@ use App\Models\Galeri;
 use App\Models\Photo;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File; // Ubah Storage menjadi File
 
 class GaleriController extends Controller
 {
@@ -18,12 +18,12 @@ class GaleriController extends Controller
 
     public function store(Request $request)
     {
+        // Validasi Album (Hanya nama album, tidak ada upload disini)
         $request->validateWithBag('storeAlbum', [
             'album' => 'required|string|max:255|unique:galeris,album',
         ]);
 
         Galeri::create(['album' => $request->album]);
-        // Diubah dari 'success' menjadi 'message'
         return redirect()->route('utama.galeri.index')->with('message', 'Album baru berhasil dibuat!');
     }
 
@@ -40,24 +40,35 @@ class GaleriController extends Controller
         ]);
 
         $galeri->update(['album' => $request->album]);
-        // Diubah dari 'success' menjadi 'message'
         return redirect()->route('utama.galeri.index')->with('message', 'Nama album berhasil diperbarui!');
     }
 
     public function destroy(Galeri $galeri)
     {
+        // Load relasi photos untuk menghapus file fisiknya
         $galeri->load('photos');
+
+        // Loop setiap foto di dalam album ini
         foreach ($galeri->photos as $photo) {
-            Storage::delete('public/foto_foto/' . $photo->foto);
+            // Path: public/asset/uploads/foto_foto
+            $imagePath = public_path('asset/uploads/foto_foto/' . $photo->foto);
+
+            // Hapus file jika ada
+            if (File::exists($imagePath)) {
+                File::delete($imagePath);
+            }
         }
+
+        // Hapus data album (foto di database akan terhapus otomatis jika ada cascade on delete,
+        // tapi sebaiknya file fisik dihapus manual seperti di atas)
         $galeri->delete();
-        // Diubah dari 'success' menjadi 'message'
+
         return redirect()->route('utama.galeri.index')->with('message', 'Album dan seluruh fotonya berhasil dihapus!');
     }
 
     /*
     |--------------------------------------------------------------------------
-    | FUNGSI UNTUK MANAJEMEN FOTO
+    | FUNGSI UNTUK MANAJEMEN FOTO (UPLOAD FOTO KE DALAM ALBUM)
     |--------------------------------------------------------------------------
     */
 
@@ -74,16 +85,23 @@ class GaleriController extends Controller
         ]);
 
         if ($request->hasFile('fupload')) {
+            // Tentukan path tujuan: public/asset/uploads/foto_foto
+            $destinationPath = public_path('asset/uploads/foto_foto');
+
             foreach ($request->file('fupload') as $file) {
+                // Buat nama file unik
                 $filename = $file->hashName();
-                $file->storeAs('public/foto_foto', $filename);
+
+                // Pindahkan file secara manual
+                $file->move($destinationPath, $filename);
+
+                // Simpan ke database
                 Photo::create([
                     'galeri_id' => $galeri->id,
                     'foto' => $filename
                 ]);
             }
         }
-        // Diubah dari 'success' menjadi 'message'
         return redirect()->route('utama.galeri.show', $galeri->id)->with('message', 'Foto-foto baru berhasil diunggah!');
     }
 
@@ -92,9 +110,15 @@ class GaleriController extends Controller
         if ($photo->galeri_id != $galeri->id) {
             abort(404);
         }
-        Storage::delete('public/foto_foto/' . $photo->foto);
+
+        // Hapus file fisik single photo
+        $imagePath = public_path('asset/uploads/foto_foto/' . $photo->foto);
+
+        if (File::exists($imagePath)) {
+            File::delete($imagePath);
+        }
+
         $photo->delete();
-        // Diubah dari 'success' menjadi 'message'
         return redirect()->route('utama.galeri.show', $galeri->id)->with('message', 'Foto berhasil dihapus!');
     }
 }
