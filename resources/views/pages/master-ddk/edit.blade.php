@@ -12,51 +12,90 @@
                 @csrf
                 @method('PUT')
 
-                {{-- Form dinamis berdasarkan tabel aktif --}}
+                {{-- Form dinamis --}}
                 @if ($activeTable == 'lembaga')
                     <div class="mb-3">
-                        <label for="jenis_lembaga" class="form-label">Jenis Lembaga</label>
-                        <input type="text" class="form-control" id="jenis_lembaga" name="jenis_lembaga"
-                            value="{{ $item->jenis_lembaga }}" required>
+                        <label class="form-label">Jenis Lembaga</label>
+                        <select class="form-control" name="jenis_lembaga" required>
+                            <option value="pemerintahan" {{ $item->lembaga == 'pemerintahan' ? 'selected' : '' }}>
+                                Pemerintahan</option>
+                            <option value="kemasyarakatan" {{ $item->lembaga == 'kemasyarakatan' ? 'selected' : '' }}>
+                                Kemasyarakatan</option>
+                            <option value="ekonomi" {{ $item->lembaga == 'ekonomi' ? 'selected' : '' }}>Ekonomi</option>
+                        </select>
                     </div>
+
                     <div class="mb-3">
-                        <label for="nama_lembaga" class="form-label">Nama Lembaga</label>
-                        <input type="text" class="form-control" id="nama_lembaga" name="nama_lembaga"
-                            value="{{ $item->nama_lembaga }}" required>
-                    </div>
-                @elseif ($activeTable == 'agama')
-                    <div class="mb-3">
-                        <label for="agama" class="form-label">Nama Agama</label>
-                        <input type="text" class="form-control" id="agama" name="agama" value="{{ $item->agama }}"
+                        <label class="form-label">Nama Lembaga</label>
+                        <input type="text" class="form-control" name="nama_lembaga" value="{{ $item->nama_lembaga }}"
                             required>
-                    </div>
-                @elseif ($activeTable == 'pendidikan')
-                    <div class="mb-3">
-                        <label for="pendidikan" class="form-label">Nama Pendidikan</label>
-                        <input type="text" class="form-control" id="pendidikan" name="pendidikan"
-                            value="{{ $item->pendidikan }}" required>
                     </div>
                 @elseif ($activeTable == 'cacat')
                     <div class="mb-3">
-                        <label for="tipe" class="form-label">Tipe</label>
-                        <input type="text" class="form-control" id="tipe" name="tipe" required
-                            value="{{ $item->tipe }}" required>
+                        <label class="form-label">Tipe</label>
+                        <input type="text" class="form-control" name="tipe" value="{{ $item->tipe }}" required>
                     </div>
                     <div class="mb-3">
-                        <label for="nama_cacat" class="form-label">Nama Cacat</label>
-                        <input type="text" class="form-control" id="nama_cacat" name="nama_cacat" required
-                            value="{{ $item->nama_cacat }}" required>
+                        <label class="form-label">Nama Cacat</label>
+                        <input type="text" class="form-control" name="nama_cacat" value="{{ $item->nama_cacat }}"
+                            required>
+                    </div>
+                @elseif ($activeTable == 'agama')
+                    <div class="mb-3">
+                        <label class="form-label">Nama Agama</label>
+                        <input type="text" class="form-control" name="agama" value="{{ $item->agama }}" required>
+                    </div>
+                @elseif ($activeTable == 'pendidikan')
+                    <div class="mb-3">
+                        <label class="form-label">Nama Pendidikan</label>
+                        <input type="text" class="form-control" name="pendidikan" value="{{ $item->pendidikan }}"
+                            required>
+                    </div>
+                @elseif ($activeTable == 'kb')
+                    <div class="mb-3">
+                        <label class="form-label">KB</label>
+                        <input type="text" class="form-control" name="kb" value="{{ $item->kb }}" required>
+                    </div>
+                @elseif ($activeTable == 'hubungankeluarga')
+                    <div class="mb-3">
+                        <label class="form-label">Hubungan Keluarga</label>
+                        <input type="text" class="form-control" name="nama" value="{{ $item->nama }}" required>
+                    </div>
+                @elseif ($activeTable == 'kedudukanpajak')
+                    <div class="mb-3">
+                        <label class="form-label">Kedudukan Pajak</label>
+                        <input type="text" class="form-control" name="kedudukan_pajak"
+                            value="{{ $item->kedudukan_pajak }}" required>
+                    </div>
+
+                    {{-- FIXED: dipindah ke sini, tidak setelah @endif --}}
+                @elseif ($activeTable == 'golongandarah')
+                    <div class="mb-3">
+                        <label class="form-label">Golongan Darah</label>
+                        <input type="text" class="form-control" name="golongan_darah"
+                            value="{{ $item->golongan_darah }}" required>
+                    </div>
+                @elseif ($activeTable == 'kewarganegaraan')
+                    <div class="mb-3">
+                        <label class="form-label">Kewarganegaraan</label>
+                        <input type="text" class="form-control" name="kewarganegaraan"
+                            value="{{ $item->kewarganegaraan }}" required>
+                    </div>
+                @elseif ($activeTable == 'matapencaharian')
+                    <div class="mb-3">
+                        <label class="form-label">Mata Pencaharian</label>
+                        <input type="text" class="form-control" name="mata_pencaharian"
+                            value="{{ $item->mata_pencaharian }}" required>
                     </div>
                 @else
-                    {{-- Default form untuk tabel lain dengan kolom 'nama' --}}
+                    {{-- Default --}}
                     @php
-                        // Dapatkan nama kolom dinamis
-                        $columnName = array_keys((array) $item)[1]; // Asumsi kolom kedua setelah 'id'
+                        $columnName = array_keys((array) $item)[1];
                     @endphp
                     <div class="mb-3">
-                        <label for="nama" class="form-label">Nama {{ Str::headline($activeTable) }}</label>
-                        <input type="text" class="form-control" id="nama" name="nama"
-                            value="{{ $item->{$columnName} }}" required>
+                        <label class="form-label">Nama {{ Str::headline($activeTable) }}</label>
+                        <input type="text" class="form-control" name="nama" value="{{ $item->{$columnName} }}"
+                            required>
                     </div>
                 @endif
 
