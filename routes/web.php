@@ -150,6 +150,7 @@ use App\Http\Controllers\KepemilikanLahanHutanController;
 use App\Http\Controllers\HasilProduksiHutanController;
 use App\Http\Controllers\KondisiHutanController;
 use App\Http\Controllers\DampakPengolahanHutanController;
+use App\Http\Controllers\KebisinganController;
 
 
 // POTENSI KELEMBAGAAN
@@ -621,6 +622,17 @@ Route::middleware(['auth'])->prefix('potensi/sda/topografi')->name('topografi.')
     Route::get('/{topografi}/edit', [TopografiController::class, 'edit'])->name('edit');
     Route::put('/{topografi}', [TopografiController::class, 'update'])->name('update');
     Route::delete('/{topografi}', [TopografiController::class, 'destroy'])->name('destroy');
+});
+
+// Kebisingan routes
+Route::middleware(['auth'])->prefix('potensi/sda/kebisingan')->name('kebisingan.')->group(function () {
+    Route::get('/', [KebisinganController::class, 'index'])->name('index');
+    Route::get('/create', [KebisinganController::class, 'create'])->name('create');
+    Route::post('/', [KebisinganController::class, 'store'])->name('store');
+    Route::get('/{kebisingan}', [KebisinganController::class, 'show'])->name('show');
+    Route::get('/{kebisingan}/edit', [KebisinganController::class, 'edit'])->name('edit');
+    Route::put('/{kebisingan}', [KebisinganController::class, 'update'])->name('update');
+    Route::delete('/{kebisingan}', [KebisinganController::class, 'destroy'])->name('destroy');
 });
 
 // Iklim routes

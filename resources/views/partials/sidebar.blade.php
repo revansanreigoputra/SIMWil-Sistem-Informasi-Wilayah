@@ -619,6 +619,14 @@
                                                 </a>
                                             @endcan
 
+                                            <br>
+                                            @can('kebisingan.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/kebisingan*') ? 'active' : '' }}"
+                                                    href="{{ route('kebisingan.index') }}">
+                                                    Kebisingan
+                                                </a>
+                                            @endcan
+
                                         </div>
                                     </div>
 
