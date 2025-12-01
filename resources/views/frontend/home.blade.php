@@ -227,7 +227,7 @@
                                 data-responsive="off"
                                 style="z-index:6;color:#fff;letter-spacing:0px;font-weight:600;">Cek & Monitoring
                                 Status Pengajuan</div>
-                            <div class="utf_rev_description_text">SiKAB Sleman - Aplikasi yang akan memberikan
+                            <div class="utf_rev_description_text"> SIMWIL (Sistem Wilayah) - Aplikasi yang akan memberikan
                                 kemudahan bagi anda dalam mengurus segala bentuk urusan yang berkaitan dengan
                                 pemerintahan daerah secara online.
                             </div>
@@ -289,7 +289,7 @@
                                 data-responsive="off"
                                 style="z-index:6;color:#fff;letter-spacing:0px;font-weight:600;">Cari & Jelajahi Tempat
                                 Hits</div>
-                            <div class="utf_rev_description_text">SiKAB Sleman - Aplikasi yang akan memberikan
+                            <div class="utf_rev_description_text">SIMWIL (Sistem Wilayah) - Aplikasi yang akan memberikan
                                 kemudahan bagi anda dalam mengurus segala bentuk urusan yang berkaitan dengan
                                 pemerintahan daerah secara online.
                             </div>
@@ -574,7 +574,7 @@
                         <h4>Bantuan</h4>
                     </div>
                     <div class="col-md-4 col-sm-12 col-xs-12">
-                        <h4>Tentang SIKAB</h4>
+                        <h4>Tentang SIMWIL</h4>
                     </div>
                 </div>
 
