@@ -71,7 +71,7 @@
         </div>
 
         @if ($berita->gambar)
-            <img src="{{ asset('storage/foto_berita/' . $berita->gambar) }}" alt="{{ $berita->judul }}" class="article-banner">
+            <img src="{{ asset('asset/uploads/foto_berita/' . $berita->gambar) }}" alt="{{ $berita->judul }}" class="article-banner">
         @endif
 
         <div class="article-body">

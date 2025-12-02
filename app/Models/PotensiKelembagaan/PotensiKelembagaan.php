@@ -3,6 +3,7 @@
 namespace App\Models\PotensiKelembagaan;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Desa;
 
 class PotensiKelembagaan extends Model
 {
@@ -15,5 +16,11 @@ class PotensiKelembagaan extends Model
         'jumlah_perangkat_desa',
         'jumlah_staf',
         'jumlah_dusun',
+        'desa_id',
     ];
+
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class, 'desa_id');
+    }
 }

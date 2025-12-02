@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SimWil - @yield('title', 'Sistem Informasi Wilayah')</title>
+    <title>SIMDES - @yield('title', 'Sistem Informasi Wilayah Tingkat Desa')</title>
 
     <link rel="shortcut icon" href="{{ asset('frontend/images/favicon.png') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/stylesheet.css') }}">
@@ -156,7 +156,7 @@
                     <div class="utf_left_side">
                         <div id="logo">
                             <a href="{{ url('/') }}">
-                                <img src="{{ asset('frontend/images/logo simwil.png') }}" alt="">
+                                <img src="{{ asset('frontend/images/SIMDES.png') }}" alt="">
                             </a>
                         </div>
                         <div class="mmenu-trigger">
@@ -208,8 +208,8 @@
                     {{-- Kolom 1: Logo & Deskripsi (Lebih Lebar) --}}
                     <div class="col-md-4 col-sm-12 col-xs-12">
                         <a href="{{ url('/') }}"><img class="footer-logo"
-                                src="{{ asset('frontend/images/logo simwil.png') }}" alt=""></a>
-                        <p>Sistem Informasi Wilayah yang memberikan kemudahan bagi anda dalam mengurus segala bentuk
+                                src="{{ asset('frontend/images/SIMDES.png') }}" alt=""></a>
+                        <p>Sistem Informasi Wilayah Tingkat Desa yang memberikan kemudahan bagi anda dalam mengurus segala bentuk
                             urusan.</p>
                     </div>
 
@@ -238,7 +238,7 @@
                         <h4>Hubungi Kami</h4>
                         <ul class="utf_footer_contact_details">
                             <li><i class="fa-solid fa-location-dot"></i> Jl. Contoh No. 123, Yogyakarta</li>
-                            <li><i class="fa-solid fa-envelope"></i> Email: info@simwil.go.id</li>
+                            <li><i class="fa-solid fa-envelope"></i> Email: info@simdes.go.id</li>
                             <li><i class="fa-solid fa-phone"></i> Telepon: (0274) 123456</li>
                         </ul>
                     </div>

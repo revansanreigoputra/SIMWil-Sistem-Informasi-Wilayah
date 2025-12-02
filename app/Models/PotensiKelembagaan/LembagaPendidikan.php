@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\MasterPotensi\KategoriSekolah;
 use App\Models\MasterPotensi\JenisSekolahTingkatan;
+use App\Models\Desa;
 
 class LembagaPendidikan extends Model
 {
@@ -14,6 +15,7 @@ class LembagaPendidikan extends Model
     protected $table = 'lembaga_pendidikan';
 
     protected $fillable = [
+        'desa_id',
         'kategori_id',
         'jenis_sekolah_id',
         'tanggal',
@@ -25,15 +27,16 @@ class LembagaPendidikan extends Model
         'jumlah_pengajar',
     ];
 
-    // Relasi ke kategori sekolah
     public function kategori()
     {
         return $this->belongsTo(KategoriSekolah::class, 'kategori_id');
     }
-
-    // Relasi ke jenis sekolah / tingkatan
     public function jenisSekolah()
     {
         return $this->belongsTo(JenisSekolahTingkatan::class, 'jenis_sekolah_id');
+    }
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class, 'desa_id');
     }
 }

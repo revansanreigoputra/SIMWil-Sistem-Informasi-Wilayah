@@ -12,11 +12,15 @@ use Barryvdh\DomPDF\Facade\Pdf;
 class HiburanController extends Controller
 {
     /**
-     * Menampilkan daftar usaha hiburan
+     * Menampilkan daftar usaha hiburan berdasarkan desa user
      */
     public function index()
     {
-        $hiburan = Hiburan::with(['kategori', 'jenisUsaha'])->latest()->get();
+        $hiburan = Hiburan::with(['kategori', 'jenisUsaha'])
+            ->where('desa_id', auth()->user()->desa_id)
+            ->latest()
+            ->get();
+
         return view('pages.potensi.potensi-kelembagaan.hiburan.index', compact('hiburan'));
     }
 
@@ -25,7 +29,10 @@ class HiburanController extends Controller
      */
     public function show($id)
     {
-        $hiburan = Hiburan::with(['kategori', 'jenisUsaha'])->findOrFail($id);
+        $hiburan = Hiburan::with(['kategori', 'jenisUsaha'])
+            ->where('desa_id', auth()->user()->desa_id)
+            ->findOrFail($id);
+
         return view('pages.potensi.potensi-kelembagaan.hiburan.show', compact('hiburan'));
     }
 
@@ -40,7 +47,7 @@ class HiburanController extends Controller
     }
 
     /**
-     * Simpan data baru
+     * Simpan data baru + desa_id
      */
     public function store(Request $request)
     {
@@ -53,7 +60,15 @@ class HiburanController extends Controller
             'jumlah_tenaga_kerja' => 'required|integer|min:0',
         ]);
 
-        Hiburan::create($request->all());
+        Hiburan::create([
+            'tanggal' => $request->tanggal,
+            'kategori_id' => $request->kategori_id,
+            'jenis_usaha_id' => $request->jenis_usaha_id,
+            'jumlah_unit' => $request->jumlah_unit,
+            'jenis_produk' => $request->jenis_produk,
+            'jumlah_tenaga_kerja' => $request->jumlah_tenaga_kerja,
+            'desa_id' => auth()->user()->desa_id, // ← DITAMBAHKAN
+        ]);
 
         return redirect()->route('potensi.potensi-kelembagaan.hiburan.index')
                          ->with('success', 'Data usaha hiburan berhasil ditambahkan!');
@@ -64,14 +79,15 @@ class HiburanController extends Controller
      */
     public function edit($id)
     {
-        $hiburan = Hiburan::findOrFail($id);
+        $hiburan = Hiburan::where('desa_id', auth()->user()->desa_id)->findOrFail($id);
+
         $kategori = KategoriUsahaJasaDanHiburan::all();
         $jenisUsaha = JenisUsahaHiburan::all();
         return view('pages.potensi.potensi-kelembagaan.hiburan.edit', compact('hiburan', 'kategori', 'jenisUsaha'));
     }
 
     /**
-     * Update data
+     * Update data + tetap mempertahankan desa_id
      */
     public function update(Request $request, $id)
     {
@@ -84,8 +100,17 @@ class HiburanController extends Controller
             'jumlah_tenaga_kerja' => 'required|integer|min:0',
         ]);
 
-        $hiburan = Hiburan::findOrFail($id);
-        $hiburan->update($request->all());
+        $hiburan = Hiburan::where('desa_id', auth()->user()->desa_id)->findOrFail($id);
+
+        $hiburan->update([
+            'tanggal' => $request->tanggal,
+            'kategori_id' => $request->kategori_id,
+            'jenis_usaha_id' => $request->jenis_usaha_id,
+            'jumlah_unit' => $request->jumlah_unit,
+            'jenis_produk' => $request->jenis_produk,
+            'jumlah_tenaga_kerja' => $request->jumlah_tenaga_kerja,
+            // desa_id TIDAK diubah karena harus tetap milik desa user
+        ]);
 
         return redirect()->route('potensi.potensi-kelembagaan.hiburan.index')
                          ->with('success', 'Data usaha hiburan berhasil diperbarui!');
@@ -96,15 +121,19 @@ class HiburanController extends Controller
      */
     public function destroy($id)
     {
-        $hiburan = Hiburan::findOrFail($id);
+        $hiburan = Hiburan::where('desa_id', auth()->user()->desa_id)->findOrFail($id);
         $hiburan->delete();
 
         return redirect()->route('potensi.potensi-kelembagaan.hiburan.index')
                          ->with('success', 'Data usaha hiburan berhasil dihapus!');
     }
+
     public function print($id)
     {
-        $hiburan = Hiburan::with(['kategori', 'jenisUsaha'])->findOrFail($id);
+        $hiburan = Hiburan::with(['kategori', 'jenisUsaha'])
+            ->where('desa_id', auth()->user()->desa_id)
+            ->findOrFail($id);
+
         $pdf = Pdf::loadView('pages.potensi.potensi-kelembagaan.hiburan.print', compact('hiburan'))
               ->setPaper('a4', 'portrait');
         return $pdf->stream('Data_Hiburan_' . $hiburan->id . '.pdf');
@@ -112,15 +141,18 @@ class HiburanController extends Controller
 
     public function download($id)
     {
-        $hiburan = Hiburan::with(['kategori', 'jenisUsaha'])->findOrFail($id);
+        $hiburan = Hiburan::with(['kategori', 'jenisUsaha'])
+            ->where('desa_id', auth()->user()->desa_id)
+            ->findOrFail($id);
+
         $pdf = Pdf::loadView('pages.potensi.potensi-kelembagaan.hiburan.print', compact('hiburan'))
               ->setPaper('a4', 'portrait');
         return $pdf->download('Data_Hiburan_' . $hiburan->id . '.pdf');
     }
+
     public function getJenis($kategoriId)
     {
         $data = JenisUsahaHiburan::where('kategori_id', $kategoriId)->get(['id', 'nama']);
         return response()->json($data);
     }
-
 }

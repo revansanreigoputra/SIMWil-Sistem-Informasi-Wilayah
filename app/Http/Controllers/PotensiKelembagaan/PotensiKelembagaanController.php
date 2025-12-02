@@ -13,24 +13,29 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
-use App\Models\{PerangkatDesa, Jabatan};
+use App\Models\{PerangkatDesa, Jabatan, Desa}; 
 
 use App\Http\Controllers\Controller;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class PotensiKelembagaanController extends Controller
 {
-    // index() dan create() Anda sudah benar
-    public function index()
+    public function index(Request $request)
     {
-        $records = PotensiKelembagaan::latest()->get();
+        $desaId = session('desa_id');
 
-        $anggotaOrganisasis = AnggotaOrganisasi::with(['perangkatDesa'])
+        $records = PotensiKelembagaan::with('desa')
+            ->where('desa_id', $desaId)
+            ->latest()
             ->get();
 
+        $anggotaOrganisasis = AnggotaOrganisasi::with(['perangkatDesa'])->get();
         $personnelMap = $anggotaOrganisasis->keyBy('jabatan_id');
 
-        return view('pages.potensi.potensi-kelembagaan.pemerintah.index', compact('records', 'personnelMap'));
+        return view('pages.potensi.potensi-kelembagaan.pemerintah.index', compact(
+            'records', 
+            'personnelMap'
+        ));
     }
 
     public function create()
@@ -39,18 +44,19 @@ class PotensiKelembagaanController extends Controller
         $perangkatDesas = PerangkatDesa::select('id', 'nama')->orderBy('nama')->get();
         $currentRecord = PotensiKelembagaan::latest()->first();
 
-        return view('pages.potensi.potensi-kelembagaan.pemerintah.create', compact('jabatans', 'perangkatDesas', 'currentRecord'));
+        return view('pages.potensi.potensi-kelembagaan.pemerintah.create', compact(
+            'jabatans', 
+            'perangkatDesas', 
+            'currentRecord'
+        ));
     }
-
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        // --- 1. Validation ---
         $validated = $request->validate([
-            // (Validasi Anda sudah benar)
             'tanggal_data' => 'required|date',
             'jumlah_aparat_pemerintah' => 'required|integer|min:0',
             'jumlah_perangkat_desa' => 'required|integer|min:0',
@@ -69,27 +75,21 @@ class PotensiKelembagaanController extends Controller
             'anggota_organisasi.*.keterangan_tambahan' => 'nullable|string',
         ]);
 
-        // --- 2. Transaction ---
         DB::beginTransaction();
 
         try {
             $potensiModel = new PotensiKelembagaan();
             $bpdModel = new BPD();
+            $dataToSave = $request->only($potensiModel->getFillable());
+            $dataToSave['desa_id'] = session('desa_id');
 
-            // === PERBAIKAN 1: Gunakan create() untuk PotensiKelembagaan ===
-            // Ini akan SELALU membuat baris baru, menyelesaikan masalah data hilang.
-            $potensi = PotensiKelembagaan::create(
-                $request->only($potensiModel->getFillable())
-            );
+           $potensi = PotensiKelembagaan::create($dataToSave);
 
-            // === PERBAIKAN 2: Kembalikan BPD ke updateOrCreate() ===
-            // Ini akan memperbarui satu-satunya baris BPD (singleton)
             BPD::updateOrCreate(
-                [], // Kriteria kosong, akan selalu update baris pertama atau buat baru jika kosong
+                [], 
                 $request->only($bpdModel->getFillable())
             );
 
-            // ... (Logika AnggotaOrganisasi Anda sudah benar) ...
             $anggotaData = $validated['anggota_organisasi'];
             $upsertData = collect($anggotaData)->map(function ($item) {
                 return [
@@ -129,11 +129,7 @@ class PotensiKelembagaanController extends Controller
     public function edit($id)
     {
         $potensi = PotensiKelembagaan::findOrFail($id);
-
-        // === PERBAIKAN 3: Kembalikan ke BPD::first() ===
-        // Mengambil satu-satunya data BPD
         $bpd = BPD::first();
-
         $jabatans = Jabatan::all();
         $perangkatDesas = PerangkatDesa::select('id', 'nama')->orderBy('nama')->get();
         $anggotaOrganisasis = AnggotaOrganisasi::with(['perangkatDesa', 'jabatan'])->get()->keyBy('jabatan_id');
@@ -153,7 +149,6 @@ class PotensiKelembagaanController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            // (Validasi sama seperti store)
             'tanggal_data' => 'required|date',
             'jumlah_aparat_pemerintah' => 'required|integer|min:0',
             'jumlah_perangkat_desa' => 'required|integer|min:0',
@@ -178,21 +173,17 @@ class PotensiKelembagaanController extends Controller
             $potensi = PotensiKelembagaan::findOrFail($id);
             $potensiModel = new PotensiKelembagaan();
             $bpdModel = new BPD();
+            $dataToUpdate = $request->only($potensiModel->getFillable());
+            $dataToUpdate['desa_id'] = session('desa_id');
 
-            // 1. Update data Potensi (ini sudah benar)
-            $potensi->update($request->only($potensiModel->getFillable()));
+            $potensi->update($dataToUpdate);
 
-            // === PERBAIKAN 4: Kembalikan ke BPD::first()->update() ===
-            // Meng-update satu-satunya baris BPD
             $bpd = BPD::first();
             if ($bpd) {
                 $bpd->update($request->only($bpdModel->getFillable()));
             } else {
-                // Jika tabel BPD kosong, buat baris baru
                 BPD::create($request->only($bpdModel->getFillable()));
             }
-
-            // ... (Logika AnggotaOrganisasi Anda sudah benar) ...
             $anggotaData = $validated['anggota_organisasi'];
             $upsertData = collect($anggotaData)->map(function ($item) {
                 return [
@@ -227,11 +218,7 @@ class PotensiKelembagaanController extends Controller
     public function show($id)
     {
         $potensi = PotensiKelembagaan::findOrFail($id);
-
-        // === PERBAIKAN 5: Kembalikan ke BPD::first() ===
-        // Ini adalah baris yang error tadi
         $bpd = BPD::first();
-
         $anggotaOrganisasis = AnggotaOrganisasi::with(['perangkatDesa', 'jabatan'])
             ->get();
 
@@ -246,14 +233,7 @@ class PotensiKelembagaanController extends Controller
         DB::beginTransaction();
         try {
             $potensi = PotensiKelembagaan::findOrFail($id);
-            
-            // Hapus Potensi
             $potensi->delete();
-
-            // === PERBAIKAN 6: Hapus logika delete BPD ===
-            // Kita tidak ingin menghapus data BPD (singleton) saat menghapus potensi
-            // BPD::where('potensi_kelembagaan_id', $potensi->id)->delete(); <-- DIHAPUS
-
             DB::commit();
             return redirect()->route('potensi.potensi-kelembagaan.pemerintah.index')
                    ->with('success', 'Data Potensi Kelembagaan berhasil dihapus.');
@@ -264,12 +244,9 @@ class PotensiKelembagaanController extends Controller
         }
     }
 
-    // ... (Print dan Download) ...
-    
     public function print($id)
     {
         $potensi = PotensiKelembagaan::findOrFail($id);
-        // === PERBAIKAN 7: Kembalikan ke BPD::first() ===
         $bpd = BPD::first();
         $anggotaOrganisasis = AnggotaOrganisasi::with(['perangkatDesa.pendidikan', 'jabatan'])->get();
 
@@ -296,4 +273,3 @@ class PotensiKelembagaanController extends Controller
         return $pdf->download('Detail_Potensi_Kelembagaan_' . $potensi->id . '.pdf');
     }
 }
-

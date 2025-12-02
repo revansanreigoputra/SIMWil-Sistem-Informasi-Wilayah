@@ -126,12 +126,10 @@
                                                 <i class="bi bi-trash me-1"></i> Hapus
                                             </button>
                                         </form>
-                                        {{-- @endcan --}}
 
                                     </div>
                                 </td>
                             </tr>
-                            {{-- Modal Delete definition goes here --}}
 
                         @empty
                             <tr>
@@ -149,7 +147,6 @@
 @push('addon-script')
     <script>
         $(document).ready(function() {
-            // Note: DataTables usually requires all columns in <thead> to match <td> in <tbody>
             $('#pemerintah-table').DataTable();
         });
 
@@ -157,7 +154,6 @@
             const downloadUrl = `/potensi/potensi-kelembagaan/pemerintah/${id}/download`;
             const previewUrl = `/potensi/potensi-kelembagaan/pemerintah/${id}/print`;
 
-            // Download PDF
             const a = document.createElement('a');
             a.href = downloadUrl;
             a.download = '';
@@ -165,7 +161,6 @@
             a.click();
             document.body.removeChild(a);
 
-            // Preview PDF
             setTimeout(() => {
                 window.open(previewUrl, '_blank');
             }, 1500);

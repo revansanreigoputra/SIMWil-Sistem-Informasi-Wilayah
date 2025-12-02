@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\MasterPotensi\KategoriUsahaJasaDanHiburan;
 use App\Models\MasterPotensi\JenisUsahaHiburan;
+use App\Models\Desa;
 
 class Hiburan extends Model
 {
@@ -14,6 +15,7 @@ class Hiburan extends Model
     protected $table = 'usaha_jasa_dan_hiburan';
 
     protected $fillable = [
+        'desa_id',
         'tanggal',
         'kategori_id',
         'jenis_usaha_id',
@@ -30,5 +32,9 @@ class Hiburan extends Model
     public function jenisUsaha()
     {
         return $this->belongsTo(JenisUsahaHiburan::class, 'jenis_usaha_id');
+    }
+    public function desa()
+    {
+        return $this->belongsTo(\App\Models\Desa::class, 'desa_id');
     }
 }
