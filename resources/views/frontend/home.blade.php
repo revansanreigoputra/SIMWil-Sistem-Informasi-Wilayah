@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SimWil - Sistem Informasi Wilayah</title>
+    <title>SIMDES - Sistem Informasi Wilayah Tingkat Desa</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('frontend/images/favicon.png') }}">
@@ -42,7 +42,7 @@
                     <div class="utf_left_side">
                         <div id="logo">
                             <a href="{{ url('/') }}">
-                                <img src="{{ asset('frontend/images/logo simwil.png') }}" alt="">
+                                <img src="{{ asset('frontend/images/SIMDES.png')}}" alt="">
                             </a>
                         </div>
                         <div class="mmenu-trigger">
@@ -227,7 +227,7 @@
                                 data-responsive="off"
                                 style="z-index:6;color:#fff;letter-spacing:0px;font-weight:600;">Cek & Monitoring
                                 Status Pengajuan</div>
-                            <div class="utf_rev_description_text"> SIMWIL (Sistem Wilayah) - Aplikasi yang akan memberikan
+                            <div class="utf_rev_description_text"> SIMDES (Sistem Informasi Wilayah Tingkat Desa) - Aplikasi yang akan memberikan
                                 kemudahan bagi anda dalam mengurus segala bentuk urusan yang berkaitan dengan
                                 pemerintahan daerah secara online.
                             </div>
@@ -289,7 +289,7 @@
                                 data-responsive="off"
                                 style="z-index:6;color:#fff;letter-spacing:0px;font-weight:600;">Cari & Jelajahi Tempat
                                 Hits</div>
-                            <div class="utf_rev_description_text">SIMWIL (Sistem Wilayah) - Aplikasi yang akan memberikan
+                            <div class="utf_rev_description_text">SIMDES (Sistem Informasi Wilayah Tingkat Desa) - Aplikasi yang akan memberikan
                                 kemudahan bagi anda dalam mengurus segala bentuk urusan yang berkaitan dengan
                                 pemerintahan daerah secara online.
                             </div>
@@ -351,7 +351,7 @@
                                 data-responsive="off"
                                 style="z-index:6;color:#fff;letter-spacing:0px;font-weight:600;">Cari & Jelajahi
                                 Informasi Terupdate</div>
-                            <div class="utf_rev_description_text">SIMWIL - Aplikasi yang akan memberikan
+                            <div class="utf_rev_description_text">SIMDES (Sistem Informasi Wilayah Tingkat Desa) - Aplikasi yang akan memberikan
                                 kemudahan bagi anda dalam mengurus segala bentuk urusan yang berkaitan dengan
                                 pemerintahan daerah secara online.
                             </div>
@@ -574,7 +574,7 @@
                         <h4>Bantuan</h4>
                     </div>
                     <div class="col-md-4 col-sm-12 col-xs-12">
-                        <h4>Tentang SIMWIL</h4>
+                        <h4>Tentang SIMDES</h4>
                     </div>
                 </div>
 

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login | {{ $websiteSetting?->website_name ?? 'SimWil' }}</title>
+    <title>Login | {{ $websiteSetting?->website_name ?? 'SIMDES' }}</title>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -241,8 +241,8 @@
             <div class="auth-background"></div>
             <div id="particles-js"></div>
             <div class="auth-header">
-                <h1>SimWil</h1>
-                <p>Sistem Informasi Wilayah</p>
+                <h1>SIMDES</h1>
+                <p>Sistem Informasi Wilayah Tingkat Desa</p>
             </div>
         </div>
 
@@ -250,7 +250,7 @@
         <div class="auth-form-container">
             <div class="text-center mb-4">
                 <h3>Welcome Back!</h3>
-                <p class="text-muted" style="font-size: 0.95rem;">Silakan login ke akun SimWil Anda</p>
+                <p class="text-muted" style="font-size: 0.95rem;">Silakan login ke akun SIMDES Anda</p>
             </div>
 
             <form method="POST" action="{{ route('login') }}">
@@ -302,7 +302,7 @@
         <div class="auth-footer">
             <p>Belum punya akun? <a href="#">Daftar di sini</a></p>
             <p class="text-muted mt-2" style="font-size: 0.85rem;">
-                &copy; {{ date('Y') }} SimWil. All Rights Reserved.
+                &copy; {{ date('Y') }} SIMDES. All Rights Reserved.
             </p>
         </div>
     </div>
