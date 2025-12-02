@@ -151,6 +151,9 @@ class DatabaseSeeder extends Seeder
             TenagaKerjaSeeder::class,
             KualitasAngkatanKerjaSeeder::class,
             JenisProduksiTernakSeeder::class,
+            AreaWisataSeeder::class,
+            PencemaranSeeder::class,
+            RuangPublikSeeder::class,
         ]);
     }
 }
