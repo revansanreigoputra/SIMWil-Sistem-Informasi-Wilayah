@@ -394,6 +394,13 @@ class PermissionSeeder extends Seeder
             'ppendidikan.update',
             'ppendidikan.delete',
 
+            // area_wisata permissions
+            'area_wisata.view',
+            'area_wisata.create',
+            'area_wisata.store',
+            'area_wisata.update',
+            'area_wisata.delete',
+
             // hiburan
             'hiburan.view',
             'hiburan.create',

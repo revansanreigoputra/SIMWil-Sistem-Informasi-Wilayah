@@ -130,6 +130,8 @@
                                     <th>Nama Tempat Ibadah</th>
                                 @elseif ($activeTab === 'jenis_produksi_ternak')
                                     <th>Nama Jenis Produksi Ternak</th>
+                                @elseif ($activeTab === 'area_wisata')
+                                    <th>Nama Area Wisata</th>
                                 @else
                                     <th>Nama {{ Str::headline($activeTab) }}</th>
                                 @endif
@@ -188,7 +190,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="{{ in_array($activeTab, ['jenis_lembaga_ekonomi', 'jenis_prasarana_transportasi_darat', 'jenis_prasarana_komunikasi_informasi', 'jenis_produksi_ternak']) ? 3 : 2 }}"
+                                    <td colspan="{{ in_array($activeTab, ['jenis_lembaga_ekonomi', 'jenis_prasarana_transportasi_darat', 'jenis_prasarana_komunikasi_informasi', 'jenis_produksi_ternak', 'area_wisata']) ? 2 : 2 }}"
                                         class="text-center text-muted py-4">
                                         Data tidak ditemukan.
                                     </td>

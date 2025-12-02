@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\View;
 // Hapus 'use App\Models\MasterPotensi;' karena tidak digunakan secara langsung
-// use App\Models\MasterPotensi; 
+// use App\Models\MasterPotensi;
 
 class MasterPotensiController extends Controller
 {
@@ -59,6 +59,7 @@ class MasterPotensiController extends Controller
                 'Jenis_Sarana_Kesehatan',
                 'Jenis_prasarana_Olah_Raga',
                 'tempat_ibadah',
+                'area_wisata',
             ],
         ];
 
@@ -71,8 +72,8 @@ class MasterPotensiController extends Controller
 
         $data = collect();
         // Variabel untuk data relasi (seperti Kategori Sekolah)
-        $relatedData = []; 
-        
+        $relatedData = [];
+
         if ($activeTab) {
             $model = $this->getModelForTab($activeTab);
             if ($model) {
@@ -151,7 +152,10 @@ class MasterPotensiController extends Controller
         $tabName = strtolower($tabName);
 
         if ($tabName === 'tempat_ibadah') {
-            $className = "App\\Models\\TempatIbadah";
+            $className = "App\\Models\\MasterPotensi\\TempatIbadah";
+            return class_exists($className) ? $className : null;
+        } elseif ($tabName === 'area_wisata') {
+            $className = "App\\Models\\MasterPotensi\\AreaWisata";
             return class_exists($className) ? $className : null;
         }
 
