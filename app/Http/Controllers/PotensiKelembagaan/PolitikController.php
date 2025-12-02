@@ -10,30 +10,27 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class PolitikController extends Controller
 {
-    /**
-     * Tampilkan daftar data partisipasi politik.
-     */
     public function index()
     {
-        $data = KelembagaanPartisipasiPolitik::with('partisipasiPolitik')->latest()->get();
+        $desaId = session('desa_id');
+
+        $data = KelembagaanPartisipasiPolitik::with(['partisipasiPolitik', 'desa'])
+            ->where('desa_id', $desaId)
+            ->orderBy('tanggal', 'desc')
+            ->paginate(10);
+
         return view('pages.potensi.potensi-kelembagaan.politik.index', compact('data'));
     }
 
-    /**
-     * Tampilkan form tambah data.
-     */
     public function create()
     {
         $partisipasi = PartisipasiPolitik::all();
         return view('pages.potensi.potensi-kelembagaan.politik.create', compact('partisipasi'));
     }
 
-    /**
-     * Simpan data baru.
-     */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'partisipasi_politik_id' => 'required|exists:partisipasi_politik,id',
             'tanggal' => 'required|date',
             'jumlah_wanita_hak_pilih' => 'required|integer|min:0',
@@ -45,28 +42,26 @@ class PolitikController extends Controller
             'persentase' => 'required|numeric|min:0',
         ]);
 
-        KelembagaanPartisipasiPolitik::create($validated);
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id'); // ← DITAMBAHKAN
+
+        KelembagaanPartisipasiPolitik::create($data);
 
         return redirect()->route('potensi.potensi-kelembagaan.politik.index')
-            ->with('success', 'Data partisipasi politik berhasil ditambahkan.');
+            ->with('success', 'Data Partisipasi Politik berhasil ditambahkan.');
     }
 
-    /**
-     * Tampilkan form edit data.
-     */
     public function edit($id)
     {
         $data = KelembagaanPartisipasiPolitik::findOrFail($id);
         $partisipasi = PartisipasiPolitik::all();
+
         return view('pages.potensi.potensi-kelembagaan.politik.edit', compact('data', 'partisipasi'));
     }
 
-    /**
-     * Update data yang ada.
-     */
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
+        $request->validate([
             'partisipasi_politik_id' => 'required|exists:partisipasi_politik,id',
             'tanggal' => 'required|date',
             'jumlah_wanita_hak_pilih' => 'required|integer|min:0',
@@ -78,16 +73,17 @@ class PolitikController extends Controller
             'persentase' => 'required|numeric|min:0',
         ]);
 
-        $data = KelembagaanPartisipasiPolitik::findOrFail($id);
-        $data->update($validated);
+        $politik = KelembagaanPartisipasiPolitik::findOrFail($id);
+
+        $data = $request->all();
+        $data['desa_id'] = session('desa_id');
+
+        $politik->update($data);
 
         return redirect()->route('potensi.potensi-kelembagaan.politik.index')
-            ->with('success', 'Data partisipasi politik berhasil diperbarui.');
+            ->with('success', 'Data Partisipasi Politik berhasil diperbarui.');
     }
 
-    /**
-     * Hapus data.
-     */
     public function destroy($id)
     {
         $data = KelembagaanPartisipasiPolitik::findOrFail($id);
@@ -97,34 +93,27 @@ class PolitikController extends Controller
             ->with('success', 'Data partisipasi politik berhasil dihapus.');
     }
 
-    /**
-     * Tampilkan detail data partisipasi politik.
-     */
     public function show($id)
     {
         $data = KelembagaanPartisipasiPolitik::with('partisipasiPolitik')->findOrFail($id);
         return view('pages.potensi.potensi-kelembagaan.politik.show', compact('data'));
     }
 
-    /**
-     * Cetak data ke PDF (tampilan langsung di browser).
-     */
     public function print($id)
     {
         $data = KelembagaanPartisipasiPolitik::with('partisipasiPolitik')->findOrFail($id);
         $pdf = Pdf::loadView('pages.potensi.potensi-kelembagaan.politik.print', compact('data'))
                   ->setPaper('a4', 'portrait');
+
         return $pdf->stream('Data_Partisipasi_Politik_' . $data->id . '.pdf');
     }
 
-    /**
-     * Unduh file PDF.
-     */
     public function download($id)
     {
         $data = KelembagaanPartisipasiPolitik::with('partisipasiPolitik')->findOrFail($id);
         $pdf = Pdf::loadView('pages.potensi.potensi-kelembagaan.politik.print', compact('data'))
                   ->setPaper('a4', 'portrait');
+
         return $pdf->download('Data_Partisipasi_Politik_' . $data->id . '.pdf');
     }
 }

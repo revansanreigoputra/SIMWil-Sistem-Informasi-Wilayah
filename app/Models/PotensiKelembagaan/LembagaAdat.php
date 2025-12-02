@@ -3,10 +3,12 @@
 namespace App\Models\PotensiKelembagaan;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Desa;
 
 class LembagaAdat extends Model
 {
     protected $fillable = [
+        'desa_id',
         'tanggal',
         'pemangku_adat',
         'kepengurusan_adat',
@@ -47,4 +49,9 @@ class LembagaAdat extends Model
         'upacara_adat_pembangunan_rumah' => 'boolean',
         'upacara_adat_penyelesaian_masalah' => 'boolean',
     ];
+    
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class, 'desa_id');
+    }
 }

@@ -16,7 +16,13 @@ class EkonomiController extends Controller
      */
     public function index()
     {
-        $data = LembagaEkonomi::with(['kategori', 'jenis'])->latest()->get();
+        $desaId = session('desa_id');
+
+        $data = LembagaEkonomi::with(['kategori', 'jenis'])
+            ->where('desa_id', $desaId) 
+            ->latest()
+            ->get();
+
         return view('pages.potensi.potensi-kelembagaan.ekonomi.index', compact('data'));
     }
 
@@ -47,6 +53,8 @@ class EkonomiController extends Controller
             'jumlah_pengurus' => 'nullable|integer|min:0',
         ]);
 
+       $validated['desa_id'] = session('desa_id');
+
         LembagaEkonomi::create($validated);
 
         return redirect()->route('potensi.potensi-kelembagaan.ekonomi.index')
@@ -58,7 +66,12 @@ class EkonomiController extends Controller
      */
     public function show($id)
     {
-        $data = LembagaEkonomi::with(['kategori', 'jenis'])->findOrFail($id);
+       $desaId = session('desa_id');
+
+        $data = LembagaEkonomi::with(['kategori', 'jenis'])
+            ->where('desa_id', $desaId)  
+            ->findOrFail($id);
+
         return view('pages.potensi.potensi-kelembagaan.ekonomi.show', compact('data'));
     }
 
@@ -67,9 +80,12 @@ class EkonomiController extends Controller
      */
     public function edit($id)
     {
-        $data = LembagaEkonomi::findOrFail($id);
+        $desaId = session('desa_id');
+
+        $data = LembagaEkonomi::where('desa_id', $desaId)->findOrFail($id);
         $kategori = KategoriLembagaEkonomi::all();
         $jenis = JenisLembagaEkonomi::where('kategori_lembaga_ekonomi_id', $data->kategori_lembaga_ekonomi_id)->get();
+
         return view('pages.potensi.potensi-kelembagaan.ekonomi.edit', compact('data', 'kategori', 'jenis'));
     }
 
@@ -87,7 +103,10 @@ class EkonomiController extends Controller
             'jumlah_pengurus' => 'nullable|integer|min:0',
         ]);
 
-        $data = LembagaEkonomi::findOrFail($id);
+       $desaId = session('desa_id');
+
+        $data = LembagaEkonomi::where('desa_id', $desaId)->findOrFail($id);
+
         $data->update($validated);
 
         return redirect()->route('potensi.potensi-kelembagaan.ekonomi.index')
@@ -96,7 +115,9 @@ class EkonomiController extends Controller
 
     public function destroy($id)
     {
-        $data = LembagaEkonomi::findOrFail($id);
+        $desaId = session('desa_id');
+
+        $data = LembagaEkonomi::where('desa_id', $desaId)->findOrFail($id);
         $data->delete();
 
         return redirect()->route('potensi.potensi-kelembagaan.ekonomi.index')
@@ -105,17 +126,29 @@ class EkonomiController extends Controller
 
    public function print($id)
     {
-        $data = LembagaEkonomi::with(['kategori', 'jenis'])->findOrFail($id);
+        $desaId = session('desa_id');
+
+        $data = LembagaEkonomi::with(['kategori', 'jenis'])
+            ->where('desa_id', $desaId)
+            ->findOrFail($id);
+
         $pdf = Pdf::loadView('pages.potensi.potensi-kelembagaan.ekonomi.print', compact('data'))
                   ->setPaper('a4', 'portrait');
+
         return $pdf->stream('Data_Lembaga_Ekonomi_' . $data->id . '.pdf');
     }
 
     public function download($id)
     {
-        $data = LembagaEkonomi::with(['kategori', 'jenis'])->findOrFail($id);
+       $desaId = session('desa_id');
+
+        $data = LembagaEkonomi::with(['kategori', 'jenis'])
+            ->where('desa_id', $desaId)
+            ->findOrFail($id);
+
         $pdf = Pdf::loadView('pages.potensi.potensi-kelembagaan.ekonomi.print', compact('data'))
                   ->setPaper('a4', 'portrait');
+
         return $pdf->download('Data_Lembaga_Ekonomi_' . $data->id . '.pdf');
     }
 

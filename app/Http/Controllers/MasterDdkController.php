@@ -137,7 +137,7 @@ class MasterDdkController extends Controller
                 $rules = [
                     'jenis_lembaga' => 'required|string|max:255',
                     'nama_lembaga' => 'required|string|max:255',
-                ];
+                 ];
                 $data = $request->only(['jenis_lembaga', 'nama_lembaga']);
                 break;
             case 'cacat':
@@ -149,9 +149,44 @@ class MasterDdkController extends Controller
                 break;
             // Untuk tabel-tabel yang hanya punya satu kolom nama unik
             case 'agama':
+                $rules = ['agama' => 'required|string|max:255'];
+                $data  = $request->only(['agama']);
+                break;
+
             case 'pendidikan':
+                $rules = ['pendidikan' => 'required|string|max:255'];
+                $data  = $request->only(['pendidikan']);
+                break;
+
             case 'kb':
+                $rules = ['kb' => 'required|string|max:255'];
+                $data  = $request->only(['kb']);
+                break;
+
             case 'golongandarah':
+                $rules = ['golongan_darah' => 'required|string|max:255'];
+                $data  = $request->only(['golongan_darah']);
+            break;
+
+            case 'hubungankeluarga':
+                $rules = ['hubungan_keluarga' => 'required|string|max:255'];
+                $data  = $request->only(['hubungan_keluarga']);
+                break;
+            case 'kedudukanpajak':
+                $rules = ['kedudukan_pajak' => 'required|string|max:255'];
+                $data  = $request->only(['kedudukan_pajak']);
+                break;
+            case 'matapencaharian':
+                $rules = [
+                    'mata_pencaharian' => 'required|string|max:255',
+                    'keterangan'       => 'nullable|string'
+                ];
+                $data = [
+                    'mata_pencaharian' => $request->mata_pencaharian,
+                    'keterangan'       => $request->keterangan ?? ''
+                ];
+                break;
+
             case 'kewarganegaraan':
                 // Mengambil nama kolom dari model jika ada, jika tidak default ke nama tabel
                 $column = (new $this->models[$table])->getFillable()[0] ?? $table;

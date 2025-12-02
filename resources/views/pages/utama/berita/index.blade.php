@@ -78,7 +78,7 @@
                                 <td>{{ Str::limit(strip_tags($berita->isi_berita), 65) }}</td>
 
                                 <td class="text-center">
-                                    <img src="{{ asset('storage/foto_berita/' . $berita->gambar) }}" class="table-image"
+                                    <img src="{{ asset('asset/uploads/foto_berita/' . $berita->gambar) }}" class="table-image"
                                         alt="Gambar {{ $berita->judul }}">
                                 </td>
 

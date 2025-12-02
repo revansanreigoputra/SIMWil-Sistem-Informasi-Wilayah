@@ -27,7 +27,7 @@
                         @foreach ($album->photos as $photo)
                             <div class="col">
                                 <div class="card h-100">
-                                    <img src="{{ asset('storage/foto_foto/' . $photo->foto) }}" class="card-img-top"
+                                    <img src="{{ asset('asset/uploads/foto_foto/' . $photo->foto) }}" class="card-img-top"
                                         alt="Foto" style="aspect-ratio: 4 / 3; object-fit: cover;">
                                     <div class="card-body">
                                         <div class="mb-2">

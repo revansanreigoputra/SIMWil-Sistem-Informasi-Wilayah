@@ -20,6 +20,171 @@
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700,800" rel="stylesheet"
         type="text/css">
+
+    <style>
+        /* Style Khusus Album di Home */
+        .album-card-container {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .album-card {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .album-card-container:hover .album-card {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .album-card .album-image-wrapper {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .album-card .album-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .album-card-container:hover .album-image-wrapper img {
+            transform: scale(1.1);
+        }
+
+        .album-card .album-content {
+            padding: 15px;
+            text-align: center;
+            background: #fff;
+            border-top: 1px solid #eee;
+        }
+
+        .album-card .album-content h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 0;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .album-card .album-count {
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+            display: block;
+        }
+
+        /* Agar Section selang-seling warnanya (Galeri abu, ini Putih) */
+        .section-agenda {
+            background-color: #ffffff;
+            border-top: 1px solid #eee;
+        }
+
+        .agenda-home-card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            display: flex;
+            overflow: hidden;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            text-decoration: none !important;
+            /* Aksen warna di kiri */
+            border-left: 4px solid #000ba6;
+        }
+
+        .agenda-home-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border-color: #000ba6;
+            /* Warna border jadi merah saat hover */
+        }
+
+        /* Kotak Tanggal (Sebelah Kiri) */
+        .agenda-date-box {
+            background-color: #f7f7f7;
+            width: 90px;
+            min-width: 90px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-right: 1px solid #eee;
+            padding: 15px 5px;
+            color: #333;
+        }
+
+        .agenda-date-day {
+            font-size: 32px;
+            font-weight: 800;
+            line-height: 1;
+            color: #333;
+        }
+
+        .agenda-date-month {
+            font-size: 13px;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-top: 5px;
+            color: #888;
+        }
+
+        /* Konten Teks (Sebelah Kanan) */
+        .agenda-home-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .agenda-home-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .agenda-home-meta {
+            font-size: 13px;
+            color: #777;
+            margin-top: 5px;
+        }
+
+        .agenda-home-meta i {
+            color: #000ba6;
+            margin-right: 5px;
+            width: 15px;
+            text-align: center;
+        }
+
+        .btn-agenda-all {
+            border-radius: 50px;
+            padding: 10px 25px;
+        }
+    </style>
 </head>
 
 <body>
@@ -409,7 +574,7 @@
                 </div>
             </div>
 
-           
+
         </div>
          <section class="fullwidth_block margin-top-0 padding-top-75 padding-bottom-75"
                 data-background-color="#f9f9f9">
@@ -502,7 +667,7 @@
                             <a href="{{ route('public.berita.show', $item->slug) }}"
                                 class="blog_compact_part-container">
                                 <div class="blog_compact_part">
-                                    <img src="{{ asset('storage/foto_berita/' . $item->gambar) }}"
+                                    <img src="{{ asset('asset/uploads/foto_berita/' . $item->gambar) }}"
                                         alt="{{ $item->judul }}">
                                     <div class="blog_compact_part_content">
                                         <h3>{{ $item->judul }}</h3>
@@ -524,6 +689,142 @@
                         </a>
                     </div>
 
+                </div>
+            </div>
+        </section>
+
+        <section class="fullwidth_block padding-top-75 padding-bottom-75" style="background-color: #f9f9f9;">
+            <div class="container">
+                <!-- Judul Section -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="headline_part centered margin-bottom-50">
+                            GALERI KEGIATAN
+                            <span>Dokumentasi kegiatan</span>
+                        </h3>
+                    </div>
+                </div>
+
+                <!-- Grid Album -->
+                <div class="row">
+                    @if (isset($albums) && $albums->count() > 0)
+                        @foreach ($albums as $album)
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <!-- Perhatikan class ini: harus 'album-card-container' sesuai CSS kamu -->
+                                <a href="{{ route('public.galeri.show', $album->id) }}" class="album-card-container">
+                                    <div class="album-card">
+                                        <div class="album-image-wrapper">
+                                            {{-- Cek apakah ada foto, jika tidak pakai placeholder --}}
+                                            @if ($album->photos->isNotEmpty())
+                                                <img src="{{ asset('asset/uploads/foto_foto/' . $album->photos->first()->foto) }}"
+                                                    alt="{{ $album->album }}">
+                                            @else
+                                                <img src="https://via.placeholder.com/300x200.png?text=No+Image"
+                                                    alt="Belum ada foto">
+                                            @endif
+                                        </div>
+
+                                        <div class="album-content">
+                                            <h3>{{ $album->album }}</h3>
+                                            {{-- Tampilkan jumlah foto --}}
+                                            <span style="font-size: 12px; color: #888;">
+                                                <i class="im im-icon-Camera-2"></i> {{ $album->photos->count() }} Foto
+                                            </span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="col-md-12 centered_content">
+                            <p class="text-muted">Belum ada album galeri yang ditampilkan.</p>
+                        </div>
+                    @endif
+                </div>
+
+                <!-- Tombol Selengkapnya -->
+                <div class="row">
+                    <div class="col-md-12 centered_content">
+                        <a href="{{ route('public.galeri.index') }}" class="button border margin-top-20">
+                            Lihat Semua Galeri
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="fullwidth_block padding-top-75 padding-bottom-75 section-agenda">
+            <div class="container">
+                <!-- Judul Section -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="headline_part centered margin-bottom-50">
+                            AGENDA MENDATANG
+                            <span>Jadwal kegiatan terbaru</span>
+                        </h3>
+                    </div>
+                </div>
+
+                <!-- Grid Agenda -->
+                <div class="row">
+                    @if (isset($agenda_terbaru) && $agenda_terbaru->count() > 0)
+                        @foreach ($agenda_terbaru as $agenda)
+                            @php
+                                $tgl = \Carbon\Carbon::parse($agenda->tgl_dari);
+                            @endphp
+
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                <a href="{{ route('public.agenda.index') }}" class="agenda-home-card">
+
+                                    {{-- Kotak Tanggal (Tetap Ada biar jelas kapan harinya) --}}
+                                    <div class="agenda-date-box">
+                                        <span class="agenda-date-day">{{ $tgl->format('d') }}</span>
+                                        <span class="agenda-date-month">{{ $tgl->format('M') }}</span>
+                                        <span
+                                            style="font-size: 10px; color: #999; margin-top: 2px;">{{ $tgl->format('Y') }}</span>
+                                    </div>
+
+                                    {{-- Konten (Kanan) --}}
+                                    <div class="agenda-home-content">
+                                        {{-- Judul --}}
+                                        <h4 class="agenda-home-title">{{ $agenda->nama_agenda ?? $agenda->judul }}
+                                        </h4>
+
+                                        {{-- Baris 1: Lokasi --}}
+                                        <div class="agenda-home-meta">
+                                            <i class="im im-icon-Location-2"></i>
+                                            {{ $agenda->lokasi ?? 'Kantor Desa' }}
+                                        </div>
+
+                                        <div class="agenda-home-meta">
+                                            <i class="im im-icon-User" style="color: #000ba6; margin-right: 5px;"></i>
+                                            <span style="color: #000000; font-weight: 800;">
+                                                {{ $agenda->peserta ?? 'Umum' }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="col-md-12 text-center">
+                            <div
+                                style="background: #fff3cd; color: #856404; padding: 20px; border-radius: 5px; border: 1px solid #ffeeba;">
+                                <i class="im im-icon-Information"></i>
+                                Belum ada agenda mendatang.
+                            </div>
+                        </div>
+                    @endif
+                </div>
+
+                <!-- Tombol Lihat Semua -->
+                <div class="row">
+                    <div class="col-md-12 centered_content">
+                        <a href="{{ route('public.agenda.index') }}"
+                            class="button border margin-top-20 btn-agenda-all">
+                            Lihat Semua Agenda
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>

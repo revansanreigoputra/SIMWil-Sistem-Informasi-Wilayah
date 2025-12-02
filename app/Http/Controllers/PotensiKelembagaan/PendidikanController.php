@@ -13,7 +13,11 @@ class PendidikanController extends Controller
 {
     public function index()
     {
-        $data = LembagaPendidikan::with(['kategori', 'jenisSekolah'])->get();
+        // Tampilkan data berdasarkan desa user aktif
+        $data = LembagaPendidikan::with(['kategori', 'jenisSekolah'])
+            ->where('desa_id', auth()->user()->desa_id) // <-- ditambahkan
+            ->get();
+
         return view('pages.potensi.potensi-kelembagaan.pendidikan.index', compact('data'));
     }
 
@@ -39,7 +43,18 @@ class PendidikanController extends Controller
             'jumlah_pengajar' => 'nullable|integer|min:0',
         ]);
 
-        LembagaPendidikan::create($request->all());
+        LembagaPendidikan::create([
+            'desa_id' => auth()->user()->desa_id, // <-- ditambahkan
+            'tanggal' => $request->tanggal,
+            'kategori_id' => $request->kategori_id,
+            'jenis_sekolah_id' => $request->jenis_sekolah_id,
+            'status' => $request->status,
+            'jumlah_negeri' => $request->jumlah_negeri,
+            'jumlah_swasta' => $request->jumlah_swasta,
+            'jumlah_dimiliki_desa' => $request->jumlah_dimiliki_desa,
+            'jumlah' => $request->jumlah,
+            'jumlah_pengajar' => $request->jumlah_pengajar,
+        ]);
 
         return redirect()->route('potensi.potensi-kelembagaan.pendidikan.index')
             ->with('success', 'Data lembaga pendidikan berhasil ditambahkan.');
@@ -47,13 +62,18 @@ class PendidikanController extends Controller
 
     public function show($id)
     {
-        $data = LembagaPendidikan::with(['kategori', 'jenisSekolah'])->findOrFail($id);
+        $data = LembagaPendidikan::with(['kategori', 'jenisSekolah'])
+            ->where('desa_id', auth()->user()->desa_id) // keamanan data per desa
+            ->findOrFail($id);
+
         return view('pages.potensi.potensi-kelembagaan.pendidikan.show', compact('data'));
     }
 
     public function edit($id)
     {
-        $data = LembagaPendidikan::findOrFail($id);
+        $data = LembagaPendidikan::where('desa_id', auth()->user()->desa_id)
+            ->findOrFail($id);
+
         $kategori = KategoriSekolah::all();
         $jenis = JenisSekolahTingkatan::all();
 
@@ -74,8 +94,20 @@ class PendidikanController extends Controller
             'jumlah_pengajar' => 'nullable|integer|min:0',
         ]);
 
-        $data = LembagaPendidikan::findOrFail($id);
-        $data->update($request->all());
+        $data = LembagaPendidikan::where('desa_id', auth()->user()->desa_id)
+            ->findOrFail($id);
+
+        $data->update([
+            'tanggal' => $request->tanggal,
+            'kategori_id' => $request->kategori_id,
+            'jenis_sekolah_id' => $request->jenis_sekolah_id,
+            'status' => $request->status,
+            'jumlah_negeri' => $request->jumlah_negeri,
+            'jumlah_swasta' => $request->jumlah_swasta,
+            'jumlah_dimiliki_desa' => $request->jumlah_dimiliki_desa,
+            'jumlah' => $request->jumlah,
+            'jumlah_pengajar' => $request->jumlah_pengajar,
+        ]);
 
         return redirect()->route('potensi.potensi-kelembagaan.pendidikan.index')
             ->with('success', 'Data lembaga pendidikan berhasil diperbarui.');
@@ -83,7 +115,9 @@ class PendidikanController extends Controller
 
     public function destroy($id)
     {
-        $data = LembagaPendidikan::findOrFail($id);
+        $data = LembagaPendidikan::where('desa_id', auth()->user()->desa_id)
+            ->findOrFail($id);
+
         $data->delete();
 
         return redirect()->route('potensi.potensi-kelembagaan.pendidikan.index')
@@ -95,19 +129,28 @@ class PendidikanController extends Controller
         $jenis = JenisSekolahTingkatan::where('kategori_sekolah_id', $kategoriId)->get();
         return response()->json($jenis);
     }
-    Public function print($id)
+
+    public function print($id)
     {
-        $data = LembagaPendidikan::with(['kategori', 'jenisSekolah'])->findOrFail($id);
+        $data = LembagaPendidikan::where('desa_id', auth()->user()->desa_id)
+            ->with(['kategori', 'jenisSekolah'])
+            ->findOrFail($id);
+
         $pdf = Pdf::loadView('pages.potensi.potensi-kelembagaan.pendidikan.print', compact('data'))
                   ->setPaper('a4', 'portrait');
+
         return $pdf->stream('Data_Pendidikan_' . $data->id . '.pdf');
     }
 
     public function download($id)
     {
-        $data = LembagaPendidikan::with(['kategori', 'jenisSekolah'])->findOrFail($id);
+        $data = LembagaPendidikan::where('desa_id', auth()->user()->desa_id)
+            ->with(['kategori', 'jenisSekolah'])
+            ->findOrFail($id);
+
         $pdf = Pdf::loadView('pages.potensi.potensi-kelembagaan.pendidikan.print', compact('data'))
                   ->setPaper('a4', 'portrait');
+
         return $pdf->download('Data_Pendidikan_' . $data->id . '.pdf');
     }
 }

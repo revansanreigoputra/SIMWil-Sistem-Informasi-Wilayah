@@ -74,7 +74,9 @@
                     <div class="col-md-3 col-sm-6 col-xs-12">
                         <a href="{{ route('public.berita.show', $item->slug) }}" class="blog_compact_part-container">
                             <div class="blog_compact_part">
-                                <img src="{{ asset('storage/foto_berita/' . $item->gambar) }}" alt="{{ $item->judul }}">
+                                {{-- PERBAIKAN PATH GAMBAR DI SINI --}}
+                                <img src="{{ asset('asset/uploads/foto_berita/' . $item->gambar) }}" alt="{{ $item->judul }}">
+
                                 <div class="blog_compact_part_content">
                                     <h3>{{ $item->judul }}</h3>
                                     <ul class="blog_post_tag_part">
