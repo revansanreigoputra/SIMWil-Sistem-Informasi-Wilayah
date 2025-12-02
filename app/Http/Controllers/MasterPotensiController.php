@@ -60,6 +60,8 @@ class MasterPotensiController extends Controller
                 'Jenis_prasarana_Olah_Raga',
                 'tempat_ibadah',
                 'area_wisata',
+                'pencemaran',
+                'ruang_publik',
             ],
         ];
 
@@ -156,6 +158,9 @@ class MasterPotensiController extends Controller
             return class_exists($className) ? $className : null;
         } elseif ($tabName === 'area_wisata') {
             $className = "App\\Models\\MasterPotensi\\AreaWisata";
+            return class_exists($className) ? $className : null;
+        } elseif ($tabName === 'pencemaran') {
+            $className = "App\\Models\\MasterPotensi\\Pencemaran";
             return class_exists($className) ? $className : null;
         }
 

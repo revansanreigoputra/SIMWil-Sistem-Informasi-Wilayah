@@ -401,6 +401,20 @@ class PermissionSeeder extends Seeder
             'area_wisata.update',
             'area_wisata.delete',
 
+            // pencemaran permissions
+            'pencemaran.view',
+            'pencemaran.create',
+            'pencemaran.store',
+            'pencemaran.update',
+            'pencemaran.delete',
+
+            // ruang_publik permissions
+            'ruang_publik.view',
+            'ruang_publik.create',
+            'ruang_publik.store',
+            'ruang_publik.update',
+            'ruang_publik.delete',
+
             // hiburan
             'hiburan.view',
             'hiburan.create',
