@@ -624,6 +624,17 @@ Route::middleware(['auth'])->prefix('potensi/sda/topografi')->name('topografi.')
     Route::delete('/{topografi}', [TopografiController::class, 'destroy'])->name('destroy');
 });
 
+// Kualitas Udara routes
+Route::middleware(['auth'])->prefix('potensi/sda/kualitas-udara')->name('kualitas-udara.')->group(function () {
+    Route::get('/', [App\Http\Controllers\KualitasUdaraController::class, 'index'])->name('index');
+    Route::get('/create', [App\Http\Controllers\KualitasUdaraController::class, 'create'])->name('create');
+    Route::post('/', [App\Http\Controllers\KualitasUdaraController::class, 'store'])->name('store');
+    Route::get('/{kualitasUdara}', [App\Http\Controllers\KualitasUdaraController::class, 'show'])->name('show');
+    Route::get('/{kualitasUdara}/edit', [App\Http\Controllers\KualitasUdaraController::class, 'edit'])->name('edit');
+    Route::put('/{kualitasUdara}', [App\Http\Controllers\KualitasUdaraController::class, 'update'])->name('update');
+    Route::delete('/{kualitasUdara}', [App\Http\Controllers\KualitasUdaraController::class, 'destroy'])->name('destroy');
+});
+
 // Kebisingan routes
 Route::middleware(['auth'])->prefix('potensi/sda/kebisingan')->name('kebisingan.')->group(function () {
     Route::get('/', [KebisinganController::class, 'index'])->name('index');

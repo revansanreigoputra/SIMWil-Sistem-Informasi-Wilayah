@@ -467,6 +467,14 @@ class PermissionSeeder extends Seeder
             'topografi.update',
             'topografi.delete',
 
+            // kualitas udara
+            'kualitas-udara.view',
+            'kualitas-udara.create',
+            'kualitas-udara.store',
+            'kualitas-udara.edit',
+            'kualitas-udara.update',
+            'kualitas-udara.delete',
+
             // kebisingan
             'kebisingan.view',
             'kebisingan.create',

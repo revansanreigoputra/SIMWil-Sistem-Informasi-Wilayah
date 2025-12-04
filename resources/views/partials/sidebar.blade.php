@@ -627,6 +627,13 @@
                                                 </a>
                                             @endcan
 
+                                            @can('kualitas-udara.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/kualitas-udara*') ? 'active' : '' }}"
+                                                    href="{{ route('kualitas-udara.index') }}">
+                                                    Kualitas Udara
+                                                </a>
+                                            @endcan
+
                                         </div>
                                     </div>
 
