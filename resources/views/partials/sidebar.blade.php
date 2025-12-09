@@ -633,6 +633,12 @@
                                                     Kualitas Udara
                                                 </a>
                                             @endcan
+                                            @can('ruang_publik.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/ruang-publik*') ? 'active' : '' }}"
+                                                    href="{{ route('ruang_publik.index') }}">
+                                                    Ruang Publik
+                                                </a>
+                                            @endcan
 
                                         </div>
                                     </div>

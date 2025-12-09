@@ -97,6 +97,7 @@ use App\Http\Controllers\SektorIndustriKecilController;
 use App\Http\Controllers\SektorIndustriMenengahBesarController;
 use App\Http\Controllers\SektorJasaUsahaController;
 use App\Http\Controllers\KualitasAirMinumController;
+use App\Http\Controllers\PRuangPublikController;
 
 
 
@@ -644,6 +645,17 @@ Route::middleware(['auth'])->prefix('potensi/sda/kebisingan')->name('kebisingan.
     Route::get('/{kebisingan}/edit', [KebisinganController::class, 'edit'])->name('edit');
     Route::put('/{kebisingan}', [KebisinganController::class, 'update'])->name('update');
     Route::delete('/{kebisingan}', [KebisinganController::class, 'destroy'])->name('destroy');
+});
+
+// RUANG PUBLIK routes
+Route::middleware(['auth'])->prefix('potensi/sda/ruang-publik')->name('ruang_publik.')->group(function () {
+    Route::get('/', [PRuangPublikController::class, 'index'])->name('index');
+    Route::get('/create', [PRuangPublikController::class, 'create'])->name('create');
+    Route::post('/', [PRuangPublikController::class, 'store'])->name('store');
+    Route::get('/{pRuangPublik}', [PRuangPublikController::class, 'show'])->name('show');
+    Route::get('/{pRuangPublik}/edit', [PRuangPublikController::class, 'edit'])->name('edit');
+    Route::put('/{pRuangPublik}', [PRuangPublikController::class, 'update'])->name('update');
+    Route::delete('/{pRuangPublik}', [PRuangPublikController::class, 'destroy'])->name('destroy');
 });
 
 // Iklim routes
