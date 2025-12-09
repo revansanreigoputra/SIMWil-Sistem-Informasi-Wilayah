@@ -9,7 +9,7 @@ class JenisUsahaPengolahanHasilTernak extends Model
 {
     use HasFactory;
 
-    protected $table = 'jenis_usaha_pengolahan_Hasil_ternak';
+    protected $table = 'jenis_usaha_pengolahan_hasil_ternak';
 
     protected $fillable = [
         'nama',
