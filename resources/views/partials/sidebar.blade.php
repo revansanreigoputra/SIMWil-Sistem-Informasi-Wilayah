@@ -640,6 +640,13 @@
                                                 </a>
                                             @endcan
 
+                                            @can('wisata.view')
+                                                <a class="dropdown-item {{ request()->is('potensi/sda/wisata*') ? 'active' : '' }}"
+                                                    href="{{ route('wisata.index') }}">
+                                                    Wisata
+                                                </a>
+                                            @endcan
+
                                         </div>
                                     </div>
 

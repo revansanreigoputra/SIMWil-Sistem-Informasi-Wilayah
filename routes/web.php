@@ -138,6 +138,7 @@ use App\Models\LayananSurat\KopTemplate;
 
 // POTENSI SDA
 use App\Http\Controllers\TopografiController;
+use App\Http\Controllers\WisataController;
 use App\Http\Controllers\JlahanController;
 use App\Http\Controllers\KlahanController;
 use App\Http\Controllers\IklimTanahErosiController;
@@ -623,6 +624,17 @@ Route::middleware(['auth'])->prefix('potensi/sda/topografi')->name('topografi.')
     Route::get('/{topografi}/edit', [TopografiController::class, 'edit'])->name('edit');
     Route::put('/{topografi}', [TopografiController::class, 'update'])->name('update');
     Route::delete('/{topografi}', [TopografiController::class, 'destroy'])->name('destroy');
+});
+
+// Wisata routes
+Route::middleware(['auth'])->prefix('potensi/sda/wisata')->name('wisata.')->group(function () {
+    Route::get('/', [WisataController::class, 'index'])->name('index');
+    Route::get('/create', [WisataController::class, 'create'])->name('create');
+    Route::post('/', [WisataController::class, 'store'])->name('store');
+    Route::get('/{wisata}', [WisataController::class, 'show'])->name('show');
+    Route::get('/{wisata}/edit', [WisataController::class, 'edit'])->name('edit');
+    Route::put('/{wisata}', [WisataController::class, 'update'])->name('update');
+    Route::delete('/{wisata}', [WisataController::class, 'destroy'])->name('destroy');
 });
 
 // Kualitas Udara routes
